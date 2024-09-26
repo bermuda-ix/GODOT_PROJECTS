@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://dk70wm05pq01i"]
+
+[ext_resource type="Script" path="res://levels/world.gd" id="1_kulhx"]
+[ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_8ey8d"]
+[ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://level_completed.tscn" id="5_7c50m"]
+[ext_resource type="PackedScene" uid="uid://cxqapy0tyeigc" path="res://ui_level.tscn" id="6_5jgk5"]
+[ext_resource type="PackedScene" uid="uid://cct4l6ox78gsb" path="res://Art_Components/city_tileset/TEST_COMP/tile_map.tscn" id="7_xo2wo"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_kulhx")
+
+[node name="PC" parent="." instance=ExtResource("2_8ey8d")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LevelCompleted" parent="CanvasLayer" instance=ExtResource("5_7c50m")]
+visible = false
+
+[node name="UI_Level" parent="CanvasLayer" instance=ExtResource("6_5jgk5")]
+
+[node name="LevelTileMap" parent="." instance=ExtResource("7_xo2wo")]
+scale = Vector2(1, 0.986982)

@@ -1,0 +1,397 @@
+extends CharacterBody2D
+
+
+@export var movement_data : PlayerMovementData
+
+enum States {IDLE, WALKING, JUMP, ATTACK, WALL_STICK, PARRY, DODGE, SPRINTING}
+
+var state: States = States.IDLE
+
+var double_jump_flag = false
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+#wall jump state
+var just_wall_jump = false
+#parry state
+var parry_stance=false
+#attack combo up to 3
+var atk_chain = 0
+#true = facing right fals= facing left
+var face_right = true
+var input_dir=Input.get_axis("walk_left","walk_right")
+#dodge dir
+var dodge_state = false
+var dodge_v = 0.0
+
+var cur_state = "IDLE"
+
+#Animation var
+@onready var animated_sprite_2d = $AnimatedSprite2D
+
+@onready var anim_player = $AnimationPlayer
+
+@onready var coyote_jump_timer = $CoyoteJumpTimer
+@onready var attack_timer = $AttackTimer
+@onready var hit_timer = $HitTimer
+@onready var parry_timer = $ParryTimer
+@onready var dodge_timer = $DodgeTimer
+@onready var starting_position = global_position
+@onready var label = $STATE
+
+var attack_combo = "Attack"
+
+func _process(delta):
+	var input_axis = Input.get_axis("walk_left", "walk_right")
+	
+	match state:
+		States.ATTACK:
+			hit_timer.paused = false
+			cur_state="ATTACK"
+			set_state(state, States.ATTACK)
+		States.IDLE:
+			hit_timer.start()
+			hit_timer.paused = true
+			cur_state="IDLE"
+			set_state(state, States.IDLE)
+		States.WALKING:
+			cur_state="WALKING"
+			set_state(state, States.WALKING)
+		States.JUMP:
+			cur_state="JUMP"
+		States.DODGE:
+			cur_state="DODGE"
+			set_state(state, States.DODGE)
+		States.WALL_STICK:
+			cur_state="WALL STICK"
+		States.SPRINTING:
+			cur_state = "SPRINTING"
+		States.PARRY:
+			cur_state = "PARRY"
+		
+	dodge(input_axis, delta)
+	if Input.is_action_just_pressed("walk_right"):
+		face_right = true
+	elif Input.is_action_just_pressed("walk_left"):
+		face_right = false
+	
+	if(state!=States.DODGE):
+		parry()
+		attack_animate()
+		update_animation(input_axis)
+
+
+func _physics_process(delta):
+	
+	if dodge_state == true:
+		state = States.DODGE
+	# Add the gravity.
+	if(dodge_state==false):
+		apply_gravity(delta) 
+	var input_axis = Input.get_axis("walk_left", "walk_right")
+	
+	#print(dodge_timer.time_left)
+	#print(parry_stance)
+	var wall_hold = false
+	if(state!=States.DODGE):
+		handle_wall_jump(wall_hold, delta)
+		jump(input_axis, delta)
+		handle_acceleration(input_axis, delta)
+		handle_air_acceleration(input_axis, delta)
+		apply_friction(input_axis, delta)
+		apply_air_resistance(input_axis, delta)
+		
+	
+	
+	
+	
+	var was_on_floor = is_on_floor()
+	move_and_slide()
+	var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
+	if just_left_ledge:
+		coyote_jump_timer.start()
+	if Input.is_action_pressed("sprint"):
+		state=States.SPRINTING
+		movement_data = load("res://FasterMovementData.tres")
+	if Input.is_action_pressed("walk"):
+		movement_data = load("res://SlowMovementData.tres")
+	if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
+		movement_data = load("res://DefaultMovementData.tres")
+	just_wall_jump = false
+	
+
+	#print(hit_timer.time_left)
+	label.text=str(atk_chain)
+	
+	#wall hold check
+	if not is_on_wall() or not Input.is_action_pressed("sprint"):
+		wall_hold=false
+		#print("wall hold false")
+		gravity = 980
+	else:
+		#print("wall hold true")
+		state = States.WALL_STICK
+		velocity.x =0
+		velocity.y = 0
+		gravity = 0
+	
+
+# Add the gravity.
+func apply_gravity(delta):
+	if not is_on_floor():
+		velocity.y += gravity * movement_data.gravity_scale * delta
+		
+# Handle jump.
+func jump(input_axis, delta):
+	if is_on_floor(): double_jump_flag = true
+	
+	if is_on_floor() or coyote_jump_timer.time_left>0.0:
+		if Input.is_action_just_pressed("jump"):
+			velocity.y = movement_data.jump_velocity
+			
+	elif not is_on_floor():
+		state = States.JUMP
+		if Input.is_action_just_released("jump") and velocity.y<movement_data.jump_velocity/2:
+			velocity.y = movement_data.jump_velocity/2
+		if Input.is_action_just_pressed("jump") and double_jump_flag == true and just_wall_jump == false:
+			velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.acceleration*10 * delta)
+			velocity.y = movement_data.jump_velocity *0.8
+			double_jump_flag = false
+
+func handle_wall_jump(wall_hold, delta):
+	if not is_on_wall_only(): return
+	if not Input.is_action_pressed("sprint"): return
+	var wall_normal = get_wall_normal()
+
+	
+	if Input.is_action_just_pressed("walk_left") and wall_normal == Vector2.LEFT and wall_hold == true:
+		state = States.WALL_STICK
+		velocity.x =0
+		velocity.y = 0
+		gravity = 0
+		
+	elif Input.is_action_just_pressed("walk_right") or Input.is_action_just_pressed("jump") or Input.is_action_just_released("sprint"):
+		state = States.JUMP
+		velocity.x = move_toward(velocity.x, movement_data.speed * wall_normal.x * 1.5, movement_data.acceleration*10 * delta)
+		velocity.y = movement_data.jump_velocity
+		just_wall_jump = true
+		
+		
+		
+		
+	if Input.is_action_just_pressed("walk_right") and wall_normal == Vector2.RIGHT and wall_hold == true:
+		state = States.WALL_STICK
+		velocity.x =0
+		velocity.y = 0
+		gravity = 0
+	
+	elif Input.is_action_just_pressed("walk_left") or Input.is_action_just_pressed("jump")  or Input.is_action_just_released("sprint"):
+		state = States.JUMP
+		velocity.x = move_toward(velocity.x, movement_data.speed * wall_normal.x * 1.5, movement_data.acceleration*10 * delta)
+		velocity.y = movement_data.jump_velocity
+		just_wall_jump = true
+		
+		
+	
+		
+	if wall_hold == true:
+		velocity.x =0
+		velocity.y = 0
+		gravity = 0
+		print("wall hold true")
+	else:
+		gravity = 980
+
+
+
+func apply_air_resistance(input_axis, delta):
+	if input_axis == 0 and not is_on_floor():
+		velocity.x = move_toward(velocity.x, 0 , movement_data.air_resistance * delta)
+# Get the input direction and handle the movement/deceleration.
+func apply_friction(input_axis, delta):
+	if input_axis == 0 and is_on_floor():
+		velocity.x = move_toward(velocity.x, 0, movement_data.friction * delta)
+		
+# Apply friction after dtopping.
+func handle_acceleration(input_axis, delta):
+	if not is_on_floor(): return
+	if input_axis != 0:
+		velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.acceleration * delta)
+		
+func handle_air_acceleration(input_axis, delta):
+	if is_on_floor(): return
+	if input_axis != 0:
+		velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.air_acceleration * delta)
+
+func update_animation(input_axis):
+	
+	var left = Input.is_action_pressed("walk_left")
+	var right = Input.is_action_pressed("walk_right")
+	if input_axis != 0:
+		
+		animated_sprite_2d.flip_h = (input_axis<0)
+		state = States.WALKING
+		#idle_state=false
+
+	elif Input.is_action_just_released("walk_left") or Input.is_action_just_released("walk_right"):
+		state = States.IDLE
+
+		
+		
+
+	if not is_on_floor() and state != States.ATTACK:
+		state = States.JUMP 
+		
+	elif is_on_floor() and state == States.JUMP:
+		state = States.IDLE
+
+		#animated_sprite_2d.play("jump")
+	
+		
+		
+func attack_animate():
+
+	if Input.is_action_pressed("attack") and state != States.ATTACK:
+		if hit_timer.is_stopped() and state != States.ATTACK:
+			hit_timer.start()
+		
+		state=States.ATTACK
+		attack_timer.paused = true
+		
+		if atk_chain == 0 and (not attack_timer.is_stopped()):
+			#animated_sprite_2d.play("attack_1")
+			attack_combo = "Attack"
+			
+
+		elif atk_chain == 1 and (not attack_timer.is_stopped()):
+			#animated_sprite_2d.play("attack_2")
+			attack_combo = "Attack_2"
+			
+
+		elif atk_chain == 2 and (not attack_timer.is_stopped()):
+			#animated_sprite_2d.play("attack_3")
+			attack_combo = "Attack_3"
+			
+
+	elif (Input.is_action_just_released("attack") or hit_timer.is_stopped()):
+		animated_sprite_2d.play("idle")
+		attack_timer.paused = false
+		state=States.IDLE
+		
+		#if state == States.IDLE:
+			#hit_timer.start()
+			#hit_timer.paused = true
+		#elif state == States.ATTACK:
+			#hit_timer.paused = false
+		if atk_chain < 2:
+			attack_timer.start()
+			atk_chain += 1
+			#print("Attack Chain")
+		elif atk_chain >=2:
+			atk_chain = 0
+			attack_combo = "Attack"
+			#print("Attack Finished")
+		
+			
+	
+	if not attack_timer.time_left > 0.0:
+			atk_chain = 0
+			attack_combo = "Attack"
+			#print("Attack Restart")
+
+func parry():
+
+	#Enter/Exit parry state
+	if Input.is_action_just_pressed("parry"):
+		parry_timer.start()
+		parry_stance=true
+
+	elif Input.is_action_just_released("parry") or parry_timer.is_stopped():
+		parry_timer.stop()
+		parry_stance=false
+		#idle_state = true
+		
+	
+	#parry interactions
+	if parry_stance==true:
+		animated_sprite_2d.play("parry_stance")
+		velocity.x=0
+		velocity.y=0
+
+		
+			
+# DODGE NEEDS WORK!!!
+func dodge(input_axis, delta):
+	#if parry_stance==false: 
+		#return
+#
+	#
+	#if parry_stance==true:
+#
+		#if Input.is_action_just_pressed("jump"):
+			#dodge_state = true
+			#
+			#dodge_timer.start()
+			#
+	#if dodge_state == true:
+	if Input.is_action_just_pressed("Dodge"):
+		dodge_timer.start()
+		if not is_on_floor():
+			velocity.y=0
+		
+		if face_right==true:
+			position.x = lerpf(position.x, position.x-1, delta)
+			state = States.DODGE
+			
+			
+		elif face_right==false:
+			position.x = lerpf(position.x, position.x+1, delta)
+			state = States.DODGE
+			
+		
+	
+	
+	if (dodge_timer.is_stopped()) and state == States.DODGE:
+		#parry_stance=false
+		dodge_state=false
+		dodge_timer.stop()
+		state = States.IDLE
+	
+	
+
+func _on_hazard_detector_area_entered(area):
+	global_position=starting_position
+	
+	
+	
+	
+#State machine for animations currently
+func set_state(cur_state, new_state: int) -> void:
+	if(cur_state == new_state):
+		pass
+	#elif new_state==States.ATTACK and cur_state==States.JUMP:
+		#cur_state="AIR_ATTACK"
+		#anim_player.play(attack_combo)
+	
+	match state:
+		States.ATTACK:
+			cur_state="ATTACK"
+			anim_player.play(attack_combo)
+			velocity.y=0
+			gravity=0
+		States.IDLE:
+			anim_player.play("idle")
+			movement_data.friction=1000
+		States.WALKING:
+			anim_player.play("walk")
+		States.JUMP:
+			cur_state="JUMP"
+		States.DODGE:
+			anim_player.play("dodge")
+			velocity.y=0
+			movement_data.friction=5000
+			
+func get_state() -> String:
+	return cur_state
+
+
+
