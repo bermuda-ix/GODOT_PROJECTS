@@ -401,6 +401,8 @@ func set_state(cur_state, new_state: int) -> void:
 		States.IDLE:
 			anim_player.play("idle")
 			movement_data.friction=1000
+			hb_left.disabled=true
+			hb_right.disabled=true
 		States.WALKING:
 			anim_player.play("walk")
 		States.JUMP:
