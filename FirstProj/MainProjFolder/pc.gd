@@ -1,7 +1,9 @@
 extends CharacterBody2D
-
+class_name PlayerEntity
 
 @export var movement_data : PlayerMovementData
+@export var health: Health
+@export var hitbox: HitBox
 
 enum States {IDLE, WALKING, JUMP, ATTACK, WALL_STICK, PARRY, DODGE, SPRINTING}
 
@@ -37,8 +39,18 @@ var cur_state = "IDLE"
 @onready var dodge_timer = $DodgeTimer
 @onready var starting_position = global_position
 @onready var label = $STATE
+@onready var hit_box = $HitBox
+@onready var hb_right = $HitBox/HBRight
+@onready var hb_left = $HitBox/HBLeft
+
+
+var hit_box_pos
 
 var attack_combo = "Attack"
+
+func _ready():
+	hit_box_pos=hit_box.position
+
 
 func _process(delta):
 	var input_axis = Input.get_axis("walk_left", "walk_right")
@@ -74,6 +86,8 @@ func _process(delta):
 	elif Input.is_action_just_pressed("walk_left"):
 		face_right = false
 	
+	handle_hitbox()
+	
 	if(state!=States.DODGE):
 		parry()
 		attack_animate()
@@ -99,7 +113,13 @@ func _physics_process(delta):
 		handle_air_acceleration(input_axis, delta)
 		apply_friction(input_axis, delta)
 		apply_air_resistance(input_axis, delta)
-		
+		if Input.is_action_pressed("sprint"):
+			state=States.SPRINTING
+			movement_data = load("res://FasterMovementData.tres")
+		if Input.is_action_pressed("walk"):
+			movement_data = load("res://SlowMovementData.tres")
+		if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
+			movement_data = load("res://DefaultMovementData.tres")
 	
 	
 	
@@ -109,13 +129,13 @@ func _physics_process(delta):
 	var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
 	if just_left_ledge:
 		coyote_jump_timer.start()
-	if Input.is_action_pressed("sprint"):
-		state=States.SPRINTING
-		movement_data = load("res://FasterMovementData.tres")
-	if Input.is_action_pressed("walk"):
-		movement_data = load("res://SlowMovementData.tres")
-	if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
-		movement_data = load("res://DefaultMovementData.tres")
+	#if Input.is_action_pressed("sprint"):
+		#state=States.SPRINTING
+		#movement_data = load("res://FasterMovementData.tres")
+	#if Input.is_action_pressed("walk"):
+		#movement_data = load("res://SlowMovementData.tres")
+	#if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
+		#movement_data = load("res://DefaultMovementData.tres")
 	just_wall_jump = false
 	
 
@@ -321,18 +341,7 @@ func parry():
 			
 # DODGE NEEDS WORK!!!
 func dodge(input_axis, delta):
-	#if parry_stance==false: 
-		#return
-#
-	#
-	#if parry_stance==true:
-#
-		#if Input.is_action_just_pressed("jump"):
-			#dodge_state = true
-			#
-			#dodge_timer.start()
-			#
-	#if dodge_state == true:
+
 	if Input.is_action_just_pressed("Dodge"):
 		dodge_timer.start()
 		if not is_on_floor():
@@ -357,9 +366,20 @@ func dodge(input_axis, delta):
 		state = States.IDLE
 	
 	
+func handle_hitbox():
+	if animated_sprite_2d.flip_h:
+		hb_left.disabled==false
+		hb_right.disabled==true
+	else:
+		hb_left.disabled==true
+		hb_right.disabled==false
 
 func _on_hazard_detector_area_entered(area):
 	global_position=starting_position
+	print("Health Depleted!")
+	health.health -= 1
+	print(health.health)
+	
 	
 	
 	
@@ -384,14 +404,19 @@ func set_state(cur_state, new_state: int) -> void:
 		States.WALKING:
 			anim_player.play("walk")
 		States.JUMP:
+			anim_player.play("jump")
 			cur_state="JUMP"
 		States.DODGE:
 			anim_player.play("dodge")
 			velocity.y=0
 			movement_data.friction=5000
 			
+			
 func get_state() -> String:
 	return cur_state
 
+func get_health() -> int:
+	return health.health
 
-
+func _on_health_health_depleted():
+	Events.game_over.emit()

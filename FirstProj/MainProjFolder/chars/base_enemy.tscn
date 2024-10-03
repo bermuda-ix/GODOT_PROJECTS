@@ -1,0 +1,81 @@
+[gd_scene load_steps=4 format=3 uid="uid://cyceakrgrsniu"]
+
+[ext_resource type="Script" path="res://Component/health.gd" id="1_onmna"]
+[ext_resource type="Script" path="res://Component/hurtbox_temlplate.gd" id="2_8inku"]
+[ext_resource type="Script" path="res://Component/hitbox_template.gd" id="3_hclah"]
+
+[node name="base_enemy" type="CharacterBody2D" groups=["Enemy"]]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -24)
+flip_h = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="WallChecks" type="Node2D" parent="."]
+
+[node name="WallCheckLeft" type="RayCast2D" parent="WallChecks"]
+position = Vector2(0, -24)
+target_position = Vector2(-40, 0)
+
+[node name="WallCheckRight" type="RayCast2D" parent="WallChecks"]
+position = Vector2(0, -24)
+target_position = Vector2(40, 0)
+
+[node name="FloorChecks" type="Node2D" parent="."]
+
+[node name="FloorChecksLeft" type="RayCast2D" parent="FloorChecks"]
+position = Vector2(-24, -24)
+target_position = Vector2(0, 40)
+
+[node name="FloorChecksRight" type="RayCast2D" parent="FloorChecks"]
+position = Vector2(16, -24)
+target_position = Vector2(0, 40)
+
+[node name="PlayerTrackerPivot" type="Node2D" parent="."]
+position = Vector2(0, -24)
+
+[node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot"]
+target_position = Vector2(112, 0)
+collision_mask = 2
+
+[node name="ChaseTimer" type="Timer" parent="."]
+
+[node name="JumpChecks" type="Node2D" parent="."]
+
+[node name="FloorJumpCheckRight" type="RayCast2D" parent="JumpChecks"]
+position = Vector2(24, -24)
+target_position = Vector2(40, 88)
+
+[node name="FloorJumpCheckLeft" type="RayCast2D" parent="JumpChecks"]
+position = Vector2(-32, -24)
+target_position = Vector2(-40, 88)
+
+[node name="GapCheckLeft" type="RayCast2D" parent="JumpChecks"]
+position = Vector2(-32, -24)
+target_position = Vector2(-96, 32)
+
+[node name="GapCheckRight" type="RayCast2D" parent="JumpChecks"]
+position = Vector2(24, -24)
+target_position = Vector2(104, 32)
+
+[node name="LeapUpCheckLeft" type="RayCast2D" parent="JumpChecks"]
+position = Vector2(-32, -24)
+target_position = Vector2(-56, -72)
+
+[node name="LeapUpCheckRight" type="RayCast2D" parent="JumpChecks"]
+position = Vector2(24, -24)
+target_position = Vector2(64, -72)
+
+[node name="JumpTimer" type="Timer" parent="."]
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("1_onmna")
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource("2_8inku")
+
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource("3_hclah")

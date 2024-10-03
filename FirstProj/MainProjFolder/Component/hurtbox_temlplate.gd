@@ -3,7 +3,7 @@ extends Area2D
 
 
 signal received_damage(damage: int)
-
+signal got_hit()
 
 @export var health: Health
 
@@ -17,3 +17,4 @@ func _on_area_entered(hitbox: HitBox) -> void:
 		health.health -= hitbox.damage
 		print(health.health)
 		received_damage.emit(hitbox.damage)
+		got_hit.emit()
