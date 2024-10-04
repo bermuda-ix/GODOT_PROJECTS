@@ -43,6 +43,7 @@ var cur_state = "IDLE"
 @onready var hb_right = $HitBox/HBRight
 @onready var hb_left = $HitBox/HBLeft
 
+var knockback : Vector2 = Vector2.ZERO
 
 var hit_box_pos
 
@@ -50,6 +51,8 @@ var attack_combo = "Attack"
 
 func _ready():
 	hit_box_pos=hit_box.position
+	hb_left.disabled=true
+	hb_right.disabled=true
 
 
 func _process(delta):
@@ -103,6 +106,8 @@ func _physics_process(delta):
 		apply_gravity(delta) 
 	var input_axis = Input.get_axis("walk_left", "walk_right")
 	
+
+	
 	#print(dodge_timer.time_left)
 	#print(parry_stance)
 	var wall_hold = false
@@ -141,6 +146,9 @@ func _physics_process(delta):
 
 	#print(hit_timer.time_left)
 	label.text=str(atk_chain)
+	
+	
+	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	
 	#wall hold check
 	if not is_on_wall() or not Input.is_action_pressed("sprint"):
@@ -380,7 +388,7 @@ func _on_hazard_detector_area_entered(area):
 	health.health -= 1
 	print(health.health)
 	
-	
+
 	
 	
 	
@@ -422,3 +430,11 @@ func get_health() -> int:
 
 func _on_health_health_depleted():
 	Events.game_over.emit()
+
+
+func _on_hurt_box_got_hit():
+	knockback.x = -350
+	velocity.y=movement_data.jump_velocity/2
+	velocity.x = movement_data.speed + knockback.x
+	
+

@@ -33,6 +33,7 @@ var immortal = false
 @export var wander_speed : float = 40.0
 @export var chase_speed : float = 80.0
 @export var jump_speed : float = 120.0
+@export var hitbox: HitBox
 
 var current_speed : float = 40.0
 var prev_speed : float = 40.0
@@ -140,8 +141,7 @@ func handle_movement() -> void:
 				#current_state=States.JUMP
 			
 			if ( (leap_up_check_right.is_colliding() and current_speed>0 ) or \
-			 (leap_up_check_left.is_colliding() and current_speed<0 ) ) and \
-			 position.y>player.position.y:
+			 (leap_up_check_left.is_colliding() and current_speed<0 ) ) and position.y>player.position.y:
 				velocity.y = jump_velocity*1.2
 			#
 			if direction.x < 0:

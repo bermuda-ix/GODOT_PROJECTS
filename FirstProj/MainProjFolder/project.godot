@@ -123,6 +123,8 @@ Dodge={
 2d_physics/layer_5="Hurtbox"
 2d_navigation/layer_5="Hurtbox"
 2d_physics/layer_6="Collectable"
+2d_physics/layer_7="PlayerHitbox"
+2d_physics/layer_8="PlayerHurtbox"
 
 [rendering]
 
