@@ -69,6 +69,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _process(delta):
 	health_bar()
+	if current_state != States.PARRY:
+		hb_collison.disabled=false
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -194,7 +196,7 @@ func handle_vision():
 		if collision_result != player:
 			return
 		else:
-			current_state = States.CHASE
+			set_state(current_state, States.CHASE)
 			chase_timer.start(1)
 			player_found = true
 			
@@ -204,7 +206,7 @@ func handle_vision():
 
 func on_timer_timeout() -> void:
 	if player_found == false:
-		current_state = States.WANDER
+		set_state(current_state, States.WANDER)
 		
 		
 	
@@ -252,7 +254,7 @@ func set_state(cur_state, new_state: int) -> void:
 						current_speed = jump_speed
 			States.PARRY:
 				hb_collison.disabled=true
-				
+		
 		print(cur_state)
 
 
@@ -279,7 +281,22 @@ func _on_hurt_box_got_hit():
 		##position.x = position.x+50
 
 
-func _on_hurt_box_parried():
+#func _on_hurt_box_parried():
+	#current_state=States.PARRY
+	#print("PARRIED")
+	#parry_timer.start()
+	#if animated_sprite_2d.flip_h==true:
+		#knockback.x = -450
+	#else:
+		#knockback.x = 450
+	#await get_tree().create_timer(0.3).timeout
+	#set_state(current_state, States.PARRY)
+	##velocity.y=jump_velocity/2
+	#parried = true
+	
+
+
+func _on_hit_box_parried():
 	current_state=States.PARRY
 	print("PARRIED")
 	parry_timer.start()
@@ -291,4 +308,7 @@ func _on_hurt_box_parried():
 	set_state(current_state, States.PARRY)
 	#velocity.y=jump_velocity/2
 	parried = true
-	
+
+
+func _on_attack_range_in_range():
+	print("within range")

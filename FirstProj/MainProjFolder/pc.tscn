@@ -604,7 +604,7 @@ size = Vector2(5, 20)
 [node name="PC" type="CharacterBody2D" node_paths=PackedStringArray("health") groups=["player"]]
 position = Vector2(0, 2)
 collision_layer = 2
-collision_mask = 3
+collision_mask = 1027
 floor_snap_length = 2.0
 script = ExtResource("1_x210m")
 movement_data = ExtResource("2_4grev")
@@ -706,7 +706,7 @@ shape = SubResource("RectangleShape2D_oupih")
 
 [node name="ParryBox" type="Area2D" parent="."]
 collision_layer = 512
-collision_mask = 16
+collision_mask = 24
 script = ExtResource("8_7q1rp")
 
 [node name="PBLeft" type="CollisionShape2D" parent="ParryBox"]
