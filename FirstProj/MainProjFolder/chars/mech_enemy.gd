@@ -283,7 +283,10 @@ func _on_hurt_box_parried():
 	current_state=States.PARRY
 	print("PARRIED")
 	parry_timer.start()
-	knockback.x = 450
+	if animated_sprite_2d.flip_h==true:
+		knockback.x = -450
+	else:
+		knockback.x = 450
 	await get_tree().create_timer(0.3).timeout
 	set_state(current_state, States.PARRY)
 	#velocity.y=jump_velocity/2
