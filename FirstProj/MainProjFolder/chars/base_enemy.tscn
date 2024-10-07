@@ -41,8 +41,6 @@ position = Vector2(0, -24)
 target_position = Vector2(112, 0)
 collision_mask = 2
 
-[node name="ChaseTimer" type="Timer" parent="."]
-
 [node name="JumpChecks" type="Node2D" parent="."]
 
 [node name="FloorJumpCheckRight" type="RayCast2D" parent="JumpChecks"]
@@ -71,11 +69,21 @@ target_position = Vector2(64, -72)
 
 [node name="JumpTimer" type="Timer" parent="."]
 
+[node name="ParryTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="ChaseTimer" type="Timer" parent="."]
+
 [node name="Health" type="Node" parent="."]
 script = ExtResource("1_onmna")
 
 [node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 576
 script = ExtResource("2_8inku")
 
 [node name="HitBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 128
 script = ExtResource("3_hclah")

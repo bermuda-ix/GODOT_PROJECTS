@@ -6,7 +6,7 @@
 [node name="EnemyTest" instance=ExtResource("1_wweet")]
 
 [node name="PC" parent="." index="0"]
-position = Vector2(32, 0)
+position = Vector2(456, -152)
 collision_layer = 3
 
 [node name="LevelTileMap" parent="." index="2"]

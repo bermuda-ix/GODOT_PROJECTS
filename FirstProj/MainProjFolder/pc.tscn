@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=46 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Component/health.gd" id="4_q0gnn"]
 [ext_resource type="Script" path="res://Component/hitbox_template.gd" id="6_y7jp7"]
 [ext_resource type="Script" path="res://Component/hurtbox_temlplate.gd" id="7_h23sv"]
+[ext_resource type="Script" path="res://Component/parrybox_template.gd" id="8_7q1rp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pue1l"]
 resource_local_to_scene = true
@@ -594,6 +595,12 @@ size = Vector2(12.6984, 27.5918)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oupih"]
 size = Vector2(14, 22)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e3ejd"]
+size = Vector2(7, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_efknh"]
+size = Vector2(5, 20)
+
 [node name="PC" type="CharacterBody2D" node_paths=PackedStringArray("health") groups=["player"]]
 position = Vector2(0, 2)
 collision_layer = 2
@@ -696,6 +703,21 @@ health = NodePath("../Health")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(0, -13)
 shape = SubResource("RectangleShape2D_oupih")
+
+[node name="ParryBox" type="Area2D" parent="."]
+collision_layer = 512
+collision_mask = 16
+script = ExtResource("8_7q1rp")
+
+[node name="PBLeft" type="CollisionShape2D" parent="ParryBox"]
+position = Vector2(6.5, -12)
+shape = SubResource("RectangleShape2D_e3ejd")
+disabled = true
+
+[node name="PBRight" type="CollisionShape2D" parent="ParryBox"]
+position = Vector2(-7.5, -12)
+shape = SubResource("RectangleShape2D_efknh")
+disabled = true
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="area_entered" from="HazardDetector" to="." method="_on_hazard_detector_area_entered"]

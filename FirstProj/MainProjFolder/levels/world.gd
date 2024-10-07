@@ -35,7 +35,7 @@ func _process(delta):
 	get_health()
 	set_health()
 	if obj<=1:
-		Events.level_completed.connect(show_level_complete)
+		Events.leveAAAl_completed.connect(show_level_complete)
 	label.text=str("Obj: ",obj)
 	
 func show_level_complete():

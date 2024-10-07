@@ -42,6 +42,9 @@ var cur_state = "IDLE"
 @onready var hit_box = $HitBox
 @onready var hb_right = $HitBox/HBRight
 @onready var hb_left = $HitBox/HBLeft
+@onready var pb_left = $ParryBox/PBLeft
+@onready var pb_right = $ParryBox/PBRight
+
 
 var knockback : Vector2 = Vector2.ZERO
 
@@ -53,7 +56,8 @@ func _ready():
 	hit_box_pos=hit_box.position
 	hb_left.disabled=true
 	hb_right.disabled=true
-
+	pb_left.disabled=true
+	pb_right.disabled=true
 
 func _process(delta):
 	var input_axis = Input.get_axis("walk_left", "walk_right")
@@ -82,6 +86,8 @@ func _process(delta):
 			cur_state = "SPRINTING"
 		States.PARRY:
 			cur_state = "PARRY"
+			set_state(state, States.PARRY)
+			
 		
 	dodge(input_axis, delta)
 	if Input.is_action_just_pressed("walk_right"):
@@ -332,10 +338,16 @@ func parry():
 	if Input.is_action_just_pressed("parry"):
 		parry_timer.start()
 		parry_stance=true
+		state=States.PARRY
+		if face_right==true:
+			pb_left.disabled=false
+		if face_right==false:
+			pb_right.disabled=false
 
 	elif Input.is_action_just_released("parry") or parry_timer.is_stopped():
 		parry_timer.stop()
 		parry_stance=false
+		state=States.IDLE
 		#idle_state = true
 		
 	
@@ -420,8 +432,14 @@ func set_state(cur_state, new_state: int) -> void:
 			anim_player.play("dodge")
 			velocity.y=0
 			movement_data.friction=5000
+		#States.PARRY:
 			
 			
+				
+			
+	if state!=States.PARRY:
+		pb_left.disabled=true
+		pb_right.disabled=true
 func get_state() -> String:
 	return cur_state
 

@@ -27,8 +27,11 @@ const JUMP_VELOCITY = -400.0
 
 @onready var health = $Health
 @onready var hurt_box = $HurtBox
+@onready var hb_collison = $HitBox/CollisionShape2D
 @onready var h_bar = $HBar
+@onready var parry_timer = $ParryTimer as Timer
 var immortal = false
+
 
 @export var wander_speed : float = 40.0
 @export var chase_speed : float = 80.0
@@ -42,15 +45,17 @@ var player_found : bool = false
 var player : PlayerEntity = null
 var jump_velocity = JUMP_VELOCITY
 var knockback : Vector2 = Vector2.ZERO
+var parried : bool = false 
 
 enum States{
 	WANDER,
 	CHASE,
 	JUMP,
-	ATTACK
+	ATTACK,
+	PARRY
 }
 
-var current_state
+var current_state = States.WANDER
 var prev_state = States.WANDER
 
 func _ready():
@@ -87,12 +92,18 @@ func _physics_process(delta):
 	
 	if knockback == Vector2.ZERO:
 		handle_movement()
-	
+		
+	if parry_timer.is_stopped() :
+		current_state=prev_state
+		parried=false
 	
 	handl_animation()
 
 	velocity.x = current_speed + knockback.x
-	move_and_slide()
+	
+	if parried==false:
+		move_and_slide()
+		
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	
 	
@@ -140,8 +151,7 @@ func handle_movement() -> void:
 				
 				#current_state=States.JUMP
 			
-			if ( (leap_up_check_right.is_colliding() and current_speed>0 ) or \
-			 (leap_up_check_left.is_colliding() and current_speed<0 ) ) and position.y>player.position.y:
+			if ( (leap_up_check_right.is_colliding() and current_speed>0 ) or (leap_up_check_left.is_colliding() and current_speed<0 ) ) and position.y>player.position.y:
 				velocity.y = jump_velocity*1.2
 			#
 			if direction.x < 0:
@@ -240,6 +250,9 @@ func set_state(cur_state, new_state: int) -> void:
 						current_speed = -jump_speed
 					else:
 						current_speed = jump_speed
+			States.PARRY:
+				hb_collison.disabled=true
+				
 		print(cur_state)
 
 
@@ -251,12 +264,12 @@ func _on_health_health_depleted():
 		print("level complete")
 		
 func health_bar():
-	h_bar.text=str(health.health, " immortal: ", immortal)
+	h_bar.text=str(health.health, " Parried: ", parried, " : ", parry_timer.time_left)
 
 func _on_hurt_box_got_hit():
-	#health.set_immortality(0.5)
-	knockback.x = 350
-	velocity.y=jump_velocity/2
+	health.set_temporary_immortality(0.2)
+	#knockback.x = 350
+	#velocity.y=jump_velocity/2
 	#if animated_sprite_2d.flip_h:
 		##velocity.y = jump_velocity/3
 		##position.x = position.x-50
@@ -264,3 +277,15 @@ func _on_hurt_box_got_hit():
 	#else:
 		##velocity.y = jump_velocity/3
 		##position.x = position.x+50
+
+
+func _on_hurt_box_parried():
+	current_state=States.PARRY
+	print("PARRIED")
+	parry_timer.start()
+	knockback.x = 450
+	await get_tree().create_timer(0.3).timeout
+	set_state(current_state, States.PARRY)
+	#velocity.y=jump_velocity/2
+	parried = true
+	
