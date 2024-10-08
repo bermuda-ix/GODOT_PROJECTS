@@ -62,6 +62,7 @@ func _ready():
 	chase_timer.timeout.connect(on_timer_timeout)
 	player = get_tree().get_first_node_in_group("player")
 	set_state(current_state, States.WANDER)
+	animation_player.play("walking")
 	
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -71,6 +72,10 @@ func _process(delta):
 	health_bar()
 	if current_state != States.PARRY:
 		hb_collison.disabled=false
+	
+	match current_state:
+		States.WANDER:
+			set_state(current_state, States.WANDER)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -97,6 +102,7 @@ func _physics_process(delta):
 		
 	if parry_timer.is_stopped() :
 		current_state=prev_state
+		knockback = Vector2.ZERO
 		parried=false
 	
 	handl_animation()
@@ -229,10 +235,12 @@ func set_state(cur_state, new_state: int) -> void:
 				gravity=0
 			States.WANDER:
 				print(str(prev_speed," ",current_speed))
-				animated_sprite_2d.play("walk")
+				animation_player.play("walking")
 				if prev_state==States.JUMP:
 					current_speed=prev_speed
 			States.CHASE:
+				#animation_player.speed_scale
+				animation_player.play("walking")
 				if prev_state==States.JUMP:
 					current_speed=prev_speed
 			States.JUMP:

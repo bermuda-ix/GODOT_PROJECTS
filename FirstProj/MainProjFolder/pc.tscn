@@ -603,7 +603,7 @@ size = Vector2(5, 20)
 
 [node name="PC" type="CharacterBody2D" node_paths=PackedStringArray("health") groups=["player"]]
 position = Vector2(0, 2)
-collision_layer = 2
+collision_layer = 1026
 collision_mask = 1027
 floor_snap_length = 2.0
 script = ExtResource("1_x210m")
