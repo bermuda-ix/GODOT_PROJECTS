@@ -412,7 +412,7 @@ size = Vector2(39, 48)
 size = Vector2(44, 48)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_80ahk"]
-radius = 40.0
+radius = 34.0147
 
 [node name="Mech_Enemy" instance=ExtResource("1_v27m8")]
 script = ExtResource("2_jjukm")
@@ -431,6 +431,9 @@ libraries = {
 [node name="CollisionShape2D" parent="." index="2"]
 position = Vector2(-2.5, -24)
 shape = SubResource("RectangleShape2D_8mxw5")
+
+[node name="WallChecks" parent="." index="3"]
+position = Vector2(0, 8)
 
 [node name="HBar" type="Label" parent="." index="11"]
 offset_left = -32.0

@@ -1,0 +1,94 @@
+[gd_scene load_steps=11 format=3 uid="uid://dmk1m13knr7mq"]
+
+[ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_wk1t8"]
+[ext_resource type="Script" path="res://chars/robot_enemy.gd" id="2_halu0"]
+[ext_resource type="Texture2D" uid="uid://bwsnnivuol0h2" path="res://Art_Components/Enemies/creatures edit_0.png" id="3_meu76"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6m28"]
+atlas = ExtResource("3_meu76")
+region = Rect2(0, 896, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbefb"]
+atlas = ExtResource("3_meu76")
+region = Rect2(32, 896, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8g6oj"]
+atlas = ExtResource("3_meu76")
+region = Rect2(64, 896, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f65ma"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a6m28")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nbefb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8g6oj")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ngog"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rurrt"]
+size = Vector2(34, 33)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lkpgo"]
+size = Vector2(34, 34)
+
+[node name="robot_enemy" instance=ExtResource("1_wk1t8")]
+position = Vector2(0, 8)
+script = ExtResource("2_halu0")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_f65ma")
+animation = &"walk"
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_3ngog")
+
+[node name="FloorChecksLeft" parent="FloorChecks" index="0"]
+position = Vector2(-16, -24)
+
+[node name="FloorJumpCheckRight" parent="JumpChecks" index="0"]
+position = Vector2(16, -24)
+
+[node name="FloorJumpCheckLeft" parent="JumpChecks" index="1"]
+position = Vector2(-16, -24)
+
+[node name="GapCheckLeft" parent="JumpChecks" index="2"]
+position = Vector2(-16, -24)
+
+[node name="GapCheckRight" parent="JumpChecks" index="3"]
+position = Vector2(16, -24)
+
+[node name="LeapUpCheckLeft" parent="JumpChecks" index="4"]
+position = Vector2(-16, -24)
+
+[node name="LeapUpCheckRight" parent="JumpChecks" index="5"]
+position = Vector2(16, -24)
+
+[node name="Health" parent="." index="10"]
+max_health = 1
+
+[node name="HurtBox" parent="." index="11" node_paths=PackedStringArray("health")]
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(0, -24.5)
+shape = SubResource("RectangleShape2D_rurrt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_lkpgo")
+
+[connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
+[connection signal="got_hit" from="HurtBox" to="." method="_on_hurt_box_got_hit"]
+[connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]

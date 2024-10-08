@@ -388,12 +388,13 @@ func dodge(_input_axis, delta):
 	
 	
 func handle_hitbox():
-	if animated_sprite_2d.flip_h:
-		hb_left.disabled=false
-		hb_right.disabled=true
-	else:
-		hb_left.disabled=true
-		hb_right.disabled=false
+	if state== States.ATTACK:
+		if animated_sprite_2d.flip_h:
+			hb_left.disabled=false
+			hb_right.disabled=true
+		else:
+			hb_left.disabled=true
+			hb_right.disabled=false
 
 func _on_hazard_detector_area_entered(_area):
 	global_position=starting_position

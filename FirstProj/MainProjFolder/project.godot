@@ -11,14 +11,14 @@ config_version=5
 [application]
 
 config/name="CharTest"
-run/main_scene="res://main_menu.tscn"
+run/main_scene="res://LVL_Transitions/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Events="*res://Events.gd"
-LevelTransition="*res://level_transition.tscn"
+LevelTransition="*res://LVL_Transitions/level_transition.tscn"
 
 [display]
 

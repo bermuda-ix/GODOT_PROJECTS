@@ -1,10 +1,9 @@
-class_name MechEnemy
+class_name RobotEnemy
 extends CharacterBody2D
 
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
-
 
 @onready var wall_check_left = $WallChecks/WallCheckLeft as RayCast2D
 @onready var wall_check_right = $WallChecks/WallCheckRight as RayCast2D
@@ -59,6 +58,7 @@ enum States{
 var current_state = States.WANDER
 var prev_state = States.WANDER
 
+
 func _ready():
 	chase_timer.timeout.connect(on_timer_timeout)
 	player = get_tree().get_first_node_in_group("player")
@@ -70,37 +70,18 @@ func _ready():
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _process(_delta):
-	health_bar()
-	#if current_state != States.PARRY:
-		#hb_collison.disabled=false
+	#health_bar()
+
 	
 	if current_state != States.ATTACK:
 		handle_vision()
 		track_player()
-	#match current_state:
-		#States.WANDER:
-			#set_state(current_state, States.WANDER)
-		#States.ATTACK:
-			#set_state(current_state, States.ATTACK)
 
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
-	## Handle jump.
-	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		#velocity.y = JUMP_VELOCITY
-#
-	## Get the input direction and handle the movement/deceleration.
-	## As good practice, you should replace UI actions with custom gameplay actions.
-	#var direction = Input.get_axis("ui_left", "ui_right")
-	#if direction:
-		#velocity.x = direction * SPEED
-	#else:
-		#velocity.x = move_toward(velocity.x, 0, SPEED)
-	
-	
 	
 	if knockback == Vector2.ZERO:
 		handle_movement()
@@ -115,6 +96,8 @@ func _physics_process(delta):
 
 	velocity.x = current_speed + knockback.x
 	
+
+	
 	if parried == true:
 		hb_collison.disabled=true
 	
@@ -124,7 +107,8 @@ func _physics_process(delta):
 		
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	
-	
+
+
 func handle_movement() -> void:
 	var direction= global_position - player.global_position
 	
@@ -135,7 +119,7 @@ func handle_movement() -> void:
 	if current_state == States.WANDER:
 		#if is_on_floor() and current_speed==jump_speed:
 			#current_speed = prev_speed
-		if not floor_checks_right.is_colliding() and not wall_check_right.is_colliding():
+		if not floor_checks_right.is_colliding():
 			if gap_check_right.is_colliding():
 				
 				set_state(current_state, States.JUMP)
@@ -143,7 +127,7 @@ func handle_movement() -> void:
 			else:
 				if is_on_floor():
 					current_speed = -wander_speed
-		if not floor_checks_left.is_colliding() and not wall_check_left.is_colliding():
+		if not floor_checks_left.is_colliding():
 			if gap_check_left.is_colliding():
 				#velocity.y = jump_velocity
 				set_state(current_state, States.JUMP)
@@ -196,7 +180,6 @@ func handl_animation():
 		animated_sprite_2d.flip_h = false
 	else:
 		animated_sprite_2d.flip_h = true	
-	
 
 func track_player():
 	if player == null:
@@ -286,6 +269,7 @@ func set_state(cur_state, new_state) -> void:
 				#await animation_player.animation_finished
 		
 		print(state)
+		
 
 
 func _on_health_health_depleted():
@@ -295,35 +279,13 @@ func _on_health_health_depleted():
 		Events.level_completed.emit()
 		print("level complete")
 		
-func health_bar():
-	h_bar.text=str(health.health, " Parried: ", parried, " : ", parry_timer.time_left)
+
+
 
 func _on_hurt_box_got_hit():
 	health.set_temporary_immortality(0.2)
-	#knockback.x = 350
-	#velocity.y=jump_velocity/2
-	#if animated_sprite_2d.flip_h:
-		##velocity.y = jump_velocity/3
-		##position.x = position.x-50
-		#
-	#else:
-		##velocity.y = jump_velocity/3
-		##position.x = position.x+50
-
-
-#func _on_hurt_box_parried():
-	#current_state=States.PARRY
-	#print("PARRIED")
-	#parry_timer.start()
-	#if animated_sprite_2d.flip_h==true:
-		#knockback.x = -450
-	#else:
-		#knockback.x = 450
-	#await get_tree().create_timer(0.3).timeout
-	#set_state(current_state, States.PARRY)
-	##velocity.y=jump_velocity/2
-	#parried = true
 	
+
 
 
 func _on_hit_box_parried():
@@ -338,16 +300,3 @@ func _on_hit_box_parried():
 	set_state(current_state, States.PARRY)
 	#velocity.y=jump_velocity/2
 	parried = true
-
-
-func _on_attack_range_body_entered(_body):
-	print("attack in range")
-	set_state(current_state, States.ATTACK)
-	animation_player.play("attack")
-	#hb_collison.disabled=true
-	await animation_player.animation_finished
-	set_state(prev_state, States.WANDER)
-	#hb_collison.disabled=false
-	attacking=false
-	
-

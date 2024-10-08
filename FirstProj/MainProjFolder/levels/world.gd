@@ -18,6 +18,10 @@ var obj : int
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
+	if not next_level is PackedScene:
+		next_level = load("res://LVL_Transitions/victory_screen.tscn")
+		
+		
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	#polygon_2d.polygon = collision_polygon_2d.polygon
 	#Events.level_completed.connect(show_level_complete)

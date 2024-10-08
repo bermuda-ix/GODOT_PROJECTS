@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dva6hjing4p6o"]
 
-[ext_resource type="Script" path="res://game_over.gd" id="1_vxrvr"]
+[ext_resource type="Script" path="res://LVL_Transitions/game_over.gd" id="1_atujy"]
 
 [node name="GameOver" type="ColorRect"]
 anchors_preset = 15
@@ -9,7 +9,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.105882)
-script = ExtResource("1_vxrvr")
+script = ExtResource("1_atujy")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -25,12 +25,21 @@ text = "Game Over!
 Your Moves Are Weak"
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="."]
+[node name="MainMenu" type="Button" parent="."]
 layout_mode = 0
-offset_left = 112.0
+offset_left = 56.0
 offset_top = 120.0
-offset_right = 208.0
+offset_right = 152.0
 offset_bottom = 151.0
 text = "Main Menu"
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[node name="Retry" type="Button" parent="."]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 120.0
+offset_right = 250.0
+offset_bottom = 151.0
+text = "Retry"
+
+[connection signal="pressed" from="MainMenu" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Retry" to="." method="_on_retry_pressed"]

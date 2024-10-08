@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://levels/world.gd" id="1_kulhx"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_8ey8d"]
-[ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://level_completed.tscn" id="5_7c50m"]
-[ext_resource type="PackedScene" uid="uid://dva6hjing4p6o" path="res://game_over.tscn" id="5_ufrxu"]
+[ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://LVL_Transitions/level_completed.tscn" id="3_lb2x3"]
+[ext_resource type="PackedScene" uid="uid://dva6hjing4p6o" path="res://LVL_Transitions/game_over.tscn" id="5_36j88"]
 [ext_resource type="PackedScene" uid="uid://cxqapy0tyeigc" path="res://ui_level.tscn" id="6_5jgk5"]
 [ext_resource type="PackedScene" uid="uid://cct4l6ox78gsb" path="res://Art_Components/city_tileset/TEST_COMP/tile_map.tscn" id="7_xo2wo"]
 
@@ -17,12 +17,12 @@ next_level = SubResource("PackedScene_om8xm")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="LevelCompleted" parent="CanvasLayer" instance=ExtResource("5_7c50m")]
+[node name="LevelCompleted" parent="CanvasLayer" instance=ExtResource("3_lb2x3")]
 visible = false
 
 [node name="UI_Level" parent="CanvasLayer" instance=ExtResource("6_5jgk5")]
 
-[node name="GameOver" parent="CanvasLayer" instance=ExtResource("5_ufrxu")]
+[node name="GameOver" parent="CanvasLayer" instance=ExtResource("5_36j88")]
 process_mode = 3
 visible = false
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dllqel3sp6kul"]
 
-[ext_resource type="Script" path="res://main_menu.gd" id="1_i6gjx"]
+[ext_resource type="Script" path="res://LVL_Transitions/main_menu.gd" id="1_i6gjx"]
 
 [node name="Main Menu" type="CenterContainer"]
 anchors_preset = 15
