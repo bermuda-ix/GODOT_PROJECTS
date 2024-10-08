@@ -1,9 +1,36 @@
 [gd_scene load_steps=5 format=3 uid="uid://cyceakrgrsniu"]
 
 [ext_resource type="Script" path="res://Component/health.gd" id="1_onmna"]
-[ext_resource type="Script" path="res://Component/hurtbox_temlplate.gd" id="2_8inku"]
 [ext_resource type="Script" path="res://Component/hitbox_template.gd" id="3_hclah"]
 [ext_resource type="Script" path="res://Component/attack_range.gd" id="4_cpw7k"]
+
+[sub_resource type="GDScript" id="GDScript_pfpj5"]
+script/source = "class_name HurtBox
+extends Area2D
+
+
+signal received_damage(damage: int)
+signal got_hit()
+signal parried()
+
+@export var health: Health
+
+
+func _ready():
+	connect(\"area_entered\", _on_area_entered)
+	connect(\"area_entered\", _on_parried)
+
+func _on_area_entered(hitbox: HitBox) -> void:
+	if hitbox != null:
+		health.health -= hitbox.damage
+		print(health.health)
+		received_damage.emit(hitbox.damage)
+		got_hit.emit()
+
+func _on_parried(parrybox: ParryBox) -> void:
+	if parrybox!= null:
+		parried.emit()
+"
 
 [node name="base_enemy" type="CharacterBody2D" groups=["Enemy"]]
 
@@ -82,7 +109,7 @@ script = ExtResource("1_onmna")
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 16
 collision_mask = 576
-script = ExtResource("2_8inku")
+script = SubResource("GDScript_pfpj5")
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_layer = 8

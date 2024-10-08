@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://d2ggaktiv0hrj" path="res://knight.png" id="2_b7jgr"]
 [ext_resource type="Script" path="res://Component/health.gd" id="4_q0gnn"]
 [ext_resource type="Script" path="res://Component/hitbox_template.gd" id="6_y7jp7"]
-[ext_resource type="Script" path="res://Component/hurtbox_temlplate.gd" id="7_h23sv"]
 [ext_resource type="Script" path="res://Component/parrybox_template.gd" id="8_7q1rp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pue1l"]
@@ -592,6 +591,34 @@ _data = {
 resource_local_to_scene = true
 size = Vector2(12.6984, 27.5918)
 
+[sub_resource type="GDScript" id="GDScript_pfpj5"]
+script/source = "class_name HurtBox
+extends Area2D
+
+
+signal received_damage(damage: int)
+signal got_hit()
+signal parried()
+
+@export var health: Health
+
+
+func _ready():
+	connect(\"area_entered\", _on_area_entered)
+	connect(\"area_entered\", _on_parried)
+
+func _on_area_entered(hitbox: HitBox) -> void:
+	if hitbox != null:
+		health.health -= hitbox.damage
+		print(health.health)
+		received_damage.emit(hitbox.damage)
+		got_hit.emit()
+
+func _on_parried(parrybox: ParryBox) -> void:
+	if parrybox!= null:
+		parried.emit()
+"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oupih"]
 size = Vector2(14, 22)
 
@@ -603,8 +630,8 @@ size = Vector2(5, 20)
 
 [node name="PC" type="CharacterBody2D" node_paths=PackedStringArray("health") groups=["player"]]
 position = Vector2(0, 2)
-collision_layer = 1026
-collision_mask = 1027
+collision_layer = 2
+collision_mask = 3075
 floor_snap_length = 2.0
 script = ExtResource("1_x210m")
 movement_data = ExtResource("2_4grev")
@@ -697,7 +724,7 @@ disabled = true
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
 collision_layer = 128
 collision_mask = 12
-script = ExtResource("7_h23sv")
+script = SubResource("GDScript_pfpj5")
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]

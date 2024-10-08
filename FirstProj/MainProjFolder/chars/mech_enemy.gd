@@ -69,7 +69,7 @@ func _ready():
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-func _process(delta):
+func _process(_delta):
 	health_bar()
 	#if current_state != States.PARRY:
 		#hb_collison.disabled=false
@@ -226,7 +226,7 @@ func on_timer_timeout() -> void:
 		
 		
 	
-func set_state(cur_state, new_state: int) -> void:
+func set_state(cur_state, new_state) -> void:
 	var state
 	if(cur_state == new_state):
 		pass
@@ -338,7 +338,7 @@ func _on_hit_box_parried():
 	parried = true
 
 
-func _on_attack_range_body_entered(body):
+func _on_attack_range_body_entered(_body):
 	print("attack in range")
 	set_state(current_state, States.ATTACK)
 	animation_player.play("attack")

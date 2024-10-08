@@ -128,6 +128,7 @@ Dodge={
 2d_physics/layer_9="Parry"
 2d_physics/layer_10="PlayerParry"
 2d_physics/layer_11="AttackRange"
+2d_physics/layer_12="Checkpoint"
 
 [rendering]
 

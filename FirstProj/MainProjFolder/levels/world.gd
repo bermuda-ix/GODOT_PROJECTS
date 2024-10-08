@@ -26,7 +26,7 @@ func _ready():
 	
 	
 	
-func _process(delta):
+func _process(_delta):
 	
 	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size())
 	
@@ -69,6 +69,8 @@ func get_health():
 func set_health():
 	ui_level.set_health(cur_health)
 #
+
+
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 	#pass

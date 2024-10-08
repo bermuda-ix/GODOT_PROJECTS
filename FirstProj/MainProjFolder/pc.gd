@@ -37,7 +37,7 @@ var cur_state = "IDLE"
 @onready var hit_timer = $HitTimer
 @onready var parry_timer = $ParryTimer
 @onready var dodge_timer = $DodgeTimer
-@onready var starting_position = global_position
+@onready var starting_position : set = set_start_pos, get = get_start_pos
 @onready var label = $STATE
 @onready var hit_box = $HitBox
 @onready var hb_right = $HitBox/HBRight
@@ -58,6 +58,7 @@ func _ready():
 	hb_right.disabled=true
 	pb_left.disabled=true
 	pb_right.disabled=true
+	set_start_pos(global_position)
 
 func _process(delta):
 	var input_axis = Input.get_axis("walk_left", "walk_right")
@@ -258,8 +259,8 @@ func handle_air_acceleration(input_axis, delta):
 
 func update_animation(input_axis):
 	
-	var left = Input.is_action_pressed("walk_left")
-	var right = Input.is_action_pressed("walk_right")
+	#var left = Input.is_action_pressed("walk_left")
+	#var right = Input.is_action_pressed("walk_right")
 	if input_axis != 0:
 		
 		animated_sprite_2d.flip_h = (input_axis<0)
@@ -360,7 +361,7 @@ func parry():
 		
 			
 # DODGE NEEDS WORK!!!
-func dodge(input_axis, delta):
+func dodge(_input_axis, delta):
 
 	if Input.is_action_just_pressed("Dodge"):
 		dodge_timer.start()
@@ -388,13 +389,13 @@ func dodge(input_axis, delta):
 	
 func handle_hitbox():
 	if animated_sprite_2d.flip_h:
-		hb_left.disabled==false
-		hb_right.disabled==true
+		hb_left.disabled=false
+		hb_right.disabled=true
 	else:
-		hb_left.disabled==true
-		hb_right.disabled==false
+		hb_left.disabled=true
+		hb_right.disabled=false
 
-func _on_hazard_detector_area_entered(area):
+func _on_hazard_detector_area_entered(_area):
 	global_position=starting_position
 	print("Health Depleted!")
 	health.health -= 1
@@ -405,8 +406,8 @@ func _on_hazard_detector_area_entered(area):
 	
 	
 #State machine for animations currently
-func set_state(cur_state, new_state: int) -> void:
-	if(cur_state == new_state):
+func set_state(current_state, new_state: int) -> void:
+	if(current_state == new_state):
 		pass
 	#elif new_state==States.ATTACK and cur_state==States.JUMP:
 		#cur_state="AIR_ATTACK"
@@ -414,7 +415,7 @@ func set_state(cur_state, new_state: int) -> void:
 	
 	match state:
 		States.ATTACK:
-			cur_state="ATTACK"
+			#cur_state="ATTACK"
 			anim_player.play(attack_combo)
 			velocity.y=0
 			gravity=0
@@ -449,10 +450,15 @@ func get_health() -> int:
 func _on_health_health_depleted():
 	Events.game_over.emit()
 
-
+#knockbackss
 func _on_hurt_box_got_hit():
 	knockback.x = -350
 	velocity.y=movement_data.jump_velocity/2
 	velocity.x = movement_data.speed + knockback.x
 	
+#Setting starting positions for level starts and checkpoints
+func get_start_pos():
+	return starting_position
 
+func set_start_pos(checkpoint_position):
+	starting_position=checkpoint_position
