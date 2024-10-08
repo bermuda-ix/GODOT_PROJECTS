@@ -46,6 +46,7 @@ var player : PlayerEntity = null
 var jump_velocity = JUMP_VELOCITY
 var knockback : Vector2 = Vector2.ZERO
 var parried : bool = false 
+var attacking : bool = false
 
 enum States{
 	WANDER,
@@ -70,12 +71,17 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _process(delta):
 	health_bar()
-	if current_state != States.PARRY:
-		hb_collison.disabled=false
+	#if current_state != States.PARRY:
+		#hb_collison.disabled=false
 	
-	match current_state:
-		States.WANDER:
-			set_state(current_state, States.WANDER)
+	if current_state != States.ATTACK:
+		handle_vision()
+		track_player()
+	#match current_state:
+		#States.WANDER:
+			#set_state(current_state, States.WANDER)
+		#States.ATTACK:
+			#set_state(current_state, States.ATTACK)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -94,8 +100,7 @@ func _physics_process(delta):
 	#else:
 		#velocity.x = move_toward(velocity.x, 0, SPEED)
 	
-	handle_vision()
-	track_player()
+	
 	
 	if knockback == Vector2.ZERO:
 		handle_movement()
@@ -104,12 +109,15 @@ func _physics_process(delta):
 		current_state=prev_state
 		knockback = Vector2.ZERO
 		parried=false
+		
 	
 	handl_animation()
 
 	velocity.x = current_speed + knockback.x
 	
-	if parried==false:
+
+	
+	if parried==false and attacking==false:
 		move_and_slide()
 		
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
@@ -118,7 +126,8 @@ func _physics_process(delta):
 func handle_movement() -> void:
 	var direction= global_position - player.global_position
 	
-	
+	if current_speed == States.ATTACK:
+		current_speed = 0
 
 	
 	if current_state == States.WANDER:
@@ -149,17 +158,18 @@ func handle_movement() -> void:
 	
 	if current_state == States.CHASE:
 		if player_found == true:
-			if (not floor_checks_right.is_colliding()) and (floor_jump_check_right.is_colliding()) and is_on_floor(): 
-				velocity.y = jump_velocity
-				
-				#current_state=States.JUMP
-				
-			if (not floor_checks_left.is_colliding()) and (floor_jump_check_left.is_colliding()) and is_on_floor():
-				velocity.y = jump_velocity
-				
+			if player.position.y<position.y:
+				if (not floor_checks_right.is_colliding()) and (floor_jump_check_right.is_colliding()) and is_on_floor(): 
+					velocity.y = jump_velocity
+					
+					#current_state=States.JUMP
+					
+				if (not floor_checks_left.is_colliding()) and (floor_jump_check_left.is_colliding()) and is_on_floor():
+					velocity.y = jump_velocity
+					
 				#current_state=States.JUMP
 			
-			if ( (leap_up_check_right.is_colliding() and current_speed>0 ) or (leap_up_check_left.is_colliding() and current_speed<0 ) ) and position.y>player.position.y:
+			if ( (leap_up_check_right.is_colliding() and current_speed>0 ) or (leap_up_check_left.is_colliding() and current_speed<0 ) ) and position.y-30>player.position.y:
 				velocity.y = jump_velocity*1.2
 			#
 			if direction.x < 0:
@@ -217,7 +227,7 @@ func on_timer_timeout() -> void:
 		
 	
 func set_state(cur_state, new_state: int) -> void:
-	
+	var state
 	if(cur_state == new_state):
 		pass
 	#elif new_state==States.ATTACK and cur_state==States.JUMP:
@@ -229,29 +239,35 @@ func set_state(cur_state, new_state: int) -> void:
 		
 		match current_state:
 			States.ATTACK:
-				cur_state="ATTACK"
+				state="ATTACK"
 				
-				velocity.y=0
-				gravity=0
+				attacking=true
+				#gravity=0
 			States.WANDER:
+				state="WANDER"
+				hb_collison.disabled=false
 				print(str(prev_speed," ",current_speed))
+				animation_player.speed_scale = 1
 				animation_player.play("walking")
 				if prev_state==States.JUMP:
 					current_speed=prev_speed
 			States.CHASE:
-				#animation_player.speed_scale
+				hb_collison.disabled=false
+				state="CHASE"
+				animation_player.speed_scale =2
 				animation_player.play("walking")
 				if prev_state==States.JUMP:
 					current_speed=prev_speed
 			States.JUMP:
 				if prev_state == States.WANDER:
+					
 					velocity.y = jump_velocity
 					print(str(prev_speed," ",current_speed))
 					prev_speed=current_speed
 					if current_speed < 0:
-						current_speed = -jump_speed
+						current_speed = -jump_speed*2
 					else:
-						current_speed = jump_speed
+						current_speed = jump_speed*2
 				if prev_state == States.CHASE:
 					velocity.y = jump_velocity*1.5
 					print(str(prev_speed," ",current_speed))
@@ -262,8 +278,12 @@ func set_state(cur_state, new_state: int) -> void:
 						current_speed = jump_speed
 			States.PARRY:
 				hb_collison.disabled=true
+			States.ATTACK:
+				animation_player.speed_scale = 1
+				#animation_player.play("attack")
+				#await animation_player.animation_finished
 		
-		print(cur_state)
+		print(state)
 
 
 func _on_health_health_depleted():
@@ -318,5 +338,13 @@ func _on_hit_box_parried():
 	parried = true
 
 
-func _on_attack_range_in_range():
-	print("within range")
+func _on_attack_range_body_entered(body):
+	print("attack in range")
+	set_state(current_state, States.ATTACK)
+	animation_player.play("attack")
+	#hb_collison.disabled=true
+	await animation_player.animation_finished
+	set_state(prev_state, States.WANDER)
+	attacking=false
+	
+
