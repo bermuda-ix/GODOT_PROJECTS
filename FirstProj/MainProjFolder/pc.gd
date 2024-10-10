@@ -8,6 +8,7 @@ class_name PlayerEntity
 enum States {IDLE, WALKING, JUMP, ATTACK, WALL_STICK, PARRY, DODGE, SPRINTING}
 
 var state: States = States.IDLE
+var prev_state: States = States.IDLE
 
 var double_jump_flag = false
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -65,12 +66,13 @@ func _process(delta):
 	
 	match state:
 		States.ATTACK:
-			hit_timer.paused = false
+			#hit_timer.paused = false
 			cur_state="ATTACK"
 			set_state(state, States.ATTACK)
+			#await anim_player.animation_finished
 		States.IDLE:
-			hit_timer.start()
-			hit_timer.paused = true
+			#hit_timer.start()
+			#hit_timer.paused = true
 			cur_state="IDLE"
 			set_state(state, States.IDLE)
 		States.WALKING:
@@ -285,9 +287,13 @@ func update_animation(input_axis):
 		
 func attack_animate():
 
+	#if not hit_timer.is_stopped():
+		#return
+	
 	if Input.is_action_pressed("attack") and state != States.ATTACK:
-		if hit_timer.is_stopped() and state != States.ATTACK:
-			hit_timer.start()
+		hit_timer.start()
+		if attack_timer.is_stopped():
+			attack_timer.start()
 		
 		state=States.ATTACK
 		attack_timer.paused = true
@@ -307,24 +313,23 @@ func attack_animate():
 			attack_combo = "Attack_3"
 			
 
-	elif (Input.is_action_just_released("attack") or hit_timer.is_stopped()):
-		animated_sprite_2d.play("idle")
+	elif (Input.is_action_just_released("attack")):
+		#animated_sprite_2d.play("idle")
+		print("attack released")
+		#anim_player.stop()
 		attack_timer.paused = false
-		state=States.IDLE
+		#state=States.IDLE
 		
-		#if state == States.IDLE:
-			#hit_timer.start()
-			#hit_timer.paused = true
-		#elif state == States.ATTACK:
-			#hit_timer.paused = false
+
 		if atk_chain < 2:
-			attack_timer.start()
+			
 			atk_chain += 1
 			#print("Attack Chain")
 		elif atk_chain >=2:
 			atk_chain = 0
 			attack_combo = "Attack"
 			#print("Attack Finished")
+		
 		
 			
 	
@@ -413,24 +418,28 @@ func set_state(current_state, new_state: int) -> void:
 	#elif new_state==States.ATTACK and cur_state==States.JUMP:
 		#cur_state="AIR_ATTACK"
 		#anim_player.play(attack_combo)
-	
+	current_state=prev_state
 	match state:
 		States.ATTACK:
 			#cur_state="ATTACK"
+			anim_player.speed_scale=1.5
 			anim_player.play(attack_combo)
 			velocity.y=0
 			gravity=0
 		States.IDLE:
+			anim_player.speed_scale=1
 			anim_player.play("idle")
 			movement_data.friction=1000
 			hb_left.disabled=true
 			hb_right.disabled=true
 		States.WALKING:
+			anim_player.speed_scale=1
 			anim_player.play("walk")
 		States.JUMP:
 			anim_player.play("jump")
 			cur_state="JUMP"
 		States.DODGE:
+			anim_player.speed_scale=1
 			anim_player.play("dodge")
 			velocity.y=0
 			movement_data.friction=5000
@@ -463,3 +472,20 @@ func get_start_pos():
 
 func set_start_pos(checkpoint_position):
 	starting_position=checkpoint_position
+
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if state==States.ATTACK:
+		print("attack finished")
+		if atk_chain < 2:
+			
+			atk_chain += 1
+			#print("Attack Chain")
+		elif atk_chain >=2:
+			atk_chain = 0
+			attack_combo = "Attack"
+			#print("Attack Finished")
+		
+		state=prev_state
+		
