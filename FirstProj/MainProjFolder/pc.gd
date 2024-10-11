@@ -52,6 +52,7 @@ var knockback : Vector2 = Vector2.ZERO
 var hit_box_pos
 
 var attack_combo = "Attack"
+var air_atk : bool = false
 
 func _ready():
 	hit_box_pos=hit_box.position
@@ -104,7 +105,8 @@ func _process(delta):
 		parry()
 		attack_animate()
 		update_animation(input_axis)
-
+	
+	print(air_atk)
 
 func _physics_process(delta):
 	
@@ -135,7 +137,7 @@ func _physics_process(delta):
 		if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
 			movement_data = load("res://DefaultMovementData.tres")
 	
-	
+
 	
 	
 	var was_on_floor = is_on_floor()
@@ -266,7 +268,8 @@ func update_animation(input_axis):
 	if input_axis != 0:
 		
 		animated_sprite_2d.flip_h = (input_axis<0)
-		state = States.WALKING
+		if state != States.ATTACK:
+			state = States.WALKING
 		#idle_state=false
 
 	elif Input.is_action_just_released("walk_left") or Input.is_action_just_released("walk_right"):
@@ -294,6 +297,9 @@ func attack_animate():
 		hit_timer.start()
 		if attack_timer.is_stopped():
 			attack_timer.start()
+		
+		if not is_on_floor():
+			air_atk=true
 		
 		state=States.ATTACK
 		attack_timer.paused = true
@@ -415,17 +421,22 @@ func _on_hazard_detector_area_entered(_area):
 func set_state(current_state, new_state: int) -> void:
 	if(current_state == new_state):
 		pass
-	#elif new_state==States.ATTACK and cur_state==States.JUMP:
-		#cur_state="AIR_ATTACK"
-		#anim_player.play(attack_combo)
+	
+	if current_state==States.JUMP:
+		air_atk=true
+		print(air_atk)
+	
 	current_state=prev_state
 	match state:
 		States.ATTACK:
 			#cur_state="ATTACK"
 			anim_player.speed_scale=1.5
 			anim_player.play(attack_combo)
-			velocity.y=0
-			gravity=0
+			
+			if air_atk==true:
+			
+				velocity=Vector2.ZERO
+				gravity=0
 		States.IDLE:
 			anim_player.speed_scale=1
 			anim_player.play("idle")
