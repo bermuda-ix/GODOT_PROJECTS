@@ -5,3 +5,5 @@ extends Node
 signal level_completed
 signal game_over
 signal obj_complete
+signal pause
+signal unpause

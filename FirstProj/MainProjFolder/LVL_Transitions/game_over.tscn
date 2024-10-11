@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://LVL_Transitions/game_over.gd" id="1_atujy"]
 
 [node name="GameOver" type="ColorRect"]
+process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

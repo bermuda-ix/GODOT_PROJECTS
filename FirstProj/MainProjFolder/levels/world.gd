@@ -9,6 +9,8 @@ extends Node2D
 @onready var PC = $PC
 @onready var ui_level = $CanvasLayer/UI_Level
 @onready var label = $CanvasLayer/Label
+@onready var pause_menu = $CanvasLayer/PauseMenu
+
 
 
 var cur_state = "IDLE"
@@ -26,8 +28,8 @@ func _ready():
 	#polygon_2d.polygon = collision_polygon_2d.polygon
 	#Events.level_completed.connect(show_level_complete)
 	Events.game_over.connect(show_game_over)
-	
-	
+	Events.pause.connect(show_pause)
+	Events.unpause.connect(unpause)
 	
 	
 func _process(_delta):
@@ -41,6 +43,11 @@ func _process(_delta):
 	if obj<=1:
 		Events.level_completed.connect(show_level_complete)
 	label.text=str("Obj: ",obj)
+	
+	if Input.is_action_just_pressed("Pause"):
+		show_pause()
+	
+	
 	
 func show_level_complete():
 
@@ -58,6 +65,13 @@ func show_game_over():
 	game_over.show()
 	get_tree().paused = true
 
+func show_pause():
+	pause_menu.show()
+	get_tree().paused = true
+	
+func unpause():
+	pause_menu.hide()
+	get_tree().paused = false
 	
 	
 func get_state():

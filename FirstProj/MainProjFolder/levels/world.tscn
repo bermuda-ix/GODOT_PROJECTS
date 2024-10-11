@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dk70wm05pq01i"]
+[gd_scene load_steps=9 format=3 uid="uid://dk70wm05pq01i"]
 
 [ext_resource type="Script" path="res://levels/world.gd" id="1_kulhx"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_8ey8d"]
 [ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://LVL_Transitions/level_completed.tscn" id="3_lb2x3"]
 [ext_resource type="PackedScene" uid="uid://dva6hjing4p6o" path="res://LVL_Transitions/game_over.tscn" id="5_36j88"]
 [ext_resource type="PackedScene" uid="uid://cxqapy0tyeigc" path="res://ui_level.tscn" id="6_5jgk5"]
+[ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="6_cayg1"]
 [ext_resource type="PackedScene" uid="uid://cct4l6ox78gsb" path="res://Art_Components/city_tileset/TEST_COMP/tile_map.tscn" id="7_xo2wo"]
 
 [sub_resource type="PackedScene" id="PackedScene_om8xm"]
@@ -23,7 +24,6 @@ visible = false
 [node name="UI_Level" parent="CanvasLayer" instance=ExtResource("6_5jgk5")]
 
 [node name="GameOver" parent="CanvasLayer" instance=ExtResource("5_36j88")]
-process_mode = 3
 visible = false
 
 [node name="Label" type="Label" parent="CanvasLayer"]
@@ -31,6 +31,10 @@ offset_left = 120.0
 offset_right = 160.0
 offset_bottom = 23.0
 text = "Obj"
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("6_cayg1")]
+process_mode = 3
+visible = false
 
 [node name="LevelTileMap" parent="." instance=ExtResource("7_xo2wo")]
 scale = Vector2(1, 0.986982)

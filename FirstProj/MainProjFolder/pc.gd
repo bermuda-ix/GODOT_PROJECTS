@@ -45,6 +45,9 @@ var cur_state = "IDLE"
 @onready var hb_left = $HitBox/HBLeft
 @onready var pb_left = $ParryBox/PBLeft
 @onready var pb_right = $ParryBox/PBRight
+@onready var hurt_box_detect = $HurtBox/CollisionShape2D
+@onready var collision_shape_2d = $CollisionShape2D
+
 
 
 var knockback : Vector2 = Vector2.ZERO
@@ -53,6 +56,7 @@ var hit_box_pos
 
 var attack_combo = "Attack"
 var air_atk : bool = false
+var move_axis : int = 1
 
 func _ready():
 	hit_box_pos=hit_box.position
@@ -96,8 +100,10 @@ func _process(delta):
 	dodge(input_axis, delta)
 	if Input.is_action_just_pressed("walk_right"):
 		face_right = true
+		move_axis = 1
 	elif Input.is_action_just_pressed("walk_left"):
 		face_right = false
+		move_axis = -1
 	
 	handle_hitbox()
 	
@@ -450,11 +456,14 @@ func set_state(current_state, new_state: int) -> void:
 			anim_player.play("jump")
 			cur_state="JUMP"
 		States.DODGE:
+			hurt_box_detect.disabled=true
 			anim_player.speed_scale=1
 			anim_player.play("dodge")
 			velocity.y=0
-			movement_data.friction=5000
-		#States.PARRY:
+			velocity.x=100 * move_axis
+			
+	if state != States.DODGE:
+		hurt_box_detect.disabled=false
 			
 			
 				
@@ -499,4 +508,4 @@ func _on_animation_player_animation_finished(anim_name):
 			#print("Attack Finished")
 		
 		state=prev_state
-		
+	
