@@ -72,7 +72,7 @@ func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	set_state(current_state, States.CHASE)
 	animation_player.play("walking")
-	hb_collison.disabled = true
+	#hb_collison.disabled = true
 	
 func _process(_delta):
 	#health_bar()
@@ -122,7 +122,7 @@ func _physics_process(delta):
 	
 	if parried==false and attacking==false:
 		move_and_slide()
-		hb_collison.disabled=false
+		#hb_collison.disabled=false
 		
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	
@@ -204,7 +204,7 @@ func set_state(cur_state, new_state) -> void:
 				
 				attacking=true
 			States.CHASE:
-				hb_collison.disabled=false
+				#hb_collison.disabled=false
 				state="CHASE"
 				animation_player.speed_scale =2
 				animation_player.play("walking")
