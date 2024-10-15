@@ -90,5 +90,4 @@ position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_lkpgo")
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
-[connection signal="got_hit" from="HurtBox" to="." method="_on_hurt_box_got_hit"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]

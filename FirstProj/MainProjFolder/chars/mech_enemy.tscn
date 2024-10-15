@@ -464,7 +464,5 @@ position = Vector2(0, -24)
 shape = SubResource("CircleShape2D_80ahk")
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
-[connection signal="got_hit" from="HurtBox" to="." method="_on_hurt_box_got_hit"]
-[connection signal="parried" from="HurtBox" to="." method="_on_hurt_box_parried"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
