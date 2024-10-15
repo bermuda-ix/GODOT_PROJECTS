@@ -3,7 +3,8 @@ extends Area2D
 
 
 signal received_damage(damage: int)
-signal got_hit()
+signal got_hit(hitbox: HitBox)
+signal knockback(hitbox: HitBox)
 signal parried()
 
 @export var health: Health
@@ -18,7 +19,8 @@ func _on_area_entered(hitbox: HitBox) -> void:
 		health.health -= hitbox.damage
 		print(health.health)
 		received_damage.emit(hitbox.damage)
-		got_hit.emit()
+		got_hit.emit(hitbox)
+
 
 func _on_parried(parrybox: ParryBox) -> void:
 	if parrybox!= null:

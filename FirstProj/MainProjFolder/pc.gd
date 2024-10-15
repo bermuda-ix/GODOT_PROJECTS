@@ -47,10 +47,14 @@ var cur_state = "IDLE"
 @onready var pb_right = $ParryBox/PBRight
 @onready var hurt_box_detect = $HurtBox/CollisionShape2D
 @onready var collision_shape_2d = $CollisionShape2D
+@onready var hurt_box = $HurtBox
+
+
 
 
 
 var knockback : Vector2 = Vector2.ZERO
+var kb_dir : Vector2 = Vector2.ZERO
 
 var hit_box_pos
 
@@ -480,12 +484,24 @@ func get_health() -> int:
 func _on_health_health_depleted():
 	Events.game_over.emit()
 
-#knockbackss
-func _on_hurt_box_got_hit():
+#knockbacks
+#func _on_hurt_box_knockback(hitbox):
+	##kb_dir=global_position.direction_to(hitbox.global_position)
+	##print("knockback")
+	##kb_dir=round(kb_dir)
+	##print(kb_dir.x, " ", knockback)
+
+func _on_hurt_box_got_hit(hitbox):
 	knockback.x = -350
+	kb_dir=global_position.direction_to(hitbox.global_position)
+	#print("knockback")
+	kb_dir=round(kb_dir)
+	#print(kb_dir.x, " ", knockback)
+	knockback.x = kb_dir.x * knockback.x
 	velocity.y=movement_data.jump_velocity/2
 	velocity.x = movement_data.speed + knockback.x
-	
+
+
 #Setting starting positions for level starts and checkpoints
 func get_start_pos():
 	return starting_position
@@ -509,3 +525,6 @@ func _on_animation_player_animation_finished(anim_name):
 		
 		state=prev_state
 	
+
+
+
