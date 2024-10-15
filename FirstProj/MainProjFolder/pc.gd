@@ -98,6 +98,7 @@ func _process(delta):
 			cur_state = "SPRINTING"
 		States.PARRY:
 			cur_state = "PARRY"
+			hurt_box_detect.disabled=true
 			set_state(state, States.PARRY)
 			
 		
@@ -473,6 +474,7 @@ func set_state(current_state, new_state: int) -> void:
 				
 			
 	if state!=States.PARRY:
+		
 		pb_left.disabled=true
 		pb_right.disabled=true
 func get_state() -> String:

@@ -33,6 +33,9 @@ const JUMP_VELOCITY = -400.0
 var immortal = false
 @onready var stagger = $Stagger
 
+@onready var hb_sb = $HB_SB
+var stg_cnt : int = 1
+
 
 
 
@@ -72,6 +75,7 @@ func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	set_state(current_state, States.CHASE)
 	animation_player.play("walking")
+	stg_cnt=stagger.get_max_stagger()
 	#hb_collison.disabled = true
 	
 func _process(_delta):
@@ -94,6 +98,10 @@ func _process(_delta):
 			atk_anim="attack_2"
 		3:
 			atk_anim="attack_3"
+	var h = health.get_health()
+	var s = stagger.get_stagger()
+	
+	hb_sb.text=str("Health: ",h,"Stagger: ",stg_cnt )
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -104,7 +112,7 @@ func _physics_process(delta):
 	#hb_collison.disabled = true
 	
 	
-	if knockback == Vector2.ZERO:
+	if knockback == Vector2.ZERO or parried==false:
 		handle_movement()
 		
 	if parry_timer.is_stopped() :
@@ -119,8 +127,9 @@ func _physics_process(delta):
 	
 	if parried == true:
 		hb_collison.disabled=true
+		velocity.x=0
 	
-	if parried==false and attacking==false:
+	if attacking==false:
 		move_and_slide()
 		#hb_collison.disabled=false
 		
@@ -242,3 +251,27 @@ func _on_attack_range_body_entered(body):
 	set_state(prev_state, States.CHASE)
 	#hb_collison.disabled=false
 	attacking=false
+
+
+
+func _on_hit_box_parried():
+	attacking=false
+	if animated_sprite_2d.flip_h==true:
+		knockback.x = 450
+	else:
+		knockback.x = -450
+	current_state=States.PARRY
+	print("PARRIED")
+	parry_timer.start()
+	velocity.y=jump_velocity/2
+	velocity.x = current_speed + knockback.x
+	print(knockback)
+	await get_tree().create_timer(0.3).timeout
+	set_state(current_state, States.PARRY)
+	#velocity.y=jump_velocity/2
+	if stg_cnt <= 1:
+		stg_cnt=stagger.get_max_stagger()
+		parried = true
+	else:
+		stg_cnt -= 1
+		

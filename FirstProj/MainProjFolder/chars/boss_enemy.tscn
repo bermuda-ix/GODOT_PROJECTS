@@ -1,10 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://euuv6783mj1j"]
+[gd_scene load_steps=27 format=3 uid="uid://euuv6783mj1j"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_47i7i"]
 [ext_resource type="Texture2D" uid="uid://eu8iskdngshs" path="res://Art_Components/Enemies/Bosses/spritesheets/spritesheets/mage-1-85x94.png" id="2_klelx"]
 [ext_resource type="Script" path="res://chars/boss_enemy.gd" id="2_r4b5u"]
 [ext_resource type="Texture2D" uid="uid://d2ggaktiv0hrj" path="res://knight.png" id="3_kcqrd"]
-[ext_resource type="Script" path="res://Component/stagger.gd" id="5_1y0yi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dwob"]
 atlas = ExtResource("2_klelx")
@@ -477,7 +476,7 @@ size = Vector2(6.5, 34)
 [sub_resource type="CircleShape2D" id="CircleShape2D_c2bll"]
 radius = 77.201
 
-[node name="base_enemy" instance=ExtResource("1_47i7i")]
+[node name="boss" instance=ExtResource("1_47i7i")]
 scale = Vector2(0.5, 0.5)
 script = ExtResource("2_r4b5u")
 
@@ -553,7 +552,11 @@ collision_mask = 2
 position = Vector2(0, -46)
 shape = SubResource("CircleShape2D_c2bll")
 
-[node name="Stagger" type="Node" parent="." index="14"]
-script = ExtResource("5_1y0yi")
+[node name="HB_SB" type="Label" parent="." index="14"]
+offset_left = -24.0
+offset_top = -118.0
+offset_right = 16.0
+offset_bottom = -95.0
 
+[connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
