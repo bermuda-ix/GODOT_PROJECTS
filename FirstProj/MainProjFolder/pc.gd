@@ -112,7 +112,7 @@ func _process(delta):
 		attack_animate()
 		update_animation(input_axis)
 	
-	print(air_atk)
+	#print(air_atk)
 
 func _physics_process(delta):
 	
