@@ -85,9 +85,15 @@ health = NodePath("../Health")
 position = Vector2(0, -24.5)
 shape = SubResource("RectangleShape2D_rurrt")
 
+[node name="HitBox" parent="." index="12" node_paths=PackedStringArray("stagger")]
+stagger = NodePath("../Stagger")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
 position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_lkpgo")
+
+[node name="Stagger" parent="." index="14"]
+max_stagger = 1
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]

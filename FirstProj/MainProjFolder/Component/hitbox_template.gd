@@ -4,6 +4,7 @@ extends Area2D
 signal parried()
 
 @export var damage: int = 1 : set = set_damage, get = get_damage
+@export var stagger: Stagger
 
 func _ready():
 	connect("area_entered", _on_parried)
@@ -16,4 +17,5 @@ func get_damage() -> int:
 
 func _on_parried(parrybox: ParryBox) -> void:
 	if parrybox!= null:
+		stagger.stagger -= 1
 		parried.emit()

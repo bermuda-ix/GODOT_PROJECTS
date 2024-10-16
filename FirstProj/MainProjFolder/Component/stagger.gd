@@ -33,6 +33,7 @@ func set_stagger(value: int):
 		
 		if stagger == 0:
 			staggered.emit()
+			stagger = max_stagger
 	
 func get_stagger() -> int:
 	return stagger

@@ -101,7 +101,7 @@ func _process(_delta):
 	var h = health.get_health()
 	var s = stagger.get_stagger()
 	
-	hb_sb.text=str("Health: ",h,"Stagger: ",stg_cnt )
+	hb_sb.text=str("Health: ",h,"Stagger: ",s )
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -247,6 +247,8 @@ func _on_attack_range_body_entered(body):
 		attack_combo+=1
 	else:
 		attack_combo=1
+		
+	
 	
 	set_state(prev_state, States.CHASE)
 	#hb_collison.disabled=false
@@ -268,10 +270,23 @@ func _on_hit_box_parried():
 	print(knockback)
 	await get_tree().create_timer(0.3).timeout
 	set_state(current_state, States.PARRY)
-	#velocity.y=jump_velocity/2
-	if stg_cnt <= 1:
-		stg_cnt=stagger.get_max_stagger()
-		parried = true
-	else:
-		stg_cnt -= 1
+	##velocity.y=jump_velocity/2
+	#if stg_cnt <= 1:
+		#stg_cnt=stagger.get_max_stagger()
+		#parried = true
+	#else:
+		#stg_cnt -= 1
 		
+
+
+
+func _on_stagger_staggered():
+	parried = true
+
+
+func _on_health_health_depleted():
+	queue_free()
+	var enemies = get_tree().get_nodes_in_group("Enemy")
+	if enemies.size() <=1:
+		Events.level_completed.emit()
+		print("level complete")

@@ -538,6 +538,9 @@ health = NodePath("../Health")
 position = Vector2(0, -46.5)
 shape = SubResource("RectangleShape2D_0kyq4")
 
+[node name="HitBox" parent="." index="12" node_paths=PackedStringArray("stagger")]
+stagger = NodePath("../Stagger")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
 position = Vector2(-75, -93)
 rotation = -0.785398
@@ -558,5 +561,7 @@ offset_top = -118.0
 offset_right = 16.0
 offset_bottom = -95.0
 
+[connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
+[connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
