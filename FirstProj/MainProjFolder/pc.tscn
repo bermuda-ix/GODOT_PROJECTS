@@ -701,12 +701,12 @@ movement_data = ExtResource("2_4grev")
 health = NodePath("Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-4.76837e-07, -12.6341)
+position = Vector2(-0.250015, -0.634098)
 scale = Vector2(1.06323, 0.994939)
 shape = SubResource("RectangleShape2D_pue1l")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1, -14)
+position = Vector2(0.749986, -2)
 scale = Vector2(0.278571, 0.266667)
 sprite_frames = SubResource("SpriteFrames_rupeb")
 animation = &"run"
@@ -734,7 +734,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -32)
+position = Vector2(-0.250014, -20)
 position_smoothing_enabled = true
 position_smoothing_speed = 3.0
 
@@ -743,7 +743,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HazardDetector"]
-position = Vector2(0.5, -8)
+position = Vector2(0.249986, 4)
 shape = SubResource("RectangleShape2D_52hex")
 
 [node name="AttackTimer" type="Timer" parent="."]
@@ -771,14 +771,14 @@ one_shot = true
 
 [node name="STATE" type="Label" parent="."]
 offset_left = -20.0
-offset_top = -42.0
+offset_top = -31.0
 offset_right = 20.0
-offset_bottom = -19.0
+offset_bottom = -8.0
 text = "State"
 metadata/_edit_use_anchors_ = true
 
 [node name="HitBox" type="Area2D" parent="."]
-position = Vector2(6, -9)
+position = Vector2(5.74999, 3)
 rotation = -0.398385
 scale = Vector2(0.568679, 0.646948)
 collision_layer = 64
@@ -804,7 +804,7 @@ script = ExtResource("9_s8nmr")
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0, -13)
+position = Vector2(-0.250014, -1)
 shape = SubResource("RectangleShape2D_oupih")
 
 [node name="ParryBox" type="Area2D" parent="."]
@@ -813,12 +813,12 @@ collision_mask = 24
 script = ExtResource("8_7q1rp")
 
 [node name="PBLeft" type="CollisionShape2D" parent="ParryBox"]
-position = Vector2(6.5, -12)
+position = Vector2(6.24999, 0)
 shape = SubResource("RectangleShape2D_e3ejd")
 disabled = true
 
 [node name="PBRight" type="CollisionShape2D" parent="ParryBox"]
-position = Vector2(-7.5, -12)
+position = Vector2(-7.75001, 0)
 shape = SubResource("RectangleShape2D_efknh")
 disabled = true
 

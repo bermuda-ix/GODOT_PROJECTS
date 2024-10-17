@@ -14,7 +14,8 @@ const JUMP_VELOCITY = -400.0
 @onready var animated_sprite_2d = $AnimatedSprite2D as AnimatedSprite2D
 @onready var sword_sprite = $AnimatedSprite2D/AnimatedSprite2D
 @onready var animation_player = $AnimationPlayer as AnimationPlayer
-
+@onready var turret = $Turret
+@onready var bullet = preload("res://Component/wave_projectile.tscn")
 
 
 @onready var floor_jump_check_right = $JumpChecks/FloorJumpCheckRight as RayCast2D
@@ -77,12 +78,21 @@ func _ready():
 	animation_player.play("walking")
 	stg_cnt=stagger.get_max_stagger()
 	#hb_collison.disabled = true
+	turret.setup()
+	turret.turret_body.visible=true
+	
 	
 func _process(_delta):
 	#health_bar()
 	#if current_state != States.PARRY:
 		#hb_collison.disabled=false
 	#hb_collison.disabled = true
+	turret.track_player()
+	turret.rotate_bullet()
+	turret.shoot()
+	#turret.rotate(player_tracking.rotation)
+	
+	print(turret.direction_to_player)
 	if current_state != States.ATTACK:
 		handle_vision()
 		track_player()
@@ -186,10 +196,12 @@ func track_player():
 	if player == null:
 		return
 	
-	var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y -15)\
+	var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y)\
 	- player_tracking.position
 	
 	player_tracker_pivot.look_at(direction_to_player)
+	
+	
 
 func handle_vision():
 	player_found=true
@@ -290,3 +302,15 @@ func _on_health_health_depleted():
 	if enemies.size() <=1:
 		Events.level_completed.emit()
 		print("level complete")
+		
+
+
+
+func _on_turret_shoot_bullet():
+	print("shoot")
+	var bullet_inst = bullet.instantiate()
+	bullet_inst.set_speed(300.0)
+	bullet_inst.dir = (turret.player_tracking.target_position).normalized()
+	bullet_inst.spawnPos = Vector2(position.x, position.y-25)
+	bullet_inst.spawnRot = turret.turret_body.rotation
+	get_tree().current_scene.add_child(bullet_inst)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=27 format=3 uid="uid://euuv6783mj1j"]
+[gd_scene load_steps=28 format=3 uid="uid://euuv6783mj1j"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_47i7i"]
 [ext_resource type="Texture2D" uid="uid://eu8iskdngshs" path="res://Art_Components/Enemies/Bosses/spritesheets/spritesheets/mage-1-85x94.png" id="2_klelx"]
 [ext_resource type="Script" path="res://chars/boss_enemy.gd" id="2_r4b5u"]
 [ext_resource type="Texture2D" uid="uid://d2ggaktiv0hrj" path="res://knight.png" id="3_kcqrd"]
+[ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="5_1gga1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dwob"]
 atlas = ExtResource("2_klelx")
@@ -561,7 +562,11 @@ offset_top = -118.0
 offset_right = 16.0
 offset_bottom = -95.0
 
+[node name="Turret" parent="." index="16" instance=ExtResource("5_1gga1")]
+position = Vector2(0, -36)
+
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
+[connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
