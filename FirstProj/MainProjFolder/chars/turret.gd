@@ -5,8 +5,8 @@ signal shoot_bullet()
 
 var player_found : bool = false
 var player : PlayerEntity = null
-@onready var turret_body = $TurretBody
-@onready var player_tracking = $PlayerTracking
+#@onready var turret_body = $TurretBody
+@onready var player_tracker = $PlayerTracking
 @onready var shoot_timer = $ShootTimer
 var direction_to_player : Vector2 
 
@@ -24,7 +24,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	track_player()
-	rotate_bullet()
+	#rotate_bullet()
 	shoot()
 	pos=position
 	
@@ -32,21 +32,21 @@ func _process(delta):
 func setup():
 	player = get_tree().get_first_node_in_group("player")
 	shoot_timer.start()
-	turret_body.visible=false
+	#turret_body.visible=false
 
 
 func track_player():
 	if player == null:
 		return
 	
-	player_tracking.target_position = to_local(player.position)
+	player_tracker.target_position = to_local(player.position)
 	
 	direction_to_player = player.position - pos
-	turret_body.rotation=direction_to_player.angle()
+	#turret_body.rotation=direction_to_player.angle()
 	dist_to_player = direction_to_player
 	
 func rotate_bullet():
-	rotate(player_tracking.rotation)
+	rotate(player_tracker.rotation)
 	
 func shoot():
 	if ranged_mode==true:

@@ -16,6 +16,7 @@ const JUMP_VELOCITY = -400.0
 @onready var animation_player = $AnimationPlayer as AnimationPlayer
 @onready var turret = $Turret
 @onready var bullet = preload("res://Component/wave_projectile.tscn")
+@onready var turret_body = $Turret/TurretBody
 
 
 @onready var floor_jump_check_right = $JumpChecks/FloorJumpCheckRight as RayCast2D
@@ -79,7 +80,7 @@ func _ready():
 	stg_cnt=stagger.get_max_stagger()
 	#hb_collison.disabled = true
 	turret.setup()
-	turret.turret_body.visible=true
+	turret_body.visible=false
 	
 	
 func _process(_delta):
@@ -88,9 +89,10 @@ func _process(_delta):
 		#hb_collison.disabled=false
 	#hb_collison.disabled = true
 	turret.track_player()
-	turret.rotate_bullet()
+	#turret.rotate_bullet()
 	turret.shoot()
-	#turret.rotate(player_tracking.rotation)
+	
+	
 	
 	print(turret.direction_to_player)
 	if current_state != States.ATTACK:
@@ -198,9 +200,11 @@ func track_player():
 	
 	var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y)\
 	- player_tracking.position
+	var dir_bullet = (to_local(player.position) - turret_body.position)
 	
 	player_tracker_pivot.look_at(direction_to_player)
 	
+	turret_body.rotation=dir_bullet.angle()
 	
 
 func handle_vision():
@@ -310,7 +314,7 @@ func _on_turret_shoot_bullet():
 	print("shoot")
 	var bullet_inst = bullet.instantiate()
 	bullet_inst.set_speed(300.0)
-	bullet_inst.dir = (turret.player_tracking.target_position).normalized()
+	bullet_inst.dir = (turret.player_tracker.target_position).normalized()
 	bullet_inst.spawnPos = Vector2(position.x, position.y-25)
-	bullet_inst.spawnRot = turret.turret_body.rotation
+	bullet_inst.spawnRot = turret_body.rotation
 	get_tree().current_scene.add_child(bullet_inst)
