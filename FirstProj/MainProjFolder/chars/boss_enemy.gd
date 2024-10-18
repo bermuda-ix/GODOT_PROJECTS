@@ -96,6 +96,8 @@ func _process(_delta):
 	#turret.rotate_bullet()
 	turret.shoot()
 	
+	if flee_timer.is_stopped() and current_state==States.FLEE:
+		set_state(current_state, prev_state)
 	
 	
 	#print(turret.direction_to_player)
@@ -271,44 +273,46 @@ func set_state(cur_state, new_state) -> void:
 
 
 func _on_attack_range_body_entered(body):
-	print("attack in range")
-	set_state(current_state, States.ATTACK)
-	attack_type = randi() % attack_type_range
-	print(attack_type)
-	
-	if attack_type <= 1:  
-		animation_player.play(atk_anim)
-		attacking=true
-		#hb_collison.disabled=true
-		await animation_player.animation_finished
-		if attack_combo<3:
-			attack_combo+=1
+	if parried != true:
+		print("attack in range")
+		set_state(current_state, States.ATTACK)
+		attack_type = randi() % attack_type_range
+		print(attack_type)
+		
+		if attack_type <= 1:  
+			animation_player.play(atk_anim)
+			attacking=true
+			light_attack=false
+			#hb_collison.disabled=true
+			await animation_player.animation_finished
+			if attack_combo<3:
+				attack_combo+=1
+			else:
+				attack_combo=1
+				
 		else:
-			attack_combo=1
-			
-	else:
-		animation_player.play("light_attack")
-		attacking=true
-		light_attack=true
-		#hb_collison.disabled=true
-		await animation_player.animation_finished
-	
-	set_state(prev_state, States.CHASE)
-	#hb_collison.disabled=false
-	attacking=false
+			animation_player.play("light_attack")
+			attacking=true
+			light_attack=true
+			#hb_collison.disabled=true
+			await animation_player.animation_finished
+		
+		set_state(prev_state, States.CHASE)
+		#hb_collison.disabled=false
+		attacking=false
 
 
 
 func _on_hit_box_parried():
 	attacking=false
-	
+	animation_player.play("RESET")
 	if animated_sprite_2d.flip_h==true:
 		knockback.x = 450
 	else:
 		knockback.x = -450
 	
 	
-	parry_timer.start()
+	
 	velocity.y=jump_velocity/2
 	velocity.x = current_speed + knockback.x
 	#print(knockback)
@@ -317,7 +321,8 @@ func _on_hit_box_parried():
 		
 		set_state(current_state, States.FLEE)
 		attack_combo=1
-		
+	else:
+		parry_timer.start()
 	##velocity.y=jump_velocity/2
 	#if stg_cnt <= 1:
 		#stg_cnt=stagger.get_max_stagger()
@@ -332,6 +337,7 @@ func _on_stagger_staggered():
 	parried = true
 	current_state=States.PARRY
 	print("PARRIED")
+	flee_timer.stop()
 	await get_tree().create_timer(0.3).timeout
 	set_state(current_state, States.PARRY)
 
