@@ -242,6 +242,8 @@ func set_state(cur_state, new_state) -> void:
 				attacking=true
 			States.CHASE:
 				#hb_collison.disabled=false
+				#turret.shoot_timer.paused=true
+				#turret.shoot_timer.start(3)
 				state="CHASE"
 				animation_player.speed_scale =2
 				animation_player.play("walking")
@@ -261,6 +263,8 @@ func set_state(cur_state, new_state) -> void:
 				animation_player.speed_scale = 1
 			States.FLEE:
 				flee_timer.start()
+				#turret.shoot_timer.paused=false
+				#turret.shoot_timer.start(1)
 		#print(state)
 
 
