@@ -96,8 +96,9 @@ func _process(_delta):
 	#turret.rotate_bullet()
 	turret.shoot()
 	
-	if flee_timer.is_stopped() and current_state==States.FLEE:
-		set_state(current_state, prev_state)
+	#if flee_timer.is_stopped() and current_state==States.FLEE:
+		#set_state(current_state, prev_state)
+		
 	
 	
 	#print(turret.direction_to_player)
@@ -136,7 +137,7 @@ func _physics_process(delta):
 		handle_movement()
 		
 	if parry_timer.is_stopped() :
-		current_state=prev_state
+		#current_state=prev_state
 		knockback = Vector2.ZERO
 		parried=false
 		
@@ -167,7 +168,7 @@ func handle_movement() -> void:
 		current_speed = 0
 
 	
-	if current_state == States.CHASE:
+	elif current_state == States.CHASE:
 		if player.position.y<position.y:
 			if (not floor_checks_right.is_colliding()) and (floor_jump_check_right.is_colliding()) and is_on_floor(): 
 				velocity.y = jump_velocity
@@ -187,7 +188,7 @@ func handle_movement() -> void:
 		else:
 			current_speed = -chase_speed
 	
-	if current_state == States.JUMP:
+	elif current_state == States.JUMP:
 		if is_on_floor():
 			set_state(current_state, prev_state)
 			#current_speed=prev_speed
@@ -195,8 +196,11 @@ func handle_movement() -> void:
 		#current_speed=0.0
 		#prev_state=States.JUMP
 		
+	elif current_state == States.PARRY:
+		current_speed=0
 	velocity.x = current_speed
 
+	
 func handl_animation():
 	var velocity_sign = sign(velocity.x)
 	
@@ -243,12 +247,13 @@ func set_state(cur_state, new_state) -> void:
 				
 				attacking=true
 			States.CHASE:
+				
 				#hb_collison.disabled=false
 				#turret.shoot_timer.paused=true
 				#turret.shoot_timer.start(3)
 				state="CHASE"
 				animation_player.speed_scale =2
-				animation_player.play("walking")
+				#animation_player.play("walking")
 				if prev_state==States.JUMP:
 					current_speed=prev_speed
 			States.JUMP:
@@ -266,7 +271,7 @@ func set_state(cur_state, new_state) -> void:
 			States.FLEE:
 				flee_timer.start()
 				#turret.shoot_timer.paused=false
-				#turret.shoot_timer.start(1)
+				turret.shoot_timer.start(.7)
 		#print(state)
 
 
@@ -317,7 +322,7 @@ func _on_hit_box_parried():
 	velocity.x = current_speed + knockback.x
 	#print(knockback)
 	
-	if light_attack == true:
+	if light_attack == true and parried == false:
 		
 		set_state(current_state, States.FLEE)
 		attack_combo=1
@@ -359,3 +364,13 @@ func _on_turret_shoot_bullet():
 	bullet_inst.spawnPos = Vector2(position.x, position.y-25)
 	bullet_inst.spawnRot = turret_body.rotation
 	get_tree().current_scene.add_child(bullet_inst)
+
+
+func _on_flee_timer_timeout():
+	turret.shoot_timer.start(3)
+	if parried != false:
+		set_state(current_state, States.CHASE)
+
+
+func _on_parry_timer_timeout():
+	set_state(current_state, prev_state)
