@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://euuv6783mj1j"]
+[gd_scene load_steps=30 format=3 uid="uid://euuv6783mj1j"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_47i7i"]
 [ext_resource type="Texture2D" uid="uid://eu8iskdngshs" path="res://Art_Components/Enemies/Bosses/spritesheets/spritesheets/mage-1-85x94.png" id="2_klelx"]
@@ -456,6 +456,69 @@ tracks/1/keys = {
 "values": [Vector2(0, -48), Vector2(5, -24)]
 }
 
+[sub_resource type="Animation" id="Animation_0e1fr"]
+resource_name = "light_attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-47, -40.75), Vector2(-40, -10), Vector2(-40, -10), Vector2(-84, 34), Vector2(-84, 34), Vector2(-47, -40.75)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D/AnimatedSprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -2.35619, -2.35619, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitBox/CollisionShape2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-42, -90), Vector2(-46, -58), Vector2(-46, -58), Vector2(-90, -14), Vector2(-90, -14), Vector2(-42, -90)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HitBox/CollisionShape2D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -2.35619, -2.35619, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wlpkv"]
 _data = {
 "RESET": SubResource("Animation_5iyqb"),
@@ -463,6 +526,7 @@ _data = {
 "attack_2": SubResource("Animation_dl0fo"),
 "attack_3": SubResource("Animation_ln4wn"),
 "idle": SubResource("Animation_qunsu"),
+"light_attack": SubResource("Animation_0e1fr"),
 "stunned": SubResource("Animation_cn1wj")
 }
 
@@ -530,26 +594,29 @@ position = Vector2(-40, -48)
 [node name="LeapUpCheckRight" parent="JumpChecks" index="5"]
 position = Vector2(40, -48)
 
-[node name="Health" parent="." index="10"]
+[node name="FleeTimer" type="Timer" parent="." index="10"]
+one_shot = true
+
+[node name="Health" parent="." index="11"]
 max_health = 10
 
-[node name="HurtBox" parent="." index="11" node_paths=PackedStringArray("health")]
+[node name="HurtBox" parent="." index="12" node_paths=PackedStringArray("health")]
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(0, -46.5)
 shape = SubResource("RectangleShape2D_0kyq4")
 
-[node name="HitBox" parent="." index="12" node_paths=PackedStringArray("stagger")]
+[node name="HitBox" parent="." index="13" node_paths=PackedStringArray("stagger")]
 stagger = NodePath("../Stagger")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0" groups=["Boss"]]
 position = Vector2(-75, -93)
 rotation = -0.785398
 shape = SubResource("RectangleShape2D_do8a1")
 disabled = true
 
-[node name="AttackRange" parent="." index="13"]
+[node name="AttackRange" parent="." index="14"]
 collision_layer = 1024
 collision_mask = 2
 
@@ -557,13 +624,13 @@ collision_mask = 2
 position = Vector2(0, -46)
 shape = SubResource("CircleShape2D_c2bll")
 
-[node name="HB_SB" type="Label" parent="." index="14"]
+[node name="HB_SB" type="Label" parent="." index="15"]
 offset_left = -24.0
 offset_top = -118.0
 offset_right = 16.0
 offset_bottom = -95.0
 
-[node name="Turret" parent="." index="16" instance=ExtResource("5_1gga1")]
+[node name="Turret" parent="." index="17" instance=ExtResource("5_1gga1")]
 position = Vector2(0, -36)
 
 [node name="TurretBody" type="Sprite2D" parent="Turret" index="2"]

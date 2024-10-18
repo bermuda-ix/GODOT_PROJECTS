@@ -34,7 +34,7 @@ func _ready():
 	
 func _process(_delta):
 	
-	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size())
+	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size()) + (get_tree().get_nodes_in_group("Boss").size())
 	
 	get_state()
 	set_state()

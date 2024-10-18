@@ -11,6 +11,7 @@ const JUMP_VELOCITY = -400.0
 @onready var player_tracking = $PlayerTrackerPivot/PlayerTracking as RayCast2D
 @onready var player_tracker_pivot = $PlayerTrackerPivot as Node2D
 @onready var chase_timer = $ChaseTimer as Timer
+@onready var flee_timer = $FleeTimer as Timer
 @onready var animated_sprite_2d = $AnimatedSprite2D as AnimatedSprite2D
 @onready var sword_sprite = $AnimatedSprite2D/AnimatedSprite2D
 @onready var animation_player = $AnimationPlayer as AnimationPlayer
@@ -30,7 +31,7 @@ const JUMP_VELOCITY = -400.0
 @onready var hurt_box = $HurtBox
 @onready var hit_box = $HitBox
 @onready var hb_collison = $HitBox/CollisionShape2D
-@onready var h_bar = $HBar
+#@onready var h_bar = $HBar
 @onready var parry_timer = $ParryTimer as Timer
 var immortal = false
 @onready var stagger = $Stagger
@@ -38,7 +39,9 @@ var immortal = false
 @onready var hb_sb = $HB_SB
 var stg_cnt : int = 1
 
-
+var attack_type_range : int = 5
+@onready var attack_type : int = randi() % 5
+@onready var light_attack : bool = false
 
 
 @export var chase_speed : float = 80.0
@@ -76,11 +79,12 @@ func _ready():
 	#chase_timer.timeout.connect(on_timer_timeout)
 	player = get_tree().get_first_node_in_group("player")
 	set_state(current_state, States.CHASE)
-	animation_player.play("walking")
+	#animation_player.play("walking")
 	stg_cnt=stagger.get_max_stagger()
 	#hb_collison.disabled = true
 	turret.setup()
 	turret_body.visible=false
+	flee_timer.stop()
 	
 	
 func _process(_delta):
@@ -94,7 +98,7 @@ func _process(_delta):
 	
 	
 	
-	print(turret.direction_to_player)
+	#print(turret.direction_to_player)
 	if current_state != States.ATTACK:
 		handle_vision()
 		track_player()
@@ -114,6 +118,8 @@ func _process(_delta):
 	var s = stagger.get_stagger()
 	
 	hb_sb.text=str("Health: ",h,"Stagger: ",s )
+	#if flee_timer.is_stopped():
+		#light_attack=false
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -148,7 +154,12 @@ func _physics_process(delta):
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	
 func handle_movement() -> void:
-	var direction= global_position - player.global_position
+	var direction
+	if flee_timer.is_stopped():
+		direction= global_position - player.global_position
+	else:
+		direction= player.global_position - global_position
+	
 	
 	if current_speed == States.ATTACK:
 		current_speed = 0
@@ -187,12 +198,13 @@ func handle_movement() -> void:
 func handl_animation():
 	var velocity_sign = sign(velocity.x)
 	
-	if velocity_sign < 0:
-		animated_sprite_2d.scale.x = 1
-		hit_box.scale.x = 1
-	else:
-		animated_sprite_2d.scale.x = -1
-		hit_box.scale.x = -1
+	if flee_timer.is_stopped():
+		if velocity_sign < 0:
+			animated_sprite_2d.scale.x = 1
+			hit_box.scale.x = 1
+		else:
+			animated_sprite_2d.scale.x = -1
+			hit_box.scale.x = -1
 		
 func track_player():
 	if player == null:
@@ -247,8 +259,9 @@ func set_state(cur_state, new_state) -> void:
 				hb_collison.disabled=true
 			States.ATTACK:
 				animation_player.speed_scale = 1
-		
-		print(state)
+			States.FLEE:
+				flee_timer.start()
+		#print(state)
 
 
 
@@ -256,15 +269,25 @@ func set_state(cur_state, new_state) -> void:
 func _on_attack_range_body_entered(body):
 	print("attack in range")
 	set_state(current_state, States.ATTACK)
-	animation_player.play(atk_anim)
-	#hb_collison.disabled=true
-	await animation_player.animation_finished
-	if attack_combo<3:
-		attack_combo+=1
-	else:
-		attack_combo=1
-		
+	attack_type = randi() % attack_type_range
+	print(attack_type)
 	
+	if attack_type <= 1:  
+		animation_player.play(atk_anim)
+		attacking=true
+		#hb_collison.disabled=true
+		await animation_player.animation_finished
+		if attack_combo<3:
+			attack_combo+=1
+		else:
+			attack_combo=1
+			
+	else:
+		animation_player.play("light_attack")
+		attacking=true
+		light_attack=true
+		#hb_collison.disabled=true
+		await animation_player.animation_finished
 	
 	set_state(prev_state, States.CHASE)
 	#hb_collison.disabled=false
@@ -274,18 +297,23 @@ func _on_attack_range_body_entered(body):
 
 func _on_hit_box_parried():
 	attacking=false
+	
 	if animated_sprite_2d.flip_h==true:
 		knockback.x = 450
 	else:
 		knockback.x = -450
-	current_state=States.PARRY
-	print("PARRIED")
+	
+	
 	parry_timer.start()
 	velocity.y=jump_velocity/2
 	velocity.x = current_speed + knockback.x
-	print(knockback)
-	await get_tree().create_timer(0.3).timeout
-	set_state(current_state, States.PARRY)
+	#print(knockback)
+	
+	if light_attack == true:
+		
+		set_state(current_state, States.FLEE)
+		attack_combo=1
+		
 	##velocity.y=jump_velocity/2
 	#if stg_cnt <= 1:
 		#stg_cnt=stagger.get_max_stagger()
@@ -298,7 +326,10 @@ func _on_hit_box_parried():
 
 func _on_stagger_staggered():
 	parried = true
-
+	current_state=States.PARRY
+	print("PARRIED")
+	await get_tree().create_timer(0.3).timeout
+	set_state(current_state, States.PARRY)
 
 func _on_health_health_depleted():
 	queue_free()
