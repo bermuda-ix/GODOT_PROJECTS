@@ -22,7 +22,7 @@ offset_bottom = 136.0
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Controls:
-WASD: Movement           	SPACE: Jump
+WASD: Movement           	SPACE: Jump (double)
 LMB: Attack				                      		SHIFT: Sprint	
 E: Parry								
 CTRL: Dodge						

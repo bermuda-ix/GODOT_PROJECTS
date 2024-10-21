@@ -19,11 +19,14 @@ offset_bottom = 128.0
 
 [node name="Label" type="Label" parent="CenterContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 11
 text = "Controls:
-WASD: Movement
-LMB: Attack
-E: Parry
-CTRL: Dodge"
+WASD: Movement           	SPACE: Jump (double)
+LMB: Attack				                      		SHIFT: Sprint	
+E: Parry								
+CTRL: Dodge						
+Jump On Wall Hang: Wall Jump
+Hold SHIFT On Wall: Wall Hang"
 horizontal_alignment = 1
 
 [node name="Continue" type="Button" parent="."]
