@@ -109,6 +109,8 @@ func _process(delta):
 	elif Input.is_action_just_pressed("walk_left"):
 		face_right = false
 		move_axis = -1
+	elif input_axis == 0:
+		move_axis = 0
 	
 	handle_hitbox()
 	
@@ -149,7 +151,7 @@ func _physics_process(delta):
 			movement_data = load("res://DefaultMovementData.tres")
 	
 
-	
+	print(input_axis)
 	
 	var was_on_floor = is_on_floor()
 	move_and_slide()
@@ -383,22 +385,33 @@ func parry():
 		
 			
 # DODGE NEEDS WORK!!!
-func dodge(_input_axis, delta):
+func dodge(input_axis, delta):
 
 	if Input.is_action_just_pressed("Dodge"):
 		dodge_timer.start()
 		if not is_on_floor():
 			velocity.y=0
 		
-		if face_right==true:
-			position.x = lerpf(position.x, position.x-1, delta)
+		if input_axis == 0:
+			velocity.x=0
+			state = States.DODGE
+		else:
+			position.x = lerpf(position.x, position.x + (input_axis*2), delta)
 			state = States.DODGE
 			
-			
-		elif face_right==false:
-			position.x = lerpf(position.x, position.x+1, delta)
-			state = States.DODGE
-			
+		#if input_axis == 0:
+			#position.x = lerpf(position.x, position.x, delta)
+			#state = States.DODGE
+		#else:
+			#if face_right==true:
+				#position.x = lerpf(position.x, position.x-1, delta)
+				#state = States.DODGE
+				#
+				#
+			#elif face_right==false:
+				#position.x = lerpf(position.x, position.x+1, delta)
+				#state = States.DODGE
+				#
 		
 	
 	
@@ -465,7 +478,7 @@ func set_state(current_state, new_state: int) -> void:
 			anim_player.speed_scale=1
 			anim_player.play("dodge")
 			velocity.y=0
-			velocity.x=100 * move_axis
+			#velocity.x=100 * move_axis
 			
 	if state != States.DODGE:
 		hurt_box_detect.disabled=false

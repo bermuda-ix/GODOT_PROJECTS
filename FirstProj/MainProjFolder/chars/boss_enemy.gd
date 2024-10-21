@@ -123,8 +123,8 @@ func _process(_delta):
 	var h = health.get_health()
 	var s = stagger.get_stagger()
 	
-	hb_sb.text=str("Health: ",h,"Stagger: ",s )
-	#hb_sb.text=str("State: ", state)
+	#hb_sb.text=str("Health: ",h,"Stagger: ",s )
+	hb_sb.text=str("State: ", state)
 	#if flee_timer.is_stopped():
 		#light_attack=false
 
@@ -274,7 +274,7 @@ func set_state(cur_state, new_state) -> void:
 			States.FLEE:
 				flee_timer.start()
 				#turret.shoot_timer.paused=false
-				turret.shoot_timer.start(.7)
+				turret.shoot_timer.start(.5)
 		#print(state)
 
 
@@ -310,7 +310,7 @@ func _on_attack_range_body_entered(body):
 		set_state(prev_state, States.CHASE)
 		#hb_collison.disabled=false
 		attacking=false
-		turret.shoot_timer.paused=false
+		turret.shoot_timer.paused=true
 
 
 func _on_hit_box_parried():
@@ -379,6 +379,12 @@ func _on_flee_timer_timeout():
 
 
 func _on_parry_timer_timeout():
-	set_state(current_state, prev_state)
+	set_state(current_state, States.CHASE)
 	turret.shoot_timer.paused=false
 
+
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == atk_anim or anim_name == "light_attack":
+		set_state(current_state, States.CHASE)
