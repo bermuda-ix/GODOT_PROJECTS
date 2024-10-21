@@ -503,6 +503,18 @@ func _on_hurt_box_got_hit(hitbox):
 	velocity.y=movement_data.jump_velocity/2
 	velocity.x = movement_data.speed + knockback.x
 
+func _on_hurt_box_area_entered(area):
+	if area.is_in_group("bullet"):
+		knockback.x = -350
+		kb_dir=global_position.direction_to(area.global_position)
+		#print("knockback")
+		kb_dir=round(kb_dir)
+		#print(kb_dir.x, " ", knockback)
+		knockback.x = kb_dir.x * knockback.x
+		velocity.y=movement_data.jump_velocity/2
+		velocity.x = movement_data.speed + knockback.x
+		health.health -= 1
+	
 
 #Setting starting positions for level starts and checkpoints
 func get_start_pos():
@@ -527,6 +539,7 @@ func _on_animation_player_animation_finished(anim_name):
 		
 		state=prev_state
 	
+
 
 
 

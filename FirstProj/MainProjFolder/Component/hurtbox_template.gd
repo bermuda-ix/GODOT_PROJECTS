@@ -26,3 +26,4 @@ func _on_area_entered(hitbox: HitBox) -> void:
 func _on_parried(parrybox: ParryBox) -> void:
 	if parrybox!= null:
 		parried.emit()
+

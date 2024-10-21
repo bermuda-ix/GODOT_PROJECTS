@@ -60,6 +60,8 @@ var attacking : bool = false
 var attack_combo : int = 1
 var atk_anim : String = "attack_1"
 
+var state
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -72,7 +74,7 @@ enum States{
 	FLEE
 }
 
-var current_state = States.CHASE
+var current_state = States.FLEE
 var prev_state = States.CHASE
 
 func _ready():
@@ -85,6 +87,7 @@ func _ready():
 	turret.setup()
 	turret_body.visible=false
 	flee_timer.stop()
+	
 	
 	
 func _process(_delta):
@@ -121,6 +124,7 @@ func _process(_delta):
 	var s = stagger.get_stagger()
 	
 	hb_sb.text=str("Health: ",h,"Stagger: ",s )
+	#hb_sb.text=str("State: ", state)
 	#if flee_timer.is_stopped():
 		#light_attack=false
 
@@ -231,7 +235,7 @@ func handle_vision():
 
 
 func set_state(cur_state, new_state) -> void:
-	var state
+	
 	if(cur_state == new_state):
 		pass
 	#elif new_state==States.ATTACK and cur_state==States.JUMP:
@@ -244,10 +248,10 @@ func set_state(cur_state, new_state) -> void:
 		match current_state:
 			States.ATTACK:
 				state="ATTACK"
-				
+				animation_player.speed_scale = 1
 				attacking=true
 			States.CHASE:
-				
+				print("chasing")
 				#hb_collison.disabled=false
 				#turret.shoot_timer.paused=true
 				#turret.shoot_timer.start(3)
@@ -266,8 +270,7 @@ func set_state(cur_state, new_state) -> void:
 					current_speed = jump_speed
 			States.PARRY:
 				hb_collison.disabled=true
-			States.ATTACK:
-				animation_player.speed_scale = 1
+	
 			States.FLEE:
 				flee_timer.start()
 				#turret.shoot_timer.paused=false
@@ -280,6 +283,7 @@ func set_state(cur_state, new_state) -> void:
 func _on_attack_range_body_entered(body):
 	if parried != true:
 		print("attack in range")
+		turret.shoot_timer.paused=true
 		set_state(current_state, States.ATTACK)
 		attack_type = randi() % attack_type_range
 		print(attack_type)
@@ -302,10 +306,11 @@ func _on_attack_range_body_entered(body):
 			#hb_collison.disabled=true
 			await animation_player.animation_finished
 		
+		print("attack finished")
 		set_state(prev_state, States.CHASE)
 		#hb_collison.disabled=false
 		attacking=false
-
+		turret.shoot_timer.paused=false
 
 
 func _on_hit_box_parried():
@@ -340,6 +345,7 @@ func _on_hit_box_parried():
 
 func _on_stagger_staggered():
 	parried = true
+	turret.shoot_timer.paused=true
 	current_state=States.PARRY
 	print("PARRIED")
 	flee_timer.stop()
@@ -374,3 +380,5 @@ func _on_flee_timer_timeout():
 
 func _on_parry_timer_timeout():
 	set_state(current_state, prev_state)
+	turret.shoot_timer.paused=false
+

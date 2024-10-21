@@ -7,10 +7,11 @@ var spawnPos : Vector2
 var spawnRot : float
 
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_as_top_level(true)
+	connect("area_entered", _char_hit)
+
 	
 	global_position = spawnPos
 	global_rotation = spawnRot
@@ -23,6 +24,7 @@ func _physics_process(delta):
 	position += dir * SPEED * delta
 	rotation = spawnRot
 	
+	
 func set_speed(value: float):
 	SPEED=value
 
@@ -32,3 +34,11 @@ func get_speed() -> float:
 
 func _on_visible_on_screen_enabler_2d_screen_exited():
 	queue_free()
+
+func _char_hit(hitbox : HitBox):
+	if hitbox != null:
+		queue_free()
+
+func _on_area_entered(area):
+	if area.get_collision_layer() == 128:
+		queue_free()
