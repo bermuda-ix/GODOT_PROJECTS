@@ -34,7 +34,7 @@ func _ready():
 	
 func _process(_delta):
 	
-	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size()) + (get_tree().get_nodes_in_group("Boss").size())
+	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size())
 	
 	get_state()
 	set_state()
@@ -42,6 +42,7 @@ func _process(_delta):
 	set_health()
 	if obj<=1:
 		Events.level_completed.connect(show_level_complete)
+		#print("leven complete")
 	label.text=str("Obj: ",obj)
 	
 	if Input.is_action_just_pressed("Pause"):

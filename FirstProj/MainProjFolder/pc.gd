@@ -151,7 +151,7 @@ func _physics_process(delta):
 			movement_data = load("res://DefaultMovementData.tres")
 	
 
-	print(input_axis)
+	#print(input_axis)
 	
 	var was_on_floor = is_on_floor()
 	move_and_slide()

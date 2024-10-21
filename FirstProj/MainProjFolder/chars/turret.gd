@@ -33,6 +33,7 @@ func setup():
 	player = get_tree().get_first_node_in_group("player")
 	shoot_timer.start()
 	#turret_body.visible=false
+	shoot_timer.paused=false
 
 
 func track_player():
@@ -71,3 +72,4 @@ func get_ranged_mode()->bool:
 
 func get_dist_to_player():
 	return dist_to_player
+
