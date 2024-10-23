@@ -79,6 +79,8 @@ one_shot = true
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("1_onmna")
+max_health = null
+immortality = null
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 16

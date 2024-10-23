@@ -1,0 +1,176 @@
+[gd_resource type="BehaviorTree" load_steps=40 format=3 uid="uid://c73vwom3cvpxj"]
+
+[ext_resource type="Script" path="res://ai/tasks/find_player.gd" id="1_7h010"]
+[ext_resource type="Script" path="res://ai/tasks/chase_player.gd" id="2_4ykdd"]
+[ext_resource type="Script" path="res://ai/tasks/flee_player.gd" id="2_s8lcq"]
+[ext_resource type="Script" path="res://ai/tasks/within_range.gd" id="3_nv67j"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_ewtji"]
+var/stunned/name = &"stunned"
+var/stunned/type = 1
+var/stunned/value = false
+var/stunned/hint = 0
+var/stunned/hint_string = ""
+var/flee/name = &"flee"
+var/flee/type = 1
+var/flee/value = false
+var/flee/hint = 0
+var/flee/hint_string = ""
+var/full_combo/name = &"full_combo"
+var/full_combo/type = 1
+var/full_combo/value = false
+var/full_combo/hint = 0
+var/full_combo/hint_string = ""
+var/light_attack/name = &"light_attack"
+var/light_attack/type = 1
+var/light_attack/value = false
+var/light_attack/hint = 0
+var/light_attack/hint_string = ""
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_b28o3"]
+variable = &"stunned"
+
+[sub_resource type="BTWait" id="BTWait_me2xo"]
+duration = 3.0
+
+[sub_resource type="BBVariant" id="BBVariant_kj0oc"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTSetVar" id="BTSetVar_gxaq8"]
+variable = &"light_attack"
+value = SubResource("BBVariant_kj0oc")
+
+[sub_resource type="BBVariant" id="BBVariant_p2t7x"]
+type = 1
+saved_value = false
+
+[sub_resource type="BTSetVar" id="BTSetVar_pewli"]
+variable = &"flee"
+value = SubResource("BBVariant_p2t7x")
+
+[sub_resource type="BBVariant" id="BBVariant_2mqon"]
+type = 1
+saved_value = false
+
+[sub_resource type="BTSetVar" id="BTSetVar_4gtqa"]
+variable = &"full_combo"
+value = SubResource("BBVariant_2mqon")
+
+[sub_resource type="BTSequence" id="BTSequence_meyx0"]
+custom_name = "Stunned"
+children = [SubResource("BTCheckTrigger_b28o3"), SubResource("BTWait_me2xo"), SubResource("BTSetVar_gxaq8"), SubResource("BTSetVar_pewli"), SubResource("BTSetVar_4gtqa")]
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_6ibqf"]
+variable = &"flee"
+
+[sub_resource type="BTAction" id="BTAction_cfxaw"]
+script = ExtResource("1_7h010")
+group = &"player"
+target_var = &"target"
+
+[sub_resource type="BTAction" id="BTAction_ckb2d"]
+script = ExtResource("2_s8lcq")
+target_var = &"target"
+speed_var = 80
+tolerance = 120
+
+[sub_resource type="BBVariant" id="BBVariant_26yjn"]
+type = 1
+saved_value = false
+
+[sub_resource type="BTSetVar" id="BTSetVar_mf0ia"]
+variable = &"flee"
+value = SubResource("BBVariant_26yjn")
+
+[sub_resource type="BBVariant" id="BBVariant_nf6cx"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTSetVar" id="BTSetVar_x35h1"]
+variable = &"light_attack"
+value = SubResource("BBVariant_nf6cx")
+
+[sub_resource type="BTSequence" id="BTSequence_eawev"]
+custom_name = "Flee"
+children = [SubResource("BTCheckTrigger_6ibqf"), SubResource("BTAction_cfxaw"), SubResource("BTAction_ckb2d"), SubResource("BTSetVar_mf0ia"), SubResource("BTSetVar_x35h1")]
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_4d8by"]
+variable = &"full_combo"
+
+[sub_resource type="BTAction" id="BTAction_tycts"]
+script = ExtResource("1_7h010")
+group = &"player"
+target_var = &"target"
+
+[sub_resource type="BTAction" id="BTAction_k5yrd"]
+script = ExtResource("3_nv67j")
+target_var = &"target"
+range = 40
+
+[sub_resource type="BBNode" id="BBNode_bnn7y"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_fthev"]
+node = SubResource("BBNode_bnn7y")
+method = &"attack_combo"
+
+[sub_resource type="BTSequence" id="BTSequence_1q3mw"]
+custom_name = "Full Combo"
+children = [SubResource("BTCheckTrigger_4d8by"), SubResource("BTAction_tycts"), SubResource("BTAction_k5yrd"), SubResource("BTCallMethod_fthev")]
+
+[sub_resource type="BTAction" id="BTAction_d3buj"]
+script = ExtResource("1_7h010")
+group = &"player"
+target_var = &"target"
+
+[sub_resource type="BTAction" id="BTAction_dc4di"]
+script = ExtResource("3_nv67j")
+target_var = &"target"
+range = 40
+
+[sub_resource type="BBNode" id="BBNode_d88m0"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_ulsms"]
+node = SubResource("BBNode_d88m0")
+method = &"light_attack"
+
+[sub_resource type="BBVariant" id="BBVariant_u1f0l"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTSetVar" id="BTSetVar_tbunq"]
+variable = &"light_attack"
+value = SubResource("BBVariant_u1f0l")
+
+[sub_resource type="BTSequence" id="BTSequence_ytpvb"]
+custom_name = "Attack Player"
+children = [SubResource("BTAction_d3buj"), SubResource("BTAction_dc4di"), SubResource("BTCallMethod_ulsms"), SubResource("BTSetVar_tbunq")]
+
+[sub_resource type="BTAction" id="BTAction_d246x"]
+script = ExtResource("1_7h010")
+group = &"player"
+target_var = &"target"
+
+[sub_resource type="BTAction" id="BTAction_aatcr"]
+script = ExtResource("2_4ykdd")
+target_var = &"target"
+speed_var = 60
+tolerance = 40
+
+[sub_resource type="BTSequence" id="BTSequence_gwxtd"]
+custom_name = "Chase Player"
+children = [SubResource("BTAction_d246x"), SubResource("BTAction_aatcr")]
+
+[sub_resource type="BTSelector" id="BTSelector_ne57j"]
+children = [SubResource("BTSequence_meyx0"), SubResource("BTSequence_eawev"), SubResource("BTSequence_1q3mw"), SubResource("BTSequence_ytpvb"), SubResource("BTSequence_gwxtd")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_ewtji")
+root_task = SubResource("BTSelector_ne57j")

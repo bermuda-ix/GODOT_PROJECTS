@@ -203,7 +203,7 @@ func track_player():
 	if player == null:
 		return
 	
-	var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y -15)\
+	var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y)\
 	- player_tracking.position
 	
 	player_tracker_pivot.look_at(direction_to_player)

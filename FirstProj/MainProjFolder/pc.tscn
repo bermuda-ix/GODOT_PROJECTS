@@ -728,6 +728,8 @@ texture = ExtResource("5_pvc8c")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("4_q0gnn")
+max_health = null
+immortality = null
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
 wait_time = 0.1

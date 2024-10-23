@@ -412,7 +412,7 @@ size = Vector2(39, 48)
 size = Vector2(44, 48)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_80ahk"]
-radius = 34.0147
+radius = 30.0167
 
 [node name="Mech_Enemy" instance=ExtResource("1_v27m8")]
 script = ExtResource("2_jjukm")
