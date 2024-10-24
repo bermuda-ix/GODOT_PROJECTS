@@ -84,7 +84,7 @@ func _ready():
 	#animation_player.play("walking")
 	stg_cnt=stagger.get_max_stagger()
 	#hb_collison.disabled = true
-	turret.setup()
+	turret.setup(3)
 	turret_body.visible=false
 	flee_timer.stop()
 	

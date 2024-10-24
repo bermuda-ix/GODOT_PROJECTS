@@ -1,10 +1,12 @@
-[gd_scene load_steps=20 format=3 uid="uid://ceqtgmxc4lyxx"]
+[gd_scene load_steps=24 format=3 uid="uid://ceqtgmxc4lyxx"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_rw6eu"]
 [ext_resource type="Texture2D" uid="uid://2wwps477elun" path="res://Art_Components/threeformsPJ2.png" id="2_hebac"]
 [ext_resource type="Script" path="res://chars/boss_enemy_bt.gd" id="2_u1ga7"]
 [ext_resource type="Texture2D" uid="uid://d2ggaktiv0hrj" path="res://knight.png" id="3_3fimp"]
 [ext_resource type="BehaviorTree" uid="uid://c73vwom3cvpxj" path="res://ai/trees/boss_ai.tres" id="5_os7gv"]
+[ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="6_muh1y"]
+[ext_resource type="Texture2D" uid="uid://c74d14ub8w3oa" path="res://Art_Components/Shotgun/Escopeta.png" id="7_7ekeh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hme25"]
 atlas = ExtResource("2_hebac")
@@ -35,70 +37,6 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
-
-[sub_resource type="Animation" id="Animation_gmlj7"]
-resource_name = "light_attack"
-length = 0.65
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HitBox/CollisionShape2D:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [0.0, -2.49408, -2.49408, -2.49408, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("HitBox/CollisionShape2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3, 0.4, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(-38, -71.25), Vector2(-38.6667, -67.5), Vector2(-38.6667, -67.5), Vector2(-90, 6.00001), Vector2(-90, 6.00001), Vector2(-38, -71.25)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [true, false, false, true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/AnimatedSprite2D:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3, 0.4, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(-37.5, -40.5), Vector2(-36, -48), Vector2(-36, -48), Vector2(-87, 25), Vector2(-87, 25), Vector2(-37.5, -40.5)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D/AnimatedSprite2D:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [0.0, -2.49408, -2.49408, -2.49408, 0.0]
-}
 
 [sub_resource type="Animation" id="Animation_lawcq"]
 length = 0.001
@@ -355,6 +293,70 @@ tracks/4/keys = {
 "values": [Vector2(-37.5, -40.5), Vector2(-80, -64), Vector2(-80, 30), Vector2(-64, 30), Vector2(-37.5, -40.5)]
 }
 
+[sub_resource type="Animation" id="Animation_gmlj7"]
+resource_name = "light_attack"
+length = 0.65
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitBox/CollisionShape2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -2.49408, -2.49408, -2.49408, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HitBox/CollisionShape2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-38, -71.25), Vector2(-38.6667, -67.5), Vector2(-38.6667, -67.5), Vector2(-90, 6.00001), Vector2(-90, 6.00001), Vector2(-38, -71.25)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/AnimatedSprite2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-37.5, -40.5), Vector2(-36, -48), Vector2(-36, -48), Vector2(-87, 25), Vector2(-87, 25), Vector2(-37.5, -40.5)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D/AnimatedSprite2D:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -2.49408, -2.49408, -2.49408, 0.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mknfj"]
 _data = {
 "RESET": SubResource("Animation_lawcq"),
@@ -374,6 +376,21 @@ size = Vector2(96, 98)
 size = Vector2(6, 31.5)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_wxdlm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_whai1"]
+atlas = ExtResource("7_7ekeh")
+region = Rect2(0, 144, 578, 144)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qaj1r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_whai1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="boss_enemy_bt" instance=ExtResource("1_rw6eu")]
 script = ExtResource("2_u1ga7")
@@ -398,6 +415,9 @@ shape = SubResource("RectangleShape2D_tmq8e")
 [node name="AttackTimer" type="Timer" parent="." index="10"]
 wait_time = 0.5
 one_shot = true
+
+[node name="Health" parent="." index="11"]
+max_health = 10
 
 [node name="HurtBox" parent="." index="12" node_paths=PackedStringArray("health")]
 health = NodePath("../Health")
@@ -425,7 +445,16 @@ offset_right = 46.0
 offset_bottom = -74.0
 text = "HB: STG:"
 
+[node name="Turret" parent="." index="18" instance=ExtResource("6_muh1y")]
+
+[node name="TurretBody" type="AnimatedSprite2D" parent="Turret" index="2"]
+position = Vector2(-2, -24)
+scale = Vector2(0.049308, 0.00735294)
+sprite_frames = SubResource("SpriteFrames_qaj1r")
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
+[connection signal="updated" from="BTPlayer" to="." method="_on_bt_player_updated"]
+[connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]

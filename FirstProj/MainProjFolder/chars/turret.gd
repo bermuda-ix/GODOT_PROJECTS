@@ -7,7 +7,7 @@ var player_found : bool = false
 var player : PlayerEntity = null
 #@onready var turret_body = $TurretBody
 @onready var player_tracker = $PlayerTracking
-@onready var shoot_timer = $ShootTimer
+@onready var shoot_timer : Timer = $ShootTimer
 var direction_to_player : Vector2 
 
 var pos = position
@@ -19,19 +19,20 @@ var dist_to_player : get = get_dist_to_player
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	setup()
+	pass
+	#setup(3)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	track_player()
 	#rotate_bullet()
-	shoot()
+	#shoot(2)
 	pos=position
 	
 	
-func setup():
+func setup(time : float):
 	player = get_tree().get_first_node_in_group("player")
-	shoot_timer.start()
+	shoot_timer.start(time)
 	#turret_body.visible=false
 	shoot_timer.paused=false
 
