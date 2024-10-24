@@ -61,8 +61,10 @@ func _process(delta):
 	turret.track_player()
 	
 	if phase == 1:
-		turret.shoot()
-		turret.shoot_timer.paused=false
+		if position.y<60:
+			turret.shoot()
+			turret.shoot_timer.paused=false
+		
 		
 	if health.health<=5:
 		set_phase(phase, 1)
