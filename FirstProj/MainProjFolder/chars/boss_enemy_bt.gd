@@ -36,11 +36,12 @@ var parried : bool = false
 var fleeing : bool = false
 var full_combo : bool = false
 var phase : int = 0
-
+var chase : bool = false
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var grav=gravity
 var knockback : Vector2 = Vector2.ZERO
 
 func _ready():
@@ -51,6 +52,7 @@ func _ready():
 	bt_player.blackboard.set_var("phase", phase)
 	turret.setup(3)
 	turret_body.visible=true
+	chase_timer.start(5)
 	
 
 func _process(delta):
@@ -62,9 +64,12 @@ func _process(delta):
 	
 	if phase == 1:
 		if position.y<60:
-			turret.shoot()
-			turret.shoot_timer.paused=false
-		
+			if bt_player.blackboard.get_var("charge")==false:	
+				turret.shoot()
+				turret.shoot_timer.paused=false
+			else:
+				turret.shoot_timer.paused=true
+	
 		
 	if health.health<=5:
 		set_phase(phase, 1)
@@ -75,7 +80,7 @@ func _process(delta):
 	
 	#elif fleeing == false:
 		#turret.shoot_timer.paused=true
-	
+	print(chase_timer.time_left)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -93,14 +98,22 @@ func _physics_process(delta):
 
 func move(dir, speed):
 	velocity.x = (dir * (speed * counter_speed)) + knockback.x
+	#velocity.y = (dir * (speed * counter_speed))
 	
 	if phase==1:
-		if position.y>20:
-			print("floaitng")
+		if position.y>20 and bt_player.blackboard.get_var("charge")==false:
+			#print("floaitng")
 			position.y -= 1
-		velocity.y=0
-		gravity=0
+			velocity.y=0
+			gravity=0
+		elif (not is_on_floor()) and bt_player.blackboard.get_var("charge")==true:
+			#position.y += 1
+			gravity=grav
+			#var direction = global_position - player.global_position
+			velocity.y = speed
+		
 		#global_position.y=100
+	
 	
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	
@@ -130,7 +143,7 @@ func handle_animation(dir):
 
 func light_attack():
 	animation_player.play("light_attack")
-	await animation_player.animation_finished
+	velocity.x=0
 
 func attack_combo():
 	#var tree_status = bt_player.get_last_status()
@@ -145,6 +158,15 @@ func attack_combo():
 
 func _on_hit_box_parried():
 	
+	
+	
+	bt_player.restart()
+	if phase == 1:
+		chase_timer.start(5)
+		chase_timer.paused = false
+		bt_player.blackboard.set_var("flee", true)
+		bt_player.blackboard.set_var("charge", false)
+	#chase_timer.pause=false
 		
 	if stagger.stagger >= 1:
 		if animated_sprite_2d.flip_h==true:
@@ -157,21 +179,23 @@ func _on_hit_box_parried():
 		else:
 			knockback.x = -45
 	
-	if bt_player.blackboard.get_var("light_attack")==true:
-		turret.setup(0.3)
-		fleeing=true
-		bt_player.blackboard.set_var("flee", true)
-	elif bt_player.blackboard.get_var("light_attack")==false:
-		if atk >= 3:
-			atk = 1
-		else:
-			atk += 1
+	#if bt_player.blackboard.get_var("light_attack")==true:
+		#turret.setup(0.3)
+		#fleeing=true
+		#bt_player.blackboard.set_var("flee", true)
+	#elif bt_player.blackboard.get_var("light_attack")==false:
+		
+	if atk >= 3:
+		atk = 1
+	else:
+		atk += 1
 			
-
 func _on_stagger_staggered():
 	
 	hb_col.disabled=true
 	parry_timer.start()
+	animation_player.play("RESET")
+	velocity=Vector2.ZERO
 	bt_player.blackboard.set_var("stunned", true)
 	bt_player.blackboard.set_var("full_combo", false)
 	full_combo=false
@@ -180,6 +204,7 @@ func _on_stagger_staggered():
 func _on_parry_timer_timeout():
 	hb_col.disabled=false
 	bt_player.blackboard.set_var("stunned", false)
+	
 	
 
 
@@ -214,14 +239,25 @@ func _on_turret_shoot_bullet():
 func _on_bt_player_updated(status):
 	if status==3:
 		fleeing=false
+		chase_timer.paused=false
+		if chase_timer.is_stopped():
+			chase_timer.start(5)
+		
 
 func set_phase(cur_phase, next_phase : int):
-	print("next phase")
-	print(cur_phase, " ",next_phase)
+	
 	if cur_phase==next_phase:
 		return
 	else:
+		print("next phase")
+		print(cur_phase, " ",next_phase)
+		chase_timer.start(5)
 		bt_player.restart()
 		bt_player.blackboard.set_var("stunned", false)
 		phase=next_phase
+		chase_timer.paused=false
 		bt_player.blackboard.set_var("phase", phase)
+
+
+func _on_chase_timer_timeout():
+	bt_player.blackboard.set_var("attack_timer", true)
