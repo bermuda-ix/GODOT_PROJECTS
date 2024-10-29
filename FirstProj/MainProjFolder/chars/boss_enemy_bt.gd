@@ -3,6 +3,10 @@ extends CharacterBody2D
 
 const SPEED = 30.0
 const JUMP_VELOCITY = -400.0
+#bullets:
+const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
+const WAVE_PROJECTILE = preload("res://Component/wave_projectile.tscn")
+
 
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var hit_box = $HitBox
@@ -14,6 +18,7 @@ const JUMP_VELOCITY = -400.0
 @onready var jump_timer = $JumpTimer
 @onready var parry_timer = $ParryTimer
 @onready var chase_timer = $ChaseTimer
+@onready var shoot_change_timer = $ShootChangeTimer
 @onready var hb_col = $HitBox/CollisionShape2D
 @onready var attack_timer = $AttackTimer
 @onready var player_tracker_pivot = $PlayerTrackerPivot
@@ -25,7 +30,12 @@ var player : PlayerEntity = null
 #shooting
 @onready var turret = $Turret
 @onready var turret_body = $Turret/TurretBody
-@onready var bullet = preload("res://Component/wave_projectile.tscn")
+@onready var bullet = WAVE_PROJECTILE
+@onready var bullet_dir = Vector2.RIGHT
+@onready var clkckws : bool = true
+@onready var arc_shot : bool = true
+@onready var multi_shot : bool = true
+
 
 
 
@@ -37,6 +47,7 @@ var fleeing : bool = false
 var full_combo : bool = false
 var phase : int = 0
 var chase : bool = false
+var final_phase_hit : int = 0
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -48,12 +59,19 @@ func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	bt_player.blackboard.set_var("stunned", false)
 	bt_player.blackboard.set_var("flee", false)
-	phase = 0
+	phase = 2
 	bt_player.blackboard.set_var("phase", phase)
-	turret.setup(3)
+	turret.setup(.1)
 	turret_body.visible=true
 	chase_timer.start(5)
+	#bullet = WAVE_PROJECTILE
+	#for testing, to be removed
 	
+	shoot_change_timer.start(10)
+	turret.set_multi_shot(false)
+	multi_shot=false
+	bt_player.blackboard.set_var("multi_shot", false)
+	bullet=BALL_PROCETILE
 
 func _process(delta):
 	var h = health.get_health()
@@ -65,14 +83,28 @@ func _process(delta):
 	if phase == 1:
 		if position.y<60:
 			if bt_player.blackboard.get_var("charge")==false:	
+				#print(turret.shoot_timer.time_left)
 				turret.shoot()
 				turret.shoot_timer.paused=false
 			else:
 				turret.shoot_timer.paused=true
-	
+	elif phase == 2:
 		
-	if health.health<=5:
+		if global_position.y<60 and final_phase_hit<3:
+			if bt_player.blackboard.get_var("charge")==false and not multi_shot:
+				bt_player.blackboard.set_var("multi_shot", false)
+				turret.shoot()
+				turret.shoot_timer.paused=false
+			else:
+				bt_player.blackboard.set_var("multi_shot", true)
+				turret.shoot_timer.paused=true
+				#spread_shot(15)
+			
+		
+	if health.health<=5 and health.health>1:
 		set_phase(phase, 1)
+	elif health.health<=1:
+		set_phase(phase, 2)
 	
 	if bt_player.blackboard.get_var("phase") != phase:
 		bt_player.blackboard.set_var("phase", phase)
@@ -80,7 +112,7 @@ func _process(delta):
 	
 	#elif fleeing == false:
 		#turret.shoot_timer.paused=true
-	print(chase_timer.time_left)
+	#print(phase)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -92,7 +124,18 @@ func _physics_process(delta):
 
 	handle_vision()
 	track_player()
+	rotate_bullet()
 	move_and_slide()
+	
+	if phase==2:
+		if (global_position.x!=176 or global_position.y>20) and bt_player.blackboard.get_var("charge")==false:
+			#print("moving to center")
+			gravity=0
+			global_position.x=lerpf(global_position.x, 176, .1)
+			global_position.y=lerpf(global_position.y, 20, .1)
+		
+		#bullet_dir = Vector2.RIGHT
+		
 	
 	
 
@@ -111,8 +154,11 @@ func move(dir, speed):
 			gravity=grav
 			#var direction = global_position - player.global_position
 			velocity.y = speed
-		
-		#global_position.y=100
+	
+	
+	#elif phase==2:
+		#
+		##global_position.y=100
 	
 	
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
@@ -131,6 +177,7 @@ func track_player():
 	var dir_bullet = (to_local(player.position) - turret_body.position)
 	
 	player_tracker_pivot.look_at(direction_to_player)
+	
 	
 	turret_body.rotation=dir_bullet.angle()
 func handle_animation(dir):
@@ -154,7 +201,32 @@ func attack_combo():
 		animation_player.play(atk_cmb)
 		await animation_player.animation_finished
 		
+
+func rotate_bullet():
 	
+	var bd_angel=bullet_dir.angle()
+	if clkckws:
+		#print("clockwise: ", bullet_dir.angle())
+		bullet_dir = bullet_dir.slerp(Vector2.LEFT, 0.02) 
+	else :
+		#print("counterclockwise: ", bullet_dir.angle())
+		bullet_dir = bullet_dir.slerp(Vector2.RIGHT, 0.02) 
+
+	if bd_angel <= 0.3 and not clkckws:
+		clkckws = true
+	elif bd_angel >= 2.8 and clkckws:
+		clkckws = false
+	
+
+func spread_shot(value: float):
+	var shots = 180/value
+	var bd_angle=0
+	for n in shots:
+		bullet_dir=bullet_dir.rotated(deg_to_rad(bd_angle))
+		turret.shoot()
+		bd_angle+=shots
+		#print(shots)
+
 
 func _on_hit_box_parried():
 	
@@ -167,7 +239,13 @@ func _on_hit_box_parried():
 		bt_player.blackboard.set_var("flee", true)
 		bt_player.blackboard.set_var("charge", false)
 	#chase_timer.pause=false
-		
+	elif phase == 2:
+		bullet = BALL_PROCETILE
+		turret.setup(1)
+		chase_timer.start(5)
+		chase_timer.paused = false
+		#bt_player.blackboard.set_var("flee", true)
+		bt_player.blackboard.set_var("charge", false)
 	if stagger.stagger >= 1:
 		if animated_sprite_2d.flip_h==true:
 			knockback.x = 200
@@ -227,12 +305,17 @@ func _on_animation_player_animation_finished(anim_name):
 
 
 func _on_turret_shoot_bullet():
-	print("shoot")
+	#print("shoot")
 	var bullet_inst = bullet.instantiate()
 	bullet_inst.set_speed(300.0)
-	bullet_inst.dir = (turret.player_tracker.target_position).normalized()
+	if phase != 2:
+		bullet_inst.dir = (turret.player_tracker.target_position).normalized()
+		bullet_inst.spawnRot = turret_body.rotation
+	else:
+		bullet_inst.dir = (bullet_dir)
+		bullet_inst.spawnRot = bullet_dir.angle()
 	bullet_inst.spawnPos = Vector2(position.x, position.y)
-	bullet_inst.spawnRot = turret_body.rotation
+	
 	get_tree().current_scene.add_child(bullet_inst)
 
 
@@ -243,6 +326,9 @@ func _on_bt_player_updated(status):
 		if chase_timer.is_stopped():
 			chase_timer.start(5)
 		
+	#if phase==2:
+		#bt_player.active=false
+		#print("final hit")
 
 func set_phase(cur_phase, next_phase : int):
 	
@@ -261,3 +347,27 @@ func set_phase(cur_phase, next_phase : int):
 
 func _on_chase_timer_timeout():
 	bt_player.blackboard.set_var("attack_timer", true)
+
+
+func _on_shoot_change_timer_timeout():
+	print(final_phase_hit)
+	var time=randf_range(3,5)
+	final_phase_hit += 1
+	if final_phase_hit >=3:
+		bt_player.blackboard.set_var("multi_shot", false)
+		bt_player.blackboard.set_var("final_hit", true)
+		multi_shot=false
+		turret.shoot_timer.paused=false
+	
+	else:
+		if multi_shot:
+			multi_shot = false
+			turret.set_multi_shot(false)
+			shoot_change_timer.start(time)
+			bullet=BALL_PROCETILE
+		else:
+			multi_shot=true
+			turret.set_multi_shot(true)
+			bullet=WAVE_PROJECTILE
+			shoot_change_timer.start(time)
+			

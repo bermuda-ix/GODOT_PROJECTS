@@ -419,17 +419,20 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
-[node name="Health" parent="." index="11"]
+[node name="ShootChangeTimer" type="Timer" parent="." index="11"]
+one_shot = true
+
+[node name="Health" parent="." index="12"]
 max_health = 10
 
-[node name="HurtBox" parent="." index="12" node_paths=PackedStringArray("health")]
+[node name="HurtBox" parent="." index="13" node_paths=PackedStringArray("health")]
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(0, -25)
 shape = SubResource("RectangleShape2D_mfd8p")
 
-[node name="HitBox" parent="." index="13" node_paths=PackedStringArray("stagger")]
+[node name="HitBox" parent="." index="14" node_paths=PackedStringArray("stagger")]
 stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
@@ -437,18 +440,18 @@ position = Vector2(-38, -71.25)
 shape = SubResource("RectangleShape2D_4kfec")
 disabled = true
 
-[node name="BTPlayer" type="BTPlayer" parent="." index="16"]
+[node name="BTPlayer" type="BTPlayer" parent="." index="17"]
 behavior_tree = ExtResource("5_os7gv")
 blackboard_plan = SubResource("BlackboardPlan_wxdlm")
 
-[node name="HBSB" type="Label" parent="." index="17"]
+[node name="HBSB" type="Label" parent="." index="18"]
 offset_left = -47.0
 offset_top = -97.0
 offset_right = 46.0
 offset_bottom = -74.0
 text = "HB: STG:"
 
-[node name="Turret" parent="." index="18" instance=ExtResource("6_muh1y")]
+[node name="Turret" parent="." index="19" instance=ExtResource("6_muh1y")]
 
 [node name="TurretBody" type="AnimatedSprite2D" parent="Turret" index="2"]
 position = Vector2(-2, -24)
@@ -458,6 +461,7 @@ sprite_frames = SubResource("SpriteFrames_qaj1r")
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="ChaseTimer" to="." method="_on_chase_timer_timeout"]
+[connection signal="timeout" from="ShootChangeTimer" to="." method="_on_shoot_change_timer_timeout"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="updated" from="BTPlayer" to="." method="_on_bt_player_updated"]

@@ -15,6 +15,8 @@ var pos = position
 #@export var bullet = preload("res://Component/wave_projectile.tscn")
 
 @export var ranged_mode : bool = true : set = set_ranged_mode, get = get_ranged_mode
+@export var multi_shot : bool = false : set = set_multi_shot, get = get_multi_shot
+
 var dist_to_player : get = get_dist_to_player
 
 # Called when the node enters the scene tree for the first time.
@@ -52,24 +54,35 @@ func rotate_bullet():
 	
 func shoot():
 	if ranged_mode==true:
-		if shoot_timer.is_stopped():
-			#print(direction_to_player)
-			shoot_timer.start()
-			#print("shoot")
+		if multi_shot:
 			shoot_bullet.emit()
-			
-			
-			#var bullet_inst = bullet.instantiate()
-			#bullet_inst.dir = (player_tracking.target_position).normalized()
-			#bullet_inst.spawnPos = pos
-			#bullet_inst.spawnRot = turret_body.rotation
-			#add_child(bullet_inst)
+		
+		else:
+			if shoot_timer.is_stopped():
+				#print(direction_to_player)
+				shoot_timer.start()
+				#print("shoot")
+				shoot_bullet.emit()
+				
+				
+				#var bullet_inst = bullet.instantiate()
+				#bullet_inst.dir = (player_tracking.target_position).normalized()
+				#bullet_inst.spawnPos = pos
+				#bullet_inst.spawnRot = turret_body.rotation
+				#add_child(bullet_inst)
+	
 	
 func set_ranged_mode(value: bool):
 	ranged_mode=value
 
 func get_ranged_mode()->bool:
 	return ranged_mode
+
+func set_multi_shot(value: bool):
+	multi_shot=value
+
+func get_multi_shot()->bool:
+	return multi_shot
 
 func get_dist_to_player():
 	return dist_to_player

@@ -16,7 +16,7 @@ animations = [{
 }]
 
 [node name="WaveProjectile" groups=["bullet"] instance=ExtResource("1_1n2vr")]
-collision_mask = 130
+collision_layer = 8
 script = ExtResource("2_v7xoe")
 
 [node name="AnimatedSprite2D" parent="." index="0"]
