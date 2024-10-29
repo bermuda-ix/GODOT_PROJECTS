@@ -462,6 +462,7 @@ sprite_frames = SubResource("SpriteFrames_qaj1r")
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="ChaseTimer" to="." method="_on_chase_timer_timeout"]
 [connection signal="timeout" from="ShootChangeTimer" to="." method="_on_shoot_change_timer_timeout"]
+[connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="updated" from="BTPlayer" to="." method="_on_bt_player_updated"]

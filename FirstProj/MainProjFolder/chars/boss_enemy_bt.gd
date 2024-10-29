@@ -35,7 +35,7 @@ var player : PlayerEntity = null
 @onready var clkckws : bool = true
 @onready var arc_shot : bool = true
 @onready var multi_shot : bool = true
-
+@onready var final_hit : bool = false
 
 
 
@@ -59,19 +59,25 @@ func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	bt_player.blackboard.set_var("stunned", false)
 	bt_player.blackboard.set_var("flee", false)
-	phase = 2
+	phase = 0
 	bt_player.blackboard.set_var("phase", phase)
-	turret.setup(.1)
+	bt_player.blackboard.set_var("final_hit", false)
+	turret.setup(3)
 	turret_body.visible=true
 	chase_timer.start(5)
-	#bullet = WAVE_PROJECTILE
-	#for testing, to be removed
-	
-	shoot_change_timer.start(10)
+	bullet = WAVE_PROJECTILE
 	turret.set_multi_shot(false)
 	multi_shot=false
 	bt_player.blackboard.set_var("multi_shot", false)
-	bullet=BALL_PROCETILE
+	
+	#for testing, to be removed
+
+	#turret.set_multi_shot(false)
+	#multi_shot=false
+	#bt_player.blackboard.set_var("multi_shot", false)
+	#turret.setup(.1)
+	#shoot_change_timer.start(3)
+	#bullet=BALL_PROCETILE
 
 func _process(delta):
 	var h = health.get_health()
@@ -81,7 +87,7 @@ func _process(delta):
 	turret.track_player()
 	
 	if phase == 1:
-		if position.y<60:
+		if position.y<70:
 			if bt_player.blackboard.get_var("charge")==false:	
 				#print(turret.shoot_timer.time_left)
 				turret.shoot()
@@ -90,7 +96,7 @@ func _process(delta):
 				turret.shoot_timer.paused=true
 	elif phase == 2:
 		
-		if global_position.y<60 and final_phase_hit<3:
+		if global_position.y<70 and final_phase_hit<10:
 			if bt_player.blackboard.get_var("charge")==false and not multi_shot:
 				bt_player.blackboard.set_var("multi_shot", false)
 				turret.shoot()
@@ -99,7 +105,11 @@ func _process(delta):
 				bt_player.blackboard.set_var("multi_shot", true)
 				turret.shoot_timer.paused=true
 				#spread_shot(15)
-			
+		
+	if final_hit==true:
+		bt_player.blackboard.set_var("final_hit", true)
+	else:
+		bt_player.blackboard.set_var("final_hit", false)
 		
 	if health.health<=5 and health.health>1:
 		set_phase(phase, 1)
@@ -112,7 +122,7 @@ func _process(delta):
 	
 	#elif fleeing == false:
 		#turret.shoot_timer.paused=true
-	#print(phase)
+	
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -125,46 +135,78 @@ func _physics_process(delta):
 	handle_vision()
 	track_player()
 	rotate_bullet()
+	if phase==2:
+		center_fly()
 	move_and_slide()
 	
-	if phase==2:
-		if (global_position.x!=176 or global_position.y>20) and bt_player.blackboard.get_var("charge")==false:
-			#print("moving to center")
-			gravity=0
-			global_position.x=lerpf(global_position.x, 176, .1)
-			global_position.y=lerpf(global_position.y, 20, .1)
-		
-		#bullet_dir = Vector2.RIGHT
-		
-	
+	#if phase==2 and final_hit==false:
+		#if (global_position.x!=176 or global_position.y>20) and bt_player.blackboard.get_var("charge")==false:
+			##print("moving to center")
+			#gravity=0
+			#global_position.x=lerpf(global_position.x, 176, .1)
+			#global_position.y=lerpf(global_position.y, 20, .1)
+		#
+	#elif phase==2 and final_hit==true:
+		#gravity=grav
+		#
+	#print(bt_player.blackboard.get_var("multi_shot"))
 	
 
 func move(dir, speed):
-	velocity.x = (dir * (speed * counter_speed)) + knockback.x
-	#velocity.y = (dir * (speed * counter_speed))
 	
-	if phase==1:
-		if position.y>20 and bt_player.blackboard.get_var("charge")==false:
+	#velocity.y = (dir * (speed * counter_speed))
+	#print(phase)
+	if phase==0:
+		velocity.x = (dir * (speed * counter_speed)) + knockback.x
+		gravity=grav
+			#var direction = global_position - player.global_position
+		velocity.y = speed
+	elif phase==1:
+		velocity.x = (dir * (speed * counter_speed)) + knockback.x
+		if position.y>60 and bt_player.blackboard.get_var("charge")==false:
 			#print("floaitng")
 			position.y -= 1
 			velocity.y=0
 			gravity=0
 		elif (not is_on_floor()) and bt_player.blackboard.get_var("charge")==true:
 			#position.y += 1
+			
 			gravity=grav
 			#var direction = global_position - player.global_position
 			velocity.y = speed
-	
+		
+	elif phase==2:
+		#print("moving phase 2")
+		if final_hit==true:
+			velocity.x = (dir * (speed * counter_speed)) + knockback.x
+			gravity=grav
+				#var direction = global_position - player.global_position
+			velocity.y = speed
+			
+	else:
+		velocity.x = (dir * (speed * counter_speed)) + knockback.x
+		gravity=grav
+		#var direction = global_position - player.global_position
+		velocity.y = speed
 	
 	#elif phase==2:
 		#
 		##global_position.y=100
 	
-	
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
+
 	
 	handle_animation(dir)
-	
+
+func center_fly():
+	if (global_position.x!=272 or global_position.y>40) and final_hit==false:
+		#print("moving to center")
+		gravity=0
+		global_position.x=lerpf(global_position.x, 272, .1)
+		global_position.y=lerpf(global_position.y, 60, .1)
+	elif final_hit==true:
+		gravity=grav
+
 func handle_vision():
 	player_found=true
 	
@@ -219,6 +261,7 @@ func rotate_bullet():
 	
 
 func spread_shot(value: float):
+	print("spread shot")
 	var shots = 180/value
 	var bd_angle=0
 	for n in shots:
@@ -241,22 +284,27 @@ func _on_hit_box_parried():
 	#chase_timer.pause=false
 	elif phase == 2:
 		bullet = BALL_PROCETILE
-		turret.setup(1)
+		turret.setup(3)
 		chase_timer.start(5)
 		chase_timer.paused = false
 		#bt_player.blackboard.set_var("flee", true)
 		bt_player.blackboard.set_var("charge", false)
-	if stagger.stagger >= 1:
-		if animated_sprite_2d.flip_h==true:
-			knockback.x = 200
+	if phase != 2:
+		if stagger.stagger >= 1:
+			if animated_sprite_2d.flip_h==true:
+				knockback.x = 200
+			else:
+				knockback.x = -200
 		else:
-			knockback.x = -200
+			if animated_sprite_2d.flip_h==true:
+				knockback.x = 45
+			else:
+				knockback.x = -45
 	else:
 		if animated_sprite_2d.flip_h==true:
-			knockback.x = 45
+			knockback.x = 600
 		else:
-			knockback.x = -45
-	
+			knockback.x = -600
 	#if bt_player.blackboard.get_var("light_attack")==true:
 		#turret.setup(0.3)
 		#fleeing=true
@@ -343,6 +391,11 @@ func set_phase(cur_phase, next_phase : int):
 		phase=next_phase
 		chase_timer.paused=false
 		bt_player.blackboard.set_var("phase", phase)
+		if next_phase == 2:
+			turret.setup(.1)
+			shoot_change_timer.start(5)
+			turret.shoot_timer.paused=false
+			bullet=BALL_PROCETILE
 
 
 func _on_chase_timer_timeout():
@@ -350,24 +403,38 @@ func _on_chase_timer_timeout():
 
 
 func _on_shoot_change_timer_timeout():
-	print(final_phase_hit)
-	var time=randf_range(3,5)
-	final_phase_hit += 1
-	if final_phase_hit >=3:
-		bt_player.blackboard.set_var("multi_shot", false)
-		bt_player.blackboard.set_var("final_hit", true)
-		multi_shot=false
-		turret.shoot_timer.paused=false
 	
+	if phase != 2:
+		return
 	else:
-		if multi_shot:
-			multi_shot = false
-			turret.set_multi_shot(false)
-			shoot_change_timer.start(time)
-			bullet=BALL_PROCETILE
+		print(final_phase_hit)
+		var time=randf_range(3,5)
+		final_phase_hit += 1
+		if final_phase_hit >=10:
+			bt_player.blackboard.set_var("multi_shot", false)
+			bt_player.blackboard.set_var("final_hit", true)
+			final_hit=true
+			multi_shot=false
+			turret.shoot_timer.paused=false
+		
 		else:
-			multi_shot=true
-			turret.set_multi_shot(true)
-			bullet=WAVE_PROJECTILE
-			shoot_change_timer.start(time)
 			
+			if multi_shot:
+				multi_shot = false
+				turret.set_multi_shot(false)
+				shoot_change_timer.start(time)
+				bullet=BALL_PROCETILE
+			else:
+				multi_shot=true
+				turret.set_multi_shot(true)
+				bullet=WAVE_PROJECTILE
+				shoot_change_timer.start(time)
+			print("MS: ",multi_shot)
+
+
+func _on_health_health_depleted():
+	queue_free()
+	var enemies = get_tree().get_nodes_in_group("Enemy")
+	if enemies.size() <=1:
+		Events.level_completed.emit()
+		print("level complete")

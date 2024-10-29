@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=86 format=3 uid="uid://c73vwom3cvpxj"]
+[gd_resource type="BehaviorTree" load_steps=93 format=3 uid="uid://c73vwom3cvpxj"]
 
 [ext_resource type="Script" path="res://ai/tasks/find_player.gd" id="1_7h010"]
 [ext_resource type="Script" path="res://ai/tasks/chase_player.gd" id="2_4ykdd"]
@@ -326,13 +326,58 @@ resource_name = "2"
 variable = &"phase"
 value = SubResource("BBVariant_tc05q")
 
-[sub_resource type="BTAction" id="BTAction_pmljw"]
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_1p7ro"]
+variable = &"final_hit"
+
+[sub_resource type="BTAction" id="BTAction_m3t3p"]
 script = ExtResource("1_7h010")
-group = &""
+group = &"player"
 target_var = &"target"
+
+[sub_resource type="BTAction" id="BTAction_aa6w0"]
+script = ExtResource("3_nv67j")
+target_var = &"target"
+range = 40
+
+[sub_resource type="BBNode" id="BBNode_xdka3"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_e566s"]
+node = SubResource("BBNode_xdka3")
+method = &"attack_combo"
+
+[sub_resource type="BTSequence" id="BTSequence_g6qnd"]
+custom_name = "Full Combo"
+children = [SubResource("BTAction_m3t3p"), SubResource("BTAction_aa6w0"), SubResource("BTCallMethod_e566s")]
+
+[sub_resource type="BTAction" id="BTAction_dwpi8"]
+script = ExtResource("1_7h010")
+group = &"player"
+target_var = &"target"
+
+[sub_resource type="BTAction" id="BTAction_faqkh"]
+script = ExtResource("2_4ykdd")
+target_var = &"target"
+speed_var = 150
+tolerance = 40
+
+[sub_resource type="BTSequence" id="BTSequence_2qnwk"]
+custom_name = "Chase Player"
+children = [SubResource("BTAction_dwpi8"), SubResource("BTAction_faqkh")]
+
+[sub_resource type="BTSelector" id="BTSelector_v6xmm"]
+custom_name = "Full Combo Attack"
+children = [SubResource("BTSequence_g6qnd"), SubResource("BTSequence_2qnwk")]
+
+[sub_resource type="BTSequence" id="BTSequence_ahi26"]
+children = [SubResource("BTCheckTrigger_1p7ro"), SubResource("BTSelector_v6xmm")]
 
 [sub_resource type="BTCheckTrigger" id="BTCheckTrigger_suwgs"]
 variable = &"multi_shot"
+
+[sub_resource type="BTConsolePrint" id="BTConsolePrint_5ps8n"]
+text = "shooting"
 
 [sub_resource type="BBVariant" id="BBVariant_pf2ws"]
 type = 3
@@ -353,31 +398,19 @@ children = [SubResource("BTCallMethod_wxvim")]
 
 [sub_resource type="BTCooldown" id="BTCooldown_7bdlg"]
 duration = 1.0
+start_cooled = true
 children = [SubResource("BTSequence_50qgl")]
-
-[sub_resource type="BTRepeat" id="BTRepeat_avaq1"]
-times = 5
-children = [SubResource("BTCooldown_7bdlg")]
 
 [sub_resource type="BTSequence" id="BTSequence_kewr2"]
 custom_name = "Final Attack - Shooting"
-children = [SubResource("BTCheckTrigger_suwgs"), SubResource("BTRepeat_avaq1")]
-
-[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_1p7ro"]
-variable = &"final_hit"
-
-[sub_resource type="BTConsolePrint" id="BTConsolePrint_2somc"]
-text = "Final hit"
-
-[sub_resource type="BTSequence" id="BTSequence_ahi26"]
-children = [SubResource("BTCheckTrigger_1p7ro"), SubResource("BTConsolePrint_2somc")]
+children = [SubResource("BTCheckTrigger_suwgs"), SubResource("BTConsolePrint_5ps8n"), SubResource("BTCooldown_7bdlg")]
 
 [sub_resource type="BTSelector" id="BTSelector_a0y1p"]
-children = [SubResource("BTSequence_kewr2"), SubResource("BTSequence_ahi26")]
+children = [SubResource("BTSequence_ahi26"), SubResource("BTSequence_kewr2")]
 
 [sub_resource type="BTSequence" id="BTSequence_5akle"]
 custom_name = "Phase 3"
-children = [SubResource("BTCheckVar_dxs17"), SubResource("BTAction_pmljw"), SubResource("BTSelector_a0y1p")]
+children = [SubResource("BTCheckVar_dxs17"), SubResource("BTSelector_a0y1p")]
 
 [sub_resource type="BTSelector" id="BTSelector_ne57j"]
 children = [SubResource("BTSequence_33rq8"), SubResource("BTSequence_meyx0"), SubResource("BTSequence_apnts"), SubResource("BTSequence_f8es7"), SubResource("BTSequence_5akle")]
