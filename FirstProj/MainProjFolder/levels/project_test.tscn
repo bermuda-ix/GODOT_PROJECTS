@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ceqtgmxc4lyxx" path="res://chars/boss_enemy_bt.tscn" id="2_dj710"]
 
 [node name="project_test" instance=ExtResource("1_07jkq")]
+next_level = null
 
 [node name="PC" parent="." index="0"]
 position = Vector2(48, 96)

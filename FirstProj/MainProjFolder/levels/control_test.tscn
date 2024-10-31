@@ -1,13 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://x87dsk68043s"]
+[gd_scene load_steps=5 format=3 uid="uid://x87dsk68043s"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_h3hd4"]
-[ext_resource type="PackedScene" uid="uid://qfmh1u77hjyy" path="res://levels/platform_test.tscn" id="2_iiwel"]
 [ext_resource type="PackedScene" uid="uid://cqiybjbg0wei7" path="res://spikes.tscn" id="3_gfiwr"]
 [ext_resource type="PackedScene" uid="uid://d05v7tm7kmcj7" path="res://heart.tscn" id="4_cf8ib"]
 [ext_resource type="PackedScene" uid="uid://cct4l6ox78gsb" path="res://Art_Components/city_tileset/TEST_COMP/tile_map.tscn" id="5_phg57"]
 
 [node name="ControlTest" instance=ExtResource("1_h3hd4")]
-next_level = ExtResource("2_iiwel")
 
 [node name="UI_Level" parent="CanvasLayer" index="1"]
 metadata/_edit_use_anchors_ = true

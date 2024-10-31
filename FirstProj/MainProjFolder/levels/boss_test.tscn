@@ -1,11 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqd8587bfopmc"]
+[gd_scene load_steps=3 format=3 uid="uid://bqd8587bfopmc"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_awvxh"]
-[ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_5t6b3"]
 [ext_resource type="PackedScene" uid="uid://ceqtgmxc4lyxx" path="res://chars/boss_enemy_bt.tscn" id="3_y0ylo"]
 
 [node name="BossTest" instance=ExtResource("1_awvxh")]
-next_level = ExtResource("2_5t6b3")
+next_level = null
 
 [node name="PC" parent="." index="0"]
 position = Vector2(48, 152)

@@ -5,7 +5,7 @@ class_name PlayerEntity
 @export var health: Health
 @export var hitbox: HitBox
 
-enum States {IDLE, WALKING, JUMP, ATTACK, WALL_STICK, PARRY, DODGE, SPRINTING}
+enum States {IDLE, WALKING, JUMP, ATTACK, SPECIAL_ATTACK, WALL_STICK, PARRY, DODGE, SPRINTING}
 
 var state: States = States.IDLE
 var prev_state: States = States.IDLE
@@ -48,7 +48,8 @@ var cur_state = "IDLE"
 @onready var hurt_box_detect = $HurtBox/CollisionShape2D
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var hurt_box = $HurtBox
-
+@onready var shotty = $AnimatedSprite2D/Shotty
+@onready var shotty_blast = $AnimatedSprite2D/ShottyBlast
 
 
 
@@ -60,6 +61,7 @@ var hit_box_pos
 
 var attack_combo = "Attack"
 var air_atk : bool = false
+var s_atk : bool = false
 var move_axis : int = 1
 
 func _ready():
@@ -69,6 +71,7 @@ func _ready():
 	pb_left.disabled=true
 	pb_right.disabled=true
 	set_start_pos(global_position)
+	#s_atk=true
 
 func _process(delta):
 	var input_axis = Input.get_axis("walk_left", "walk_right")
@@ -79,6 +82,9 @@ func _process(delta):
 			cur_state="ATTACK"
 			set_state(state, States.ATTACK)
 			#await anim_player.animation_finished
+		States.SPECIAL_ATTACK:
+			cur_state="SPECIAL_ATTACK"
+			set_state(state, States.SPECIAL_ATTACK)
 		States.IDLE:
 			#hit_timer.start()
 			#hit_timer.paused = true
@@ -112,9 +118,9 @@ func _process(delta):
 	elif input_axis == 0:
 		move_axis = 0
 	
-	handle_hitbox()
+	handle_hitbox(input_axis)
 	
-	if(state!=States.DODGE):
+	if(state!=States.DODGE and s_atk==false):
 		parry()
 		attack_animate()
 		update_animation(input_axis)
@@ -123,69 +129,74 @@ func _process(delta):
 
 func _physics_process(delta):
 	
-	if dodge_state == true:
-		state = States.DODGE
-	# Add the gravity.
-	if(dodge_state==false):
-		apply_gravity(delta) 
-	var input_axis = Input.get_axis("walk_left", "walk_right")
-	
-
-	
-	#print(dodge_timer.time_left)
-	#print(parry_stance)
-	var wall_hold = false
-	if(state!=States.DODGE):
-		handle_wall_jump(wall_hold, delta)
-		jump(input_axis, delta)
-		handle_acceleration(input_axis, delta)
-		handle_air_acceleration(input_axis, delta)
-		apply_friction(input_axis, delta)
-		apply_air_resistance(input_axis, delta)
-		if Input.is_action_pressed("sprint"):
-			state=States.SPRINTING
-			movement_data = load("res://FasterMovementData.tres")
-		if Input.is_action_pressed("walk"):
-			movement_data = load("res://SlowMovementData.tres")
-		if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
-			movement_data = load("res://DefaultMovementData.tres")
-	
-
-	#print(input_axis)
-	
-	var was_on_floor = is_on_floor()
-	move_and_slide()
-	var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
-	if just_left_ledge:
-		coyote_jump_timer.start()
-	#if Input.is_action_pressed("sprint"):
-		#state=States.SPRINTING
-		#movement_data = load("res://FasterMovementData.tres")
-	#if Input.is_action_pressed("walk"):
-		#movement_data = load("res://SlowMovementData.tres")
-	#if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
-		#movement_data = load("res://DefaultMovementData.tres")
-	just_wall_jump = false
-	
-
-	#print(hit_timer.time_left)
-	label.text=str(atk_chain)
-	
-	
-	knockback = lerp(knockback, Vector2.ZERO, 0.1)
-	
-	#wall hold check
-	if not is_on_wall() or not Input.is_action_pressed("sprint"):
-		wall_hold=false
-		#print("wall hold false")
-		gravity = 980
+	if s_atk==true:
+		pass
 	else:
-		#print("wall hold true")
-		state = States.WALL_STICK
-		velocity.x =0
-		velocity.y = 0
-		gravity = 0
-	
+		if dodge_state == true:
+			state = States.DODGE
+		# Add the gravity.
+		if(dodge_state==false):
+			apply_gravity(delta) 
+		var input_axis = Input.get_axis("walk_left", "walk_right")
+		
+
+		
+		#print(dodge_timer.time_left)
+		#print(parry_stance)
+		var wall_hold = false
+		if(state!=States.DODGE):
+			handle_wall_jump(wall_hold, delta)
+			jump(input_axis, delta)
+			handle_acceleration(input_axis, delta)
+			handle_air_acceleration(input_axis, delta)
+			apply_friction(input_axis, delta)
+			apply_air_resistance(input_axis, delta)
+			if Input.is_action_pressed("sprint"):
+				state=States.SPRINTING
+				movement_data = load("res://FasterMovementData.tres")
+			if Input.is_action_pressed("walk"):
+				movement_data = load("res://SlowMovementData.tres")
+			if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
+				movement_data = load("res://DefaultMovementData.tres")
+		
+		if state==States.SPECIAL_ATTACK:
+			velocity=Vector2.ZERO
+			gravity=0
+		#print(input_axis)
+		
+		var was_on_floor = is_on_floor()
+		move_and_slide()
+		var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
+		if just_left_ledge:
+			coyote_jump_timer.start()
+		#if Input.is_action_pressed("sprint"):
+			#state=States.SPRINTING
+			#movement_data = load("res://FasterMovementData.tres")
+		#if Input.is_action_pressed("walk"):
+			#movement_data = load("res://SlowMovementData.tres")
+		#if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
+			#movement_data = load("res://DefaultMovementData.tres")
+		just_wall_jump = false
+		
+
+		#print(hit_timer.time_left)
+		label.text=str(atk_chain)
+		
+		
+		knockback = lerp(knockback, Vector2.ZERO, 0.1)
+		
+		#wall hold check
+		if not is_on_wall() or not Input.is_action_pressed("sprint"):
+			wall_hold=false
+			#print("wall hold false")
+			gravity = 980
+		else:
+			#print("wall hold true")
+			state = States.WALL_STICK
+			velocity.x =0
+			velocity.y = 0
+			gravity = 0
+		
 
 # Add the gravity.
 func apply_gravity(delta):
@@ -280,8 +291,15 @@ func update_animation(input_axis):
 	#var right = Input.is_action_pressed("walk_right")
 	if input_axis != 0:
 		
-		animated_sprite_2d.flip_h = (input_axis<0)
-		if state != States.ATTACK:
+		#animated_sprite_2d.flip_h = (input_axis<0)
+		if input_axis<0:
+			if animated_sprite_2d.scale.x>0:
+				animated_sprite_2d.scale.x *= -1
+		else:
+			if animated_sprite_2d.scale.x<0:
+				animated_sprite_2d.scale.x *= -1
+				
+		if state != States.ATTACK and s_atk==false:
 			state = States.WALKING
 		#idle_state=false
 
@@ -351,10 +369,24 @@ func attack_animate():
 		
 		
 			
-	
-	if not attack_timer.time_left > 0.0:
-			atk_chain = 0
-			attack_combo = "Attack"
+	if Input.is_action_just_pressed("special_attack") and state != States.SPECIAL_ATTACK:
+		
+		if attack_timer.is_stopped():
+			attack_timer.start()
+		state=States.SPECIAL_ATTACK
+		set_state(state, States.SPECIAL_ATTACK)
+		attack_timer.paused = false
+		s_atk=true
+		await anim_player.animation_finished
+		s_atk=false
+
+	#elif (Input.is_action_just_released("special_attack")):
+		#print("attack released")
+		#attack_timer.paused = false
+		#await anim_player.animation_finished
+	#if not attack_timer.time_left > 0.0:
+			#atk_chain = 0
+			#attack_combo = "Attack"
 			#print("Attack Restart")
 
 func parry():
@@ -422,9 +454,9 @@ func dodge(input_axis, delta):
 		state = States.IDLE
 	
 	
-func handle_hitbox():
+func handle_hitbox(input_axis):
 	if state== States.ATTACK:
-		if animated_sprite_2d.flip_h:
+		if input_axis<0:
 			hb_left.disabled=false
 			hb_right.disabled=true
 		else:
@@ -456,8 +488,15 @@ func set_state(current_state, new_state: int) -> void:
 			#cur_state="ATTACK"
 			anim_player.speed_scale=1.5
 			anim_player.play(attack_combo)
-			
 			if air_atk==true:
+			
+				velocity=Vector2.ZERO
+				gravity=0
+				
+		States.SPECIAL_ATTACK:
+			anim_player.speed_scale=1.5
+			anim_player.play("shotgun_attack")
+			if not is_on_floor():
 			
 				velocity=Vector2.ZERO
 				gravity=0
@@ -551,8 +590,15 @@ func _on_animation_player_animation_finished(anim_name):
 			#print("Attack Finished")
 		
 		state=prev_state
-	
+	elif state==States.SPECIAL_ATTACK:
+		if anim_name=="shotgun_attack":
+			print("special finished")
+			s_atk=false
+			state=States.IDLE
+			#set_state(state, States.IDLE)
 
-
-
+func _on_attack_timer_timeout():
+	atk_chain = 0
+	attack_combo = "Attack"
+	#s_atk=false
 
