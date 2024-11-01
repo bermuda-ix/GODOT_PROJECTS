@@ -49,8 +49,8 @@ var cur_state = "IDLE"
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var hurt_box = $HurtBox
 @onready var shotty = $AnimatedSprite2D/Shotty
-@onready var sp_atk_hit_box = $SpAtkHitBox
-@onready var sp_atk_cone = $SpAtkHitBox/SpAtkCone
+@onready var sp_atk_hit_box = $AnimatedSprite2D/Shotty/SpAtkHitBox
+@onready var sp_atk_cone = $AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone
 
 
 

@@ -63,7 +63,7 @@ func _ready():
 	bt_player.blackboard.set_var("phase", phase)
 	bt_player.blackboard.set_var("final_hit", false)
 	turret.setup(3)
-	turret_body.visible=true
+	turret_body.visible=false
 	chase_timer.start(5)
 	bullet = WAVE_PROJECTILE
 	turret.set_multi_shot(false)
@@ -363,6 +363,7 @@ func _on_turret_shoot_bullet():
 		bullet_inst.dir = (bullet_dir)
 		bullet_inst.spawnRot = bullet_dir.angle()
 	bullet_inst.spawnPos = Vector2(position.x, position.y)
+	
 	
 	get_tree().current_scene.add_child(bullet_inst)
 

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://y41334wummex"]
+[gd_scene load_steps=6 format=3 uid="uid://y41334wummex"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_wweet"]
 [ext_resource type="PackedScene" uid="uid://bqd8587bfopmc" path="res://levels/boss_test.tscn" id="2_7soqr"]
 [ext_resource type="PackedScene" uid="uid://ckut0dvkbw0oi" path="res://chars/mech_enemy.tscn" id="2_s4xm7"]
 [ext_resource type="PackedScene" uid="uid://dmk1m13knr7mq" path="res://chars/robot_enemy.tscn" id="3_ej7ve"]
+[ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_5c65i"]
 
 [node name="EnemyTest" instance=ExtResource("1_wweet")]
 next_level = ExtResource("2_7soqr")
@@ -42,3 +43,15 @@ position = Vector2(1336, -120)
 
 [node name="robot_enemy5" parent="." index="11" instance=ExtResource("3_ej7ve")]
 position = Vector2(1584, -72)
+
+[node name="flying_enemy2" parent="." index="12" instance=ExtResource("5_5c65i")]
+position = Vector2(1056, -128)
+
+[node name="flying_enemy" parent="." index="13" instance=ExtResource("5_5c65i")]
+position = Vector2(568, -184)
+
+[node name="flying_enemy3" parent="." index="14" instance=ExtResource("5_5c65i")]
+position = Vector2(1512, -248)
+
+[node name="flying_enemy4" parent="." index="15" instance=ExtResource("5_5c65i")]
+position = Vector2(1800, -120)
