@@ -135,6 +135,7 @@ Pause={
 2d_physics/layer_11="AttackRange"
 2d_physics/layer_12="Checkpoint"
 2d_physics/layer_13="Bullet"
+2d_physics/layer_14="SpAtkPlayer"
 
 [rendering]
 

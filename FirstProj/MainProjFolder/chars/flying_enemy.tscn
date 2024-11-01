@@ -1,0 +1,104 @@
+[gd_scene load_steps=11 format=3 uid="uid://cmbh5yrvkl5a6"]
+
+[ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_4opfk"]
+[ext_resource type="Script" path="res://chars/flying_enemy.gd" id="2_avqxo"]
+[ext_resource type="Texture2D" uid="uid://bwsnnivuol0h2" path="res://Art_Components/Enemies/creatures edit_0.png" id="2_ga466"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kgcfl"]
+atlas = ExtResource("2_ga466")
+region = Rect2(0, 384, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ggnjq"]
+atlas = ExtResource("2_ga466")
+region = Rect2(32, 384, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u11lx"]
+atlas = ExtResource("2_ga466")
+region = Rect2(64, 384, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l6o7e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kgcfl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ggnjq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u11lx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ggnjq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wnnks"]
+radius = 19.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gt2wk"]
+size = Vector2(27, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0dbrs"]
+size = Vector2(25.5, 27.5)
+
+[node name="flying_enemy" instance=ExtResource("1_4opfk")]
+collision_layer = 0
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("2_avqxo")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="0"]
+debug_enabled = true
+
+[node name="NavTimer" type="Timer" parent="." index="1"]
+wait_time = 0.5
+autostart = true
+
+[node name="AnimatedSprite2D" parent="." index="2"]
+sprite_frames = SubResource("SpriteFrames_l6o7e")
+frame_progress = 0.740218
+
+[node name="CollisionShape2D" parent="." index="4"]
+position = Vector2(0.5, -24)
+shape = SubResource("CircleShape2D_wnnks")
+
+[node name="FloorChecksRight" parent="FloorChecks" index="1"]
+position = Vector2(24, -24)
+
+[node name="FloorJumpCheckRight" parent="JumpChecks" index="0"]
+position = Vector2(16, -24)
+
+[node name="FloorJumpCheckLeft" parent="JumpChecks" index="1"]
+position = Vector2(-16, -24)
+
+[node name="GapCheckLeft" parent="JumpChecks" index="2"]
+position = Vector2(-16, -24)
+
+[node name="GapCheckRight" parent="JumpChecks" index="3"]
+position = Vector2(16, -24)
+
+[node name="LeapUpCheckLeft" parent="JumpChecks" index="4"]
+position = Vector2(-16, -24)
+
+[node name="LeapUpCheckRight" parent="JumpChecks" index="5"]
+position = Vector2(16, -24)
+
+[node name="HurtBox" parent="." index="13" node_paths=PackedStringArray("health")]
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(0.5, -24)
+shape = SubResource("RectangleShape2D_gt2wk")
+
+[node name="HitBox" parent="." index="14" node_paths=PackedStringArray("stagger")]
+stagger = NodePath("../Stagger")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2(0.25, -24.75)
+shape = SubResource("RectangleShape2D_0dbrs")
+
+[connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]

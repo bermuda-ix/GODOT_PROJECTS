@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://dlh7n5loge7vo"]
+
+[ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_j2h2q"]
+[ext_resource type="Texture2D" uid="uid://bwsnnivuol0h2" path="res://Art_Components/Enemies/creatures edit_0.png" id="2_iq3ap"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4i6be"]
+atlas = ExtResource("2_iq3ap")
+region = Rect2(0, 224, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qklr2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4i6be")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g3357"]
+radius = 28.5175
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m6ifn"]
+size = Vector2(30, 31)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_36rkh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7nopq"]
+radius = 32.0156
+
+[node name="robot_enemy" instance=ExtResource("1_j2h2q")]
+motion_mode = 1
+wall_min_slide_angle = 0.0
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_qklr2")
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2(-0.5, -24)
+shape = SubResource("CircleShape2D_g3357")
+
+[node name="HurtBox" parent="." index="11" node_paths=PackedStringArray("health")]
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(0, -23.5)
+shape = SubResource("RectangleShape2D_m6ifn")
+
+[node name="HitBox" parent="." index="12" node_paths=PackedStringArray("stagger")]
+stagger = NodePath("../Stagger")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2(-8, -18)
+shape = SubResource("RectangleShape2D_36rkh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" index="0"]
+position = Vector2(0, -24)
+shape = SubResource("CircleShape2D_7nopq")

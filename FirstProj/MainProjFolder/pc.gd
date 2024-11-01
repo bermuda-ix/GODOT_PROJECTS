@@ -49,7 +49,8 @@ var cur_state = "IDLE"
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var hurt_box = $HurtBox
 @onready var shotty = $AnimatedSprite2D/Shotty
-@onready var shotty_blast = $AnimatedSprite2D/ShottyBlast
+@onready var sp_atk_hit_box = $SpAtkHitBox
+@onready var sp_atk_cone = $SpAtkHitBox/SpAtkCone
 
 
 
@@ -63,6 +64,7 @@ var attack_combo = "Attack"
 var air_atk : bool = false
 var s_atk : bool = false
 var move_axis : int = 1
+var sp_atk_type = sp_atk_cone
 
 func _ready():
 	hit_box_pos=hit_box.position
@@ -71,7 +73,8 @@ func _ready():
 	pb_left.disabled=true
 	pb_right.disabled=true
 	set_start_pos(global_position)
-	#s_atk=true
+	sp_atk_type = sp_atk_cone
+	
 
 func _process(delta):
 	var input_axis = Input.get_axis("walk_left", "walk_right")
@@ -151,6 +154,7 @@ func _physics_process(delta):
 			handle_air_acceleration(input_axis, delta)
 			apply_friction(input_axis, delta)
 			apply_air_resistance(input_axis, delta)
+			sp_atk()
 			if Input.is_action_pressed("sprint"):
 				state=States.SPRINTING
 				movement_data = load("res://FasterMovementData.tres")
@@ -388,6 +392,11 @@ func attack_animate():
 			#atk_chain = 0
 			#attack_combo = "Attack"
 			#print("Attack Restart")
+
+func sp_atk():
+	shotty.look_at(get_global_mouse_position())
+	#sp_atk_hit_box.look_at(get_global_mouse_position())
+
 
 func parry():
 

@@ -1,13 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://qfmh1u77hjyy"]
+[gd_scene load_steps=7 format=3 uid="uid://qfmh1u77hjyy"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_vm2d0"]
+[ext_resource type="PackedScene" uid="uid://y41334wummex" path="res://levels/enemy_test.tscn" id="2_levgc"]
 [ext_resource type="PackedScene" uid="uid://cct4l6ox78gsb" path="res://Art_Components/city_tileset/TEST_COMP/tile_map.tscn" id="2_mn0vm"]
 [ext_resource type="PackedScene" uid="uid://cqiybjbg0wei7" path="res://spikes.tscn" id="3_ooya7"]
 [ext_resource type="PackedScene" uid="uid://d05v7tm7kmcj7" path="res://heart.tscn" id="4_aw8qk"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="6_q2ogh"]
 
 [node name="platform_test" instance=ExtResource("1_vm2d0")]
-next_level = null
+next_level = ExtResource("2_levgc")
 
 [node name="PC" parent="." index="0"]
 position = Vector2(16, 112)
