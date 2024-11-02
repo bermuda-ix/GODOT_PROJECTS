@@ -5,7 +5,7 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
-
+#pathfinding
 @onready var wall_check_left = $WallChecks/WallCheckLeft as RayCast2D
 @onready var wall_check_right = $WallChecks/WallCheckRight as RayCast2D
 @onready var floor_checks_left = $FloorChecks/FloorChecksLeft as RayCast2D
@@ -15,6 +15,7 @@ const JUMP_VELOCITY = -400.0
 @onready var chase_timer = $ChaseTimer as Timer
 @onready var animated_sprite_2d = $AnimatedSprite2D as AnimatedSprite2D
 @onready var animation_player = $AnimationPlayer as AnimationPlayer
+@onready var nav_agent = $NavigationAgent2D
 
 
 
@@ -88,7 +89,8 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
-
+	
+	var dir = to_local(nav_agent.get_next_path_position()).normalized()
 	## Handle jump.
 	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		#velocity.y = JUMP_VELOCITY
@@ -227,8 +229,9 @@ func on_timer_timeout() -> void:
 	if player_found == false:
 		set_state(current_state, States.WANDER)
 		
-		
-	
+func makepath() -> void:
+	nav_agent.target_position = player.global_position
+
 func set_state(cur_state, new_state) -> void:
 	var state
 	if(cur_state == new_state):
@@ -352,3 +355,7 @@ func _on_attack_range_body_entered(_body):
 	attacking=false
 	
 
+
+
+func _on_navigation_timer_timeout():
+	makepath()

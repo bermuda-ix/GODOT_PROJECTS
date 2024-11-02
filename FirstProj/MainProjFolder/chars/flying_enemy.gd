@@ -19,7 +19,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var stg_laber = $stg_laber
 
 var player_found : bool = false
-
+var found : bool = false
 
 enum States{
 	WANDER,
@@ -50,7 +50,7 @@ func _physics_process(delta):
 	var vel_y_default = velocity.y
 	var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 	
-	if player_found:
+	if found:
 		move_and_slide()
 	
 	if current_state==States.CHASE:
@@ -86,6 +86,7 @@ func handle_vision():
 				set_state(current_state, States.CHASE)
 				#chase_timer.start(1)
 				player_found = true
+				found = true
 				#print("found")
 			
 	else:
@@ -121,7 +122,7 @@ func set_state(cur_state, new_state) -> void:
 				#animation_player.play("attack")
 				#await animation_player.animation_finished
 		
-		print(state)
+		#print(state)
 
 func _on_nav_timer_timeout():
 	makepath()
@@ -144,7 +145,7 @@ func _on_turret_shoot_bullet():
 
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("sp_atk_default"):
-		print("spc_hit")
+		#print("spc_hit")
 		stagger.stagger -= 1
 
 

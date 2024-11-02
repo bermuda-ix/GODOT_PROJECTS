@@ -90,23 +90,23 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("2_avqxo")
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="0"]
+[node name="NavigationAgent2D2" type="NavigationAgent2D" parent="." index="0"]
 debug_enabled = true
 
 [node name="NavTimer" type="Timer" parent="." index="1"]
 wait_time = 0.5
 autostart = true
 
-[node name="AnimatedSprite2D" parent="." index="2"]
+[node name="AnimatedSprite2D" parent="." index="3"]
 position = Vector2(0, 0)
 sprite_frames = SubResource("SpriteFrames_l6o7e")
 
-[node name="AnimationPlayer" parent="." index="3"]
+[node name="AnimationPlayer" parent="." index="4"]
 libraries = {
 "": SubResource("AnimationLibrary_h1g2h")
 }
 
-[node name="CollisionShape2D" parent="." index="4"]
+[node name="CollisionShape2D" parent="." index="5"]
 position = Vector2(0.5, 0)
 shape = SubResource("CircleShape2D_wnnks")
 
@@ -122,7 +122,7 @@ position = Vector2(-24, 0)
 [node name="FloorChecksRight" parent="FloorChecks" index="1"]
 position = Vector2(24, 0)
 
-[node name="PlayerTrackerPivot" parent="." index="7"]
+[node name="PlayerTrackerPivot" parent="." index="8"]
 position = Vector2(0, 0)
 
 [node name="FloorJumpCheckRight" parent="JumpChecks" index="0"]
@@ -143,13 +143,13 @@ position = Vector2(-16, 0)
 [node name="LeapUpCheckRight" parent="JumpChecks" index="5"]
 position = Vector2(16, 0)
 
-[node name="ParryTimer" parent="." index="10"]
+[node name="ParryTimer" parent="." index="12"]
 wait_time = 5.0
 
-[node name="Health" parent="." index="12"]
+[node name="Health" parent="." index="14"]
 max_health = 1
 
-[node name="HurtBox" parent="." index="13" node_paths=PackedStringArray("health")]
+[node name="HurtBox" parent="." index="15" node_paths=PackedStringArray("health")]
 collision_mask = 8768
 health = NodePath("../Health")
 
@@ -157,16 +157,13 @@ health = NodePath("../Health")
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_gt2wk")
 
-[node name="HitBox" parent="." index="14" node_paths=PackedStringArray("stagger")]
+[node name="HitBox" parent="." index="16" node_paths=PackedStringArray("stagger")]
 position = Vector2(1, -1.90735e-06)
 scale = Vector2(0.96, 0.995272)
 stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
 shape = SubResource("RectangleShape2D_0dbrs")
-
-[node name="Stagger" parent="." index="16"]
-max_stagger = 1
 
 [node name="Turret" parent="." index="17" instance=ExtResource("4_g2l3k")]
 
@@ -177,9 +174,12 @@ offset_right = 30.0
 offset_bottom = -16.0
 text = "STAGGER:"
 
+[node name="Stagger" parent="." index="20"]
+max_stagger = 1
+
 [connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
-[connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
+[connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]

@@ -8,6 +8,8 @@
 
 [node name="base_enemy" type="CharacterBody2D" groups=["Enemy"]]
 
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -24)
 flip_h = true
@@ -68,6 +70,8 @@ target_position = Vector2(-56, -72)
 [node name="LeapUpCheckRight" type="RayCast2D" parent="JumpChecks"]
 position = Vector2(24, -24)
 target_position = Vector2(64, -72)
+
+[node name="NavigationTimer" type="Timer" parent="."]
 
 [node name="JumpTimer" type="Timer" parent="."]
 

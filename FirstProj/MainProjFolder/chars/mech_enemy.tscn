@@ -417,23 +417,30 @@ radius = 30.0167
 [node name="Mech_Enemy" instance=ExtResource("1_v27m8")]
 script = ExtResource("2_jjukm")
 
-[node name="AnimatedSprite2D" parent="." index="0"]
+[node name="NavigationAgent2D" parent="." index="0"]
+debug_enabled = true
+
+[node name="AnimatedSprite2D" parent="." index="1"]
 position = Vector2(0, -48)
 rotation = -3.14114
 sprite_frames = SubResource("SpriteFrames_qh0rx")
 animation = &"walk"
 
-[node name="AnimationPlayer" parent="." index="1"]
+[node name="AnimationPlayer" parent="." index="2"]
 libraries = {
 "": SubResource("AnimationLibrary_nsak1")
 }
 
-[node name="CollisionShape2D" parent="." index="2"]
+[node name="CollisionShape2D" parent="." index="3"]
 position = Vector2(-2.5, -24)
 shape = SubResource("RectangleShape2D_8mxw5")
 
-[node name="WallChecks" parent="." index="3"]
+[node name="WallChecks" parent="." index="4"]
 position = Vector2(0, 8)
+
+[node name="NavigationTimer" parent="." index="8"]
+wait_time = 0.1
+autostart = true
 
 [node name="HBar" type="Label" parent="." index="11"]
 offset_left = -32.0
@@ -442,14 +449,14 @@ offset_right = 30.0
 offset_bottom = -49.0
 text = "HEALTH"
 
-[node name="HurtBox" parent="." index="12" node_paths=PackedStringArray("health")]
+[node name="HurtBox" parent="." index="14" node_paths=PackedStringArray("health")]
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(-2, -24)
 shape = SubResource("RectangleShape2D_ohrrw")
 
-[node name="HitBox" parent="." index="13" node_paths=PackedStringArray("stagger")]
+[node name="HitBox" parent="." index="15" node_paths=PackedStringArray("stagger")]
 stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
@@ -458,7 +465,7 @@ rotation = 1.5708
 shape = SubResource("RectangleShape2D_3vrh8")
 disabled = true
 
-[node name="AttackRange" parent="." index="14"]
+[node name="AttackRange" parent="." index="16"]
 collision_layer = 1024
 collision_mask = 2
 
@@ -466,9 +473,10 @@ collision_mask = 2
 position = Vector2(0, -24)
 shape = SubResource("CircleShape2D_80ahk")
 
-[node name="Stagger" parent="." index="15"]
+[node name="Stagger" parent="." index="17"]
 max_stagger = 1
 
+[connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
