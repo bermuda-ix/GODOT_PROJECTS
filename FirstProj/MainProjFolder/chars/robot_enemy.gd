@@ -21,8 +21,9 @@ const JUMP_VELOCITY = -400.0
 @onready var floor_jump_check_left = $JumpChecks/FloorJumpCheckLeft as RayCast2D
 @onready var gap_check_left = $JumpChecks/GapCheckLeft as RayCast2D
 @onready var gap_check_right = $JumpChecks/GapCheckRight as RayCast2D
-@onready var leap_up_check_left = $JumpChecks/LeapUpCheckLeft as RayCast2D
-@onready var leap_up_check_right = $JumpChecks/LeapUpCheckRight as RayCast2D
+@onready var leap_up_check_left = $JumpChecks/LeapUpCheckLeft
+@onready var leap_up_check_right = $JumpChecks/LeapUpCheckRight
+
 
 @onready var health = $Health
 @onready var hurt_box = $HurtBox
@@ -155,7 +156,7 @@ func handle_movement() -> void:
 					
 				#current_state=States.JUMP
 			
-			if ( (leap_up_check_right.is_colliding() and current_speed>0 ) or (leap_up_check_left.is_colliding() and current_speed<0 ) ) and position.y-30>player.position.y:
+			if ( leap_up_check_left.has_overlapping_bodies() or leap_up_check_right.has_overlapping_bodies() ) and position.y-30>player.position.y:
 				velocity.y = jump_velocity*1.2
 			#
 			if direction.x < 0:

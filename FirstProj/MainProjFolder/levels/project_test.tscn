@@ -1,19 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=7 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
 [ext_resource type="PackedScene" uid="uid://ckut0dvkbw0oi" path="res://chars/mech_enemy.tscn" id="2_mxhnw"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ys1t2"]
-vertices = PackedVector2Array(518, -227, 691, -227, 691, -213, 493, -213, 430, -291, 479, -217, 410, -277, 389, 93, 523, 93, 523, 107, 371, 107, 331, 27, 349, 13, 253, 13, 173, 27, 140, 107, 29, 107, 29, 77, 123, 77, 148, 13, 224, 13, 210, -64, 187, -69, 13, -69, 13, -91, 170, -91, 258, -155, 253, -133, 445, -133, 435, -155, 223, -299, 209, -277, 127, -355, 105, -341, -59, -355, -59, -341)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5, 6), PackedInt32Array(7, 8, 9, 10), PackedInt32Array(7, 10, 11, 12), PackedInt32Array(13, 12, 11, 14), PackedInt32Array(15, 16, 17, 18), PackedInt32Array(14, 15, 18, 19), PackedInt32Array(14, 19, 20), PackedInt32Array(13, 14, 20), PackedInt32Array(21, 13, 20, 22), PackedInt32Array(22, 23, 24, 25), PackedInt32Array(21, 22, 25, 26, 27), PackedInt32Array(28, 27, 26, 29), PackedInt32Array(3, 28, 29, 5), PackedInt32Array(30, 4, 6, 31), PackedInt32Array(32, 30, 31, 33), PackedInt32Array(34, 32, 33, 35)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(24, 112, 144, 112, 176, 32, 328, 32, 368, 112, 528, 112, 528, 88, 392, 88, 352, 8, 256, 8, 216, -64, 256, -128, 448, -128, 496, -208, 696, -208, 696, -232, 520, -232, 432, -296, 224, -304, 128, -360, -64, -360, -64, -336, 104, -336, 208, -272, 408, -272, 472, -216, 432, -160, 256, -160, 168, -96, 8, -96, 8, -64, 184, -64, 216, 8, 144, 8, 120, 72, 24, 72)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 agent_radius = 5.0
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_f2p4u"]
+vertices = PackedVector2Array(150, 101, 18, 101, 18, 89, 150, 89)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(8, 79, 8, 111, 160, 111, 160, 79)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_yrn8s"]
+vertices = PackedVector2Array(198, 102, 10, 102, 10, 90, 198, 90)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, 80, 0, 112, 208, 112, 208, 80)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_b6fvs"]
+vertices = PackedVector2Array(166, 102, 18, 102, 18, 90, 166, 90)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(8, 112, 176, 112, 176, 80, 8, 80)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
 [node name="project_test" instance=ExtResource("1_07jkq")]
 
 [node name="PC" parent="." index="0"]
-position = Vector2(544, -224)
+position = Vector2(40, -353)
 
 [node name="LevelTileMap" parent="." index="2"]
 position = Vector2(1, 0)
@@ -26,3 +42,75 @@ scale = Vector2(1, 0.986982)
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." index="4"]
 navigation_polygon = SubResource("NavigationPolygon_ys1t2")
 navigation_layers = 2
+
+[node name="NavigationRegion2D2" type="NavigationRegion2D" parent="." index="5"]
+position = Vector2(16, 1)
+navigation_polygon = SubResource("NavigationPolygon_f2p4u")
+navigation_layers = 2
+
+[node name="NavigationRegion2D3" type="NavigationRegion2D" parent="." index="6"]
+position = Vector2(320, 0)
+navigation_polygon = SubResource("NavigationPolygon_yrn8s")
+navigation_layers = 2
+
+[node name="NavigationRegion2D4" type="NavigationRegion2D" parent="." index="7"]
+position = Vector2(160, -80)
+navigation_polygon = SubResource("NavigationPolygon_b6fvs")
+navigation_layers = 2
+
+[node name="NavigationRegion2D5" type="NavigationRegion2D" parent="." index="8"]
+position = Vector2(-8, -176)
+navigation_polygon = SubResource("NavigationPolygon_yrn8s")
+navigation_layers = 2
+
+[node name="NavigationRegion2D6" type="NavigationRegion2D" parent="." index="9"]
+position = Vector2(240, -240)
+navigation_polygon = SubResource("NavigationPolygon_yrn8s")
+navigation_layers = 2
+
+[node name="NavigationRegion2D7" type="NavigationRegion2D" parent="." index="10"]
+position = Vector2(488, -320)
+navigation_polygon = SubResource("NavigationPolygon_yrn8s")
+navigation_layers = 2
+
+[node name="NavigationRegion2D8" type="NavigationRegion2D" parent="." index="11"]
+position = Vector2(208, -384)
+navigation_polygon = SubResource("NavigationPolygon_yrn8s")
+navigation_layers = 2
+
+[node name="NavigationRegion2D9" type="NavigationRegion2D" parent="." index="12"]
+position = Vector2(-72, -448)
+navigation_polygon = SubResource("NavigationPolygon_yrn8s")
+navigation_layers = 2
+
+[node name="NavigationLink2D" type="NavigationLink2D" parent="." index="13"]
+position = Vector2(152, 96)
+navigation_layers = 2
+start_position = Vector2(32, -80)
+
+[node name="NavigationLink2D2" type="NavigationLink2D" parent="." index="14"]
+position = Vector2(1, 0)
+start_position = Vector2(344, 96)
+end_position = Vector2(319, 16)
+
+[node name="NavigationLink2D3" type="NavigationLink2D" parent="." index="15"]
+start_position = Vector2(208, 16)
+end_position = Vector2(184, -80)
+
+[node name="NavigationLink2D4" type="NavigationLink2D" parent="." index="16"]
+start_position = Vector2(168, -80)
+end_position = Vector2(256, -144)
+
+[node name="NavigationLink2D5" type="NavigationLink2D" parent="." index="17"]
+position = Vector2(232, -120)
+start_position = Vector2(272, -104)
+end_position = Vector2(200, -24)
+
+[node name="NavigationLink2D6" type="NavigationLink2D" parent="." index="18"]
+start_position = Vector2(520, -224)
+end_position = Vector2(400, -288)
+
+[node name="NavigationLink2D7" type="NavigationLink2D" parent="." index="19"]
+position = Vector2(-8, -8)
+start_position = Vector2(232, -280)
+end_position = Vector2(128, -344)
