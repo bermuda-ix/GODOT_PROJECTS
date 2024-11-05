@@ -63,13 +63,17 @@ target_position = Vector2(-96, 32)
 position = Vector2(24, -24)
 target_position = Vector2(104, 32)
 
-[node name="LeapUpCheckLeft" type="RayCast2D" parent="JumpChecks"]
+[node name="LeapUpCheckLeft" type="Area2D" parent="JumpChecks"]
 position = Vector2(-32, -24)
-target_position = Vector2(-56, -72)
 
-[node name="LeapUpCheckRight" type="RayCast2D" parent="JumpChecks"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="JumpChecks/LeapUpCheckLeft"]
+polygon = PackedVector2Array(-88, -16, -56, -56, 0, 0)
+
+[node name="LeapUpCheckRight" type="Area2D" parent="JumpChecks"]
 position = Vector2(24, -24)
-target_position = Vector2(64, -72)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="JumpChecks/LeapUpCheckRight"]
+polygon = PackedVector2Array(88, -16, 64, -56, 0, 0)
 
 [node name="NavigationTimer" type="Timer" parent="."]
 

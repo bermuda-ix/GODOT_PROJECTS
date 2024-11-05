@@ -22,8 +22,8 @@ LevelTransition="*res://LVL_Transitions/level_transition.tscn"
 
 [display]
 
-window/size/viewport_width=320
-window/size/viewport_height=180
+window/size/viewport_width=576
+window/size/viewport_height=324
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
@@ -130,13 +130,10 @@ switch_ammo_down={
 2d_physics/layer_1="World"
 2d_navigation/layer_1="World"
 2d_physics/layer_2="Player"
-2d_navigation/layer_2="Player"
+2d_navigation/layer_2="Ground"
 2d_physics/layer_3="Hazard"
-2d_navigation/layer_3="Hazard"
 2d_physics/layer_4="Hitbox"
-2d_navigation/layer_4="Hitbox"
 2d_physics/layer_5="Hurtbox"
-2d_navigation/layer_5="Hurtbox"
 2d_physics/layer_6="Collectable"
 2d_physics/layer_7="PlayerHitbox"
 2d_physics/layer_8="PlayerHurtbox"

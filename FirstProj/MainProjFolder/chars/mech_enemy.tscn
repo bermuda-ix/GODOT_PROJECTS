@@ -405,8 +405,8 @@ _data = {
 "walking": SubResource("Animation_0lf1b")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8mxw5"]
-size = Vector2(39, 48)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_os6jg"]
+size = Vector2(40, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohrrw"]
 size = Vector2(44, 48)
@@ -415,9 +415,11 @@ size = Vector2(44, 48)
 radius = 30.0167
 
 [node name="Mech_Enemy" instance=ExtResource("1_v27m8")]
+floor_stop_on_slope = false
 script = ExtResource("2_jjukm")
 
 [node name="NavigationAgent2D" parent="." index="0"]
+navigation_layers = 3
 debug_enabled = true
 
 [node name="AnimatedSprite2D" parent="." index="1"]
@@ -432,15 +434,19 @@ libraries = {
 }
 
 [node name="CollisionShape2D" parent="." index="3"]
-position = Vector2(-2.5, -24)
-shape = SubResource("RectangleShape2D_8mxw5")
+position = Vector2(-2, -24)
+shape = SubResource("RectangleShape2D_os6jg")
 
 [node name="WallChecks" parent="." index="4"]
 position = Vector2(0, 8)
 
 [node name="NavigationTimer" parent="." index="8"]
-wait_time = 0.1
+process_callback = 0
+wait_time = 0.2
 autostart = true
+
+[node name="JumpTimer" parent="." index="9"]
+one_shot = true
 
 [node name="HBar" type="Label" parent="." index="11"]
 offset_left = -32.0
@@ -448,6 +454,9 @@ offset_top = -72.0
 offset_right = 30.0
 offset_bottom = -49.0
 text = "HEALTH"
+
+[node name="ChaseTimer" parent="." index="12"]
+wait_time = 10.0
 
 [node name="HurtBox" parent="." index="14" node_paths=PackedStringArray("health")]
 health = NodePath("../Health")
@@ -476,6 +485,7 @@ shape = SubResource("CircleShape2D_80ahk")
 [node name="Stagger" parent="." index="17"]
 max_stagger = 1
 
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]

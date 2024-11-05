@@ -419,20 +419,20 @@ one_shot = true
 [node name="ShootChangeTimer" type="Timer" parent="." index="11"]
 one_shot = true
 
-[node name="ChaseTimer" parent="." index="12"]
+[node name="ChaseTimer" parent="." index="13"]
 one_shot = true
 
-[node name="Health" parent="." index="13"]
+[node name="Health" parent="." index="14"]
 max_health = 10
 
-[node name="HurtBox" parent="." index="14" node_paths=PackedStringArray("health")]
+[node name="HurtBox" parent="." index="15" node_paths=PackedStringArray("health")]
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(0, -25)
 shape = SubResource("RectangleShape2D_mfd8p")
 
-[node name="HitBox" parent="." index="15" node_paths=PackedStringArray("stagger")]
+[node name="HitBox" parent="." index="16" node_paths=PackedStringArray("stagger")]
 stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
@@ -459,8 +459,8 @@ scale = Vector2(0.049308, 0.00735294)
 sprite_frames = SubResource("SpriteFrames_qaj1r")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="ShootChangeTimer" to="." method="_on_shoot_change_timer_timeout"]
+[connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="ChaseTimer" to="." method="_on_chase_timer_timeout"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
