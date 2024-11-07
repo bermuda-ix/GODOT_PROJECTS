@@ -419,7 +419,7 @@ floor_stop_on_slope = false
 script = ExtResource("2_jjukm")
 
 [node name="NavigationAgent2D" parent="." index="0"]
-navigation_layers = 3
+navigation_layers = 2
 debug_enabled = true
 
 [node name="AnimatedSprite2D" parent="." index="1"]

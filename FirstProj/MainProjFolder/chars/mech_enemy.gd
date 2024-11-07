@@ -18,7 +18,7 @@ const JUMP_VELOCITY = -400.0
 @onready var nav_agent = $NavigationAgent2D
 @onready var jump_timer = $JumpTimer
 
-
+@export var drop = preload("res://heart.tscn")
 
 @onready var floor_jump_check_right = $JumpChecks/FloorJumpCheckRight as RayCast2D
 @onready var floor_jump_check_left = $JumpChecks/FloorJumpCheckLeft as RayCast2D
@@ -132,7 +132,7 @@ func _physics_process(delta):
 	
 	#print(state, ": ", current_state, prev_state)	
 	#print(current_speed)
-	print(is_on_floor())
+	#print(is_on_floor())
 	if current_state==States.JUMP:
 		print("in air")
 	handl_animation()
@@ -183,6 +183,7 @@ func handle_movement() -> void:
 	elif current_state == States.CHASE:
 		if player_found == true:
 			var dir = to_local(nav_agent.get_next_path_position())
+			
 			#print("moving to player")
 			#if next_y<position.y:
 				#if (not floor_checks_right.is_colliding()) and (floor_jump_check_right.is_colliding()) and is_on_floor(): 
@@ -322,6 +323,9 @@ func set_state(cur_state, new_state) -> void:
 
 
 func _on_health_health_depleted():
+	var drop_inst=drop.instantiate()
+	drop_inst.spawnPos = Vector2(position.x, position.y)
+	get_tree().current_scene.add_child(drop_inst)
 	queue_free()
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 	if enemies.size() <=1:

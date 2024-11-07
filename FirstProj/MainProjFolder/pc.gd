@@ -74,7 +74,7 @@ func _ready():
 	pb_right.disabled=true
 	set_start_pos(global_position)
 	sp_atk_type = sp_atk_cone
-	
+	health.health=3
 
 func _process(delta):
 	var input_axis = Input.get_axis("walk_left", "walk_right")
@@ -575,6 +575,9 @@ func _on_hurt_box_area_entered(area):
 		velocity.y=movement_data.jump_velocity/2
 		velocity.x = movement_data.speed + knockback.x
 		health.health -= 1
+		
+	if area.is_in_group("Hearts"):
+		health.health+=1
 	
 
 #Setting starting positions for level starts and checkpoints

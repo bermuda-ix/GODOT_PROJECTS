@@ -18,6 +18,8 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 
 @onready var stg_laber = $stg_laber
 
+@export var drop = preload("res://heart.tscn")
+
 var player_found : bool = false
 var found : bool = false
 
