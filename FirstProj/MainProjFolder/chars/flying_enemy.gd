@@ -38,6 +38,7 @@ func _ready():
 	animation_player.play("default")
 	turret.setup(2)
 	turret.shoot_timer.paused=true
+	player_found=true
 	
 func _process(delta):
 	track_player()
@@ -78,22 +79,22 @@ func makepath() -> void:
 	nav_agent.target_position = player.global_position
 
 func handle_vision():
-	if player_tracking.is_colliding():
-		var collision_result = player_tracking.get_collider()
-		
-		if collision_result != player:
-			return
-		else:
-			if parry_timer.is_stopped():
-				set_state(current_state, States.CHASE)
-				#chase_timer.start(1)
-				player_found = true
-				found = true
-				#print("found")
-			
-	else:
-		player_found = false
-		
+	#if player_tracking.is_colliding():
+		#var collision_result = player_tracking.get_collider()
+		#
+		#if collision_result != player:
+			#return
+		#else:
+			#if parry_timer.is_stopped():
+				#set_state(current_state, States.CHASE)
+				##chase_timer.start(1)
+				#player_found = true
+				#found = true
+				##print("found")
+			#
+	#else:
+		#player_found = false
+	player_found=true
 func track_player():
 	if player == null:
 		return

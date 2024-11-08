@@ -11,7 +11,7 @@ extends Node2D
 @onready var label = $CanvasLayer/Label
 @onready var pause_menu = $CanvasLayer/PauseMenu
 
-
+@export var lvl_type = "goal"
 
 var cur_state = "IDLE"
 var cur_health = 3
@@ -40,10 +40,14 @@ func _process(_delta):
 	set_state()
 	get_health()
 	set_health()
-	if obj<=1:
-		Events.level_completed.connect(show_level_complete)
-		#print("leven complete")
-	label.text=str("Obj: ",obj)
+	
+	if lvl_type=="goal":
+	
+		if obj<=1:
+			Events.level_completed.connect(show_level_complete)
+			#print("leven complete")
+		label.text=str("Obj: ",obj)
+	
 	
 	if Input.is_action_just_pressed("Pause"):
 		show_pause()

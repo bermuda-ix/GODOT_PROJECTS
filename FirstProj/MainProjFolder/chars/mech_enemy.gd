@@ -324,7 +324,7 @@ func set_state(cur_state, new_state) -> void:
 
 func _on_health_health_depleted():
 	var drop_inst=drop.instantiate()
-	drop_inst.spawnPos = Vector2(position.x, position.y)
+	drop_inst.global_position = Vector2(position.x, position.y)
 	get_tree().current_scene.add_child(drop_inst)
 	queue_free()
 	var enemies = get_tree().get_nodes_in_group("Enemy")

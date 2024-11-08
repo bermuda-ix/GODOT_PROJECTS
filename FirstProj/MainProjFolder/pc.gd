@@ -121,7 +121,7 @@ func _process(delta):
 	elif input_axis == 0:
 		move_axis = 0
 	
-	handle_hitbox(input_axis)
+	handle_hitbox(input_axis, face_right)
 	
 	if(state!=States.DODGE and s_atk==false):
 		parry()
@@ -463,9 +463,9 @@ func dodge(input_axis, delta):
 		state = States.IDLE
 	
 	
-func handle_hitbox(input_axis):
+func handle_hitbox(input_axis, face_right):
 	if state== States.ATTACK:
-		if input_axis<0:
+		if not face_right:
 			hb_left.disabled=false
 			hb_right.disabled=true
 		else:

@@ -37,7 +37,7 @@ var player : PlayerEntity = null
 @onready var multi_shot : bool = true
 @onready var final_hit : bool = false
 
-
+@export var center : Vector2 = Vector2(272,60)
 
 var atk : int = 1
 var atk_cmb : String = "attack_1"
@@ -202,8 +202,8 @@ func center_fly():
 	if (global_position.x!=272 or global_position.y>40) and final_hit==false:
 		#print("moving to center")
 		gravity=0
-		global_position.x=lerpf(global_position.x, 272, .1)
-		global_position.y=lerpf(global_position.y, 60, .1)
+		global_position.x=lerpf(global_position.x, center.x, .1)
+		global_position.y=lerpf(global_position.y, center.y, .1)
 	elif final_hit==true:
 		gravity=grav
 

@@ -394,6 +394,7 @@ animations = [{
 
 [node name="boss_enemy_bt" instance=ExtResource("1_rw6eu")]
 script = ExtResource("2_u1ga7")
+center = Vector2(528, 136)
 
 [node name="AnimatedSprite2D" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_7ugna")
