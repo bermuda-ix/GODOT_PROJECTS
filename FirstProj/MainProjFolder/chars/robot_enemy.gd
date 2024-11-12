@@ -51,6 +51,7 @@ var jump_velocity = JUMP_VELOCITY
 var knockback : Vector2 = Vector2.ZERO
 var parried : bool = false 
 var attacking : bool = false
+var pckscn : Node = null
 
 enum States{
 	WANDER,
@@ -71,6 +72,7 @@ func _ready():
 	animation_player.play("walking")
 	next_y=nav_agent.get_next_path_position().y
 	player_found=true
+	pckscn = get_tree().current_scene
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -97,7 +99,7 @@ func _physics_process(delta):
 		current_state=States.JUMP
 	elif jump_timer.is_stopped() and is_on_floor() and current_state==States.JUMP:
 		set_state(current_state,prev_state)
-	print(current_state, " , ", jump_timer.is_stopped(), " , ", is_on_floor())
+	#print(current_state, " , ", jump_timer.is_stopped(), " , ", is_on_floor())
 	#print(navigation_timer.time_left)
 	## Handle jump.
 	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -199,8 +201,8 @@ func handle_movement() -> void:
 				#velocity.y = jump_velocity*1.2
 			#velocity = dir * SPEED
 			#velocity.x = dir.x * chase_speed
-			print(dir.x)
-			print(is_on_floor())
+			#print(dir.x)
+			#print(is_on_floor())
 			if dir.x > 0 and is_on_floor():
 				current_speed = chase_speed
 			else:
@@ -330,6 +332,7 @@ func _on_health_health_depleted():
 	var drop_inst=drop.instantiate()
 	drop_inst.global_position = Vector2(position.x, position.y)
 	get_tree().current_scene.add_child(drop_inst)
+	pckscn.score += 1
 	queue_free()
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 	#if enemies.size() <=1:
@@ -349,7 +352,7 @@ func _on_navigation_timer_timeout():
 	#print("path_made")
 	next_y=nav_agent.get_next_path_position().y
 	var next_x=nav_agent.get_next_path_position().x
-	print(next_x)
+	#print(next_x)
 
 
 func _on_hit_box_parried():

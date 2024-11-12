@@ -53,6 +53,7 @@ var parried : bool = false
 var attacking : bool = false
 var next_y
 var state
+var pckscn : Node = null
 
 enum States{
 	WANDER,
@@ -72,7 +73,7 @@ func _ready():
 	#set_state(current_state, States.CHASE)
 	animation_player.play("walking")
 	next_y=nav_agent.get_next_path_position().y
-
+	pckscn = get_tree().current_scene
 	
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -326,6 +327,7 @@ func _on_health_health_depleted():
 	var drop_inst=drop.instantiate()
 	drop_inst.global_position = Vector2(position.x, position.y)
 	get_tree().current_scene.add_child(drop_inst)
+	pckscn.score += 1
 	queue_free()
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 	if enemies.size() <=1:

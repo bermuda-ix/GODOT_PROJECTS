@@ -10,6 +10,7 @@ extends Node2D
 @onready var ui_level = $CanvasLayer/UI_Level
 @onready var label = $CanvasLayer/Label
 @onready var pause_menu = $CanvasLayer/PauseMenu
+@onready var score : int = 0
 
 @export var lvl_type = "goal"
 
@@ -47,6 +48,8 @@ func _process(_delta):
 			Events.level_completed.connect(show_level_complete)
 			#print("leven complete")
 		label.text=str("Obj: ",obj)
+	else:
+		label.text = str("Score: ", score)
 	
 	
 	if Input.is_action_just_pressed("Pause"):
