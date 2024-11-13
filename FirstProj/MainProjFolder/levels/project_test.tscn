@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=8 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
-[ext_resource type="PackedScene" uid="uid://dmk1m13knr7mq" path="res://chars/robot_enemy.tscn" id="2_vcbn3"]
+[ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="2_1h38b"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ys1t2"]
 outlines = Array[PackedVector2Array]([PackedVector2Array(24, 112, 144, 112, 176, 32, 328, 32, 368, 112, 528, 112, 528, 88, 392, 88, 352, 8, 256, 8, 216, -64, 256, -128, 448, -128, 496, -208, 696, -208, 696, -232, 520, -232, 432, -296, 224, -304, 128, -360, -64, -360, -64, -336, 104, -336, 208, -272, 408, -272, 472, -216, 432, -160, 256, -160, 168, -96, 8, -96, 8, -64, 184, -64, 216, 8, 144, 8, 120, 72, 24, 72)])
@@ -22,6 +22,12 @@ source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_b6fvs"]
 outlines = Array[PackedVector2Array]([PackedVector2Array(8, 112, 176, 112, 176, 80, 8, 80)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_nxtlr"]
+vertices = PackedVector2Array(438, -238, 438, -154, 190, -154, 10, -238, 10, -90, 190, -90)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 2, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -248, 0, -80, 200, -80, 200, -144, 448, -144, 448, -248)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [node name="project_test" instance=ExtResource("1_07jkq")]
@@ -118,10 +124,13 @@ navigation_layers = 2
 start_position = Vector2(232, -280)
 end_position = Vector2(128, -344)
 
-[node name="robot_enemy" parent="." index="19" instance=ExtResource("2_vcbn3")]
-position = Vector2(600, -223)
-
-[node name="NavigationRegion2D10" type="NavigationRegion2D" parent="." index="20"]
+[node name="NavigationRegion2D10" type="NavigationRegion2D" parent="." index="19"]
 position = Vector2(160, -72)
 navigation_polygon = SubResource("NavigationPolygon_f2p4u")
 navigation_layers = 2
+
+[node name="NavigationRegion2D11" type="NavigationRegion2D" parent="." index="20"]
+navigation_polygon = SubResource("NavigationPolygon_nxtlr")
+
+[node name="flying_enemy" parent="." index="21" instance=ExtResource("2_1h38b")]
+position = Vector2(280, -200)

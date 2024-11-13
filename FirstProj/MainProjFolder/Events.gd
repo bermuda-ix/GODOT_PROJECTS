@@ -7,3 +7,6 @@ signal game_over
 signal obj_complete
 signal pause
 signal unpause
+
+#Score
+signal inc_score

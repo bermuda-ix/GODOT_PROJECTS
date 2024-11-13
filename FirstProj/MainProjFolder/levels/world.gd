@@ -31,6 +31,7 @@ func _ready():
 	Events.game_over.connect(show_game_over)
 	Events.pause.connect(show_pause)
 	Events.unpause.connect(unpause)
+	Events.inc_score.connect(inc_score)
 	
 	
 func _process(_delta):
@@ -94,7 +95,9 @@ func get_health():
 	
 func set_health():
 	ui_level.set_health(cur_health)
-#
+
+func inc_score():
+	score += 1
 
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -4,7 +4,7 @@ const SPEED = 40
 const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 
 @onready var player : PlayerEntity = null
-@onready var nav_agent := $NavigationAgent2D as NavigationAgent2D
+@onready var nav_agent := $NavigationAgent2D2 as NavigationAgent2D
 @onready var player_tracker_pivot = $PlayerTrackerPivot
 @onready var player_tracking = $PlayerTrackerPivot/PlayerTracking
 @onready var jump_timer = $JumpTimer
@@ -28,8 +28,8 @@ enum States{
 	CHASE,
 	STAGGERED
 }
-var current_state = States.WANDER
-var prev_state = States.WANDER
+var current_state = States.CHASE
+var prev_state = States.CHASE
 
 var state : String
 
@@ -39,6 +39,7 @@ func _ready():
 	turret.setup(2)
 	turret.shoot_timer.paused=true
 	player_found=true
+	found=true
 	
 func _process(delta):
 	track_player()
@@ -65,7 +66,7 @@ func _physics_process(delta):
 		
 	elif current_state==States.STAGGERED:
 		#move_and_slide()
-		velocity = dir *  gravity * 0.5
+		velocity.y = gravity * 0.3
 		velocity.x=0
 		turret.shoot_timer.paused=true
 		#print("staggered")
@@ -132,6 +133,7 @@ func _on_nav_timer_timeout():
 
 
 func _on_health_health_depleted():
+	Events.inc_score.emit()
 	queue_free()
 
 
