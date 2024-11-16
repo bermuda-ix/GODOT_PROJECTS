@@ -134,8 +134,8 @@ func _physics_process(delta):
 	#print(state, ": ", current_state, prev_state)	
 	#print(current_speed)
 	#print(is_on_floor())
-	if current_state==States.JUMP:
-		print("in air")
+	#if current_state==States.JUMP:
+		#print("in air")
 	handl_animation()
 
 	velocity.x = current_speed + knockback.x
@@ -212,7 +212,7 @@ func handle_movement() -> void:
 		
 		#velocity.x = velocity.x
 		if is_on_floor() and jump_timer.is_stopped():
-			print("landed")
+			#print("landed")
 			set_state(current_state, States.CHASE)
 			current_speed=prev_speed
 		#velocity.y = jump_velocity
@@ -292,7 +292,7 @@ func set_state(cur_state, new_state) -> void:
 			States.WANDER:
 				state="WANDER"
 				hb_collison.disabled=false
-				print(str(prev_speed," ",current_speed))
+				#print(str(prev_speed," ",current_speed))
 				animation_player.speed_scale = 1
 				animation_player.play("walking")
 				if prev_state==States.JUMP:
@@ -307,7 +307,7 @@ func set_state(cur_state, new_state) -> void:
 					current_speed=prev_speed
 			States.JUMP:
 				prev_speed=current_speed
-				print("jumping")
+				#print("jumping")
 				state="JUMP"
 				if current_speed < 0:
 					current_speed = -jump_speed
@@ -320,7 +320,7 @@ func set_state(cur_state, new_state) -> void:
 				#animation_player.play("attack")
 				#await animation_player.animation_finished
 		
-		print(state)
+		#print(state)
 
 
 func _on_health_health_depleted():
@@ -332,7 +332,7 @@ func _on_health_health_depleted():
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 	if enemies.size() <=1:
 		Events.level_completed.emit()
-		print("level complete")
+		#print("level complete")
 		
 func health_bar():
 	h_bar.text=str(health.health, " Parried: ", parried, " : ", parry_timer.time_left)
@@ -400,5 +400,5 @@ func _on_navigation_timer_timeout():
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name=="attack":
-		print("attack finished")
+		#print("attack finished")
 		set_state(current_state, States.CHASE)

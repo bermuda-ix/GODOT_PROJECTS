@@ -134,8 +134,8 @@ func _physics_process(delta):
 	#print(state, ": ", current_state, prev_state)	
 	#print(current_speed)
 	#print(is_on_floor())
-	if current_state==States.JUMP:
-		print("in air")
+	#if current_state==States.JUMP:
+		#print("in air")
 	handl_animation()
 
 	velocity.x = current_speed + knockback.x
@@ -212,7 +212,7 @@ func handle_movement() -> void:
 		
 		#velocity.x = velocity.x
 		if is_on_floor() and jump_timer.is_stopped():
-			print("landed")
+			#print("landed")
 			set_state(current_state, States.CHASE)
 			current_speed=prev_speed
 		#velocity.y = jump_velocity
@@ -291,7 +291,7 @@ func set_state(cur_state, new_state) -> void:
 			States.WANDER:
 				state="WANDER"
 				hb_collison.disabled=false
-				print(str(prev_speed," ",current_speed))
+				#print(str(prev_speed," ",current_speed))
 				animation_player.speed_scale = 1
 				animation_player.play("walking")
 				if prev_state==States.JUMP:
@@ -307,7 +307,7 @@ func set_state(cur_state, new_state) -> void:
 				if prev_state == States.WANDER:
 					
 					velocity.y = jump_velocity
-					print(str(prev_speed," ",current_speed))
+					#print(str(prev_speed," ",current_speed))
 					prev_speed=current_speed
 					if current_speed < 0:
 						current_speed = -jump_speed*2
@@ -315,7 +315,7 @@ func set_state(cur_state, new_state) -> void:
 						current_speed = jump_speed*2
 				if prev_state == States.CHASE:
 					velocity.y = jump_velocity*1.5
-					print(str(prev_speed," ",current_speed))
+					#print(str(prev_speed," ",current_speed))
 					prev_speed=current_speed
 					if current_speed < 0:
 						current_speed = -jump_speed

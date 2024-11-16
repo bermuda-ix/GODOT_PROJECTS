@@ -393,6 +393,7 @@ animations = [{
 }]
 
 [node name="boss_enemy_bt" instance=ExtResource("1_rw6eu")]
+scale = Vector2(0.516248, 0.517893)
 script = ExtResource("2_u1ga7")
 center = Vector2(528, 136)
 
@@ -451,6 +452,7 @@ offset_top = -97.0
 offset_right = 46.0
 offset_bottom = -74.0
 text = "HB: STG:"
+metadata/_edit_use_anchors_ = true
 
 [node name="Turret" parent="." index="19" instance=ExtResource("6_muh1y")]
 

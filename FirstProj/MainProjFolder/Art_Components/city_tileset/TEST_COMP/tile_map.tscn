@@ -499,7 +499,7 @@ texture = ExtResource("1_rrxxp")
 
 [sub_resource type="TileSet" id="TileSet_6s0np"]
 physics_layer_0/collision_layer = 1
-physics_layer_0/collision_mask = 0
+physics_layer_0/collision_mask = 8
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Floors"
 terrain_set_0/terrain_0/color = Color(0.5, 0.5, 0.5, 1)
@@ -509,6 +509,6 @@ terrain_set_0/terrain_2/name = "background"
 terrain_set_0/terrain_2/color = Color(0.46875, 0.5, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_32bb4")
 
-[node name="LevelTileMap" type="TileMap"]
+[node name="LevelTileMap" type="TileMap" groups=["world"]]
 tile_set = SubResource("TileSet_6s0np")
 format = 2

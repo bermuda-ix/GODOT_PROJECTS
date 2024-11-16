@@ -21,7 +21,8 @@ animations = [{
 
 [node name="ProjectTemplate" groups=["bullet"] instance=ExtResource("1_2tfmk")]
 scale = Vector2(0.1, 0.1)
-collision_layer = 8
+collision_layer = 9
+collision_mask = 129
 script = ExtResource("2_4620e")
 
 [node name="AnimatedSprite2D" parent="." index="0"]
@@ -35,4 +36,5 @@ position = Vector2(0, -1.90735e-06)
 scale = Vector2(5.39999, 5.4)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

@@ -42,3 +42,8 @@ func _char_hit(hurtbox : HurtBox):
 func _on_area_entered(area):
 	if area.get_collision_layer() == 128:
 		queue_free()
+
+
+func _on_body_entered(body):
+	if body.is_in_group("world"):
+		queue_free()

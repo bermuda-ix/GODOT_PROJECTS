@@ -13,9 +13,15 @@ extends Node2D
 @onready var score : int = 0
 
 @export var lvl_type = "goal"
+@export var elite_spawn : int = 20
+@export var boss_spawn : int = 40
 
 var cur_state = "IDLE"
 var cur_health = 3
+var elite_spawn_flag : bool = false
+var boss_spawn_flag : bool = false
+
+var spawn_type : Array[String] = ["enemy", "boss"]
 
 var obj : int
 
@@ -33,6 +39,7 @@ func _ready():
 	Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
 	
+	#score=45
 	
 func _process(_delta):
 	
@@ -51,7 +58,7 @@ func _process(_delta):
 		label.text=str("Obj: ",obj)
 	else:
 		label.text = str("Score: ", score)
-	
+		handle_spawn()
 	
 	if Input.is_action_just_pressed("Pause"):
 		show_pause()
@@ -99,6 +106,23 @@ func set_health():
 func inc_score():
 	score += 1
 
+func handle_spawn():
+	if score>=20 and score<40:
+		if elite_spawn_flag == false:
+			print("adding mech")
+			Events.spawn_update.emit(enemy_list.MECH_ENEMY, true)
+			elite_spawn_flag = true
+			
+	elif score>=40:
+		if boss_spawn_flag == false:
+			#print("boss spawn")
+			Events.deactivate.emit(spawn_type[0])
+			#Events.deactivate.emit(spawn_type[1])
+			var enemy_cnt = get_tree().get_nodes_in_group("Enemy").size()
+			if enemy_cnt==0:
+				print("boss activate")
+				boss_spawn_flag=true
+				Events.activate.emit(spawn_type[1])
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
