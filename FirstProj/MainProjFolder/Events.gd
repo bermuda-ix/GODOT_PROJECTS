@@ -25,3 +25,7 @@ signal activate
 signal deactivate
 signal spawn_update
 #spawn_update(Enemy type, true=add false=remove)
+
+#Handle Player Data
+signal set_player_data
+signal get_player_data

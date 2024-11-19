@@ -12,3 +12,4 @@ func _on_body_entered(body):
 		print("checkpoint reached")
 		check_flag.disabled=true
 		$"../PC".set_start_pos(position)
+		Events.set_player_data.emit()

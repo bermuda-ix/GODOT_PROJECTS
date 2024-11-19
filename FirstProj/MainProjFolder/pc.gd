@@ -74,7 +74,9 @@ func _ready():
 	pb_right.disabled=true
 	set_start_pos(global_position)
 	sp_atk_type = sp_atk_cone
-	health.health=3
+	load_player_data()
+	Events.set_player_data.connect(save_player_data)
+	
 
 func _process(delta):
 	var input_axis = Input.get_axis("walk_left", "walk_right")
@@ -614,3 +616,35 @@ func _on_attack_timer_timeout():
 	attack_combo = "Attack"
 	#s_atk=false
 
+func load_player_data():
+	var file = FileAccess.open("user://player_data/stats/player_stats.txt", FileAccess.READ)
+	if file.file_exists("user://player_data/stats/player_stats.txt"):
+		while file.is_open():
+			var content = file.get_line()
+			var stat : String = content.get_slice(":", 0)
+			var stat_val : int = int(content.get_slice(":", 1))
+			print(stat, ": ", str(stat_val))
+			if stat != null:
+				match stat:
+					"health":
+						health.set_health(stat_val)
+					"max_health":
+						health.set_max_health(stat_val)
+			if file.eof_reached():
+				break
+		file.close()
+	else:
+		print("file not found")
+
+func save_player_data():
+	var file = FileAccess.open("user://player_data/stats/player_stats.txt", FileAccess.READ_WRITE)
+	if file.file_exists("user://player_data/stats/player_stats.txt"):
+		var stat : String = str("health: ", health.get_health())
+		file.store_string(stat)
+		file.store_string("\n")
+		stat = str("max_health: ", health.get_max_health())
+		file.store_string(stat)
+		file.store_string("\n")
+		file.close()
+	else:
+		print("file not found")
