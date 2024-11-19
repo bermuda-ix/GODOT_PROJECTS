@@ -439,3 +439,9 @@ func _on_health_health_depleted():
 	if enemies.size() <=1:
 		Events.level_completed.emit()
 		print("level complete")
+
+
+func _on_hurt_box_got_hit(hitbox):
+	animation_player.play("hit")
+	await animation_player.animation_finished
+	animation_player.play("RESET")

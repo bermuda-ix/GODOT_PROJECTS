@@ -337,8 +337,12 @@ func _on_health_health_depleted():
 func health_bar():
 	h_bar.text=str(health.health, " Parried: ", parried, " : ", parry_timer.time_left)
 
-func _on_hurt_box_got_hit():
+func _on_hurt_box_got_hit(hitbox):
 	health.set_temporary_immortality(0.2)
+	print("hit")
+	animation_player.play("hit")
+	await animation_player.animation_finished
+	animation_player.play("RESET")
 	#knockback.x = 350
 	#velocity.y=jump_velocity/2
 	#if animated_sprite_2d.flip_h:
@@ -373,7 +377,7 @@ func _on_hit_box_parried():
 		knockback.x = -450
 	else:
 		knockback.x = 450
-	await get_tree().create_timer(0.3).timeout
+	#await get_tree().create_timer(0.3).timeout
 	set_state(current_state, States.PARRY)
 	#velocity.y=jump_velocity/2
 	parried = true
