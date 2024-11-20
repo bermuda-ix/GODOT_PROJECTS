@@ -15,6 +15,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var bullet = BALL_PROCETILE
 @onready var bullet_dir = Vector2.RIGHT
 @onready var stagger = $Stagger
+@onready var hb_detect = $HitBox/CollisionShape2D
 
 @onready var stg_laber = $stg_laber
 
@@ -157,8 +158,10 @@ func _on_hurt_box_area_entered(area):
 func _on_stagger_staggered():
 	set_state(current_state, States.STAGGERED)
 	parry_timer.start()
+	hb_detect.disabled=true
 	#parry_timer.paused=true
 
 
 func _on_parry_timer_timeout():
 	set_state(current_state, prev_state)
+	hb_detect.disabled=false
