@@ -325,6 +325,58 @@ tracks/6/keys = {
 "values": [Vector2(-2, -24), Vector2(-2, -4), Vector2(-2, -4), Vector2(-2, -24)]
 }
 
+[sub_resource type="Animation" id="Animation_88wjf"]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.326377]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-5, -24)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(100, 100, 100, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_1w5ir"]
 resource_name = "idle"
 length = 0.3
@@ -420,58 +472,6 @@ tracks/3/keys = {
 "values": [Vector2(48, 42)]
 }
 
-[sub_resource type="Animation" id="Animation_88wjf"]
-resource_name = "hit"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-0.326377]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-5, -24)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D:self_modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(100, 100, 100, 1), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nsak1"]
 _data = {
 "RESET": SubResource("Animation_0u5nh"),
@@ -533,14 +533,14 @@ text = "HEALTH"
 [node name="ChaseTimer" parent="." index="12"]
 wait_time = 10.0
 
-[node name="HurtBox" parent="." index="14" node_paths=PackedStringArray("health")]
+[node name="HurtBox" parent="." index="15" node_paths=PackedStringArray("health")]
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(-2, -24)
 shape = SubResource("RectangleShape2D_ohrrw")
 
-[node name="HitBox" parent="." index="15" node_paths=PackedStringArray("stagger")]
+[node name="HitBox" parent="." index="16" node_paths=PackedStringArray("stagger")]
 stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
@@ -549,7 +549,7 @@ rotation = 1.5708
 shape = SubResource("RectangleShape2D_3vrh8")
 disabled = true
 
-[node name="AttackRange" parent="." index="16"]
+[node name="AttackRange" parent="." index="17"]
 collision_layer = 1024
 collision_mask = 2
 
@@ -557,7 +557,7 @@ collision_mask = 2
 position = Vector2(0, -24)
 shape = SubResource("CircleShape2D_80ahk")
 
-[node name="Stagger" parent="." index="17"]
+[node name="Stagger" parent="." index="18"]
 max_stagger = 1
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

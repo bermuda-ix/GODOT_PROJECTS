@@ -46,14 +46,14 @@ sprite_frames = SubResource("SpriteFrames_qklr2")
 position = Vector2(-0.5, -24)
 shape = SubResource("CircleShape2D_g3357")
 
-[node name="HurtBox" parent="." index="13" node_paths=PackedStringArray("health")]
+[node name="HurtBox" parent="." index="14" node_paths=PackedStringArray("health")]
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(0, -23.5)
 shape = SubResource("RectangleShape2D_m6ifn")
 
-[node name="HitBox" parent="." index="14" node_paths=PackedStringArray("stagger")]
+[node name="HitBox" parent="." index="15" node_paths=PackedStringArray("stagger")]
 stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]

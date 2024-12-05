@@ -19,6 +19,8 @@ const JUMP_VELOCITY = -400.0
 @onready var navigation_timer = $NavigationTimer
 
 @export var drop = preload("res://heart.tscn")
+@onready var death_timer = $DeathTimer
+@export var explode = preload("res://Component/explosion.tscn")
 
 @onready var floor_jump_check_right = $JumpChecks/FloorJumpCheckRight as RayCast2D
 @onready var floor_jump_check_left = $JumpChecks/FloorJumpCheckLeft as RayCast2D
@@ -58,7 +60,8 @@ enum States{
 	CHASE,
 	JUMP,
 	ATTACK,
-	PARRY
+	PARRY,
+	DEATH
 }
 
 var current_state = States.CHASE
@@ -126,10 +129,10 @@ func _physics_process(delta):
 		##print("landed")
 		#set_state(current_state,States.CHASE)
 	
-	if parry_timer.is_stopped() :
-		current_state=prev_state
-		knockback = Vector2.ZERO
-		parried=false
+	#if parry_timer.is_stopped() :
+		#current_state=prev_state
+		#knockback = Vector2.ZERO
+		#parried=false
 	
 	#print(state, ": ", current_state, prev_state)	
 	#print(current_speed)
@@ -139,6 +142,8 @@ func _physics_process(delta):
 	handl_animation()
 
 	velocity.x = current_speed + knockback.x
+	if current_state==States.DEATH:
+		velocity.y = knockback.y
 	
 	if parried == true:
 		hb_collison.disabled=true
@@ -225,7 +230,7 @@ func handle_jump():
 	if (leap_up_check_left.has_overlapping_bodies() or leap_up_check_right.has_overlapping_bodies()) and is_on_floor():
 		#print("jump check")
 		#set_state(current_state, States.JUMP)
-		if (position.y-50)>next_y:
+		if (position.y-70)>next_y:
 			jump_timer.start()
 			#print("jump start")
 			velocity.y = jump_velocity*1.2
@@ -323,6 +328,9 @@ func set_state(cur_state, new_state) -> void:
 						current_speed = jump_speed
 			States.PARRY:
 				hb_collison.disabled=true
+			States.DEATH:
+				hb_collison.disabled=true
+			
 		
 		#print(state)
 		
@@ -333,13 +341,28 @@ func _on_health_health_depleted():
 	drop_inst.global_position = Vector2(position.x, position.y)
 	get_tree().current_scene.add_child(drop_inst)
 	Events.inc_score.emit()
-	queue_free()
-	var enemies = get_tree().get_nodes_in_group("Enemy")
+	parried=false
+	parry_timer.stop()
+	set_state(current_state, States.DEATH)
+	if animated_sprite_2d.flip_h==true:
+		knockback.x = randi_range(500,800)*-1
+	else:
+		knockback.x = randi_range(500,800)
+	knockback.y=randi_range(100,250)*-1
+	
+	death_timer.start()
+	
 	#if enemies.size() <=1:
 		#Events.level_completed.emit()
 		#print("level complete")
 		#
-
+func _on_death_timer_timeout():
+	var explode_inst=explode.instantiate()
+	explode_inst.global_position=Vector2(position.x, position.y)
+	get_tree().current_scene.add_child(explode_inst)
+	await get_tree().create_timer(0.1).timeout 
+	queue_free()
+	var enemies = get_tree().get_nodes_in_group("Enemy")
 
 
 func _on_hurt_box_got_hit():
@@ -371,5 +394,7 @@ func _on_hit_box_parried():
 	
 
 
-
-
+func _on_parry_timer_timeout():
+	current_state=prev_state
+	knockback = Vector2.ZERO
+	parried=false

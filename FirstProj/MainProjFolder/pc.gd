@@ -330,17 +330,53 @@ func attack_animate():
 	#if not hit_timer.is_stopped():
 		#return
 	
-	if Input.is_action_pressed("attack") and state != States.ATTACK:
-		hit_timer.start()
-		if attack_timer.is_stopped():
-			attack_timer.start()
+	#if Input.is_action_pressed("attack") and state != States.ATTACK:
+		#hit_timer.start()
+		#if attack_timer.is_stopped():
+			#attack_timer.start()
+		#
+		#if not is_on_floor():
+			#air_atk=true
+		#
+		#state=States.ATTACK
+		#attack_timer.paused = true
+		#
+		#if atk_chain == 0 and (not attack_timer.is_stopped()):
+			##animated_sprite_2d.play("attack_1")
+			#attack_combo = "Attack"
+			#
+#
+		#elif atk_chain == 1 and (not attack_timer.is_stopped()):
+			##animated_sprite_2d.play("attack_2")
+			#attack_combo = "Attack_2"
+			#
+#
+		#elif atk_chain == 2 and (not attack_timer.is_stopped()):
+			##animated_sprite_2d.play("attack_3")
+			#attack_combo = "Attack_3"
+			
+#
+	#elif (Input.is_action_just_released("attack")):
+		##animated_sprite_2d.play("idle")
+		#print("attack released")
+		##anim_player.stop()
+		#attack_timer.paused = false
+		##state=States.IDLE
 		
-		if not is_on_floor():
-			air_atk=true
+
+		#if atk_chain < 2:
+			#
+			#atk_chain += 1
+			##print("Attack Chain")
+		#elif atk_chain >=2:
+			#atk_chain = 0
+			#attack_combo = "Attack"
+			##print("Attack Finished")
 		
-		state=States.ATTACK
-		attack_timer.paused = true
-		
+	if Input.is_action_just_pressed("attack") and state != States.ATTACK:
+		attack_timer.start()
+		attack_timer.paused=true
+			
 		if atk_chain == 0 and (not attack_timer.is_stopped()):
 			#animated_sprite_2d.play("attack_1")
 			attack_combo = "Attack"
@@ -355,24 +391,21 @@ func attack_animate():
 			#animated_sprite_2d.play("attack_3")
 			attack_combo = "Attack_3"
 			
-
-	elif (Input.is_action_just_released("attack")):
-		#animated_sprite_2d.play("idle")
-		print("attack released")
-		#anim_player.stop()
-		attack_timer.paused = false
-		#state=States.IDLE
-		
-
-		if atk_chain < 2:
 			
-			atk_chain += 1
-			#print("Attack Chain")
-		elif atk_chain >=2:
-			atk_chain = 0
-			attack_combo = "Attack"
-			#print("Attack Finished")
+		state=States.ATTACK
+		set_state(state, States.ATTACK)
 		
+		await anim_player.animation_finished
+		attack_timer.paused=false
+		
+		#if atk_chain < 2:
+			#
+			#atk_chain += 1
+			##print("Attack Chain")
+		#elif atk_chain >=2:
+			#atk_chain = 0
+			#attack_combo = "Attack"
+			##print("Attack Finished")
 		
 			
 	if Input.is_action_just_pressed("special_attack") and state != States.SPECIAL_ATTACK:
@@ -412,7 +445,7 @@ func parry():
 		if face_right==false:
 			pb_right.disabled=false
 
-	elif Input.is_action_just_released("parry") or parry_timer.is_stopped():
+	elif Input.is_action_just_released("parry"):
 		parry_timer.stop()
 		parry_stance=false
 		state=States.IDLE
@@ -474,12 +507,15 @@ func handle_hitbox(input_axis, face_right):
 			hb_left.disabled=true
 			hb_right.disabled=false
 
-func _on_hazard_detector_area_entered(_area):
-	global_position=starting_position
-	print("Health Depleted!")
-	health.health -= 1
-	print(health.health)
-	
+func _on_hazard_detector_area_entered(area):
+	if area.is_in_group("hazard"):
+		global_position=starting_position
+		print("Health Depleted!")
+		health.health -= 1
+		print(health.health)
+	elif area.is_in_group("Enemy"):
+		print("enemy touched")
+		knockback.x = input_dir.x * knockback.x *0.5
 
 	
 	
@@ -565,6 +601,7 @@ func _on_hurt_box_got_hit(hitbox):
 	knockback.x = kb_dir.x * knockback.x
 	velocity.y=movement_data.jump_velocity/2
 	velocity.x = movement_data.speed + knockback.x
+	health.set_temporary_immortality(0.2)
 
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("bullet"):
@@ -577,9 +614,13 @@ func _on_hurt_box_area_entered(area):
 		velocity.y=movement_data.jump_velocity/2
 		velocity.x = movement_data.speed + knockback.x
 		health.health -= 1
+		health.set_temporary_immortality(0.2)
 		
 	if area.is_in_group("Hearts"):
 		health.health+=1
+		
+	elif area.is_in_group("Enemy"):
+		pass
 	
 
 #Setting starting positions for level starts and checkpoints
@@ -648,3 +689,7 @@ func save_player_data():
 		file.close()
 	else:
 		print("file not found")
+
+
+func _on_parry_timer_timeout():
+	state=States.IDLE

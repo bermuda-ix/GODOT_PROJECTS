@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://cmbh5yrvkl5a6"]
+[gd_scene load_steps=16 format=3 uid="uid://cmbh5yrvkl5a6"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_4opfk"]
 [ext_resource type="Script" path="res://chars/flying_enemy.gd" id="2_avqxo"]
 [ext_resource type="Texture2D" uid="uid://bwsnnivuol0h2" path="res://Art_Components/Enemies/creatures edit_0.png" id="2_ga466"]
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="4_g2l3k"]
+[ext_resource type="AudioStream" uid="uid://kwfnuck85oo7" path="res://Art_Components/Effects/sound/alienshoot1.ogg" id="5_o3mrs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kgcfl"]
 atlas = ExtResource("2_ga466")
@@ -76,7 +77,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wnnks"]
-radius = 19.5
+radius = 20.025
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gt2wk"]
 size = Vector2(27, 30)
@@ -85,7 +86,8 @@ size = Vector2(27, 30)
 size = Vector2(25.5, 27.5)
 
 [node name="flying_enemy" instance=ExtResource("1_4opfk")]
-collision_layer = 0
+collision_layer = 4
+collision_mask = 3
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("2_avqxo")
@@ -107,7 +109,6 @@ libraries = {
 }
 
 [node name="CollisionShape2D" parent="." index="5"]
-position = Vector2(0.5, 0)
 shape = SubResource("CircleShape2D_wnnks")
 
 [node name="WallCheckLeft" parent="WallChecks" index="0"]
@@ -146,24 +147,19 @@ position = Vector2(16, 0)
 [node name="ParryTimer" parent="." index="12"]
 wait_time = 5.0
 
-[node name="Health" parent="." index="14"]
+[node name="DeathTimer" parent="." index="14"]
+wait_time = 0.35
+
+[node name="Health" parent="." index="15"]
 max_health = 1
 
-[node name="HurtBox" parent="." index="15" node_paths=PackedStringArray("health")]
+[node name="HurtBox" parent="." index="16" node_paths=PackedStringArray("health")]
 collision_mask = 8768
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_gt2wk")
-
-[node name="HitBox" parent="." index="16" node_paths=PackedStringArray("stagger")]
-position = Vector2(1, -1.90735e-06)
-scale = Vector2(0.96, 0.995272)
-stagger = NodePath("../Stagger")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
-shape = SubResource("RectangleShape2D_0dbrs")
 
 [node name="Turret" parent="." index="17" instance=ExtResource("4_g2l3k")]
 
@@ -174,11 +170,23 @@ offset_right = 30.0
 offset_bottom = -16.0
 text = "STAGGER:"
 
-[node name="Stagger" parent="." index="20"]
+[node name="HitBox" parent="." index="19" node_paths=PackedStringArray("stagger")]
+position = Vector2(1, -1.90735e-06)
+scale = Vector2(0.96, 0.995272)
+stagger = NodePath("../Stagger")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
+shape = SubResource("RectangleShape2D_0dbrs")
+
+[node name="Stagger" parent="." index="21"]
 max_stagger = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." index="22"]
+stream = ExtResource("5_o3mrs")
 
 [connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]

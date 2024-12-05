@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://blkf58xveglj4" path="res://spikes.png" id="1_c3kw8"]
 [ext_resource type="PackedScene" uid="uid://c162iggk87vx1" path="res://hazard.tscn" id="2_8sepb"]
 
-[node name="Spikes" type="Node2D"]
+[node name="Spikes" type="Node2D" groups=["hazard"]]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(8, -8)

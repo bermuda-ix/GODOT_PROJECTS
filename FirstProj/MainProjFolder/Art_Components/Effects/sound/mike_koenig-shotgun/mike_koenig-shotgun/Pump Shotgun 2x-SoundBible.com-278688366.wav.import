@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cyatui1ad1aph"
+path="res://.godot/imported/Pump Shotgun 2x-SoundBible.com-278688366.wav-2ce133de2d25f5cf443cd25ddd8802ac.sample"
+
+[deps]
+
+source_file="res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/Pump Shotgun 2x-SoundBible.com-278688366.wav"
+dest_files=["res://.godot/imported/Pump Shotgun 2x-SoundBible.com-278688366.wav-2ce133de2d25f5cf443cd25ddd8802ac.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

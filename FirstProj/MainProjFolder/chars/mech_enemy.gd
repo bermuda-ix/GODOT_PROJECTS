@@ -213,6 +213,7 @@ func handle_movement() -> void:
 		#velocity.x = velocity.x
 		if is_on_floor() and jump_timer.is_stopped():
 			#print("landed")
+			makepath()
 			set_state(current_state, States.CHASE)
 			current_speed=prev_speed
 		#velocity.y = jump_velocity

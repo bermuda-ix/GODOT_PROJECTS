@@ -305,6 +305,22 @@ tracks/4/keys = {
 "values": [Vector2(-37.5, -40.5), Vector2(-80, -64), Vector2(-80, 30), Vector2(-64, 30), Vector2(-37.5, -40.5)]
 }
 
+[sub_resource type="Animation" id="Animation_pab60"]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(100, 100, 100, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_gmlj7"]
 resource_name = "light_attack"
 length = 0.5
@@ -369,22 +385,6 @@ tracks/4/keys = {
 "values": [0.0, -2.49408, -2.49408, -2.49408, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_pab60"]
-resource_name = "hit"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(100, 100, 100, 1), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mknfj"]
 _data = {
 "RESET": SubResource("Animation_lawcq"),
@@ -400,9 +400,6 @@ size = Vector2(80, 98)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mfd8p"]
 size = Vector2(96, 98)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4kfec"]
-size = Vector2(6, 31.5)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_wxdlm"]
 
@@ -420,6 +417,9 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4kfec"]
+size = Vector2(6, 31.5)
 
 [node name="boss_enemy_bt" instance=ExtResource("1_rw6eu")]
 scale = Vector2(0.516248, 0.517893)
@@ -453,23 +453,15 @@ one_shot = true
 [node name="ChaseTimer" parent="." index="13"]
 one_shot = true
 
-[node name="Health" parent="." index="14"]
+[node name="Health" parent="." index="15"]
 max_health = 10
 
-[node name="HurtBox" parent="." index="15" node_paths=PackedStringArray("health")]
+[node name="HurtBox" parent="." index="16" node_paths=PackedStringArray("health")]
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(0, -25)
 shape = SubResource("RectangleShape2D_mfd8p")
-
-[node name="HitBox" parent="." index="16" node_paths=PackedStringArray("stagger")]
-stagger = NodePath("../Stagger")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
-position = Vector2(-38, -71.25)
-shape = SubResource("RectangleShape2D_4kfec")
-disabled = true
 
 [node name="BTPlayer" type="BTPlayer" parent="." index="17"]
 behavior_tree = ExtResource("5_os7gv")
@@ -490,13 +482,21 @@ position = Vector2(-2, -24)
 scale = Vector2(0.049308, 0.00735294)
 sprite_frames = SubResource("SpriteFrames_qaj1r")
 
+[node name="HitBox" parent="." index="20" node_paths=PackedStringArray("stagger")]
+stagger = NodePath("../Stagger")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2(-38, -71.25)
+shape = SubResource("RectangleShape2D_4kfec")
+disabled = true
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="ShootChangeTimer" to="." method="_on_shoot_change_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="ChaseTimer" to="." method="_on_chase_timer_timeout"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="got_hit" from="HurtBox" to="." method="_on_hurt_box_got_hit"]
-[connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="updated" from="BTPlayer" to="." method="_on_bt_player_updated"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
+[connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]

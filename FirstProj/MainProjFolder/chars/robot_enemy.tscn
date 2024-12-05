@@ -93,35 +93,42 @@ position = Vector2(-16, 0.5)
 position = Vector2(16, 0.5)
 
 [node name="NavigationTimer" parent="." index="8"]
-wait_time = 0.3
+wait_time = 0.1
 autostart = true
 
 [node name="JumpTimer" parent="." index="9"]
 wait_time = 0.2
 one_shot = true
 
-[node name="Health" parent="." index="12"]
+[node name="DeathTimer" parent="." index="12"]
+wait_time = 0.35
+
+[node name="Health" parent="." index="13"]
 max_health = 1
 
-[node name="HurtBox" parent="." index="13" node_paths=PackedStringArray("health")]
+[node name="HurtBox" parent="." index="14" node_paths=PackedStringArray("health")]
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
 shape = SubResource("RectangleShape2D_rurrt")
 
-[node name="HitBox" parent="." index="14" node_paths=PackedStringArray("stagger")]
+[node name="HitBox" parent="." index="15" node_paths=PackedStringArray("stagger")]
 stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_lkpgo")
 
-[node name="AttackRange" parent="." index="15"]
+[node name="AttackRange" parent="." index="16"]
 position = Vector2(0, 1.5)
 
-[node name="Stagger" parent="." index="16"]
+[node name="Timer" type="Timer" parent="." index="17"]
+
+[node name="Stagger" parent="." index="18"]
 max_stagger = 1
 
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
+[connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
