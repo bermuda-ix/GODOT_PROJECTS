@@ -24,7 +24,9 @@ signal deactivate_regular
 signal activate
 signal deactivate
 signal spawn_update
-#spawn_update(Enemy type, true=add false=remove)
+#spawn_update(Enemy type, true=add false=remove)\
+
+signal parried
 
 #Handle Player Data
 signal set_player_data

@@ -379,6 +379,7 @@ func _on_navigation_timer_timeout():
 
 
 func _on_hit_box_parried():
+	Events.parried.emit()
 	current_state=States.PARRY
 	print("PARRIED")
 	parry_timer.start()

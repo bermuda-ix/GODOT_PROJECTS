@@ -45,6 +45,9 @@ var cur_state = "IDLE"
 @onready var hb_left = $HitBox/HBLeft
 @onready var pb_left = $ParryBox/PBLeft
 @onready var pb_right = $ParryBox/PBRight
+@onready var pb_rot = $ParryBox/PBRot
+@onready var parry_box = $ParryBox
+
 @onready var hurt_box_detect = $HurtBox/CollisionShape2D
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var hurt_box = $HurtBox
@@ -72,10 +75,12 @@ func _ready():
 	hb_right.disabled=true
 	pb_left.disabled=true
 	pb_right.disabled=true
+	pb_rot.disabled=true
 	set_start_pos(global_position)
 	sp_atk_type = sp_atk_cone
 	load_player_data()
 	Events.set_player_data.connect(save_player_data)
+	Events.parried.connect(parry_success)
 	
 
 func _process(delta):
@@ -434,27 +439,29 @@ func sp_atk():
 
 
 func parry():
-
+	parry_box.look_at(get_global_mouse_position())
 	#Enter/Exit parry state
 	if Input.is_action_just_pressed("parry"):
 		parry_timer.start()
 		parry_stance=true
 		state=States.PARRY
-		if face_right==true:
-			pb_left.disabled=false
-		if face_right==false:
-			pb_right.disabled=false
+		pb_rot.disabled=false
+		#if face_right==true:
+			#pb_left.disabled=false
+		#if face_right==false:
+			#pb_right.disabled=false
 
 	elif Input.is_action_just_released("parry"):
 		parry_timer.stop()
 		parry_stance=false
 		state=States.IDLE
+		anim_player.stop()
 		#idle_state = true
 		
 	
 	#parry interactions
 	if parry_stance==true:
-		animated_sprite_2d.play("parry_stance")
+		#animated_sprite_2d.play("parry_stance")
 		velocity.x=0
 		velocity.y=0
 
@@ -565,6 +572,8 @@ func set_state(current_state, new_state: int) -> void:
 			anim_player.play("dodge")
 			velocity.y=0
 			#velocity.x=100 * move_axis
+		States.PARRY:
+			anim_player.play("Parry")
 			
 	if state != States.DODGE:
 		hurt_box_detect.disabled=false
@@ -573,7 +582,7 @@ func set_state(current_state, new_state: int) -> void:
 				
 			
 	if state!=States.PARRY:
-		
+		pb_rot.disabled=true
 		pb_left.disabled=true
 		pb_right.disabled=true
 func get_state() -> String:
@@ -693,3 +702,12 @@ func save_player_data():
 
 func _on_parry_timer_timeout():
 	state=States.IDLE
+	anim_player.stop()
+	
+func parry_success():
+	parry_timer.stop()
+	anim_player.play("Parry_Success")
+	print("parry success")
+	await anim_player.animation_finished
+	anim_player.stop()
+

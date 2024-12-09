@@ -19,6 +19,8 @@ const JUMP_VELOCITY = -400.0
 @onready var jump_timer = $JumpTimer
 
 @export var drop = preload("res://heart.tscn")
+@onready var death_timer = $DeathTimer
+@export var explode = preload("res://Component/explosion.tscn")
 
 @onready var floor_jump_check_right = $JumpChecks/FloorJumpCheckRight as RayCast2D
 @onready var floor_jump_check_left = $JumpChecks/FloorJumpCheckLeft as RayCast2D
@@ -60,7 +62,8 @@ enum States{
 	CHASE,
 	JUMP,
 	ATTACK,
-	PARRY
+	PARRY,
+	DEATH
 }
 
 var current_state = States.WANDER
@@ -112,7 +115,7 @@ func _physics_process(delta):
 		#velocity.x = direction * SPEED
 	#else:
 		#velocity.x = move_toward(velocity.x, 0, SPEED)
-	if parried==false and attacking==false:
+	if parried==false and attacking==false and current_state!=States.DEATH:
 		move_and_slide()
 		hb_collison.disabled=false
 	
@@ -132,7 +135,7 @@ func _physics_process(delta):
 		parried=false
 	
 	#print(state, ": ", current_state, prev_state)	
-	#print(current_speed)
+	print(animation_player.current_animation)
 	#print(is_on_floor())
 	#if current_state==States.JUMP:
 		#print("in air")
@@ -277,6 +280,8 @@ func set_state(cur_state, new_state) -> void:
 
 	if(cur_state == new_state):
 		pass
+	elif(cur_state==States.DEATH):
+		pass
 	#elif new_state==States.ATTACK and cur_state==States.JUMP:
 		#cur_state="AIR_ATTACK"
 		#anim_player.play(attack_combo)
@@ -320,21 +325,35 @@ func set_state(cur_state, new_state) -> void:
 				animation_player.speed_scale = 1
 				#animation_player.play("attack")
 				#await animation_player.animation_finished
-		
+			States.DEATH:
+				state="DEATH"
+				hb_collison.disabled=false
 		#print(state)
 
 
 func _on_health_health_depleted():
+	death_timer.start()
+	parried==false
+	#current_state==States.DEATH
+	set_state(current_state,States.DEATH)
+	#animation_player.stop()
+	animation_player.play("Death")
+	#var enemies = get_tree().get_nodes_in_group("Enemy")
+	#if enemies.size() <=1:
+		#Events.level_completed.emit()
+		#print("level complete")
+
+func _on_death_timer_timeout():
 	var drop_inst=drop.instantiate()
 	drop_inst.global_position = Vector2(position.x, position.y)
 	get_tree().current_scene.add_child(drop_inst)
 	Events.inc_score.emit()
+	var explode_inst=explode.instantiate()
+	explode_inst.global_position=Vector2(position.x, position.y)
+	get_tree().current_scene.add_child(explode_inst)
+	await get_tree().create_timer(0.1).timeout 
 	queue_free()
-	var enemies = get_tree().get_nodes_in_group("Enemy")
-	if enemies.size() <=1:
-		Events.level_completed.emit()
-		#print("level complete")
-		
+
 func health_bar():
 	h_bar.text=str(health.health, " Parried: ", parried, " : ", parry_timer.time_left)
 
@@ -343,7 +362,8 @@ func _on_hurt_box_got_hit(hitbox):
 	print("hit")
 	animation_player.play("hit")
 	await animation_player.animation_finished
-	animation_player.play("RESET")
+	if current_state != States.DEATH:
+		animation_player.play("RESET")
 	#knockback.x = 350
 	#velocity.y=jump_velocity/2
 	#if animated_sprite_2d.flip_h:
@@ -407,3 +427,6 @@ func _on_animation_player_animation_finished(anim_name):
 	if anim_name=="attack":
 		#print("attack finished")
 		set_state(current_state, States.CHASE)
+
+
+
