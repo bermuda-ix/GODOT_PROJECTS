@@ -135,4 +135,4 @@ navigation_layers = 2
 navigation_polygon = SubResource("NavigationPolygon_nxtlr")
 
 [node name="Mech_Enemy" parent="." index="21" instance=ExtResource("2_tu1ch")]
-position = Vector2(296, 23)
+position = Vector2(480, 104)

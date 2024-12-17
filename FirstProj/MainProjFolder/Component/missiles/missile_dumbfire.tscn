@@ -19,8 +19,9 @@ animations = [{
 radius = 3.0
 height = 33.991
 
-[node name="missile_dumbfire" instance=ExtResource("1_bxiaj")]
+[node name="missile_dumbfire" groups=["bullet"] instance=ExtResource("1_bxiaj")]
 position = Vector2(181, 88)
+scale = Vector2(0.5, 0.5)
 script = ExtResource("2_eesph")
 
 [node name="AnimatedSprite2D" parent="." index="0"]
@@ -30,7 +31,7 @@ sprite_frames = SubResource("SpriteFrames_e7c7u")
 [node name="RayCast2D" parent="AnimatedSprite2D" index="0"]
 rotation = -1.5708
 
-[node name="Area2D" parent="AnimatedSprite2D" index="1"]
+[node name="Area2D" parent="AnimatedSprite2D" index="1" groups=["bullet"]]
 collision_layer = 8
 collision_mask = 128
 
@@ -47,7 +48,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="InitialFireTimer" type="Timer" parent="." index="2"]
-wait_time = 0.15
+wait_time = 0.05
 one_shot = true
 autostart = true
 

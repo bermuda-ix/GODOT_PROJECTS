@@ -577,14 +577,17 @@ text = "HEALTH"
 [node name="ChaseTimer" parent="." index="12"]
 wait_time = 10.0
 
-[node name="HurtBox" parent="." index="15" node_paths=PackedStringArray("health")]
+[node name="ShootingCooldown" type="Timer" parent="." index="14"]
+wait_time = 5.0
+
+[node name="HurtBox" parent="." index="16" node_paths=PackedStringArray("health")]
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(-2, -24)
 shape = SubResource("RectangleShape2D_ohrrw")
 
-[node name="HitBox" parent="." index="16" node_paths=PackedStringArray("stagger")]
+[node name="HitBox" parent="." index="17" node_paths=PackedStringArray("stagger")]
 stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
@@ -593,7 +596,7 @@ rotation = 1.5708
 shape = SubResource("RectangleShape2D_3vrh8")
 disabled = true
 
-[node name="AttackRange" parent="." index="17"]
+[node name="AttackRange" parent="." index="18"]
 collision_layer = 1024
 collision_mask = 2
 
@@ -601,14 +604,15 @@ collision_mask = 2
 position = Vector2(0, -24)
 shape = SubResource("CircleShape2D_80ahk")
 
-[node name="Stagger" parent="." index="18"]
+[node name="Stagger" parent="." index="19"]
 max_stagger = 1
 
-[node name="BTPlayer" type="BTPlayer" parent="." index="19"]
+[node name="BTPlayer" type="BTPlayer" parent="." index="20"]
 behavior_tree = ExtResource("4_r1ibv")
 blackboard_plan = SubResource("BlackboardPlan_yo2q5")
 
-[node name="Turret" parent="." index="20" instance=ExtResource("5_o81st")]
+[node name="Turret" parent="." index="21" instance=ExtResource("5_o81st")]
+position = Vector2(9, -37)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
@@ -618,3 +622,6 @@ blackboard_plan = SubResource("BlackboardPlan_yo2q5")
 [connection signal="got_hit" from="HurtBox" to="." method="_on_hurt_box_got_hit"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
+[connection signal="behavior_tree_finished" from="BTPlayer" to="." method="_on_bt_player_behavior_tree_finished"]
+[connection signal="tree_exited" from="BTPlayer" to="." method="_on_bt_player_tree_exited"]
+[connection signal="updated" from="BTPlayer" to="." method="_on_bt_player_updated"]

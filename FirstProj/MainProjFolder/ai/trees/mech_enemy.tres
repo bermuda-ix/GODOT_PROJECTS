@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=13 format=3 uid="uid://dc38s54hrld05"]
+[gd_resource type="BehaviorTree" load_steps=16 format=3 uid="uid://dc38s54hrld05"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_23vmn"]
 var/in_range/name = &"in_range"
@@ -24,11 +24,21 @@ resource_name = "."
 node = SubResource("BBNode_vv8xt")
 method = &"shoot"
 
+[sub_resource type="BTWait" id="BTWait_05jrc"]
+duration = 0.2
+
+[sub_resource type="BTSequence" id="BTSequence_oh487"]
+children = [SubResource("BTComment_mcll0"), SubResource("BTCheckTrigger_fek5u"), SubResource("BTComment_m2gwx"), SubResource("BTCallMethod_rbxi6"), SubResource("BTWait_05jrc")]
+
+[sub_resource type="BTRepeat" id="BTRepeat_kqla3"]
+times = 5
+children = [SubResource("BTSequence_oh487")]
+
 [sub_resource type="BTComment" id="BTComment_excyx"]
 custom_name = "Resume movement"
 
 [sub_resource type="BTSequence" id="BTSequence_gmuen"]
-children = [SubResource("BTComment_mcll0"), SubResource("BTCheckTrigger_fek5u"), SubResource("BTComment_m2gwx"), SubResource("BTCallMethod_rbxi6"), SubResource("BTComment_excyx")]
+children = [SubResource("BTRepeat_kqla3"), SubResource("BTComment_excyx")]
 
 [sub_resource type="BTCooldown" id="BTCooldown_fbc00"]
 duration = 3.0

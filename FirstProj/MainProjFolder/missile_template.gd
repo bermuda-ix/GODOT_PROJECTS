@@ -4,11 +4,12 @@ extends Node2D
 
 var dir : Vector2 = Vector2.RIGHT
 var spawnPos : Vector2
-var spawnRot : float = 0
+var spawnRot : float = -90
 var tracking_rot : float = -90
 var tracking_vector : Vector2 = Vector2.UP
 var init_dir
 var player : PlayerEntity = null
+var accel : float = 0
 @onready var player_tracker = $AnimatedSprite2D/RayCast2D
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var tracking_timer = $TrackingTimer
@@ -24,9 +25,10 @@ func _ready():
 	set_as_top_level(true)
 	connect("area_entered", _char_hit)
 	player = get_tree().get_first_node_in_group("player")
-	dir=Vector2.UP
+	#dir=Vector2.UP
 	global_position = spawnPos
-	animated_sprite_2d.rotation_degrees = -90
+	#spawnRot = -90
+	animated_sprite_2d.rotation=deg_to_rad(spawnRot)
 	tracking_rot=animated_sprite_2d.rotation_degrees
 	
 	init_dir=(player_tracker.to_global(player_tracker.target_position) -player_tracker.to_global(Vector2.ZERO)).normalized()
@@ -38,7 +40,8 @@ func _physics_process(delta):
 	
 	if not tracking_timer.is_stopped():
 		track_player()
-	
+	else:
+		accel += 10
 	
 	
 	#print(spawnRot)
@@ -50,7 +53,7 @@ func _physics_process(delta):
 	
 	#dir=position.normalized()
 	
-	position += dir * SPEED * delta
+	position += (dir * (SPEED +accel) * delta)
 	
 	
 	
@@ -77,7 +80,7 @@ func _on_area_2d_area_entered(area):
 		var explode_inst=explode.instantiate()
 		explode_inst.global_position=Vector2(position.x, position.y)
 		get_tree().current_scene.add_child(explode_inst)
-		await get_tree().create_timer(0.1).timeout 
+		await get_tree().create_timer(0.01).timeout 
 		queue_free()
 
 
@@ -86,13 +89,13 @@ func _on_area_2d_body_entered(body):
 		var explode_inst=explode.instantiate()
 		explode_inst.global_position=Vector2(position.x, position.y)
 		get_tree().current_scene.add_child(explode_inst)
-		await get_tree().create_timer(0.1).timeout 
+		await get_tree().create_timer(0.01).timeout 
 		queue_free()
 		
 func track_player():
 	
 	
-	var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y)\
+	var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y+25)\
 	- position
 	
 	

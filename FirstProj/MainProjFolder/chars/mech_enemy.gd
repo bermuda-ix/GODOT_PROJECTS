@@ -33,6 +33,8 @@ const MISSILE_DUMBFIRE = preload("res://Component/missiles/missile_dumbfire.tscn
 @onready var turret = $Turret
 @onready var bullet = MISSILE_DUMBFIRE
 @onready var bullet_dir = Vector2.RIGHT
+@onready var shooting_cooldown = $ShootingCooldown
+
 
 @onready var health = $Health
 @onready var hurt_box = $HurtBox
@@ -98,7 +100,8 @@ func _process(_delta):
 		if current_state != States.SHOOTING:
 			handle_vision()
 		track_player()
-		shooting_range()
+		if shooting_cooldown.is_stopped():
+			shooting_range()
 	#match current_state:
 		#States.WANDER:
 			#set_state(current_state, States.WANDER)
@@ -471,8 +474,34 @@ func shoot():
 	print("shoot")
 	var bullet_inst = bullet.instantiate()
 	bullet_inst.set_speed(300.0)
-	bullet_inst.dir =  Vector2.UP
-	bullet_inst.spawnPos = Vector2(position.x, position.y)
+	#bullet_inst.dir =  Vector2.UP
+	bullet_inst.spawnPos = Vector2(turret.global_position.x, turret.global_position.y)
+	if animated_sprite_2d.flip_h==true:
+		bullet_inst.spawnRot = -135
+		bullet_inst.dir =  Vector2.UP + Vector2.LEFT
+	else:
+		bullet_inst.spawnRot = -45
+		bullet_inst.dir =  Vector2.UP + Vector2.RIGHT
 	#audio_stream_player_2d.play()
 	
 	get_tree().current_scene.add_child(bullet_inst)
+
+
+
+func _on_bt_player_behavior_tree_finished(status):
+	pass
+
+func _on_bt_player_updated(status):
+	pass
+
+
+func _on_bt_player_tree_exited():
+	pass # Replace with function body.
+	
+	#if status==3 or status==2:
+		#print("shooting finished")
+		#bt_player.blackboard.set_var("in_range", false)
+		#set_state(current_state,prev_state)
+		#shooting_cooldown.start()
+	#else:
+		#pass
