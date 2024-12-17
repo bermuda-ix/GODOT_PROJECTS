@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 const SPEED = 40
 const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
+const MISSILE_DUMBFIRE = preload("res://Component/missiles/missile_dumbfire.tscn")
 
 @onready var player : PlayerEntity = null
 @onready var nav_agent := $NavigationAgent2D2 as NavigationAgent2D
@@ -12,7 +13,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var chase_timer = $ChaseTimer
 @onready var turret = $Turret
 @onready var animation_player = $AnimationPlayer
-@onready var bullet = BALL_PROCETILE
+@onready var bullet = MISSILE_DUMBFIRE
 @onready var bullet_dir = Vector2.RIGHT
 @onready var audio_stream_player_2d = $AudioStreamPlayer2D
 @onready var stagger = $Stagger

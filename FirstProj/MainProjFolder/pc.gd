@@ -43,8 +43,6 @@ var cur_state = "IDLE"
 @onready var hit_box = $HitBox
 @onready var hb_right = $HitBox/HBRight
 @onready var hb_left = $HitBox/HBLeft
-@onready var pb_left = $ParryBox/PBLeft
-@onready var pb_right = $ParryBox/PBRight
 @onready var pb_rot = $ParryBox/PBRot
 @onready var parry_box = $ParryBox
 
@@ -73,8 +71,7 @@ func _ready():
 	hit_box_pos=hit_box.position
 	hb_left.disabled=true
 	hb_right.disabled=true
-	pb_left.disabled=true
-	pb_right.disabled=true
+
 	pb_rot.disabled=true
 	set_start_pos(global_position)
 	sp_atk_type = sp_atk_cone
@@ -122,9 +119,11 @@ func _process(delta):
 	if Input.is_action_just_pressed("walk_right"):
 		face_right = true
 		move_axis = 1
+		parry_box.scale.x=1
 	elif Input.is_action_just_pressed("walk_left"):
 		face_right = false
 		move_axis = -1
+		parry_box.scale.x=-1
 	elif input_axis == 0:
 		move_axis = 0
 	
@@ -145,7 +144,7 @@ func _physics_process(delta):
 		if dodge_state == true:
 			state = States.DODGE
 		# Add the gravity.
-		if(dodge_state==false):
+		if(dodge_state==false and parry_stance==false):
 			apply_gravity(delta) 
 		var input_axis = Input.get_axis("walk_left", "walk_right")
 		
@@ -154,7 +153,7 @@ func _physics_process(delta):
 		#print(dodge_timer.time_left)
 		#print(parry_stance)
 		var wall_hold = false
-		if(state!=States.DODGE):
+		if(state!=States.DODGE and parry_stance==false):
 			handle_wall_jump(wall_hold, delta)
 			jump(input_axis, delta)
 			handle_acceleration(input_axis, delta)
@@ -190,7 +189,7 @@ func _physics_process(delta):
 		just_wall_jump = false
 		
 
-		#print(hit_timer.time_left)
+		#print(cur_state)
 		label.text=str(atk_chain)
 		
 		
@@ -222,7 +221,7 @@ func jump(input_axis, delta):
 		if Input.is_action_just_pressed("jump"):
 			velocity.y = movement_data.jump_velocity
 			
-	elif not is_on_floor():
+	elif not is_on_floor() and parry_stance==false:
 		state = States.JUMP
 		if Input.is_action_just_released("jump") and velocity.y<movement_data.jump_velocity/2:
 			velocity.y = movement_data.jump_velocity/2
@@ -297,7 +296,18 @@ func handle_air_acceleration(input_axis, delta):
 		velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.air_acceleration * delta)
 
 func update_animation(input_axis):
-	
+	if Input.is_action_pressed("up"):
+		if Input.is_action_pressed("walk_right"):
+			parry_box.rotation=-(PI/4)
+		elif Input.is_action_pressed("walk_left"):
+			parry_box.rotation=(PI/4)
+		else:
+			if parry_box.scale.x<0:
+				parry_box.rotation=(PI/2)
+			else:
+				parry_box.rotation=-(PI/2)
+	elif Input.is_action_just_released("up") :
+		parry_box.rotation=0
 	#var left = Input.is_action_pressed("walk_left")
 	#var right = Input.is_action_pressed("walk_right")
 	if input_axis != 0:
@@ -332,51 +342,7 @@ func update_animation(input_axis):
 		
 func attack_animate():
 
-	#if not hit_timer.is_stopped():
-		#return
 	
-	#if Input.is_action_pressed("attack") and state != States.ATTACK:
-		#hit_timer.start()
-		#if attack_timer.is_stopped():
-			#attack_timer.start()
-		#
-		#if not is_on_floor():
-			#air_atk=true
-		#
-		#state=States.ATTACK
-		#attack_timer.paused = true
-		#
-		#if atk_chain == 0 and (not attack_timer.is_stopped()):
-			##animated_sprite_2d.play("attack_1")
-			#attack_combo = "Attack"
-			#
-#
-		#elif atk_chain == 1 and (not attack_timer.is_stopped()):
-			##animated_sprite_2d.play("attack_2")
-			#attack_combo = "Attack_2"
-			#
-#
-		#elif atk_chain == 2 and (not attack_timer.is_stopped()):
-			##animated_sprite_2d.play("attack_3")
-			#attack_combo = "Attack_3"
-			
-#
-	#elif (Input.is_action_just_released("attack")):
-		##animated_sprite_2d.play("idle")
-		#print("attack released")
-		##anim_player.stop()
-		#attack_timer.paused = false
-		##state=States.IDLE
-		
-
-		#if atk_chain < 2:
-			#
-			#atk_chain += 1
-			##print("Attack Chain")
-		#elif atk_chain >=2:
-			#atk_chain = 0
-			#attack_combo = "Attack"
-			##print("Attack Finished")
 		
 	if Input.is_action_just_pressed("attack") and state != States.ATTACK:
 		attack_timer.start()
@@ -439,17 +405,20 @@ func sp_atk():
 
 
 func parry():
-	parry_box.look_at(get_global_mouse_position())
+	#parry_box.look_at(get_global_mouse_position())
 	#Enter/Exit parry state
+	
+	
 	if Input.is_action_just_pressed("parry"):
 		parry_timer.start()
 		parry_stance=true
 		state=States.PARRY
+		set_state(state, States.PARRY)
 		pb_rot.disabled=false
 		#if face_right==true:
-			#pb_left.disabled=false
+			#parry_box.scale.x=1
 		#if face_right==false:
-			#pb_right.disabled=false
+			#parry_box.scale.x=-1
 
 	elif Input.is_action_just_released("parry"):
 		parry_timer.stop()
@@ -535,6 +504,8 @@ func set_state(current_state, new_state: int) -> void:
 	if current_state==States.JUMP:
 		air_atk=true
 		print(air_atk)
+	if current_state == States.PARRY and parry_stance==true:
+		pass
 	
 	current_state=prev_state
 	match state:
@@ -583,8 +554,6 @@ func set_state(current_state, new_state: int) -> void:
 			
 	if state!=States.PARRY:
 		pb_rot.disabled=true
-		pb_left.disabled=true
-		pb_right.disabled=true
 func get_state() -> String:
 	return cur_state
 
@@ -701,6 +670,8 @@ func save_player_data():
 
 
 func _on_parry_timer_timeout():
+	parry_timer.stop()
+	parry_stance=false
 	state=States.IDLE
 	anim_player.stop()
 	

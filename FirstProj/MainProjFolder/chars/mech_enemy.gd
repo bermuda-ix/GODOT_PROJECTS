@@ -4,6 +4,7 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
+const MISSILE_DUMBFIRE = preload("res://Component/missiles/missile_dumbfire.tscn")
 
 #pathfinding
 @onready var wall_check_left = $WallChecks/WallCheckLeft as RayCast2D
@@ -29,7 +30,9 @@ const JUMP_VELOCITY = -400.0
 @onready var leap_up_check_left = $JumpChecks/LeapUpCheckLeft
 @onready var leap_up_check_right = $JumpChecks/LeapUpCheckRight
 
-
+@onready var turret = $Turret
+@onready var bullet = MISSILE_DUMBFIRE
+@onready var bullet_dir = Vector2.RIGHT
 
 @onready var health = $Health
 @onready var hurt_box = $HurtBox
@@ -38,6 +41,7 @@ const JUMP_VELOCITY = -400.0
 @onready var parry_timer = $ParryTimer as Timer
 var immortal = false
 
+@onready var bt_player = $BTPlayer
 
 @export var wander_speed : float = 40.0
 @export var chase_speed : float = 80.0
@@ -55,6 +59,7 @@ var parried : bool = false
 var attacking : bool = false
 var next_y
 var state
+var distance
 
 
 enum States{
@@ -63,7 +68,8 @@ enum States{
 	JUMP,
 	ATTACK,
 	PARRY,
-	DEATH
+	DEATH,
+	SHOOTING
 }
 
 var current_state = States.WANDER
@@ -76,8 +82,9 @@ func _ready():
 	#set_state(current_state, States.CHASE)
 	animation_player.play("walking")
 	next_y=nav_agent.get_next_path_position().y
-
-	
+	bt_player.blackboard.set_var("in_range", false)
+	turret.setup(2)
+	turret.shoot_timer.paused=true
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -88,8 +95,10 @@ func _process(_delta):
 		#hb_collison.disabled=false
 	player_found=true
 	if current_state != States.ATTACK:
-		handle_vision()
+		if current_state != States.SHOOTING:
+			handle_vision()
 		track_player()
+		shooting_range()
 	#match current_state:
 		#States.WANDER:
 			#set_state(current_state, States.WANDER)
@@ -115,7 +124,7 @@ func _physics_process(delta):
 		#velocity.x = direction * SPEED
 	#else:
 		#velocity.x = move_toward(velocity.x, 0, SPEED)
-	if parried==false and attacking==false and current_state!=States.DEATH:
+	if parried==false and attacking==false and current_state!=States.DEATH and current_state!=States.SHOOTING:
 		move_and_slide()
 		hb_collison.disabled=false
 	
@@ -129,13 +138,13 @@ func _physics_process(delta):
 		##print("landed")
 		#set_state(current_state,States.CHASE)
 	
-	if parry_timer.is_stopped() :
-		current_state=prev_state
-		knockback = Vector2.ZERO
-		parried=false
+	#if parry_timer.is_stopped() :
+		#current_state=prev_state
+		#knockback = Vector2.ZERO
+		#parried=false
 	
 	#print(state, ": ", current_state, prev_state)	
-	print(animation_player.current_animation)
+	#print(animation_player.current_animation)
 	#print(is_on_floor())
 	#if current_state==States.JUMP:
 		#print("in air")
@@ -246,13 +255,30 @@ func handl_animation():
 	
 
 func track_player():
-	if player == null:
-		return
+	
 	
 	var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y)\
 	- player_tracking.position
 	
+	
+	
 	player_tracker_pivot.look_at(direction_to_player)
+
+func shooting_range():
+	if player == null:
+		return
+		
+	var tar_pos = player.global_position
+	var dir = global_position.direction_to(tar_pos)
+	distance =abs(global_position.x - tar_pos.x)
+	if distance<=200 and attacking==false:
+		#print(bt_player.blackboard.get_var("in_range"), " ",distance, " ",attacking)
+		bt_player.blackboard.set_var("in_range", true)
+		set_state(current_state,States.SHOOTING)
+	else:
+		bt_player.blackboard.set_var("in_range", false)
+		set_state(current_state,prev_state)
+	
 
 func handle_vision():
 	if player_tracking.is_colliding():
@@ -328,6 +354,9 @@ func set_state(cur_state, new_state) -> void:
 			States.DEATH:
 				state="DEATH"
 				hb_collison.disabled=false
+			States.SHOOTING:
+				state="shooting"
+				
 		#print(state)
 
 
@@ -430,3 +459,20 @@ func _on_animation_player_animation_finished(anim_name):
 
 
 
+
+func _on_parry_timer_timeout():
+	current_state=prev_state
+	knockback = Vector2.ZERO
+	parried=false
+
+func shoot():
+	#turret.shoot()
+	#turret.shoot_timer.paused=false
+	print("shoot")
+	var bullet_inst = bullet.instantiate()
+	bullet_inst.set_speed(300.0)
+	bullet_inst.dir =  Vector2.UP
+	bullet_inst.spawnPos = Vector2(position.x, position.y)
+	#audio_stream_player_2d.play()
+	
+	get_tree().current_scene.add_child(bullet_inst)

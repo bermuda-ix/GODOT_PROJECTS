@@ -396,6 +396,75 @@ tracks/4/keys = {
 "values": [true, false, true]
 }
 
+[sub_resource type="Animation" id="Animation_x1wk2"]
+resource_name = "Parry"
+length = 0.25
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ParryBox/PBRot/AnimatedSprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.227451), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_irs7o"]
+resource_name = "Parry_Success"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 3.14159, 6.28319]
+}
+
 [sub_resource type="Animation" id="Animation_13dif"]
 length = 0.001
 tracks/0/type = "value"
@@ -553,6 +622,18 @@ tracks/12/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("ParryBox/PBRot/AnimatedSprite2D:self_modulate")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.227451)]
 }
 
 [sub_resource type="Animation" id="Animation_pskkv"]
@@ -768,87 +849,6 @@ tracks/1/keys = {
 "values": [2, 1, 3, 3, 4, 5, 6, 7]
 }
 
-[sub_resource type="Animation" id="Animation_x1wk2"]
-resource_name = "Parry"
-length = 0.25
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:self_modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(100, 100, 100, 1), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_irs7o"]
-resource_name = "Parry_Success"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.0, 3.14159, 6.28319]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qyq63"]
 _data = {
 "Attack": SubResource("Animation_1ru25"),
@@ -871,14 +871,23 @@ size = Vector2(12.6984, 27.5918)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oupih"]
 size = Vector2(14, 22)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e3ejd"]
-size = Vector2(7, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_efknh"]
-size = Vector2(5, 20)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnh6k"]
-size = Vector2(6, 20)
+size = Vector2(10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2mgc"]
+atlas = ExtResource("2_b7jgr")
+region = Rect2(192, 30, 24, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_47tfd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2mgc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="PC" type="CharacterBody2D" node_paths=PackedStringArray("health") groups=["player"]]
 position = Vector2(0, 2)
@@ -1043,19 +1052,15 @@ collision_layer = 512
 collision_mask = 24
 script = ExtResource("8_7q1rp")
 
-[node name="PBLeft" type="CollisionShape2D" parent="ParryBox"]
-position = Vector2(6.24999, 0)
-shape = SubResource("RectangleShape2D_e3ejd")
-disabled = true
-
-[node name="PBRight" type="CollisionShape2D" parent="ParryBox"]
-position = Vector2(-7.75001, 0)
-shape = SubResource("RectangleShape2D_efknh")
-disabled = true
-
 [node name="PBRot" type="CollisionShape2D" parent="ParryBox"]
-position = Vector2(11, 0)
+position = Vector2(6, 0)
 shape = SubResource("RectangleShape2D_rnh6k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ParryBox/PBRot"]
+self_modulate = Color(1, 1, 1, 0.227451)
+position = Vector2(0.5, -0.999999)
+scale = Vector2(0.291667, 0.8)
+sprite_frames = SubResource("SpriteFrames_47tfd")
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="area_entered" from="HazardDetector" to="." method="_on_hazard_detector_area_entered"]
