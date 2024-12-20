@@ -42,6 +42,8 @@ const MISSILE_DUMBFIRE = preload("res://Component/missiles/missile_dumbfire.tscn
 @onready var h_bar = $HBar
 @onready var parry_timer = $ParryTimer as Timer
 var immortal = false
+@onready var stagger = $Stagger
+
 
 @onready var bt_player = $BTPlayer
 
@@ -474,6 +476,7 @@ func shoot():
 	print("shoot")
 	var bullet_inst = bullet.instantiate()
 	bullet_inst.set_speed(300.0)
+	bullet_inst.set_accel(100.0)
 	#bullet_inst.dir =  Vector2.UP
 	bullet_inst.spawnPos = Vector2(turret.global_position.x, turret.global_position.y)
 	if animated_sprite_2d.flip_h==true:
@@ -489,7 +492,11 @@ func shoot():
 
 
 func _on_bt_player_behavior_tree_finished(status):
-	pass
+	if status==3:
+		print("shooting finished")
+		bt_player.blackboard.set_var("in_range", false)
+		set_state(current_state,prev_state)
+		shooting_cooldown.start()
 
 func _on_bt_player_updated(status):
 	pass
@@ -498,10 +505,16 @@ func _on_bt_player_updated(status):
 func _on_bt_player_tree_exited():
 	pass # Replace with function body.
 	
-	#if status==3 or status==2:
+	#if status==3:
 		#print("shooting finished")
 		#bt_player.blackboard.set_var("in_range", false)
 		#set_state(current_state,prev_state)
 		#shooting_cooldown.start()
 	#else:
 		#pass
+
+
+func _on_hurt_box_area_entered(area):
+	if area.is_in_group("sp_atk_default"):
+		#print("spc_hit")
+		stagger.stagger -= 1

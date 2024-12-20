@@ -588,6 +588,7 @@ position = Vector2(-2, -24)
 shape = SubResource("RectangleShape2D_ohrrw")
 
 [node name="HitBox" parent="." index="17" node_paths=PackedStringArray("stagger")]
+damage = 3
 stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
@@ -604,9 +605,6 @@ collision_mask = 2
 position = Vector2(0, -24)
 shape = SubResource("CircleShape2D_80ahk")
 
-[node name="Stagger" parent="." index="19"]
-max_stagger = 1
-
 [node name="BTPlayer" type="BTPlayer" parent="." index="20"]
 behavior_tree = ExtResource("4_r1ibv")
 blackboard_plan = SubResource("BlackboardPlan_yo2q5")
@@ -619,6 +617,7 @@ position = Vector2(9, -37)
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="got_hit" from="HurtBox" to="." method="_on_hurt_box_got_hit"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]

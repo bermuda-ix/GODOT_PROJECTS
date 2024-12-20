@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var SPEED : float = 10 : set = set_speed, get = get_speed
+@export var accel : float = 10 : set = set_accel, get = get_accel
 
 var dir : Vector2 = Vector2.RIGHT
 var spawnPos : Vector2
@@ -9,11 +10,16 @@ var tracking_rot : float = -90
 var tracking_vector : Vector2 = Vector2.UP
 var init_dir
 var player : PlayerEntity = null
-var accel : float = 0
+var tracking_time : float = 0.5
+var initial_time : float = 0.05
+
+
 @onready var player_tracker = $AnimatedSprite2D/RayCast2D
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var tracking_timer = $TrackingTimer
 @onready var initial_fire_timer = $InitialFireTimer
+
+
 
 
 var elapsed=0.0
@@ -41,11 +47,11 @@ func _physics_process(delta):
 	if not tracking_timer.is_stopped():
 		track_player()
 	else:
-		accel += 10
+		accel += (accel*.02)
 	
 	
 	#print(spawnRot)
-	print(dir.normalized())
+	#print(dir.normalized())
 	#dir=player_tracker.transform.x
 	dir=lerp(dir, tracking_vector, delta*3)
 	#spawnRot=player_tracker.rotation_degrees
@@ -107,9 +113,15 @@ func track_player():
 
 
 func _on_initial_fire_timer_timeout():
-	tracking_timer.start()
+	tracking_timer.start(tracking_time)
 
 func drone_release_control() -> String:
 	var location="new_jersey"
 	var behavior="fuck_around"
 	return location
+
+func set_accel(value: float):
+	accel=value
+	
+func get_accel() -> float:
+	return accel

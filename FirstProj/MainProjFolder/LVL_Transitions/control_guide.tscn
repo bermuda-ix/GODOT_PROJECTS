@@ -23,7 +23,8 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Controls:
 WASD: Movement           	SPACE: Jump (double)
-LMB: Attack				                      		SHIFT: Sprint	
+LMB: Attack (Health damage)				                      		RMB: Special Attack (Stagger damage)
+SHIFT: Sprint	
 E: Parry								
 CTRL: Dodge						
 Jump On Wall Hang: Wall Jump

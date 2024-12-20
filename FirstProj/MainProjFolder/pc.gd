@@ -52,6 +52,7 @@ var cur_state = "IDLE"
 @onready var shotty = $AnimatedSprite2D/Shotty
 @onready var sp_atk_hit_box = $AnimatedSprite2D/Shotty/SpAtkHitBox
 @onready var sp_atk_cone = $AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone
+@onready var cpu_particles_2d = $AnimatedSprite2D/Shotty/CPUParticles2D
 
 
 
@@ -387,8 +388,10 @@ func attack_animate():
 		set_state(state, States.SPECIAL_ATTACK)
 		attack_timer.paused = false
 		s_atk=true
+		#cpu_particles_2d.emitting=true
 		await anim_player.animation_finished
 		s_atk=false
+		
 
 	#elif (Input.is_action_just_released("special_attack")):
 		#print("attack released")

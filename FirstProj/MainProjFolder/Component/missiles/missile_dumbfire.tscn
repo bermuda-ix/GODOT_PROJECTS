@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://flaiq8fdiflo"]
+[gd_scene load_steps=11 format=3 uid="uid://flaiq8fdiflo"]
 
 [ext_resource type="PackedScene" uid="uid://b1rejq3d3efwl" path="res://Component/missiles/missile_template.tscn" id="1_bxiaj"]
 [ext_resource type="Script" path="res://missile_template.gd" id="2_eesph"]
@@ -19,6 +19,30 @@ animations = [{
 radius = 3.0
 height = 33.991
 
+[sub_resource type="Gradient" id="Gradient_asbaw"]
+offsets = PackedFloat32Array(0.242215, 0.515571, 0.916955)
+colors = PackedColorArray(0.974354, 0.446335, 0.25, 1, 0.965805, 0.26178, 0, 1, 0.0338533, 0.0338533, 0.0338533, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tg5ar"]
+gradient = SubResource("Gradient_asbaw")
+
+[sub_resource type="Curve" id="Curve_0ogn6"]
+_data = [Vector2(0, 0.836888), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rrkwm"]
+curve = SubResource("Curve_0ogn6")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tomia"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 30.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_rrkwm")
+color = Color(0.950249, 0.458249, 5.77569e-07, 1)
+color_ramp = SubResource("GradientTexture1D_tg5ar")
+
 [node name="missile_dumbfire" groups=["bullet"] instance=ExtResource("1_bxiaj")]
 position = Vector2(181, 88)
 scale = Vector2(0.5, 0.5)
@@ -33,7 +57,7 @@ rotation = -1.5708
 
 [node name="Area2D" parent="AnimatedSprite2D" index="1" groups=["bullet"]]
 collision_layer = 8
-collision_mask = 128
+collision_mask = 129
 
 [node name="VisibleOnScreenEnabler2D" parent="AnimatedSprite2D/Area2D" index="0"]
 position = Vector2(3.17722, 0)
@@ -42,6 +66,14 @@ scale = Vector2(2.23027, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Area2D" index="1"]
 rotation = -1.58007
 shape = SubResource("CapsuleShape2D_yocoi")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D" index="2"]
+position = Vector2(-18, -6.51598e-05)
+rotation = 1.5708
+scale = Vector2(0.0958754, 0.0863445)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_tomia")
+lifetime = 0.5
 
 [node name="TrackingTimer" type="Timer" parent="." index="1"]
 wait_time = 0.5
