@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dxedk74ivrhne"
+path="res://.godot/imported/Socapex - small knock.wav-cf4e96c383de4ea340b5fa262401d55a.sample"
+
+[deps]
+
+source_file="res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - small knock.wav"
+dest_files=["res://.godot/imported/Socapex - small knock.wav-cf4e96c383de4ea340b5fa262401d55a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

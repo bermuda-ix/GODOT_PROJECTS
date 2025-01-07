@@ -86,7 +86,7 @@ func _physics_process(delta):
 		velocity.x = dir.x*(-1)*knockback.x
 	#if knockback != Vector2.ZERO:
 		
-	print(player_tracker_pivot.rotation)
+	#print(player_tracker_pivot.rotation)
 		
 	
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)

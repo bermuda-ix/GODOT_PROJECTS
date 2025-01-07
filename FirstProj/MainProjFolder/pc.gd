@@ -1,6 +1,15 @@
 extends CharacterBody2D
 class_name PlayerEntity
 
+const hit1 = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - Swordsmall_1.wav"
+const hit2 = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - Swordsmall_2.wav"
+const hit3 = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - Swordsmall_3.wav"
+
+const swing1 = "res://Art_Components/Effects/sound/swishes/swishes/swish-1.wav"
+const swing2 = "res://Art_Components/Effects/sound/swishes/swishes/swish-3.wav"
+const swing3 = "res://Art_Components/Effects/sound/swishes/swishes/swish-5.wav"
+const parry_sfx = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - big punch.wav"
+
 @export var movement_data : PlayerMovementData
 @export var health: Health
 @export var hitbox: HitBox
@@ -53,12 +62,13 @@ var cur_state = "IDLE"
 @onready var sp_atk_hit_box = $AnimatedSprite2D/Shotty/SpAtkHitBox
 @onready var sp_atk_cone = $AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone
 @onready var cpu_particles_2d = $AnimatedSprite2D/Shotty/CPUParticles2D
-
-
+@onready var audio_stream_player_2d = $AudioStreamPlayer2D
+@onready var hit_sound = hit1
 
 
 var knockback : Vector2 = Vector2.ZERO
 var kb_dir : Vector2 = Vector2.ZERO
+var hit_success : bool = false
 
 var hit_box_pos
 
@@ -352,18 +362,22 @@ func attack_animate():
 		if atk_chain == 0 and (not attack_timer.is_stopped()):
 			#animated_sprite_2d.play("attack_1")
 			attack_combo = "Attack"
-			
+			hit_sound = hit1
+			AudioStreamManager.play(swing1)
 
 		elif atk_chain == 1 and (not attack_timer.is_stopped()):
 			#animated_sprite_2d.play("attack_2")
 			attack_combo = "Attack_2"
-			
+			hit_sound = hit2
+			AudioStreamManager.play(swing2)
 
 		elif atk_chain == 2 and (not attack_timer.is_stopped()):
 			#animated_sprite_2d.play("attack_3")
 			attack_combo = "Attack_3"
-			
-			
+			hit_sound = hit3
+			AudioStreamManager.play(swing3)
+		
+		
 		state=States.ATTACK
 		set_state(state, States.ATTACK)
 		
@@ -616,6 +630,7 @@ func set_start_pos(checkpoint_position):
 func _on_animation_player_animation_finished(anim_name):
 	if state==States.ATTACK:
 		print("attack finished")
+		hit_success=false
 		if atk_chain < 2:
 			
 			atk_chain += 1
@@ -682,6 +697,17 @@ func parry_success():
 	parry_timer.stop()
 	anim_player.play("Parry_Success")
 	print("parry success")
+	AudioStreamManager.play(parry_sfx)
 	await anim_player.animation_finished
 	anim_player.stop()
 
+
+
+func _on_hit_box_area_entered(area):
+	hit_sound=hit1
+	AudioStreamManager.play(hit_sound)
+	
+
+
+func _on_hit_box_body_entered(body):
+	pass # Replace with function body.

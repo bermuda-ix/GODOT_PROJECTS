@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://by0nsp14mjgv3"
+path="res://.godot/imported/Socapex - new_hits_7.wav-44055ccee47483fd2022674d2cdbe116.sample"
+
+[deps]
+
+source_file="res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - new_hits_7.wav"
+dest_files=["res://.godot/imported/Socapex - new_hits_7.wav-44055ccee47483fd2022674d2cdbe116.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
