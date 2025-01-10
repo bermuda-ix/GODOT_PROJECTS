@@ -9,6 +9,8 @@ const swing1 = "res://Art_Components/Effects/sound/swishes/swishes/swish-1.wav"
 const swing2 = "res://Art_Components/Effects/sound/swishes/swishes/swish-3.wav"
 const swing3 = "res://Art_Components/Effects/sound/swishes/swishes/swish-5.wav"
 const parry_sfx = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - big punch.wav"
+const shotgun_fire = "res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/10 Guage Shotgun-SoundBible.com-74120584.wav"
+const reload = "res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/Chambering A Round-SoundBible.com-854171848.wav"
 
 @export var movement_data : PlayerMovementData
 @export var health: Health
@@ -28,6 +30,7 @@ var just_wall_jump = false
 var parry_stance=false
 #attack combo up to 3
 var atk_chain = 0
+var sp_atk_chn = 0
 #true = facing right fals= facing left
 var face_right = true
 var input_dir=Input.get_axis("walk_left","walk_right")
@@ -73,6 +76,7 @@ var hit_success : bool = false
 var hit_box_pos
 
 var attack_combo = "Attack"
+var sp_atk_combo = "shotgun_attack"
 var air_atk : bool = false
 var s_atk : bool = false
 var move_axis : int = 1
@@ -398,12 +402,38 @@ func attack_animate():
 		
 		if attack_timer.is_stopped():
 			attack_timer.start()
+			attack_timer.paused=true
+			
+		if atk_chain==0:
+			if sp_atk_chn == 0 and (not attack_timer.is_stopped()):
+				sp_atk_combo="shotgun_attack"
+				print("sp_atk 1")
+				AudioStreamManager.play(shotgun_fire)
+
+			elif sp_atk_chn == 1 and (not attack_timer.is_stopped()):
+				#animated_sprite_2d.play("attack_2")
+				sp_atk_combo="shotgun_attack"
+				print("sp_atk 2")
+				AudioStreamManager.play(shotgun_fire)
+
+			elif sp_atk_chn == 2 and (not attack_timer.is_stopped()):
+				#animated_sprite_2d.play("attack_3")
+				print("reload anim playing")
+				AudioStreamManager.play(reload)
+				sp_atk_combo="shotgun_attack"
+				print("sp_atk 3")
+				
+		else:
+			sp_atk_combo="shotgun_attack_fast"
+			
 		state=States.SPECIAL_ATTACK
 		set_state(state, States.SPECIAL_ATTACK)
 		attack_timer.paused = false
 		s_atk=true
 		#cpu_particles_2d.emitting=true
+		
 		await anim_player.animation_finished
+		attack_timer.paused=false
 		s_atk=false
 		
 
@@ -537,6 +567,10 @@ func set_state(current_state, new_state: int) -> void:
 				
 		States.SPECIAL_ATTACK:
 			anim_player.speed_scale=1.5
+			if sp_atk_chn==2:
+				anim_player.play("shotgun_finish")
+				await anim_player.animation_finished
+				sp_atk_chn=0
 			anim_player.play("shotgun_attack")
 			if not is_on_floor():
 			
@@ -642,11 +676,20 @@ func _on_animation_player_animation_finished(anim_name):
 		
 		state=prev_state
 	elif state==States.SPECIAL_ATTACK:
+		
 		if anim_name=="shotgun_attack":
+			if sp_atk_chn < 2:
+			
+				sp_atk_chn += 1
+			#print("Attack Chain")
+			elif sp_atk_chn >=2:
+				sp_atk_chn = 0
 			print("special finished")
 			s_atk=false
 			state=States.IDLE
 			#set_state(state, States.IDLE)
+		elif anim_name=="shotgun_finish":
+			AudioStreamManager.play(shotgun_fire)
 
 func _on_attack_timer_timeout():
 	atk_chain = 0
