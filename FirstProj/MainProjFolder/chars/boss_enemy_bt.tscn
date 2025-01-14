@@ -455,6 +455,7 @@ one_shot = true
 
 [node name="Health" parent="." index="15"]
 max_health = 10
+immortality = false
 
 [node name="HurtBox" parent="." index="16" node_paths=PackedStringArray("health")]
 health = NodePath("../Health")

@@ -81,6 +81,7 @@ var air_atk : bool = false
 var s_atk : bool = false
 var move_axis : int = 1
 var sp_atk_type = sp_atk_cone
+var sp_atk_dmg :int = 1
 
 func _ready():
 	hit_box_pos=hit_box.position
@@ -409,12 +410,14 @@ func attack_animate():
 				sp_atk_combo="shotgun_attack"
 				print("sp_atk 1")
 				AudioStreamManager.play(shotgun_fire)
+				sp_atk_dmg=1
 
 			elif sp_atk_chn == 1 and (not attack_timer.is_stopped()):
 				#animated_sprite_2d.play("attack_2")
 				sp_atk_combo="shotgun_attack"
 				print("sp_atk 2")
 				AudioStreamManager.play(shotgun_fire)
+				sp_atk_dmg=1
 
 			elif sp_atk_chn == 2 and (not attack_timer.is_stopped()):
 				#animated_sprite_2d.play("attack_3")
@@ -422,9 +425,11 @@ func attack_animate():
 				AudioStreamManager.play(reload)
 				sp_atk_combo="shotgun_attack"
 				print("sp_atk 3")
+				sp_atk_dmg=2
 				
 		else:
 			sp_atk_combo="shotgun_attack_fast"
+			AudioStreamManager.play(shotgun_fire)
 			
 		state=States.SPECIAL_ATTACK
 		set_state(state, States.SPECIAL_ATTACK)
@@ -571,7 +576,7 @@ func set_state(current_state, new_state: int) -> void:
 				anim_player.play("shotgun_finish")
 				await anim_player.animation_finished
 				sp_atk_chn=0
-			anim_player.play("shotgun_attack")
+			anim_player.play(sp_atk_combo)
 			if not is_on_floor():
 			
 				velocity=Vector2.ZERO
@@ -690,6 +695,11 @@ func _on_animation_player_animation_finished(anim_name):
 			#set_state(state, States.IDLE)
 		elif anim_name=="shotgun_finish":
 			AudioStreamManager.play(shotgun_fire)
+			state=States.IDLE
+		elif anim_name=="shotgun_attack_fast":
+			AudioStreamManager.play(shotgun_fire)
+			state=States.IDLE
+			
 
 func _on_attack_timer_timeout():
 	atk_chain = 0

@@ -152,6 +152,7 @@ wait_time = 0.35
 
 [node name="Health" parent="." index="15"]
 max_health = 1
+immortality = false
 
 [node name="HurtBox" parent="." index="16" node_paths=PackedStringArray("health")]
 collision_mask = 8768

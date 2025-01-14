@@ -73,7 +73,8 @@ enum States{
 	ATTACK,
 	PARRY,
 	DEATH,
-	SHOOTING
+	SHOOTING,
+	STAGGERED
 }
 
 var current_state = States.WANDER
@@ -98,7 +99,7 @@ func _process(_delta):
 	#if current_state != States.PARRY:
 		#hb_collison.disabled=false
 	player_found=true
-	if current_state != States.ATTACK:
+	if current_state != States.ATTACK and current_state != States.STAGGERED:
 		if current_state != States.SHOOTING:
 			handle_vision()
 		track_player()
@@ -129,12 +130,12 @@ func _physics_process(delta):
 		#velocity.x = direction * SPEED
 	#else:
 		#velocity.x = move_toward(velocity.x, 0, SPEED)
-	if parried==false and attacking==false and current_state!=States.DEATH and current_state!=States.SHOOTING:
+	if parried==false and attacking==false and current_state!=States.DEATH and current_state!=States.SHOOTING and current_state!=States.STAGGERED:
 		move_and_slide()
 		hb_collison.disabled=false
 	
 	
-	if knockback == Vector2.ZERO:
+	if knockback == Vector2.ZERO or current_state!=States.STAGGERED:
 		handle_movement()
 		if current_state!=States.JUMP:
 			handle_jump()
@@ -313,6 +314,8 @@ func set_state(cur_state, new_state) -> void:
 		pass
 	elif(cur_state==States.DEATH):
 		pass
+	elif(cur_state==States.STAGGERED and not parry_timer.is_stopped()):
+		pass
 	#elif new_state==States.ATTACK and cur_state==States.JUMP:
 		#cur_state="AIR_ATTACK"
 		#anim_player.play(attack_combo)
@@ -361,6 +364,10 @@ func set_state(cur_state, new_state) -> void:
 				hb_collison.disabled=false
 			States.SHOOTING:
 				state="shooting"
+			States.STAGGERED:
+				state="staggered"
+				animation_player.play("Staggered")
+				hb_collison.disabled=false
 				
 		#print(state)
 
@@ -389,7 +396,7 @@ func _on_death_timer_timeout():
 	queue_free()
 
 func health_bar():
-	h_bar.text=str(health.health, " Parried: ", parried, " : ", parry_timer.time_left)
+	h_bar.text=str(health.health, " State: ", state, " : ", parry_timer.time_left)
 
 func _on_hurt_box_got_hit(hitbox):
 	health.set_temporary_immortality(0.2)
@@ -398,6 +405,14 @@ func _on_hurt_box_got_hit(hitbox):
 	await animation_player.animation_finished
 	if current_state != States.DEATH:
 		animation_player.play("RESET")
+	
+	if current_state==States.STAGGERED:
+		print("big damage")
+		
+		#health.health-=2
+	else:
+		print("not big damage")
+		
 	#knockback.x = 350
 	#velocity.y=jump_velocity/2
 	#if animated_sprite_2d.flip_h:
@@ -426,7 +441,7 @@ func _on_hurt_box_got_hit(hitbox):
 
 func _on_hit_box_parried():
 	current_state=States.PARRY
-	print("PARRIED")
+	#print("PARRIED")
 	parry_timer.start()
 	if animated_sprite_2d.flip_h==true:
 		knockback.x = -450
@@ -439,6 +454,8 @@ func _on_hit_box_parried():
 
 
 func _on_attack_range_body_entered(_body):
+	if current_state==States.STAGGERED:
+		pass
 	print("attack in range")
 	set_state(current_state, States.ATTACK)
 	animation_player.play("attack")
@@ -469,6 +486,7 @@ func _on_parry_timer_timeout():
 	current_state=prev_state
 	knockback = Vector2.ZERO
 	parried=false
+	hurt_box.set_damage_mulitplyer(1)
 
 func shoot():
 	#turret.shoot()
@@ -493,7 +511,7 @@ func shoot():
 
 func _on_bt_player_behavior_tree_finished(status):
 	if status==3:
-		print("shooting finished")
+		#print("shooting finished")
 		bt_player.blackboard.set_var("in_range", false)
 		set_state(current_state,prev_state)
 		shooting_cooldown.start()
@@ -516,5 +534,13 @@ func _on_bt_player_tree_exited():
 
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("sp_atk_default"):
-		#print("spc_hit")
-		stagger.stagger -= 1
+		print("spc_hit")
+		stagger.stagger -= player.sp_atk_dmg
+
+
+func _on_stagger_staggered():
+	animation_player.stop()
+	set_state(current_state, States.STAGGERED)
+	parry_timer.start(5)
+	hurt_box.set_damage_mulitplyer(3)
+	print("staggered")

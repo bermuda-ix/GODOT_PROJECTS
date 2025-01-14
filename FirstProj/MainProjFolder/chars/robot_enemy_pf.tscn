@@ -46,6 +46,10 @@ sprite_frames = SubResource("SpriteFrames_qklr2")
 position = Vector2(-0.5, -24)
 shape = SubResource("CircleShape2D_g3357")
 
+[node name="Health" parent="." index="13"]
+max_health = 3
+immortality = false
+
 [node name="HurtBox" parent="." index="14" node_paths=PackedStringArray("health")]
 health = NodePath("../Health")
 

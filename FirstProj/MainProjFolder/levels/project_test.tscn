@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
-[ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="2_3lqyo"]
+[ext_resource type="PackedScene" uid="uid://ckut0dvkbw0oi" path="res://chars/mech_enemy.tscn" id="2_owvly"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ys1t2"]
 outlines = Array[PackedVector2Array]([PackedVector2Array(24, 112, 144, 112, 176, 32, 328, 32, 368, 112, 528, 112, 528, 88, 392, 88, 352, 8, 256, 8, 216, -64, 256, -128, 448, -128, 496, -208, 696, -208, 696, -232, 520, -232, 432, -296, 224, -304, 128, -360, -64, -360, -64, -336, 104, -336, 208, -272, 408, -272, 472, -216, 432, -160, 256, -160, 168, -96, 8, -96, 8, -64, 184, -64, 216, 8, 144, 8, 120, 72, 24, 72)])
@@ -134,5 +134,5 @@ navigation_layers = 2
 [node name="NavigationRegion2D11" type="NavigationRegion2D" parent="." index="20"]
 navigation_polygon = SubResource("NavigationPolygon_nxtlr")
 
-[node name="flying_enemy" parent="." index="21" instance=ExtResource("2_3lqyo")]
-position = Vector2(151, -112)
+[node name="Mech_Enemy" parent="." index="21" instance=ExtResource("2_owvly")]
+position = Vector2(464, 104)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://ckut0dvkbw0oi"]
+[gd_scene load_steps=38 format=3 uid="uid://ckut0dvkbw0oi"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_v27m8"]
 [ext_resource type="Script" path="res://chars/mech_enemy.gd" id="2_jjukm"]
@@ -278,6 +278,35 @@ tracks/7/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_g06qv"]
+resource_name = "Staggered"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.605629]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(5.946, 7.027, 6.487, 1), Color(1, 1, 1, 1), Color(5.946, 7.027, 6.487, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_elng3"]
 resource_name = "attack"
 length = 3.0
@@ -517,6 +546,7 @@ tracks/3/keys = {
 _data = {
 "Death": SubResource("Animation_oc2dx"),
 "RESET": SubResource("Animation_0u5nh"),
+"Staggered": SubResource("Animation_g06qv"),
 "attack": SubResource("Animation_elng3"),
 "hit": SubResource("Animation_88wjf"),
 "idle": SubResource("Animation_1w5ir"),
@@ -580,7 +610,12 @@ wait_time = 10.0
 [node name="ShootingCooldown" type="Timer" parent="." index="14"]
 wait_time = 5.0
 
+[node name="Health" parent="." index="15"]
+max_health = 10
+immortality = false
+
 [node name="HurtBox" parent="." index="16" node_paths=PackedStringArray("health")]
+collision_mask = 8768
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
@@ -621,6 +656,7 @@ position = Vector2(9, -37)
 [connection signal="got_hit" from="HurtBox" to="." method="_on_hurt_box_got_hit"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
+[connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="behavior_tree_finished" from="BTPlayer" to="." method="_on_bt_player_behavior_tree_finished"]
 [connection signal="tree_exited" from="BTPlayer" to="." method="_on_bt_player_tree_exited"]
 [connection signal="updated" from="BTPlayer" to="." method="_on_bt_player_updated"]
