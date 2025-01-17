@@ -1,0 +1,83 @@
+[gd_scene load_steps=8 format=3 uid="uid://w2mgtcnbneri"]
+
+[ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_0gsjo"]
+[ext_resource type="Script" path="res://chars/testing.gd" id="2_0h0oo"]
+[ext_resource type="Texture2D" uid="uid://r35brmys5jtr" path="res://Art_Components/Enemies/securityrobot.png" id="2_0vw4e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ac1i2"]
+atlas = ExtResource("2_0vw4e")
+region = Rect2(42, 32, 14, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1tbbf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ac1i2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aq2km"]
+radius = 6.0
+height = 26.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_kflhl"]
+font_size = 6
+
+[node name="testing" instance=ExtResource("1_0gsjo")]
+position = Vector2(0, -1)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("2_0h0oo")
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+position = Vector2(-28, 10)
+sprite_frames = SubResource("SpriteFrames_1tbbf")
+offset = Vector2(29.5319, -9.70852)
+
+[node name="CollisionShape2D" parent="." index="3"]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_aq2km")
+
+[node name="WallCheckLeft" parent="WallChecks" index="0"]
+position = Vector2(1, 1)
+
+[node name="WallCheckRight" parent="WallChecks" index="1"]
+position = Vector2(1, 1)
+
+[node name="FloorChecksLeft" parent="FloorChecks" index="0"]
+position = Vector2(-23, 1)
+
+[node name="FloorChecksRight" parent="FloorChecks" index="1"]
+position = Vector2(17, 1)
+
+[node name="PlayerTrackerPivot" parent="." index="6"]
+position = Vector2(1, 1)
+
+[node name="FloorJumpCheckRight" parent="JumpChecks" index="0"]
+position = Vector2(25, 1)
+
+[node name="FloorJumpCheckLeft" parent="JumpChecks" index="1"]
+position = Vector2(-31, 1)
+
+[node name="GapCheckLeft" parent="JumpChecks" index="2"]
+position = Vector2(-31, 1)
+
+[node name="GapCheckRight" parent="JumpChecks" index="3"]
+position = Vector2(25, 1)
+
+[node name="LeapUpCheckLeft" parent="JumpChecks" index="4"]
+position = Vector2(-31, 1)
+
+[node name="LeapUpCheckRight" parent="JumpChecks" index="5"]
+position = Vector2(25, 1)
+
+[node name="Label" type="Label" parent="." index="18"]
+offset_left = -24.0
+offset_top = -21.0
+offset_right = 16.0
+offset_bottom = 2.0
+text = "DTP"
+label_settings = SubResource("LabelSettings_kflhl")
