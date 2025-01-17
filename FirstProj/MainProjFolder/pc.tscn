@@ -1348,7 +1348,7 @@ position = Vector2(5.74999, 3)
 rotation = -0.398385
 scale = Vector2(0.568679, 0.646948)
 collision_layer = 64
-collision_mask = 16
+collision_mask = 17
 script = ExtResource("6_y7jp7")
 
 [node name="HBRight" type="CollisionShape2D" parent="HitBox"]

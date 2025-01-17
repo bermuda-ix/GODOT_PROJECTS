@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://w2mgtcnbneri"]
+[gd_scene load_steps=9 format=3 uid="uid://w2mgtcnbneri"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_0gsjo"]
 [ext_resource type="Script" path="res://chars/testing.gd" id="2_0h0oo"]
@@ -23,12 +23,15 @@ animations = [{
 radius = 6.0
 height = 26.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fu3bx"]
+radius = 7.0
+height = 28.0
+
 [sub_resource type="LabelSettings" id="LabelSettings_kflhl"]
 font_size = 6
 
 [node name="testing" instance=ExtResource("1_0gsjo")]
 position = Vector2(0, -1)
-collision_layer = 0
 collision_mask = 0
 script = ExtResource("2_0h0oo")
 
@@ -73,6 +76,16 @@ position = Vector2(-31, 1)
 
 [node name="LeapUpCheckRight" parent="JumpChecks" index="5"]
 position = Vector2(25, 1)
+
+[node name="Health" parent="." index="13"]
+max_health = 3
+
+[node name="HurtBox" parent="." index="14" node_paths=PackedStringArray("health")]
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_fu3bx")
 
 [node name="Label" type="Label" parent="." index="18"]
 offset_left = -24.0

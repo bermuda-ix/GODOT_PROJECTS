@@ -32,8 +32,8 @@ var target_right : bool = false
 var rotate_around : bool = false
 
 func _ready():
-	position.y = -264
-	position.x = 408
+	#position.y = -264
+	#position.x = 408
 	player = get_tree().get_first_node_in_group("player")
 	
 	
@@ -47,9 +47,9 @@ func _physics_process(delta):
 	handle_movement()
 	
 	
-	if rotate_around:
-		move_and_slide()
-		velocity = movement * SPEED * delta
+	#if rotate_around:
+		#move_and_slide()
+		##velocity = movement * SPEED * delta
 
 func track_player():
 	
@@ -93,17 +93,17 @@ func handle_movement():
 		#print("arcing ", str(arc_vector))
 
 		
-	if not rotate_around :
-		if position.x >= 400 and dir==1:
-			dir = -1
-		elif position.x <= 200 and dir==-1:
-			dir = 1
-		position.x += 1 * dir
-	else:
-		if target_right:
-			movement = target_direction.rotated(CLOCKWISE)
-		else:
-			movement = target_direction.rotated(COUNTER_CLOCKWISE)
+	#if not rotate_around :
+		#if position.x >= 400 and dir==1:
+			#dir = -1
+		#elif position.x <= 200 and dir==-1:
+			#dir = 1
+		#position.x += 1 * dir
+	#else:
+		#if target_right:
+			#movement = target_direction.rotated(CLOCKWISE)
+		#else:
+			#movement = target_direction.rotated(COUNTER_CLOCKWISE)
 
 
 	

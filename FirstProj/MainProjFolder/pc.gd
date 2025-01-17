@@ -83,6 +83,9 @@ var move_axis : int = 1
 var sp_atk_type = sp_atk_cone
 var sp_atk_dmg :int = 1
 
+var target
+var target_string_test : String = "NONE"
+
 func _ready():
 	hit_box_pos=hit_box.position
 	hb_left.disabled=true
@@ -149,7 +152,8 @@ func _process(delta):
 		parry()
 		attack_animate()
 		update_animation(input_axis)
-	
+	if target == null:
+		target_string_test="NONE"
 	#print(air_atk)
 
 func _physics_process(delta):
@@ -206,7 +210,8 @@ func _physics_process(delta):
 		
 
 		#print(cur_state)
-		label.text=str(atk_chain)
+		
+		label.text=str(atk_chain," Target:", target_string_test)
 		
 		
 		knockback = lerp(knockback, Vector2.ZERO, 0.1)
@@ -763,4 +768,7 @@ func _on_hit_box_area_entered(area):
 
 
 func _on_hit_box_body_entered(body):
-	pass # Replace with function body.
+	if body.is_in_group("Enemy"):
+		print(str(body.name))
+		target_string_test=str(body.name)
+		target = body
