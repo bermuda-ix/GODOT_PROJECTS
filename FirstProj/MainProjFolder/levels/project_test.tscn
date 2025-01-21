@@ -135,7 +135,4 @@ navigation_layers = 2
 navigation_polygon = SubResource("NavigationPolygon_nxtlr")
 
 [node name="testing" parent="." index="21" instance=ExtResource("2_glorx")]
-position = Vector2(352, -298)
-
-[node name="testing2" parent="." index="22" instance=ExtResource("2_glorx")]
-position = Vector2(235, -289)
+position = Vector2(328, -288)

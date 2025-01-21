@@ -12,14 +12,24 @@ const parry_sfx = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX 
 const shotgun_fire = "res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/10 Guage Shotgun-SoundBible.com-74120584.wav"
 const reload = "res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/Chambering A Round-SoundBible.com-854171848.wav"
 
+const CLOCKWISE=PI/2
+const COUNTER_CLOCKWISE=-PI/2
+#signals
+signal flip
+
 @export var movement_data : PlayerMovementData
 @export var health: Health
 @export var hitbox: HitBox
 
-enum States {IDLE, WALKING, JUMP, ATTACK, SPECIAL_ATTACK, WALL_STICK, PARRY, DODGE, SPRINTING}
+enum States {IDLE, WALKING, JUMP, ATTACK, SPECIAL_ATTACK, WALL_STICK, PARRY, DODGE, SPRINTING,
+FLIP}
+
+enum CombatStates {LOCKED, UNLOCKED}
 
 var state: States = States.IDLE
 var prev_state: States = States.IDLE
+
+var combat_state: CombatStates = CombatStates.UNLOCKED
 
 var double_jump_flag = false
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -37,6 +47,7 @@ var input_dir=Input.get_axis("walk_left","walk_right")
 #dodge dir
 var dodge_state = false
 var dodge_v = 0.0
+
 
 var cur_state = "IDLE"
 
@@ -85,6 +96,10 @@ var sp_atk_dmg :int = 1
 
 var target
 var target_string_test : String = "NONE"
+var target_direction
+var movement
+var flip_speed
+var target_right : bool = false
 
 func _ready():
 	hit_box_pos=hit_box.position
@@ -97,6 +112,7 @@ func _ready():
 	load_player_data()
 	Events.set_player_data.connect(save_player_data)
 	Events.parried.connect(parry_success)
+	flip.connect(flip_over)
 	
 
 func _process(delta):
@@ -132,6 +148,8 @@ func _process(delta):
 			cur_state = "PARRY"
 			hurt_box_detect.disabled=true
 			set_state(state, States.PARRY)
+		States.FLIP:
+			cur_state = "FLIP"
 			
 		
 	dodge(input_axis, delta)
@@ -148,19 +166,37 @@ func _process(delta):
 	
 	handle_hitbox(input_axis, face_right)
 	
-	if(state!=States.DODGE and s_atk==false):
+	if(state!=States.DODGE and s_atk==false and state!=States.FLIP):
 		parry()
 		attack_animate()
 		update_animation(input_axis)
-	if target == null:
-		target_string_test="NONE"
+	
+	lockon()
 	#print(air_atk)
 
 func _physics_process(delta):
 	
 	if s_atk==true:
 		pass
+	elif state==States.FLIP:
+		#pass
+		move_and_slide()
+		apply_gravity(delta)
+		if target_right:
+			movement = target_direction.rotated(CLOCKWISE)
+			print("flip_right")
+		else:
+			movement = target_direction.rotated(COUNTER_CLOCKWISE)
+			print("flip_left")
+		velocity = movement * flip_speed * delta
+		
+		if is_on_floor():
+			state = States.IDLE
+		#velocity = movement * SPEED * delta
 	else:
+		if combat_state==CombatStates.LOCKED:
+			locked_combat()	
+
 		if dodge_state == true:
 			state = States.DODGE
 		# Add the gravity.
@@ -173,7 +209,7 @@ func _physics_process(delta):
 		#print(dodge_timer.time_left)
 		#print(parry_stance)
 		var wall_hold = false
-		if(state!=States.DODGE and parry_stance==false):
+		if(state!=States.DODGE and parry_stance==false and state!=States.FLIP):
 			handle_wall_jump(wall_hold, delta)
 			jump(input_axis, delta)
 			handle_acceleration(input_axis, delta)
@@ -182,7 +218,7 @@ func _physics_process(delta):
 			apply_air_resistance(input_axis, delta)
 			sp_atk()
 			if Input.is_action_pressed("sprint"):
-				state=States.SPRINTING
+				#state=States.SPRINTING
 				movement_data = load("res://FasterMovementData.tres")
 			if Input.is_action_pressed("walk"):
 				movement_data = load("res://SlowMovementData.tres")
@@ -210,8 +246,12 @@ func _physics_process(delta):
 		
 
 		#print(cur_state)
-		
-		label.text=str(atk_chain," Target:", target_string_test)
+		var side
+		if target_right:
+			side = "Right"
+		else:
+			side = "Left"
+		label.text=str(" Target:", combat_state, " Side:", side)
 		
 		
 		knockback = lerp(knockback, Vector2.ZERO, 0.1)
@@ -242,8 +282,8 @@ func jump(input_axis, delta):
 		if Input.is_action_just_pressed("jump"):
 			velocity.y = movement_data.jump_velocity
 			
-	elif not is_on_floor() and parry_stance==false:
-		state = States.JUMP
+	elif not is_on_floor() and parry_stance==false and state != States.FLIP:
+		#state = States.JUMP
 		if Input.is_action_just_released("jump") and velocity.y<movement_data.jump_velocity/2:
 			velocity.y = movement_data.jump_velocity/2
 		if Input.is_action_just_pressed("jump") and double_jump_flag == true and just_wall_jump == false:
@@ -351,11 +391,11 @@ func update_animation(input_axis):
 		
 		
 
-	if not is_on_floor() and state != States.ATTACK:
-		state = States.JUMP 
-		
-	elif is_on_floor() and state == States.JUMP:
-		state = States.IDLE
+	#if not is_on_floor() and state != States.ATTACK and state != States.FLIP:
+		#state = States.JUMP 
+		#
+	#elif is_on_floor() and state == States.JUMP:
+		#state = States.IDLE
 
 		#animated_sprite_2d.play("jump")
 	
@@ -540,6 +580,32 @@ func handle_hitbox(input_axis, face_right):
 			hb_left.disabled=true
 			hb_right.disabled=false
 
+func lockon():
+	if target == null:
+		target_string_test="NONE"
+		combat_state=CombatStates.UNLOCKED
+	else:
+		var direction_to_target : Vector2 = Vector2(target.position.x, target.position.y)\
+	- position
+		var arc_vector = Vector2(position-Vector2(target.position)).normalized()
+		target_direction = position.direction_to(target.position)
+		if state!=States.FLIP:
+			if arc_vector<Vector2.RIGHT and Vector2.UP<arc_vector:
+				
+				#print("on right")
+				target_right = true
+				
+			elif arc_vector>Vector2.LEFT and Vector2.UP>arc_vector:
+				#print("on left")
+				target_right = false
+			
+	
+
+func locked_combat():
+	if Input.is_action_pressed("jump") and Input.is_action_pressed("sprint"):
+		
+		flip.emit()
+
 func _on_hazard_detector_area_entered(area):
 	if area.is_in_group("hazard"):
 		global_position=starting_position
@@ -549,7 +615,7 @@ func _on_hazard_detector_area_entered(area):
 	elif area.is_in_group("Enemy"):
 		print("enemy touched")
 		knockback.x = input_dir.x * knockback.x *0.5
-
+	
 	
 	
 	
@@ -606,6 +672,8 @@ func set_state(current_state, new_state: int) -> void:
 			#velocity.x=100 * move_axis
 		States.PARRY:
 			anim_player.play("Parry")
+		States.FLIP:
+			cur_state=="Flipping"
 			
 	if state != States.DODGE:
 		hurt_box_detect.disabled=false
@@ -772,3 +840,11 @@ func _on_hit_box_body_entered(body):
 		print(str(body.name))
 		target_string_test=str(body.name)
 		target = body
+		combat_state=CombatStates.LOCKED
+
+func flip_over():
+	
+	flip_speed=movement_data.speed *75
+	set_state(state, States.FLIP)
+	state=States.FLIP
+	
