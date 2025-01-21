@@ -150,6 +150,7 @@ func _process(delta):
 			set_state(state, States.PARRY)
 		States.FLIP:
 			cur_state = "FLIP"
+			set_state(state, States.FLIP)
 			
 		
 	dodge(input_axis, delta)
@@ -603,7 +604,7 @@ func lockon():
 
 func locked_combat():
 	if Input.is_action_pressed("jump") and Input.is_action_pressed("sprint"):
-		
+		set_state(state, States.FLIP)
 		flip.emit()
 
 func _on_hazard_detector_area_entered(area):
@@ -673,7 +674,9 @@ func set_state(current_state, new_state: int) -> void:
 		States.PARRY:
 			anim_player.play("Parry")
 		States.FLIP:
-			cur_state=="Flipping"
+			anim_player.play("flip")
+			cur_state="Flipping"
+			
 			
 	if state != States.DODGE:
 		hurt_box_detect.disabled=false
