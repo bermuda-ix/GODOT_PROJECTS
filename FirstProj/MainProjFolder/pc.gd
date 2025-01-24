@@ -16,6 +16,7 @@ const CLOCKWISE=PI/2
 const COUNTER_CLOCKWISE=-PI/2
 #signals
 signal flip
+signal jump_out_signal
 
 @export var movement_data : PlayerMovementData
 @export var health: Health
@@ -80,6 +81,7 @@ var cur_state = "IDLE"
 @onready var hit_sound = hit1
 
 
+
 var knockback : Vector2 = Vector2.ZERO
 var kb_dir : Vector2 = Vector2.ZERO
 var hit_success : bool = false
@@ -100,6 +102,11 @@ var target_direction
 var movement
 var flip_speed
 var target_right : bool = false
+var vector_away : Vector2 = Vector2.ZERO
+
+@onready var target_testing = $TargetLocking/TargetTesting
+@onready var target_locking = $TargetLocking
+@onready var jump_out_timer = $JumpOutTimer
 
 func _ready():
 	hit_box_pos=hit_box.position
@@ -113,6 +120,7 @@ func _ready():
 	Events.set_player_data.connect(save_player_data)
 	Events.parried.connect(parry_success)
 	flip.connect(flip_over)
+	jump_out_signal.connect(jump_out)
 	
 
 func _process(delta):
@@ -171,7 +179,7 @@ func _process(delta):
 		parry()
 		attack_animate()
 		update_animation(input_axis)
-	
+	#print(velocity.y)
 	lockon()
 	#print(air_atk)
 
@@ -181,16 +189,16 @@ func _physics_process(delta):
 		pass
 	elif state==States.FLIP:
 		#pass
-		move_and_slide()
+		break_out()
 		apply_gravity(delta)
 		if target_right:
 			movement = target_direction.rotated(CLOCKWISE)
-			print("flip_right")
+			#print("flip_right")
 		else:
 			movement = target_direction.rotated(COUNTER_CLOCKWISE)
-			print("flip_left")
+			#print("flip_left")
 		velocity = movement * flip_speed * delta
-		
+		move_and_slide()
 		if is_on_floor():
 			state = States.IDLE
 		#velocity = movement * SPEED * delta
@@ -211,6 +219,7 @@ func _physics_process(delta):
 		#print(parry_stance)
 		var wall_hold = false
 		if(state!=States.DODGE and parry_stance==false and state!=States.FLIP):
+			#print("not flip")
 			handle_wall_jump(wall_hold, delta)
 			jump(input_axis, delta)
 			handle_acceleration(input_axis, delta)
@@ -218,6 +227,7 @@ func _physics_process(delta):
 			apply_friction(input_axis, delta)
 			apply_air_resistance(input_axis, delta)
 			sp_atk()
+			#jump_out()
 			if Input.is_action_pressed("sprint"):
 				#state=States.SPRINTING
 				movement_data = load("res://FasterMovementData.tres")
@@ -252,7 +262,7 @@ func _physics_process(delta):
 			side = "Right"
 		else:
 			side = "Left"
-		label.text=str(" Target:", combat_state, " Side:", side)
+		#label.text=str(" Target:", combat_state, " Side:", side)
 		
 		
 		knockback = lerp(knockback, Vector2.ZERO, 0.1)
@@ -277,6 +287,7 @@ func apply_gravity(delta):
 		
 # Handle jump.
 func jump(input_axis, delta):
+
 	if is_on_floor(): double_jump_flag = true
 	
 	if is_on_floor() or coyote_jump_timer.time_left>0.0:
@@ -291,6 +302,20 @@ func jump(input_axis, delta):
 			velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.acceleration*10 * delta)
 			velocity.y = movement_data.jump_velocity *0.8
 			double_jump_flag = false
+
+#breaking out of a flip
+func break_out():
+	if Input.is_action_just_pressed("jump"):
+		print("breaking")
+		state=States.IDLE
+		jump_out_signal.emit()
+
+#jump out of flip
+func jump_out():
+	jump_out_timer.start()
+	#velocity.x = movement_data.speed * vector_away.x
+	print(str(vector_away), " jumping out")
+
 
 func handle_wall_jump(wall_hold, delta):
 	if not is_on_wall_only(): return
@@ -586,10 +611,20 @@ func lockon():
 		target_string_test="NONE"
 		combat_state=CombatStates.UNLOCKED
 	else:
-		var direction_to_target : Vector2 = Vector2(target.position.x, target.position.y)\
-	- position
+		var direction_to_target : Vector2 = Vector2(target.position.x, target.position.y) - global_position
+		label.text=str(" target:", direction_to_target.x)
+		
 		var arc_vector = Vector2(position-Vector2(target.position)).normalized()
 		target_direction = position.direction_to(target.position)
+		
+		#raycast from pointing away NEEDS WORK
+		var dir_away_from_target : Vector2 = (Vector2(target.position.x, target.position.y) - target_testing.position)
+		
+		target_locking.look_at(dir_away_from_target)
+		vector_away=-((target_testing.to_global(target_testing.target_position) - target_testing.to_global(Vector2.ZERO)).normalized())
+		
+	
+		
 		if state!=States.FLIP:
 			if arc_vector<Vector2.RIGHT and Vector2.UP<arc_vector:
 				
@@ -603,7 +638,7 @@ func lockon():
 	
 
 func locked_combat():
-	if Input.is_action_pressed("jump") and Input.is_action_pressed("sprint"):
+	if Input.is_action_just_pressed("jump") and Input.is_action_pressed("sprint"):
 		set_state(state, States.FLIP)
 		flip.emit()
 
@@ -630,6 +665,7 @@ func set_state(current_state, new_state: int) -> void:
 		print(air_atk)
 	if current_state == States.PARRY and parry_stance==true:
 		pass
+
 	
 	current_state=prev_state
 	match state:
@@ -851,3 +887,11 @@ func flip_over():
 	set_state(state, States.FLIP)
 	state=States.FLIP
 	
+
+
+func _on_jump_out_timer_timeout():
+	velocity.y=movement_data.jump_velocity
+	if vector_away.x<0:
+		velocity.x=(movement_data.speed*0.8)*-1
+	else:
+		velocity.x=(movement_data.speed/2*0.8)
