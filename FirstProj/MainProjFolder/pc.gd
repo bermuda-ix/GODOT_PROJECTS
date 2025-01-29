@@ -48,7 +48,8 @@ var input_dir=Input.get_axis("walk_left","walk_right")
 #dodge dir
 var dodge_state = false
 var dodge_v = 0.0
-
+var falling : bool = false
+var jumping : bool = false
 
 var cur_state = "IDLE"
 
@@ -87,6 +88,8 @@ var kb_dir : Vector2 = Vector2.ZERO
 var hit_success : bool = false
 
 var hit_box_pos
+
+var walk_anim : String = "walk"
 
 var attack_combo = "Attack"
 var sp_atk_combo = "shotgun_attack"
@@ -145,6 +148,7 @@ func _process(delta):
 			set_state(state, States.WALKING)
 		States.JUMP:
 			cur_state="JUMP"
+			set_state(state, States.JUMP)
 		States.DODGE:
 			cur_state="DODGE"
 			set_state(state, States.DODGE)
@@ -174,12 +178,15 @@ func _process(delta):
 		move_axis = 0
 	
 	handle_hitbox(input_axis, face_right)
+	#print(air_atk)
 	
 	if(state!=States.DODGE and s_atk==false and state!=States.FLIP):
 		parry()
 		attack_animate()
 		update_animation(input_axis)
-	#print(velocity.y)
+	if state == States.FLIP:
+		break_out()
+	
 	lockon()
 	#print(air_atk)
 
@@ -189,7 +196,7 @@ func _physics_process(delta):
 		pass
 	elif state==States.FLIP:
 		#pass
-		break_out()
+		
 		apply_gravity(delta)
 		if target_right:
 			movement = target_direction.rotated(CLOCKWISE)
@@ -200,7 +207,9 @@ func _physics_process(delta):
 		velocity = movement * flip_speed * delta
 		move_and_slide()
 		if is_on_floor():
+			
 			state = States.IDLE
+			
 		#velocity = movement * SPEED * delta
 	else:
 		if combat_state==CombatStates.LOCKED:
@@ -229,12 +238,13 @@ func _physics_process(delta):
 			sp_atk()
 			#jump_out()
 			if Input.is_action_pressed("sprint"):
-				#state=States.SPRINTING
+				walk_anim="run"
 				movement_data = load("res://FasterMovementData.tres")
 			if Input.is_action_pressed("walk"):
 				movement_data = load("res://SlowMovementData.tres")
 			if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
 				movement_data = load("res://DefaultMovementData.tres")
+				walk_anim="walk"
 		
 		if state==States.SPECIAL_ATTACK:
 			velocity=Vector2.ZERO
@@ -292,28 +302,39 @@ func jump(input_axis, delta):
 	
 	if is_on_floor() or coyote_jump_timer.time_left>0.0:
 		if Input.is_action_just_pressed("jump"):
+			state = States.JUMP
+			#set_state(state, States.JUMP)
 			velocity.y = movement_data.jump_velocity
 			
 	elif not is_on_floor() and parry_stance==false and state != States.FLIP:
 		#state = States.JUMP
 		if Input.is_action_just_released("jump") and velocity.y<movement_data.jump_velocity/2:
+			
 			velocity.y = movement_data.jump_velocity/2
+			state = States.JUMP
+			#set_state(state, States.JUMP)
 		if Input.is_action_just_pressed("jump") and double_jump_flag == true and just_wall_jump == false:
+			
 			velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.acceleration*10 * delta)
 			velocity.y = movement_data.jump_velocity *0.8
 			double_jump_flag = false
+			state = States.JUMP
+			#set_state(state, States.JUMP)
 
-#breaking out of a flip
+#breaking out of a flip. Test without timer later
 func break_out():
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") and not Input.is_action_pressed("sprint"):
 		print("breaking")
 		state=States.IDLE
 		jump_out_signal.emit()
 
 #jump out of flip
 func jump_out():
-	jump_out_timer.start()
-	#velocity.x = movement_data.speed * vector_away.x
+	velocity.y=movement_data.jump_velocity
+	if vector_away.x<0:
+		velocity.x=(movement_data.speed*0.8)*-1
+	else:
+		velocity.x=(movement_data.speed/2*0.8)
 	print(str(vector_away), " jumping out")
 
 
@@ -417,11 +438,13 @@ func update_animation(input_axis):
 		
 		
 
-	#if not is_on_floor() and state != States.ATTACK and state != States.FLIP:
-		#state = States.JUMP 
-		#
-	#elif is_on_floor() and state == States.JUMP:
-		#state = States.IDLE
+	# 
+		
+	if is_on_floor() :
+		jumping=false
+		if state == States.JUMP:
+			falling=false
+			state = States.IDLE
 
 		#animated_sprite_2d.play("jump")
 	
@@ -455,7 +478,7 @@ func attack_animate():
 		
 		
 		state=States.ATTACK
-		set_state(state, States.ATTACK)
+		#set_state(state, States.ATTACK)
 		
 		await anim_player.animation_finished
 		attack_timer.paused=false
@@ -503,7 +526,7 @@ func attack_animate():
 			AudioStreamManager.play(shotgun_fire)
 			
 		state=States.SPECIAL_ATTACK
-		set_state(state, States.SPECIAL_ATTACK)
+		#set_state(state, States.SPECIAL_ATTACK)
 		attack_timer.paused = false
 		s_atk=true
 		#cpu_particles_2d.emitting=true
@@ -536,7 +559,7 @@ func parry():
 		parry_timer.start()
 		parry_stance=true
 		state=States.PARRY
-		set_state(state, States.PARRY)
+		#set_state(state, States.PARRY)
 		pb_rot.disabled=false
 		#if face_right==true:
 			#parry_box.scale.x=1
@@ -612,7 +635,7 @@ func lockon():
 		combat_state=CombatStates.UNLOCKED
 	else:
 		var direction_to_target : Vector2 = Vector2(target.position.x, target.position.y) - global_position
-		label.text=str(" target:", direction_to_target.x)
+		label.text=str(" target:", direction_to_target.y)
 		
 		var arc_vector = Vector2(position-Vector2(target.position)).normalized()
 		target_direction = position.direction_to(target.position)
@@ -638,9 +661,14 @@ func lockon():
 	
 
 func locked_combat():
-	if Input.is_action_just_pressed("jump") and Input.is_action_pressed("sprint"):
-		set_state(state, States.FLIP)
-		flip.emit()
+	var direction_to_target : Vector2 = Vector2(target.position.x, target.position.y) - global_position
+	if abs(direction_to_target.x) >50 or abs(direction_to_target.y)>50:
+		pass
+	else:
+		
+		if Input.is_action_just_pressed("jump") and Input.is_action_pressed("sprint"):
+			#set_state(state, States.FLIP)
+			flip.emit()
 
 func _on_hazard_detector_area_entered(area):
 	if area.is_in_group("hazard"):
@@ -657,12 +685,16 @@ func _on_hazard_detector_area_entered(area):
 	
 #State machine for animations currently
 func set_state(current_state, new_state: int) -> void:
+	print(current_state, new_state)
 	if(current_state == new_state):
 		pass
+	else:
+		print(current_state, new_state)
+		print("changing")
 	
 	if current_state==States.JUMP:
 		air_atk=true
-		print(air_atk)
+		#print(air_atk)
 	if current_state == States.PARRY and parry_stance==true:
 		pass
 
@@ -695,11 +727,19 @@ func set_state(current_state, new_state: int) -> void:
 			movement_data.friction=1000
 			hb_left.disabled=true
 			hb_right.disabled=true
+			air_atk=false
 		States.WALKING:
 			anim_player.speed_scale=1
-			anim_player.play("walk")
+			if jumping:
+				pass
+			else:
+				anim_player.play(walk_anim)
 		States.JUMP:
-			anim_player.play("jump")
+			jumping=true
+			if falling==false:
+				anim_player.play("jump")
+			else:
+				pass
 			cur_state="JUMP"
 		States.DODGE:
 			hurt_box_detect.disabled=true
@@ -717,11 +757,12 @@ func set_state(current_state, new_state: int) -> void:
 	if state != States.DODGE:
 		hurt_box_detect.disabled=false
 			
-			
+	
 				
 			
 	if state!=States.PARRY:
 		pb_rot.disabled=true
+
 func get_state() -> String:
 	return cur_state
 
@@ -811,7 +852,11 @@ func _on_animation_player_animation_finished(anim_name):
 		elif anim_name=="shotgun_attack_fast":
 			AudioStreamManager.play(shotgun_fire)
 			state=States.IDLE
-			
+	elif state==States.JUMP:
+		if anim_name=="jump":
+			falling=true
+	else:
+		pass
 
 func _on_attack_timer_timeout():
 	atk_chain = 0
@@ -884,14 +929,10 @@ func _on_hit_box_body_entered(body):
 func flip_over():
 	
 	flip_speed=movement_data.speed *75
-	set_state(state, States.FLIP)
+	#set_state(state, States.FLIP)
 	state=States.FLIP
 	
 
 
 func _on_jump_out_timer_timeout():
-	velocity.y=movement_data.jump_velocity
-	if vector_away.x<0:
-		velocity.x=(movement_data.speed*0.8)*-1
-	else:
-		velocity.x=(movement_data.speed/2*0.8)
+	pass

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ct80sjipvf3ig"
+path="res://.godot/imported/PlayerCombat.aseprite-cdb54e98402ede19ce4ea648fbc18d40.res"
+
+[deps]
+
+source_file="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Aseprite/PlayerCombat.aseprite"
+dest_files=["res://.godot/imported/PlayerCombat.aseprite-cdb54e98402ede19ce4ea648fbc18d40.res"]
+
+[params]
+
