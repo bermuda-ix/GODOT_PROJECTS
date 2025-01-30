@@ -1,4 +1,4 @@
-[gd_scene load_steps=336 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=347 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -22,6 +22,16 @@
 [ext_resource type="Texture2D" uid="uid://cxc05461s8ihy" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash07.png" id="10_uef4t"]
 [ext_resource type="Texture2D" uid="uid://74066nrt8kge" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash08.png" id="11_fnjo2"]
 [ext_resource type="Texture2D" uid="uid://dfcqy66mntnni" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash09.png" id="12_jmpur"]
+[ext_resource type="Texture2D" uid="uid://c626tgcxok0dl" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll01.png" id="13_ofvdd"]
+[ext_resource type="Texture2D" uid="uid://cg2h74qs5ugfs" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll02.png" id="14_0yp4m"]
+[ext_resource type="Texture2D" uid="uid://bx4k3g8u5ohh8" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll03.png" id="15_2agx4"]
+[ext_resource type="Texture2D" uid="uid://bdon3gtci8eqo" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll04.png" id="16_bel67"]
+[ext_resource type="Texture2D" uid="uid://d0hy2ucfa0h0" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll05.png" id="17_5v3ag"]
+[ext_resource type="Texture2D" uid="uid://dudtoda0wgts0" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll06.png" id="18_nd2p8"]
+[ext_resource type="Texture2D" uid="uid://de2tlqm5d6o7a" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll07.png" id="19_270mb"]
+[ext_resource type="Texture2D" uid="uid://c70il3do84chb" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll08.png" id="20_lu2kc"]
+[ext_resource type="Texture2D" uid="uid://65jgwhqlfphj" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll09.png" id="21_by4qa"]
+[ext_resource type="Texture2D" uid="uid://cj6pqrvsga70n" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll10.png" id="22_5u51q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pue1l"]
 resource_local_to_scene = true
@@ -1889,6 +1899,41 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("13_ofvdd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_0yp4m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_2agx4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_bel67")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_5v3ag")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_nd2p8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_270mb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_lu2kc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_by4qa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_5u51q")
+}],
+"loop": true,
+"name": &"Roll",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_mud1g")
 }, {
 "duration": 1.0,
@@ -2678,7 +2723,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"run"]
+"values": [&"SwordIdle"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -2949,19 +2994,60 @@ tracks/1/keys = {
 "values": [2, 1, 0, 2]
 }
 
-[sub_resource type="Animation" id="Animation_s1lpt"]
-resource_name = "flip"
+[sub_resource type="Animation" id="Animation_yo2cx"]
+resource_name = "dodge_roll"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:rotation")
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.5, 0.6, 0.7, 1, 1.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [0.0, 0.0, 1.82038, 3.14159, 4.17148, 6.28319, 6.28319]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Dash"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 3, 5, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_s1lpt"]
+resource_name = "flip"
+length = 0.55
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Roll"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 1, 2, 3, 4, 5]
 }
 
 [sub_resource type="Animation" id="Animation_xowcg"]
@@ -3341,9 +3427,9 @@ tracks/1/keys = {
 "values": [5, 1, 2, 3, 4]
 }
 
-[sub_resource type="Animation" id="Animation_yo2cx"]
-resource_name = "dodge_roll"
-length = 0.5
+[sub_resource type="Animation" id="Animation_tj0ec"]
+resource_name = "roll"
+length = 0.65
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -3354,7 +3440,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Dash"]
+"values": [&"Roll"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -3363,10 +3449,10 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 2, 3, 5, 7, 8]
+"values": [5, 1, 2, 3, 4, 5, 9]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qyq63"]
@@ -3382,6 +3468,7 @@ _data = {
 "flip": SubResource("Animation_s1lpt"),
 "idle": SubResource("Animation_xowcg"),
 "jump": SubResource("Animation_5m6tb"),
+"roll": SubResource("Animation_tj0ec"),
 "run": SubResource("Animation_i1mvx"),
 "shotgun_attack": SubResource("Animation_on8rs"),
 "shotgun_attack_fast": SubResource("Animation_okwur"),
@@ -3433,7 +3520,7 @@ texture_filter = 1
 position = Vector2(0, 8)
 scale = Vector2(0.395833, 0.490476)
 sprite_frames = SubResource("SpriteFrames_ieyv5")
-animation = &"run"
+animation = &"SwordIdle"
 frame = 1
 speed_scale = 0.16
 offset = Vector2(2.59398, -39.5489)
@@ -3457,8 +3544,7 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "e40bf6776b8b2a4268a34f1cf42c192c"
 
 [node name="Shotty" type="Sprite2D" parent="AnimatedSprite2D"]
-visible = false
-position = Vector2(-1.66893e-06, 17.1262)
+position = Vector2(-1.0757e-09, -16.3107)
 rotation = -1.5643
 scale = Vector2(0.0885122, 0.0871019)
 texture = ExtResource("4_2ahp4")

@@ -102,7 +102,7 @@ func get_health():
 	
 func set_health():
 	ui_level.set_health(cur_health)
-
+	
 func inc_score():
 	score += 1
 
