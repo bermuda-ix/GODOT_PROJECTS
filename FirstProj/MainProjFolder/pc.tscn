@@ -1,4 +1,4 @@
-[gd_scene load_steps=326 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=336 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -6,13 +6,22 @@
 [ext_resource type="Texture2D" uid="uid://d2ggaktiv0hrj" path="res://knight.png" id="2_b7jgr"]
 [ext_resource type="Texture2D" uid="uid://rl1y4h8u1rk5" path="res://Art_Components/PixelPrototypePlayer/MC/mc_combat_test.png" id="3_81nyk"]
 [ext_resource type="Texture2D" uid="uid://c74d14ub8w3oa" path="res://Art_Components/Shotgun/Escopeta.png" id="4_2ahp4"]
+[ext_resource type="Texture2D" uid="uid://jrn865h2pyur" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash01.png" id="4_gobm8"]
 [ext_resource type="Script" path="res://Component/health.gd" id="4_q0gnn"]
+[ext_resource type="Texture2D" uid="uid://3d6b01276t3v" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash02.png" id="5_77biq"]
 [ext_resource type="Texture2D" uid="uid://dus86lxw4ytis" path="res://Art_Components/Shotgun/Efecto.png" id="5_pvc8c"]
 [ext_resource type="Texture2D" uid="uid://dv3l2s77h7bq8" path="res://Art_Components/Shotgun/BalaEscopeta.png" id="6_mbdqo"]
+[ext_resource type="Texture2D" uid="uid://b1xxofqwimhtb" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash03.png" id="6_mlauo"]
 [ext_resource type="Script" path="res://Component/hitbox_template.gd" id="6_y7jp7"]
 [ext_resource type="AudioStream" uid="uid://dxedk74ivrhne" path="res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - small knock.wav" id="7_02w0c"]
+[ext_resource type="Texture2D" uid="uid://dgvmkb487nm32" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash04.png" id="7_ctn4q"]
 [ext_resource type="Script" path="res://Component/parrybox_template.gd" id="8_7q1rp"]
+[ext_resource type="Texture2D" uid="uid://tcp20ojs7fam" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash05.png" id="8_e6snp"]
+[ext_resource type="Texture2D" uid="uid://cmul76rmqdspd" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash06.png" id="9_k204x"]
 [ext_resource type="Script" path="res://Component/hurtbox_template.gd" id="9_s8nmr"]
+[ext_resource type="Texture2D" uid="uid://cxc05461s8ihy" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash07.png" id="10_uef4t"]
+[ext_resource type="Texture2D" uid="uid://74066nrt8kge" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash08.png" id="11_fnjo2"]
+[ext_resource type="Texture2D" uid="uid://dfcqy66mntnni" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash09.png" id="12_jmpur"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pue1l"]
 resource_local_to_scene = true
@@ -1316,6 +1325,38 @@ animations = [{
 "loop": true,
 "name": &"CrouchSlash",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_gobm8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_77biq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_mlauo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ctn4q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_e6snp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_k204x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_uef4t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_fnjo2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_jmpur")
+}],
+"loop": true,
+"name": &"Dash",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -3300,6 +3341,34 @@ tracks/1/keys = {
 "values": [5, 1, 2, 3, 4]
 }
 
+[sub_resource type="Animation" id="Animation_yo2cx"]
+resource_name = "dodge_roll"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Dash"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 3, 5, 7, 8]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qyq63"]
 _data = {
 "Attack": SubResource("Animation_1ru25"),
@@ -3309,6 +3378,7 @@ _data = {
 "Parry_Success": SubResource("Animation_irs7o"),
 "RESET": SubResource("Animation_13dif"),
 "dodge": SubResource("Animation_pskkv"),
+"dodge_roll": SubResource("Animation_yo2cx"),
 "flip": SubResource("Animation_s1lpt"),
 "idle": SubResource("Animation_xowcg"),
 "jump": SubResource("Animation_5m6tb"),

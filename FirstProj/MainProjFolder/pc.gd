@@ -90,6 +90,8 @@ var hit_success : bool = false
 var hit_box_pos
 
 var walk_anim : String = "walk"
+var dodge_anim : String = "dodge"
+var dodge_anim_run : String = "dodge"
 
 var attack_combo = "Attack"
 var sp_atk_combo = "shotgun_attack"
@@ -591,12 +593,14 @@ func dodge(input_axis, delta):
 			velocity.y=0
 		
 		if input_axis == 0:
+			dodge_anim_run=dodge_anim
 			velocity.x=0
 			state = States.DODGE
 		else:
-			position.x = lerpf(position.x, position.x + (input_axis*2), delta)
+			#position.x = lerpf(position.x, position.x + (input_axis*2), delta)
+			dodge_anim_run=dodge_anim+"_roll"
 			state = States.DODGE
-			
+			velocity.x=movement_data.dodge_speed*input_axis
 		#if input_axis == 0:
 			#position.x = lerpf(position.x, position.x, delta)
 			#state = States.DODGE
@@ -744,7 +748,7 @@ func set_state(current_state, new_state: int) -> void:
 		States.DODGE:
 			hurt_box_detect.disabled=true
 			anim_player.speed_scale=1
-			anim_player.play("dodge")
+			anim_player.play(dodge_anim_run)
 			velocity.y=0
 			#velocity.x=100 * move_axis
 		States.PARRY:
@@ -855,6 +859,9 @@ func _on_animation_player_animation_finished(anim_name):
 	elif state==States.JUMP:
 		if anim_name=="jump":
 			falling=true
+	elif anim_name=="dodge_roll":
+		velocity.x=0
+	
 	else:
 		pass
 
