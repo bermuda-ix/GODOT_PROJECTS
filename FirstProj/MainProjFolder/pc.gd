@@ -71,6 +71,8 @@ var previous = "IDLE"
 @onready var hb_left = $HitBox/HBLeft
 @onready var pb_rot = $ParryBox/PBRot
 @onready var parry_box = $ParryBox
+@onready var counter_box_collision = $CounterBox/CounterBoxCollision
+
 
 @onready var hurt_box_detect = $HurtBox/CollisionShape2D
 @onready var collision_shape_2d = $CollisionShape2D
@@ -102,6 +104,9 @@ var move_axis : int = 1
 var sp_atk_type = sp_atk_cone
 var sp_atk_dmg :int = 1
 
+var counter_flag : bool = false
+@onready var counter_timer = $CounterTimer
+
 var target
 var target_string_test : String = "NONE"
 var target_direction
@@ -132,43 +137,10 @@ func _ready():
 func _process(delta):
 	var input_axis = Input.get_axis("walk_left", "walk_right")
 	
-	match state:
-		States.ATTACK:
-			#hit_timer.paused = false
-			cur_state="ATTACK"
-			set_state(state, States.ATTACK)
-			#await anim_player.animation_finished
-		States.SPECIAL_ATTACK:
-			cur_state="SPECIAL_ATTACK"
-			set_state(state, States.SPECIAL_ATTACK)
-		States.IDLE:
-			#hit_timer.start()
-			#hit_timer.paused = true
-			cur_state="IDLE"
-			set_state(state, States.IDLE)
-		States.WALKING:
-			cur_state="WALKING"
-			set_state(state, States.WALKING)
-		States.JUMP:
-			cur_state="JUMP"
-			set_state(state, States.JUMP)
-		States.DODGE:
-			cur_state="DODGE"
-			set_state(state, States.DODGE)
-		States.WALL_STICK:
-			cur_state="WALL STICK"
-		States.SPRINTING:
-			cur_state = "SPRINTING"
-		States.PARRY:
-			cur_state = "PARRY"
-			hurt_box_detect.disabled=true
-			set_state(state, States.PARRY)
-		States.FLIP:
-			cur_state = "FLIP"
-			set_state(state, States.FLIP)
+	current_state_label()
 			
 	previous_state()
-	label.text=str(" Previous State:", previous)
+	label.text=str("Counter: ", counter_flag)
 	dodge(input_axis, delta)
 	if Input.is_action_just_pressed("walk_right"):
 		face_right = true
@@ -288,13 +260,21 @@ func _physics_process(delta):
 			velocity.x =0
 			velocity.y = 0
 			gravity = 0
+	
+	#return_to_idle()
 		
 
 # Add the gravity.
 func apply_gravity(delta):
 	if not is_on_floor():
 		velocity.y += gravity * movement_data.gravity_scale * delta
-		
+	
+#condtions to return to idle
+func return_to_idle():
+	if is_on_floor() and state==States.FLIP:
+		print("flip end")
+		set_state(state, States.IDLE)
+	
 # Handle jump.
 func jump(input_axis, delta):
 
@@ -438,18 +418,12 @@ func update_animation(input_axis):
 	elif Input.is_action_just_released("walk_left") or Input.is_action_just_released("walk_right"):
 		#state = States.IDLE
 		set_state(state, States.IDLE)
-
 		
-		
-
-	# 
-		
-	if is_on_floor() :
+	if is_on_floor():
 		jumping=false
 		if state == States.JUMP:
 			falling=false
 			set_state(state, States.IDLE)
-
 		#animated_sprite_2d.play("jump")
 	
 		
@@ -462,23 +436,30 @@ func attack_animate():
 		attack_timer.start()
 		attack_timer.paused=true
 			
-		if atk_chain == 0 and (not attack_timer.is_stopped()):
-			#animated_sprite_2d.play("attack_1")
-			attack_combo = "Attack"
+		if counter_flag:
+			attack_combo = "Attack_Counter"
+			hit_box.set_damage(3)
 			hit_sound = hit1
 			AudioStreamManager.play(swing1)
+		else:
+			hit_box.set_damage(1)
+			if atk_chain == 0 and (not attack_timer.is_stopped()):
+				#animated_sprite_2d.play("attack_1")
+				attack_combo = "Attack"
+				hit_sound = hit1
+				AudioStreamManager.play(swing1)
 
-		elif atk_chain == 1 and (not attack_timer.is_stopped()):
-			#animated_sprite_2d.play("attack_2")
-			attack_combo = "Attack_2"
-			hit_sound = hit2
-			AudioStreamManager.play(swing2)
+			elif atk_chain == 1 and (not attack_timer.is_stopped()):
+				#animated_sprite_2d.play("attack_2")
+				attack_combo = "Attack_2"
+				hit_sound = hit2
+				AudioStreamManager.play(swing2)
 
-		elif atk_chain == 2 and (not attack_timer.is_stopped()):
-			#animated_sprite_2d.play("attack_3")
-			attack_combo = "Attack_3"
-			hit_sound = hit3
-			AudioStreamManager.play(swing3)
+			elif atk_chain == 2 and (not attack_timer.is_stopped()):
+				#animated_sprite_2d.play("attack_3")
+				attack_combo = "Attack_3"
+				hit_sound = hit3
+				AudioStreamManager.play(swing3)
 		
 		
 		#state=States.ATTACK
@@ -736,7 +717,6 @@ func _on_hazard_detector_area_entered(area):
 	
 	
 	
-	
 #State machine for animations currently
 func set_state(current_state, new_state: int) -> void:
 	#print(current_state, new_state)
@@ -752,7 +732,6 @@ func set_state(current_state, new_state: int) -> void:
 		#print(air_atk)
 	if current_state == States.PARRY and parry_stance==true:
 		pass
-
 	
 	prev_state=current_state
 	state=new_state
@@ -780,7 +759,9 @@ func set_state(current_state, new_state: int) -> void:
 		States.IDLE:
 			anim_player.speed_scale=1
 			anim_player.play("idle")
+			print("playing idle")
 			movement_data.friction=1000
+			counter_box_collision.disabled=true
 			hb_left.disabled=true
 			hb_right.disabled=true
 			air_atk=false
@@ -799,11 +780,13 @@ func set_state(current_state, new_state: int) -> void:
 			cur_state="JUMP"
 		States.DODGE:
 			hurt_box_detect.disabled=true
+			counter_box_collision.disabled=false
 			anim_player.speed_scale=1
 			anim_player.play(dodge_anim_run)
 			velocity.y=0
 			#velocity.x=100 * move_axis
 		States.PARRY:
+			hurt_box_detect.disabled=true			
 			anim_player.play("Parry")
 		States.FLIP:
 			anim_player.speed_scale=3
@@ -878,7 +861,7 @@ func set_start_pos(checkpoint_position):
 
 func _on_animation_player_animation_finished(anim_name):
 	if state==States.ATTACK:
-		print("attack finished")
+		#print("attack finished")
 		hit_success=false
 		if atk_chain < 2:
 			
@@ -888,8 +871,11 @@ func _on_animation_player_animation_finished(anim_name):
 			atk_chain = 0
 			attack_combo = "Attack"
 			#print("Attack Finished")
-		
-		state=prev_state
+		set_state(state, prev_state)
+		hb_left.disabled=true
+		hb_right.disabled=true
+		if anim_name=="Attack_Counter":
+			counter_flag=false
 	elif state==States.SPECIAL_ATTACK:
 		if prev_state==States.FLIP:
 			if anim_name=="shotgun_attack":
@@ -920,9 +906,17 @@ func _on_animation_player_animation_finished(anim_name):
 			falling=true
 	
 	elif anim_name=="dodge_roll":
+		print("dodge finished")
 		velocity.x=0
+		counter_box_collision.disabled=true
+	elif anim_name=="dodge":
+		print("dodge finished")
+		counter_box_collision.disabled=true
 	elif anim_name=="flip":
+		print("flipping finish")
 		anim_player.speed_scale=1
+		set_state(state, prev_state)
+	
 	
 	
 	else:
@@ -1016,6 +1010,29 @@ func flipping(delta):
 func _on_jump_out_timer_timeout():
 	pass
 	
+func current_state_label():
+	match state:
+		States.ATTACK:
+			cur_state="ATTACK"
+		States.SPECIAL_ATTACK:
+			cur_state="SPECIAL_ATTACK"
+		States.IDLE:
+			cur_state="IDLE"
+		States.WALKING:
+			cur_state="WALKING"
+		States.JUMP:
+			cur_state="JUMP"
+		States.DODGE:
+			cur_state="DODGE"
+		States.WALL_STICK:
+			cur_state="WALL STICK"
+		States.SPRINTING:
+			cur_state = "SPRINTING"
+		States.PARRY:
+			cur_state = "PARRY"
+		States.FLIP:
+			cur_state = "FLIP"
+	
 func previous_state():
 
 	match prev_state:
@@ -1040,3 +1057,16 @@ func previous_state():
 		States.FLIP:
 			previous = "FLIP"
 			
+
+
+func _on_counter_box_area_entered(area):
+	if area.is_in_group("bullet"):
+		counter_flag = true
+		counter_timer.start()
+		print("bullet dodge")
+	elif area.is_in_group("Enemy"):
+		print("enemy dodge")
+
+
+func _on_counter_timer_timeout():
+	counter_flag = false
