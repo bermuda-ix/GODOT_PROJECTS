@@ -280,7 +280,7 @@ func apply_gravity(delta):
 #condtions to return to idle
 func return_to_idle():
 	if is_on_floor() and state==States.FLIP:
-		print("flip end")
+		#print("flip end")
 		set_state(state, States.IDLE)
 	
 # Handle jump.
@@ -573,23 +573,23 @@ func sp_atk():
 		if atk_chain==0:
 			if sp_atk_chn == 0 and (not attack_timer.is_stopped()):
 				sp_atk_combo="shotgun_attack"
-				print("sp_atk 1")
+				#print("sp_atk 1")
 				AudioStreamManager.play(shotgun_fire)
 				sp_atk_dmg=1
 
 			elif sp_atk_chn == 1 and (not attack_timer.is_stopped()):
 				#animated_sprite_2d.play("attack_2")
 				sp_atk_combo="shotgun_attack"
-				print("sp_atk 2")
+				#print("sp_atk 2")
 				AudioStreamManager.play(shotgun_fire)
 				sp_atk_dmg=1
 
 			elif sp_atk_chn == 2 and (not attack_timer.is_stopped()):
 				#animated_sprite_2d.play("attack_3")
-				print("reload anim playing")
+				#print("reload anim playing")
 				AudioStreamManager.play(reload)
 				sp_atk_combo="shotgun_attack"
-				print("sp_atk 3")
+				#print("sp_atk 3")
 				sp_atk_dmg=2
 				
 		else:
@@ -732,17 +732,20 @@ func lockon():
 	
 
 func locked_combat():
-	var direction_to_target : Vector2 = Vector2(target.position.x, target.position.y) - global_position
-	target_size_x = target.get_width()
-	target_size_y = target.get_height()
-	
-	if abs(direction_to_target.x) >(20+target_size_x) or abs(direction_to_target.y)>(30+target_size_y):
-		pass
+	if target==null:
+		return
 	else:
+		var direction_to_target : Vector2 = Vector2(target.position.x, target.position.y) - global_position
+		target_size_x = target.get_width()
+		target_size_y = target.get_height()
 		
-		if Input.is_action_just_pressed("jump") and Input.is_action_pressed("sprint"):
-			#set_state(state, States.FLIP)
-			flip.emit()
+		if abs(direction_to_target.x) >(20+target_size_x) or abs(direction_to_target.y)>(30+target_size_y):
+			pass
+		else:
+			
+			if Input.is_action_just_pressed("jump") and Input.is_action_pressed("sprint"):
+				#set_state(state, States.FLIP)
+				flip.emit()
 
 func _on_hazard_detector_area_entered(area):
 	if area.is_in_group("hazard"):
@@ -764,7 +767,7 @@ func set_state(current_state, new_state: int) -> void:
 		return
 	else:
 		print(current_state, new_state)
-		print("changing")
+		#print("changing")
 	
 	if current_state==States.JUMP:
 		air_atk=true
@@ -798,7 +801,7 @@ func set_state(current_state, new_state: int) -> void:
 		States.IDLE:
 			anim_player.speed_scale=1
 			anim_player.play("idle")
-			print("playing idle")
+			#print("playing idle")
 			movement_data.friction=1000
 			counter_box_collision.disabled=true
 			hb_left.disabled=true
@@ -929,7 +932,7 @@ func _on_animation_player_animation_finished(anim_name):
 				#print("Attack Chain")
 				elif sp_atk_chn >=2:
 					sp_atk_chn = 0
-				print("special finished")
+				#print("special finished")
 				s_atk=false
 				#state=States.IDLE
 				set_state(state, States.IDLE)

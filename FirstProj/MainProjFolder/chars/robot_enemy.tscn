@@ -107,6 +107,7 @@ wait_time = 0.35
 max_health = 1
 
 [node name="HurtBox" parent="." index="14" node_paths=PackedStringArray("health")]
+collision_mask = 8768
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
@@ -131,4 +132,6 @@ max_stagger = 1
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
+[connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]

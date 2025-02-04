@@ -18,6 +18,8 @@ const MISSILE_DUMBFIRE = preload("res://Component/missiles/missile_dumbfire.tscn
 @onready var audio_stream_player_2d = $AudioStreamPlayer2D
 @onready var stagger = $Stagger
 @onready var hb_detect = $HitBox/CollisionShape2D
+@onready var collision_shape_2d = $CollisionShape2D
+
 
 @onready var stg_laber = $stg_laber
 
@@ -190,6 +192,8 @@ func _on_turret_shoot_bullet():
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("sp_atk_default"):
 		#print("spc_hit")
+		knockback.y=(randi_range(50,200)*-1)
+		knockback.x=(randi_range(200,400))
 		stagger.stagger -= 1
 
 
@@ -203,5 +207,8 @@ func _on_stagger_staggered():
 func _on_parry_timer_timeout():
 	set_state(current_state, prev_state)
 	
-
+func get_width() -> int:
+	return collision_shape_2d.get_shape().size.x
+func get_height() -> int:
+	return collision_shape_2d.get_shape().size.y
 

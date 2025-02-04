@@ -17,6 +17,8 @@ const JUMP_VELOCITY = -400.0
 @onready var nav_agent = $NavigationAgent2D
 @onready var next_y : float = 0
 @onready var navigation_timer = $NavigationTimer
+@onready var collision_shape_2d = $CollisionShape2D
+
 
 @export var drop = preload("res://heart.tscn")
 @onready var death_timer = $DeathTimer
@@ -37,6 +39,7 @@ const JUMP_VELOCITY = -400.0
 @onready var h_bar = $HBar
 @onready var parry_timer = $ParryTimer as Timer
 var immortal = false
+@onready var stagger = $Stagger
 
 
 @export var wander_speed : float = 40.0
@@ -119,7 +122,7 @@ func _physics_process(delta):
 		move_and_slide()
 		hb_collison.disabled=false
 	
-	
+
 	if knockback == Vector2.ZERO:
 		handle_movement()
 		if current_state!=States.JUMP:
@@ -399,3 +402,20 @@ func _on_parry_timer_timeout():
 	current_state=prev_state
 	knockback = Vector2.ZERO
 	parried=false
+
+
+func _on_hurt_box_area_entered(area):
+	if area.is_in_group("sp_atk_default"):
+		knockback.y=(randi_range(50,200)*-1)
+		knockback.x=(randi_range(500,1000))
+		print("spc_hit_weak")
+		
+
+func get_width() -> int:
+	return collision_shape_2d.get_shape().size.x
+func get_height() -> int:
+	return collision_shape_2d.get_shape().size.y
+
+
+func _on_stagger_staggered():
+	pass # Replace with function body.
