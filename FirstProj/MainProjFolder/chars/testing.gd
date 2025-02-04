@@ -30,6 +30,8 @@ var target_direction
 var movement
 var target_right : bool = false
 var rotate_around : bool = false
+@onready var collision_shape_2d = $CollisionShape2D
+
 
 func _ready():
 	#position.y = -264
@@ -46,7 +48,7 @@ func _process(delta):
 func _physics_process(delta):
 	handle_movement()
 	
-	
+	label.text=str(get_width(), get_height())
 	#if rotate_around:
 		#move_and_slide()
 		##velocity = movement * SPEED * delta
@@ -87,12 +89,14 @@ func handle_movement():
 	label.text=str(abs(distance))
 	target_direction = position.direction_to(player.position)
 	
-	label.text=str(abs(distance))
+	#label.text=str(abs(distance))
 	if abs(distance)<25:
 		rotate_around=true
 		#print("arcing ", str(arc_vector))
-
-		
+func get_width() -> int:
+	return collision_shape_2d.get_shape().radius
+func get_height() -> int:
+	return collision_shape_2d.get_shape().height
 	#if not rotate_around :
 		#if position.x >= 400 and dir==1:
 			#dir = -1

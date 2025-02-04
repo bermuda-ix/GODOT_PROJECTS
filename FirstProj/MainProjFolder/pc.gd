@@ -115,9 +115,16 @@ var flip_speed
 var target_right : bool = false
 var vector_away : Vector2 = Vector2.ZERO
 
+#locked on target info
 @onready var target_testing = $TargetLocking/TargetTesting
 @onready var target_locking = $TargetLocking
+var target_size_x
+var target_size_y
+var target_pos_y=0
+
+#flipping
 @onready var jump_out_timer = $JumpOutTimer
+var flipped_over : bool = false
 
 func _ready():
 	hit_box_pos=hit_box.position
@@ -140,7 +147,7 @@ func _process(delta):
 	current_state_label()
 			
 	previous_state()
-	label.text=str("Counter: ", counter_flag)
+	label.text=str(round(position.y)," ", target_pos_y)
 	dodge(input_axis, delta)
 	if Input.is_action_just_pressed("walk_right"):
 		face_right = true
@@ -180,7 +187,7 @@ func _physics_process(delta):
 		
 		if is_on_floor():
 			
-			state = States.IDLE
+			set_state(state, States.IDLE)
 			
 		#velocity = movement * SPEED * delta
 	else:
@@ -210,7 +217,8 @@ func _physics_process(delta):
 			sp_atk()
 			#jump_out()
 			if Input.is_action_pressed("sprint"):
-				walk_anim="run"
+				if combat_state!=CombatStates.LOCKED:
+					walk_anim="run"
 				movement_data = load("res://FasterMovementData.tres")
 			if Input.is_action_pressed("walk"):
 				movement_data = load("res://SlowMovementData.tres")
@@ -400,22 +408,42 @@ func update_animation(input_axis):
 		parry_box.rotation=0
 	#var left = Input.is_action_pressed("walk_left")
 	#var right = Input.is_action_pressed("walk_right")
-	if input_axis != 0:
+	
+	
+	if combat_state!=CombatStates.LOCKED:
+		if input_axis != 0:
 		
 		#animated_sprite_2d.flip_h = (input_axis<0)
-		if input_axis<0:
+			if input_axis<0:
+				if animated_sprite_2d.scale.x>0:
+					animated_sprite_2d.scale.x *= -1
+			else:
+				if animated_sprite_2d.scale.x<0:
+					animated_sprite_2d.scale.x *= -1
+					
+			if state != States.ATTACK and s_atk==false:
+				#state = States.WALKING
+				set_state(state, States.WALKING)
+			#idle_state=false
+	else:
+		if target_right:
 			if animated_sprite_2d.scale.x>0:
 				animated_sprite_2d.scale.x *= -1
+			if input_axis>0:
+				walk_anim="walk_back"
+			else:
+				walk_anim="walk"
 		else:
 			if animated_sprite_2d.scale.x<0:
 				animated_sprite_2d.scale.x *= -1
-				
-		if state != States.ATTACK and s_atk==false:
+			if input_axis>0:
+				walk_anim="walk"
+			else:
+				walk_anim="walk_back"
+		if (state != States.ATTACK and s_atk==false) and input_axis!=0:
 			#state = States.WALKING
 			set_state(state, States.WALKING)
-		#idle_state=false
-
-	elif Input.is_action_just_released("walk_left") or Input.is_action_just_released("walk_right"):
+	if (Input.is_action_just_released("walk_left") or Input.is_action_just_released("walk_right")) and input_axis==0:
 		#state = States.IDLE
 		set_state(state, States.IDLE)
 		
@@ -657,12 +685,20 @@ func dodge(input_axis, delta):
 	
 func handle_hitbox(input_axis, face_right):
 	if state== States.ATTACK:
-		if not face_right:
-			hb_left.disabled=false
-			hb_right.disabled=true
+		if combat_state!=CombatStates.LOCKED:
+			if not face_right:
+				hb_left.disabled=false
+				hb_right.disabled=true
+			else:
+				hb_left.disabled=true
+				hb_right.disabled=false
 		else:
-			hb_left.disabled=true
-			hb_right.disabled=false
+			if target_right:
+				hb_left.disabled=false
+				hb_right.disabled=true
+			else:
+				hb_left.disabled=true
+				hb_right.disabled=false
 
 func lockon():
 	if target == null:
@@ -697,7 +733,10 @@ func lockon():
 
 func locked_combat():
 	var direction_to_target : Vector2 = Vector2(target.position.x, target.position.y) - global_position
-	if abs(direction_to_target.x) >50 or abs(direction_to_target.y)>50:
+	target_size_x = target.get_width()
+	target_size_y = target.get_height()
+	
+	if abs(direction_to_target.x) >(20+target_size_x) or abs(direction_to_target.y)>(30+target_size_y):
 		pass
 	else:
 		
@@ -765,6 +804,7 @@ func set_state(current_state, new_state: int) -> void:
 			hb_left.disabled=true
 			hb_right.disabled=true
 			air_atk=false
+			flipped_over=false
 		States.WALKING:
 			anim_player.speed_scale=1
 			if jumping:
@@ -998,13 +1038,20 @@ func flip_over():
 	#state=States.FLIP
 
 func flipping(delta):
-	if target_right:
-		movement = target_direction.rotated(CLOCKWISE)
-		#print("flip_right")
+	
+	target_pos_y=(target.position.y-target_size_y/2)
+	if position.y>(target.position.y-target_size_y+5) and not flipped_over:
+		print(position.y, " ",target_size_y+target.position.y)
+		velocity.y=movement_data.jump_velocity
 	else:
-		movement = target_direction.rotated(COUNTER_CLOCKWISE)
-		#print("flip_left")
-	velocity = movement * flip_speed * delta
+		flipped_over=true
+		if target_right:
+			movement = target_direction.rotated(CLOCKWISE)
+			#print("flip_right")
+		else:
+			movement = target_direction.rotated(COUNTER_CLOCKWISE)
+			#print("flip_left")
+		velocity = movement * flip_speed * delta
 
 
 func _on_jump_out_timer_timeout():

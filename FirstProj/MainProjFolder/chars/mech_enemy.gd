@@ -43,6 +43,9 @@ const MISSILE_DUMBFIRE = preload("res://Component/missiles/missile_dumbfire.tscn
 @onready var parry_timer = $ParryTimer as Timer
 var immortal = false
 @onready var stagger = $Stagger
+@onready var hurt_box_weak_point = $AnimatedSprite2D/HurtBox_WeakPoint
+
+@onready var collision_shape_2d = $CollisionShape2D
 
 
 @onready var bt_player = $BTPlayer
@@ -256,9 +259,10 @@ func handl_animation():
 	
 	if velocity_sign < 0:
 		animated_sprite_2d.flip_h = false
+		hurt_box_weak_point.scale.x = -1
 	else:
 		animated_sprite_2d.flip_h = true	
-	
+		hurt_box_weak_point.scale.x = 1
 
 func track_player():
 	
@@ -544,3 +548,14 @@ func _on_stagger_staggered():
 	parry_timer.start(5)
 	hurt_box.set_damage_mulitplyer(3)
 	print("staggered")
+
+
+func _on_hurt_box_weak_point_area_entered(area):
+	if area.is_in_group("sp_atk_default"):
+		print("spc_hit_weak")
+		stagger.stagger = 0
+
+func get_width() -> int:
+	return collision_shape_2d.get_shape().size.x
+func get_height() -> int:
+	return collision_shape_2d.get_shape().size.y

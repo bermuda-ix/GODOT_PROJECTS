@@ -1,4 +1,4 @@
-[gd_scene load_steps=349 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=358 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -32,6 +32,14 @@
 [ext_resource type="Texture2D" uid="uid://c70il3do84chb" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll08.png" id="20_lu2kc"]
 [ext_resource type="Texture2D" uid="uid://65jgwhqlfphj" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll09.png" id="21_by4qa"]
 [ext_resource type="Texture2D" uid="uid://cj6pqrvsga70n" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll10.png" id="22_5u51q"]
+[ext_resource type="Texture2D" uid="uid://87vmqtl8vouy" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Walk/Walk01.png" id="23_8ycck"]
+[ext_resource type="Texture2D" uid="uid://dnp7ov4ltlul6" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Walk/Walk02.png" id="24_hsinu"]
+[ext_resource type="Texture2D" uid="uid://qlkfwgxkfjud" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Walk/Walk03.png" id="25_aqnsu"]
+[ext_resource type="Texture2D" uid="uid://bvdedi2yjdmca" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Walk/Walk04.png" id="26_cu2e0"]
+[ext_resource type="Texture2D" uid="uid://bst7auctft6cb" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Walk/Walk05.png" id="27_ea8ye"]
+[ext_resource type="Texture2D" uid="uid://cx1mtrj05uxb6" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Walk/Walk06.png" id="28_mn2r5"]
+[ext_resource type="Texture2D" uid="uid://opipugigc3oa" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Walk/Walk07.png" id="29_00lx6"]
+[ext_resource type="Texture2D" uid="uid://6ne5ipkky6bv" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Walk/Walk08.png" id="30_kuuhk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pue1l"]
 resource_local_to_scene = true
@@ -2424,6 +2432,35 @@ animations = [{
 "loop": true,
 "name": &"ThrowUnderarm",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("23_8ycck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_hsinu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_aqnsu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_cu2e0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_ea8ye")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_mn2r5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_00lx6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_kuuhk")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 5.0
 }]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v22jq"]
@@ -2605,6 +2642,69 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"SwordCombo04"]
+}
+
+[sub_resource type="Animation" id="Animation_urihx"]
+resource_name = "Attack_Counter"
+length = 0.45
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitBox/HBRight:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HitBox/HBLeft:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [],
+"times": PackedFloat32Array()
+}
+tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D:animation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"SwordSlash01"]
 }
 
 [sub_resource type="Animation" id="Animation_x1wk2"]
@@ -3457,67 +3557,33 @@ tracks/1/keys = {
 "values": [5, 1, 2, 3, 4]
 }
 
-[sub_resource type="Animation" id="Animation_urihx"]
-resource_name = "Attack_Counter"
-length = 0.45
+[sub_resource type="Animation" id="Animation_padls"]
+resource_name = "walk_back"
+length = 0.7
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("HitBox/HBRight:disabled")
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true, false, true]
+"values": [&"Walk"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("HitBox/HBLeft:disabled")
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [true, false, true]
-}
-tracks/2/type = "audio"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AudioStreamPlayer2D")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"clips": [],
-"times": PackedFloat32Array()
-}
-tracks/2/use_blend = true
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D:animation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"SwordSlash01"]
+"values": [7, 6, 5, 4, 3, 2, 1]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qyq63"]
@@ -3539,7 +3605,8 @@ _data = {
 "shotgun_attack": SubResource("Animation_on8rs"),
 "shotgun_attack_fast": SubResource("Animation_okwur"),
 "shotgun_finish": SubResource("Animation_dr66y"),
-"walk": SubResource("Animation_hm6eq")
+"walk": SubResource("Animation_hm6eq"),
+"walk_back": SubResource("Animation_padls")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0g83a"]
@@ -3754,7 +3821,6 @@ script = ExtResource("6_y7jp7")
 light_mask = 0
 position = Vector2(4.45928, -3.12741)
 rotation = 0.398128
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_0g83a")
 
 [node name="HBLeft" type="CollisionShape2D" parent="HitBox"]

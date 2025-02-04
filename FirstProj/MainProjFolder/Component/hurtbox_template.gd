@@ -9,7 +9,7 @@ signal parried()
 
 
 @export var health: Health
-var dmg_mult : int = 1
+@export var dmg_mult : int = 1
 
 func _ready():
 	connect("area_entered", _on_area_entered)
