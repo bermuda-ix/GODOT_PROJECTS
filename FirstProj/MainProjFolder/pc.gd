@@ -1120,3 +1120,11 @@ func _on_counter_box_area_entered(area):
 
 func _on_counter_timer_timeout():
 	counter_flag = false
+
+
+func _on_hazard_detector_body_entered(body):
+	if body.is_in_group("Enemy"):
+		if (position.x-body.position.x)<0:
+			knockback.x = -350
+		else:
+			knockback.x = 350

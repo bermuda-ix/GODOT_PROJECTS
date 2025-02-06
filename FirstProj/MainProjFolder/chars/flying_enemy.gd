@@ -30,6 +30,8 @@ const MISSILE_DUMBFIRE = preload("res://Component/missiles/missile_dumbfire.tscn
 
 
 var player_found : bool = false
+var distance_to_player : float = 0.0
+var distance_above_player : float = 0.0
 var found : bool = false
 var knockback : Vector2 = Vector2.ZERO
 
@@ -71,8 +73,9 @@ func _physics_process(delta):
 	
 	if current_state==States.CHASE:
 		velocity = dir * SPEED
-		turret.shoot()
-		turret.shoot_timer.paused=false
+		if distance_to_player<2500 and distance_above_player<250:
+			turret.shoot()
+			turret.shoot_timer.paused=false
 		#gravity=0
 		#velocity.y = vel_y_default
 		
@@ -121,6 +124,8 @@ func track_player():
 	
 	var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y)\
 	- player_tracking.position
+	distance_to_player = abs(position.x-player.position.x)
+	distance_above_player = abs(position.y-player.position.y)
 	
 	player_tracker_pivot.look_at(direction_to_player)
 func set_state(cur_state, new_state) -> void:
@@ -208,7 +213,7 @@ func _on_parry_timer_timeout():
 	set_state(current_state, prev_state)
 	
 func get_width() -> int:
-	return collision_shape_2d.get_shape().size.x
+	return collision_shape_2d.get_shape().radius
 func get_height() -> int:
-	return collision_shape_2d.get_shape().size.y
+	return collision_shape_2d.get_shape().radius
 

@@ -3640,7 +3640,7 @@ size = Vector2(21, 22)
 [node name="PC" type="CharacterBody2D" node_paths=PackedStringArray("health") groups=["player"]]
 position = Vector2(0, 2)
 collision_layer = 2
-collision_mask = 3083
+collision_mask = 19467
 floor_snap_length = 2.0
 script = ExtResource("1_x210m")
 movement_data = ExtResource("2_4grev")
@@ -3765,7 +3765,7 @@ position_smoothing_speed = 3.0
 
 [node name="HazardDetector" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 4
+collision_mask = 16388
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HazardDetector"]
 position = Vector2(0.249986, 4)
@@ -3873,6 +3873,7 @@ target_position = Vector2(20, 0)
 
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="area_entered" from="HazardDetector" to="." method="_on_hazard_detector_area_entered"]
+[connection signal="body_entered" from="HazardDetector" to="." method="_on_hazard_detector_body_entered"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="CounterTimer" to="." method="_on_counter_timer_timeout"]

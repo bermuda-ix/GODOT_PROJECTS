@@ -40,11 +40,14 @@ size = Vector2(32, 32)
 size = Vector2(34, 33)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lkpgo"]
-size = Vector2(34, 34)
+size = Vector2(34, 31.5)
 
-[node name="robot_enemy" instance=ExtResource("1_wk1t8")]
+[node name="robot_enemy" node_paths=PackedStringArray("hitbox") instance=ExtResource("1_wk1t8")]
 position = Vector2(0, -1)
+collision_layer = 16385
+collision_mask = 3
 script = ExtResource("2_halu0")
+hitbox = NodePath("HitBox")
 
 [node name="NavigationAgent2D" parent="." index="0"]
 navigation_layers = 2
@@ -117,7 +120,7 @@ shape = SubResource("RectangleShape2D_rurrt")
 stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
-position = Vector2(0, 0.5)
+position = Vector2(0, 1.75)
 shape = SubResource("RectangleShape2D_lkpgo")
 
 [node name="AttackRange" parent="." index="16"]
