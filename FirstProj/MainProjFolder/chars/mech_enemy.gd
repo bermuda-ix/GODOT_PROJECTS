@@ -315,11 +315,11 @@ func makepath() -> void:
 func set_state(cur_state, new_state) -> void:
 
 	if(cur_state == new_state):
-		pass
+		return
 	elif(cur_state==States.DEATH):
-		pass
+		return
 	elif(cur_state==States.STAGGERED and not parry_timer.is_stopped()):
-		pass
+		return
 	#elif new_state==States.ATTACK and cur_state==States.JUMP:
 		#cur_state="AIR_ATTACK"
 		#anim_player.play(attack_combo)

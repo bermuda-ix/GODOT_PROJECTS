@@ -1,0 +1,78 @@
+[gd_resource type="BehaviorTree" load_steps=17 format=3 uid="uid://bkpyddqh402xp"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_2djuw"]
+var/attack_mode/name = &"attack_mode"
+var/attack_mode/type = 1
+var/attack_mode/value = false
+var/attack_mode/hint = 0
+var/attack_mode/hint_string = ""
+var/ranged_mode/name = &"ranged_mode"
+var/ranged_mode/type = 1
+var/ranged_mode/value = false
+var/ranged_mode/hint = 0
+var/ranged_mode/hint_string = ""
+var/melee_mode/name = &"melee_mode"
+var/melee_mode/type = 1
+var/melee_mode/value = false
+var/melee_mode/hint = 0
+var/melee_mode/hint_string = ""
+
+[sub_resource type="BBVariant" id="BBVariant_cye2g"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_e1x7l"]
+variable = &"attack_mode"
+value = SubResource("BBVariant_cye2g")
+custom_name = "AttackMode"
+
+[sub_resource type="BTConsolePrint" id="BTConsolePrint_mr7p4"]
+text = "ATTACKING"
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_dbl60"]
+variable = &"melee_mode"
+
+[sub_resource type="BBNode" id="BBNode_ysbiq"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_qwr6t"]
+node = SubResource("BBNode_ysbiq")
+method = &"melee_attack"
+
+[sub_resource type="BTSequence" id="BTSequence_dm2bk"]
+custom_name = "Melee"
+children = [SubResource("BTCheckTrigger_dbl60"), SubResource("BTCallMethod_qwr6t")]
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_xq5ey"]
+variable = &"ranged_mode"
+
+[sub_resource type="BBNode" id="BBNode_4kawb"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_kmg6s"]
+node = SubResource("BBNode_4kawb")
+method = &"shoot"
+
+[sub_resource type="BTSequence" id="BTSequence_p3l4r"]
+custom_name = "Shoot"
+children = [SubResource("BTCheckTrigger_xq5ey"), SubResource("BTCallMethod_kmg6s")]
+
+[sub_resource type="BTSelector" id="BTSelector_ct688"]
+children = [SubResource("BTSequence_dm2bk"), SubResource("BTSequence_p3l4r")]
+
+[sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_vwcxk"]
+children = [SubResource("BTSelector_ct688")]
+
+[sub_resource type="BTSequence" id="BTSequence_df28b"]
+custom_name = "Attacks"
+children = [SubResource("BTCheckVar_e1x7l"), SubResource("BTConsolePrint_mr7p4"), SubResource("BTRepeatUntilFailure_vwcxk")]
+
+[sub_resource type="BTSelector" id="BTSelector_307xj"]
+children = [SubResource("BTSequence_df28b")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_2djuw")
+root_task = SubResource("BTSelector_307xj")
