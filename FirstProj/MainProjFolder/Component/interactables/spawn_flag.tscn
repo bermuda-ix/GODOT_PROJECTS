@@ -2,13 +2,17 @@
 
 [ext_resource type="Script" path="res://spawn_flag_trigger.gd" id="1_akacg"]
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_345og"]
-b = Vector2(-1, 102)
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_rp3r5"]
+b = Vector2(0, 115)
 
 [node name="SpawnFlag" type="Node2D"]
-
-[node name="SpawnFlagTrigger" type="Area2D" parent="."]
 script = ExtResource("1_akacg")
 
+[node name="SpawnFlagTrigger" type="Area2D" parent="."]
+collision_mask = 2
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnFlagTrigger"]
-shape = SubResource("SegmentShape2D_345og")
+position = Vector2(0, 1)
+shape = SubResource("SegmentShape2D_rp3r5")
+
+[connection signal="body_entered" from="SpawnFlagTrigger" to="." method="_on_spawn_flag_trigger_body_entered"]

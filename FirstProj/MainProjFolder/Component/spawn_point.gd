@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name SpawnPoint
+
 @onready var spawn_timer = $SpawnTimer
 @onready var enemy_cnt : int = 1
 @onready var spawn_size : int = 1
@@ -14,9 +16,10 @@ extends Node2D
 func _ready():
 	spawn_timer.start()
 	spawn_size = enemy.size()
-	Events.activate.connect(activate)
-	Events.deactivate.connect(deactivate)
-	Events.spawn_update.connect(spawn_update)
+	if not single_spawn:
+		Events.activate.connect(activate)
+		Events.deactivate.connect(deactivate)
+		Events.spawn_update.connect(spawn_update)
 
 func _on_spawn_timer_timeout():
 	var spawn_ind
