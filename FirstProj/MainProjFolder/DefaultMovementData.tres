@@ -11,3 +11,4 @@ friction = 800.0
 jump_velocity = -250.0
 gravity_scale = 0.8
 air_resistance = 400
+dodge_speed = 180

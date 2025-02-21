@@ -4,7 +4,7 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
-const MISSILE_DUMBFIRE = preload("res://Component/missiles/missile_dumbfire.tscn")
+const MISSILE_TRACKER = preload("res://Component/missiles/missile_tracker.tscn")
 
 #pathfinding
 @onready var wall_check_left = $WallChecks/WallCheckLeft as RayCast2D
@@ -31,7 +31,7 @@ const MISSILE_DUMBFIRE = preload("res://Component/missiles/missile_dumbfire.tscn
 @onready var leap_up_check_right = $JumpChecks/LeapUpCheckRight
 
 @onready var turret = $Turret
-@onready var bullet = MISSILE_DUMBFIRE
+@onready var bullet = MISSILE_TRACKER
 @onready var bullet_dir = Vector2.RIGHT
 @onready var shooting_cooldown = $ShootingCooldown
 
@@ -378,7 +378,7 @@ func set_state(cur_state, new_state) -> void:
 
 func _on_health_health_depleted():
 	death_timer.start()
-	parried==false
+	parried=false
 	#current_state==States.DEATH
 	set_state(current_state,States.DEATH)
 	#animation_player.stop()
@@ -559,3 +559,10 @@ func get_width() -> int:
 	return collision_shape_2d.get_shape().size.x
 func get_height() -> int:
 	return collision_shape_2d.get_shape().size.y
+	
+func target_lock():
+	var target_lock_inst
+	const TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
+	target_lock_inst=TARGET_LOCK.instantiate()
+	add_child(target_lock_inst)
+	print(str(position)," ",str(target_lock_inst.global_position))

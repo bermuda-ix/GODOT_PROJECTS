@@ -5,7 +5,9 @@ extends Node2D
 @onready var spawn_size : int = 1
 
 @export var active : bool = true
+@export var single_spawn : bool = true
 @export var enemy : Array[PackedScene] = [enemy_list.ROBOT_ENEMY, enemy_list.FLYING_ENEMY]
+@export var enemy_single : PackedScene
 @export var max_enemy : int = 5
 @export var spawn_type : String = "enemy"
 
@@ -24,7 +26,13 @@ func _on_spawn_timer_timeout():
 			enemy_inst.global_position = Vector2(position.x, position.y)
 			get_tree().current_scene.add_child(enemy_inst)
 			spawn_timer.paused=true
-			
+		
+		elif single_spawn:
+			var enemy_inst = enemy_single.instantiate()
+			enemy_inst.global_position = Vector2(position.x, position.y)
+			get_tree().current_scene.add_child(enemy_inst)
+			active=false
+		
 		else:
 			if enemy_cnt < max_enemy:
 				if spawn_size >1:
@@ -37,6 +45,7 @@ func _on_spawn_timer_timeout():
 			
 				enemy_inst.global_position = Vector2(position.x, position.y)
 				get_tree().current_scene.add_child(enemy_inst)
+				
 			else:
 				print("max spawned")
 				

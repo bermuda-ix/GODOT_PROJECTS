@@ -185,6 +185,8 @@ max_stagger = 1
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." index="22"]
 stream = ExtResource("5_o3mrs")
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="23"]
+
 [connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

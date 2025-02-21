@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://deujl8odhk3y1"]
+
+[ext_resource type="Texture2D" uid="uid://dpau2hbjnjnwo" path="res://Art_Components/OGs/target_lock.png" id="1_0ww5r"]
+[ext_resource type="Script" path="res://Component/effects/target_lock.gd" id="2_555r8"]
+
+[sub_resource type="Animation" id="Animation_oa53i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -150)]
+}
+
+[sub_resource type="Animation" id="Animation_45rgr"]
+resource_name = "default"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -150), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5lbfw"]
+_data = {
+"RESET": SubResource("Animation_oa53i"),
+"default": SubResource("Animation_45rgr")
+}
+
+[node name="TargetLock" type="Node2D"]
+position = Vector2(-1, -3)
+script = ExtResource("2_555r8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, -0.999998)
+scale = Vector2(0.100625, 0.0733333)
+texture = ExtResource("1_0ww5r")
+offset = Vector2(0, -150)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_5lbfw")
+}
+
+[node name="Label" type="Label" parent="Sprite2D"]
+offset_left = -168.944
+offset_top = -627.273
+offset_right = -128.944
+offset_bottom = -604.273
+scale = Vector2(8.49339, 12.5089)
+text = "TEST
+"

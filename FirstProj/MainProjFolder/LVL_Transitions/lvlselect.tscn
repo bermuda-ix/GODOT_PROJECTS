@@ -30,7 +30,7 @@ text = "Gauntlet"
 [node name="boss" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 action_mode = 0
-text = "Challenge Boss"
+text = "PROLOGUE"
 
 [connection signal="pressed" from="VBoxContainer/tutorials" to="." method="_on_tutorials_pressed"]
 [connection signal="pressed" from="VBoxContainer/guanlet" to="." method="_on_guanlet_pressed"]

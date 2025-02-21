@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://j41r1dqp7vf3"]
+
+[ext_resource type="Script" path="res://levels/standard_lvl_template.gd" id="1_xbjfv"]
+[ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://LVL_Transitions/level_completed.tscn" id="2_wo4mj"]
+[ext_resource type="PackedScene" uid="uid://cxqapy0tyeigc" path="res://ui_level.tscn" id="3_pd0wq"]
+[ext_resource type="PackedScene" uid="uid://dva6hjing4p6o" path="res://LVL_Transitions/game_over.tscn" id="4_5utq2"]
+[ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="5_rvipd"]
+
+[node name="StandardLvlTemplate" type="Node2D"]
+script = ExtResource("1_xbjfv")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LevelCompleted" parent="CanvasLayer" instance=ExtResource("2_wo4mj")]
+visible = false
+
+[node name="UI_Level" parent="CanvasLayer" instance=ExtResource("3_pd0wq")]
+
+[node name="GameOver" parent="CanvasLayer" instance=ExtResource("4_5utq2")]
+visible = false
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 120.0
+offset_right = 160.0
+offset_bottom = 23.0
+text = "Obj"
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("5_rvipd")]
+process_mode = 3
+visible = false

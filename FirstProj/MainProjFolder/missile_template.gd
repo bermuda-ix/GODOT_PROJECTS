@@ -46,21 +46,22 @@ func _physics_process(delta):
 	
 	if not tracking_timer.is_stopped():
 		track_player()
+		dir=lerp(dir, tracking_vector, delta*3)
 	else:
 		accel += (accel*.02)
-	
+		dir=dir
 	
 	#print(spawnRot)
 	#print(dir.normalized())
 	#dir=player_tracker.transform.x
-	dir=lerp(dir, tracking_vector, delta*3)
+	
 	#spawnRot=player_tracker.rotation_degrees
 	animated_sprite_2d.rotation = lerp_angle(animated_sprite_2d.rotation, tracking_rot, delta*5)
 	
 	#dir=position.normalized()
 	
 	position += (dir * (SPEED +accel) * delta)
-	
+	print(dir)
 	
 	
 func set_speed(value: float):
@@ -101,8 +102,8 @@ func _on_area_2d_body_entered(body):
 func track_player():
 	
 	
-	var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y+25)\
-	- position
+	var direction_to_player : Vector2 = Vector2(player.global_position.x, player.global_position.y+25)\
+	- global_position
 	
 	
 	

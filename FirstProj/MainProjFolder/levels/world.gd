@@ -18,6 +18,7 @@ extends Node2D
 
 var cur_state = "IDLE"
 var cur_health = 3
+var max_health = 3
 var elite_spawn_flag : bool = false
 var boss_spawn_flag : bool = false
 
@@ -99,9 +100,11 @@ func set_state():
 	
 func get_health():
 	cur_health = PC.get_health()
+	max_health = PC.get_max_health()
 	
 func set_health():
 	ui_level.set_health(cur_health)
+	ui_level.set_max_health(max_health)
 	
 func inc_score():
 	score += 1

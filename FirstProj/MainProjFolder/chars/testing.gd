@@ -4,6 +4,7 @@ const SPEED = 3000.0
 const JUMP_VELOCITY = -400.0
 const CLOCKWISE=PI/2
 const COUNTER_CLOCKWISE=-PI/2
+const TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
 
 @onready var player_tracking = $PlayerTrackerPivot/PlayerTracking
 
@@ -48,7 +49,7 @@ func _process(delta):
 func _physics_process(delta):
 	handle_movement()
 	
-	label.text=str(get_width(), get_height())
+	label.text=str(global_position)
 	#if rotate_around:
 		#move_and_slide()
 		##velocity = movement * SPEED * delta
@@ -109,7 +110,11 @@ func get_height() -> int:
 		#else:
 			#movement = target_direction.rotated(COUNTER_CLOCKWISE)
 
-
+func target_lock():
+	var target_lock_inst
+	target_lock_inst=TARGET_LOCK.instantiate()
+	add_child(target_lock_inst)
+	print(str(position)," ",str(target_lock_inst.global_position))
 	
 	
 	

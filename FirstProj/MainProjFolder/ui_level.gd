@@ -2,6 +2,7 @@ extends Control
 
 @onready var health_bar = $Health
 @onready var state = $State
+@onready var health_bar_ui = $HealthBar
 
 
 var health = 3
@@ -21,6 +22,10 @@ func _process(delta):
 
 func set_health(value: int) -> void:
 	health = value
+	health_bar_ui.value=value
 	
 func set_cur_state(value: String) -> void:
 	cur_state = value
+
+func set_max_health(value: int) -> void:
+	health_bar_ui.max_value = value

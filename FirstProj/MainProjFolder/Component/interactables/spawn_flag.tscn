@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwe3bu6vqh8v"]
+
+[ext_resource type="Script" path="res://spawn_flag_trigger.gd" id="1_akacg"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_345og"]
+b = Vector2(-1, 102)
+
+[node name="SpawnFlag" type="Node2D"]
+
+[node name="SpawnFlagTrigger" type="Area2D" parent="."]
+script = ExtResource("1_akacg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnFlagTrigger"]
+shape = SubResource("SegmentShape2D_345og")

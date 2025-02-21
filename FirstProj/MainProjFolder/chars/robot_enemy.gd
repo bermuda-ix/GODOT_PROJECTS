@@ -31,6 +31,7 @@ const JUMP_VELOCITY = -400.0
 @onready var leap_up_check_left = $JumpChecks/LeapUpCheckLeft
 @onready var leap_up_check_right = $JumpChecks/LeapUpCheckRight
 @onready var jump_timer = $JumpTimer
+@onready var knock_back_timer = $KnockBackTimer
 
 
 @onready var health = $Health
@@ -407,8 +408,14 @@ func _on_parry_timer_timeout():
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("sp_atk_default"):
 		knockback.y=(randi_range(50,200)*-1)
-		knockback.x=(randi_range(500,1000))
+		if animated_sprite_2d.flip_h==true:
+			knockback.x=(randi_range(500,1000))*-1
+		else:
+			knockback.x=(randi_range(500,1000))
 		print("spc_hit_weak")
+		await get_tree().create_timer(0.2).timeout
+		parried=true
+		parry_timer.start(3) 
 		
 
 func get_width() -> int:
@@ -419,3 +426,10 @@ func get_height() -> int:
 
 func _on_stagger_staggered():
 	pass # Replace with function body.
+
+func target_lock():
+	var target_lock_inst
+	const TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
+	target_lock_inst=TARGET_LOCK.instantiate()
+	add_child(target_lock_inst)
+	print(str(position)," ",str(target_lock_inst.global_position))

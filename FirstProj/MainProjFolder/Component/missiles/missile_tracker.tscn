@@ -1,14 +1,14 @@
 [gd_scene load_steps=11 format=3 uid="uid://flaiq8fdiflo"]
 
-[ext_resource type="PackedScene" uid="uid://b1rejq3d3efwl" path="res://Component/missiles/missile_template.tscn" id="1_bxiaj"]
-[ext_resource type="Script" path="res://missile_template.gd" id="2_eesph"]
-[ext_resource type="Texture2D" uid="uid://d1xsuny35cgdk" path="res://Art_Components/missile/spr_missile_half.png" id="3_r3onn"]
+[ext_resource type="PackedScene" uid="uid://b1rejq3d3efwl" path="res://Component/missiles/missile_template.tscn" id="1_2xtrp"]
+[ext_resource type="Script" path="res://missile_template.gd" id="2_ialjw"]
+[ext_resource type="Texture2D" uid="uid://d1xsuny35cgdk" path="res://Art_Components/missile/spr_missile_half.png" id="3_7j0m5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e7c7u"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_r3onn")
+"texture": ExtResource("3_7j0m5")
 }],
 "loop": true,
 "name": &"default",
@@ -43,10 +43,10 @@ scale_curve = SubResource("CurveTexture_rrkwm")
 color = Color(0.950249, 0.458249, 5.77569e-07, 1)
 color_ramp = SubResource("GradientTexture1D_tg5ar")
 
-[node name="missile_dumbfire" groups=["bullet"] instance=ExtResource("1_bxiaj")]
+[node name="missile_tracker" groups=["bullet"] instance=ExtResource("1_2xtrp")]
 position = Vector2(181, 88)
 scale = Vector2(0.5, 0.5)
-script = ExtResource("2_eesph")
+script = ExtResource("2_ialjw")
 
 [node name="AnimatedSprite2D" parent="." index="0"]
 rotation = -1.5708

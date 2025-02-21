@@ -11,7 +11,7 @@ func _on_guanlet_pressed():
 
 func _on_boss_pressed():
 	await LevelTransition.fade_to_black()
-	get_tree().change_scene_to_file("res://levels/boss_test.tscn")
+	get_tree().change_scene_to_file("res://levels/prologue_lvl.tscn")
 	LevelTransition.fade_from_black()
 
 

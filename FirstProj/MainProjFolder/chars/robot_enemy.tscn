@@ -126,7 +126,7 @@ shape = SubResource("RectangleShape2D_lkpgo")
 [node name="AttackRange" parent="." index="16"]
 position = Vector2(0, 1.5)
 
-[node name="Timer" type="Timer" parent="." index="17"]
+[node name="KnockBackTimer" type="Timer" parent="." index="17"]
 
 [node name="Stagger" parent="." index="18"]
 max_stagger = 1

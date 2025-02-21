@@ -4,7 +4,11 @@
 
 [resource]
 script = ExtResource("1_ysxet")
-speed = 120.0
+speed = 150.0
 acceleration = 1000.0
+air_acceleration = 400.0
 friction = 800.0
 jump_velocity = -350.0
+gravity_scale = 1.0
+air_resistance = 200
+dodge_speed = 180

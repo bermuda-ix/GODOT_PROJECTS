@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://blsmgy883jm3a"]
+
+[ext_resource type="Texture2D" uid="uid://bj13qy2ckri8q" path="res://Art_Components/Backgrounds/night_1/1.png" id="1_yf5fq"]
+[ext_resource type="Texture2D" uid="uid://b1p3fdvwsdnfy" path="res://Art_Components/Backgrounds/night_1/2.png" id="2_e13ki"]
+[ext_resource type="Texture2D" uid="uid://d0gvriwjqa03k" path="res://Art_Components/Backgrounds/background2.png" id="2_j4ay7"]
+[ext_resource type="Texture2D" uid="uid://b03d4l8fn2u7k" path="res://Art_Components/Backgrounds/background3.png" id="3_pkb51"]
+
+[node name="Desert_Background" type="Node2D"]
+
+[node name="ParallaxLayer" type="ParallaxBackground" parent="."]
+
+[node name="Sky" type="ParallaxLayer" parent="ParallaxLayer"]
+motion_scale = Vector2(0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer/Sky"]
+texture = ExtResource("1_yf5fq")
+centered = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxLayer/Sky"]
+position = Vector2(0, -66)
+texture = ExtResource("2_e13ki")
+centered = false
+
+[node name="MountainFar" type="ParallaxLayer" parent="ParallaxLayer"]
+motion_scale = Vector2(0.4, 0.1)
+motion_offset = Vector2(0, -100)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer/MountainFar"]
+self_modulate = Color(0.396889, 0.396889, 0.396889, 1)
+texture = ExtResource("2_j4ay7")
+centered = false
+
+[node name="MountainsNear" type="ParallaxLayer" parent="ParallaxLayer"]
+position = Vector2(0, -1)
+motion_scale = Vector2(0.7, 0.3)
+motion_offset = Vector2(0, -100)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer/MountainsNear"]
+self_modulate = Color(0.646029, 0.646029, 0.646029, 1)
+texture = ExtResource("3_pkb51")
+centered = false

@@ -32,4 +32,6 @@ signal parried
 signal set_player_data
 signal get_player_data
 
-
+#Lockon
+signal lockon_to
+signal unlock_from

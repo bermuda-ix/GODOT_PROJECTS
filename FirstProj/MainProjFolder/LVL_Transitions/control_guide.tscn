@@ -28,7 +28,8 @@ SHIFT: Sprint
 E: Parry								
 CTRL: Dodge						
 Jump On Wall Hang: Wall Jump
-Hold SHIFT On Wall: Wall Hang"
+Hold SHIFT On Wall: Wall Hang
+ALT: Lock-on"
 horizontal_alignment = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]

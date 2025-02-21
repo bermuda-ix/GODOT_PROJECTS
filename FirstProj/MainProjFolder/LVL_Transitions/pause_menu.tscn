@@ -28,23 +28,24 @@ SHIFT: Sprint
 E: Parry								
 CTRL: Dodge						
 Jump On Wall Hang: Wall Jump
-Hold SHIFT On Wall: Wall Hang"
+Hold SHIFT On Wall: Wall Hang
+Alt:Lock- On"
 horizontal_alignment = 1
 
 [node name="Continue" type="Button" parent="."]
 layout_mode = 0
 offset_left = 176.0
-offset_top = 272.0
+offset_top = 280.0
 offset_right = 255.0
-offset_bottom = 303.0
+offset_bottom = 311.0
 text = "Continue"
 
 [node name="Quit" type="Button" parent="."]
 layout_mode = 0
 offset_left = 320.0
-offset_top = 272.0
+offset_top = 280.0
 offset_right = 362.0
-offset_bottom = 303.0
+offset_bottom = 311.0
 text = "Quit"
 
 [connection signal="pressed" from="Continue" to="." method="_on_continue_pressed"]

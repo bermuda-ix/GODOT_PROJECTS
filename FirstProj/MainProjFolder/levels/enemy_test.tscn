@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://y41334wummex"]
+[gd_scene load_steps=17 format=3 uid="uid://y41334wummex"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_wweet"]
+[ext_resource type="PackedScene" uid="uid://bqd8587bfopmc" path="res://levels/boss_test.tscn" id="2_04e58"]
 [ext_resource type="PackedScene" uid="uid://ckut0dvkbw0oi" path="res://chars/mech_enemy.tscn" id="2_s4xm7"]
 [ext_resource type="PackedScene" uid="uid://dmk1m13knr7mq" path="res://chars/robot_enemy.tscn" id="3_ej7ve"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_5c65i"]
@@ -72,6 +73,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(1720, -16, 1720, 16, 23
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [node name="EnemyTest" instance=ExtResource("1_wweet")]
+next_level = ExtResource("2_04e58")
 
 [node name="PC" parent="." index="0"]
 position = Vector2(24, 0)

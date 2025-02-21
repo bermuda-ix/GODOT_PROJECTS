@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=10 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
 [ext_resource type="PackedScene" uid="uid://w2mgtcnbneri" path="res://chars/testing.tscn" id="2_58a6u"]
-[ext_resource type="PackedScene" uid="uid://dmk1m13knr7mq" path="res://chars/robot_enemy.tscn" id="3_0ndc5"]
+[ext_resource type="PackedScene" uid="uid://bt6url6xt1nqm" path="res://Component/interactables/lab_door_switch.tscn" id="3_t0ect"]
+[ext_resource type="PackedScene" uid="uid://b8htmq8u3ykss" path="res://Component/interactables/door.tscn" id="4_m1d7p"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ys1t2"]
 outlines = Array[PackedVector2Array]([PackedVector2Array(24, 112, 144, 112, 176, 32, 328, 32, 368, 112, 528, 112, 528, 88, 392, 88, 352, 8, 256, 8, 216, -64, 256, -128, 448, -128, 496, -208, 696, -208, 696, -232, 520, -232, 432, -296, 224, -304, 128, -360, -64, -360, -64, -336, 104, -336, 208, -272, 408, -272, 472, -216, 432, -160, 256, -160, 168, -96, 8, -96, 8, -64, 184, -64, 216, 8, 144, 8, 120, 72, 24, 72)])
@@ -36,7 +37,7 @@ source_geometry_group_name = &"navigation_polygon_source_group"
 [node name="project_test" instance=ExtResource("1_07jkq")]
 
 [node name="PC" parent="." index="0"]
-position = Vector2(360, 64)
+position = Vector2(272, -288)
 
 [node name="LevelTileMap" parent="." index="2"]
 position = Vector2(1, 0)
@@ -138,5 +139,9 @@ navigation_polygon = SubResource("NavigationPolygon_nxtlr")
 [node name="testing" parent="." index="21" instance=ExtResource("2_58a6u")]
 position = Vector2(368, -296)
 
-[node name="robot_enemy" parent="." index="22" instance=ExtResource("3_0ndc5")]
-position = Vector2(472, 92)
+[node name="lab_door_switch" parent="." index="22" node_paths=PackedStringArray("door_connect") instance=ExtResource("3_t0ect")]
+position = Vector2(592, -216)
+door_connect = NodePath("../door")
+
+[node name="door" parent="." index="23" instance=ExtResource("4_m1d7p")]
+position = Vector2(640, -248)

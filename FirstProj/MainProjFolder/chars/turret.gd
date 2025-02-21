@@ -43,7 +43,7 @@ func track_player():
 	if player == null:
 		return
 	
-	player_tracker.target_position = to_local(player.position)
+	player_tracker.target_position = to_local(player.global_position)
 	
 	direction_to_player = player.position - pos
 	#turret_body.rotation=direction_to_player.angle()
@@ -86,4 +86,3 @@ func get_multi_shot()->bool:
 
 func get_dist_to_player():
 	return dist_to_player
-

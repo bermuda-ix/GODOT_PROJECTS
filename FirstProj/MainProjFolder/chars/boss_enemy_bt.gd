@@ -445,3 +445,10 @@ func _on_hurt_box_got_hit(hitbox):
 	animation_player.play("hit")
 	await animation_player.animation_finished
 	animation_player.play("RESET")
+
+func target_lock():
+	var target_lock_inst
+	const TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
+	target_lock_inst=TARGET_LOCK.instantiate()
+	add_child(target_lock_inst)
+	print(str(position)," ",str(target_lock_inst.global_position))

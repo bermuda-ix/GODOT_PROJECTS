@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3 uid="uid://bwy4dfs27ji8h"]
+
+[ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_7j8nt"]
+[ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
+[ext_resource type="PackedScene" uid="uid://2t2be0q7lqvs" path="res://Art_Components/tile_maps/lab_architect.tscn" id="3_fyow3"]
+[ext_resource type="PackedScene" uid="uid://blsmgy883jm3a" path="res://levels/level_backgrounds/desert_background.tscn" id="4_iov4b"]
+[ext_resource type="PackedScene" uid="uid://bt6url6xt1nqm" path="res://Component/interactables/lab_door_switch.tscn" id="5_ru525"]
+[ext_resource type="PackedScene" uid="uid://b8htmq8u3ykss" path="res://Component/interactables/door.tscn" id="6_jykkx"]
+[ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="7_h0p3s"]
+[ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="8_bi776"]
+
+[node name="PrologueLvl" instance=ExtResource("1_7j8nt")]
+
+[node name="PC" parent="." index="1" instance=ExtResource("2_dtpw0")]
+position = Vector2(144, 440)
+scale = Vector2(2, 2)
+
+[node name="LabArchitect" parent="." index="2" instance=ExtResource("3_fyow3")]
+position = Vector2(-8, 392)
+scale = Vector2(1, 1.071)
+collision_visibility_mode = 1
+
+[node name="Non_TilesetCollisions" type="Node2D" parent="LabArchitect" index="7"]
+
+[node name="stairs_1_1st_area" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="0"]
+position = Vector2(1664, 67.2269)
+scale = Vector2(1, 0.933707)
+collision_mask = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LabArchitect/Non_TilesetCollisions/stairs_1_1st_area" index="0"]
+position = Vector2(-1664, -72)
+scale = Vector2(1, 1.071)
+polygon = PackedVector2Array(1648, 97.1055, 1976, -67.2269, 2008, -67.2269, 2016, -59.7572, 1664, 104.575)
+
+[node name="stairs_2_1st_area" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="1"]
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="LabArchitect/Non_TilesetCollisions/stairs_2_1st_area" index="0"]
+polygon = PackedVector2Array(1504, -224.09, 1480, -224.09, 1352, -276.377, 1352, -291.317, 1384, -291.317, 1504, -231.559)
+
+[node name="Desert_Background" parent="." index="3" instance=ExtResource("4_iov4b")]
+
+[node name="lab_door_switch" parent="." index="4" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
+z_index = -1
+position = Vector2(680, 480)
+door_connect = NodePath("../Door")
+
+[node name="Door" parent="." index="5" instance=ExtResource("6_jykkx")]
+position = Vector2(736, 448)
+scale = Vector2(1.03607, 1.19587)
+
+[node name="lab_door_switch2" parent="." index="6" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
+position = Vector2(1040, 344)
+door_connect = NodePath("../Door2")
+
+[node name="Door2" parent="." index="7" instance=ExtResource("6_jykkx")]
+z_index = -1
+position = Vector2(1984, 264)
+scale = Vector2(1, 1.18132)
+
+[node name="SpawnPoint" parent="." index="8" instance=ExtResource("7_h0p3s")]
+position = Vector2(1360, 424)
+enemy_single = ExtResource("8_bi776")
+
+[node name="SpawnPoint2" parent="." index="9" instance=ExtResource("7_h0p3s")]
+position = Vector2(2264, 272)
+enemy_single = ExtResource("8_bi776")
+max_enemy = 1

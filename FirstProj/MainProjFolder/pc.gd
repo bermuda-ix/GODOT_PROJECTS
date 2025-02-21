@@ -12,6 +12,7 @@ const parry_sfx = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX 
 const shotgun_fire = "res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/10 Guage Shotgun-SoundBible.com-74120584.wav"
 const reload = "res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/Chambering A Round-SoundBible.com-854171848.wav"
 
+
 const CLOCKWISE=PI/2
 const COUNTER_CLOCKWISE=-PI/2
 #signals
@@ -21,16 +22,22 @@ signal jump_out_signal
 @export var movement_data : PlayerMovementData
 @export var health: Health
 @export var hitbox: HitBox
+@export var ammo : int = 0
+@export var TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
 
+#Base FSM
 enum States {IDLE, WALKING, JUMP, ATTACK, SPECIAL_ATTACK, WALL_STICK, PARRY, DODGE, SPRINTING,
-FLIP}
-
+FLIP,THRUST}
+#FSM for lock on
 enum CombatStates {LOCKED, UNLOCKED}
+#FSM for combo attacks:
+enum ComboStates {ATK_1,ATK_2,ATK_3,SPC_ATK,SPC_ATK_STRONG,SPC_ATK_BACK,THRUST}
 
 var state: States = States.IDLE
 var prev_state: States = States.IDLE
 
 var combat_state: CombatStates = CombatStates.UNLOCKED
+var combo_state: ComboStates = ComboStates.ATK_1
 
 var double_jump_flag = false
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -53,6 +60,7 @@ var jumping : bool = false
 
 var cur_state = "IDLE"
 var previous = "IDLE"
+var atk_state="ATK_1"
 
 #Animation var
 @onready var animated_sprite_2d = $AnimatedSprite2D
@@ -89,6 +97,7 @@ var previous = "IDLE"
 var knockback : Vector2 = Vector2.ZERO
 var kb_dir : Vector2 = Vector2.ZERO
 var hit_success : bool = false
+var forward_thrust : Vector2 = Vector2.ZERO
 
 var hit_box_pos
 
@@ -103,6 +112,7 @@ var s_atk : bool = false
 var move_axis : int = 1
 var sp_atk_type = sp_atk_cone
 var sp_atk_dmg :int = 1
+var thrust : bool = false
 
 var counter_flag : bool = false
 @onready var counter_timer = $CounterTimer
@@ -114,6 +124,7 @@ var movement
 var flip_speed
 var target_right : bool = false
 var vector_away : Vector2 = Vector2.ZERO
+var target_below : bool = false
 
 #locked on target info
 @onready var target_testing = $TargetLocking/TargetTesting
@@ -139,7 +150,7 @@ func _ready():
 	Events.parried.connect(parry_success)
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
-	
+
 
 func _process(delta):
 	var input_axis = Input.get_axis("walk_left", "walk_right")
@@ -147,7 +158,11 @@ func _process(delta):
 	current_state_label()
 			
 	previous_state()
-	label.text=str(round(position.y)," ", target_pos_y)
+	atk_state_debug()
+	if atk_chain >= 1 and sp_atk_chn >=1:
+		label.text=str("chain ready. Vel:", velocity)
+	else:
+		label.text=str("chain not ready. Vel:", velocity)
 	dodge(input_axis, delta)
 	if Input.is_action_just_pressed("walk_right"):
 		face_right = true
@@ -167,8 +182,11 @@ func _process(delta):
 		parry()
 		attack_animate()
 		update_animation(input_axis)
-	if state == States.FLIP:
+	elif state == States.FLIP:
 		break_out()
+	elif state==States.DODGE:
+		if Input.is_action_just_pressed("attack"):
+			dash_attack()
 	
 	lockon()
 	#print(air_atk)
@@ -216,17 +234,9 @@ func _physics_process(delta):
 			apply_air_resistance(input_axis, delta)
 			sp_atk()
 			#jump_out()
-			if Input.is_action_pressed("sprint"):
-				if combat_state!=CombatStates.LOCKED:
-					walk_anim="run"
-				movement_data = load("res://FasterMovementData.tres")
-			if Input.is_action_pressed("walk"):
-				movement_data = load("res://SlowMovementData.tres")
-			if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
-				movement_data = load("res://DefaultMovementData.tres")
-				walk_anim="walk"
+			
 		
-		if state==States.SPECIAL_ATTACK:
+		if state==States.SPECIAL_ATTACK and combo_state!=ComboStates.SPC_ATK_BACK:
 			velocity=Vector2.ZERO
 			gravity=0
 		#print(input_axis)
@@ -256,7 +266,7 @@ func _physics_process(delta):
 		
 		
 		knockback = lerp(knockback, Vector2.ZERO, 0.1)
-		
+		forward_thrust = lerp(forward_thrust, Vector2.ZERO, 0.6)
 		#wall hold check
 		if not is_on_wall() or not Input.is_action_pressed("sprint"):
 			wall_hold=false
@@ -423,7 +433,21 @@ func update_animation(input_axis):
 					
 			if state != States.ATTACK and s_atk==false:
 				#state = States.WALKING
-				set_state(state, States.WALKING)
+				
+				if Input.is_action_pressed("sprint"):
+					if combat_state!=CombatStates.LOCKED:
+						walk_anim="run"
+						set_state(state, States.SPRINTING)
+					else:
+						set_state(state, States.WALKING)
+					movement_data = load("res://FasterMovementData.tres")
+				elif Input.is_action_just_released("sprint"):
+					movement_data = load("res://DefaultMovementData.tres")
+					walk_anim="walk"
+					set_state(state, States.WALKING)
+				else:
+					set_state(state, States.WALKING)
+					walk_anim="walk"
 			#idle_state=false
 	else:
 		if target_right:
@@ -451,7 +475,7 @@ func update_animation(input_axis):
 		jumping=false
 		if state == States.JUMP:
 			falling=false
-			set_state(state, States.IDLE)
+			set_state(state, prev_state)
 		#animated_sprite_2d.play("jump")
 	
 		
@@ -469,25 +493,36 @@ func attack_animate():
 			hit_box.set_damage(3)
 			hit_sound = hit1
 			AudioStreamManager.play(swing1)
+		elif target_below:
+			attack_combo = "Attack_Down"
+			hit_box.set_damage(2)
+			hit_sound = hit1
+			AudioStreamManager.play(swing1)
+			velocity.y=movement_data.jump_velocity/2
 		else:
 			hit_box.set_damage(1)
-			if atk_chain == 0 and (not attack_timer.is_stopped()):
-				#animated_sprite_2d.play("attack_1")
-				attack_combo = "Attack"
-				hit_sound = hit1
-				AudioStreamManager.play(swing1)
+			if not attack_timer.is_stopped():
+				if atk_chain == 0:
+					#animated_sprite_2d.play("attack_1")
+					attack_combo = "Attack"
+					hit_sound = hit1
+					AudioStreamManager.play(swing1)
 
-			elif atk_chain == 1 and (not attack_timer.is_stopped()):
-				#animated_sprite_2d.play("attack_2")
-				attack_combo = "Attack_2"
-				hit_sound = hit2
-				AudioStreamManager.play(swing2)
-
-			elif atk_chain == 2 and (not attack_timer.is_stopped()):
-				#animated_sprite_2d.play("attack_3")
-				attack_combo = "Attack_3"
-				hit_sound = hit3
-				AudioStreamManager.play(swing3)
+				elif atk_chain == 1 and sp_atk_chn<1:
+					#animated_sprite_2d.play("attack_2")
+					attack_combo = "Attack_2"
+					hit_sound = hit2
+					AudioStreamManager.play(swing2)
+				
+				elif atk_chain == 2:
+					#animated_sprite_2d.play("attack_3")
+					attack_combo = "Attack_3"
+					hit_sound = hit3
+					AudioStreamManager.play(swing3)
+				elif sp_atk_chn>=1:
+					attack_combo = "Attack_Chain"
+					hit_sound = hit2
+					AudioStreamManager.play(swing2)
 		
 		
 		#state=States.ATTACK
@@ -496,67 +531,12 @@ func attack_animate():
 		await anim_player.animation_finished
 		attack_timer.paused=false
 		
-		#if atk_chain < 2:
-			#
-			#atk_chain += 1
-			##print("Attack Chain")
-		#elif atk_chain >=2:
-			#atk_chain = 0
-			#attack_combo = "Attack"
-			##print("Attack Finished")
 		
-			
-	#if Input.is_action_just_pressed("special_attack") and state != States.SPECIAL_ATTACK:
-		#
-		#if attack_timer.is_stopped():
-			#attack_timer.start()
-			#attack_timer.paused=true
-			#
-		#if atk_chain==0:
-			#if sp_atk_chn == 0 and (not attack_timer.is_stopped()):
-				#sp_atk_combo="shotgun_attack"
-				#print("sp_atk 1")
-				#AudioStreamManager.play(shotgun_fire)
-				#sp_atk_dmg=1
-#
-			#elif sp_atk_chn == 1 and (not attack_timer.is_stopped()):
-				##animated_sprite_2d.play("attack_2")
-				#sp_atk_combo="shotgun_attack"
-				#print("sp_atk 2")
-				#AudioStreamManager.play(shotgun_fire)
-				#sp_atk_dmg=1
-#
-			#elif sp_atk_chn == 2 and (not attack_timer.is_stopped()):
-				##animated_sprite_2d.play("attack_3")
-				#print("reload anim playing")
-				#AudioStreamManager.play(reload)
-				#sp_atk_combo="shotgun_attack"
-				#print("sp_atk 3")
-				#sp_atk_dmg=2
-				#
-		#else:
-			#sp_atk_combo="shotgun_attack_fast"
-			#AudioStreamManager.play(shotgun_fire)
-			#
-		#state=States.SPECIAL_ATTACK
-		##set_state(state, States.SPECIAL_ATTACK)
-		#attack_timer.paused = false
-		#s_atk=true
-		##cpu_particles_2d.emitting=true
-		#
-		#await anim_player.animation_finished
-		#attack_timer.paused=false
-		#s_atk=false
-		
-
-	#elif (Input.is_action_just_released("special_attack")):
-		#print("attack released")
-		#attack_timer.paused = false
-		#await anim_player.animation_finished
-	#if not attack_timer.time_left > 0.0:
-			#atk_chain = 0
-			#attack_combo = "Attack"
-			#print("Attack Restart")
+func dash_attack():
+	attack_combo = "Attack_Dash"
+	hit_sound = hit1
+	AudioStreamManager.play(swing1)
+	set_state(state, States.ATTACK)
 
 func sp_atk():
 	if state==States.FLIP:
@@ -569,32 +549,36 @@ func sp_atk():
 		if attack_timer.is_stopped():
 			attack_timer.start()
 			attack_timer.paused=true
-			
-		if atk_chain==0:
-			if sp_atk_chn == 0 and (not attack_timer.is_stopped()):
-				sp_atk_combo="shotgun_attack"
-				#print("sp_atk 1")
-				AudioStreamManager.play(shotgun_fire)
-				sp_atk_dmg=1
-
-			elif sp_atk_chn == 1 and (not attack_timer.is_stopped()):
-				#animated_sprite_2d.play("attack_2")
-				sp_atk_combo="shotgun_attack"
-				#print("sp_atk 2")
-				AudioStreamManager.play(shotgun_fire)
-				sp_atk_dmg=1
-
-			elif sp_atk_chn == 2 and (not attack_timer.is_stopped()):
-				#animated_sprite_2d.play("attack_3")
-				#print("reload anim playing")
-				AudioStreamManager.play(reload)
-				sp_atk_combo="shotgun_attack"
-				#print("sp_atk 3")
-				sp_atk_dmg=2
-				
-		else:
+		if combo_state==ComboStates.SPC_ATK_BACK:
+			print("judo flip")
 			sp_atk_combo="shotgun_attack_fast"
-			AudioStreamManager.play(shotgun_fire)
+			
+		else:
+			if atk_chain==0:
+				if sp_atk_chn == 0 and (not attack_timer.is_stopped()):
+					sp_atk_combo="shotgun_attack"
+					#print("sp_atk 1")
+					AudioStreamManager.play(shotgun_fire)
+					sp_atk_dmg=1
+
+				elif sp_atk_chn == 1 and (not attack_timer.is_stopped()):
+					#animated_sprite_2d.play("attack_2")
+					sp_atk_combo="shotgun_attack"
+					#print("sp_atk 2")
+					AudioStreamManager.play(shotgun_fire)
+					sp_atk_dmg=1
+
+				elif sp_atk_chn == 2 and (not attack_timer.is_stopped()):
+					#animated_sprite_2d.play("attack_3")
+					#print("reload anim playing")
+					AudioStreamManager.play(reload)
+					sp_atk_combo="shotgun_attack"
+					#print("sp_atk 3")
+					sp_atk_dmg=2
+					
+			else:
+				sp_atk_combo="shotgun_attack_fast"
+				#AudioStreamManager.play(shotgun_fire)
 			
 		#state=States.SPECIAL_ATTACK
 		set_state(state, States.SPECIAL_ATTACK)
@@ -701,12 +685,19 @@ func handle_hitbox(input_axis, face_right):
 				hb_right.disabled=false
 
 func lockon():
+	if Input.is_action_just_pressed("lockon"):
+		
+		Events.unlock_from.emit()
+		find_closest_enemy()
+		
+		
 	if target == null:
 		target_string_test="NONE"
 		combat_state=CombatStates.UNLOCKED
 	else:
+		target.target_lock()
+		combat_state=CombatStates.LOCKED
 		var direction_to_target : Vector2 = Vector2(target.position.x, target.position.y) - global_position
-		
 		
 		var arc_vector = Vector2(position-Vector2(target.position)).normalized()
 		target_direction = position.direction_to(target.position)
@@ -716,8 +707,6 @@ func lockon():
 		
 		target_locking.look_at(dir_away_from_target)
 		vector_away=-((target_testing.to_global(target_testing.target_position) - target_testing.to_global(Vector2.ZERO)).normalized())
-		
-	
 		
 		if state!=States.FLIP and state!=States.SPECIAL_ATTACK:
 			if arc_vector<Vector2.RIGHT and Vector2.UP<arc_vector:
@@ -729,8 +718,24 @@ func lockon():
 				#print("on left")
 				target_right = false
 			
+func find_closest_enemy():
+	var enemies = get_tree().get_nodes_in_group("Enemy")
 	
-
+	if enemies.is_empty():
+		return
+		print("no enemies near")
+	
+	var closest_enemy = enemies[0]
+	
+	for enemy in enemies:
+		if enemy.global_position.distance_to(global_position) < closest_enemy.global_position.distance_to(global_position):
+			closest_enemy=enemy
+	
+	target=closest_enemy
+	
+	print("target locked")
+	
+	
 func locked_combat():
 	if target==null:
 		return
@@ -765,12 +770,14 @@ func set_state(current_state, new_state: int) -> void:
 	if(current_state == new_state):
 		#print("no change")
 		return
-	else:
-		print(current_state, new_state)
-		#print("changing")
+	#else:
+		#print(current_state, new_state)
+		##print("changing")
 	
 	if current_state==States.JUMP:
 		air_atk=true
+		if not is_on_floor():
+			return
 		#print(air_atk)
 	if current_state == States.PARRY and parry_stance==true:
 		pass
@@ -789,13 +796,13 @@ func set_state(current_state, new_state: int) -> void:
 				
 		States.SPECIAL_ATTACK:
 			anim_player.speed_scale=1.5
+			#sp_atk_chn+=1
 			if sp_atk_chn==2:
 				anim_player.play("shotgun_finish")
 				await anim_player.animation_finished
 				sp_atk_chn=0
 			anim_player.play(sp_atk_combo)
 			if not is_on_floor():
-			
 				velocity=Vector2.ZERO
 				gravity=0
 		States.IDLE:
@@ -810,17 +817,19 @@ func set_state(current_state, new_state: int) -> void:
 			flipped_over=false
 		States.WALKING:
 			anim_player.speed_scale=1
-			if jumping:
-				pass
-			else:
-				anim_player.play(walk_anim)
+			#if jumping:
+				#pass
+			#else:
+				#anim_player.play("walk")
+			anim_player.play("walk")
 		States.JUMP:
 			jumping=true
-			if falling==false:
-				anim_player.play("jump")
-			else:
-				pass
+			#if falling==false:
+				#anim_player.play("jump")
+			#else:
+				#pass
 			cur_state="JUMP"
+			anim_player.play("jump")
 		States.DODGE:
 			hurt_box_detect.disabled=true
 			counter_box_collision.disabled=false
@@ -835,8 +844,13 @@ func set_state(current_state, new_state: int) -> void:
 			anim_player.speed_scale=3
 			anim_player.play("flip")
 			cur_state="Flipping"
-			
-			
+		States.SPRINTING:
+			anim_player.speed_scale=1
+			#if jumping:
+				#pass
+			#else:
+				#anim_player.play("run")
+			anim_player.play("run")
 	if state != States.DODGE:
 		hurt_box_detect.disabled=false
 			
@@ -851,6 +865,8 @@ func get_state() -> String:
 
 func get_health() -> int:
 	return health.health
+func get_max_health() -> int:
+	return health.max_health
 
 func _on_health_health_depleted():
 	Events.game_over.emit()
@@ -907,18 +923,21 @@ func _on_animation_player_animation_finished(anim_name):
 		#print("attack finished")
 		hit_success=false
 		if atk_chain < 2:
-			
 			atk_chain += 1
-			#print("Attack Chain")
 		elif atk_chain >=2:
 			atk_chain = 0
 			attack_combo = "Attack"
-			#print("Attack Finished")
 		set_state(state, prev_state)
 		hb_left.disabled=true
 		hb_right.disabled=true
 		if anim_name=="Attack_Counter":
 			counter_flag=false
+		elif anim_name=="Attack_Chain":
+			set_state(state, States.IDLE)
+			sp_atk_chn=0
+			atk_chain=0
+			attack_timer.start(1)
+			combo_state=ComboStates.SPC_ATK_BACK
 	elif state==States.SPECIAL_ATTACK:
 		if prev_state==States.FLIP:
 			if anim_name=="shotgun_attack":
@@ -941,7 +960,8 @@ func _on_animation_player_animation_finished(anim_name):
 				#state=States.IDLE
 				set_state(state, States.IDLE)
 			elif anim_name=="shotgun_attack_fast":
-				AudioStreamManager.play(shotgun_fire)
+				#AudioStreamManager.play(shotgun_fire)
+				sp_atk_chn += 1
 				#state=States.IDLE
 				set_state(state, States.IDLE)
 	elif state==States.JUMP:
@@ -968,7 +988,8 @@ func _on_animation_player_animation_finished(anim_name):
 func _on_attack_timer_timeout():
 	atk_chain = 0
 	attack_combo = "Attack"
-	#s_atk=false
+	sp_atk_chn = 0
+	combo_state=ComboStates.ATK_1
 
 func load_player_data():
 	var file = FileAccess.open("user://player_data/stats/player_stats.txt", FileAccess.READ)
@@ -984,6 +1005,11 @@ func load_player_data():
 						health.set_health(stat_val)
 					"max_health":
 						health.set_max_health(stat_val)
+					"max_stagger":
+						pass
+					"ammo":
+						ammo=stat_val
+						
 			if file.eof_reached():
 				break
 		file.close()
@@ -1028,7 +1054,7 @@ func _on_hit_box_area_entered(area):
 
 
 func _on_hit_box_body_entered(body):
-	if body.is_in_group("Enemy"):
+	if body.is_in_group("Enemy") and combat_state==CombatStates.UNLOCKED:
 		print(str(body.name))
 		target_string_test=str(body.name)
 		target = body
@@ -1043,7 +1069,7 @@ func flip_over():
 func flipping(delta):
 	
 	target_pos_y=(target.position.y-target_size_y/2)
-	if position.y>(target.position.y-target_size_y+5) and not flipped_over:
+	if position.y>(target.position.y-target_size_y+15) and not flipped_over:
 		print(position.y, " ",target_size_y+target.position.y)
 		velocity.y=movement_data.jump_velocity
 	else:
@@ -1108,7 +1134,13 @@ func previous_state():
 			previous = "FLIP"
 			
 
-
+func atk_state_debug():
+	match combo_state:
+		ComboStates.ATK_1:
+			atk_state="AKT_1"
+		ComboStates.SPC_ATK_BACK:
+			atk_state="SPC_ATK_BACK"
+		
 func _on_counter_box_area_entered(area):
 	if area.is_in_group("bullet"):
 		counter_flag = true
@@ -1124,7 +1156,38 @@ func _on_counter_timer_timeout():
 
 func _on_hazard_detector_body_entered(body):
 	if body.is_in_group("Enemy"):
-		if (position.x-body.position.x)<0:
-			knockback.x = -350
+		if (position.y-body.position.y)<0:
+			target_below=true
 		else:
-			knockback.x = 350
+			print("enemy above")
+
+
+func _on_hazard_detector_body_exited(body):
+	if body.is_in_group("Enemy"):
+		#print("leaving enemy")
+		target_below=false
+
+
+func _on_animation_player_animation_started(anim_name):
+	if anim_name=="Attack_Chain":
+		if face_right:
+			forward_thrust.x=200
+		else:
+			forward_thrust.x=-200
+		velocity.x = forward_thrust.x
+	elif anim_name=="shotgun_attack_fast":
+		AudioStreamManager.play(shotgun_fire)
+		#sp_atk_chn += 1
+		#state=States.IDLE
+		#set_state(state, States.IDLE)
+		if combo_state==ComboStates.SPC_ATK_BACK:
+			knockback.y=-100
+			if face_right:
+				knockback.x=-250
+			else:
+				knockback.x=250
+			velocity.x = knockback.x
+			velocity.y = knockback.y
+
+
+	
