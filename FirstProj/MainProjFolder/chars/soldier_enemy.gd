@@ -48,7 +48,10 @@ var immortal = false
 @onready var bt_player = $BTPlayer
 
 @export var jump_speed : float = 120.0
+@export var chase_speed : float = 80.0
 @export var hitbox: HitBox
+@onready var target_lock_node: Node2D = $TargetLock
+
 
 var current_speed : float = 40.0
 var prev_speed : float = 40.0
@@ -63,6 +66,7 @@ var next_y
 var state
 var distance
 
+@onready var atk_chain : String = "_1"
 
 enum States{
 	GUARD,
@@ -96,7 +100,8 @@ func _ready():
 	next_y=nav_agent.get_next_path_position().y
 	bt_player.blackboard.set_var("attack_mode", false)
 	bt_player.blackboard.set_var("melee_mode", false)
-	bt_player.blackboard.set_var("ranged_mode", false)
+	bt_player.blackboard.set_var("ranged_mode", true)
+	bt_player.blackboard.set_var("within_range", false)
 	turret.setup(2)
 	turret.shoot_timer.paused=true
 
@@ -108,7 +113,7 @@ func _process(_delta):
 	track_player()
 	combat_state_change()
 	handle_vision()
-	
+	#print(bt_player.blackboard.get_var("melee_mode"))
 
 func _physics_process(delta):
 	move_and_slide()
@@ -116,23 +121,36 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
-	
+		
+	handle_movement()
+	if current_state==States.CHASE:
+		velocity.x = current_speed
+	else:
+		velocity.x=0
 
 func handle_vision():
-	if player_tracking.is_colliding():
-		var collision_result = player_tracking.get_collider()
-		
-		if collision_result != player:
-			return
-		else:
+	#if player_tracking.is_colliding():
+		#var collision_result = player_tracking.get_collider()
+		#
+		#if collision_result != player:
+			#return
+		#else:
+			#set_state(current_state, States.ATTACK)
+			##chase_timer.start(1)
+			#player_found = true
+			#
+	#else:
+		#player_found = false
+	if current_combat_state==CombatStates.RANGED:
+		set_state(current_state, States.ATTACK)
+	elif current_combat_state==CombatStates.MELEE:
+		if bt_player.blackboard.get_var("within_range"):
 			set_state(current_state, States.ATTACK)
+		else:
+			set_state(current_state, States.CHASE)
 			#chase_timer.start(1)
-			player_found = true
-			
-	else:
-		player_found = false
-	#player_found=true
-
+	player_found = true
+	
 func track_player():
 	
 	var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y)\
@@ -140,23 +158,42 @@ func track_player():
 	
 	player_tracker_pivot.look_at(direction_to_player)
 	
+func handle_movement() -> void:
+	
+	var direction= global_position - player.global_position
+	
+	
+	if player_found == true:
+		
+		var dir = to_local(nav_agent.get_next_path_position())
+		print(dir)
+		if dir.x > 0 and is_on_floor():
+			current_speed = chase_speed
+		else:
+			current_speed = -chase_speed
+
+
 func combat_state_change():
 	distance=abs(global_position.x-player.global_position.x)
 	if distance>100:
-		bt_player.blackboard.set_var("ranged_mode", true)
-		bt_player.blackboard.set_var("melee_mode", false)
+		
 		set_combat_state(current_combat_state, CombatStates.RANGED)
 	else:
-		bt_player.blackboard.set_var("melee_mode", true)
-		bt_player.blackboard.set_var("ranged_mode", false)
+		
 		set_combat_state(current_combat_state, CombatStates.MELEE)
+func target_lock():
+	target_lock_node.target_lock()
+	
+
+func chase():
+	set_state(current_state, States.CHASE)
 
 func shoot():
 	animation_player.play("shoot")
 
 func melee_attack():
 	print("melee attack")
-	animation_player.play("atk_1")
+	animation_player.play("atk"+atk_chain)
 
 func health_bar():
 	h_bar.text=str(health.health, " State: ", state, " : ", "Combat: ", combat_state)
@@ -186,14 +223,14 @@ func set_state(cur_state, new_state) -> void:
 			States.GUARD:
 				state="GUARD"
 				hb_collison.disabled=false
-				#print(str(prev_speed," ",current_speed))
+				bt_player.blackboard.set_var("attack_mode", false)
 				animation_player.speed_scale = 1
 				animation_player.play("idle")
 			States.CHASE:
 				player_found=true
 				hb_collison.disabled=false
 				state="CHASE"
-				animation_player.speed_scale =2
+				bt_player.blackboard.set_var("attack_mode", true)
 				if prev_state==States.JUMP:
 					current_speed=prev_speed
 			States.JUMP:
@@ -234,15 +271,47 @@ func set_combat_state(cur_state, new_state) -> void:
 			match current_combat_state:
 				CombatStates.RANGED:
 					combat_state="Ranged"
+					bt_player.blackboard.set_var("ranged_mode", true)
+					bt_player.blackboard.set_var("melee_mode", false)
 					#animation_player.play("shoot")
 				CombatStates.MELEE:
 					print("melee range")
+					bt_player.blackboard.set_var("melee_mode", true)
+					bt_player.blackboard.set_var("ranged_mode", false)
 					combat_state="Melee"
+					
 					#animation_player.play("atk_1")
 		else:
 			pass
 
-
+func get_width() -> int:
+	return collision_shape_2d.get_shape().radius
+func get_height() -> int:
+	return collision_shape_2d.get_shape().radius
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	pass # Replace with function body.
+	match anim_name:
+		"atk_1":
+			atk_chain="_2"
+		"atk_2":
+			atk_chain="_3"
+		"atk_3":
+			atk_chain="_1"
+
+
+func _on_attack_range_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		print("in range")
+		bt_player.blackboard.set_var("within_range", true)
+		set_state(current_state, States.ATTACK)
+
+func _on_attack_range_body_exited(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		print("out of range")
+		bt_player.blackboard.set_var("within_range", false)
+		set_state(current_state, States.CHASE)
+
+
+func _on_navigation_timer_timeout() -> void:
+	makepath()
+	next_y=nav_agent.get_next_path_position().y

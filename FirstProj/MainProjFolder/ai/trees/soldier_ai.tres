@@ -1,4 +1,6 @@
-[gd_resource type="BehaviorTree" load_steps=17 format=3 uid="uid://bkpyddqh402xp"]
+[gd_resource type="BehaviorTree" load_steps=28 format=3 uid="uid://bkpyddqh402xp"]
+
+[ext_resource type="Script" path="res://ai/tasks/find_player.gd" id="1_7px3v"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_2djuw"]
 var/attack_mode/name = &"attack_mode"
@@ -16,22 +18,41 @@ var/melee_mode/type = 1
 var/melee_mode/value = false
 var/melee_mode/hint = 0
 var/melee_mode/hint_string = ""
+var/within_range/name = &"within_range"
+var/within_range/type = 1
+var/within_range/value = false
+var/within_range/hint = 0
+var/within_range/hint_string = ""
 
-[sub_resource type="BBVariant" id="BBVariant_cye2g"]
+[sub_resource type="BBVariant" id="BBVariant_s1wjr"]
 type = 1
 saved_value = true
 resource_name = "true"
 
-[sub_resource type="BTCheckVar" id="BTCheckVar_e1x7l"]
+[sub_resource type="BTCheckVar" id="BTCheckVar_or1gh"]
 variable = &"attack_mode"
-value = SubResource("BBVariant_cye2g")
+value = SubResource("BBVariant_s1wjr")
 custom_name = "AttackMode"
 
 [sub_resource type="BTConsolePrint" id="BTConsolePrint_mr7p4"]
 text = "ATTACKING"
 
-[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_dbl60"]
-variable = &"melee_mode"
+[sub_resource type="BTConsolePrint" id="BTConsolePrint_nlv1u"]
+text = "melee check passes"
+
+[sub_resource type="BBVariant" id="BBVariant_ex4gl"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_gi26e"]
+variable = &"within_range"
+value = SubResource("BBVariant_ex4gl")
+
+[sub_resource type="BTAction" id="BTAction_2i8b5"]
+script = ExtResource("1_7px3v")
+group = &"player"
+target_var = &"target"
 
 [sub_resource type="BBNode" id="BBNode_ysbiq"]
 saved_value = NodePath(".")
@@ -41,12 +62,44 @@ resource_name = "."
 node = SubResource("BBNode_ysbiq")
 method = &"melee_attack"
 
-[sub_resource type="BTSequence" id="BTSequence_dm2bk"]
-custom_name = "Melee"
-children = [SubResource("BTCheckTrigger_dbl60"), SubResource("BTCallMethod_qwr6t")]
+[sub_resource type="BBVariant" id="BBVariant_eahdn"]
+type = 1
+saved_value = true
+resource_name = "true"
 
-[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_xq5ey"]
+[sub_resource type="BTCheckVar" id="BTCheckVar_aa25s"]
+variable = &"melee_mode"
+value = SubResource("BBVariant_eahdn")
+
+[sub_resource type="BTSequence" id="BTSequence_7vhxb"]
+custom_name = "Attack"
+children = [SubResource("BTCheckVar_gi26e"), SubResource("BTAction_2i8b5"), SubResource("BTCallMethod_qwr6t"), SubResource("BTCheckVar_aa25s")]
+
+[sub_resource type="BTAction" id="BTAction_kugyc"]
+script = ExtResource("1_7px3v")
+group = &"player"
+target_var = &"target"
+
+[sub_resource type="BTSequence" id="BTSequence_5qq8g"]
+custom_name = "Get In Range"
+children = [SubResource("BTAction_kugyc")]
+
+[sub_resource type="BTSelector" id="BTSelector_3ojif"]
+custom_name = "Getting in range"
+children = [SubResource("BTSequence_7vhxb"), SubResource("BTSequence_5qq8g")]
+
+[sub_resource type="BTSequence" id="BTSequence_c1urr"]
+custom_name = "Melee"
+children = [SubResource("BTConsolePrint_nlv1u"), SubResource("BTSelector_3ojif")]
+
+[sub_resource type="BBVariant" id="BBVariant_wptbb"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_1cp6n"]
 variable = &"ranged_mode"
+value = SubResource("BBVariant_wptbb")
 
 [sub_resource type="BBNode" id="BBNode_4kawb"]
 saved_value = NodePath(".")
@@ -58,17 +111,17 @@ method = &"shoot"
 
 [sub_resource type="BTSequence" id="BTSequence_p3l4r"]
 custom_name = "Shoot"
-children = [SubResource("BTCheckTrigger_xq5ey"), SubResource("BTCallMethod_kmg6s")]
+children = [SubResource("BTCheckVar_1cp6n"), SubResource("BTCallMethod_kmg6s")]
 
 [sub_resource type="BTSelector" id="BTSelector_ct688"]
-children = [SubResource("BTSequence_dm2bk"), SubResource("BTSequence_p3l4r")]
+children = [SubResource("BTSequence_c1urr"), SubResource("BTSequence_p3l4r")]
 
 [sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_vwcxk"]
 children = [SubResource("BTSelector_ct688")]
 
 [sub_resource type="BTSequence" id="BTSequence_df28b"]
 custom_name = "Attacks"
-children = [SubResource("BTCheckVar_e1x7l"), SubResource("BTConsolePrint_mr7p4"), SubResource("BTRepeatUntilFailure_vwcxk")]
+children = [SubResource("BTCheckVar_or1gh"), SubResource("BTConsolePrint_mr7p4"), SubResource("BTRepeatUntilFailure_vwcxk")]
 
 [sub_resource type="BTSelector" id="BTSelector_307xj"]
 children = [SubResource("BTSequence_df28b")]

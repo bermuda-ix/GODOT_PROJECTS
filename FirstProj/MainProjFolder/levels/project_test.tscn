@@ -49,6 +49,7 @@ layer_0/tile_data = PackedInt32Array(458752, 393216, 3, 458753, 327680, 1, 52428
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." index="3"]
 navigation_polygon = SubResource("NavigationPolygon_ys1t2")
+enabled = false
 navigation_layers = 2
 
 [node name="NavigationRegion2D2" type="NavigationRegion2D" parent="." index="4"]
@@ -154,3 +155,4 @@ enemy_single = ExtResource("5_fkwqf")
 
 [node name="soldier_enemy" parent="." index="24" instance=ExtResource("6_lbc3e")]
 position = Vector2(448, 80)
+scale = Vector2(0.696869, 0.698497)
