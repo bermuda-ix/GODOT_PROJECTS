@@ -17,6 +17,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var animation_player = $AnimationPlayer as AnimationPlayer
 @onready var nav_agent = $NavigationAgent2D
 @onready var jump_timer = $JumpTimer
+@onready var player_right : bool = false
 
 @export var drop = preload("res://heart.tscn")
 @onready var death_timer = $DeathTimer
@@ -37,11 +38,14 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var health = $Health
 @onready var hurt_box = $HurtBox
 @onready var hb_collison = $HitBox/CollisionShape2D
+@onready var hit_box: HitBox = $HitBox
+
 @onready var h_bar = $HBar
 @onready var parry_timer = $ParryTimer as Timer
 var immortal = false
 @onready var stagger = $Stagger
 @onready var hurt_box_weak_point = $AnimatedSprite2D/HurtBox_WeakPoint
+@onready var attack_timer: Timer = $AttackTimer
 
 @onready var collision_shape_2d = $CollisionShape2D
 
@@ -51,6 +55,8 @@ var immortal = false
 @export var chase_speed : float = 80.0
 @export var hitbox: HitBox
 @onready var target_lock_node: Node2D = $TargetLock
+@onready var attack_range: AttackRange = $AttackRange
+
 
 
 var current_speed : float = 40.0
@@ -109,13 +115,18 @@ func _ready():
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _process(_delta):
+	if current_state==States.DEATH:
+		return
 	health_bar()
 	track_player()
 	combat_state_change()
 	handle_vision()
 	#print(bt_player.blackboard.get_var("melee_mode"))
+	attack_timer.one_shot=true
 
 func _physics_process(delta):
+	if current_state==States.DEATH or not parry_timer.is_stopped() or not attack_timer.is_stopped():
+		return
 	move_and_slide()
 	
 	# Add the gravity.
@@ -124,10 +135,13 @@ func _physics_process(delta):
 		
 	handle_movement()
 	if current_state==States.CHASE:
-		velocity.x = current_speed
+		velocity.x = current_speed + knockback.x
 	else:
 		velocity.x=0
-
+	
+	knockback = lerp(knockback, Vector2.ZERO, 0.1)
+	
+	
 func handle_vision():
 	#if player_tracking.is_colliding():
 		#var collision_result = player_tracking.get_collider()
@@ -141,6 +155,9 @@ func handle_vision():
 			#
 	#else:
 		#player_found = false
+	if not attack_range.has_overlapping_bodies():
+		bt_player.blackboard.set_var("within_range", false)
+		
 	if current_combat_state==CombatStates.RANGED:
 		set_state(current_state, States.ATTACK)
 	elif current_combat_state==CombatStates.MELEE:
@@ -150,6 +167,8 @@ func handle_vision():
 			set_state(current_state, States.CHASE)
 			#chase_timer.start(1)
 	player_found = true
+	
+	
 	
 func track_player():
 	
@@ -166,12 +185,16 @@ func handle_movement() -> void:
 	if player_found == true:
 		
 		var dir = to_local(nav_agent.get_next_path_position())
-		print(dir)
+		#print(dir)
 		if dir.x > 0 and is_on_floor():
 			current_speed = chase_speed
+			animated_sprite_2d.scale.x = -1
+			hit_box.scale.x = -1
 		else:
 			current_speed = -chase_speed
-
+			animated_sprite_2d.scale.x = 1
+			hit_box.scale.x = 1
+			
 
 func combat_state_change():
 	distance=abs(global_position.x-player.global_position.x)
@@ -182,6 +205,7 @@ func combat_state_change():
 		
 		set_combat_state(current_combat_state, CombatStates.MELEE)
 func target_lock():
+	Events.unlock_from.emit()
 	target_lock_node.target_lock()
 	
 
@@ -192,11 +216,12 @@ func shoot():
 	animation_player.play("shoot")
 
 func melee_attack():
-	print("melee attack")
+	set_state(current_state,States.ATTACK)
+	#print("melee attack")
 	animation_player.play("atk"+atk_chain)
 
 func health_bar():
-	h_bar.text=str(health.health, " State: ", state, " : ", "Combat: ", combat_state)
+	h_bar.text=str(health.health, " : ", stagger.stagger, " : State:", state)
 
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
@@ -207,7 +232,7 @@ func set_state(cur_state, new_state) -> void:
 		return
 	elif(cur_state==States.DEATH):
 		return
-	elif(cur_state==States.STAGGERED and not parry_timer.is_stopped()):
+	elif(cur_state==States.STAGGERED and not parry_timer.is_stopped()) and not (new_state==States.DEATH):
 		return
 	
 	else:
@@ -245,7 +270,7 @@ func set_state(cur_state, new_state) -> void:
 				hb_collison.disabled=true
 			States.DEATH:
 				state="DEATH"
-				hb_collison.disabled=false
+				
 			States.SHOOTING:
 				state="shooting"
 			States.STAGGERED:
@@ -293,10 +318,14 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	match anim_name:
 		"atk_1":
 			atk_chain="_2"
+			attack_timer.start(.2)
 		"atk_2":
 			atk_chain="_3"
+			attack_timer.start(.2)
 		"atk_3":
 			atk_chain="_1"
+			attack_timer.start(.2)
+			
 
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
@@ -306,7 +335,7 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 		set_state(current_state, States.ATTACK)
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
-	if body.is_in_group("player"):
+	if body.is_in_group("player") and not animation_player.is_playing():
 		print("out of range")
 		bt_player.blackboard.set_var("within_range", false)
 		set_state(current_state, States.CHASE)
@@ -315,3 +344,36 @@ func _on_attack_range_body_exited(body: Node2D) -> void:
 func _on_navigation_timer_timeout() -> void:
 	makepath()
 	next_y=nav_agent.get_next_path_position().y
+
+
+func _on_stagger_staggered() -> void:
+	set_state(current_state, States.STAGGERED)
+	parry_timer.start(5)
+	hurt_box.set_damage_mulitplyer(3)
+	print("staggered")
+	hb_collison.disabled
+
+
+func _on_parry_timer_timeout() -> void:
+	set_state(current_state, prev_state)
+	hurt_box.set_damage_mulitplyer(1)
+
+
+func _on_hit_box_parried() -> void:
+	pass # Replace with function body.
+
+
+func _on_health_health_depleted() -> void:
+	print("dying")
+	set_state(current_state, States.DEATH)
+	hb_collison.disabled=false
+	animation_player.play("death")
+	await animation_player.animation_finished
+	queue_free()
+
+func _on_attack_timer_timeout() -> void:
+	#print("begin move")
+	if bt_player.blackboard.get_var("within_range"):
+		set_state(current_state, States.ATTACK)
+	else:
+		set_state(current_state, States.CHASE)

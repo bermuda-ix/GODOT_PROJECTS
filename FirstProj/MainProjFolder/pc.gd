@@ -334,7 +334,7 @@ func jump_out():
 		velocity.x=(movement_data.speed*0.8)*-1
 	else:
 		velocity.x=(movement_data.speed/2*0.8)
-	print(str(vector_away), " jumping out")
+	#print(str(vector_away), " jumping out")
 
 
 func handle_wall_jump(wall_hold, delta):
@@ -879,15 +879,18 @@ func _on_health_health_depleted():
 	##print(kb_dir.x, " ", knockback)
 
 func _on_hurt_box_got_hit(hitbox):
-	knockback.x = -350
-	kb_dir=global_position.direction_to(hitbox.global_position)
-	#print("knockback")
-	kb_dir=round(kb_dir)
-	#print(kb_dir.x, " ", knockback)
-	knockback.x = kb_dir.x * knockback.x
-	velocity.y=movement_data.jump_velocity/2
-	velocity.x = movement_data.speed + knockback.x
-	health.set_temporary_immortality(0.2)
+	if hitbox.is_in_group("regular_enemy_hb"):
+		print("regular enemy hit")
+	else:
+		knockback.x = -350
+		kb_dir=global_position.direction_to(hitbox.global_position)
+		#print("knockback")
+		kb_dir=round(kb_dir)
+		#print(kb_dir.x, " ", knockback)
+		knockback.x = kb_dir.x * knockback.x
+		velocity.y=movement_data.jump_velocity/2
+		velocity.x = movement_data.speed + knockback.x
+		health.set_temporary_immortality(0.2)
 
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("bullet"):
@@ -1055,7 +1058,8 @@ func _on_hit_box_area_entered(area):
 
 func _on_hit_box_body_entered(body):
 	if body.is_in_group("Enemy") and combat_state==CombatStates.UNLOCKED:
-		print(str(body.name))
+		Events.unlock_from.emit()
+		#print(str(body.name))
 		target_string_test=str(body.name)
 		target = body
 		combat_state=CombatStates.LOCKED
@@ -1070,7 +1074,7 @@ func flipping(delta):
 	
 	target_pos_y=(target.position.y-target_size_y/2)
 	if position.y>(target.position.y-target_size_y+15) and not flipped_over:
-		print(position.y, " ",target_size_y+target.position.y)
+		#print(position.y, " ",target_size_y+target.position.y)
 		velocity.y=movement_data.jump_velocity
 	else:
 		flipped_over=true

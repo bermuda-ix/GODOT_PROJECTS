@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=28 format=3 uid="uid://bkpyddqh402xp"]
+[gd_resource type="BehaviorTree" load_steps=29 format=3 uid="uid://bkpyddqh402xp"]
 
 [ext_resource type="Script" path="res://ai/tasks/find_player.gd" id="1_7px3v"]
 
@@ -36,9 +36,6 @@ custom_name = "AttackMode"
 
 [sub_resource type="BTConsolePrint" id="BTConsolePrint_mr7p4"]
 text = "ATTACKING"
-
-[sub_resource type="BTConsolePrint" id="BTConsolePrint_nlv1u"]
-text = "melee check passes"
 
 [sub_resource type="BBVariant" id="BBVariant_ex4gl"]
 type = 1
@@ -80,9 +77,16 @@ script = ExtResource("1_7px3v")
 group = &"player"
 target_var = &"target"
 
+[sub_resource type="BBNode" id="BBNode_hd7qm"]
+saved_value = null
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_ok4as"]
+node = SubResource("BBNode_hd7qm")
+method = &"chase"
+
 [sub_resource type="BTSequence" id="BTSequence_5qq8g"]
 custom_name = "Get In Range"
-children = [SubResource("BTAction_kugyc")]
+children = [SubResource("BTAction_kugyc"), SubResource("BTCallMethod_ok4as")]
 
 [sub_resource type="BTSelector" id="BTSelector_3ojif"]
 custom_name = "Getting in range"
@@ -90,7 +94,7 @@ children = [SubResource("BTSequence_7vhxb"), SubResource("BTSequence_5qq8g")]
 
 [sub_resource type="BTSequence" id="BTSequence_c1urr"]
 custom_name = "Melee"
-children = [SubResource("BTConsolePrint_nlv1u"), SubResource("BTSelector_3ojif")]
+children = [SubResource("BTSelector_3ojif")]
 
 [sub_resource type="BBVariant" id="BBVariant_wptbb"]
 type = 1

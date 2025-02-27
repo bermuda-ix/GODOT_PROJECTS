@@ -21,9 +21,9 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(8, 80, 8, 112, 168, 112
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_yrn8s"]
-vertices = PackedVector2Array(198, 102, 10, 102, 10, 90, 198, 90)
+vertices = PackedVector2Array(198, 102, 18, 102, 18, 90, 198, 90)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(0, 80, 0, 112, 208, 112, 208, 80)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(8, 80, 8, 112, 208, 112, 208, 80)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_b6fvs"]
@@ -100,7 +100,7 @@ start_position = Vector2(32, -80)
 [node name="NavigationLink2D2" type="NavigationLink2D" parent="." index="13"]
 position = Vector2(-3, 12)
 navigation_layers = 2
-start_position = Vector2(339, 92)
+start_position = Vector2(347, 92)
 end_position = Vector2(331, 12)
 
 [node name="NavigationLink2D3" type="NavigationLink2D" parent="." index="14"]
