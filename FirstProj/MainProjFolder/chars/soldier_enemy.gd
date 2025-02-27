@@ -116,6 +116,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _process(_delta):
 	if current_state==States.DEATH:
+		print("returning")
 		return
 	health_bar()
 	track_player()
@@ -125,7 +126,8 @@ func _process(_delta):
 	attack_timer.one_shot=true
 
 func _physics_process(delta):
-	if current_state==States.DEATH or not parry_timer.is_stopped() or not attack_timer.is_stopped():
+	if current_state==States.DEATH or not parry_timer.is_stopped():
+		print("returning")
 		return
 	move_and_slide()
 	
@@ -318,13 +320,13 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	match anim_name:
 		"atk_1":
 			atk_chain="_2"
-			attack_timer.start(.2)
+			attack_timer.start(5)
 		"atk_2":
 			atk_chain="_3"
-			attack_timer.start(.2)
+			attack_timer.start(5)
 		"atk_3":
 			atk_chain="_1"
-			attack_timer.start(.2)
+			attack_timer.start(5)
 			
 
 
@@ -339,7 +341,11 @@ func _on_attack_range_body_exited(body: Node2D) -> void:
 		print("out of range")
 		bt_player.blackboard.set_var("within_range", false)
 		set_state(current_state, States.CHASE)
-
+		
+func _on_hurt_box_area_entered(area: Area2D) -> void:
+	if area.is_in_group("sp_atk_default"):
+		print("spc_hit")
+		stagger.stagger -= player.sp_atk_dmg
 
 func _on_navigation_timer_timeout() -> void:
 	makepath()

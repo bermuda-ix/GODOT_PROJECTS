@@ -34,9 +34,6 @@ variable = &"attack_mode"
 value = SubResource("BBVariant_s1wjr")
 custom_name = "AttackMode"
 
-[sub_resource type="BTConsolePrint" id="BTConsolePrint_mr7p4"]
-text = "ATTACKING"
-
 [sub_resource type="BBVariant" id="BBVariant_ex4gl"]
 type = 1
 saved_value = true
@@ -72,13 +69,18 @@ value = SubResource("BBVariant_eahdn")
 custom_name = "Attack"
 children = [SubResource("BTCheckVar_gi26e"), SubResource("BTAction_2i8b5"), SubResource("BTCallMethod_qwr6t"), SubResource("BTCheckVar_aa25s")]
 
+[sub_resource type="BTCooldown" id="BTCooldown_5mvyu"]
+duration = 0.8
+start_cooled = true
+children = [SubResource("BTSequence_7vhxb")]
+
 [sub_resource type="BTAction" id="BTAction_kugyc"]
 script = ExtResource("1_7px3v")
 group = &"player"
 target_var = &"target"
 
 [sub_resource type="BBNode" id="BBNode_hd7qm"]
-saved_value = null
+saved_value = NodePath("")
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_ok4as"]
 node = SubResource("BBNode_hd7qm")
@@ -90,7 +92,7 @@ children = [SubResource("BTAction_kugyc"), SubResource("BTCallMethod_ok4as")]
 
 [sub_resource type="BTSelector" id="BTSelector_3ojif"]
 custom_name = "Getting in range"
-children = [SubResource("BTSequence_7vhxb"), SubResource("BTSequence_5qq8g")]
+children = [SubResource("BTCooldown_5mvyu"), SubResource("BTSequence_5qq8g")]
 
 [sub_resource type="BTSequence" id="BTSequence_c1urr"]
 custom_name = "Melee"
@@ -125,7 +127,7 @@ children = [SubResource("BTSelector_ct688")]
 
 [sub_resource type="BTSequence" id="BTSequence_df28b"]
 custom_name = "Attacks"
-children = [SubResource("BTCheckVar_or1gh"), SubResource("BTConsolePrint_mr7p4"), SubResource("BTRepeatUntilFailure_vwcxk")]
+children = [SubResource("BTCheckVar_or1gh"), SubResource("BTRepeatUntilFailure_vwcxk")]
 
 [sub_resource type="BTSelector" id="BTSelector_307xj"]
 children = [SubResource("BTSequence_df28b")]

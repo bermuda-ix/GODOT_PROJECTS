@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Events="*res://Events.gd"
 LevelTransition="*res://LVL_Transitions/level_transition.tscn"
 AudioStreamManager="*res://AudioStreamManager.gd"
+SoundFx="*res://Component/resources/sound_fx.gd"
 
 [display]
 

@@ -27,7 +27,7 @@ signal jump_out_signal
 
 #Base FSM
 enum States {IDLE, WALKING, JUMP, ATTACK, SPECIAL_ATTACK, WALL_STICK, PARRY, DODGE, SPRINTING,
-FLIP,THRUST}
+FLIP,THRUST, HIT}
 #FSM for lock on
 enum CombatStates {LOCKED, UNLOCKED}
 #FSM for combo attacks:
@@ -91,6 +91,7 @@ var atk_state="ATK_1"
 @onready var cpu_particles_2d = $AnimatedSprite2D/Shotty/CPUParticles2D
 @onready var audio_stream_player_2d = $AudioStreamPlayer2D
 @onready var hit_sound = hit1
+@onready var player_hit: GPUParticles2D = $AnimatedSprite2D/PlayerHit
 
 
 
@@ -851,6 +852,9 @@ func set_state(current_state, new_state: int) -> void:
 			#else:
 				#anim_player.play("run")
 			anim_player.play("run")
+		States.HIT:
+			anim_player.play("hit")
+			hurt_box_detect.disabled=true
 	if state != States.DODGE:
 		hurt_box_detect.disabled=false
 			
@@ -881,6 +885,12 @@ func _on_health_health_depleted():
 func _on_hurt_box_got_hit(hitbox):
 	if hitbox.is_in_group("regular_enemy_hb"):
 		print("regular enemy hit")
+		if hit_timer.is_stopped():
+			AudioStreamManager.play(SoundFx.PUNCH_DESIGNED_HEAVY_12)
+		player_hit.emitting=true
+		player_hit.restart()
+		hit_timer.start(0.3)
+		set_state(state, States.HIT)
 	else:
 		knockback.x = -350
 		kb_dir=global_position.direction_to(hitbox.global_position)
@@ -891,6 +901,12 @@ func _on_hurt_box_got_hit(hitbox):
 		velocity.y=movement_data.jump_velocity/2
 		velocity.x = movement_data.speed + knockback.x
 		health.set_temporary_immortality(0.2)
+
+func _on_hit_timer_timeout() -> void:
+	hurt_box_detect.disabled=true
+	set_state(state, States.IDLE)
+	player_hit.emitting=false
+
 
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("bullet"):
