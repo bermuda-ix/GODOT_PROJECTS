@@ -837,6 +837,7 @@ func set_state(current_state, new_state: int) -> void:
 			counter_box_collision.disabled=false
 			anim_player.speed_scale=1
 			anim_player.play(dodge_anim_run)
+			set_collision_mask_value(15, false)
 			velocity.y=0
 			#velocity.x=100 * move_axis
 		States.PARRY:
@@ -993,6 +994,7 @@ func _on_animation_player_animation_finished(anim_name):
 		print("dodge finished")
 		velocity.x=0
 		counter_box_collision.disabled=true
+		set_collision_mask_value(15, true)
 	elif anim_name=="dodge":
 		print("dodge finished")
 		counter_box_collision.disabled=true
