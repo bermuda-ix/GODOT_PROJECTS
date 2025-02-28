@@ -811,6 +811,7 @@ func set_state(current_state, new_state: int) -> void:
 			anim_player.play("idle")
 			#print("playing idle")
 			movement_data.friction=1000
+			s_atk=false
 			counter_box_collision.disabled=true
 			hb_left.disabled=true
 			hb_right.disabled=true
@@ -889,7 +890,7 @@ func _on_hurt_box_got_hit(hitbox):
 			AudioStreamManager.play(SoundFx.PUNCH_DESIGNED_HEAVY_12)
 		player_hit.emitting=true
 		player_hit.restart()
-		hit_timer.start(0.3)
+		hit_timer.start(0.2)
 		set_state(state, States.HIT)
 	else:
 		knockback.x = -350
@@ -904,6 +905,7 @@ func _on_hurt_box_got_hit(hitbox):
 
 func _on_hit_timer_timeout() -> void:
 	hurt_box_detect.disabled=true
+	
 	set_state(state, States.IDLE)
 	player_hit.emitting=false
 

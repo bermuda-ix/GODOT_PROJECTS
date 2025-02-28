@@ -115,8 +115,8 @@ func _ready():
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _process(_delta):
-	if current_state==States.DEATH:
-		print("returning")
+	if current_state==States.DEATH or current_state==States.STAGGERED:
+		#print("returning")
 		return
 	health_bar()
 	track_player()
@@ -126,7 +126,7 @@ func _process(_delta):
 	attack_timer.one_shot=true
 
 func _physics_process(delta):
-	if current_state==States.DEATH or not parry_timer.is_stopped():
+	if current_state==States.DEATH or current_state==States.STAGGERED:
 		print("returning")
 		return
 	move_and_slide()
@@ -139,7 +139,7 @@ func _physics_process(delta):
 	if current_state==States.CHASE:
 		velocity.x = current_speed + knockback.x
 	else:
-		velocity.x=0
+		velocity.x= knockback.x
 	
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	
@@ -272,13 +272,14 @@ func set_state(cur_state, new_state) -> void:
 				hb_collison.disabled=true
 			States.DEATH:
 				state="DEATH"
-				
+				bt_player.blackboard.set_var("attack_mode", false)
 			States.SHOOTING:
 				state="shooting"
 			States.STAGGERED:
 				state="staggered"
 				animation_player.play("Staggered")
 				hb_collison.disabled=false
+				bt_player.blackboard.set_var("attack_mode", false)
 			States.DODGE:
 				state="Dodging"
 				
@@ -345,6 +346,10 @@ func _on_attack_range_body_exited(body: Node2D) -> void:
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("sp_atk_default"):
 		print("spc_hit")
+		if animated_sprite_2d.flip_h:
+			knockback.x=50
+		else:
+			knockback.x=-50
 		stagger.stagger -= player.sp_atk_dmg
 
 func _on_navigation_timer_timeout() -> void:
