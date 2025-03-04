@@ -108,7 +108,7 @@ func _ready():
 	bt_player.blackboard.set_var("melee_mode", false)
 	bt_player.blackboard.set_var("ranged_mode", true)
 	bt_player.blackboard.set_var("within_range", false)
-	turret.setup(2)
+	turret.setup(0.2)
 	turret.shoot_timer.paused=true
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -124,6 +124,7 @@ func _process(_delta):
 	handle_vision()
 	#print(bt_player.blackboard.get_var("melee_mode"))
 	attack_timer.one_shot=true
+	print(current_combat_state," ",prev_combat_state)
 
 func _physics_process(delta):
 	if current_state==States.DEATH or current_state==States.STAGGERED:
@@ -201,10 +202,11 @@ func handle_movement() -> void:
 func combat_state_change():
 	distance=abs(global_position.x-player.global_position.x)
 	if distance>100:
-		
+		turret.shoot_timer.paused=false
 		set_combat_state(current_combat_state, CombatStates.RANGED)
-	else:
 		
+	else:
+		turret.shoot_timer.paused=true
 		set_combat_state(current_combat_state, CombatStates.MELEE)
 func target_lock():
 	Events.unlock_from.emit()
@@ -216,6 +218,8 @@ func chase():
 
 func shoot():
 	animation_player.play("shoot")
+	turret.shoot()
+	
 
 func melee_attack():
 	set_state(current_state,States.ATTACK)
@@ -223,7 +227,7 @@ func melee_attack():
 	animation_player.play("atk"+atk_chain)
 
 func health_bar():
-	h_bar.text=str(health.health, " : ", stagger.stagger, " : State:", state)
+	h_bar.text=str(health.health, " : ", stagger.stagger, " : State:", combat_state, " DIST. ", distance)
 
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
@@ -284,33 +288,35 @@ func set_state(cur_state, new_state) -> void:
 				state="Dodging"
 				
 func set_combat_state(cur_state, new_state) -> void:
-
+	print(cur_state, " ", new_state)
 	if(cur_state == new_state):
 		return
+		print("no change")
 	elif(current_state==States.DEATH):
 		return
-	elif(current_state==States.STAGGERED and not parry_timer.is_stopped()):
+	elif(current_state==States.STAGGERED):
 		return
 	
 	else:
 		current_combat_state = new_state
 		prev_combat_state = cur_state
-		if current_state==States.ATTACK:
-			match current_combat_state:
-				CombatStates.RANGED:
-					combat_state="Ranged"
-					bt_player.blackboard.set_var("ranged_mode", true)
-					bt_player.blackboard.set_var("melee_mode", false)
-					#animation_player.play("shoot")
-				CombatStates.MELEE:
-					print("melee range")
-					bt_player.blackboard.set_var("melee_mode", true)
-					bt_player.blackboard.set_var("ranged_mode", false)
-					combat_state="Melee"
+		
+		match current_combat_state:
+			CombatStates.RANGED:
+				combat_state="Ranged"
+				bt_player.blackboard.set_var("ranged_mode", true)
+				bt_player.blackboard.set_var("melee_mode", false)
+				
+				#animation_player.play("shoot")
+			CombatStates.MELEE:
+				print("melee range")
+				bt_player.blackboard.set_var("melee_mode", true)
+				bt_player.blackboard.set_var("ranged_mode", false)
+				combat_state="Melee"
+					
 					
 					#animation_player.play("atk_1")
-		else:
-			pass
+		
 
 func get_width() -> int:
 	return collision_shape_2d.get_shape().radius
@@ -388,3 +394,16 @@ func _on_attack_timer_timeout() -> void:
 		set_state(current_state, States.ATTACK)
 	else:
 		set_state(current_state, States.CHASE)
+
+
+func _on_turret_shoot_bullet() -> void:
+	var bullet_inst = bullet.instantiate()
+	bullet_inst.set_speed(400.0)
+	#bullet_inst.set_accel(50.0)
+	#bullet_inst.tracking_time=0.01
+	bullet_inst.dir = (turret.player_tracker.target_position).normalized()
+	bullet_inst.spawnPos = Vector2(position.x, position.y)
+	bullet_inst.spawnRot = player_tracker_pivot.rotation_degrees
+	#print(bullet_inst.dir)
+	
+	get_tree().current_scene.add_child(bullet_inst)

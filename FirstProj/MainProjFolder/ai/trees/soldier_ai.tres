@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=29 format=3 uid="uid://bkpyddqh402xp"]
+[gd_resource type="BehaviorTree" load_steps=30 format=3 uid="uid://bkpyddqh402xp"]
 
 [ext_resource type="Script" path="res://ai/tasks/find_player.gd" id="1_7px3v"]
 
@@ -119,8 +119,13 @@ method = &"shoot"
 custom_name = "Shoot"
 children = [SubResource("BTCheckVar_1cp6n"), SubResource("BTCallMethod_kmg6s")]
 
+[sub_resource type="BTCooldown" id="BTCooldown_ufwxr"]
+duration = 0.5
+start_cooled = true
+children = [SubResource("BTSequence_p3l4r")]
+
 [sub_resource type="BTSelector" id="BTSelector_ct688"]
-children = [SubResource("BTSequence_c1urr"), SubResource("BTSequence_p3l4r")]
+children = [SubResource("BTSequence_c1urr"), SubResource("BTCooldown_ufwxr")]
 
 [sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_vwcxk"]
 children = [SubResource("BTSelector_ct688")]

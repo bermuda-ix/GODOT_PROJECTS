@@ -61,7 +61,7 @@ func shoot():
 			if shoot_timer.is_stopped():
 				#print(direction_to_player)
 				shoot_timer.start()
-				#print("shoot")
+				print("shoot")
 				shoot_bullet.emit()
 				
 				

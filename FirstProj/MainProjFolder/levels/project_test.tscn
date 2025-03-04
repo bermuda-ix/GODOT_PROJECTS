@@ -39,6 +39,9 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(0, -248, 0, -80, 200, -
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [node name="project_test" instance=ExtResource("1_07jkq")]
+lvl_type = null
+elite_spawn = null
+boss_spawn = null
 
 [node name="PC" parent="." index="0"]
 position = Vector2(272, 4)
