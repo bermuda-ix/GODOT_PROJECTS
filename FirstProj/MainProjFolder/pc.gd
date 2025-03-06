@@ -126,6 +126,7 @@ var flip_speed
 var target_right : bool = false
 var vector_away : Vector2 = Vector2.ZERO
 var target_below : bool = false
+var vel_y : float = 0.0
 
 #locked on target info
 @onready var target_testing = $TargetLocking/TargetTesting
@@ -137,6 +138,9 @@ var target_pos_y=0
 #flipping
 @onready var jump_out_timer = $JumpOutTimer
 var flipped_over : bool = false
+
+#DEBUG FLAGS TBR
+var stuck : bool = false
 
 func _ready():
 	hit_box_pos=hit_box.position
@@ -160,10 +164,11 @@ func _process(delta):
 			
 	previous_state()
 	atk_state_debug()
-	if atk_chain >= 1 and sp_atk_chn >=1:
-		label.text=str("chain ready. Vel:", velocity)
-	else:
-		label.text=str("chain not ready. Vel:", velocity)
+	#if atk_chain >= 1 and sp_atk_chn >=1:
+		#label.text=str("chain ready. Vel:", velocity)
+	#else:
+		#label.text=str("chain not ready. Vel:", velocity)
+	label.text=str(attack_timer.paused)
 	dodge(input_axis, delta)
 	if Input.is_action_just_pressed("walk_right"):
 		face_right = true
@@ -195,7 +200,7 @@ func _process(delta):
 func _physics_process(delta):
 	
 	if s_atk==true:
-		pass
+		return
 	elif state==States.FLIP:
 		#pass
 		
@@ -205,8 +210,8 @@ func _physics_process(delta):
 		move_and_slide()
 		
 		if is_on_floor():
-			
-			set_state(state, States.IDLE)
+			if state==States.JUMP:
+				set_state(state, States.IDLE)
 			
 		#velocity = movement * SPEED * delta
 	else:
@@ -237,10 +242,12 @@ func _physics_process(delta):
 			#jump_out()
 			
 		
-		if state==States.SPECIAL_ATTACK and combo_state!=ComboStates.SPC_ATK_BACK:
-			velocity=Vector2.ZERO
-			gravity=0
+		#elif state==States.SPECIAL_ATTACK and combo_state!=ComboStates.SPC_ATK_BACK:
+			#velocity=Vector2.ZERO
+			#gravity=0
+			#print("no fall")
 		#print(input_axis)
+		
 		
 		var was_on_floor = is_on_floor()
 		move_and_slide()
@@ -476,7 +483,7 @@ func update_animation(input_axis):
 		jumping=false
 		if state == States.JUMP:
 			falling=false
-			set_state(state, prev_state)
+			set_state(state, States.IDLE)
 		#animated_sprite_2d.play("jump")
 	
 		
@@ -550,10 +557,11 @@ func sp_atk():
 		if attack_timer.is_stopped():
 			attack_timer.start()
 			attack_timer.paused=true
+			
+			
 		if combo_state==ComboStates.SPC_ATK_BACK:
 			print("judo flip")
 			sp_atk_combo="shotgun_attack_fast"
-			
 		else:
 			if atk_chain==0:
 				if sp_atk_chn == 0 and (not attack_timer.is_stopped()):
@@ -584,12 +592,12 @@ func sp_atk():
 		#state=States.SPECIAL_ATTACK
 		set_state(state, States.SPECIAL_ATTACK)
 		attack_timer.paused = false
-		s_atk=true
+		#s_atk=true
 		#cpu_particles_2d.emitting=true
 		
-		await anim_player.animation_finished
-		attack_timer.paused=false
-		s_atk=false
+		#await anim_player.animation_finished
+		#attack_timer.paused=false
+		#s_atk=false
 
 
 func parry():
@@ -777,8 +785,8 @@ func set_state(current_state, new_state: int) -> void:
 	
 	if current_state==States.JUMP:
 		air_atk=true
-		if not is_on_floor():
-			return
+		#if not is_on_floor():
+			#return
 		#print(air_atk)
 	if current_state == States.PARRY and parry_stance==true:
 		pass
@@ -803,9 +811,9 @@ func set_state(current_state, new_state: int) -> void:
 				await anim_player.animation_finished
 				sp_atk_chn=0
 			anim_player.play(sp_atk_combo)
-			if not is_on_floor():
-				velocity=Vector2.ZERO
-				gravity=0
+			#if not is_on_floor():
+				#velocity=Vector2.ZERO
+				#gravity=0
 		States.IDLE:
 			anim_player.speed_scale=1
 			anim_player.play("idle")
@@ -868,6 +876,8 @@ func set_state(current_state, new_state: int) -> void:
 
 func get_state() -> String:
 	return cur_state
+func get_state_enum() -> int:
+	return state
 
 func get_health() -> int:
 	return health.health
@@ -964,7 +974,9 @@ func _on_animation_player_animation_finished(anim_name):
 		if prev_state==States.FLIP:
 			if anim_name=="shotgun_attack":
 				#flip.emit()
+				
 				set_state(state, States.FLIP)
+				
 		else:
 			if anim_name=="shotgun_attack":
 				if sp_atk_chn < 2:
@@ -976,15 +988,19 @@ func _on_animation_player_animation_finished(anim_name):
 				#print("special finished")
 				s_atk=false
 				#state=States.IDLE
-				set_state(state, States.IDLE)
+				if falling:
+					velocity.y=vel_y
+				set_state(state, prev_state)
 			elif anim_name=="shotgun_finish":
 				AudioStreamManager.play(shotgun_fire)
 				#state=States.IDLE
+				s_atk=false
 				set_state(state, States.IDLE)
 			elif anim_name=="shotgun_attack_fast":
 				#AudioStreamManager.play(shotgun_fire)
 				sp_atk_chn += 1
 				#state=States.IDLE
+				s_atk=false
 				set_state(state, States.IDLE)
 	elif state==States.JUMP:
 		if anim_name=="jump":
@@ -1212,6 +1228,7 @@ func _on_animation_player_animation_started(anim_name):
 				knockback.x=250
 			velocity.x = knockback.x
 			velocity.y = knockback.y
-
-
+	elif anim_name=="shotgun_attack":
+		vel_y=velocity.y
+		s_atk=true
 	

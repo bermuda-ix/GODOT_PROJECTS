@@ -105,7 +105,7 @@ func get_health():
 func set_health():
 	ui_level.set_health(cur_health)
 	ui_level.set_max_health(max_health)
-	A
+	
 func inc_score():
 	score += 1
 

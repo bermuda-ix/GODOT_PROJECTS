@@ -83,7 +83,8 @@ enum States{
 	DEATH,
 	SHOOTING,
 	STAGGERED,
-	DODGE
+	DODGE,
+	DEAD
 }
 
 var current_state = States.GUARD
@@ -97,6 +98,7 @@ enum CombatStates{
 var current_combat_state = CombatStates.RANGED
 var prev_combat_state = CombatStates.RANGED
 var combat_state : String = "RANGED"
+var player_state : int
 	
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
@@ -122,16 +124,17 @@ func _process(_delta):
 	track_player()
 	combat_state_change()
 	handle_vision()
-	#print(bt_player.blackboard.get_var("melee_mode"))
+	#print(bt_player.blackboard.get_var("attack_mode"))
 	attack_timer.one_shot=true
-	print(current_combat_state," ",prev_combat_state)
+	get_player_state(player)
+	#print(current_combat_state," ",prev_combat_state)
 
 func _physics_process(delta):
 	if current_state==States.DEATH or current_state==States.STAGGERED:
-		print("returning")
+		#print("returning")
 		return
 	move_and_slide()
-	
+	counter_attack()
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -146,22 +149,26 @@ func _physics_process(delta):
 	
 	
 func handle_vision():
-	#if player_tracking.is_colliding():
-		#var collision_result = player_tracking.get_collider()
-		#
-		#if collision_result != player:
-			#return
-		#else:
-			#set_state(current_state, States.ATTACK)
-			##chase_timer.start(1)
-			#player_found = true
-			#
-	#else:
-		#player_found = false
+	if player_tracking.is_colliding():
+		var collision_result = player_tracking.get_collider()
+		
+		if collision_result != player:
+			set_state(current_state, States.GUARD)
+			return
+		else:
+			set_state(current_state, States.ATTACK)
+			#chase_timer.start(1)
+			player_found = true
+			
+	else:
+		
+		set_state(current_state, States.GUARD)
+		player_found = false
+		
 	if not attack_range.has_overlapping_bodies():
 		bt_player.blackboard.set_var("within_range", false)
 		
-	if current_combat_state==CombatStates.RANGED:
+	if current_combat_state==CombatStates.RANGED and player_found:
 		set_state(current_state, States.ATTACK)
 	elif current_combat_state==CombatStates.MELEE:
 		if bt_player.blackboard.get_var("within_range"):
@@ -169,7 +176,7 @@ func handle_vision():
 		else:
 			set_state(current_state, States.CHASE)
 			#chase_timer.start(1)
-	player_found = true
+	#player_found = true
 	
 	
 	
@@ -215,6 +222,13 @@ func target_lock():
 
 func chase():
 	set_state(current_state, States.CHASE)
+	
+func handle_jump():
+	if jump_timer.is_stopped():
+		velocity.y = jump_velocity
+		set_state(current_state, States.JUMP)
+		jump_timer.start(2)
+	
 
 func shoot():
 	animation_player.play("shoot")
@@ -275,6 +289,7 @@ func set_state(cur_state, new_state) -> void:
 			States.PARRY:
 				hb_collison.disabled=true
 			States.DEATH:
+				hb_collison.disabled=true
 				state="DEATH"
 				bt_player.blackboard.set_var("attack_mode", false)
 			States.SHOOTING:
@@ -288,7 +303,7 @@ func set_state(cur_state, new_state) -> void:
 				state="Dodging"
 				
 func set_combat_state(cur_state, new_state) -> void:
-	print(cur_state, " ", new_state)
+	#print(cur_state, " ", new_state)
 	if(cur_state == new_state):
 		return
 		print("no change")
@@ -317,6 +332,13 @@ func set_combat_state(cur_state, new_state) -> void:
 					
 					#animation_player.play("atk_1")
 		
+func get_player_state(player: PlayerEntity) -> void:
+	player_state=player.get_state_enum()
+	
+func counter_attack():
+	if player_state == player.States.SPECIAL_ATTACK:
+		#print("jump")
+		handle_jump()
 
 func get_width() -> int:
 	return collision_shape_2d.get_shape().radius
@@ -386,7 +408,7 @@ func _on_health_health_depleted() -> void:
 	hb_collison.disabled=false
 	animation_player.play("death")
 	await animation_player.animation_finished
-	queue_free()
+	animation_player.play("dead")
 
 func _on_attack_timer_timeout() -> void:
 	#print("begin move")
@@ -407,3 +429,8 @@ func _on_turret_shoot_bullet() -> void:
 	#print(bullet_inst.dir)
 	
 	get_tree().current_scene.add_child(bullet_inst)
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	if current_state==States.DEATH:
+		queue_free()
