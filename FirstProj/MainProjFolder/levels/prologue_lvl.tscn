@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=14 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_7j8nt"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
@@ -20,15 +20,10 @@ vertices = PackedVector2Array(1926, -110, 1926, 158, 1618.8, 158, 1434.8, 46, 80
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 4, 5, 0)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(792, -120, 792, 56, 1432, 56, 1616, 168, 1936, 168, 1936, -120)])
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_6p2a2"]
-vertices = PackedVector2Array(702, 486, 106, 486, 106, 458, 702, 458)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(96, 448, 96, 496, 712, 496, 712, 448)])
-
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_pxxff"]
-vertices = PackedVector2Array(1634.46, 458, 1958, 288.523, 1958, 313.938, 1629.54, 486, 786, 458, 786, 486)
+vertices = PackedVector2Array(1634.46, 458, 1958, 288.523, 1958, 313.938, 1629.54, 486, 74, 458, 74, 486)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(776, 448, 776, 496, 1632, 496, 1968, 320, 1968, 272, 1632, 448)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(64, 448, 64, 496, 1632, 496, 1968, 320, 1968, 272, 1632, 448)])
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_olhh5"]
 vertices = PackedVector2Array(2598, 310, 2010, 310, 2010, 274, 2598, 274)
@@ -65,20 +60,18 @@ polygon = PackedVector2Array(1504, -224.09, 1480, -224.09, 1352, -276.377, 1352,
 
 [node name="Desert_Background" parent="." index="3" instance=ExtResource("4_iov4b")]
 
-[node name="lab_door_switch" parent="." index="4" node_paths=PackedStringArray("door_connect", "NavLink") instance=ExtResource("5_ru525")]
+[node name="lab_door_switch" parent="." index="4" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
 z_index = -1
 position = Vector2(680, 480)
 door_connect = NodePath("../Door")
-NavLink = NodePath("../GroundNavs/Links/GNav_1Outside_1Inside")
 
 [node name="Door" parent="." index="5" instance=ExtResource("6_jykkx")]
 position = Vector2(736, 448)
 scale = Vector2(1.03607, 1.19587)
 
-[node name="lab_door_switch2" parent="." index="6" node_paths=PackedStringArray("door_connect", "NavLink") instance=ExtResource("5_ru525")]
+[node name="lab_door_switch2" parent="." index="6" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
 position = Vector2(1040, 344)
 door_connect = NodePath("../Door2")
-NavLink = NodePath("../GroundNavs/Links/GNav_1Inside_2Inside")
 
 [node name="Door2" parent="." index="7" instance=ExtResource("6_jykkx")]
 z_index = -1
@@ -100,6 +93,7 @@ max_enemy = 1
 position = Vector2(904, 464)
 
 [node name="soldier_enemy" parent="Enemies" index="0" instance=ExtResource("9_grstv")]
+position = Vector2(-40, 0)
 
 [node name="flying_enemy" parent="Enemies" index="1" instance=ExtResource("8_bi776")]
 position = Vector2(640, -120)
@@ -123,24 +117,18 @@ navigation_polygon = SubResource("NavigationPolygon_nlf3e")
 
 [node name="GroundNavs" type="Node2D" parent="." index="12"]
 
-[node name="GroundNav1_Outside" type="NavigationRegion2D" parent="GroundNavs" index="0"]
-navigation_polygon = SubResource("NavigationPolygon_6p2a2")
+[node name="GroundNav1_Inside" type="NavigationRegion2D" parent="GroundNavs" index="0"]
+navigation_polygon = SubResource("NavigationPolygon_pxxff")
 navigation_layers = 2
 
-[node name="GroundNav1_Inside" type="NavigationRegion2D" parent="GroundNavs" index="1"]
-navigation_polygon = SubResource("NavigationPolygon_pxxff")
-
-[node name="GroundNav2_Inside" type="NavigationRegion2D" parent="GroundNavs" index="2"]
+[node name="GroundNav2_Inside" type="NavigationRegion2D" parent="GroundNavs" index="1"]
 navigation_polygon = SubResource("NavigationPolygon_olhh5")
+navigation_layers = 2
+travel_cost = 2.0
 
-[node name="Links" type="Node2D" parent="GroundNavs" index="3"]
+[node name="Links" type="Node2D" parent="GroundNavs" index="2"]
 
-[node name="GNav_1Outside_1Inside" type="NavigationLink2D" parent="GroundNavs/Links" index="0"]
-enabled = false
-start_position = Vector2(800, 472)
-end_position = Vector2(688, 472)
-
-[node name="GNav_1Inside_2Inside" type="NavigationLink2D" parent="GroundNavs/Links" index="1"]
-enabled = false
+[node name="GNav_1Inside_2Inside" type="NavigationLink2D" parent="GroundNavs/Links" index="0"]
+navigation_layers = 2
 start_position = Vector2(2048, 296)
 end_position = Vector2(1944, 304)

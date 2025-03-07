@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=30 format=3 uid="uid://bkpyddqh402xp"]
+[gd_resource type="BehaviorTree" load_steps=31 format=3 uid="uid://bkpyddqh402xp"]
 
 [ext_resource type="Script" path="res://ai/tasks/find_player.gd" id="1_7px3v"]
 
@@ -48,14 +48,6 @@ script = ExtResource("1_7px3v")
 group = &"player"
 target_var = &"target"
 
-[sub_resource type="BBNode" id="BBNode_ysbiq"]
-saved_value = NodePath(".")
-resource_name = "."
-
-[sub_resource type="BTCallMethod" id="BTCallMethod_qwr6t"]
-node = SubResource("BBNode_ysbiq")
-method = &"melee_attack"
-
 [sub_resource type="BBVariant" id="BBVariant_eahdn"]
 type = 1
 saved_value = true
@@ -65,14 +57,26 @@ resource_name = "true"
 variable = &"melee_mode"
 value = SubResource("BBVariant_eahdn")
 
-[sub_resource type="BTSequence" id="BTSequence_7vhxb"]
+[sub_resource type="BBNode" id="BBNode_ysbiq"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_qwr6t"]
+node = SubResource("BBNode_ysbiq")
+method = &"melee_attack"
+
+[sub_resource type="BTSequence" id="BTSequence_yfw6d"]
 custom_name = "Attack"
-children = [SubResource("BTCheckVar_gi26e"), SubResource("BTAction_2i8b5"), SubResource("BTCallMethod_qwr6t"), SubResource("BTCheckVar_aa25s")]
+children = [SubResource("BTCheckVar_aa25s"), SubResource("BTCallMethod_qwr6t")]
 
 [sub_resource type="BTCooldown" id="BTCooldown_5mvyu"]
 duration = 0.8
 start_cooled = true
-children = [SubResource("BTSequence_7vhxb")]
+children = [SubResource("BTSequence_yfw6d")]
+
+[sub_resource type="BTSequence" id="BTSequence_7vhxb"]
+custom_name = "AttackRange"
+children = [SubResource("BTCheckVar_gi26e"), SubResource("BTAction_2i8b5"), SubResource("BTCooldown_5mvyu")]
 
 [sub_resource type="BTAction" id="BTAction_kugyc"]
 script = ExtResource("1_7px3v")
@@ -92,7 +96,7 @@ children = [SubResource("BTAction_kugyc"), SubResource("BTCallMethod_ok4as")]
 
 [sub_resource type="BTSelector" id="BTSelector_3ojif"]
 custom_name = "Getting in range"
-children = [SubResource("BTCooldown_5mvyu"), SubResource("BTSequence_5qq8g")]
+children = [SubResource("BTSequence_7vhxb"), SubResource("BTSequence_5qq8g")]
 
 [sub_resource type="BTSequence" id="BTSequence_c1urr"]
 custom_name = "Melee"

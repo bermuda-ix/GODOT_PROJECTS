@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=12 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
 [ext_resource type="PackedScene" uid="uid://w2mgtcnbneri" path="res://chars/testing.tscn" id="2_58a6u"]
 [ext_resource type="PackedScene" uid="uid://bwe3bu6vqh8v" path="res://Component/interactables/spawn_flag.tscn" id="3_c2k67"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="4_4kfue"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
+[ext_resource type="PackedScene" uid="uid://b5d2nkkrrcixy" path="res://chars/soldier_enemy.tscn" id="6_8cgm3"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ys1t2"]
 vertices = PackedVector2Array(518.367, -227, 691, -227, 691, -213, 493.172, -213, 430.289, -291.047, 478.703, -216.781, 409.883, -277, 388.906, 93, 523, 93, 523, 107, 371.094, 107, 331.094, 27, 348.906, 13, 253.063, 13, 172.609, 27, 140.617, 107, 29, 107, 29, 77, 123.469, 77, 147.469, 13, 223.688, 13, 210.203, -64.1484, 187.25, -69, 13, -69, 13, -91, 169.633, -91, 257.617, -155, 253.227, -133, 445.172, -133, 434.57, -155, 222.563, -299.047, 209.422, -277, 105.422, -341, 126.648, -355, -59, -355, -59, -341)
@@ -40,7 +41,7 @@ source_geometry_group_name = &"navigation_polygon_source_group"
 [node name="project_test" instance=ExtResource("1_07jkq")]
 
 [node name="PC" parent="." index="0"]
-position = Vector2(272, 4)
+position = Vector2(280, -288)
 
 [node name="LevelTileMap" parent="." index="2"]
 position = Vector2(1, 0)
@@ -151,3 +152,6 @@ spawn_connected = NodePath("../SpawnPoint")
 position = Vector2(624, -272)
 active = false
 enemy_single = ExtResource("5_fkwqf")
+
+[node name="soldier_enemy" parent="." index="24" instance=ExtResource("6_8cgm3")]
+position = Vector2(400, 80)

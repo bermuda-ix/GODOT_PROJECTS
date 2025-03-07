@@ -19,7 +19,7 @@ const MISSILE_TRACKER = preload("res://Component/missiles/missile_tracker.tscn")
 @onready var stagger = $Stagger
 @onready var hb_detect = $HitBox/CollisionShape2D
 @onready var collision_shape_2d = $CollisionShape2D
-@onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 
 @onready var stg_laber = $stg_laber
@@ -74,7 +74,7 @@ func _physics_process(delta):
 	
 	if current_state==States.CHASE:
 		velocity = dir * SPEED
-		if distance_to_player<2500 and distance_above_player<250 and visible_on_screen_notifier_2d.is_on_screen():
+		if distance_to_player<2500 and distance_above_player<250 and on_screen.is_on_screen():
 			turret.shoot()
 			turret.shoot_timer.paused=false
 		#gravity=0

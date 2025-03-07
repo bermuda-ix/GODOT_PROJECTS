@@ -168,7 +168,7 @@ func _process(delta):
 		#label.text=str("chain ready. Vel:", velocity)
 	#else:
 		#label.text=str("chain not ready. Vel:", velocity)
-	label.text=str(attack_timer.paused)
+	label.text=str(target_size_x, ",", target_size_y, ": ",target_right)
 	dodge(input_axis, delta)
 	if Input.is_action_just_pressed("walk_right"):
 		face_right = true
@@ -210,7 +210,7 @@ func _physics_process(delta):
 		move_and_slide()
 		
 		if is_on_floor():
-			if state==States.JUMP:
+			if state==States.JUMP or state==States.FLIP:
 				set_state(state, States.IDLE)
 			
 		#velocity = movement * SPEED * delta
@@ -694,17 +694,28 @@ func handle_hitbox(input_axis, face_right):
 				hb_right.disabled=false
 
 func lockon():
+	var target_dist : Vector2 = Vector2.ZERO
 	if Input.is_action_just_pressed("lockon"):
 		
 		Events.unlock_from.emit()
 		find_closest_enemy()
+		target_dist=abs(global_position-target.global_position)
 		
+		if not target.on_screen.is_on_screen():
+			print("no enemy near")
+			target=null
+		else:
+			target.target_lock()
 		
 	if target == null:
+		
 		target_string_test="NONE"
 		combat_state=CombatStates.UNLOCKED
 	else:
-		target.target_lock()
+		if target.current_state==target.States.DEATH:
+			combat_state=CombatStates.UNLOCKED
+			return
+		
 		combat_state=CombatStates.LOCKED
 		var direction_to_target : Vector2 = Vector2(target.position.x, target.position.y) - global_position
 		
@@ -737,7 +748,8 @@ func find_closest_enemy():
 	var closest_enemy = enemies[0]
 	
 	for enemy in enemies:
-		if enemy.global_position.distance_to(global_position) < closest_enemy.global_position.distance_to(global_position):
+		if (enemy.global_position.distance_to(global_position) < closest_enemy.global_position.distance_to(global_position))\
+		and enemy.current_state!=target.States.DEATH:
 			closest_enemy=enemy
 	
 	target=closest_enemy
@@ -933,6 +945,8 @@ func _on_hurt_box_area_entered(area):
 		velocity.x = movement_data.speed + knockback.x
 		health.health -= 1
 		health.set_temporary_immortality(0.2)
+		if state==States.FLIP:
+			set_state(state, States.IDLE)
 		
 	if area.is_in_group("Hearts"):
 		health.health+=1
@@ -976,7 +990,7 @@ func _on_animation_player_animation_finished(anim_name):
 				#flip.emit()
 				
 				set_state(state, States.FLIP)
-				
+				s_atk=false
 		else:
 			if anim_name=="shotgun_attack":
 				if sp_atk_chn < 2:
@@ -990,7 +1004,7 @@ func _on_animation_player_animation_finished(anim_name):
 				#state=States.IDLE
 				if falling:
 					velocity.y=vel_y
-				set_state(state, prev_state)
+				set_state(state, States.IDLE)
 			elif anim_name=="shotgun_finish":
 				AudioStreamManager.play(shotgun_fire)
 				#state=States.IDLE

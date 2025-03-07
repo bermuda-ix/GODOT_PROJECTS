@@ -56,7 +56,7 @@ var immortal = false
 @export var hitbox: HitBox
 @onready var target_lock_node: Node2D = $TargetLock
 @onready var attack_range: AttackRange = $AttackRange
-
+@onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 
 var current_speed : float = 40.0
@@ -127,7 +127,7 @@ func _process(_delta):
 	#print(bt_player.blackboard.get_var("attack_mode"))
 	attack_timer.one_shot=true
 	get_player_state(player)
-	#print(current_combat_state," ",prev_combat_state)
+	#print(on_screen.is_on_screen())
 
 func _physics_process(delta):
 	if current_state==States.DEATH or current_state==States.STAGGERED:
@@ -153,7 +153,7 @@ func handle_vision():
 		var collision_result = player_tracking.get_collider()
 		
 		if collision_result != player:
-			set_state(current_state, States.GUARD)
+			#set_state(current_state, States.GUARD)
 			return
 		else:
 			set_state(current_state, States.ATTACK)
@@ -276,6 +276,7 @@ func set_state(cur_state, new_state) -> void:
 				hb_collison.disabled=false
 				state="CHASE"
 				bt_player.blackboard.set_var("attack_mode", true)
+				animation_player.play("run")
 				if prev_state==States.JUMP:
 					current_speed=prev_speed
 			States.JUMP:
@@ -338,7 +339,14 @@ func get_player_state(player: PlayerEntity) -> void:
 func counter_attack():
 	if player_state == player.States.SPECIAL_ATTACK:
 		#print("jump")
-		handle_jump()
+		if current_state!=States.ATTACK:
+			if player_state == player.States.FLIP:
+				shoot()
+			else:
+				handle_jump()
+			
+			
+		
 
 func get_width() -> int:
 	return collision_shape_2d.get_shape().radius
@@ -383,6 +391,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 func _on_navigation_timer_timeout() -> void:
 	makepath()
 	next_y=nav_agent.get_next_path_position().y
+	
 
 
 func _on_stagger_staggered() -> void:
@@ -424,7 +433,7 @@ func _on_turret_shoot_bullet() -> void:
 	#bullet_inst.set_accel(50.0)
 	#bullet_inst.tracking_time=0.01
 	bullet_inst.dir = (turret.player_tracker.target_position).normalized()
-	bullet_inst.spawnPos = Vector2(position.x, position.y)
+	bullet_inst.spawnPos = Vector2(turret.global_position.x, turret.global_position.y)
 	bullet_inst.spawnRot = player_tracker_pivot.rotation_degrees
 	#print(bullet_inst.dir)
 	

@@ -35,3 +35,9 @@ shape = SubResource("RectangleShape2D_c3yeq")
 
 [node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D"]
 texture = SubResource("AtlasTexture_1s761")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+vertices = PackedVector2Array(-8.00017, -48, -7.99982, 48, 8.00018, 48, 7.99983, -48)
+affect_navigation_mesh = true
+carve_navigation_mesh = true
+avoidance_layers = 2

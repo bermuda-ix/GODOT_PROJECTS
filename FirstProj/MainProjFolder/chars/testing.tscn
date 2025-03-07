@@ -94,3 +94,5 @@ offset_right = 13.0
 offset_bottom = -2.0
 text = "DTP"
 label_settings = SubResource("LabelSettings_kflhl")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="19"]
