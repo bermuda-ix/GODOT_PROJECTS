@@ -3864,7 +3864,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qebxi"]
 size = Vector2(21, 22)
 
-[node name="PC" type="CharacterBody2D" node_paths=PackedStringArray("health") groups=["player"]]
+[node name="PC" type="CharacterBody2D" node_paths=PackedStringArray("health", "hitbox") groups=["player"]]
 position = Vector2(0, 2)
 collision_layer = 2
 collision_mask = 19467
@@ -3874,6 +3874,7 @@ floor_snap_length = 2.0
 script = ExtResource("1_x210m")
 movement_data = ExtResource("2_4grev")
 health = NodePath("Health")
+hitbox = NodePath("HitBox")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, -1)
@@ -3994,7 +3995,7 @@ trail_lifetime = 0.1
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("4_q0gnn")
-max_health = 10
+max_health = 100
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
 wait_time = 0.1

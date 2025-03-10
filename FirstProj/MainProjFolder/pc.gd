@@ -168,7 +168,6 @@ func _process(delta):
 		#label.text=str("chain ready. Vel:", velocity)
 	#else:
 		#label.text=str("chain not ready. Vel:", velocity)
-	label.text=str(target_size_x, ",", target_size_y, ": ",target_right)
 	dodge(input_axis, delta)
 	if Input.is_action_just_pressed("walk_right"):
 		face_right = true
@@ -548,7 +547,7 @@ func dash_attack():
 
 func sp_atk():
 	if state==States.FLIP:
-		shotty.look_at(target.position)
+		shotty.look_at(target.global_position)
 	else:
 		shotty.look_at(get_global_mouse_position())
 	#sp_atk_hit_box.look_at(get_global_mouse_position())
@@ -695,12 +694,14 @@ func handle_hitbox(input_axis, face_right):
 
 func lockon():
 	var target_dist : Vector2 = Vector2.ZERO
+	
 	if Input.is_action_just_pressed("lockon"):
 		
 		Events.unlock_from.emit()
 		find_closest_enemy()
-		target_dist=abs(global_position-target.global_position)
 		
+		
+
 		if not target.on_screen.is_on_screen():
 			print("no enemy near")
 			target=null
@@ -712,6 +713,8 @@ func lockon():
 		target_string_test="NONE"
 		combat_state=CombatStates.UNLOCKED
 	else:
+		
+		target_dist=abs(global_position-target.global_position)
 		if target.current_state==target.States.DEATH:
 			combat_state=CombatStates.UNLOCKED
 			return
@@ -761,14 +764,13 @@ func locked_combat():
 	if target==null:
 		return
 	else:
-		var direction_to_target : Vector2 = Vector2(target.position.x, target.position.y) - global_position
+		var direction_to_target : Vector2 = Vector2(target.global_position.x, target.global_position.y) - global_position
 		target_size_x = target.get_width()
 		target_size_y = target.get_height()
-		
-		if abs(direction_to_target.x) >(20+target_size_x) or abs(direction_to_target.y)>(30+target_size_y):
+		label.text=str(target_size_x, ",", target_size_y, ": ",abs(direction_to_target.y))
+		if abs(direction_to_target.x) >(30+target_size_x) or abs(direction_to_target.y)>(30+target_size_y):
 			pass
 		else:
-			
 			if Input.is_action_just_pressed("jump") and Input.is_action_pressed("sprint"):
 				#set_state(state, States.FLIP)
 				flip.emit()
@@ -908,7 +910,6 @@ func _on_health_health_depleted():
 
 func _on_hurt_box_got_hit(hitbox):
 	if hitbox.is_in_group("regular_enemy_hb"):
-		print("regular enemy hit")
 		if hit_timer.is_stopped():
 			AudioStreamManager.play(SoundFx.PUNCH_DESIGNED_HEAVY_12)
 		player_hit.emitting=true
@@ -1055,9 +1056,9 @@ func load_player_data():
 			if stat != null:
 				match stat:
 					"health":
-						health.set_health(stat_val)
+						health.set_health(100)
 					"max_health":
-						health.set_max_health(stat_val)
+						health.set_max_health(100)
 					"max_stagger":
 						pass
 					"ammo":
@@ -1122,8 +1123,9 @@ func flip_over():
 
 func flipping(delta):
 	
-	target_pos_y=(target.position.y-target_size_y/2)
-	if position.y>(target.position.y-target_size_y+15) and not flipped_over:
+	target_pos_y=(target.global_position.y)
+	var pos_above_y=target.global_position.y-global_position.y
+	if pos_above_y<(target_size_y+25) and not flipped_over:
 		#print(position.y, " ",target_size_y+target.position.y)
 		velocity.y=movement_data.jump_velocity
 	else:

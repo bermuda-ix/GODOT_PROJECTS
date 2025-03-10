@@ -46,6 +46,7 @@ var immortal = false
 @onready var stagger = $Stagger
 @onready var hurt_box_weak_point = $AnimatedSprite2D/HurtBox_WeakPoint
 @onready var attack_timer: Timer = $AttackTimer
+@onready var stagger_timer: Timer = $StaggerTimer
 
 @onready var collision_shape_2d = $CollisionShape2D
 
@@ -84,7 +85,8 @@ enum States{
 	SHOOTING,
 	STAGGERED,
 	DODGE,
-	DEAD
+	DEAD,
+	HIT
 }
 
 var current_state = States.GUARD
@@ -117,8 +119,8 @@ func _ready():
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _process(_delta):
-	if current_state==States.DEATH or current_state==States.STAGGERED:
-		#print("returning")
+	if current_state==States.DEATH or current_state==States.STAGGERED or current_state==States.HIT:
+		hb_collison.disabled=true
 		return
 	health_bar()
 	track_player()
@@ -130,8 +132,8 @@ func _process(_delta):
 	#print(on_screen.is_on_screen())
 
 func _physics_process(delta):
-	if current_state==States.DEATH or current_state==States.STAGGERED:
-		#print("returning")
+	if current_state==States.DEATH or current_state==States.STAGGERED or current_state==States.HIT:
+		hb_collison.disabled=true
 		return
 	move_and_slide()
 	counter_attack()
@@ -223,9 +225,9 @@ func target_lock():
 func chase():
 	set_state(current_state, States.CHASE)
 	
-func handle_jump():
+func handle_jump(jump_vel : float):
 	if jump_timer.is_stopped():
-		velocity.y = jump_velocity
+		velocity.y = jump_velocity*jump_vel
 		set_state(current_state, States.JUMP)
 		jump_timer.start(2)
 	
@@ -241,7 +243,7 @@ func melee_attack():
 	animation_player.play("atk"+atk_chain)
 
 func health_bar():
-	h_bar.text=str(health.health, " : ", stagger.stagger, " : State:", combat_state, " DIST. ", distance)
+	h_bar.text=str(health.health, " : ", stagger.stagger, " : inv:", health.immortality)
 
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
@@ -298,10 +300,14 @@ func set_state(cur_state, new_state) -> void:
 			States.STAGGERED:
 				state="staggered"
 				animation_player.play("Staggered")
-				hb_collison.disabled=false
+				hb_collison.disabled=true
 				bt_player.blackboard.set_var("attack_mode", false)
 			States.DODGE:
 				state="Dodging"
+			States.HIT:
+				state="Hit"
+				bt_player.blackboard.set_var("attack_mode", false)
+				#animation_player.play("hit")
 				
 func set_combat_state(cur_state, new_state) -> void:
 	#print(cur_state, " ", new_state)
@@ -325,7 +331,6 @@ func set_combat_state(cur_state, new_state) -> void:
 				
 				#animation_player.play("shoot")
 			CombatStates.MELEE:
-				print("melee range")
 				bt_player.blackboard.set_var("melee_mode", true)
 				bt_player.blackboard.set_var("ranged_mode", false)
 				combat_state="Melee"
@@ -343,7 +348,7 @@ func counter_attack():
 			if player_state == player.States.FLIP:
 				shoot()
 			else:
-				handle_jump()
+				handle_jump(0.5)
 			
 			
 		
@@ -369,13 +374,11 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		print("in range")
 		bt_player.blackboard.set_var("within_range", true)
 		set_state(current_state, States.ATTACK)
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player") and not animation_player.is_playing():
-		print("out of range")
 		bt_player.blackboard.set_var("within_range", false)
 		set_state(current_state, States.CHASE)
 		
@@ -387,6 +390,10 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 		else:
 			knockback.x=-50
 		stagger.stagger -= player.sp_atk_dmg
+		
+		
+
+
 
 func _on_navigation_timer_timeout() -> void:
 	makepath()
@@ -407,9 +414,24 @@ func _on_parry_timer_timeout() -> void:
 	hurt_box.set_damage_mulitplyer(1)
 
 
-func _on_hit_box_parried() -> void:
-	pass # Replace with function body.
-
+func _on_hurt_box_received_damage(damage: int) -> void:
+	print(damage)
+	if current_state==States.DEATH:
+		return
+	health.set_temporary_immortality(0.1)
+	print("hit")
+	animation_player.play("hit")
+	stagger_timer.start(0.1)
+	set_state(current_state, States.HIT)
+	#if current_state != States.DEATH:
+		#animation_player.play("RESET")
+	#
+	#if current_state==States.STAGGERED:
+		#print("big damage")
+		#
+		##health.health-=2
+	#else:
+		#print("not big damage")
 
 func _on_health_health_depleted() -> void:
 	print("dying")
@@ -443,3 +465,9 @@ func _on_turret_shoot_bullet() -> void:
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	if current_state==States.DEATH:
 		queue_free()
+
+
+func _on_stagger_timer_timeout() -> void:
+	bt_player.blackboard.set_var("attack_mode", true)
+
+	set_state(current_state, prev_state)

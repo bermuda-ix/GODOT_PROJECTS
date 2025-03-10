@@ -71,7 +71,7 @@ func show_level_complete():
 	get_tree().paused = false
 	get_tree().change_scene_to_packed(next_level)
 	LevelTransition.fade_from_black()
-	
+
 func show_game_over():
 	game_over.show()
 	get_tree().paused = true
