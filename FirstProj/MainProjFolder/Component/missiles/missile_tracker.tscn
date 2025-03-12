@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://flaiq8fdiflo"]
 
 [ext_resource type="PackedScene" uid="uid://b1rejq3d3efwl" path="res://Component/missiles/missile_template.tscn" id="1_2xtrp"]
-[ext_resource type="Script" path="res://missile_template.gd" id="2_ialjw"]
+[ext_resource type="Script" uid="uid://deikjc1o8rqsy" path="res://missile_template.gd" id="2_ialjw"]
 [ext_resource type="Texture2D" uid="uid://d1xsuny35cgdk" path="res://Art_Components/missile/spr_missile_half.png" id="3_7j0m5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e7c7u"]
@@ -72,8 +72,8 @@ position = Vector2(-18, -6.51598e-05)
 rotation = 1.5708
 scale = Vector2(0.0958754, 0.0863445)
 amount = 100
-process_material = SubResource("ParticleProcessMaterial_tomia")
 lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_tomia")
 
 [node name="TrackingTimer" type="Timer" parent="." index="1"]
 wait_time = 0.5

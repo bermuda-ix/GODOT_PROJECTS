@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ciiiwec0uyyt2"]
 
-[ext_resource type="Script" path="res://LVL_Transitions/lvlselect.gd" id="1_ss0c2"]
+[ext_resource type="Script" uid="uid://5iilivk4dtx5" path="res://LVL_Transitions/lvlselect.gd" id="1_ss0c2"]
 
 [node name="lvlselect" type="CenterContainer"]
 anchors_preset = 15

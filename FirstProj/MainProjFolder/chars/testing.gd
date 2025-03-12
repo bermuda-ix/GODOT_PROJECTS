@@ -34,6 +34,17 @@ var rotate_around : bool = false
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
+enum States{
+	GUARD,
+	CHASE,
+	JUMP,
+	ATTACK,
+	PARRY,
+	DEATH,
+}
+
+var current_state = States.GUARD
+
 
 func _ready():
 	#position.y = -264

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://deujl8odhk3y1"]
 
 [ext_resource type="Texture2D" uid="uid://dpau2hbjnjnwo" path="res://Art_Components/OGs/target_lock.png" id="1_0ww5r"]
-[ext_resource type="Script" path="res://Component/effects/target_lock.gd" id="2_555r8"]
+[ext_resource type="Script" uid="uid://71i1m1dj8ws" path="res://Component/effects/target_lock.gd" id="2_555r8"]
 
 [sub_resource type="Animation" id="Animation_oa53i"]
 length = 0.001
@@ -36,8 +36,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5lbfw"]
 _data = {
-"RESET": SubResource("Animation_oa53i"),
-"default": SubResource("Animation_45rgr")
+&"RESET": SubResource("Animation_oa53i"),
+&"default": SubResource("Animation_45rgr")
 }
 
 [node name="TargetLock" type="Node2D"]

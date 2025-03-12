@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bt6url6xt1nqm"]
 
-[ext_resource type="Script" path="res://Component/interactables/lab_door_switch.gd" id="1_awm7x"]
+[ext_resource type="Script" uid="uid://c5ygikivdc67e" path="res://Component/interactables/lab_door_switch.gd" id="1_awm7x"]
 [ext_resource type="Texture2D" uid="uid://cm36bhcpc0hsc" path="res://Art_Components/tile_maps/_PNG/1. main platforms.png" id="1_ik8c4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8xe4m"]

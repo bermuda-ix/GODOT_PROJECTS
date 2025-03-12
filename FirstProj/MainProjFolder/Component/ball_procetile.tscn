@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://e8y61qs02r7p"]
 
 [ext_resource type="PackedScene" uid="uid://6w7fy3t1fhcg" path="res://Component/project_template.tscn" id="1_2tfmk"]
-[ext_resource type="Script" path="res://Component/ball_procetile.gd" id="2_4620e"]
+[ext_resource type="Script" uid="uid://ca8e47rujgaxi" path="res://Component/ball_procetile.gd" id="2_4620e"]
 [ext_resource type="Texture2D" uid="uid://23dmp5jsusa6" path="res://Art_Components/OGs/mini_projectile.png" id="2_i2xw0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4crhy"]

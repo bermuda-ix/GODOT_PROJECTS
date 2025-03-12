@@ -1,24 +1,24 @@
 [gd_scene load_steps=367 format=3 uid="uid://b4uytwmkvsqi0"]
 
-[ext_resource type="Script" path="res://pc.gd" id="1_x210m"]
+[ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
-[ext_resource type="Script" path="res://SMPC.gd" id="2_53mma"]
+[ext_resource type="Script" uid="uid://ce2x0yp83iey8" path="res://SMPC.gd" id="2_53mma"]
 [ext_resource type="Texture2D" uid="uid://d2ggaktiv0hrj" path="res://knight.png" id="2_b7jgr"]
 [ext_resource type="Texture2D" uid="uid://rl1y4h8u1rk5" path="res://Art_Components/PixelPrototypePlayer/MC/mc_combat_test.png" id="3_81nyk"]
 [ext_resource type="Texture2D" uid="uid://c74d14ub8w3oa" path="res://Art_Components/Shotgun/Escopeta.png" id="4_2ahp4"]
 [ext_resource type="Texture2D" uid="uid://jrn865h2pyur" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash01.png" id="4_gobm8"]
-[ext_resource type="Script" path="res://Component/health.gd" id="4_q0gnn"]
+[ext_resource type="Script" uid="uid://cnxm24jqclb68" path="res://Component/health.gd" id="4_q0gnn"]
 [ext_resource type="Texture2D" uid="uid://3d6b01276t3v" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash02.png" id="5_77biq"]
 [ext_resource type="Texture2D" uid="uid://dus86lxw4ytis" path="res://Art_Components/Shotgun/Efecto.png" id="5_pvc8c"]
 [ext_resource type="Texture2D" uid="uid://dv3l2s77h7bq8" path="res://Art_Components/Shotgun/BalaEscopeta.png" id="6_mbdqo"]
 [ext_resource type="Texture2D" uid="uid://b1xxofqwimhtb" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash03.png" id="6_mlauo"]
-[ext_resource type="Script" path="res://Component/hitbox_template.gd" id="6_y7jp7"]
+[ext_resource type="Script" uid="uid://5ijvah6jjgdb" path="res://Component/hitbox_template.gd" id="6_y7jp7"]
 [ext_resource type="AudioStream" uid="uid://dxedk74ivrhne" path="res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - small knock.wav" id="7_02w0c"]
 [ext_resource type="Texture2D" uid="uid://dgvmkb487nm32" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash04.png" id="7_ctn4q"]
-[ext_resource type="Script" path="res://Component/parrybox_template.gd" id="8_7q1rp"]
+[ext_resource type="Script" uid="uid://dj5amth02vbhe" path="res://Component/parrybox_template.gd" id="8_7q1rp"]
 [ext_resource type="Texture2D" uid="uid://tcp20ojs7fam" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash05.png" id="8_e6snp"]
 [ext_resource type="Texture2D" uid="uid://cmul76rmqdspd" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash06.png" id="9_k204x"]
-[ext_resource type="Script" path="res://Component/hurtbox_template.gd" id="9_s8nmr"]
+[ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="9_s8nmr"]
 [ext_resource type="Texture2D" uid="uid://cxc05461s8ihy" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash07.png" id="10_uef4t"]
 [ext_resource type="Texture2D" uid="uid://74066nrt8kge" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash08.png" id="11_fnjo2"]
 [ext_resource type="Texture2D" uid="uid://dfcqy66mntnni" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash09.png" id="12_jmpur"]
@@ -3808,29 +3808,29 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qyq63"]
 _data = {
-"Attack": SubResource("Animation_1ru25"),
-"Attack_2": SubResource("Animation_vtlvl"),
-"Attack_3": SubResource("Animation_222nm"),
-"Attack_Chain": SubResource("Animation_euoq7"),
-"Attack_Counter": SubResource("Animation_urihx"),
-"Attack_Dash": SubResource("Animation_yuc35"),
-"Attack_Down": SubResource("Animation_704ig"),
-"Parry": SubResource("Animation_x1wk2"),
-"Parry_Success": SubResource("Animation_irs7o"),
-"RESET": SubResource("Animation_13dif"),
-"dodge": SubResource("Animation_pskkv"),
-"dodge_roll": SubResource("Animation_yo2cx"),
-"flip": SubResource("Animation_s1lpt"),
-"hit": SubResource("Animation_aki4b"),
-"idle": SubResource("Animation_xowcg"),
-"jump": SubResource("Animation_5m6tb"),
-"roll": SubResource("Animation_tj0ec"),
-"run": SubResource("Animation_i1mvx"),
-"shotgun_attack": SubResource("Animation_on8rs"),
-"shotgun_attack_fast": SubResource("Animation_okwur"),
-"shotgun_finish": SubResource("Animation_dr66y"),
-"walk": SubResource("Animation_hm6eq"),
-"walk_back": SubResource("Animation_padls")
+&"Attack": SubResource("Animation_1ru25"),
+&"Attack_2": SubResource("Animation_vtlvl"),
+&"Attack_3": SubResource("Animation_222nm"),
+&"Attack_Chain": SubResource("Animation_euoq7"),
+&"Attack_Counter": SubResource("Animation_urihx"),
+&"Attack_Dash": SubResource("Animation_yuc35"),
+&"Attack_Down": SubResource("Animation_704ig"),
+&"Parry": SubResource("Animation_x1wk2"),
+&"Parry_Success": SubResource("Animation_irs7o"),
+&"RESET": SubResource("Animation_13dif"),
+&"dodge": SubResource("Animation_pskkv"),
+&"dodge_roll": SubResource("Animation_yo2cx"),
+&"flip": SubResource("Animation_s1lpt"),
+&"hit": SubResource("Animation_aki4b"),
+&"idle": SubResource("Animation_xowcg"),
+&"jump": SubResource("Animation_5m6tb"),
+&"roll": SubResource("Animation_tj0ec"),
+&"run": SubResource("Animation_i1mvx"),
+&"shotgun_attack": SubResource("Animation_on8rs"),
+&"shotgun_attack_fast": SubResource("Animation_okwur"),
+&"shotgun_finish": SubResource("Animation_dr66y"),
+&"walk": SubResource("Animation_hm6eq"),
+&"walk_back": SubResource("Animation_padls")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0g83a"]
@@ -3865,7 +3865,6 @@ animations = [{
 size = Vector2(21, 22)
 
 [node name="PC" type="CharacterBody2D" node_paths=PackedStringArray("health", "hitbox") groups=["player"]]
-position = Vector2(0, 2)
 collision_layer = 2
 collision_mask = 19467
 floor_stop_on_slope = false
@@ -3984,7 +3983,6 @@ sprite_frames = SubResource("SpriteFrames_v22jq")
 modulate = Color(0.827053, 0, 0.0905092, 1)
 position = Vector2(0, -18.3495)
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_34r87")
 lifetime = 2.0
 one_shot = true
 speed_scale = 5.0
@@ -3992,6 +3990,7 @@ explosiveness = 1.0
 randomness = 1.0
 trail_enabled = true
 trail_lifetime = 0.1
+process_material = SubResource("ParticleProcessMaterial_34r87")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("4_q0gnn")
@@ -4030,7 +4029,7 @@ one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_qyq63")
+&"": SubResource("AnimationLibrary_qyq63")
 }
 
 [node name="SMPC" type="Node" parent="."]

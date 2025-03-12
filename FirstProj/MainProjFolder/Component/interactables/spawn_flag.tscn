@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bwe3bu6vqh8v"]
 
-[ext_resource type="Script" path="res://spawn_flag_trigger.gd" id="1_akacg"]
+[ext_resource type="Script" uid="uid://bhvoky7yl4fsj" path="res://spawn_flag_trigger.gd" id="1_akacg"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_rp3r5"]
 b = Vector2(0, 115)

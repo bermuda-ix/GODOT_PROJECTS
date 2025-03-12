@@ -134,6 +134,8 @@ var vel_y : float = 0.0
 var target_size_x
 var target_size_y
 var target_pos_y=0
+var target_pos_x=0
+var target_top=0
 
 #flipping
 @onready var jump_out_timer = $JumpOutTimer
@@ -161,7 +163,7 @@ func _process(delta):
 	var input_axis = Input.get_axis("walk_left", "walk_right")
 	
 	current_state_label()
-			
+	get_target_info()
 	previous_state()
 	atk_state_debug()
 	#if atk_chain >= 1 and sp_atk_chn >=1:
@@ -341,7 +343,7 @@ func jump_out():
 		velocity.x=(movement_data.speed*0.8)*-1
 	else:
 		velocity.x=(movement_data.speed/2*0.8)
-	#print(str(vector_away), " jumping out")
+	set_collision_mask_value(15, true)
 
 
 func handle_wall_jump(wall_hold, delta):
@@ -457,7 +459,7 @@ func update_animation(input_axis):
 					walk_anim="walk"
 			#idle_state=false
 	else:
-		if target_right:
+		if not target_right:
 			if animated_sprite_2d.scale.x>0:
 				animated_sprite_2d.scale.x *= -1
 			if input_axis>0:
@@ -685,7 +687,7 @@ func handle_hitbox(input_axis, face_right):
 				hb_left.disabled=true
 				hb_right.disabled=false
 		else:
-			if target_right:
+			if not target_right:
 				hb_left.disabled=false
 				hb_right.disabled=true
 			else:
@@ -735,11 +737,11 @@ func lockon():
 			if arc_vector<Vector2.RIGHT and Vector2.UP<arc_vector:
 				
 				#print("on right")
-				target_right = true
+				target_right = false
 				
 			elif arc_vector>Vector2.LEFT and Vector2.UP>arc_vector:
 				#print("on left")
-				target_right = false
+				target_right = true
 			
 func find_closest_enemy():
 	var enemies = get_tree().get_nodes_in_group("Enemy")
@@ -759,16 +761,23 @@ func find_closest_enemy():
 	
 	print("target locked")
 	
+func get_target_info():
+	if target==null:
+		return
+	else:
+		target_size_x = target.get_width()
+		target_size_y = target.get_height()
+		target_top = target.global_position.y-(target_size_y/2)
 	
+
 func locked_combat():
 	if target==null:
 		return
 	else:
 		var direction_to_target : Vector2 = Vector2(target.global_position.x, target.global_position.y) - global_position
-		target_size_x = target.get_width()
-		target_size_y = target.get_height()
-		label.text=str(target_size_x, ",", target_size_y, ": ",abs(direction_to_target.y))
-		if abs(direction_to_target.x) >(30+target_size_x) or abs(direction_to_target.y)>(30+target_size_y):
+		
+		label.text=str(target_size_x, ",", target_size_y, ": ",target_right)
+		if abs(direction_to_target.x) >(50+target_size_x) or abs(direction_to_target.y)>(10+target_size_y):
 			pass
 		else:
 			if Input.is_action_just_pressed("jump") and Input.is_action_pressed("sprint"):
@@ -869,6 +878,7 @@ func set_state(current_state, new_state: int) -> void:
 			anim_player.speed_scale=3
 			anim_player.play("flip")
 			cur_state="Flipping"
+			set_collision_mask_value(15, false)
 		States.SPRINTING:
 			anim_player.speed_scale=1
 			#if jumping:
@@ -1117,7 +1127,7 @@ func _on_hit_box_body_entered(body):
 
 func flip_over():
 	
-	flip_speed=movement_data.speed *100
+	flip_speed=movement_data.speed * 90
 	set_state(state, States.FLIP)
 	#state=States.FLIP
 
@@ -1125,18 +1135,24 @@ func flipping(delta):
 	
 	target_pos_y=(target.global_position.y)
 	var pos_above_y=target.global_position.y-global_position.y
-	if pos_above_y<(target_size_y+25) and not flipped_over:
+	target_pos_x=(target.global_position.x)
+	var pos_above_x=target.global_position.x-global_position.x
+	if pos_above_y<(target_size_y+15) and not flipped_over:
 		#print(position.y, " ",target_size_y+target.position.y)
 		velocity.y=movement_data.jump_velocity
 	else:
 		flipped_over=true
-		if target_right:
+		if not target_right:
 			movement = target_direction.rotated(CLOCKWISE)
 			#print("flip_right")
 		else:
 			movement = target_direction.rotated(COUNTER_CLOCKWISE)
 			#print("flip_left")
-		velocity = movement * flip_speed * delta
+		if global_position.y<target_top:
+			velocity = movement * flip_speed * delta
+		else:
+			velocity.y += gravity * movement_data.gravity_scale * delta
+			velocity.x=0
 
 
 func _on_jump_out_timer_timeout():

@@ -92,7 +92,7 @@ max_enemy = 1
 [node name="Enemies" type="Node" parent="." index="10"]
 
 [node name="soldier_enemy" parent="Enemies" index="0" instance=ExtResource("9_grstv")]
-position = Vector2(832, 456)
+position = Vector2(475, 453)
 
 [node name="flying_enemy" parent="Enemies" index="1" instance=ExtResource("8_bi776")]
 position = Vector2(1248, 336)

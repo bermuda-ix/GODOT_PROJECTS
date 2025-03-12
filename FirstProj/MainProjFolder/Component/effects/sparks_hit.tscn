@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://d0hq4vov11ov2"]
 
-[ext_resource type="Script" path="res://Component/effects/CPUParticles2D.gd" id="1_2yunu"]
+[ext_resource type="Script" uid="uid://c58u1mtbuj4mg" path="res://Component/effects/CPUParticles2D.gd" id="1_2yunu"]
 
 [sub_resource type="Curve" id="Curve_fs1uh"]
 _data = [Vector2(0, 0.800795), 0.0, 0.0, 0, 0, Vector2(0.197101, 0.638479), -5.93927, -5.93927, 0, 0, Vector2(0.481159, 0), 0.410796, 0.0, 0, 0]

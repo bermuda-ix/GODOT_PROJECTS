@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://cmbh5yrvkl5a6"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_4opfk"]
-[ext_resource type="Script" path="res://chars/flying_enemy.gd" id="2_avqxo"]
+[ext_resource type="Script" uid="uid://csh8rjbhyvxoc" path="res://chars/flying_enemy.gd" id="2_avqxo"]
 [ext_resource type="Texture2D" uid="uid://bwsnnivuol0h2" path="res://Art_Components/Enemies/creatures edit_0.png" id="2_ga466"]
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="4_g2l3k"]
 [ext_resource type="AudioStream" uid="uid://kwfnuck85oo7" path="res://Art_Components/Effects/sound/alienshoot1.ogg" id="5_o3mrs"]
@@ -72,8 +72,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_h1g2h"]
 _data = {
-"RESET": SubResource("Animation_bdoiu"),
-"default": SubResource("Animation_tuyck")
+&"RESET": SubResource("Animation_bdoiu"),
+&"default": SubResource("Animation_tuyck")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wnnks"]
@@ -105,7 +105,7 @@ sprite_frames = SubResource("SpriteFrames_l6o7e")
 
 [node name="AnimationPlayer" parent="." index="4"]
 libraries = {
-"": SubResource("AnimationLibrary_h1g2h")
+&"": SubResource("AnimationLibrary_h1g2h")
 }
 
 [node name="CollisionShape2D" parent="." index="5"]

@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://cyceakrgrsniu"]
 
-[ext_resource type="Script" path="res://Component/health.gd" id="1_onmna"]
-[ext_resource type="Script" path="res://Component/hurtbox_template.gd" id="2_fj31f"]
-[ext_resource type="Script" path="res://Component/hitbox_template.gd" id="3_hclah"]
-[ext_resource type="Script" path="res://Component/attack_range.gd" id="4_cpw7k"]
-[ext_resource type="Script" path="res://Component/stagger.gd" id="5_63345"]
+[ext_resource type="Script" uid="uid://cnxm24jqclb68" path="res://Component/health.gd" id="1_onmna"]
+[ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="2_fj31f"]
+[ext_resource type="Script" uid="uid://5ijvah6jjgdb" path="res://Component/hitbox_template.gd" id="3_hclah"]
+[ext_resource type="Script" uid="uid://cf3jqneer6g2o" path="res://Component/attack_range.gd" id="4_cpw7k"]
+[ext_resource type="Script" uid="uid://ba6pwl0vfuyp" path="res://Component/stagger.gd" id="5_63345"]
 
 [node name="base_enemy" type="CharacterBody2D" groups=["Enemy"]]
 

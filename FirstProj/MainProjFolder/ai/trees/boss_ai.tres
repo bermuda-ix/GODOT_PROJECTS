@@ -1,10 +1,10 @@
 [gd_resource type="BehaviorTree" load_steps=93 format=3 uid="uid://c73vwom3cvpxj"]
 
-[ext_resource type="Script" path="res://ai/tasks/find_player.gd" id="1_7h010"]
-[ext_resource type="Script" path="res://ai/tasks/chase_player.gd" id="2_4ykdd"]
-[ext_resource type="Script" path="res://ai/tasks/flee_player.gd" id="2_bl5of"]
-[ext_resource type="Script" path="res://ai/tasks/within_range.gd" id="3_nv67j"]
-[ext_resource type="Script" path="res://ai/tasks/keep_range.gd" id="4_sosob"]
+[ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_7h010"]
+[ext_resource type="Script" uid="uid://cov8ln83btwt8" path="res://ai/tasks/chase_player.gd" id="2_4ykdd"]
+[ext_resource type="Script" uid="uid://dwx32cqb0l4t5" path="res://ai/tasks/flee_player.gd" id="2_bl5of"]
+[ext_resource type="Script" uid="uid://bjq0mdyt8cyi2" path="res://ai/tasks/within_range.gd" id="3_nv67j"]
+[ext_resource type="Script" uid="uid://c5vs4nrkjqj0t" path="res://ai/tasks/keep_range.gd" id="4_sosob"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_ewtji"]
 var/stunned/name = &"stunned"

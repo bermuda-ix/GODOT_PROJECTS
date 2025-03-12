@@ -1,11 +1,11 @@
 [gd_scene load_steps=40 format=3 uid="uid://ckut0dvkbw0oi"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_v27m8"]
-[ext_resource type="Script" path="res://chars/mech_enemy.gd" id="2_jjukm"]
+[ext_resource type="Script" uid="uid://bmrldbik8b3p2" path="res://chars/mech_enemy.gd" id="2_jjukm"]
 [ext_resource type="Texture2D" uid="uid://cjjg0i5hc7f10" path="res://Art_Components/Mechs/walker1.png" id="3_ycqub"]
 [ext_resource type="BehaviorTree" uid="uid://dc38s54hrld05" path="res://ai/trees/mech_enemy.tres" id="4_r1ibv"]
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="5_o81st"]
-[ext_resource type="Script" path="res://Component/hurtbox_template.gd" id="6_fsob0"]
+[ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="6_fsob0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_744re"]
 atlas = ExtResource("3_ycqub")
@@ -549,14 +549,14 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nsak1"]
 _data = {
-"Death": SubResource("Animation_oc2dx"),
-"RESET": SubResource("Animation_0u5nh"),
-"Staggered": SubResource("Animation_g06qv"),
-"attack": SubResource("Animation_elng3"),
-"hit": SubResource("Animation_88wjf"),
-"idle": SubResource("Animation_1w5ir"),
-"leap": SubResource("Animation_w5aod"),
-"walking": SubResource("Animation_0lf1b")
+&"Death": SubResource("Animation_oc2dx"),
+&"RESET": SubResource("Animation_0u5nh"),
+&"Staggered": SubResource("Animation_g06qv"),
+&"attack": SubResource("Animation_elng3"),
+&"hit": SubResource("Animation_88wjf"),
+&"idle": SubResource("Animation_1w5ir"),
+&"leap": SubResource("Animation_w5aod"),
+&"walking": SubResource("Animation_0lf1b")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_os6jg"]
@@ -598,7 +598,7 @@ shape = SubResource("CapsuleShape2D_pg2vh")
 
 [node name="AnimationPlayer" parent="." index="2"]
 libraries = {
-"": SubResource("AnimationLibrary_nsak1")
+&"": SubResource("AnimationLibrary_nsak1")
 }
 
 [node name="CollisionShape2D" parent="." index="3"]

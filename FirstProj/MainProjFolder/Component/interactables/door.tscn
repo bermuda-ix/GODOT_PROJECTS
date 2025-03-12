@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b8htmq8u3ykss"]
 
 [ext_resource type="Texture2D" uid="uid://cm36bhcpc0hsc" path="res://Art_Components/tile_maps/_PNG/1. main platforms.png" id="1_4moad"]
-[ext_resource type="Script" path="res://Component/interactables/path_follow_2d.gd" id="1_opf7r"]
+[ext_resource type="Script" uid="uid://d0d3rflso77ye" path="res://Component/interactables/path_follow_2d.gd" id="1_opf7r"]
 
 [sub_resource type="Curve2D" id="Curve2D_2h5dv"]
 _data = {

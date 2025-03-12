@@ -1,6 +1,6 @@
 [gd_resource type="BehaviorTree" load_steps=31 format=3 uid="uid://bkpyddqh402xp"]
 
-[ext_resource type="Script" path="res://ai/tasks/find_player.gd" id="1_7px3v"]
+[ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_7px3v"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_2djuw"]
 var/attack_mode/name = &"attack_mode"

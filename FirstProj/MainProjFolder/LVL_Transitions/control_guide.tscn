@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://46ln5h3bxjim"]
 
-[ext_resource type="Script" path="res://LVL_Transitions/control_guide.gd" id="1_bd0d3"]
+[ext_resource type="Script" uid="uid://y7e1bb211pe6" path="res://LVL_Transitions/control_guide.gd" id="1_bd0d3"]
 
 [node name="ControlGuide" type="CanvasLayer"]
 script = ExtResource("1_bd0d3")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bt0mesljrak83"]
 
-[ext_resource type="Script" path="res://LVL_Transitions/pause_menu.gd" id="1_trunp"]
+[ext_resource type="Script" uid="uid://dbn0u864yfs77" path="res://LVL_Transitions/pause_menu.gd" id="1_trunp"]
 
 [node name="PauseMenu" type="ColorRect"]
 anchors_preset = 15

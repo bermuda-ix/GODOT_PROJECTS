@@ -17,7 +17,6 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var animation_player = $AnimationPlayer as AnimationPlayer
 @onready var nav_agent = $NavigationAgent2D
 @onready var jump_timer = $JumpTimer
-@onready var player_right : bool = false
 
 @export var drop = preload("res://heart.tscn")
 @onready var death_timer = $DeathTimer
@@ -72,6 +71,9 @@ var attacking : bool = false
 var next_y
 var state
 var distance
+#player relative locations
+@onready var player_right : bool = false
+
 
 @onready var atk_chain : String = "_1"
 
@@ -119,6 +121,12 @@ func _ready():
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _process(_delta):
+	#FOR TESTING REMOVE LATER
+	current_state=States.GUARD
+	if current_state==States.GUARD:
+		return
+#	END OF TEST
+
 	if current_state==States.DEATH or current_state==States.STAGGERED or current_state==States.HIT:
 		hb_collison.disabled=true
 		return
@@ -132,6 +140,12 @@ func _process(_delta):
 	#print(on_screen.is_on_screen())
 
 func _physics_process(delta):
+	#FOR TESTING REMOVE LATER
+	current_state=States.GUARD
+	if current_state==States.GUARD:
+		return
+#	END OF TEST
+	
 	if current_state==States.DEATH or current_state==States.STAGGERED or current_state==States.HIT:
 		hb_collison.disabled=true
 		return
@@ -341,6 +355,12 @@ func set_combat_state(cur_state, new_state) -> void:
 func get_player_state(player: PlayerEntity) -> void:
 	player_state=player.get_state_enum()
 	
+func get_player_relative_loc():
+	if player.global_position.x>global_position.x:
+		player_right=true
+	else:
+		false
+
 func counter_attack():
 	if player_state == player.States.SPECIAL_ATTACK:
 		#print("jump")
@@ -356,7 +376,7 @@ func counter_attack():
 func get_width() -> int:
 	return collision_shape_2d.get_shape().radius
 func get_height() -> int:
-	return collision_shape_2d.get_shape().radius
+	return collision_shape_2d.get_shape().radius+10
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	match anim_name:

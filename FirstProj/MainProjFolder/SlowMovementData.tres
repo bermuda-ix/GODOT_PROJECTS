@@ -1,11 +1,14 @@
 [gd_resource type="Resource" script_class="PlayerMovementData" load_steps=2 format=3 uid="uid://bs3gsuimnsw8v"]
 
-[ext_resource type="Script" path="res://PlayerMovementResource.gd" id="1_pg6m2"]
+[ext_resource type="Script" uid="uid://0ld1jxuqaevj" path="res://PlayerMovementResource.gd" id="1_pg6m2"]
 
 [resource]
 script = ExtResource("1_pg6m2")
 speed = 50.0
 acceleration = 600.0
+air_acceleration = 400.0
 friction = 800.0
 jump_velocity = -250.0
 gravity_scale = 0.5
+air_resistance = 200
+dodge_speed = 180

@@ -142,7 +142,7 @@ navigation_layers = 2
 navigation_polygon = SubResource("NavigationPolygon_nxtlr")
 
 [node name="testing" parent="." index="21" instance=ExtResource("2_58a6u")]
-position = Vector2(368, -296)
+position = Vector2(312, -294)
 
 [node name="SpawnFlag" parent="." index="22" node_paths=PackedStringArray("spawn_connected") instance=ExtResource("3_c2k67")]
 position = Vector2(528, -308)
