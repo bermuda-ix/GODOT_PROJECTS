@@ -136,6 +136,8 @@ var target_size_y
 var target_pos_y=0
 var target_pos_x=0
 var target_top=0
+var target_left_edge=0
+var target_right_edge=0
 
 #flipping
 @onready var jump_out_timer = $JumpOutTimer
@@ -205,13 +207,13 @@ func _physics_process(delta):
 	elif state==States.FLIP:
 		#pass
 		
-		apply_gravity(delta)
+		#apply_gravity(delta)
 		flipping(delta)
 		sp_atk()
 		move_and_slide()
 		
 		if is_on_floor():
-			if state==States.JUMP or state==States.FLIP:
+			if state==States.JUMP or (state==States.FLIP and flipped_over):
 				set_state(state, States.IDLE)
 			
 		#velocity = movement * SPEED * delta
@@ -271,7 +273,7 @@ func _physics_process(delta):
 			side = "Right"
 		else:
 			side = "Left"
-		#label.text=str(" Target:", combat_state, " Side:", side)
+		#label.text=str("Vel: ",velocity)
 		
 		
 		knockback = lerp(knockback, Vector2.ZERO, 0.1)
@@ -767,8 +769,9 @@ func get_target_info():
 	else:
 		target_size_x = target.get_width()
 		target_size_y = target.get_height()
-		target_top = target.global_position.y-(target_size_y/2)
-	
+		target_top = target.global_position.y-(target_size_y/2-5)
+		target_left_edge=target.global_position.x-(target_size_x*2)
+		target_right_edge=target.global_position.x+(target_size_x*2)
 
 func locked_combat():
 	if target==null:
@@ -776,7 +779,12 @@ func locked_combat():
 	else:
 		var direction_to_target : Vector2 = Vector2(target.global_position.x, target.global_position.y) - global_position
 		
-		label.text=str(target_size_x, ",", target_size_y, ": ",target_right)
+		if target_right:
+			var dist_to_edge=round(abs(global_position.x-target_right_edge))
+			label.text=str(target_right, Vector2((target_left_edge),(target_top-25)))
+		else:
+			var dist_to_edge=round(abs(global_position.x-target_left_edge))
+			label.text=str(target_right, Vector2((target_right_edge),(target_top-25)))
 		if abs(direction_to_target.x) >(50+target_size_x) or abs(direction_to_target.y)>(10+target_size_y):
 			pass
 		else:
@@ -1128,31 +1136,62 @@ func _on_hit_box_body_entered(body):
 func flip_over():
 	
 	flip_speed=movement_data.speed * 90
+	
 	set_state(state, States.FLIP)
 	#state=States.FLIP
 
 func flipping(delta):
-	
+#	variables set and declared
 	target_pos_y=(target.global_position.y)
 	var pos_above_y=target.global_position.y-global_position.y
 	target_pos_x=(target.global_position.x)
 	var pos_above_x=target.global_position.x-global_position.x
-	if pos_above_y<(target_size_y+15) and not flipped_over:
+	
+#	Jumping before flipping over
+	if not flipped_over:
 		#print(position.y, " ",target_size_y+target.position.y)
-		velocity.y=movement_data.jump_velocity
+		if target_right:
+			#velocity.y=movement_data.jump_velocit/2
+			#gravity = 0
+			if global_position.y>target_top-15:
+				if global_position<Vector2((target_left_edge-15),(target_top-25)):
+					print("lerping dawg: ", global_position)
+					global_position=lerp(global_position, Vector2((target_left_edge-5),(target_top-40)), delta*3)
+				else:
+					velocity.y=movement_data.jump_velocity
+			else:
+				print("no lerp")
+				flipped_over=true
+				#gravity = 980
+		else:
+			#gravity = 0
+			if global_position.y>target_top-15:
+				if global_position>Vector2((target_right_edge+15),(target_top-25)):
+					print("lerping dawg", global_position)
+					global_position=lerp(global_position, Vector2((target_right_edge+5),(target_top-40)), delta*3)
+				else:
+					velocity.y=movement_data.jump_velocity
+			else:
+				print("no lerp")
+				flipped_over=true
+				#gravity = 980
+#	flipping over
 	else:
 		flipped_over=true
 		if not target_right:
 			movement = target_direction.rotated(CLOCKWISE)
+			
 			#print("flip_right")
 		else:
 			movement = target_direction.rotated(COUNTER_CLOCKWISE)
 			#print("flip_left")
 		if global_position.y<target_top:
 			velocity = movement * flip_speed * delta
+			
 		else:
 			velocity.y += gravity * movement_data.gravity_scale * delta
-			velocity.x=0
+			
+		
 
 
 func _on_jump_out_timer_timeout():
