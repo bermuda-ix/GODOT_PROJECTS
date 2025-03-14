@@ -12,11 +12,15 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var floor_checks_right = $FloorChecks/FloorChecksRight as RayCast2D
 @onready var player_tracking = $PlayerTrackerPivot/PlayerTracking as RayCast2D
 @onready var player_tracker_pivot = $PlayerTrackerPivot as Node2D
+@onready var vision_handler: VisionHandler = $VisionHandler
+
 @onready var chase_timer = $ChaseTimer as Timer
 @onready var animated_sprite_2d = $AnimatedSprite2D as AnimatedSprite2D
 @onready var animation_player = $AnimationPlayer as AnimationPlayer
 @onready var nav_agent = $NavigationAgent2D
 @onready var jump_timer = $JumpTimer
+@onready var movement_handler: MovementHandler = $MovementHandler
+
 
 @export var drop = preload("res://heart.tscn")
 @onready var death_timer = $DeathTimer
@@ -33,6 +37,8 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var bullet = BALL_PROCETILE
 @onready var bullet_dir = Vector2.RIGHT
 @onready var shooting_cooldown = $ShootingCooldown
+@onready var shoot_handler: ShootHandler = $ShootHandler
+
 
 @onready var health = $Health
 @onready var hurt_box = $HurtBox
@@ -51,6 +57,7 @@ var immortal = false
 
 @onready var bt_player = $BTPlayer
 
+@onready var jump_handler: JumpHandler = $JumpHandler
 @export var jump_speed : float = 120.0
 @export var chase_speed : float = 80.0
 @export var hitbox: HitBox
@@ -69,16 +76,35 @@ var knockback : Vector2 = Vector2.ZERO
 var parried : bool = false 
 var attacking : bool = false
 var next_y
+var next_x
+var next
+var dir
 var state
 var distance
 #player relative locations
 @onready var player_right : bool = false
 
-
+#ATTACKS
 @onready var atk_chain : String = "_1"
 
+
+@onready var death_handler: DeathHandler = $DeathHandler
+
+#State Machine
+@export var state_machine : LimboHSM
+#states
+@onready var idle: LimboState = $LimboHSM/IDLE
+@onready var chasing: LimboState = $LimboHSM/CHASING
+@onready var jump: LimboState = $LimboHSM/JUMP
+@onready var death: LimboState = $LimboHSM/DEATH
+@onready var attack: LimboState = $LimboHSM/ATTACK
+@onready var shooting: LimboState = $LimboHSM/SHOOTING
+@onready var dodge: LimboState = $LimboHSM/DODGE
+@onready var hit: LimboState = $LimboHSM/HIT
+@onready var staggered: LimboState = $LimboHSM/STAGGERED
+
 enum States{
-	GUARD,
+	IDLE,
 	CHASE,
 	JUMP,
 	ATTACK,
@@ -87,12 +113,11 @@ enum States{
 	SHOOTING,
 	STAGGERED,
 	DODGE,
-	DEAD,
 	HIT
 }
 
-var current_state = States.GUARD
-var prev_state = States.GUARD
+var current_state = States.IDLE
+var prev_state = States.IDLE
 
 enum CombatStates{
 	RANGED,
@@ -107,92 +132,84 @@ var player_state : int
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	#set_state(current_state, States.CHASE)
+	bullet = BALL_PROCETILE
 	animation_player.play("guard")
 	state="guard"
-	next_y=nav_agent.get_next_path_position().y
+	next=nav_agent.get_next_path_position()
 	bt_player.blackboard.set_var("attack_mode", false)
 	bt_player.blackboard.set_var("melee_mode", false)
 	bt_player.blackboard.set_var("ranged_mode", true)
 	bt_player.blackboard.set_var("within_range", false)
 	turret.setup(0.2)
 	turret.shoot_timer.paused=true
+	_init_state_machine()
+	
 
+	
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+# initialize state
+func _init_state_machine():
+	state_machine.initial_state=idle
+	state_machine.initialize(self)
+	state_machine.set_active(true)
 
+	state_machine.add_transition(idle, attack, &"attack_mode")
+	
+	
 func _process(_delta):
-	#FOR TESTING REMOVE LATER
-	current_state=States.GUARD
-	if current_state==States.GUARD:
-		return
-#	END OF TEST
-
-	if current_state==States.DEATH or current_state==States.STAGGERED or current_state==States.HIT:
+	##FOR TESTING REMOVE LATER
+	##current_state=States.GUARD
+	##if current_state==States.GUARD:
+		##return
+	#if state_machine.get_active_state() == idle:
+		#return
+##	END OF TEST
+	#movement_handler.dir)
+	dir = to_local(next)
+	
+	if state_machine.get_active_state()==death or current_state==States.STAGGERED or current_state==States.HIT:
 		hb_collison.disabled=true
 		return
 	health_bar()
 	track_player()
 	combat_state_change()
 	handle_vision()
-	#print(bt_player.blackboard.get_var("attack_mode"))
+	#bt_player.blackboard.get_var("attack_mode"))
 	attack_timer.one_shot=true
 	get_player_state(player)
-	#print(on_screen.is_on_screen())
+	#on_screen.is_on_screen())
 
 func _physics_process(delta):
-	#FOR TESTING REMOVE LATER
-	current_state=States.GUARD
-	if current_state==States.GUARD:
-		return
-#	END OF TEST
+	##FOR TESTING REMOVE LATER
+	##current_state=States.GUARD
+	##if current_state==States.GUARD:
+		##return
+	#if state_machine.get_active_state() == idle:
+		#return
+##	END OF TEST
 	
-	if current_state==States.DEATH or current_state==States.STAGGERED or current_state==States.HIT:
+	if state_machine.get_active_state()==death or current_state==States.STAGGERED or current_state==States.HIT:
 		hb_collison.disabled=true
 		return
-	move_and_slide()
+	
 	counter_attack()
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		
-	handle_movement()
+	#handle_movement()
 	if current_state==States.CHASE:
 		velocity.x = current_speed + knockback.x
 	else:
 		velocity.x= knockback.x
+	move_and_slide()
 	
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	
 	
 func handle_vision():
-	if player_tracking.is_colliding():
-		var collision_result = player_tracking.get_collider()
-		
-		if collision_result != player:
-			#set_state(current_state, States.GUARD)
-			return
-		else:
-			set_state(current_state, States.ATTACK)
-			#chase_timer.start(1)
-			player_found = true
-			
-	else:
-		
-		set_state(current_state, States.GUARD)
-		player_found = false
-		
-	if not attack_range.has_overlapping_bodies():
-		bt_player.blackboard.set_var("within_range", false)
-		
-	if current_combat_state==CombatStates.RANGED and player_found:
-		set_state(current_state, States.ATTACK)
-	elif current_combat_state==CombatStates.MELEE:
-		if bt_player.blackboard.get_var("within_range"):
-			set_state(current_state, States.ATTACK)
-		else:
-			set_state(current_state, States.CHASE)
-			#chase_timer.start(1)
-	#player_found = true
+	vision_handler.handle_vision()
 	
 	
 	
@@ -203,23 +220,23 @@ func track_player():
 	
 	player_tracker_pivot.look_at(direction_to_player)
 	
-func handle_movement() -> void:
-	
-	var direction= global_position - player.global_position
-	
-	
-	if player_found == true:
-		
-		var dir = to_local(nav_agent.get_next_path_position())
-		#print(dir)
-		if dir.x > 0 and is_on_floor():
-			current_speed = chase_speed
-			animated_sprite_2d.scale.x = -1
-			hit_box.scale.x = -1
-		else:
-			current_speed = -chase_speed
-			animated_sprite_2d.scale.x = 1
-			hit_box.scale.x = 1
+#func handle_movement() -> void:
+	#
+	#var direction= global_position - player.global_position
+	#
+	#
+	#if player_found == true:
+		#
+		#var dir = to_local(nav_agent.get_next_path_position())
+		##dir)
+		#if dir.x > 0 and is_on_floor():
+			#current_speed = chase_speed
+			#animated_sprite_2d.scale.x = -1
+			#hit_box.scale.x = -1
+		#else:
+			#current_speed = -chase_speed
+			#animated_sprite_2d.scale.x = 1
+			#hit_box.scale.x = 1
 			
 
 func combat_state_change():
@@ -231,6 +248,8 @@ func combat_state_change():
 	else:
 		turret.shoot_timer.paused=true
 		set_combat_state(current_combat_state, CombatStates.MELEE)
+		
+		
 func target_lock():
 	Events.unlock_from.emit()
 	target_lock_node.target_lock()
@@ -253,7 +272,7 @@ func shoot():
 
 func melee_attack():
 	set_state(current_state,States.ATTACK)
-	#print("melee attack")
+	#"melee attack")
 	animation_player.play("atk"+atk_chain)
 
 func health_bar():
@@ -261,6 +280,7 @@ func health_bar():
 
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
+	
 
 func set_state(cur_state, new_state) -> void:
 
@@ -274,14 +294,14 @@ func set_state(cur_state, new_state) -> void:
 	else:
 		current_state = new_state
 		prev_state = cur_state
-		#print(current_state, " : ", prev_state)
+		#current_state, " : ", prev_state)
 		match current_state:
 			States.ATTACK:
 				state="ATTACK"
 				bt_player.blackboard.set_var("attack_mode", true)
 				attacking=true
 				#gravity=0
-			States.GUARD:
+			States.IDLE:
 				state="GUARD"
 				hb_collison.disabled=false
 				bt_player.blackboard.set_var("attack_mode", false)
@@ -297,7 +317,7 @@ func set_state(cur_state, new_state) -> void:
 					current_speed=prev_speed
 			States.JUMP:
 				prev_speed=current_speed
-				#print("jumping")
+				#"jumping")
 				state="JUMP"
 				if current_speed < 0:
 					current_speed = -jump_speed
@@ -324,7 +344,7 @@ func set_state(cur_state, new_state) -> void:
 				#animation_player.play("hit")
 				
 func set_combat_state(cur_state, new_state) -> void:
-	#print(cur_state, " ", new_state)
+	#cur_state, " ", new_state)
 	if(cur_state == new_state):
 		return
 		print("no change")
@@ -363,12 +383,14 @@ func get_player_relative_loc():
 
 func counter_attack():
 	if player_state == player.States.SPECIAL_ATTACK:
-		#print("jump")
+		#"jump")
 		if current_state!=States.ATTACK:
 			if player_state == player.States.FLIP:
 				shoot()
 			else:
-				handle_jump(0.5)
+				#handle_jump(0.5)
+				jump_handler.handle_jump(0.5)
+				
 			
 			
 		
@@ -418,7 +440,8 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 func _on_navigation_timer_timeout() -> void:
 	makepath()
 	next_y=nav_agent.get_next_path_position().y
-	
+	next_x=nav_agent.get_next_path_position().x
+	next=nav_agent.get_next_path_position()
 
 
 func _on_stagger_staggered() -> void:
@@ -435,11 +458,10 @@ func _on_parry_timer_timeout() -> void:
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	print(damage)
+
 	if current_state==States.DEATH:
 		return
 	health.set_temporary_immortality(0.1)
-	print("hit")
 	animation_player.play("hit")
 	stagger_timer.start(0.1)
 	set_state(current_state, States.HIT)
@@ -447,22 +469,17 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		#animation_player.play("RESET")
 	#
 	#if current_state==States.STAGGERED:
-		#print("big damage")
+		#"big damage")
 		#
 		##health.health-=2
 	#else:
-		#print("not big damage")
+		#"not big damage")
 
 func _on_health_health_depleted() -> void:
-	print("dying")
-	set_state(current_state, States.DEATH)
-	hb_collison.disabled=false
-	animation_player.play("death")
-	await animation_player.animation_finished
-	animation_player.play("dead")
+	death_handler.death()
 
 func _on_attack_timer_timeout() -> void:
-	#print("begin move")
+	#"begin move")
 	if bt_player.blackboard.get_var("within_range"):
 		set_state(current_state, States.ATTACK)
 	else:
@@ -470,20 +487,20 @@ func _on_attack_timer_timeout() -> void:
 
 
 func _on_turret_shoot_bullet() -> void:
-	var bullet_inst = bullet.instantiate()
-	bullet_inst.set_speed(400.0)
-	#bullet_inst.set_accel(50.0)
-	#bullet_inst.tracking_time=0.01
-	bullet_inst.dir = (turret.player_tracker.target_position).normalized()
-	bullet_inst.spawnPos = Vector2(turret.global_position.x, turret.global_position.y)
-	bullet_inst.spawnRot = player_tracker_pivot.rotation_degrees
-	#print(bullet_inst.dir)
-	
-	get_tree().current_scene.add_child(bullet_inst)
-
+	#var bullet_inst = bullet.instantiate()
+	#bullet_inst.set_speed(400.0)
+	##bullet_inst.set_accel(50.0)
+	##bullet_inst.tracking_time=0.01
+	#bullet_inst.dir = (turret.player_tracker.target_position).normalized()
+	#bullet_inst.spawnPos = Vector2(turret.global_position.x, turret.global_position.y)
+	#bullet_inst.spawnRot = player_tracker_pivot.rotation_degrees
+	##bullet_inst.dir)
+	#
+	#get_tree().current_scene.add_child(bullet_inst)
+	shoot_handler.shoot_bullet()
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	if current_state==States.DEATH:
+	if state_machine.get_active_state()==death:
 		queue_free()
 
 

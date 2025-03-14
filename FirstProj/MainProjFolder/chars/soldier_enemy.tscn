@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=3 uid="uid://b5d2nkkrrcixy"]
+[gd_scene load_steps=107 format=3 uid="uid://b5d2nkkrrcixy"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_ojqla"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ibi2a"]
@@ -79,6 +79,15 @@
 [ext_resource type="Texture2D" uid="uid://cmyvx2n2e3yj1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Stunned/Stunned05.png" id="70_0rb0h"]
 [ext_resource type="Texture2D" uid="uid://b4w3h1v4gqqlv" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Stunned/Stunned06.png" id="71_1mrof"]
 [ext_resource type="Texture2D" uid="uid://cb74312fth8pt" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Stunned/Stunned07.png" id="72_g25us"]
+[ext_resource type="Script" uid="uid://bsha0mnmfnjww" path="res://Component/functions/MovementHandler.gd" id="80_goy6u"]
+[ext_resource type="Script" uid="uid://dgyx4da7oymh2" path="res://Component/functions/JumpHandler.gd" id="81_3cn1w"]
+[ext_resource type="Script" uid="uid://cr58jnxs33hft" path="res://Component/functions/deathHandler.gd" id="82_iidcd"]
+[ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="83_ue1j6"]
+[ext_resource type="Script" uid="uid://wkp4a7ybuj21" path="res://Component/functions/VisionHandler.gd" id="84_b31jy"]
+[ext_resource type="Script" uid="uid://daq7xh1e6l7u6" path="res://chars/idle.gd" id="85_jwwhp"]
+[ext_resource type="Script" uid="uid://d2wausty5l457" path="res://chars/jump.gd" id="86_36igo"]
+[ext_resource type="Script" uid="uid://c4yno8xy5erif" path="res://chars/death.gd" id="87_24o4m"]
+[ext_resource type="Script" uid="uid://b5an13nv6em7m" path="res://chars/attack.gd" id="88_24o4m"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p1s76"]
 animations = [{
@@ -1033,10 +1042,11 @@ size = Vector2(48, 40)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_x6bu2"]
 
-[node name="soldier_enemy" node_paths=PackedStringArray("hitbox") instance=ExtResource("1_ojqla")]
+[node name="soldier_enemy" node_paths=PackedStringArray("hitbox", "state_machine") instance=ExtResource("1_ojqla")]
 collision_layer = 16384
 script = ExtResource("2_ibi2a")
 hitbox = NodePath("HitBox")
+state_machine = NodePath("LimboHSM")
 
 [node name="NavigationAgent2D" parent="." index="0"]
 navigation_layers = 2
@@ -1121,6 +1131,60 @@ offset_right = 16.0
 offset_bottom = -25.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="24"]
+
+[node name="MovementHandler" type="Node" parent="." index="25" node_paths=PackedStringArray("actor")]
+script = ExtResource("80_goy6u")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://bsha0mnmfnjww"
+
+[node name="JumpHandler" type="Node" parent="." index="26" node_paths=PackedStringArray("actor")]
+script = ExtResource("81_3cn1w")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://dgyx4da7oymh2"
+
+[node name="DeathHandler" type="Node" parent="." index="27" node_paths=PackedStringArray("actor")]
+script = ExtResource("82_iidcd")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://cr58jnxs33hft"
+
+[node name="ShootHandler" type="Node" parent="." index="28" node_paths=PackedStringArray("actor")]
+script = ExtResource("83_ue1j6")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://5gt6g8063rb4"
+
+[node name="VisionHandler" type="Node" parent="." index="29" node_paths=PackedStringArray("actor", "sm")]
+script = ExtResource("84_b31jy")
+actor = NodePath("..")
+sm = NodePath("../LimboHSM")
+metadata/_custom_type_script = "uid://wkp4a7ybuj21"
+
+[node name="LimboHSM" type="LimboHSM" parent="." index="30"]
+
+[node name="IDLE" type="LimboState" parent="LimboHSM" index="0" node_paths=PackedStringArray("actor")]
+script = ExtResource("85_jwwhp")
+actor = NodePath("../..")
+
+[node name="CHASING" type="LimboState" parent="LimboHSM" index="1"]
+
+[node name="JUMP" type="LimboState" parent="LimboHSM" index="2" node_paths=PackedStringArray("actor")]
+script = ExtResource("86_36igo")
+actor = NodePath("../..")
+
+[node name="DEATH" type="LimboState" parent="LimboHSM" index="3" node_paths=PackedStringArray("actor")]
+script = ExtResource("87_24o4m")
+actor = NodePath("../..")
+
+[node name="ATTACK" type="LimboState" parent="LimboHSM" index="4" node_paths=PackedStringArray("actor")]
+script = ExtResource("88_24o4m")
+actor = NodePath("../..")
+
+[node name="SHOOTING" type="LimboState" parent="LimboHSM" index="5"]
+
+[node name="DODGE" type="LimboState" parent="LimboHSM" index="6"]
+
+[node name="HIT" type="LimboState" parent="LimboHSM" index="7"]
+
+[node name="STAGGERED" type="LimboState" parent="LimboHSM" index="8"]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]

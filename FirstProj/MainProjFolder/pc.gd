@@ -185,7 +185,7 @@ func _process(delta):
 		move_axis = 0
 	
 	handle_hitbox(input_axis, face_right)
-	#print(air_atk)
+	#air_atk)
 	
 	if(state!=States.DODGE and s_atk==false and state!=States.FLIP):
 		parry()
@@ -198,7 +198,7 @@ func _process(delta):
 			dash_attack()
 	
 	lockon()
-	#print(air_atk)
+	#air_atk)
 
 func _physics_process(delta):
 	
@@ -230,11 +230,11 @@ func _physics_process(delta):
 		
 
 		
-		#print(dodge_timer.time_left)
-		#print(parry_stance)
+		#dodge_timer.time_left)
+		#parry_stance)
 		var wall_hold = false
 		if(state!=States.DODGE and parry_stance==false and state!=States.FLIP):
-			#print("not flip")
+			#"not flip")
 			handle_wall_jump(wall_hold, delta)
 			jump(input_axis, delta)
 			handle_acceleration(input_axis, delta)
@@ -248,8 +248,8 @@ func _physics_process(delta):
 		#elif state==States.SPECIAL_ATTACK and combo_state!=ComboStates.SPC_ATK_BACK:
 			#velocity=Vector2.ZERO
 			#gravity=0
-			#print("no fall")
-		#print(input_axis)
+			#"no fall")
+		#input_axis)
 		
 		
 		var was_on_floor = is_on_floor()
@@ -267,7 +267,7 @@ func _physics_process(delta):
 		just_wall_jump = false
 		
 
-		#print(cur_state)
+		#cur_state)
 		var side
 		if target_right:
 			side = "Right"
@@ -281,10 +281,10 @@ func _physics_process(delta):
 		#wall hold check
 		if not is_on_wall() or not Input.is_action_pressed("sprint"):
 			wall_hold=false
-			#print("wall hold false")
+			#"wall hold false")
 			gravity = 980
 		else:
-			#print("wall hold true")
+			#"wall hold true")
 			state = States.WALL_STICK
 			velocity.x =0
 			velocity.y = 0
@@ -301,7 +301,7 @@ func apply_gravity(delta):
 #condtions to return to idle
 func return_to_idle():
 	if is_on_floor() and state==States.FLIP:
-		#print("flip end")
+		#"flip end")
 		set_state(state, States.IDLE)
 	
 # Handle jump.
@@ -333,7 +333,7 @@ func jump(input_axis, delta):
 #breaking out of a flip. Test without timer later
 func break_out():
 	if Input.is_action_just_pressed("jump") and not Input.is_action_pressed("sprint"):
-		print("breaking")
+		
 		#state=States.IDLE
 		set_state(state, States.IDLE)
 		jump_out_signal.emit()
@@ -389,7 +389,7 @@ func handle_wall_jump(wall_hold, delta):
 		velocity.x =0
 		velocity.y = 0
 		gravity = 0
-		print("wall hold true")
+		
 	else:
 		gravity = 980
 
@@ -563,29 +563,29 @@ func sp_atk():
 			
 			
 		if combo_state==ComboStates.SPC_ATK_BACK:
-			print("judo flip")
+			
 			sp_atk_combo="shotgun_attack_fast"
 		else:
 			if atk_chain==0:
 				if sp_atk_chn == 0 and (not attack_timer.is_stopped()):
 					sp_atk_combo="shotgun_attack"
-					#print("sp_atk 1")
+					#"sp_atk 1")
 					AudioStreamManager.play(shotgun_fire)
 					sp_atk_dmg=1
 
 				elif sp_atk_chn == 1 and (not attack_timer.is_stopped()):
 					#animated_sprite_2d.play("attack_2")
 					sp_atk_combo="shotgun_attack"
-					#print("sp_atk 2")
+					#"sp_atk 2")
 					AudioStreamManager.play(shotgun_fire)
 					sp_atk_dmg=1
 
 				elif sp_atk_chn == 2 and (not attack_timer.is_stopped()):
 					#animated_sprite_2d.play("attack_3")
-					#print("reload anim playing")
+					#"reload anim playing")
 					AudioStreamManager.play(reload)
 					sp_atk_combo="shotgun_attack"
-					#print("sp_atk 3")
+					#"sp_atk 3")
 					sp_atk_dmg=2
 					
 			else:
@@ -707,7 +707,7 @@ func lockon():
 		
 
 		if not target.on_screen.is_on_screen():
-			print("no enemy near")
+			
 			target=null
 		else:
 			target.target_lock()
@@ -738,11 +738,11 @@ func lockon():
 		if state!=States.FLIP and state!=States.SPECIAL_ATTACK:
 			if arc_vector<Vector2.RIGHT and Vector2.UP<arc_vector:
 				
-				#print("on right")
+				#"on right")
 				target_right = false
 				
 			elif arc_vector>Vector2.LEFT and Vector2.UP>arc_vector:
-				#print("on left")
+				#"on left")
 				target_right = true
 			
 func find_closest_enemy():
@@ -750,7 +750,7 @@ func find_closest_enemy():
 	
 	if enemies.is_empty():
 		return
-		print("no enemies near")
+		
 	
 	var closest_enemy = enemies[0]
 	
@@ -761,7 +761,7 @@ func find_closest_enemy():
 	
 	target=closest_enemy
 	
-	print("target locked")
+	
 	
 func get_target_info():
 	if target==null:
@@ -795,30 +795,30 @@ func locked_combat():
 func _on_hazard_detector_area_entered(area):
 	if area.is_in_group("hazard"):
 		global_position=starting_position
-		print("Health Depleted!")
+		
 		health.health -= 1
-		print(health.health)
+		
 	elif area.is_in_group("Enemy"):
-		print("enemy touched")
+		
 		knockback.x = input_dir.x * knockback.x *0.5
 	
 	
 	
 #State machine for animations currently
 func set_state(current_state, new_state: int) -> void:
-	#print(current_state, new_state)
+	#current_state, new_state)
 	if(current_state == new_state):
-		#print("no change")
+		#"no change")
 		return
 	#else:
-		#print(current_state, new_state)
-		##print("changing")
+		#current_state, new_state)
+		##"changing")
 	
 	if current_state==States.JUMP:
 		air_atk=true
 		#if not is_on_floor():
 			#return
-		#print(air_atk)
+		#air_atk)
 	if current_state == States.PARRY and parry_stance==true:
 		pass
 	
@@ -848,7 +848,7 @@ func set_state(current_state, new_state: int) -> void:
 		States.IDLE:
 			anim_player.speed_scale=1
 			anim_player.play("idle")
-			#print("playing idle")
+			#"playing idle")
 			movement_data.friction=1000
 			s_atk=false
 			counter_box_collision.disabled=true
@@ -922,9 +922,9 @@ func _on_health_health_depleted():
 #knockbacks
 #func _on_hurt_box_knockback(hitbox):
 	##kb_dir=global_position.direction_to(hitbox.global_position)
-	##print("knockback")
+	##"knockback")
 	##kb_dir=round(kb_dir)
-	##print(kb_dir.x, " ", knockback)
+	##kb_dir.x, " ", knockback)
 
 func _on_hurt_box_got_hit(hitbox):
 	if hitbox.is_in_group("regular_enemy_hb"):
@@ -937,9 +937,9 @@ func _on_hurt_box_got_hit(hitbox):
 	else:
 		knockback.x = -350
 		kb_dir=global_position.direction_to(hitbox.global_position)
-		#print("knockback")
+		#"knockback")
 		kb_dir=round(kb_dir)
-		#print(kb_dir.x, " ", knockback)
+		#kb_dir.x, " ", knockback)
 		knockback.x = kb_dir.x * knockback.x
 		velocity.y=movement_data.jump_velocity/2
 		velocity.x = movement_data.speed + knockback.x
@@ -956,9 +956,9 @@ func _on_hurt_box_area_entered(area):
 	if area.is_in_group("bullet"):
 		knockback.x = -350
 		kb_dir=global_position.direction_to(area.global_position)
-		#print("knockback")
+		#"knockback")
 		kb_dir=round(kb_dir)
-		#print(kb_dir.x, " ", knockback)
+		#kb_dir.x, " ", knockback)
 		knockback.x = kb_dir.x * knockback.x
 		velocity.y=movement_data.jump_velocity/2
 		velocity.x = movement_data.speed + knockback.x
@@ -985,7 +985,7 @@ func set_start_pos(checkpoint_position):
 
 func _on_animation_player_animation_finished(anim_name):
 	if state==States.ATTACK:
-		#print("attack finished")
+		#"attack finished")
 		hit_success=false
 		if atk_chain < 2:
 			atk_chain += 1
@@ -1015,10 +1015,10 @@ func _on_animation_player_animation_finished(anim_name):
 				if sp_atk_chn < 2:
 				
 					sp_atk_chn += 1
-				#print("Attack Chain")
+				#"Attack Chain")
 				elif sp_atk_chn >=2:
 					sp_atk_chn = 0
-				#print("special finished")
+				#"special finished")
 				s_atk=false
 				#state=States.IDLE
 				if falling:
@@ -1040,15 +1040,15 @@ func _on_animation_player_animation_finished(anim_name):
 			falling=true
 	
 	elif anim_name=="dodge_roll":
-		print("dodge finished")
+		
 		velocity.x=0
 		counter_box_collision.disabled=true
 		set_collision_mask_value(15, true)
 	elif anim_name=="dodge":
-		print("dodge finished")
+		
 		counter_box_collision.disabled=true
 	elif anim_name=="flip":
-		print("flipping finish")
+		
 		anim_player.speed_scale=1
 		set_state(state, prev_state)
 	
@@ -1070,7 +1070,7 @@ func load_player_data():
 			var content = file.get_line()
 			var stat : String = content.get_slice(":", 0)
 			var stat_val : int = int(content.get_slice(":", 1))
-			print(stat, ": ", str(stat_val))
+			
 			if stat != null:
 				match stat:
 					"health":
@@ -1112,7 +1112,7 @@ func _on_parry_timer_timeout():
 func parry_success():
 	parry_timer.stop()
 	anim_player.play("Parry_Success")
-	print("parry success")
+	
 	AudioStreamManager.play(parry_sfx)
 	await anim_player.animation_finished
 	anim_player.stop()
@@ -1128,7 +1128,7 @@ func _on_hit_box_area_entered(area):
 func _on_hit_box_body_entered(body):
 	if body.is_in_group("Enemy") and combat_state==CombatStates.UNLOCKED:
 		Events.unlock_from.emit()
-		#print(str(body.name))
+		#str(body.name))
 		target_string_test=str(body.name)
 		target = body
 		combat_state=CombatStates.LOCKED
@@ -1149,30 +1149,30 @@ func flipping(delta):
 	
 #	Jumping before flipping over
 	if not flipped_over:
-		#print(position.y, " ",target_size_y+target.position.y)
+		#position.y, " ",target_size_y+target.position.y)
 		if target_right:
 			#velocity.y=movement_data.jump_velocit/2
 			#gravity = 0
 			if global_position.y>target_top-15:
 				if global_position<Vector2((target_left_edge-15),(target_top-25)):
-					print("lerping dawg: ", global_position)
+					#"lerping dawg: ", global_position)
 					global_position=lerp(global_position, Vector2((target_left_edge-5),(target_top-40)), delta*3)
 				else:
 					velocity.y=movement_data.jump_velocity
 			else:
-				print("no lerp")
+				#"no lerp")
 				flipped_over=true
 				#gravity = 980
 		else:
 			#gravity = 0
 			if global_position.y>target_top-15:
 				if global_position>Vector2((target_right_edge+15),(target_top-25)):
-					print("lerping dawg", global_position)
+					#"lerping dawg", global_position)
 					global_position=lerp(global_position, Vector2((target_right_edge+5),(target_top-40)), delta*3)
 				else:
 					velocity.y=movement_data.jump_velocity
 			else:
-				print("no lerp")
+				#"no lerp")
 				flipped_over=true
 				#gravity = 980
 #	flipping over
@@ -1181,10 +1181,10 @@ func flipping(delta):
 		if not target_right:
 			movement = target_direction.rotated(CLOCKWISE)
 			
-			#print("flip_right")
+			#"flip_right")
 		else:
 			movement = target_direction.rotated(COUNTER_CLOCKWISE)
-			#print("flip_left")
+			#"flip_left")
 		if global_position.y<target_top:
 			velocity = movement * flip_speed * delta
 			
@@ -1256,7 +1256,7 @@ func _on_counter_box_area_entered(area):
 	if area.is_in_group("bullet"):
 		counter_flag = true
 		counter_timer.start()
-		print("bullet dodge")
+		
 	elif area.is_in_group("Enemy"):
 		print("enemy dodge")
 
@@ -1275,7 +1275,7 @@ func _on_hazard_detector_body_entered(body):
 
 func _on_hazard_detector_body_exited(body):
 	if body.is_in_group("Enemy"):
-		#print("leaving enemy")
+		#"leaving enemy")
 		target_below=false
 
 

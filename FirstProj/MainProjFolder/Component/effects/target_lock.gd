@@ -1,3 +1,4 @@
+class_name TargetLockVisual
 extends Node2D
 
 @onready var animation_player = $Sprite2D/AnimationPlayer

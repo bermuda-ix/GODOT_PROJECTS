@@ -52,7 +52,7 @@ offset = Vector2(0, -150)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
 libraries = {
-"": SubResource("AnimationLibrary_5lbfw")
+&"": SubResource("AnimationLibrary_5lbfw")
 }
 
 [node name="Label" type="Label" parent="Sprite2D"]
