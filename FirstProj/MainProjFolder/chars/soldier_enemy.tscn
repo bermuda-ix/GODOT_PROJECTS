@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=3 uid="uid://b5d2nkkrrcixy"]
+[gd_scene load_steps=118 format=3 uid="uid://b5d2nkkrrcixy"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_ojqla"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ibi2a"]
@@ -93,6 +93,7 @@
 [ext_resource type="Script" uid="uid://b5an13nv6em7m" path="res://chars/attack.gd" id="88_24o4m"]
 [ext_resource type="Script" uid="uid://cvo1e5meai30k" path="res://Component/functions/CombatStateChangeHandler.gd" id="88_ivw15"]
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="89_81rlk"]
+[ext_resource type="Script" uid="uid://d04qf1jqrfg1h" path="res://Component/functions/CounterAttackHandler.gd" id="89_j0qvy"]
 [ext_resource type="Script" uid="uid://dgja48rcyj78n" path="res://chars/chasing.gd" id="90_4frhw"]
 [ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="90_tmwt0"]
 [ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="94_kad5g"]
@@ -387,6 +388,16 @@ animations = [{
 "name": &"stunned",
 "speed": 5.0
 }]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j0qvy"]
+particle_flag_disable_z = true
+inherit_velocity_ratio = 0.229
+spread = 180.0
+initial_velocity_min = 34.48
+initial_velocity_max = 34.48
+linear_accel_min = -42.53
+linear_accel_max = 33.33
+damping_max = 30.46
 
 [sub_resource type="Animation" id="Animation_rh5v8"]
 length = 0.1
@@ -1067,6 +1078,20 @@ modulate = Color(0.454524, 0.454524, 0.454524, 1)
 self_modulate = Color(0.521141, 0.521141, 0.521141, 1)
 sprite_frames = SubResource("SpriteFrames_p1s76")
 
+[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D" index="0"]
+modulate = Color(0.761294, 0.168372, 4.81307e-07, 1)
+self_modulate = Color(0.569186, 0.0170695, 0.00667699, 1)
+position = Vector2(0, 24)
+emitting = false
+lifetime = 0.5
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+randomness = 1.0
+trail_enabled = true
+trail_lifetime = 0.05
+process_material = SubResource("ParticleProcessMaterial_j0qvy")
+
 [node name="AnimationPlayer" parent="." index="2"]
 libraries = {
 &"": SubResource("AnimationLibrary_c6g3t")
@@ -1157,9 +1182,10 @@ script = ExtResource("80_goy6u")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
 
-[node name="JumpHandler" type="Node" parent="." index="27" node_paths=PackedStringArray("actor")]
+[node name="JumpHandler" type="Node" parent="." index="27" node_paths=PackedStringArray("actor", "state_machine")]
 script = ExtResource("81_3cn1w")
 actor = NodePath("..")
+state_machine = NodePath("../LimboHSM")
 metadata/_custom_type_script = "uid://dgyx4da7oymh2"
 
 [node name="DeathHandler" type="Node" parent="." index="28" node_paths=PackedStringArray("actor", "sm", "animation_player")]
@@ -1190,13 +1216,23 @@ script = ExtResource("87_qbww6")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
-[node name="CombatStateChangeHandler" type="Node" parent="." index="33" node_paths=PackedStringArray("actor", "combat_state_machine")]
+[node name="CombatStateChangeHandler" type="Node" parent="." index="33" node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player")]
 script = ExtResource("88_ivw15")
 actor = NodePath("..")
+sm = NodePath("../LimboHSM")
 combat_state_machine = NodePath("../CombatStateMachine")
+bt_player = NodePath("../BTPlayer")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
-[node name="LimboHSM" type="LimboHSM" parent="." index="34"]
+[node name="CounterAttackHandler" type="Node" parent="." index="34" node_paths=PackedStringArray("actor", "jump_handler", "shoot_attack_manager", "state_machine")]
+script = ExtResource("89_j0qvy")
+actor = NodePath("..")
+jump_handler = NodePath("../JumpHandler")
+shoot_attack_manager = NodePath("../ShootAttackManager")
+state_machine = NodePath("../LimboHSM")
+metadata/_custom_type_script = "uid://d04qf1jqrfg1h"
+
+[node name="LimboHSM" type="LimboHSM" parent="." index="35"]
 
 [node name="IDLE" type="LimboState" parent="LimboHSM" index="0" node_paths=PackedStringArray("actor")]
 script = ExtResource("85_jwwhp")
@@ -1232,7 +1268,7 @@ actor = NodePath("../..")
 script = ExtResource("89_81rlk")
 actor = NodePath("../..")
 
-[node name="CombatStateMachine" type="LimboHSM" parent="." index="35"]
+[node name="CombatStateMachine" type="LimboHSM" parent="." index="36"]
 
 [node name="RANGED" type="LimboState" parent="CombatStateMachine" index="0" node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("94_kad5g")

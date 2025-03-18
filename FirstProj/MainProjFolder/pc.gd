@@ -719,7 +719,7 @@ func lockon():
 	else:
 		
 		target_dist=abs(global_position-target.global_position)
-		if target.state_machine.get_active_state==target.death:
+		if target.state_machine.get_active_state()==target.death:
 			combat_state=CombatStates.UNLOCKED
 			return
 		

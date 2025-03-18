@@ -52,6 +52,8 @@ var immortal = false
 @onready var hurt_box_weak_point = $AnimatedSprite2D/HurtBox_WeakPoint
 @onready var attack_timer: Timer = $AttackTimer
 @onready var stagger_timer: Timer = $StaggerTimer
+@onready var gpu_particles_2d: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
+
 
 @onready var collision_shape_2d = $CollisionShape2D
 
@@ -169,6 +171,14 @@ func _init_state_machine():
 	state_machine.add_transition(attack, chasing, &"start_chase")
 	state_machine.add_transition(chasing, attack, &"start_attack")
 	state_machine.add_transition(attack, idle, &"idle_mode")
+	state_machine.add_transition(attack, jump, &"jump_attack")
+	state_machine.add_transition(chasing, jump, &"jump")
+	state_machine.add_transition(jump, chasing, &"landing")
+	state_machine.add_transition(jump, attack, &"land_attack")
+	
+	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
+	state_machine.add_transition(state_machine.ANYSTATE, death, &"die")
+	
 func _init_combat_state_machine():
 	combat_state_machine.initial_state=ranged
 	combat_state_machine.initialize(self)
@@ -330,11 +340,11 @@ func set_state(cur_state, new_state) -> void:
 				#animation_player.speed_scale = 1
 				#animation_player.play("idle")
 			States.CHASE:
-				player_found=true
-				hb_collison.disabled=false
-				state="CHASE"
-				bt_player.blackboard.set_var("attack_mode", true)
-				animation_player.play("run")
+				#player_found=true
+				#hb_collison.disabled=false
+				#state="CHASE"
+				#bt_player.blackboard.set_var("attack_mode", true)
+				#animation_player.play("run")
 				if prev_state==States.JUMP:
 					current_speed=prev_speed
 			#States.JUMP:
@@ -488,7 +498,8 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		animation_player.play("hit")
 		stagger_timer.start(0.1)
 		#set_state(current_state, States.HIT)
-		state_machine.change_active_state(hit)
+		gpu_particles_2d.emitting=true
+		state_machine.dispatch(&"hit")
 	else:
 		print("kill shot")
 	#if current_state != States.DEATH:
