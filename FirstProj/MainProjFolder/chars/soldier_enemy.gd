@@ -86,6 +86,8 @@ var distance
 
 #ATTACKS
 @onready var atk_chain : String = "_1"
+@onready var melee_attack_manager: MeleeAttackManager = $MeleeAttackManager
+@onready var shoot_attack_manager: ShootAttackManager = $ShootAttackManager
 
 
 @onready var death_handler: DeathHandler = $DeathHandler
@@ -119,6 +121,12 @@ enum States{
 var current_state = States.IDLE
 var prev_state = States.IDLE
 
+@onready var combat_state_machine: LimboHSM = $CombatStateMachine
+@onready var ranged: LimboState = $CombatStateMachine/RANGED
+@onready var melee: LimboState = $CombatStateMachine/MELEE
+
+
+
 enum CombatStates{
 	RANGED,
 	MELEE,
@@ -143,6 +151,8 @@ func _ready():
 	turret.setup(0.2)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
+	_init_combat_state_machine()
+	hurt_box.set_damage_mulitplyer(1)
 	
 
 	
@@ -155,7 +165,18 @@ func _init_state_machine():
 	state_machine.set_active(true)
 
 	state_machine.add_transition(idle, attack, &"attack_mode")
+	state_machine.add_transition(staggered, state_machine.get_previous_active_state(), &"stagger_recover")
+	state_machine.add_transition(attack, chasing, &"start_chase")
+	state_machine.add_transition(chasing, attack, &"start_attack")
+	state_machine.add_transition(attack, idle, &"idle_mode")
+func _init_combat_state_machine():
+	combat_state_machine.initial_state=ranged
+	combat_state_machine.initialize(self)
+	combat_state_machine.set_active(true)
 	
+	combat_state_machine.add_transition(ranged, melee, &"melee_mode")
+	combat_state_machine.add_transition(melee, ranged, &"ranged_mode")
+
 	
 func _process(_delta):
 	##FOR TESTING REMOVE LATER
@@ -168,12 +189,12 @@ func _process(_delta):
 	#movement_handler.dir)
 	dir = to_local(next)
 	
-	if state_machine.get_active_state()==death or current_state==States.STAGGERED or current_state==States.HIT:
+	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collison.disabled=true
 		return
 	health_bar()
-	track_player()
-	combat_state_change()
+	#track_player()
+	#combat_state_change()
 	handle_vision()
 	#bt_player.blackboard.get_var("attack_mode"))
 	attack_timer.one_shot=true
@@ -189,7 +210,7 @@ func _physics_process(delta):
 		#return
 ##	END OF TEST
 	
-	if state_machine.get_active_state()==death or current_state==States.STAGGERED or current_state==States.HIT:
+	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collison.disabled=true
 		return
 	
@@ -199,7 +220,7 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 		
 	#handle_movement()
-	if current_state==States.CHASE:
+	if state_machine.get_active_state()==chasing:
 		velocity.x = current_speed + knockback.x
 	else:
 		velocity.x= knockback.x
@@ -213,12 +234,12 @@ func handle_vision():
 	
 	
 	
-func track_player():
-	
-	var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y)\
-	- player_tracking.position
-	
-	player_tracker_pivot.look_at(direction_to_player)
+#func track_player():
+	#
+	#var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y)\
+	#- player_tracking.position
+	#
+	#player_tracker_pivot.look_at(direction_to_player)
 	
 #func handle_movement() -> void:
 	#
@@ -239,15 +260,15 @@ func track_player():
 			#hit_box.scale.x = 1
 			
 
-func combat_state_change():
-	distance=abs(global_position.x-player.global_position.x)
-	if distance>100:
-		turret.shoot_timer.paused=false
-		set_combat_state(current_combat_state, CombatStates.RANGED)
-		
-	else:
-		turret.shoot_timer.paused=true
-		set_combat_state(current_combat_state, CombatStates.MELEE)
+#func combat_state_change():
+	#distance=abs(global_position.x-player.global_position.x)
+	#if distance>100:
+		#turret.shoot_timer.paused=false
+		#set_combat_state(current_combat_state, CombatStates.RANGED)
+		#
+	#else:
+		#turret.shoot_timer.paused=true
+		#set_combat_state(current_combat_state, CombatStates.MELEE)
 		
 		
 func target_lock():
@@ -256,7 +277,8 @@ func target_lock():
 	
 
 func chase():
-	set_state(current_state, States.CHASE)
+	#set_state(current_state, States.CHASE)
+	state_machine.change_active_state(chasing)
 	
 func handle_jump(jump_vel : float):
 	if jump_timer.is_stopped():
@@ -265,15 +287,15 @@ func handle_jump(jump_vel : float):
 		jump_timer.start(2)
 	
 
-func shoot():
-	animation_player.play("shoot")
-	turret.shoot()
+#func shoot():
+	#animation_player.play("shoot")
+	#turret.shoot()
 	
 
-func melee_attack():
-	set_state(current_state,States.ATTACK)
-	#"melee attack")
-	animation_player.play("atk"+atk_chain)
+#func melee_attack():
+	#state_machine.change_active_state(attack)
+	##"melee attack")
+	#animation_player.play("atk"+atk_chain)
 
 func health_bar():
 	h_bar.text=str(health.health, " : ", stagger.stagger, " : inv:", health.immortality)
@@ -296,17 +318,17 @@ func set_state(cur_state, new_state) -> void:
 		prev_state = cur_state
 		#current_state, " : ", prev_state)
 		match current_state:
-			States.ATTACK:
-				state="ATTACK"
-				bt_player.blackboard.set_var("attack_mode", true)
-				attacking=true
+			#States.ATTACK:
+				#state="ATTACK"
+				#bt_player.blackboard.set_var("attack_mode", true)
+				#attacking=true
 				#gravity=0
-			States.IDLE:
-				state="GUARD"
-				hb_collison.disabled=false
-				bt_player.blackboard.set_var("attack_mode", false)
-				animation_player.speed_scale = 1
-				animation_player.play("idle")
+			#States.IDLE:
+				#state="GUARD"
+				#hb_collison.disabled=false
+				#bt_player.blackboard.set_var("attack_mode", false)
+				#animation_player.speed_scale = 1
+				#animation_player.play("idle")
 			States.CHASE:
 				player_found=true
 				hb_collison.disabled=false
@@ -315,59 +337,59 @@ func set_state(cur_state, new_state) -> void:
 				animation_player.play("run")
 				if prev_state==States.JUMP:
 					current_speed=prev_speed
-			States.JUMP:
-				prev_speed=current_speed
-				#"jumping")
-				state="JUMP"
-				if current_speed < 0:
-					current_speed = -jump_speed
-				else:
-					current_speed = jump_speed
+			#States.JUMP:
+				#prev_speed=current_speed
+				##"jumping")
+				#state="JUMP"
+				#if current_speed < 0:
+					#current_speed = -jump_speed
+				#else:
+					#current_speed = jump_speed
 			States.PARRY:
 				hb_collison.disabled=true
-			States.DEATH:
-				hb_collison.disabled=true
-				state="DEATH"
-				bt_player.blackboard.set_var("attack_mode", false)
+			#States.DEATH:
+				#hb_collison.disabled=true
+				#state="DEATH"
+				#bt_player.blackboard.set_var("attack_mode", false)
 			States.SHOOTING:
 				state="shooting"
-			States.STAGGERED:
-				state="staggered"
-				animation_player.play("Staggered")
-				hb_collison.disabled=true
-				bt_player.blackboard.set_var("attack_mode", false)
+			#States.STAGGERED:
+				#state="staggered"
+				#animation_player.play("Staggered")
+				#hb_collison.disabled=true
+				#bt_player.blackboard.set_var("attack_mode", false)
 			States.DODGE:
 				state="Dodging"
-			States.HIT:
-				state="Hit"
-				bt_player.blackboard.set_var("attack_mode", false)
+			#States.HIT:
+				#state="Hit"
+				#bt_player.blackboard.set_var("attack_mode", false)
 				#animation_player.play("hit")
 				
-func set_combat_state(cur_state, new_state) -> void:
-	#cur_state, " ", new_state)
-	if(cur_state == new_state):
-		return
-		print("no change")
-	elif(current_state==States.DEATH):
-		return
-	elif(current_state==States.STAGGERED):
-		return
-	
-	else:
-		current_combat_state = new_state
-		prev_combat_state = cur_state
-		
-		match current_combat_state:
-			CombatStates.RANGED:
-				combat_state="Ranged"
-				bt_player.blackboard.set_var("ranged_mode", true)
-				bt_player.blackboard.set_var("melee_mode", false)
-				
-				#animation_player.play("shoot")
-			CombatStates.MELEE:
-				bt_player.blackboard.set_var("melee_mode", true)
-				bt_player.blackboard.set_var("ranged_mode", false)
-				combat_state="Melee"
+#func set_combat_state(cur_state, new_state) -> void:
+	##cur_state, " ", new_state)
+	#if(cur_state == new_state):
+		#return
+		#print("no change")
+	#elif(state_machine.get_active_state()==death):
+		#return
+	#elif(state_machine.get_active_state()==staggered):
+		#return
+	#
+	#else:
+		#current_combat_state = new_state
+		#prev_combat_state = cur_state
+		#
+		#match current_combat_state:
+			#CombatStates.RANGED:
+				#combat_state="Ranged"
+				#bt_player.blackboard.set_var("ranged_mode", true)
+				#bt_player.blackboard.set_var("melee_mode", false)
+				#
+				##animation_player.play("shoot")
+			#CombatStates.MELEE:
+				#bt_player.blackboard.set_var("melee_mode", true)
+				#bt_player.blackboard.set_var("ranged_mode", false)
+				#combat_state="Melee"
 					
 					
 					#animation_player.play("atk_1")
@@ -384,9 +406,9 @@ func get_player_relative_loc():
 func counter_attack():
 	if player_state == player.States.SPECIAL_ATTACK:
 		#"jump")
-		if current_state!=States.ATTACK:
+		if state_machine.get_active_state()!=attack:
 			if player_state == player.States.FLIP:
-				shoot()
+				shoot_attack_manager.shoot()
 			else:
 				#handle_jump(0.5)
 				jump_handler.handle_jump(0.5)
@@ -417,12 +439,14 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func _on_attack_range_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		bt_player.blackboard.set_var("within_range", true)
-		set_state(current_state, States.ATTACK)
+		#set_state(current_state, States.ATTACK)
+		state_machine.dispatch(&"start_attack")
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player") and not animation_player.is_playing():
 		bt_player.blackboard.set_var("within_range", false)
-		set_state(current_state, States.CHASE)
+		#set_state(current_state, States.CHASE)
+		state_machine.dispatch(&"start_chase")
 		
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("sp_atk_default"):
@@ -445,26 +469,28 @@ func _on_navigation_timer_timeout() -> void:
 
 
 func _on_stagger_staggered() -> void:
-	set_state(current_state, States.STAGGERED)
-	parry_timer.start(5)
-	hurt_box.set_damage_mulitplyer(3)
-	print("staggered")
-	hb_collison.disabled
+	#set_state(current_state, States.STAGGERED)
+	state_machine.change_active_state(staggered)
 
 
 func _on_parry_timer_timeout() -> void:
-	set_state(current_state, prev_state)
+	#set_state(current_state, prev_state)
+	state_machine.dispatch(&"stagger_recover")
 	hurt_box.set_damage_mulitplyer(1)
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-
-	if current_state==States.DEATH:
+	print(damage)
+	if state_machine.get_active_state()==death:
 		return
 	health.set_temporary_immortality(0.1)
-	animation_player.play("hit")
-	stagger_timer.start(0.1)
-	set_state(current_state, States.HIT)
+	if damage<health.health:
+		animation_player.play("hit")
+		stagger_timer.start(0.1)
+		#set_state(current_state, States.HIT)
+		state_machine.change_active_state(hit)
+	else:
+		print("kill shot")
 	#if current_state != States.DEATH:
 		#animation_player.play("RESET")
 	#
@@ -476,14 +502,17 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		#"not big damage")
 
 func _on_health_health_depleted() -> void:
+	parry_timer.stop()
 	death_handler.death()
 
 func _on_attack_timer_timeout() -> void:
 	#"begin move")
 	if bt_player.blackboard.get_var("within_range"):
-		set_state(current_state, States.ATTACK)
+		#set_state(current_state, States.ATTACK)
+		state_machine.dispatch(&"start_attack")
 	else:
-		set_state(current_state, States.CHASE)
+		#set_state(current_state, States.CHASE)
+		state_machine.dispatch(&"start_chase")
 
 
 func _on_turret_shoot_bullet() -> void:
@@ -506,5 +535,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 func _on_stagger_timer_timeout() -> void:
 	bt_player.blackboard.set_var("attack_mode", true)
-
-	set_state(current_state, prev_state)
+	state_machine.dispatch(&"stagger_recover")
+	movement_handler.active=true
+	#state_machine.change_active_state(state_machine.get_previous_active_state())
+	#set_state(current_state, prev_state)

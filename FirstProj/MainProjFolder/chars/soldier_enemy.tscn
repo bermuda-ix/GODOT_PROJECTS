@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://b5d2nkkrrcixy"]
+[gd_scene load_steps=116 format=3 uid="uid://b5d2nkkrrcixy"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_ojqla"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ibi2a"]
@@ -79,6 +79,7 @@
 [ext_resource type="Texture2D" uid="uid://cmyvx2n2e3yj1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Stunned/Stunned05.png" id="70_0rb0h"]
 [ext_resource type="Texture2D" uid="uid://b4w3h1v4gqqlv" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Stunned/Stunned06.png" id="71_1mrof"]
 [ext_resource type="Texture2D" uid="uid://cb74312fth8pt" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Stunned/Stunned07.png" id="72_g25us"]
+[ext_resource type="Script" uid="uid://cx8bi64kwoulc" path="res://Component/functions/PlayerTrackingHandler.gd" id="80_edkvm"]
 [ext_resource type="Script" uid="uid://bsha0mnmfnjww" path="res://Component/functions/MovementHandler.gd" id="80_goy6u"]
 [ext_resource type="Script" uid="uid://dgyx4da7oymh2" path="res://Component/functions/JumpHandler.gd" id="81_3cn1w"]
 [ext_resource type="Script" uid="uid://cr58jnxs33hft" path="res://Component/functions/deathHandler.gd" id="82_iidcd"]
@@ -86,8 +87,16 @@
 [ext_resource type="Script" uid="uid://wkp4a7ybuj21" path="res://Component/functions/VisionHandler.gd" id="84_b31jy"]
 [ext_resource type="Script" uid="uid://daq7xh1e6l7u6" path="res://chars/idle.gd" id="85_jwwhp"]
 [ext_resource type="Script" uid="uid://d2wausty5l457" path="res://chars/jump.gd" id="86_36igo"]
+[ext_resource type="Script" uid="uid://ddhk64y60klpg" path="res://Component/functions/MeleeAttackManager.gd" id="86_j1fbf"]
 [ext_resource type="Script" uid="uid://c4yno8xy5erif" path="res://chars/death.gd" id="87_24o4m"]
+[ext_resource type="Script" uid="uid://5h8g0n4mebtm" path="res://Component/functions/ShootAttackManager.gd" id="87_qbww6"]
 [ext_resource type="Script" uid="uid://b5an13nv6em7m" path="res://chars/attack.gd" id="88_24o4m"]
+[ext_resource type="Script" uid="uid://cvo1e5meai30k" path="res://Component/functions/CombatStateChangeHandler.gd" id="88_ivw15"]
+[ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="89_81rlk"]
+[ext_resource type="Script" uid="uid://dgja48rcyj78n" path="res://chars/chasing.gd" id="90_4frhw"]
+[ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="90_tmwt0"]
+[ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="94_kad5g"]
+[ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="95_ivw15"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p1s76"]
 animations = [{
@@ -1074,6 +1083,12 @@ target_position = Vector2(320, 0)
 collision_mask = 3
 collide_with_areas = true
 
+[node name="LeapUpCheckLeft" parent="JumpChecks" index="4"]
+collision_layer = 0
+
+[node name="LeapUpCheckRight" parent="JumpChecks" index="5"]
+collision_layer = 0
+
 [node name="NavigationTimer" parent="." index="8"]
 wait_time = 0.2
 autostart = true
@@ -1132,39 +1147,65 @@ offset_bottom = -25.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="24"]
 
-[node name="MovementHandler" type="Node" parent="." index="25" node_paths=PackedStringArray("actor")]
+[node name="PlayerTrackingHandler" type="Node" parent="." index="25" node_paths=PackedStringArray("actor")]
+script = ExtResource("80_edkvm")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://cx8bi64kwoulc"
+
+[node name="MovementHandler" type="Node" parent="." index="26" node_paths=PackedStringArray("actor")]
 script = ExtResource("80_goy6u")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
 
-[node name="JumpHandler" type="Node" parent="." index="26" node_paths=PackedStringArray("actor")]
+[node name="JumpHandler" type="Node" parent="." index="27" node_paths=PackedStringArray("actor")]
 script = ExtResource("81_3cn1w")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://dgyx4da7oymh2"
 
-[node name="DeathHandler" type="Node" parent="." index="27" node_paths=PackedStringArray("actor")]
+[node name="DeathHandler" type="Node" parent="." index="28" node_paths=PackedStringArray("actor", "sm", "animation_player")]
 script = ExtResource("82_iidcd")
 actor = NodePath("..")
+sm = NodePath("../LimboHSM")
+animation_player = NodePath("../AnimationPlayer")
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
 
-[node name="ShootHandler" type="Node" parent="." index="28" node_paths=PackedStringArray("actor")]
+[node name="ShootHandler" type="Node" parent="." index="29" node_paths=PackedStringArray("actor")]
 script = ExtResource("83_ue1j6")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
-[node name="VisionHandler" type="Node" parent="." index="29" node_paths=PackedStringArray("actor", "sm")]
+[node name="VisionHandler" type="Node" parent="." index="30" node_paths=PackedStringArray("actor", "sm")]
 script = ExtResource("84_b31jy")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
-[node name="LimboHSM" type="LimboHSM" parent="." index="30"]
+[node name="MeleeAttackManager" type="Node" parent="." index="31" node_paths=PackedStringArray("actor")]
+script = ExtResource("86_j1fbf")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://ddhk64y60klpg"
+
+[node name="ShootAttackManager" type="Node" parent="." index="32" node_paths=PackedStringArray("actor")]
+script = ExtResource("87_qbww6")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://5h8g0n4mebtm"
+
+[node name="CombatStateChangeHandler" type="Node" parent="." index="33" node_paths=PackedStringArray("actor", "combat_state_machine")]
+script = ExtResource("88_ivw15")
+actor = NodePath("..")
+combat_state_machine = NodePath("../CombatStateMachine")
+metadata/_custom_type_script = "uid://cvo1e5meai30k"
+
+[node name="LimboHSM" type="LimboHSM" parent="." index="34"]
 
 [node name="IDLE" type="LimboState" parent="LimboHSM" index="0" node_paths=PackedStringArray("actor")]
 script = ExtResource("85_jwwhp")
 actor = NodePath("../..")
 
-[node name="CHASING" type="LimboState" parent="LimboHSM" index="1"]
+[node name="CHASING" type="LimboState" parent="LimboHSM" index="1" node_paths=PackedStringArray("actor", "bt_player")]
+script = ExtResource("90_4frhw")
+actor = NodePath("../..")
+bt_player = NodePath("../../BTPlayer")
 
 [node name="JUMP" type="LimboState" parent="LimboHSM" index="2" node_paths=PackedStringArray("actor")]
 script = ExtResource("86_36igo")
@@ -1174,17 +1215,34 @@ actor = NodePath("../..")
 script = ExtResource("87_24o4m")
 actor = NodePath("../..")
 
-[node name="ATTACK" type="LimboState" parent="LimboHSM" index="4" node_paths=PackedStringArray("actor")]
+[node name="ATTACK" type="LimboState" parent="LimboHSM" index="4" node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("88_24o4m")
 actor = NodePath("../..")
+bt_player = NodePath("../../BTPlayer")
 
 [node name="SHOOTING" type="LimboState" parent="LimboHSM" index="5"]
 
 [node name="DODGE" type="LimboState" parent="LimboHSM" index="6"]
 
-[node name="HIT" type="LimboState" parent="LimboHSM" index="7"]
+[node name="HIT" type="LimboState" parent="LimboHSM" index="7" node_paths=PackedStringArray("actor")]
+script = ExtResource("90_tmwt0")
+actor = NodePath("../..")
 
-[node name="STAGGERED" type="LimboState" parent="LimboHSM" index="8"]
+[node name="STAGGERED" type="LimboState" parent="LimboHSM" index="8" node_paths=PackedStringArray("actor")]
+script = ExtResource("89_81rlk")
+actor = NodePath("../..")
+
+[node name="CombatStateMachine" type="LimboHSM" parent="." index="35"]
+
+[node name="RANGED" type="LimboState" parent="CombatStateMachine" index="0" node_paths=PackedStringArray("actor", "bt_player")]
+script = ExtResource("94_kad5g")
+actor = NodePath("../..")
+bt_player = NodePath("../../BTPlayer")
+
+[node name="MELEE" type="LimboState" parent="CombatStateMachine" index="1" node_paths=PackedStringArray("actor", "bt_player")]
+script = ExtResource("95_ivw15")
+actor = NodePath("../..")
+bt_player = NodePath("../../BTPlayer")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]

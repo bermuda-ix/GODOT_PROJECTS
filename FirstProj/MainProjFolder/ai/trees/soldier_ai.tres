@@ -58,8 +58,8 @@ variable = &"melee_mode"
 value = SubResource("BBVariant_eahdn")
 
 [sub_resource type="BBNode" id="BBNode_ysbiq"]
-saved_value = NodePath(".")
-resource_name = "."
+saved_value = NodePath("MeleeAttackManager")
+resource_name = "MeleeAttackManager"
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_qwr6t"]
 node = SubResource("BBNode_ysbiq")
@@ -112,8 +112,8 @@ variable = &"ranged_mode"
 value = SubResource("BBVariant_wptbb")
 
 [sub_resource type="BBNode" id="BBNode_4kawb"]
-saved_value = NodePath(".")
-resource_name = "."
+saved_value = NodePath("ShootAttackManager")
+resource_name = "ShootAttackManager"
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_kmg6s"]
 node = SubResource("BBNode_4kawb")

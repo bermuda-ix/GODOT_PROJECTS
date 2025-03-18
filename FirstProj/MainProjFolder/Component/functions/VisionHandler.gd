@@ -14,13 +14,14 @@ func handle_vision():
 		else:
 			#actor.set_state(actor.current_state, actor.States.ATTACK)
 			sm.dispatch(&"attack_mode")
-			print("attack")
+			#print("attack")
 			#chase_timer.start(1)
 			actor.player_found = true
 			
 	else:
 		
-		actor.set_state(actor.current_state, actor.States.IDLE)
+		#actor.set_state(actor.current_state, actor.States.IDLE)
+		sm.dispatch(&"idle_mode")
 		actor.player_found = false
 		
 	if not actor.attack_range.has_overlapping_bodies():

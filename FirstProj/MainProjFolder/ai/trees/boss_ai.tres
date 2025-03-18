@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=93 format=3 uid="uid://c73vwom3cvpxj"]
+[gd_resource type="BehaviorTree" load_steps=92 format=3 uid="uid://c73vwom3cvpxj"]
 
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_7h010"]
 [ext_resource type="Script" uid="uid://cov8ln83btwt8" path="res://ai/tasks/chase_player.gd" id="2_4ykdd"]
@@ -135,12 +135,7 @@ script = ExtResource("3_nv67j")
 target_var = &"target"
 range = 40
 
-[sub_resource type="BBNode" id="BBNode_bnn7y"]
-saved_value = NodePath(".")
-resource_name = "."
-
 [sub_resource type="BTCallMethod" id="BTCallMethod_fthev"]
-node = SubResource("BBNode_bnn7y")
 method = &"attack_combo"
 
 [sub_resource type="BTSequence" id="BTSequence_1q3mw"]

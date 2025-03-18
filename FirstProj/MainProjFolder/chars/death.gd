@@ -10,4 +10,4 @@ func _enter() -> void:
 func _update(delta: float) -> void:
 	actor.hb_collison.disabled=true
 	#print("oof i'm dead sadge")
-	actor.animation_player.play("dead")
+	actor.movement_handler.active=false
