@@ -36,14 +36,17 @@ var distance_above_player : float = 0.0
 var found : bool = false
 var knockback : Vector2 = Vector2.ZERO
 
+@onready var state_machine: LimboHSM = $LimboHSM
+@onready var death: LimboState = $LimboHSM/DEATH
+
 enum States{
 	WANDER,
 	CHASE,
 	STAGGERED,
 	DEATH
 }
-var current_state = States.CHASE
-var prev_state = States.CHASE
+var current_state = States.WANDER
+var prev_state = States.WANDER
 
 var state : String
 
@@ -58,7 +61,7 @@ func _ready():
 	
 func _process(delta):
 	track_player()
-	handle_vision()
+	#handle_vision()
 	#print(current_state)
 	stg_laber.text=str("Stagger: ", stagger.get_stagger(), " ", state)
 	
@@ -115,10 +118,10 @@ func handle_vision():
 				#player_found = true
 				#found = true
 				##print("found")
-			#
 	#else:
 		#player_found = false
 	player_found=true
+	
 func track_player():
 	if player == null:
 		return
@@ -225,3 +228,8 @@ func target_lock():
 	target_lock_inst=TARGET_LOCK.instantiate()
 	add_child(target_lock_inst)
 	print(str(position)," ",str(target_lock_inst.global_position))
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	player_found=true
+	set_state(current_state, States.CHASE)

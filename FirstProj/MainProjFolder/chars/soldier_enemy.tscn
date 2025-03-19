@@ -1,4 +1,4 @@
-[gd_scene load_steps=118 format=3 uid="uid://b5d2nkkrrcixy"]
+[gd_scene load_steps=119 format=3 uid="uid://b5d2nkkrrcixy"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_ojqla"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ibi2a"]
@@ -95,6 +95,7 @@
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="89_81rlk"]
 [ext_resource type="Script" uid="uid://d04qf1jqrfg1h" path="res://Component/functions/CounterAttackHandler.gd" id="89_j0qvy"]
 [ext_resource type="Script" uid="uid://dgja48rcyj78n" path="res://chars/chasing.gd" id="90_4frhw"]
+[ext_resource type="Script" uid="uid://co05jfawt7xsm" path="res://Component/functions/GetPlayerInfoHandler.gd" id="90_r7ycw"]
 [ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="90_tmwt0"]
 [ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="94_kad5g"]
 [ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="95_ivw15"]
@@ -1232,7 +1233,12 @@ shoot_attack_manager = NodePath("../ShootAttackManager")
 state_machine = NodePath("../LimboHSM")
 metadata/_custom_type_script = "uid://d04qf1jqrfg1h"
 
-[node name="LimboHSM" type="LimboHSM" parent="." index="35"]
+[node name="GetPlayerInfoHandler" type="Node" parent="." index="35" node_paths=PackedStringArray("actor")]
+script = ExtResource("90_r7ycw")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://co05jfawt7xsm"
+
+[node name="LimboHSM" type="LimboHSM" parent="." index="36"]
 
 [node name="IDLE" type="LimboState" parent="LimboHSM" index="0" node_paths=PackedStringArray("actor")]
 script = ExtResource("85_jwwhp")
@@ -1268,7 +1274,7 @@ actor = NodePath("../..")
 script = ExtResource("89_81rlk")
 actor = NodePath("../..")
 
-[node name="CombatStateMachine" type="LimboHSM" parent="." index="36"]
+[node name="CombatStateMachine" type="LimboHSM" parent="." index="37"]
 
 [node name="RANGED" type="LimboState" parent="CombatStateMachine" index="0" node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("94_kad5g")

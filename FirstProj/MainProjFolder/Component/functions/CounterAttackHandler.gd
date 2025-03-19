@@ -6,7 +6,7 @@ extends Node
 @export var shoot_attack_manager : ShootAttackManager
 @export var state_machine : LimboHSM
 
-func counter_attack():
+func _physics_process(delta: float) -> void:
 	if actor.player_state == actor.player.States.SPECIAL_ATTACK:
 		#"jump")
 		if state_machine.get_active_state()!=actor.attack:

@@ -208,7 +208,7 @@ func _process(_delta):
 	handle_vision()
 	#bt_player.blackboard.get_var("attack_mode"))
 	attack_timer.one_shot=true
-	get_player_state(player)
+	#get_player_state(player)
 	#on_screen.is_on_screen())
 
 func _physics_process(delta):
@@ -222,9 +222,10 @@ func _physics_process(delta):
 	
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collison.disabled=true
+		velocity.y += gravity * delta
 		return
 	
-	counter_attack()
+	#counter_attack()
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -290,11 +291,11 @@ func chase():
 	#set_state(current_state, States.CHASE)
 	state_machine.change_active_state(chasing)
 	
-func handle_jump(jump_vel : float):
-	if jump_timer.is_stopped():
-		velocity.y = jump_velocity*jump_vel
-		set_state(current_state, States.JUMP)
-		jump_timer.start(2)
+#func handle_jump(jump_vel : float):
+	#if jump_timer.is_stopped():
+		#velocity.y = jump_velocity*jump_vel
+		#set_state(current_state, States.JUMP)
+		#jump_timer.start(2)
 	
 
 #func shoot():
@@ -413,16 +414,16 @@ func get_player_relative_loc():
 	else:
 		false
 
-func counter_attack():
-	if player_state == player.States.SPECIAL_ATTACK:
-		#"jump")
-		if state_machine.get_active_state()!=attack:
-			if player_state == player.States.FLIP:
-				shoot_attack_manager.shoot()
-			else:
-				#handle_jump(0.5)
-				jump_handler.handle_jump(0.5)
-				
+#func counter_attack():
+	#if player_state == player.States.SPECIAL_ATTACK:
+		##"jump")
+		#if state_machine.get_active_state()!=attack:
+			#if player_state == player.States.FLIP:
+				#shoot_attack_manager.shoot()
+			#else:
+				##handle_jump(0.5)
+				#jump_handler.handle_jump(0.5)
+				#
 			
 			
 		

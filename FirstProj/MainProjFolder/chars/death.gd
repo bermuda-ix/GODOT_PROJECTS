@@ -11,3 +11,4 @@ func _update(delta: float) -> void:
 	actor.hb_collison.disabled=true
 	#print("oof i'm dead sadge")
 	actor.movement_handler.active=false
+	actor.animated_sprite_2d.scale.x = 1

@@ -93,6 +93,7 @@ var atk_state="ATK_1"
 @onready var hit_sound = hit1
 @onready var player_hit: GPUParticles2D = $AnimatedSprite2D/PlayerHit
 
+@onready var enemies : Array =[]
 
 
 var knockback : Vector2 = Vector2.ZERO
@@ -131,13 +132,13 @@ var vel_y : float = 0.0
 #locked on target info
 @onready var target_testing = $TargetLocking/TargetTesting
 @onready var target_locking = $TargetLocking
-var target_size_x
-var target_size_y
-var target_pos_y=0
-var target_pos_x=0
-var target_top=0
-var target_left_edge=0
-var target_right_edge=0
+@onready var target_size_x=0
+@onready var target_size_y=0
+@onready var target_pos_y=0
+@onready var target_pos_x=0
+@onready var target_top=0
+@onready var target_left_edge=0
+@onready var target_right_edge=0
 
 #flipping
 @onready var jump_out_timer = $JumpOutTimer
@@ -706,7 +707,7 @@ func lockon():
 		
 		
 
-		if not target.on_screen.is_on_screen():
+		if not target.on_screen.is_on_screen() or target.state_machine.get_active_state()==target.death:
 			
 			target=null
 		else:
@@ -719,7 +720,7 @@ func lockon():
 	else:
 		
 		target_dist=abs(global_position-target.global_position)
-		if target.state_machine.get_active_state()==target.death:
+		if (target.state_machine.get_active_state()==target.death) or target.current_state==target.States.DEATH:
 			combat_state=CombatStates.UNLOCKED
 			return
 		
@@ -746,7 +747,9 @@ func lockon():
 				target_right = true
 			
 func find_closest_enemy():
-	var enemies = get_tree().get_nodes_in_group("Enemy")
+	enemies.clear()
+	
+	enemies = get_tree().get_nodes_in_group("Enemy")
 	
 	if enemies.is_empty():
 		return
@@ -755,10 +758,15 @@ func find_closest_enemy():
 	var closest_enemy = enemies[0]
 	
 	for enemy in enemies:
-		if (enemy.global_position.distance_to(global_position) < closest_enemy.global_position.distance_to(global_position))\
-		and enemy.current_state!=target.States.DEATH:
-			closest_enemy=enemy
-	
+		if not is_instance_valid(enemy):
+			if (enemy.global_position.distance_to(global_position) < closest_enemy.global_position.distance_to(global_position))\
+			and enemy.current_state!=target.States.DEATH or (enemy.state_machine.get_active_state()!=enemy.death):
+				closest_enemy=enemy
+			else:
+				continue
+		else:
+			continue
+			
 	target=closest_enemy
 	
 	
@@ -1149,6 +1157,8 @@ func flipping(delta):
 	
 #	Jumping before flipping over
 	if not flipped_over:
+		health.immortality=true
+		hurt_box_detect.disabled=true
 		#position.y, " ",target_size_y+target.position.y)
 		if target_right:
 			#velocity.y=movement_data.jump_velocit/2
@@ -1177,6 +1187,8 @@ func flipping(delta):
 				#gravity = 980
 #	flipping over
 	else:
+		health.immortality=false
+		hurt_box_detect.disabled=true
 		flipped_over=true
 		if not target_right:
 			movement = target_direction.rotated(CLOCKWISE)
