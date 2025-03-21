@@ -4,7 +4,8 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
-
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+@onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var wall_check_left = $WallChecks/WallCheckLeft as RayCast2D
 @onready var wall_check_right = $WallChecks/WallCheckRight as RayCast2D
@@ -158,8 +159,7 @@ func _ready():
 	
 
 	
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
 # initialize state
 func _init_state_machine():
 	state_machine.initial_state=idle
@@ -167,17 +167,18 @@ func _init_state_machine():
 	state_machine.set_active(true)
 
 	state_machine.add_transition(idle, attack, &"attack_mode")
-	state_machine.add_transition(staggered, state_machine.get_previous_active_state(), &"stagger_recover")
+	state_machine.add_transition(staggered, attack, &"stagger_recover")
 	state_machine.add_transition(attack, chasing, &"start_chase")
 	state_machine.add_transition(chasing, attack, &"start_attack")
 	state_machine.add_transition(attack, idle, &"idle_mode")
 	state_machine.add_transition(attack, jump, &"jump_attack")
 	state_machine.add_transition(chasing, jump, &"jump")
-	state_machine.add_transition(jump, chasing, &"landing")
+	state_machine.add_transition(jump, chasing, &"land")
 	state_machine.add_transition(jump, attack, &"land_attack")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, death, &"die")
+	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
 	
 func _init_combat_state_machine():
 	combat_state_machine.initial_state=ranged
@@ -220,9 +221,14 @@ func _physics_process(delta):
 		#return
 ##	END OF TEST
 	
-	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
+	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered:
 		hb_collison.disabled=true
 		velocity.y += gravity * delta
+		return
+	elif state_machine.get_active_state()==hit:
+		hb_collison.disabled=true
+		velocity.y += gravity * delta
+		move_and_slide()
 		return
 	
 	#counter_attack()
@@ -309,7 +315,7 @@ func chase():
 	#animation_player.play("atk"+atk_chain)
 
 func health_bar():
-	h_bar.text=str(health.health, " : ", stagger.stagger, " : inv:", health.immortality)
+	h_bar.text=str(health.health, " : ", stagger.stagger, " : STATE:", str(state_machine.get_active_state()))
 
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
@@ -481,11 +487,13 @@ func _on_navigation_timer_timeout() -> void:
 
 func _on_stagger_staggered() -> void:
 	#set_state(current_state, States.STAGGERED)
-	state_machine.change_active_state(staggered)
+	state_machine.dispatch(&"staggered")
 
 
 func _on_parry_timer_timeout() -> void:
 	#set_state(current_state, prev_state)
+	#print("timeout")
+	#print(state_machine.get_previous_active_state())
 	state_machine.dispatch(&"stagger_recover")
 	hurt_box.set_damage_mulitplyer(1)
 

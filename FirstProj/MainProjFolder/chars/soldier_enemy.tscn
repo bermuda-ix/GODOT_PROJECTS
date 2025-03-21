@@ -1249,9 +1249,10 @@ script = ExtResource("90_4frhw")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="JUMP" type="LimboState" parent="LimboHSM" index="2" node_paths=PackedStringArray("actor")]
+[node name="JUMP" type="LimboState" parent="LimboHSM" index="2" node_paths=PackedStringArray("actor", "state_machine")]
 script = ExtResource("86_36igo")
 actor = NodePath("../..")
+state_machine = NodePath("..")
 
 [node name="DEATH" type="LimboState" parent="LimboHSM" index="3" node_paths=PackedStringArray("actor")]
 script = ExtResource("87_24o4m")
