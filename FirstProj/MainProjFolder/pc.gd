@@ -927,6 +927,7 @@ func get_max_health() -> int:
 func _on_health_health_depleted():
 	Events.game_over.emit()
 
+	
 #knockbacks
 #func _on_hurt_box_knockback(hitbox):
 	##kb_dir=global_position.direction_to(hitbox.global_position)
@@ -940,8 +941,11 @@ func _on_hurt_box_got_hit(hitbox):
 			AudioStreamManager.play(SoundFx.PUNCH_DESIGNED_HEAVY_12)
 		player_hit.emitting=true
 		player_hit.restart()
+		hurt_box_detect.disabled=true
 		hit_timer.start(0.2)
-		set_state(state, States.HIT)
+		if state!=States.FLIP:
+			
+			set_state(state, States.HIT)
 	else:
 		knockback.x = -350
 		kb_dir=global_position.direction_to(hitbox.global_position)
@@ -954,9 +958,9 @@ func _on_hurt_box_got_hit(hitbox):
 		health.set_temporary_immortality(0.2)
 
 func _on_hit_timer_timeout() -> void:
-	hurt_box_detect.disabled=true
-	
-	set_state(state, States.IDLE)
+	hurt_box_detect.disabled=false
+	if state!=States.FLIP:
+		set_state(state, States.IDLE)
 	player_hit.emitting=false
 
 
@@ -1315,3 +1319,7 @@ func _on_animation_player_animation_started(anim_name):
 		vel_y=velocity.y
 		s_atk=true
 	
+
+
+func _on_hurt_box_received_damage(damage: int) -> void:
+	pass # Replace with function body.

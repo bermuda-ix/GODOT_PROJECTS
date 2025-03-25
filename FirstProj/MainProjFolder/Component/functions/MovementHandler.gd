@@ -13,6 +13,7 @@ func _physics_process(delta: float) -> void:
 	if actor.player_found == true:
 		
 		var dir = actor.to_local(actor.nav_agent.get_next_path_position())
+		#actor.h_bar.text=str(actor.health.health, " : ", actor.stagger.stagger, " : vel_x:", actor.velocity.x)
 		if dir.x > 0 and actor.is_on_floor():
 			actor.current_speed = actor.chase_speed
 			actor.animated_sprite_2d.scale.x = -1

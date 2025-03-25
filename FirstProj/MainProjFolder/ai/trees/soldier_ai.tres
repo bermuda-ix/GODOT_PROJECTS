@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=31 format=3 uid="uid://bkpyddqh402xp"]
+[gd_resource type="BehaviorTree" load_steps=36 format=3 uid="uid://bkpyddqh402xp"]
 
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_7px3v"]
 
@@ -23,6 +23,11 @@ var/within_range/type = 1
 var/within_range/value = false
 var/within_range/hint = 0
 var/within_range/hint_string = ""
+var/counter_attack/name = &"counter_attack"
+var/counter_attack/type = 1
+var/counter_attack/value = false
+var/counter_attack/hint = 0
+var/counter_attack/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_s1wjr"]
 type = 1
@@ -48,6 +53,22 @@ script = ExtResource("1_7px3v")
 group = &"player"
 target_var = &"target"
 
+[sub_resource type="BBVariant" id="BBVariant_vjri2"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_wr2jt"]
+variable = &"counter_attack"
+value = SubResource("BBVariant_vjri2")
+
+[sub_resource type="BTConsolePrint" id="BTConsolePrint_qkysk"]
+text = "counter attack"
+
+[sub_resource type="BTSequence" id="BTSequence_cj7pg"]
+custom_name = "CounterAttack"
+children = [SubResource("BTCheckVar_wr2jt"), SubResource("BTConsolePrint_qkysk")]
+
 [sub_resource type="BBVariant" id="BBVariant_eahdn"]
 type = 1
 saved_value = true
@@ -69,10 +90,14 @@ method = &"melee_attack"
 custom_name = "Attack"
 children = [SubResource("BTCheckVar_aa25s"), SubResource("BTCallMethod_qwr6t")]
 
+[sub_resource type="BTSelector" id="BTSelector_qpg7m"]
+custom_name = "attacks"
+children = [SubResource("BTSequence_cj7pg"), SubResource("BTSequence_yfw6d")]
+
 [sub_resource type="BTCooldown" id="BTCooldown_5mvyu"]
 duration = 0.8
 start_cooled = true
-children = [SubResource("BTSequence_yfw6d")]
+children = [SubResource("BTSelector_qpg7m")]
 
 [sub_resource type="BTSequence" id="BTSequence_7vhxb"]
 custom_name = "AttackRange"

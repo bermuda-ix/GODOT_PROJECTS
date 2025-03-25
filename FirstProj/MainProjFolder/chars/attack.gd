@@ -4,5 +4,6 @@ extends LimboState
 @export var bt_player : BTPlayer
 
 func _enter() -> void:
-	print("entering ranged")
+	actor.state="ATTACK"
+	print("begin attack")
 	bt_player.blackboard.set_var("attack_mode", true)

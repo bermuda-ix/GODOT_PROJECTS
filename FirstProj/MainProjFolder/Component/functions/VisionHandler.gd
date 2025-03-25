@@ -3,6 +3,8 @@ extends Node
 
 @export var actor : Node2D
 @export var sm : LimboHSM
+@export var csm : LimboHSM
+
 
 func handle_vision():
 	if actor.player_tracking.is_colliding():
@@ -14,7 +16,7 @@ func handle_vision():
 		else:
 			#actor.set_state(actor.current_state, actor.States.ATTACK)
 			sm.dispatch(&"attack_mode")
-			#print("attack")
+			
 			#chase_timer.start(1)
 			actor.player_found = true
 			
@@ -27,14 +29,15 @@ func handle_vision():
 	if not actor.attack_range.has_overlapping_bodies():
 		actor.bt_player.blackboard.set_var("within_range", false)
 		
-	if actor.current_combat_state==actor.CombatStates.RANGED and actor.player_found:
-		actor.set_state(actor.current_state, actor.States.ATTACK)
+	if csm.get_active_state()==actor.ranged and actor.player_found:
+		#actor.set_state(actor.current_state, actor.States.ATTACK)
 		sm.dispatch(&"attack_mode")
-	elif actor.current_combat_state==actor.CombatStates.MELEE:
+	elif csm.get_active_state()==actor.melee:
 		if actor.bt_player.blackboard.get_var("within_range"):
-			actor.set_state(actor.current_state, actor.States.ATTACK)
-			sm.dispatch(&"attack_mode")
+			#actor.set_state(actor.current_state, actor.States.ATTACK)
+			sm.dispatch(&"start_attack")
 		else:
-			actor.set_state(actor.current_state, actor.States.CHASE)
+			#actor.set_state(actor.current_state, actor.States.CHASE)
+			sm.dispatch(&"start_chase")
 			#chase_timer.start(1)
 	#player_found = true

@@ -49,7 +49,7 @@ func _process(_delta):
 	
 	#if lvl_type=="goal":
 	#
-		#if obj<=1:
+		#if obj<=1:s
 			#Events.level_completed.connect(show_level_complete)
 			##print("leven complete")
 		#label.text=str("Obj: ",obj)
