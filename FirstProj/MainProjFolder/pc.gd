@@ -571,20 +571,23 @@ func sp_atk():
 				if sp_atk_chn == 0 and (not attack_timer.is_stopped()):
 					sp_atk_combo="shotgun_attack"
 					#"sp_atk 1")
-					AudioStreamManager.play(shotgun_fire)
+					if state!=States.HIT:
+						AudioStreamManager.play(shotgun_fire)
 					sp_atk_dmg=1
 
 				elif sp_atk_chn == 1 and (not attack_timer.is_stopped()):
 					#animated_sprite_2d.play("attack_2")
 					sp_atk_combo="shotgun_attack"
 					#"sp_atk 2")
-					AudioStreamManager.play(shotgun_fire)
+					if state!=States.HIT:
+						AudioStreamManager.play(shotgun_fire)
 					sp_atk_dmg=1
 
 				elif sp_atk_chn == 2 and (not attack_timer.is_stopped()):
 					#animated_sprite_2d.play("attack_3")
 					#"reload anim playing")
-					AudioStreamManager.play(reload)
+					if state!=States.HIT:
+						AudioStreamManager.play(reload)
 					sp_atk_combo="shotgun_attack"
 					#"sp_atk 3")
 					sp_atk_dmg=2
