@@ -1195,7 +1195,7 @@ func flipping(delta):
 #	flipping over
 	else:
 		health.immortality=false
-		hurt_box_detect.disabled=true
+		hurt_box_detect.disabled=false
 		flipped_over=true
 		if not target_right:
 			movement = target_direction.rotated(CLOCKWISE)
@@ -1325,4 +1325,11 @@ func _on_animation_player_animation_started(anim_name):
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	pass # Replace with function body.
+	if state==States.FLIP:
+		print("countered! your moves are weak!")
+		if target_right:
+			knockback.x=400
+		else:
+			knockback.x=-400
+		velocity.x = movement_data.speed + knockback.x
+		set_state(state, States.HIT)

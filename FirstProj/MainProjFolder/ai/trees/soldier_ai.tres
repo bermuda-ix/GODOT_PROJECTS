@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=36 format=3 uid="uid://bkpyddqh402xp"]
+[gd_resource type="BehaviorTree" load_steps=37 format=3 uid="uid://bkpyddqh402xp"]
 
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_7px3v"]
 
@@ -62,12 +62,17 @@ resource_name = "true"
 variable = &"counter_attack"
 value = SubResource("BBVariant_vjri2")
 
-[sub_resource type="BTConsolePrint" id="BTConsolePrint_qkysk"]
-text = "counter attack"
+[sub_resource type="BBNode" id="BBNode_vjri2"]
+saved_value = NodePath("MeleeAttackManager")
+resource_name = "MeleeAttackManager"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_wr2jt"]
+node = SubResource("BBNode_vjri2")
+method = &"melee_counter"
 
 [sub_resource type="BTSequence" id="BTSequence_cj7pg"]
 custom_name = "CounterAttack"
-children = [SubResource("BTCheckVar_wr2jt"), SubResource("BTConsolePrint_qkysk")]
+children = [SubResource("BTCheckVar_wr2jt"), SubResource("BTCallMethod_wr2jt")]
 
 [sub_resource type="BBVariant" id="BBVariant_eahdn"]
 type = 1
@@ -90,18 +95,18 @@ method = &"melee_attack"
 custom_name = "Attack"
 children = [SubResource("BTCheckVar_aa25s"), SubResource("BTCallMethod_qwr6t")]
 
-[sub_resource type="BTSelector" id="BTSelector_qpg7m"]
-custom_name = "attacks"
-children = [SubResource("BTSequence_cj7pg"), SubResource("BTSequence_yfw6d")]
-
 [sub_resource type="BTCooldown" id="BTCooldown_5mvyu"]
 duration = 0.8
 start_cooled = true
-children = [SubResource("BTSelector_qpg7m")]
+children = [SubResource("BTSequence_yfw6d")]
+
+[sub_resource type="BTSelector" id="BTSelector_qpg7m"]
+custom_name = "attacks"
+children = [SubResource("BTSequence_cj7pg"), SubResource("BTCooldown_5mvyu")]
 
 [sub_resource type="BTSequence" id="BTSequence_7vhxb"]
 custom_name = "AttackRange"
-children = [SubResource("BTCheckVar_gi26e"), SubResource("BTAction_2i8b5"), SubResource("BTCooldown_5mvyu")]
+children = [SubResource("BTCheckVar_gi26e"), SubResource("BTAction_2i8b5"), SubResource("BTSelector_qpg7m")]
 
 [sub_resource type="BTAction" id="BTAction_kugyc"]
 script = ExtResource("1_7px3v")

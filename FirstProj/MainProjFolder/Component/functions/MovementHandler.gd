@@ -3,6 +3,7 @@ extends Node
 
 @export var actor : Node2D
 @export var active : bool = true
+@export var state_machine : LimboHSM
 
 func _physics_process(delta: float) -> void:
 	
@@ -16,9 +17,11 @@ func _physics_process(delta: float) -> void:
 		#actor.h_bar.text=str(actor.health.health, " : ", actor.stagger.stagger, " : vel_x:", actor.velocity.x)
 		if dir.x > 0 and actor.is_on_floor():
 			actor.current_speed = actor.chase_speed
-			actor.animated_sprite_2d.scale.x = -1
+			if state_machine.get_active_state()!=actor.attack:
+				actor.animated_sprite_2d.scale.x = -1
 			actor.hit_box.scale.x = -1
 		else:
 			actor.current_speed = -actor.chase_speed
-			actor.animated_sprite_2d.scale.x = 1
+			if state_machine.get_active_state()!=actor.attack:
+				actor.animated_sprite_2d.scale.x = 1
 			actor.hit_box.scale.x = 1

@@ -7,3 +7,8 @@ func melee_attack():
 	actor.state_machine.change_active_state(actor.attack)
 	#"melee attack")
 	actor.animation_player.play("atk"+actor.atk_chain)
+
+func melee_counter():
+	actor.state_machine.change_active_state(actor.attack)
+	print("counter")
+	actor.animation_player.play("atk_counter")

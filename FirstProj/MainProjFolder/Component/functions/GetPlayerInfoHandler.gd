@@ -15,4 +15,4 @@ func get_player_relative_loc():
 	if actor.player.global_position.x>actor.global_position.x:
 		actor.player_right=true
 	else:
-		false
+		actor.player_right=false

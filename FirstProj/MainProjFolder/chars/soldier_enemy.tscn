@@ -1,4 +1,4 @@
-[gd_scene load_steps=120 format=3 uid="uid://b5d2nkkrrcixy"]
+[gd_scene load_steps=121 format=3 uid="uid://b5d2nkkrrcixy"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_ojqla"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ibi2a"]
@@ -167,6 +167,38 @@ animations = [{
 }],
 "loop": true,
 "name": &"atk_3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("26_q1jji")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_s877c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_xkj2w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_p1gfe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_xj2ev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_umy1f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_vo477")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_eem33")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_mdrp4")
+}],
+"loop": true,
+"name": &"atk_counter",
 "speed": 5.0
 }, {
 "frames": [{
@@ -1034,6 +1066,59 @@ tracks/1/keys = {
 "values": [&"shoot"]
 }
 
+[sub_resource type="Animation" id="Animation_0nqgj"]
+resource_name = "atk_counter"
+length = 1.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4, 0.5, 0.8, 0.9, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 5, 6, 7, 8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"atk_counter"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HitBox/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-20, -25), Vector2(-20, -25), Vector2(-14, -7)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c6g3t"]
 _data = {
 &"RESET": SubResource("Animation_rh5v8"),
@@ -1041,6 +1126,7 @@ _data = {
 &"atk_1": SubResource("Animation_0vyy2"),
 &"atk_2": SubResource("Animation_dhh13"),
 &"atk_3": SubResource("Animation_i54iy"),
+&"atk_counter": SubResource("Animation_0nqgj"),
 &"dead": SubResource("Animation_b3shf"),
 &"death": SubResource("Animation_j488j"),
 &"guard": SubResource("Animation_hssic"),
@@ -1178,9 +1264,10 @@ script = ExtResource("80_edkvm")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="MovementHandler" type="Node" parent="." index="26" node_paths=PackedStringArray("actor")]
+[node name="MovementHandler" type="Node" parent="." index="26" node_paths=PackedStringArray("actor", "state_machine")]
 script = ExtResource("80_goy6u")
 actor = NodePath("..")
+state_machine = NodePath("../LimboHSM")
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
 
 [node name="JumpHandler" type="Node" parent="." index="27" node_paths=PackedStringArray("actor", "state_machine")]
