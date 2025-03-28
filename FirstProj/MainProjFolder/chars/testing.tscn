@@ -96,3 +96,7 @@ text = "DTP"
 label_settings = SubResource("LabelSettings_kflhl")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="19"]
+
+[node name="LimboHSM" type="LimboHSM" parent="." index="20"]
+
+[node name="DEATH" type="LimboState" parent="LimboHSM" index="0"]

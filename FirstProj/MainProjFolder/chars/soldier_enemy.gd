@@ -55,6 +55,7 @@ var immortal = false
 @onready var attack_timer: Timer = $AttackTimer
 @onready var stagger_timer: Timer = $StaggerTimer
 @onready var gpu_particles_2d: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
+@onready var dodge_timer: Timer = $DodgeTimer
 
 
 @onready var collision_shape_2d = $CollisionShape2D
@@ -179,6 +180,8 @@ func _init_state_machine():
 	state_machine.add_transition(jump, chasing, &"land")
 	state_machine.add_transition(jump, attack, &"land_attack")
 	state_machine.add_transition(hit, attack, &"hit_recover")
+	state_machine.add_transition(attack, dodge, &"dodge")
+	state_machine.add_transition(dodge, attack, &"dodge_end")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, death, &"die")
@@ -455,6 +458,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		"atk_3":
 			atk_chain="_1"
 			attack_timer.start(5)
+		"dodge":
+			state_machine.dispatch(&"dodge_end")
 			
 
 

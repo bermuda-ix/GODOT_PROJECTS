@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=37 format=3 uid="uid://bkpyddqh402xp"]
+[gd_resource type="BehaviorTree" load_steps=52 format=3 uid="uid://bkpyddqh402xp"]
 
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_7px3v"]
 
@@ -28,6 +28,11 @@ var/counter_attack/type = 1
 var/counter_attack/value = false
 var/counter_attack/hint = 0
 var/counter_attack/hint_string = ""
+var/a/name = &"a"
+var/a/type = 3
+var/a/value = 0.0
+var/a/hint = 0
+var/a/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_s1wjr"]
 type = 1
@@ -53,14 +58,8 @@ script = ExtResource("1_7px3v")
 group = &"player"
 target_var = &"target"
 
-[sub_resource type="BBVariant" id="BBVariant_vjri2"]
-type = 1
-saved_value = true
-resource_name = "true"
-
-[sub_resource type="BTCheckVar" id="BTCheckVar_wr2jt"]
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_vjri2"]
 variable = &"counter_attack"
-value = SubResource("BBVariant_vjri2")
 
 [sub_resource type="BBNode" id="BBNode_vjri2"]
 saved_value = NodePath("MeleeAttackManager")
@@ -70,9 +69,74 @@ resource_name = "MeleeAttackManager"
 node = SubResource("BBNode_vjri2")
 method = &"melee_counter"
 
+[sub_resource type="BBNode" id="BBNode_cj7pg"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_qpg7m"]
+animation_player = SubResource("BBNode_cj7pg")
+animation_name = &"atk_counter"
+max_time = 5.0
+
+[sub_resource type="BTSequence" id="BTSequence_wr2jt"]
+custom_name = "CounterKick"
+children = [SubResource("BTCallMethod_wr2jt"), SubResource("BTAwaitAnimation_qpg7m")]
+
+[sub_resource type="BTProbability" id="BTProbability_vjri2"]
+custom_name = "counter_kick_weight"
+children = [SubResource("BTSequence_wr2jt")]
+
+[sub_resource type="BBNode" id="BBNode_wr2jt"]
+saved_value = NodePath("DodgeManager")
+resource_name = "DodgeManager"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_qkysk"]
+node = SubResource("BBNode_wr2jt")
+method = &"dodge"
+
+[sub_resource type="BBNode" id="BBNode_qkysk"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_cj7pg"]
+animation_player = SubResource("BBNode_qkysk")
+animation_name = &"dodge"
+max_time = 0.2
+
+[sub_resource type="BBNode" id="BBNode_qpg7m"]
+saved_value = NodePath("ShootAttackManager")
+resource_name = "ShootAttackManager"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_xienf"]
+node = SubResource("BBNode_qpg7m")
+method = &"shoot"
+
+[sub_resource type="BTWait" id="BTWait_vjri2"]
+duration = 0.2
+
 [sub_resource type="BTSequence" id="BTSequence_cj7pg"]
+children = [SubResource("BTCallMethod_xienf"), SubResource("BTWait_vjri2")]
+
+[sub_resource type="BTRepeat" id="BTRepeat_cj7pg"]
+times = 3
+children = [SubResource("BTSequence_cj7pg")]
+
+[sub_resource type="BTSequence" id="BTSequence_qpg7m"]
+custom_name = "CounterShoot"
+children = [SubResource("BTCallMethod_qkysk"), SubResource("BTAwaitAnimation_cj7pg"), SubResource("BTRepeat_cj7pg")]
+
+[sub_resource type="BTProbability" id="BTProbability_cj7pg"]
+run_chance = 1.0
+custom_name = "counter_shoot_weight"
+children = [SubResource("BTSequence_qpg7m")]
+
+[sub_resource type="BTSelector" id="BTSelector_vjri2"]
+custom_name = "CounterTypes"
+children = [SubResource("BTProbability_vjri2"), SubResource("BTProbability_cj7pg")]
+
+[sub_resource type="BTSequence" id="BTSequence_qkysk"]
 custom_name = "CounterAttack"
-children = [SubResource("BTCheckVar_wr2jt"), SubResource("BTCallMethod_wr2jt")]
+children = [SubResource("BTCheckTrigger_vjri2"), SubResource("BTSelector_vjri2")]
 
 [sub_resource type="BBVariant" id="BBVariant_eahdn"]
 type = 1
@@ -102,7 +166,7 @@ children = [SubResource("BTSequence_yfw6d")]
 
 [sub_resource type="BTSelector" id="BTSelector_qpg7m"]
 custom_name = "attacks"
-children = [SubResource("BTSequence_cj7pg"), SubResource("BTCooldown_5mvyu")]
+children = [SubResource("BTSequence_qkysk"), SubResource("BTCooldown_5mvyu")]
 
 [sub_resource type="BTSequence" id="BTSequence_7vhxb"]
 custom_name = "AttackRange"

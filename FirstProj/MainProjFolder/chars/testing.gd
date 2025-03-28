@@ -33,6 +33,8 @@ var target_right : bool = false
 var rotate_around : bool = false
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var state_machine: LimboHSM = $LimboHSM
+@onready var death: LimboState = $LimboHSM/DEATH
 
 enum States{
 	GUARD,

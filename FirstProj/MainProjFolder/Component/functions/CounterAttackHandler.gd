@@ -7,6 +7,7 @@ extends Node
 @export var state_machine : LimboHSM
 @export var bt_player : BTPlayer
 
+
 func _physics_process(delta: float) -> void:
 	if actor.player_state == actor.player.States.SPECIAL_ATTACK:
 		if state_machine.get_active_state()!=actor.attack:
@@ -26,5 +27,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			actor.animated_sprite_2d.scale.x = 1
 		bt_player.blackboard.set_var("counter_attack", true)
+		
 	else:
 		bt_player.blackboard.set_var("counter_attack", false)
+		

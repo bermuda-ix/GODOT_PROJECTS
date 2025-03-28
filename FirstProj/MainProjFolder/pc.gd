@@ -139,7 +139,7 @@ var vel_y : float = 0.0
 @onready var target_top=0
 @onready var target_left_edge=0
 @onready var target_right_edge=0
-
+@onready var vel_x=0
 #flipping
 @onready var jump_out_timer = $JumpOutTimer
 var flipped_over : bool = false
@@ -164,7 +164,7 @@ func _ready():
 
 func _process(delta):
 	var input_axis = Input.get_axis("walk_left", "walk_right")
-	
+	vel_x=velocity.x
 	current_state_label()
 	get_target_info()
 	previous_state()
@@ -243,6 +243,7 @@ func _physics_process(delta):
 			apply_friction(input_axis, delta)
 			apply_air_resistance(input_axis, delta)
 			sp_atk()
+			label.text=str(velocity)
 			#jump_out()
 			
 		
@@ -336,16 +337,23 @@ func break_out():
 	if Input.is_action_just_pressed("jump") and not Input.is_action_pressed("sprint"):
 		
 		#state=States.IDLE
-		set_state(state, States.IDLE)
-		jump_out_signal.emit()
-
+		set_state(state, States.JUMP)
+		jump_out_signal.emit(250)
+	elif Input.is_action_just_pressed("attack"):
+		attack_combo="Flip_Attack"
+		set_state(state, States.ATTACK)
+		jump_out_signal.emit(200)
+		
+		
 #jump out of flip
-func jump_out():
-	velocity.y=movement_data.jump_velocity
+func jump_out(jumpout_vel : float):
+	knockback.x=jumpout_vel
 	if vector_away.x<0:
-		velocity.x=(movement_data.speed*0.8)*-1
-	else:
-		velocity.x=(movement_data.speed/2*0.8)
+		print("jump left")
+		knockback.x = knockback.x
+	velocity.y=movement_data.jump_velocity
+	velocity.x = knockback.x
+	
 	set_collision_mask_value(15, true)
 
 
@@ -792,10 +800,10 @@ func locked_combat():
 		
 		if target_right:
 			var dist_to_edge=round(abs(global_position.x-target_right_edge))
-			label.text=str(target_right, Vector2((target_left_edge),(target_top-25)))
+			
 		else:
 			var dist_to_edge=round(abs(global_position.x-target_left_edge))
-			label.text=str(target_right, Vector2((target_right_edge),(target_top-25)))
+			
 		if abs(direction_to_target.x) >(50+target_size_x) or abs(direction_to_target.y)>(10+target_size_y):
 			pass
 		else:
@@ -1002,22 +1010,29 @@ func _on_animation_player_animation_finished(anim_name):
 	if state==States.ATTACK:
 		#"attack finished")
 		hit_success=false
-		if atk_chain < 2:
-			atk_chain += 1
-		elif atk_chain >=2:
-			atk_chain = 0
-			attack_combo = "Attack"
-		set_state(state, prev_state)
-		hb_left.disabled=true
-		hb_right.disabled=true
 		if anim_name=="Attack_Counter":
 			counter_flag=false
+			return
 		elif anim_name=="Attack_Chain":
 			set_state(state, States.IDLE)
 			sp_atk_chn=0
 			atk_chain=0
 			attack_timer.start(1)
 			combo_state=ComboStates.SPC_ATK_BACK
+			return
+		if atk_chain < 2:
+			atk_chain += 1
+		elif atk_chain >=2:
+			atk_chain = 0
+			attack_combo = "Attack"
+		if prev_state==States.FLIP:
+			set_state(state, States.JUMP)
+			
+		else:
+			set_state(state, prev_state)
+		hb_left.disabled=true
+		hb_right.disabled=true
+		
 	elif state==States.SPECIAL_ATTACK:
 		if prev_state==States.FLIP:
 			if anim_name=="shotgun_attack":
@@ -1326,7 +1341,7 @@ func _on_animation_player_animation_started(anim_name):
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	if state==States.FLIP:
-		print("countered! your moves are weak!")
+		#print("countered! your moves are weak!")
 		if target_right:
 			knockback.x=400
 		else:
