@@ -4,7 +4,7 @@ extends LimboState
 @export var bt_player : BTPlayer
 
 func _enter() -> void:
-	print("begin chase")
+	#print("begin chase")
 	actor.player_found=true
 	actor.hb_collison.disabled=false
 	actor.state="CHASE"

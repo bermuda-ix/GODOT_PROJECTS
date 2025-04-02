@@ -40,7 +40,7 @@ func setup(time : float):
 
 
 func track_player():
-	if player == null:
+	if player == null or player.flipped_over:
 		return
 	
 	player_tracker.target_position = to_local(player.global_position)

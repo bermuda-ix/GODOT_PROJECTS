@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=52 format=3 uid="uid://bkpyddqh402xp"]
+[gd_resource type="BehaviorTree" load_steps=64 format=3 uid="uid://bkpyddqh402xp"]
 
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_7px3v"]
 
@@ -28,11 +28,16 @@ var/counter_attack/type = 1
 var/counter_attack/value = false
 var/counter_attack/hint = 0
 var/counter_attack/hint_string = ""
-var/a/name = &"a"
-var/a/type = 3
-var/a/value = 0.0
-var/a/hint = 0
-var/a/hint_string = ""
+var/counter_kick_flag/name = &"counter_kick_flag"
+var/counter_kick_flag/type = 1
+var/counter_kick_flag/value = false
+var/counter_kick_flag/hint = 0
+var/counter_kick_flag/hint_string = ""
+var/shoot_counter/name = &"shoot_counter"
+var/shoot_counter/type = 2
+var/shoot_counter/value = 0
+var/shoot_counter/hint = 0
+var/shoot_counter/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_s1wjr"]
 type = 1
@@ -43,6 +48,15 @@ resource_name = "true"
 variable = &"attack_mode"
 value = SubResource("BBVariant_s1wjr")
 custom_name = "AttackMode"
+
+[sub_resource type="BBVariant" id="BBVariant_qkysk"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_cj7pg"]
+variable = &"melee_mode"
+value = SubResource("BBVariant_qkysk")
 
 [sub_resource type="BBVariant" id="BBVariant_ex4gl"]
 type = 1
@@ -60,6 +74,9 @@ target_var = &"target"
 
 [sub_resource type="BTCheckTrigger" id="BTCheckTrigger_vjri2"]
 variable = &"counter_attack"
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_wr2jt"]
+variable = &"counter_kick_flag"
 
 [sub_resource type="BBNode" id="BBNode_vjri2"]
 saved_value = NodePath("MeleeAttackManager")
@@ -80,11 +97,7 @@ max_time = 5.0
 
 [sub_resource type="BTSequence" id="BTSequence_wr2jt"]
 custom_name = "CounterKick"
-children = [SubResource("BTCallMethod_wr2jt"), SubResource("BTAwaitAnimation_qpg7m")]
-
-[sub_resource type="BTProbability" id="BTProbability_vjri2"]
-custom_name = "counter_kick_weight"
-children = [SubResource("BTSequence_wr2jt")]
+children = [SubResource("BTCheckTrigger_wr2jt"), SubResource("BTCallMethod_wr2jt"), SubResource("BTAwaitAnimation_qpg7m")]
 
 [sub_resource type="BBNode" id="BBNode_wr2jt"]
 saved_value = NodePath("DodgeManager")
@@ -103,6 +116,20 @@ animation_player = SubResource("BBNode_qkysk")
 animation_name = &"dodge"
 max_time = 0.2
 
+[sub_resource type="BBVariant" id="BBVariant_vjri2"]
+type = 3
+saved_value = 0.05
+resource_name = "0.05000000000291"
+
+[sub_resource type="BBNode" id="BBNode_xienf"]
+saved_value = NodePath("ShootAttackManager")
+resource_name = "ShootAttackManager"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_0uopn"]
+node = SubResource("BBNode_xienf")
+method = &"shoot_setup"
+args = Array[BBVariant]([SubResource("BBVariant_vjri2")])
+
 [sub_resource type="BBNode" id="BBNode_qpg7m"]
 saved_value = NodePath("ShootAttackManager")
 resource_name = "ShootAttackManager"
@@ -112,7 +139,7 @@ node = SubResource("BBNode_qpg7m")
 method = &"shoot"
 
 [sub_resource type="BTWait" id="BTWait_vjri2"]
-duration = 0.2
+duration = 0.05
 
 [sub_resource type="BTSequence" id="BTSequence_cj7pg"]
 children = [SubResource("BTCallMethod_xienf"), SubResource("BTWait_vjri2")]
@@ -121,9 +148,29 @@ children = [SubResource("BTCallMethod_xienf"), SubResource("BTWait_vjri2")]
 times = 3
 children = [SubResource("BTSequence_cj7pg")]
 
+[sub_resource type="BTWait" id="BTWait_wr2jt"]
+duration = 0.2
+
+[sub_resource type="BTConsolePrint" id="BTConsolePrint_vjri2"]
+text = "shoot counter success"
+
+[sub_resource type="BBVariant" id="BBVariant_wr2jt"]
+type = 3
+saved_value = 0.2
+resource_name = "0.19999999999709"
+
+[sub_resource type="BBNode" id="BBNode_0uopn"]
+saved_value = NodePath("ShootAttackManager")
+resource_name = "ShootAttackManager"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_5tega"]
+node = SubResource("BBNode_0uopn")
+method = &"shoot_setup"
+args = Array[BBVariant]([SubResource("BBVariant_wr2jt")])
+
 [sub_resource type="BTSequence" id="BTSequence_qpg7m"]
 custom_name = "CounterShoot"
-children = [SubResource("BTCallMethod_qkysk"), SubResource("BTAwaitAnimation_cj7pg"), SubResource("BTRepeat_cj7pg")]
+children = [SubResource("BTCallMethod_qkysk"), SubResource("BTAwaitAnimation_cj7pg"), SubResource("BTCallMethod_0uopn"), SubResource("BTRepeat_cj7pg"), SubResource("BTWait_wr2jt"), SubResource("BTConsolePrint_vjri2"), SubResource("BTCallMethod_5tega")]
 
 [sub_resource type="BTProbability" id="BTProbability_cj7pg"]
 run_chance = 1.0
@@ -132,11 +179,19 @@ children = [SubResource("BTSequence_qpg7m")]
 
 [sub_resource type="BTSelector" id="BTSelector_vjri2"]
 custom_name = "CounterTypes"
-children = [SubResource("BTProbability_vjri2"), SubResource("BTProbability_cj7pg")]
+children = [SubResource("BTSequence_wr2jt"), SubResource("BTProbability_cj7pg")]
+
+[sub_resource type="BBNode" id="BBNode_5tega"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_kadvv"]
+node = SubResource("BBNode_5tega")
+method = &"counter_select"
 
 [sub_resource type="BTSequence" id="BTSequence_qkysk"]
 custom_name = "CounterAttack"
-children = [SubResource("BTCheckTrigger_vjri2"), SubResource("BTSelector_vjri2")]
+children = [SubResource("BTCheckTrigger_vjri2"), SubResource("BTSelector_vjri2"), SubResource("BTCallMethod_kadvv")]
 
 [sub_resource type="BBVariant" id="BBVariant_eahdn"]
 type = 1
@@ -178,7 +233,8 @@ group = &"player"
 target_var = &"target"
 
 [sub_resource type="BBNode" id="BBNode_hd7qm"]
-saved_value = NodePath("")
+saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_ok4as"]
 node = SubResource("BBNode_hd7qm")
@@ -194,7 +250,7 @@ children = [SubResource("BTSequence_7vhxb"), SubResource("BTSequence_5qq8g")]
 
 [sub_resource type="BTSequence" id="BTSequence_c1urr"]
 custom_name = "Melee"
-children = [SubResource("BTSelector_3ojif")]
+children = [SubResource("BTCheckVar_cj7pg"), SubResource("BTSelector_3ojif")]
 
 [sub_resource type="BBVariant" id="BBVariant_wptbb"]
 type = 1

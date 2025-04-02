@@ -69,7 +69,8 @@ var immortal = false
 @onready var target_lock_node: Node2D = $TargetLock
 @onready var attack_range: AttackRange = $AttackRange
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
-
+@export var counter_kick_chance : int = 0
+@onready var counter_flag : bool = false
 
 var current_speed : float = 40.0
 var prev_speed : float = 40.0
@@ -155,12 +156,13 @@ func _ready():
 	bt_player.blackboard.set_var("ranged_mode", true)
 	bt_player.blackboard.set_var("within_range", false)
 	bt_player.blackboard.set_var("counter_attack", false)
+	bt_player.blackboard.set_var("counter_kick_flag", false)
 	turret.setup(0.2)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 	_init_combat_state_machine()
 	hurt_box.set_damage_mulitplyer(1)
-	
+	Events.allied_enemy_hit.connect(adjust_counter)
 
 	
 
@@ -239,7 +241,7 @@ func _physics_process(delta):
 	elif state_machine.get_active_state()==death :
 		hb_collison.disabled=true
 		return
-	
+	#melee_range_failsafe()
 	#counter_attack()
 	# Add the gravity.
 	if not is_on_floor():
@@ -256,45 +258,7 @@ func _physics_process(delta):
 	
 func handle_vision():
 	vision_handler.handle_vision()
-	
-	
-	
-#func track_player():
-	#
-	#var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y)\
-	#- player_tracking.position
-	#
-	#player_tracker_pivot.look_at(direction_to_player)
-	
-#func handle_movement() -> void:
-	#
-	#var direction= global_position - player.global_position
-	#
-	#
-	#if player_found == true:
-		#
-		#var dir = to_local(nav_agent.get_next_path_position())
-		##dir)
-		#if dir.x > 0 and is_on_floor():
-			#current_speed = chase_speed
-			#animated_sprite_2d.scale.x = -1
-			#hit_box.scale.x = -1
-		#else:
-			#current_speed = -chase_speed
-			#animated_sprite_2d.scale.x = 1
-			#hit_box.scale.x = 1
-			
 
-#func combat_state_change():
-	#distance=abs(global_position.x-player.global_position.x)
-	#if distance>100:
-		#turret.shoot_timer.paused=false
-		#set_combat_state(current_combat_state, CombatStates.RANGED)
-		#
-	#else:
-		#turret.shoot_timer.paused=true
-		#set_combat_state(current_combat_state, CombatStates.MELEE)
-		
 		
 func target_lock():
 	Events.unlock_from.emit()
@@ -305,25 +269,9 @@ func chase():
 	#set_state(current_state, States.CHASE)
 	state_machine.change_active_state(chasing)
 	
-#func handle_jump(jump_vel : float):
-	#if jump_timer.is_stopped():
-		#velocity.y = jump_velocity*jump_vel
-		#set_state(current_state, States.JUMP)
-		#jump_timer.start(2)
-	
-
-#func shoot():
-	#animation_player.play("shoot")
-	#turret.shoot()
-	
-
-#func melee_attack():
-	#state_machine.change_active_state(attack)
-	##"melee attack")
-	#animation_player.play("atk"+atk_chain)
 
 func health_bar():
-	h_bar.text=str(health.health, " : ", stagger.stagger, " : vel_x:", velocity.x)
+	h_bar.text=str(health.health, " : ", bt_player.blackboard.get_var("counter_kick_flag"), " : CKF: ", counter_kick_chance)
 
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
@@ -477,6 +425,8 @@ func _on_attack_range_body_exited(body: Node2D) -> void:
 		
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("sp_atk_default"):
+		if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
+			Events.allied_enemy_hit.emit()
 		print("spc_hit")
 		if animated_sprite_2d.flip_h:
 			knockback.x=50
@@ -507,9 +457,30 @@ func _on_parry_timer_timeout() -> void:
 	state_machine.dispatch(&"stagger_recover")
 	hurt_box.set_damage_mulitplyer(1)
 
+func adjust_counter():
+	
+	if not counter_flag:
+		if counter_kick_chance <100:
+			counter_kick_chance +=10
+	else:
+		
+		if counter_kick_chance > 10:
+			print("lower chance")
+			counter_kick_chance -=10
+		
+func counter_select()->void:
+	if randi_range(0,100)<=counter_kick_chance:
+		bt_player.blackboard.set_var("counter_kick_flag", true)
+		counter_flag=true
+	else:
+		bt_player.blackboard.set_var("counter_kick_flag", false)
+		counter_flag=false
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	print(damage)
+	
+	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
+		Events.allied_enemy_hit.emit()
+	
 	bt_player.restart()
 	if state_machine.get_active_state()==death:
 		return
@@ -522,6 +493,8 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		
 	else:
 		print("kill shot")
+		
+	
 	#if current_state != States.DEATH:
 		#animation_player.play("RESET")
 	#

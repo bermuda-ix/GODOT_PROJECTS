@@ -243,7 +243,7 @@ func _physics_process(delta):
 			apply_friction(input_axis, delta)
 			apply_air_resistance(input_axis, delta)
 			sp_atk()
-			label.text=str(velocity)
+			label.text=str(cur_state, " ", previous)
 			#jump_out()
 			
 		
@@ -302,7 +302,7 @@ func apply_gravity(delta):
 	
 #condtions to return to idle
 func return_to_idle():
-	if is_on_floor() and state==States.FLIP:
+	if is_on_floor() and state==States.FLIP and flipped_over:
 		#"flip end")
 		set_state(state, States.IDLE)
 	
@@ -342,7 +342,7 @@ func break_out():
 	elif Input.is_action_just_pressed("attack"):
 		attack_combo="Flip_Attack"
 		set_state(state, States.ATTACK)
-		jump_out_signal.emit(200)
+		jump_out(200)
 		
 		
 #jump out of flip
@@ -350,7 +350,9 @@ func jump_out(jumpout_vel : float):
 	knockback.x=jumpout_vel
 	if vector_away.x<0:
 		print("jump left")
-		knockback.x = knockback.x
+		knockback.x = knockback.x*-1
+	else:
+		knockback.x=knockback.x
 	velocity.y=movement_data.jump_velocity
 	velocity.x = knockback.x
 	
@@ -902,7 +904,6 @@ func set_state(current_state, new_state: int) -> void:
 			hurt_box_detect.disabled=true			
 			anim_player.play("Parry")
 		States.FLIP:
-			anim_player.speed_scale=3
 			anim_player.play("flip")
 			cur_state="Flipping"
 			set_collision_mask_value(15, false)

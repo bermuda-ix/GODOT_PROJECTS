@@ -20,6 +20,7 @@ signal deactivate_elite
 signal deactivate_boss
 signal activate_regular
 signal deactivate_regular
+signal allied_enemy_hit
 
 signal activate
 signal deactivate
