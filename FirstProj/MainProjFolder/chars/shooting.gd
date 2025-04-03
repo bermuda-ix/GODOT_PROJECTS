@@ -5,3 +5,4 @@ extends LimboState
 
 func _enter() -> void:
 	print("begin shooting")
+	actor.hb_collision.disabled=true

@@ -16,6 +16,9 @@ var pos = position
 
 @export var ranged_mode : bool = true : set = set_ranged_mode, get = get_ranged_mode
 @export var multi_shot : bool = false : set = set_multi_shot, get = get_multi_shot
+@export var ammo_count : int
+@export var max_ammo : int
+@export var infinite_ammo : bool
 
 var dist_to_player : get = get_dist_to_player
 

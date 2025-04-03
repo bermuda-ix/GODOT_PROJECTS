@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=64 format=3 uid="uid://bkpyddqh402xp"]
+[gd_resource type="BehaviorTree" load_steps=66 format=3 uid="uid://bkpyddqh402xp"]
 
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_7px3v"]
 
@@ -148,12 +148,6 @@ children = [SubResource("BTCallMethod_xienf"), SubResource("BTWait_vjri2")]
 times = 3
 children = [SubResource("BTSequence_cj7pg")]
 
-[sub_resource type="BTWait" id="BTWait_wr2jt"]
-duration = 0.2
-
-[sub_resource type="BTConsolePrint" id="BTConsolePrint_vjri2"]
-text = "shoot counter success"
-
 [sub_resource type="BBVariant" id="BBVariant_wr2jt"]
 type = 3
 saved_value = 0.2
@@ -168,9 +162,18 @@ node = SubResource("BBNode_0uopn")
 method = &"shoot_setup"
 args = Array[BBVariant]([SubResource("BBVariant_wr2jt")])
 
+[sub_resource type="BTConsolePrint" id="BTConsolePrint_vjri2"]
+text = "reloading"
+
+[sub_resource type="BTWait" id="BTWait_wr2jt"]
+duration = 0.4
+
+[sub_resource type="BTConsolePrint" id="BTConsolePrint_wr2jt"]
+text = "reloading done"
+
 [sub_resource type="BTSequence" id="BTSequence_qpg7m"]
 custom_name = "CounterShoot"
-children = [SubResource("BTCallMethod_qkysk"), SubResource("BTAwaitAnimation_cj7pg"), SubResource("BTCallMethod_0uopn"), SubResource("BTRepeat_cj7pg"), SubResource("BTWait_wr2jt"), SubResource("BTConsolePrint_vjri2"), SubResource("BTCallMethod_5tega")]
+children = [SubResource("BTCallMethod_qkysk"), SubResource("BTAwaitAnimation_cj7pg"), SubResource("BTCallMethod_0uopn"), SubResource("BTRepeat_cj7pg"), SubResource("BTCallMethod_5tega"), SubResource("BTConsolePrint_vjri2"), SubResource("BTWait_wr2jt"), SubResource("BTConsolePrint_wr2jt")]
 
 [sub_resource type="BTProbability" id="BTProbability_cj7pg"]
 run_chance = 1.0
@@ -219,9 +222,11 @@ duration = 0.8
 start_cooled = true
 children = [SubResource("BTSequence_yfw6d")]
 
+[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_vjri2"]
+
 [sub_resource type="BTSelector" id="BTSelector_qpg7m"]
 custom_name = "attacks"
-children = [SubResource("BTSequence_qkysk"), SubResource("BTCooldown_5mvyu")]
+children = [SubResource("BTSequence_qkysk"), SubResource("BTCooldown_5mvyu"), SubResource("BTAlwaysSucceed_vjri2")]
 
 [sub_resource type="BTSequence" id="BTSequence_7vhxb"]
 custom_name = "AttackRange"

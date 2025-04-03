@@ -11,5 +11,6 @@ func _enter() -> void:
 	animation_player.play("hit")
 	actor.hurt_box_collision.disabled=true
 	
+	
 func _exit() -> void:
 	actor.hurt_box_collision.disabled=false

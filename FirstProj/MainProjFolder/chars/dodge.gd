@@ -16,4 +16,3 @@ func _enter() -> void:
 func _exit() -> void:
 	animation_player.stop()
 	actor.hurt_box_collision.disabled=false
-	actor.hb_collision.disabled=true

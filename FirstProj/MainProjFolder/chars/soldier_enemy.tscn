@@ -1,4 +1,4 @@
-[gd_scene load_steps=125 format=3 uid="uid://b5d2nkkrrcixy"]
+[gd_scene load_steps=135 format=3 uid="uid://b5d2nkkrrcixy"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_ojqla"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ibi2a"]
@@ -65,14 +65,23 @@
 [ext_resource type="Texture2D" uid="uid://b1oggfv0aohno" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Hit/Hit03.png" id="48_t0kud"]
 [ext_resource type="Texture2D" uid="uid://mttfbqg126xs" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunRunFire/GunRunFire02.png" id="49_of8m6"]
 [ext_resource type="Texture2D" uid="uid://bgygjajwsuaw6" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunRunFire/GunRunFire03.png" id="50_j8lwu"]
+[ext_resource type="Texture2D" uid="uid://tl5l7l5by1kd" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunReload/GunReload01.png" id="50_nnfiv"]
+[ext_resource type="Texture2D" uid="uid://wpsm5rhftuv3" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunReload/GunReload02.png" id="51_1dxn7"]
 [ext_resource type="Texture2D" uid="uid://6asp5vuy600u" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunRunFire/GunRunFire04.png" id="51_dgjxh"]
 [ext_resource type="Texture2D" uid="uid://cjwamry6dthms" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunRunFire/GunRunFire05.png" id="52_cr57m"]
+[ext_resource type="Texture2D" uid="uid://r0hx2y74nnk2" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunReload/GunReload03.png" id="52_xc7oc"]
+[ext_resource type="Texture2D" uid="uid://b58qql37v0f70" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunReload/GunReload04.png" id="53_p17nh"]
 [ext_resource type="Texture2D" uid="uid://bxxyav51gc8ky" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunRunFire/GunRunFire06.png" id="53_revyb"]
 [ext_resource type="Texture2D" uid="uid://brobqeuubcdwc" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunRunFire/GunRunFire07.png" id="54_k8yro"]
+[ext_resource type="Texture2D" uid="uid://c3y2wgjrccjgm" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunReload/GunReload05.png" id="54_yvx0r"]
 [ext_resource type="Texture2D" uid="uid://bldb1jccvctug" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunRunFire/GunRunFire08.png" id="55_fktqp"]
+[ext_resource type="Texture2D" uid="uid://c3gmclnt1e2aq" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunReload/GunReload06.png" id="55_he81y"]
+[ext_resource type="Texture2D" uid="uid://5x1syekqs3s" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunReload/GunReload07.png" id="56_jjike"]
+[ext_resource type="Texture2D" uid="uid://ck0xfga54uycy" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunReload/GunReload08.png" id="57_6eofm"]
 [ext_resource type="Script" uid="uid://b0uasmutdnguo" path="res://chars/target_lock.gd" id="57_d6os8"]
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="57_lhivr"]
 [ext_resource type="BehaviorTree" uid="uid://bkpyddqh402xp" path="res://ai/trees/soldier_ai.tres" id="58_n1sc2"]
+[ext_resource type="Texture2D" uid="uid://duitrl6u64xju" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunReload/GunReload09.png" id="58_qew73"]
 [ext_resource type="Texture2D" uid="uid://btyocoapfceyl" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Stunned/Stunned01.png" id="66_s2yxa"]
 [ext_resource type="Texture2D" uid="uid://cq16qqirxqqsq" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Stunned/Stunned02.png" id="67_n6x1w"]
 [ext_resource type="Texture2D" uid="uid://ck72bfvgbu7ie" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Stunned/Stunned03.png" id="68_72eek"]
@@ -322,6 +331,38 @@ animations = [{
 }],
 "loop": true,
 "name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("50_nnfiv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_1dxn7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_xc7oc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_p17nh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_yvx0r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_he81y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_jjike")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_6eofm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_qew73")
+}],
+"loop": true,
+"name": &"reload",
 "speed": 5.0
 }, {
 "frames": [{
@@ -610,6 +651,18 @@ tracks/13/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("AnimatedSprite2D:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_2kcob"]
 resource_name = "Staggered"
@@ -705,6 +758,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [true, false, false, true]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HitBox/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-14, -7)]
+}
 
 [sub_resource type="Animation" id="Animation_dhh13"]
 resource_name = "atk_2"
@@ -745,6 +810,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [true, false, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HitBox/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-14, -7)]
 }
 
 [sub_resource type="Animation" id="Animation_i54iy"]
@@ -1009,7 +1086,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_ovyjq"]
 resource_name = "dodge"
-length = 0.4
+length = 0.2
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1042,10 +1119,10 @@ tracks/2/path = NodePath("AnimatedSprite2D:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.303924),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(0.454524, 0.454524, 0.454524, 1), Color(0.925353, 0.925353, 0.925353, 1), Color(0.454524, 0.454524, 0.454524, 1), Color(0.925353, 0.925353, 0.925353, 1)]
+"values": [Color(0.454524, 0.454524, 0.454524, 1), Color(0.925353, 0.925353, 0.925353, 1), Color(0.454524, 0.454524, 0.454524, 1)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -1054,10 +1131,22 @@ tracks/3/path = NodePath("AnimatedSprite2D:self_modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.303924),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(0.521141, 0.521141, 0.521141, 1), Color(1, 1, 1, 1), Color(0.521141, 0.521141, 0.521141, 1), Color(1, 1, 1, 1)]
+"values": [Color(0.521141, 0.521141, 0.521141, 1), Color(1, 1, 1, 1), Color(0.521141, 0.521141, 0.521141, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.101308, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [true, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_hssic"]
@@ -1202,6 +1291,58 @@ tracks/1/keys = {
 "values": [&"shoot"]
 }
 
+[sub_resource type="Animation" id="Animation_dhr1a"]
+resource_name = "reload"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"reload"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HitBox/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-14, -7)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c6g3t"]
 _data = {
 &"RESET": SubResource("Animation_rh5v8"),
@@ -1215,6 +1356,7 @@ _data = {
 &"dodge": SubResource("Animation_ovyjq"),
 &"guard": SubResource("Animation_hssic"),
 &"hit": SubResource("Animation_x3dkm"),
+&"reload": SubResource("Animation_dhr1a"),
 &"run": SubResource("Animation_48047"),
 &"shoot": SubResource("Animation_buxyb")
 }
@@ -1333,6 +1475,8 @@ shape = SubResource("RectangleShape2D_0c6of")
 
 [node name="Turret" parent="." index="22" instance=ExtResource("57_lhivr")]
 position = Vector2(-8, -7)
+ammo_count = 6
+max_ammo = 6
 
 [node name="BTPlayer" type="BTPlayer" parent="." index="23"]
 behavior_tree = ExtResource("58_n1sc2")
@@ -1387,9 +1531,10 @@ script = ExtResource("86_j1fbf")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://ddhk64y60klpg"
 
-[node name="ShootAttackManager" type="Node" parent="." index="33" node_paths=PackedStringArray("actor", "turret")]
+[node name="ShootAttackManager" type="Node" parent="." index="33" node_paths=PackedStringArray("actor", "animation_player", "turret")]
 script = ExtResource("87_qbww6")
 actor = NodePath("..")
+animation_player = NodePath("../AnimationPlayer")
 turret = NodePath("../Turret")
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 

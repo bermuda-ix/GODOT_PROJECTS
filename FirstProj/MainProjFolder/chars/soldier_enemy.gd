@@ -44,7 +44,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var health = $Health
 @onready var hurt_box = $HurtBox
 @onready var hurt_box_collision: CollisionShape2D = $HurtBox/CollisionShape2D
-@onready var hb_collison = $HitBox/CollisionShape2D
+@onready var hb_collision = $HitBox/CollisionShape2D
 @onready var hit_box: HitBox = $HitBox
 
 @onready var h_bar = $HBar
@@ -163,7 +163,6 @@ func _ready():
 	_init_combat_state_machine()
 	hurt_box.set_damage_mulitplyer(1)
 	Events.allied_enemy_hit.connect(adjust_counter)
-
 	
 
 # initialize state
@@ -210,7 +209,7 @@ func _process(_delta):
 	dir = to_local(next)
 	
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
-		hb_collison.disabled=true
+		hb_collision.disabled=true
 		return
 	health_bar()
 	#track_player()
@@ -239,7 +238,7 @@ func _physics_process(delta):
 		move_and_slide()
 		return
 	elif state_machine.get_active_state()==death :
-		hb_collison.disabled=true
+		hb_collision.disabled=true
 		return
 	#melee_range_failsafe()
 	#counter_attack()
@@ -271,7 +270,7 @@ func chase():
 	
 
 func health_bar():
-	h_bar.text=str(health.health, " : ", bt_player.blackboard.get_var("counter_kick_flag"), " : CKF: ", counter_kick_chance)
+	h_bar.text=str(health.health, " : ammo:",turret.ammo_count , " : CKF: ", counter_kick_chance)
 
 func makepath() -> void:
 	nav_agent.target_position = player.global_position

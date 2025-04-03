@@ -19,6 +19,7 @@ func _physics_process(delta: float) -> void:
 			#print("ranged")
 			actor.turret.shoot_timer.paused=false
 			combat_state_machine.dispatch(&"ranged_mode")
+			sm.dispatch(&"start_attack")
 			
 #		MELEE ATTACK
 		else:

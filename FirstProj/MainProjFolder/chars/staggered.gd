@@ -5,7 +5,7 @@ extends LimboState
 
 func _enter() -> void:
 	actor.animation_player.play("Staggered")
-	actor.hb_collison.disabled=true
+	actor.hb_collision.disabled=true
 	actor.bt_player.blackboard.set_var("attack_mode", false)
 	actor.parry_timer.start(3)
 	actor.hurt_box.set_damage_mulitplyer(3)
