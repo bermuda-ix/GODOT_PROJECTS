@@ -74,9 +74,9 @@ var atk_state="ATK_1"
 @onready var dodge_timer = $DodgeTimer
 @onready var starting_position : set = set_start_pos, get = get_start_pos
 @onready var label = $STATE
-@onready var hit_box = $HitBox
-@onready var hb_right = $HitBox/HBRight
-@onready var hb_left = $HitBox/HBLeft
+
+@onready var hit_box: HitBox = $AnimatedSprite2D/HitBox
+@onready var hb_collision: CollisionShape2D = $AnimatedSprite2D/HitBox/HBCollision
 @onready var pb_rot = $ParryBox/PBRot
 @onready var parry_box = $ParryBox
 @onready var counter_box_collision = $CounterBox/CounterBoxCollision
@@ -149,8 +149,7 @@ var stuck : bool = false
 
 func _ready():
 	hit_box_pos=hit_box.position
-	hb_left.disabled=true
-	hb_right.disabled=true
+	hb_collision.disabled=true
 
 	pb_rot.disabled=true
 	set_start_pos(global_position)
@@ -185,7 +184,7 @@ func _process(delta):
 	elif input_axis == 0:
 		move_axis = 0
 	
-	handle_hitbox(input_axis, face_right)
+	#handle_hitbox(input_axis, face_right)
 	#air_atk)
 	
 	if(state!=States.DODGE and s_atk==false and state!=States.FLIP):
@@ -693,22 +692,18 @@ func dodge(input_axis, delta):
 		set_state(state, States.IDLE)
 	
 	
-func handle_hitbox(input_axis, face_right):
-	if state== States.ATTACK:
-		if combat_state!=CombatStates.LOCKED:
-			if not face_right:
-				hb_left.disabled=false
-				hb_right.disabled=true
-			else:
-				hb_left.disabled=true
-				hb_right.disabled=false
-		else:
-			if not target_right:
-				hb_left.disabled=false
-				hb_right.disabled=true
-			else:
-				hb_left.disabled=true
-				hb_right.disabled=false
+#func handle_hitbox(input_axis, face_right):
+	#if state== States.ATTACK:
+		#if combat_state!=CombatStates.LOCKED:
+			#if not face_right:
+				#hit_box.scale.x=1
+			#else:
+				#hit_box.scale.x=-1
+		#else:
+			#if not target_right:
+				#hit_box.scale.x=1
+			#else:
+				#hit_box.scale.x=-1
 
 func lockon():
 	var target_dist : Vector2 = Vector2.ZERO
@@ -873,8 +868,7 @@ func set_state(current_state, new_state: int) -> void:
 			movement_data.friction=1000
 			s_atk=false
 			counter_box_collision.disabled=true
-			hb_left.disabled=true
-			hb_right.disabled=true
+			hb_collision.disabled=true
 			air_atk=false
 			flipped_over=false
 		States.WALKING:
@@ -1031,8 +1025,7 @@ func _on_animation_player_animation_finished(anim_name):
 			
 		else:
 			set_state(state, prev_state)
-		hb_left.disabled=true
-		hb_right.disabled=true
+		hb_collision.disabled=true
 		
 	elif state==States.SPECIAL_ATTACK:
 		if prev_state==States.FLIP:

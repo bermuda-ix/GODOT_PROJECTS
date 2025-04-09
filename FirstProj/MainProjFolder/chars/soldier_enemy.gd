@@ -211,10 +211,14 @@ func _process(_delta):
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collision.disabled=true
 		return
+	elif state_machine.get_active_state()==idle:
+		hb_collision.disabled=true
 	health_bar()
 	#track_player()
 	#combat_state_change()
 	handle_vision()
+	if not attack_range.has_overlapping_bodies():
+		bt_player.blackboard.set_var("within_range", false)
 	#bt_player.blackboard.get_var("attack_mode"))
 	attack_timer.one_shot=true
 	#get_player_state(player)
@@ -483,10 +487,10 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	bt_player.restart()
 	if state_machine.get_active_state()==death:
 		return
-	health.set_temporary_immortality(0.5)
+	health.set_temporary_immortality(0.2)
 	if damage<=health.health:
 		state_machine.dispatch(&"hit")
-		stagger_timer.start(0.1)
+		stagger_timer.start(0.5)
 		#set_state(current_state, States.HIT)
 		gpu_particles_2d.emitting=true
 		

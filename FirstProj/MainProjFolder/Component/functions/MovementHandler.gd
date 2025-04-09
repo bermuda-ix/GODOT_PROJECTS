@@ -4,6 +4,7 @@ extends Node
 @export var actor : Node2D
 @export var active : bool = true
 @export var state_machine : LimboHSM
+@export var vision_handler : VisionHandler
 
 func _physics_process(delta: float) -> void:
 	
@@ -11,7 +12,7 @@ func _physics_process(delta: float) -> void:
 	if not active:
 		return
 	
-	if actor.player_found == true:
+	if vision_handler.player_found == true:
 		
 		var dir = actor.to_local(actor.nav_agent.get_next_path_position())
 		#actor.h_bar.text=str(actor.health.health, " : ", actor.stagger.stagger, " : vel_x:", actor.velocity.x)

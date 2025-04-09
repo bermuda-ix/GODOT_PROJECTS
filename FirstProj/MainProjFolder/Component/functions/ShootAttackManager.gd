@@ -22,3 +22,9 @@ func shoot():
 	
 func shoot_setup(value : float):
 	turret.setup(value)
+	
+func rotate_turret():
+	if turret.slow_track:
+		turret.rotation=actor.rotation
+	else:
+		return

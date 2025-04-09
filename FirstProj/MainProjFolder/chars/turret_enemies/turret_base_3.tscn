@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://mve6miefg0i0"]
+
+[ext_resource type="Texture2D" uid="uid://20rgocssusvw" path="res://Art_Components/2D Sci-Fi Turret Pack/2D Sci-Fi Turret Pack/3-Turrets/Turret3Base.png" id="1_8k2it"]
+[ext_resource type="Script" uid="uid://byyhaxyukojmg" path="res://chars/turret_enemies/turret_base.gd" id="1_61vfk"]
+[ext_resource type="PackedScene" uid="uid://c3lkw8owoadhu" path="res://chars/turret_enemies/turret_top_3.tscn" id="2_4s1b6"]
+[ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="3_sh051"]
+[ext_resource type="Script" uid="uid://cnxm24jqclb68" path="res://Component/health.gd" id="4_61vfk"]
+
+[node name="turret_base_3" type="StaticBody2D"]
+script = ExtResource("1_61vfk")
+
+[node name="AnimatedSprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_8k2it")
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-122, 95, 82, 95, 123, 57, 122, 17, 78, 17, 72, -93, 36, -93, 32, 17, -30, 18, -66, 56, -102, 56, -122, 75)
+
+[node name="turret_top" parent="." node_paths=PackedStringArray("base") instance=ExtResource("2_4s1b6")]
+position = Vector2(56, -78)
+base = NodePath("..")
+
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+script = ExtResource("3_sh051")
+health = NodePath("../Health")
+metadata/_custom_type_script = "uid://bet3nodk2voxv"
+
+[node name="HurtBoxCollision" type="CollisionPolygon2D" parent="HurtBox"]
+polygon = PackedVector2Array(-122, 95, 82, 95, 123, 57, 122, 17, 78, 17, 72, -93, 36, -93, 32, 17, -30, 18, -66, 56, -102, 56, -122, 75)
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("4_61vfk")
+metadata/_custom_type_script = "uid://cnxm24jqclb68"

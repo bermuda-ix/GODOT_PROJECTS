@@ -4,6 +4,7 @@ extends LimboState
 @export var animation_player : AnimationPlayer
 
 
+
 func _enter() -> void:
 	actor.state="Hit"
 	actor.bt_player.blackboard.set_var("attack_mode", false)
@@ -13,4 +14,6 @@ func _enter() -> void:
 	
 	
 func _exit() -> void:
+	print("hit recovered")
 	actor.hurt_box_collision.disabled=false
+	animation_player.play("RESET")

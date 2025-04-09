@@ -1,0 +1,108 @@
+[gd_scene load_steps=15 format=3 uid="uid://c3lkw8owoadhu"]
+
+[ext_resource type="Texture2D" uid="uid://du2h7k6fl2qse" path="res://Art_Components/2D Sci-Fi Turret Pack/2D Sci-Fi Turret Pack/3-Turrets/Turret3Top.png" id="1_12xbq"]
+[ext_resource type="Script" uid="uid://b3e7r8nfekoni" path="res://chars/turret_enemies/turret_top.gd" id="1_c3g7k"]
+[ext_resource type="Script" uid="uid://cx8bi64kwoulc" path="res://Component/functions/PlayerTrackingHandler.gd" id="2_3hw1p"]
+[ext_resource type="Script" uid="uid://wkp4a7ybuj21" path="res://Component/functions/VisionHandler.gd" id="3_3ligv"]
+[ext_resource type="Script" uid="uid://daq7xh1e6l7u6" path="res://chars/idle.gd" id="4_2a4oo"]
+[ext_resource type="Script" uid="uid://b5an13nv6em7m" path="res://chars/attack.gd" id="5_c3g7k"]
+[ext_resource type="Script" uid="uid://c4yno8xy5erif" path="res://chars/death.gd" id="6_matqd"]
+[ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="8_matqd"]
+[ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="9_fl7l4"]
+[ext_resource type="Script" uid="uid://5h8g0n4mebtm" path="res://Component/functions/ShootAttackManager.gd" id="10_j0ghf"]
+[ext_resource type="Script" uid="uid://bj1m6kr4vol6u" path="res://Component/functions/RotationManager.gd" id="11_j0ghf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fl7l4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_12xbq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_elma4"]
+size = Vector2(261, 67)
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_c3g7k"]
+
+[node name="turret_top_3" type="Node2D"]
+script = ExtResource("1_c3g7k")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(-1, -1)
+sprite_frames = SubResource("SpriteFrames_fl7l4")
+offset = Vector2(-56, -23)
+
+[node name="turret_top" type="AnimatableBody2D" parent="Sprite2D"]
+position = Vector2(-56, -23)
+
+[node name="turret_top_collision" type="CollisionShape2D" parent="Sprite2D/turret_top"]
+position = Vector2(1.5, -4.5)
+shape = SubResource("RectangleShape2D_elma4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="PlayerTrackerPivot" type="Node2D" parent="."]
+position = Vector2(0, -32)
+rotation = 3.14159
+
+[node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot"]
+target_position = Vector2(576, 0)
+collision_mask = 3
+collide_with_areas = true
+
+[node name="DeathTimer" type="Timer" parent="."]
+
+[node name="BTPlayer" type="BTPlayer" parent="."]
+blackboard_plan = SubResource("BlackboardPlan_c3g7k")
+
+[node name="LimboHSM" type="LimboHSM" parent="."]
+
+[node name="Idle" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor")]
+script = ExtResource("4_2a4oo")
+actor = NodePath("../..")
+
+[node name="Attack" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "bt_player")]
+script = ExtResource("5_c3g7k")
+actor = NodePath("../..")
+bt_player = NodePath("../../BTPlayer")
+
+[node name="Death" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor")]
+script = ExtResource("6_matqd")
+actor = NodePath("../..")
+
+[node name="PlayerTrackingHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("2_3hw1p")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://cx8bi64kwoulc"
+
+[node name="VisionHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm")]
+script = ExtResource("3_3ligv")
+actor = NodePath("..")
+sm = NodePath("../LimboHSM")
+combat_state_active = false
+metadata/_custom_type_script = "uid://wkp4a7ybuj21"
+
+[node name="Turret" parent="." instance=ExtResource("8_matqd")]
+position = Vector2(0, -32)
+scale = Vector2(-1, 1)
+
+[node name="ShootHandler" type="Node" parent="."]
+script = ExtResource("9_fl7l4")
+metadata/_custom_type_script = "uid://5gt6g8063rb4"
+
+[node name="ShootAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]
+script = ExtResource("10_j0ghf")
+actor = NodePath("..")
+turret = NodePath("../Turret")
+metadata/_custom_type_script = "uid://5h8g0n4mebtm"
+
+[node name="RotationManager" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine")]
+script = ExtResource("11_j0ghf")
+actor = NodePath("..")
+state_machine = NodePath("../LimboHSM")
+min_arc = -220.0
+metadata/_custom_type_script = "uid://bj1m6kr4vol6u"

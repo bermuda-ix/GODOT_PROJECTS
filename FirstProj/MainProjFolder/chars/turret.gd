@@ -19,6 +19,7 @@ var pos = position
 @export var ammo_count : int
 @export var max_ammo : int
 @export var infinite_ammo : bool
+@export var slow_track : bool = false
 
 var dist_to_player : get = get_dist_to_player
 
@@ -43,14 +44,18 @@ func setup(time : float):
 
 
 func track_player():
-	if player == null or player.flipped_over:
+	if slow_track:
 		return
-	
-	player_tracker.target_position = to_local(player.global_position)
-	
-	direction_to_player = player.position - pos
-	#turret_body.rotation=direction_to_player.angle()
-	dist_to_player = direction_to_player
+	else:
+		
+		if player == null or player.flipped_over:
+			return
+		
+		player_tracker.target_position = to_local(player.global_position)
+		
+		direction_to_player = player.position - pos
+		#turret_body.rotation=direction_to_player.angle()
+		dist_to_player = direction_to_player
 	
 func rotate_bullet():
 	rotate(player_tracker.rotation)
