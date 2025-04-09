@@ -145,6 +145,6 @@ active = false
 enemy_single = ExtResource("5_fkwqf")
 
 [node name="turret_base_3" parent="." index="22" instance=ExtResource("5_ca064")]
-position = Vector2(369, -282)
-rotation = 6.29698
+position = Vector2(386, -362)
+rotation = 4.73095
 scale = Vector2(0.1, 0.1)

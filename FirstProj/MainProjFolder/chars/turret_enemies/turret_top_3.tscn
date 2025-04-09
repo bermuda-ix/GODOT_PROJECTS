@@ -177,7 +177,6 @@ process_material = SubResource("ParticleProcessMaterial_j0ghf")
 
 [node name="Turret" parent="Sprite2D" instance=ExtResource("8_matqd")]
 position = Vector2(-176, -32)
-scale = Vector2(-1, -1)
 ammo_count = 12
 max_ammo = 12
 slow_track = true

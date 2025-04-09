@@ -50,5 +50,5 @@ func _physics_process(delta: float) -> void:
 		else:
 			return
 	if actor.turret.slow_track:
-		actor.turret.direction_to_player=Vector2.RIGHT.rotated(actor.sprite_2d.rotation)
+		actor.turret.direction_to_player=Vector2.RIGHT.rotated(actor.sprite_2d.global_rotation)*-1
 		print(actor.turret.direction_to_player)
