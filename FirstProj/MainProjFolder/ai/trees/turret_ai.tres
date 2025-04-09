@@ -1,0 +1,44 @@
+[gd_resource type="BehaviorTree" load_steps=10 format=3 uid="uid://b1t5gv0bt5din"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_cecvh"]
+var/attack_mode/name = &"attack_mode"
+var/attack_mode/type = 1
+var/attack_mode/value = false
+var/attack_mode/hint = 0
+var/attack_mode/hint_string = ""
+
+[sub_resource type="BBVariant" id="BBVariant_cecvh"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_n0ccg"]
+variable = &"attack_mode"
+value = SubResource("BBVariant_cecvh")
+
+[sub_resource type="BBNode" id="BBNode_cecvh"]
+saved_value = NodePath("ShootAttackManager")
+resource_name = "ShootAttackManager"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_n0ccg"]
+node = SubResource("BBNode_cecvh")
+method = &"shoot"
+
+[sub_resource type="BTCooldown" id="BTCooldown_l7px2"]
+duration = 0.2
+start_cooled = true
+children = [SubResource("BTCallMethod_n0ccg")]
+
+[sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_cecvh"]
+children = [SubResource("BTCooldown_l7px2")]
+
+[sub_resource type="BTSequence" id="BTSequence_n0ccg"]
+custom_name = "Attack"
+children = [SubResource("BTCheckVar_n0ccg"), SubResource("BTRepeatUntilFailure_cecvh")]
+
+[sub_resource type="BTSelector" id="BTSelector_l7px2"]
+children = [SubResource("BTSequence_n0ccg")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_cecvh")
+root_task = SubResource("BTSelector_l7px2")

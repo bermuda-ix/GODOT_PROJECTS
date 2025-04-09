@@ -1,4 +1,4 @@
-[gd_scene load_steps=135 format=3 uid="uid://b5d2nkkrrcixy"]
+[gd_scene load_steps=136 format=3 uid="uid://b5d2nkkrrcixy"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_ojqla"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ibi2a"]
@@ -109,6 +109,7 @@
 [ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="90_tmwt0"]
 [ext_resource type="Script" uid="uid://cp2j3xnu5vd7q" path="res://Component/functions/DodgeManager.gd" id="92_233jl"]
 [ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="94_kad5g"]
+[ext_resource type="PackedScene" uid="uid://e8y61qs02r7p" path="res://Component/ball_procetile.tscn" id="95_1dxn7"]
 [ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="95_ivw15"]
 [ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="96_0nqgj"]
 [ext_resource type="Script" uid="uid://doi7s32f3duwj" path="res://chars/dodge.gd" id="98_ovyjq"]
@@ -1528,9 +1529,11 @@ sm = NodePath("../LimboHSM")
 animation_player = NodePath("../AnimationPlayer")
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
 
-[node name="ShootHandler" type="Node" parent="." index="30" node_paths=PackedStringArray("actor")]
+[node name="ShootHandler" type="Node" parent="." index="30" node_paths=PackedStringArray("actor", "turret")]
 script = ExtResource("83_ue1j6")
 actor = NodePath("..")
+projectile = ExtResource("95_1dxn7")
+turret = NodePath("../Turret")
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
 [node name="VisionHandler" type="Node" parent="." index="31" node_paths=PackedStringArray("actor", "sm", "csm")]

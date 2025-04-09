@@ -1,14 +1,16 @@
-[gd_scene load_steps=15 format=3 uid="uid://c3lkw8owoadhu"]
+[gd_scene load_steps=22 format=3 uid="uid://c3lkw8owoadhu"]
 
 [ext_resource type="Texture2D" uid="uid://du2h7k6fl2qse" path="res://Art_Components/2D Sci-Fi Turret Pack/2D Sci-Fi Turret Pack/3-Turrets/Turret3Top.png" id="1_12xbq"]
 [ext_resource type="Script" uid="uid://b3e7r8nfekoni" path="res://chars/turret_enemies/turret_top.gd" id="1_c3g7k"]
 [ext_resource type="Script" uid="uid://cx8bi64kwoulc" path="res://Component/functions/PlayerTrackingHandler.gd" id="2_3hw1p"]
 [ext_resource type="Script" uid="uid://wkp4a7ybuj21" path="res://Component/functions/VisionHandler.gd" id="3_3ligv"]
+[ext_resource type="BehaviorTree" uid="uid://b1t5gv0bt5din" path="res://ai/trees/turret_ai.tres" id="3_ksx82"]
 [ext_resource type="Script" uid="uid://daq7xh1e6l7u6" path="res://chars/idle.gd" id="4_2a4oo"]
 [ext_resource type="Script" uid="uid://b5an13nv6em7m" path="res://chars/attack.gd" id="5_c3g7k"]
 [ext_resource type="Script" uid="uid://c4yno8xy5erif" path="res://chars/death.gd" id="6_matqd"]
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="8_matqd"]
 [ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="9_fl7l4"]
+[ext_resource type="PackedScene" uid="uid://e8y61qs02r7p" path="res://Component/ball_procetile.tscn" id="10_ik7so"]
 [ext_resource type="Script" uid="uid://5h8g0n4mebtm" path="res://Component/functions/ShootAttackManager.gd" id="10_j0ghf"]
 [ext_resource type="Script" uid="uid://bj1m6kr4vol6u" path="res://Component/functions/RotationManager.gd" id="11_j0ghf"]
 
@@ -21,10 +23,120 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_12xbq")
+}],
+"loop": true,
+"name": &"reload",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_elma4"]
 size = Vector2(261, 67)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j0ghf"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+spread = 90.0
+initial_velocity_min = 98.12
+initial_velocity_max = 98.12
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_j0ghf"]
+resource_name = "reload"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5, 0.7, 0.801223, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(72.376, 75.138, 74.585, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(72.376, 75.138, 74.585, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ik7so"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D/GPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ksx82"]
+resource_name = "shoot"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ik7so"]
+_data = {
+&"RESET": SubResource("Animation_ik7so"),
+&"reload": SubResource("Animation_j0ghf"),
+&"shoot": SubResource("Animation_ksx82")
+}
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_c3g7k"]
 
@@ -34,16 +146,46 @@ script = ExtResource("1_c3g7k")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(-1, -1)
 sprite_frames = SubResource("SpriteFrames_fl7l4")
+animation = &"reload"
 offset = Vector2(-56, -23)
 
 [node name="turret_top" type="AnimatableBody2D" parent="Sprite2D"]
 position = Vector2(-56, -23)
+collision_layer = 4
+collision_mask = 2
 
 [node name="turret_top_collision" type="CollisionShape2D" parent="Sprite2D/turret_top"]
 position = Vector2(1.5, -4.5)
 shape = SubResource("RectangleShape2D_elma4")
 
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D"]
+position = Vector2(-184, -32)
+scale = Vector2(-1, -1)
+lifetime = 0.5
+one_shot = true
+speed_scale = 5.0
+explosiveness = 1.0
+randomness = 1.0
+use_fixed_seed = true
+seed = 1500462308
+collision_base_size = 5.0
+trail_enabled = true
+trail_lifetime = 0.01
+trail_sections = 4
+trail_section_subdivisions = 1
+process_material = SubResource("ParticleProcessMaterial_j0ghf")
+
+[node name="Turret" parent="Sprite2D" instance=ExtResource("8_matqd")]
+position = Vector2(-176, -32)
+scale = Vector2(-1, -1)
+ammo_count = 12
+max_ammo = 12
+slow_track = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ik7so")
+}
 
 [node name="PlayerTrackerPivot" type="Node2D" parent="."]
 position = Vector2(0, -32)
@@ -57,6 +199,7 @@ collide_with_areas = true
 [node name="DeathTimer" type="Timer" parent="."]
 
 [node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("3_ksx82")
 blackboard_plan = SubResource("BlackboardPlan_c3g7k")
 
 [node name="LimboHSM" type="LimboHSM" parent="."]
@@ -86,23 +229,35 @@ sm = NodePath("../LimboHSM")
 combat_state_active = false
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
-[node name="Turret" parent="." instance=ExtResource("8_matqd")]
-position = Vector2(0, -32)
-scale = Vector2(-1, 1)
-
-[node name="ShootHandler" type="Node" parent="."]
+[node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]
 script = ExtResource("9_fl7l4")
+actor = NodePath("..")
+projectile = ExtResource("10_ik7so")
+turret = NodePath("../Sprite2D/Turret")
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
-[node name="ShootAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]
+[node name="ShootAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor", "animation_player", "turret")]
 script = ExtResource("10_j0ghf")
 actor = NodePath("..")
-turret = NodePath("../Turret")
+animation_player = NodePath("../AnimationPlayer")
+turret = NodePath("../Sprite2D/Turret")
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
 [node name="RotationManager" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine")]
 script = ExtResource("11_j0ghf")
 actor = NodePath("..")
+rotation_speed = 1
 state_machine = NodePath("../LimboHSM")
-min_arc = -220.0
+min_arc = 140.0
+max_arc = 260.0
 metadata/_custom_type_script = "uid://bj1m6kr4vol6u"
+
+[node name="debug" type="Label" parent="."]
+offset_left = -104.0
+offset_top = -192.0
+offset_right = 112.0
+offset_bottom = -17.0
+theme_override_font_sizes/font_size = 128
+
+[connection signal="shoot_bullet" from="Sprite2D/Turret" to="." method="_on_turret_shoot_bullet"]
+[connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]

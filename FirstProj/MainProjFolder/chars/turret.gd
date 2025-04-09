@@ -62,6 +62,7 @@ func rotate_bullet():
 	
 func shoot():
 	if ranged_mode==true:
+		#print("begin shoot")
 		if multi_shot:
 			shoot_bullet.emit()
 		
@@ -69,7 +70,7 @@ func shoot():
 			if shoot_timer.is_stopped():
 				#print(direction_to_player)
 				shoot_timer.start()
-				print("shoot")
+				#print("shoot")
 				shoot_bullet.emit()
 				
 				

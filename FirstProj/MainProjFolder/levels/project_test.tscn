@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=10 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
-[ext_resource type="PackedScene" uid="uid://bwe3bu6vqh8v" path="res://Component/interactables/spawn_flag.tscn" id="3_c2k67"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="4_4kfue"]
 [ext_resource type="PackedScene" uid="uid://mve6miefg0i0" path="res://chars/turret_enemies/turret_base_3.tscn" id="5_ca064"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
@@ -140,15 +139,12 @@ navigation_layers = 2
 [node name="NavigationRegion2D11" type="NavigationRegion2D" parent="." index="20"]
 navigation_polygon = SubResource("NavigationPolygon_nxtlr")
 
-[node name="SpawnFlag" parent="." index="21" node_paths=PackedStringArray("spawn_connected") instance=ExtResource("3_c2k67")]
-position = Vector2(528, -308)
-spawn_connected = NodePath("../SpawnPoint")
-
-[node name="SpawnPoint" parent="." index="22" instance=ExtResource("4_4kfue")]
+[node name="SpawnPoint" parent="." index="21" instance=ExtResource("4_4kfue")]
 position = Vector2(624, -272)
 active = false
 enemy_single = ExtResource("5_fkwqf")
 
-[node name="turret_base_3" parent="." index="23" instance=ExtResource("5_ca064")]
-position = Vector2(305, -318)
+[node name="turret_base_3" parent="." index="22" instance=ExtResource("5_ca064")]
+position = Vector2(369, -282)
+rotation = 6.29698
 scale = Vector2(0.1, 0.1)
