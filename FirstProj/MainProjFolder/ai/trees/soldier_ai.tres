@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=66 format=3 uid="uid://bkpyddqh402xp"]
+[gd_resource type="BehaviorTree" load_steps=68 format=3 uid="uid://bkpyddqh402xp"]
 
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_7px3v"]
 
@@ -38,6 +38,20 @@ var/shoot_counter/type = 2
 var/shoot_counter/value = 0
 var/shoot_counter/hint = 0
 var/shoot_counter/hint_string = ""
+var/staggered/name = &"staggered"
+var/staggered/type = 1
+var/staggered/value = false
+var/staggered/hint = 0
+var/staggered/hint_string = ""
+
+[sub_resource type="BBVariant" id="BBVariant_cj7pg"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_qpg7m"]
+variable = &"staggered"
+value = SubResource("BBVariant_cj7pg")
 
 [sub_resource type="BBVariant" id="BBVariant_s1wjr"]
 type = 1
@@ -291,7 +305,7 @@ children = [SubResource("BTSelector_ct688")]
 
 [sub_resource type="BTSequence" id="BTSequence_df28b"]
 custom_name = "Attacks"
-children = [SubResource("BTCheckVar_or1gh"), SubResource("BTRepeatUntilFailure_vwcxk")]
+children = [SubResource("BTCheckVar_qpg7m"), SubResource("BTCheckVar_or1gh"), SubResource("BTRepeatUntilFailure_vwcxk")]
 
 [sub_resource type="BTSelector" id="BTSelector_307xj"]
 children = [SubResource("BTSequence_df28b")]

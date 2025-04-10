@@ -1624,10 +1624,12 @@ script = ExtResource("90_tmwt0")
 actor = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="STAGGERED" type="LimboState" parent="LimboHSM" index="8" node_paths=PackedStringArray("actor", "movement_handler")]
+[node name="STAGGERED" type="LimboState" parent="LimboHSM" index="8" node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player")]
 script = ExtResource("89_81rlk")
 actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
+stagger = NodePath("../../Stagger")
+bt_player = NodePath("../../BTPlayer")
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." index="39"]
 
@@ -1646,7 +1648,6 @@ bt_player = NodePath("../../BTPlayer")
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
-[connection signal="timeout" from="StaggerTimer" to="." method="_on_stagger_timer_timeout"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]

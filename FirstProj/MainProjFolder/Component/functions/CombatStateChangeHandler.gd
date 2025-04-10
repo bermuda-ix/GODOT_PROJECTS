@@ -11,10 +11,13 @@ extends Node
 func _physics_process(delta: float) -> void:
 	if not active:
 		return
+	elif sm.get_active_state()==actor.staggered:
+		return
 	else:
 		actor.distance=abs(actor.global_position.x-actor.player.global_position.x)
 		#print(actor.distance)
 #		RANGED ATTACK
+
 		if actor.distance>100:
 			#print("ranged")
 			actor.turret.shoot_timer.paused=false

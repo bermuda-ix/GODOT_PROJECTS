@@ -8,7 +8,7 @@ extends Node
 func death():
 	#print("dying")
 	Events.unlock_from.emit()
-	actor.parry_timer.stop()
+	#actor.parry_timer.stop()
 	sm.dispatch(&"die")
 	actor.hb_collision.disabled=false
 	animation_player.play("death")

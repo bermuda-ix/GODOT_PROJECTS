@@ -112,22 +112,6 @@ var distance
 @onready var staggered: LimboState = $LimboHSM/STAGGERED
 
 
-enum States{
-	IDLE,
-	CHASE,
-	JUMP,
-	ATTACK,
-	PARRY,
-	DEATH,
-	SHOOTING,
-	STAGGERED,
-	DODGE,
-	HIT
-}
-
-var current_state = States.IDLE
-var prev_state = States.IDLE
-
 @onready var combat_state_machine: LimboHSM = $CombatStateMachine
 @onready var ranged: LimboState = $CombatStateMachine/RANGED
 @onready var melee: LimboState = $CombatStateMachine/MELEE
@@ -157,6 +141,7 @@ func _ready():
 	bt_player.blackboard.set_var("within_range", false)
 	bt_player.blackboard.set_var("counter_attack", false)
 	bt_player.blackboard.set_var("counter_kick_flag", false)
+	bt_player.blackboard.set_var("staggered", false)
 	turret.setup(0.2)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
@@ -223,6 +208,9 @@ func _process(_delta):
 	attack_timer.one_shot=true
 	#get_player_state(player)
 	#on_screen.is_on_screen())
+	if parry_timer.time_left>0.0:
+		bt_player.blackboard.set_var("attack_mode", false)
+		#print(parry_timer.time_left)
 
 func _physics_process(delta):
 	##FOR TESTING REMOVE LATER
@@ -250,6 +238,9 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		
+	if state_machine.get_active_state()==staggered and parry_timer.time_left>0.0:
+		state_machine.change_active_state(staggered)
+		
 	#handle_movement()
 	if state_machine.get_active_state()==chasing:
 		velocity.x = current_speed + knockback.x
@@ -274,7 +265,7 @@ func chase():
 	
 
 func health_bar():
-	h_bar.text=str(health.health, " : ammo:",turret.ammo_count , " : CKF: ", counter_kick_chance)
+	h_bar.text=str(health.health, " : ammo:",turret.ammo_count , " : STG: ", stagger.stagger)
 
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
@@ -415,13 +406,13 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
+	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
 		bt_player.blackboard.set_var("within_range", true)
 		#set_state(current_state, States.ATTACK)
 		state_machine.dispatch(&"start_attack")
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
-	if body.is_in_group("player") and not animation_player.is_playing():
+	if body.is_in_group("player") and not animation_player.is_playing() and state_machine.get_active_state()!=staggered:
 		bt_player.blackboard.set_var("within_range", false)
 		#set_state(current_state, States.CHASE)
 		state_machine.dispatch(&"start_chase")
@@ -450,14 +441,25 @@ func _on_navigation_timer_timeout() -> void:
 
 func _on_stagger_staggered() -> void:
 	#set_state(current_state, States.STAGGERED)
+	bt_player.blackboard.set_var("staggered", true)
+	bt_player.restart()
+	parry_timer.start(3)
+	
+	hb_collision.disabled=true
+	print("staggered")
 	state_machine.dispatch(&"staggered")
 
 
 func _on_parry_timer_timeout() -> void:
 	#set_state(current_state, prev_state)
-	#print("timeout")
+	print("timeout")
 	#print(state_machine.get_previous_active_state())
-	state_machine.dispatch(&"stagger_recover")
+	bt_player.blackboard.set_var("attack_mode", true)
+	if state_machine.get_active_state()==staggered:
+		state_machine.dispatch(&"stagger_recover")
+	elif state_machine.get_active_state()==hit:
+		state_machine.dispatch(&"hit_recover")
+	movement_handler.active=true
 	hurt_box.set_damage_mulitplyer(1)
 
 func adjust_counter():
@@ -489,8 +491,9 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		return
 	health.set_temporary_immortality(0.2)
 	if damage<=health.health:
+		parry_timer.start(0.5)
 		state_machine.dispatch(&"hit")
-		stagger_timer.start(0.5)
+		
 		#set_state(current_state, States.HIT)
 		gpu_particles_2d.emitting=true
 		
@@ -514,6 +517,8 @@ func _on_health_health_depleted() -> void:
 
 func _on_attack_timer_timeout() -> void:
 	#"begin move")
+	if state_machine.get_active_state()==staggered:
+		return
 	if bt_player.blackboard.get_var("within_range"):
 		#set_state(current_state, States.ATTACK)
 		state_machine.dispatch(&"start_attack")
@@ -540,17 +545,17 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 		queue_free()
 
 
-func _on_stagger_timer_timeout() -> void:
-	bt_player.blackboard.set_var("attack_mode", true)
-	if state_machine.get_active_state()==staggered:
-		state_machine.dispatch(&"stagger_recover")
-	elif state_machine.get_active_state()==hit:
-		state_machine.dispatch(&"hit_recover")
-	movement_handler.active=true
+#func _on_stagger_timer_timeout() -> void:
+	#bt_player.blackboard.set_var("attack_mode", true)
+	#if state_machine.get_active_state()==staggered:
+		#state_machine.dispatch(&"stagger_recover")
+	#elif state_machine.get_active_state()==hit:
+		#state_machine.dispatch(&"hit_recover")
+	#movement_handler.active=true
 	#state_machine.change_active_state(state_machine.get_previous_active_state())
 	#set_state(current_state, prev_state)
 
-
+ 
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if current==jump:
 		if previous==attack:
