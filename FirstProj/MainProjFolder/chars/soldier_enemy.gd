@@ -207,9 +207,7 @@ func _process(_delta):
 	#bt_player.blackboard.get_var("attack_mode"))
 	attack_timer.one_shot=true
 	#get_player_state(player)
-	#on_screen.is_on_screen())
-	if parry_timer.time_left>0.0:
-		bt_player.blackboard.set_var("attack_mode", false)
+	#on_screen.is_on_screen()
 		#print(parry_timer.time_left)
 
 func _physics_process(delta):
@@ -441,7 +439,7 @@ func _on_navigation_timer_timeout() -> void:
 
 func _on_stagger_staggered() -> void:
 	#set_state(current_state, States.STAGGERED)
-	bt_player.blackboard.set_var("staggered", true)
+	#bt_player.blackboard.set_var("staggered", true)
 	bt_player.restart()
 	parry_timer.start(3)
 	
@@ -454,7 +452,7 @@ func _on_parry_timer_timeout() -> void:
 	#set_state(current_state, prev_state)
 	print("timeout")
 	#print(state_machine.get_previous_active_state())
-	bt_player.blackboard.set_var("attack_mode", true)
+	#bt_player.blackboard.set_var("attack_mode", true)
 	if state_machine.get_active_state()==staggered:
 		state_machine.dispatch(&"stagger_recover")
 	elif state_machine.get_active_state()==hit:

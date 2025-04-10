@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=68 format=3 uid="uid://bkpyddqh402xp"]
+[gd_resource type="BehaviorTree" load_steps=69 format=3 uid="uid://bkpyddqh402xp"]
 
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_7px3v"]
 
@@ -44,15 +44,6 @@ var/staggered/value = false
 var/staggered/hint = 0
 var/staggered/hint_string = ""
 
-[sub_resource type="BBVariant" id="BBVariant_cj7pg"]
-type = 1
-saved_value = false
-resource_name = "false"
-
-[sub_resource type="BTCheckVar" id="BTCheckVar_qpg7m"]
-variable = &"staggered"
-value = SubResource("BBVariant_cj7pg")
-
 [sub_resource type="BBVariant" id="BBVariant_s1wjr"]
 type = 1
 saved_value = true
@@ -62,6 +53,15 @@ resource_name = "true"
 variable = &"attack_mode"
 value = SubResource("BBVariant_s1wjr")
 custom_name = "AttackMode"
+
+[sub_resource type="BBVariant" id="BBVariant_cj7pg"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_qpg7m"]
+variable = &"staggered"
+value = SubResource("BBVariant_cj7pg")
 
 [sub_resource type="BBVariant" id="BBVariant_qkysk"]
 type = 1
@@ -300,12 +300,15 @@ children = [SubResource("BTSequence_p3l4r")]
 [sub_resource type="BTSelector" id="BTSelector_ct688"]
 children = [SubResource("BTSequence_c1urr"), SubResource("BTCooldown_ufwxr")]
 
+[sub_resource type="BTSequence" id="BTSequence_vjri2"]
+children = [SubResource("BTCheckVar_qpg7m"), SubResource("BTSelector_ct688")]
+
 [sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_vwcxk"]
-children = [SubResource("BTSelector_ct688")]
+children = [SubResource("BTSequence_vjri2")]
 
 [sub_resource type="BTSequence" id="BTSequence_df28b"]
 custom_name = "Attacks"
-children = [SubResource("BTCheckVar_qpg7m"), SubResource("BTCheckVar_or1gh"), SubResource("BTRepeatUntilFailure_vwcxk")]
+children = [SubResource("BTCheckVar_or1gh"), SubResource("BTRepeatUntilFailure_vwcxk")]
 
 [sub_resource type="BTSelector" id="BTSelector_307xj"]
 children = [SubResource("BTSequence_df28b")]
