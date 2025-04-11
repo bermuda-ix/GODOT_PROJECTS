@@ -1,3 +1,4 @@
+class_name TargetLock
 extends Node2D
 
 func target_lock():

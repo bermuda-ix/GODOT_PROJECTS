@@ -488,6 +488,10 @@ func update_animation(input_axis):
 		if (state != States.ATTACK and s_atk==false) and input_axis!=0:
 			#state = States.WALKING
 			set_state(state, States.WALKING)
+		if Input.is_action_pressed("sprint"):
+			movement_data = load("res://FasterMovementData.tres")
+		elif Input.is_action_just_released("sprint"):
+			movement_data = load("res://DefaultMovementData.tres")
 	if (Input.is_action_just_released("walk_left") or Input.is_action_just_released("walk_right")) and input_axis==0:
 		#state = States.IDLE
 		set_state(state, States.IDLE)
