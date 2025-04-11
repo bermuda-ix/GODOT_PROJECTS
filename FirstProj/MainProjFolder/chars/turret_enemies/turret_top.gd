@@ -36,7 +36,7 @@ var state : String
 
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
-	turret.setup(0.1)
+	turret.setup(0)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 
@@ -44,7 +44,8 @@ func _ready():
 func _process(_delta):
 	vision_handler.handle_vision()
 	#shoot_attack_manager.shoot()
-	debug.text=str(turret.ammo_count)
+	var player_track_angle_wrap=wrapf(player_tracker_pivot.rotation, 0, 2*PI)
+	debug.text=str(rad_to_deg(player_track_angle_wrap), " ",sprite_2d.rotation_degrees)
 
 func _init_state_machine():
 	state_machine.initial_state=idle

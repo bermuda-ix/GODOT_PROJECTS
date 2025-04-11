@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cvmnpiglmb8am"
+path="res://.godot/imported/308 Spray.mp3-fa9733b569d1979c5b5bcced7a020195.mp3str"
+
+[deps]
+
+source_file="res://Art_Components/Effects/sound/308 (7.62x51)/MP3/308 Spray.mp3"
+dest_files=["res://.godot/imported/308 Spray.mp3-fa9733b569d1979c5b5bcced7a020195.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

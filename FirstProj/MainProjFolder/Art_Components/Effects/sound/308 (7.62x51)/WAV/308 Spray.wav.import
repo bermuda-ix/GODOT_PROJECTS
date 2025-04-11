@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dqnxw81sb8t7o"
+path="res://.godot/imported/308 Spray.wav-0089c65fec76a1fe6e97e43a9d9ef7a9.sample"
+
+[deps]
+
+source_file="res://Art_Components/Effects/sound/308 (7.62x51)/WAV/308 Spray.wav"
+dest_files=["res://.godot/imported/308 Spray.wav-0089c65fec76a1fe6e97e43a9d9ef7a9.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

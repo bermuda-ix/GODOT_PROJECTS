@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bukoi7u2m4gur"
+path="res://.godot/imported/308 Slow Burst.mp3-b1877fdbd1c5a00c3a4d6bbaf9861ea3.mp3str"
+
+[deps]
+
+source_file="res://Art_Components/Effects/sound/308 (7.62x51)/MP3/308 Slow Burst.mp3"
+dest_files=["res://.godot/imported/308 Slow Burst.mp3-b1877fdbd1c5a00c3a4d6bbaf9861ea3.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

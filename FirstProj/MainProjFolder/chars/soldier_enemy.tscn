@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=3 uid="uid://b5d2nkkrrcixy"]
+[gd_scene load_steps=138 format=3 uid="uid://b5d2nkkrrcixy"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_ojqla"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ibi2a"]
@@ -100,6 +100,7 @@
 [ext_resource type="Script" uid="uid://ddhk64y60klpg" path="res://Component/functions/MeleeAttackManager.gd" id="86_j1fbf"]
 [ext_resource type="Script" uid="uid://c4yno8xy5erif" path="res://chars/death.gd" id="87_24o4m"]
 [ext_resource type="Script" uid="uid://5h8g0n4mebtm" path="res://Component/functions/ShootAttackManager.gd" id="87_qbww6"]
+[ext_resource type="AudioStream" uid="uid://beaoa1qp3nt2b" path="res://Art_Components/Effects/sound/9mm/WAV/9mm Single Isolated.wav" id="87_xc7oc"]
 [ext_resource type="Script" uid="uid://b5an13nv6em7m" path="res://chars/attack.gd" id="88_24o4m"]
 [ext_resource type="Script" uid="uid://cvo1e5meai30k" path="res://Component/functions/CombatStateChangeHandler.gd" id="88_ivw15"]
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="89_81rlk"]
@@ -481,6 +482,9 @@ linear_accel_min = -42.53
 linear_accel_max = 33.33
 damping_max = 30.46
 
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_1dxn7"]
+stereo = true
+
 [sub_resource type="Animation" id="Animation_rh5v8"]
 length = 0.1
 step = 0.1
@@ -663,6 +667,30 @@ tracks/14/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Turret/AudioStreamPlayer2D:stream")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("AudioStreamWAV_1dxn7")]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Turret/AudioStreamPlayer2D:playing")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_2kcob"]
@@ -1356,6 +1384,30 @@ tracks/1/keys = {
 "update": 1,
 "values": [&"shoot"]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Turret/AudioStreamPlayer2D:stream")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("87_xc7oc")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Turret/AudioStreamPlayer2D:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c6g3t"]
 _data = {
@@ -1491,6 +1543,9 @@ shape = SubResource("RectangleShape2D_0c6of")
 position = Vector2(-8, -7)
 ammo_count = 6
 max_ammo = 6
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Turret" index="2"]
+stream = SubResource("AudioStreamWAV_1dxn7")
 
 [node name="BTPlayer" type="BTPlayer" parent="." index="23"]
 behavior_tree = ExtResource("58_n1sc2")

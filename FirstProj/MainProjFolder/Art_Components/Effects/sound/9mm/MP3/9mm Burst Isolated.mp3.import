@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dnpybmb068ld8"
+path="res://.godot/imported/9mm Burst Isolated.mp3-2b92da0e64245987dc27f5e317728129.mp3str"
+
+[deps]
+
+source_file="res://Art_Components/Effects/sound/9mm/MP3/9mm Burst Isolated.mp3"
+dest_files=["res://.godot/imported/9mm Burst Isolated.mp3-2b92da0e64245987dc27f5e317728129.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

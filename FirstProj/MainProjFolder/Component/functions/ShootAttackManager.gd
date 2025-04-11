@@ -8,10 +8,12 @@ extends Node
 
 func shoot():
 	if turret.infinite_ammo:
+		animation_player.stop()
 		animation_player.play("shoot")
 		actor.turret.shoot()
 	else:
 		if turret.ammo_count>0:
+			animation_player.stop()
 			animation_player.play("shoot")
 			actor.turret.shoot()
 			turret.ammo_count-=1

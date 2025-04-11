@@ -39,6 +39,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var bullet_dir = Vector2.RIGHT
 @onready var shooting_cooldown = $ShootingCooldown
 @onready var shoot_handler: ShootHandler = $ShootHandler
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $Turret/AudioStreamPlayer2D
 
 
 @onready var health = $Health
