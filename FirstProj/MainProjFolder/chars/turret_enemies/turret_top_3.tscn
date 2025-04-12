@@ -236,6 +236,7 @@ slow_track = true
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Sprite2D/Turret"]
 stream = ExtResource("4_mgwb3")
 max_distance = 500.0
+attenuation = 0.287175
 max_polyphony = 12
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
