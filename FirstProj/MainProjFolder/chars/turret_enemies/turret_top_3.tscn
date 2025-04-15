@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c3lkw8owoadhu"]
+[gd_scene load_steps=27 format=3 uid="uid://c3lkw8owoadhu"]
 
 [ext_resource type="Texture2D" uid="uid://du2h7k6fl2qse" path="res://Art_Components/2D Sci-Fi Turret Pack/2D Sci-Fi Turret Pack/3-Turrets/Turret3Top.png" id="1_12xbq"]
 [ext_resource type="Script" uid="uid://b3e7r8nfekoni" path="res://chars/turret_enemies/turret_top.gd" id="1_c3g7k"]
@@ -114,6 +114,49 @@ tracks/4/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_7vnq2"]
+resource_name = "dead"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.44346]
+}
+
+[sub_resource type="Animation" id="Animation_mgwb3"]
+resource_name = "death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.44346]
+}
 
 [sub_resource type="Animation" id="Animation_j0ghf"]
 resource_name = "reload"
@@ -185,6 +228,8 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ik7so"]
 _data = {
 &"RESET": SubResource("Animation_ik7so"),
+&"dead": SubResource("Animation_7vnq2"),
+&"death": SubResource("Animation_mgwb3"),
 &"reload": SubResource("Animation_j0ghf"),
 &"shoot": SubResource("Animation_ksx82")
 }
@@ -313,19 +358,20 @@ min_arc = 140.0
 max_arc = 260.0
 metadata/_custom_type_script = "uid://bj1m6kr4vol6u"
 
-[node name="debug" type="Label" parent="."]
-offset_left = -104.0
-offset_top = -192.0
-offset_right = 112.0
-offset_bottom = -17.0
-theme_override_font_sizes/font_size = 128
-
 [node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "animation_player")]
 script = ExtResource("15_utw6m")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 animation_player = NodePath("../AnimationPlayer")
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
+
+[node name="debug" type="Label" parent="."]
+visible = false
+offset_left = -104.0
+offset_top = -192.0
+offset_right = 112.0
+offset_bottom = -17.0
+theme_override_font_sizes/font_size = 128
 
 [connection signal="shoot_bullet" from="Sprite2D/Turret" to="." method="_on_turret_shoot_bullet"]
 [connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]

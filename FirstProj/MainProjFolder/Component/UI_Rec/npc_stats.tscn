@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://bro4najrj7577"]
+
+[ext_resource type="PackedScene" uid="uid://bjcwyc4ncipm" path="res://Component/UI_Rec/health_bar.tscn" id="1_kfdb0"]
+[ext_resource type="Script" uid="uid://ba8ctedlk64q7" path="res://Component/UI_Rec/npc_stats.gd" id="1_sly68"]
+[ext_resource type="Texture2D" uid="uid://c800m2au07hfq" path="res://Art_Components/UI/04.png" id="2_sly68"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ekdya"]
+atlas = ExtResource("2_sly68")
+region = Rect2(287.757, 19.4883, 45.3378, 8.74694)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6uqvd"]
+atlas = ExtResource("2_sly68")
+region = Rect2(-0.0203705, 35.7828, 48.1896, 10.5333)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yiy1h"]
+atlas = ExtResource("2_sly68")
+region = Rect2(48.2061, 19.738, 44.614, 7.61702)
+
+[node name="NPCStats" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sly68")
+
+[node name="HealthBar" parent="." instance=ExtResource("1_kfdb0")]
+offset_left = -2.0
+offset_top = 1.0
+offset_right = 46.0
+offset_bottom = 13.0
+scale = Vector2(2.04851, 1.9269)
+
+[node name="StaggerBar" type="TextureProgressBar" parent="."]
+offset_top = 25.0
+offset_right = 40.0
+offset_bottom = 65.0
+scale = Vector2(1.94809, 1.73336)
+value = 100.0
+texture_under = SubResource("AtlasTexture_ekdya")
+texture_over = SubResource("AtlasTexture_6uqvd")
+texture_progress = SubResource("AtlasTexture_yiy1h")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 96.0
+offset_right = 177.0
+offset_bottom = 25.0
+scale = Vector2(1.58639, 1.68951)
+text = "Ammo:"
+
+[node name="AmmoCount" type="RichTextLabel" parent="RichTextLabel"]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 1.0
+offset_right = 87.0
+offset_bottom = 28.0
+text = "6"

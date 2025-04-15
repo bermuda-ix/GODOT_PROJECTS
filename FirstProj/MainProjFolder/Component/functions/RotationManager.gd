@@ -37,14 +37,14 @@ func _physics_process(delta: float) -> void:
 					else:
 						pass
 			elif player_track_angle_wrap > max_arc:
-				print("above max")
+				#print("above max")
 				if rotation_speed == 0:
 					actor.sprite_2d.rotation_degrees = max_arc
 				else:
 					actor.sprite_2d.rotation_degrees=rad_to_deg(lerp_angle(actor.sprite_2d.rotation, deg_to_rad(max_arc), 0.01))
 					elapsed +=delta
 			elif player_track_angle_wrap < min_arc:
-				print("below min")
+				#print("below min")
 				if rotation_speed== 0:
 					actor.sprite_2d.rotation_degrees = min_arc
 				else:

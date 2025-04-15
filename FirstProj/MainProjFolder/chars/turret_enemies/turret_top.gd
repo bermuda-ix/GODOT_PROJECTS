@@ -18,6 +18,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var shoot_attack_manager: ShootAttackManager = $ShootAttackManager
 @onready var shoot_handler: ShootHandler = $ShootHandler
 
+@onready var death_handler: DeathHandler = $DeathHandler
 
 @onready var bt_player: BTPlayer = $BTPlayer
 
@@ -53,6 +54,7 @@ func _init_state_machine():
 	state_machine.set_active(true)
 	
 	state_machine.add_transition(idle, attack, &"attack_mode")
+	state_machine.add_transition(state_machine.ANYSTATE, death, &"die")
 
 
 

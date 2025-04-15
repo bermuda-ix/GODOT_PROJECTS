@@ -1,0 +1,311 @@
+[gd_scene load_steps=46 format=3 uid="uid://berbmq4u2lo3s"]
+
+[ext_resource type="Script" uid="uid://ds31ngno5boru" path="res://chars/guard_enemy.gd" id="1_4q725"]
+[ext_resource type="Texture2D" uid="uid://cshwi53lwaqph" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle01.png" id="1_vk1fx"]
+[ext_resource type="Texture2D" uid="uid://woaeddeaesia" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle02.png" id="2_kbb6k"]
+[ext_resource type="Texture2D" uid="uid://bsrw6gsqslsy1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle03.png" id="3_34xo2"]
+[ext_resource type="Texture2D" uid="uid://c2eu0v2wn2wt4" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle04.png" id="4_8kxdo"]
+[ext_resource type="Texture2D" uid="uid://d1w1yb7ixukhu" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle05.png" id="5_bwuha"]
+[ext_resource type="Texture2D" uid="uid://didp24116d82f" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle06.png" id="6_q7gmp"]
+[ext_resource type="Texture2D" uid="uid://bwdp8hfv8bdyl" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle07.png" id="7_3nf0a"]
+[ext_resource type="Script" uid="uid://cnxm24jqclb68" path="res://Component/health.gd" id="8_kbb6k"]
+[ext_resource type="Script" uid="uid://ba6pwl0vfuyp" path="res://Component/stagger.gd" id="9_34xo2"]
+[ext_resource type="Script" uid="uid://5ijvah6jjgdb" path="res://Component/hitbox_template.gd" id="10_bwuha"]
+[ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="11_q7gmp"]
+[ext_resource type="Script" uid="uid://b0uasmutdnguo" path="res://chars/target_lock.gd" id="12_q7gmp"]
+[ext_resource type="Script" uid="uid://cf3jqneer6g2o" path="res://Component/attack_range.gd" id="13_8t56l"]
+[ext_resource type="Script" uid="uid://cx8bi64kwoulc" path="res://Component/functions/PlayerTrackingHandler.gd" id="13_72jhu"]
+[ext_resource type="Script" uid="uid://tifgdq27rt6g" path="res://chars/turret.gd" id="14_53axh"]
+[ext_resource type="Script" uid="uid://bsha0mnmfnjww" path="res://Component/functions/MovementHandler.gd" id="14_dc187"]
+[ext_resource type="Script" uid="uid://dgyx4da7oymh2" path="res://Component/functions/JumpHandler.gd" id="15_6yr1f"]
+[ext_resource type="BehaviorTree" uid="uid://cynrrfs5iidbs" path="res://ai/trees/guard_ai.tres" id="15_j02m3"]
+[ext_resource type="Script" uid="uid://cr58jnxs33hft" path="res://Component/functions/deathHandler.gd" id="16_78yqy"]
+[ext_resource type="Script" uid="uid://wkp4a7ybuj21" path="res://Component/functions/VisionHandler.gd" id="17_i7oh3"]
+[ext_resource type="Script" uid="uid://ddhk64y60klpg" path="res://Component/functions/MeleeAttackManager.gd" id="18_8ivtl"]
+[ext_resource type="Script" uid="uid://co05jfawt7xsm" path="res://Component/functions/GetPlayerInfoHandler.gd" id="19_vppyt"]
+[ext_resource type="Script" uid="uid://cp2j3xnu5vd7q" path="res://Component/functions/DodgeManager.gd" id="20_f16nn"]
+[ext_resource type="Script" uid="uid://5h8g0n4mebtm" path="res://Component/functions/ShootAttackManager.gd" id="21_luk7s"]
+[ext_resource type="Script" uid="uid://daq7xh1e6l7u6" path="res://chars/idle.gd" id="21_vbc8h"]
+[ext_resource type="Script" uid="uid://dgja48rcyj78n" path="res://chars/chasing.gd" id="22_4q725"]
+[ext_resource type="Script" uid="uid://d2wausty5l457" path="res://chars/jump.gd" id="23_qiptk"]
+[ext_resource type="Script" uid="uid://c4yno8xy5erif" path="res://chars/death.gd" id="24_t40re"]
+[ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="24_yw64w"]
+[ext_resource type="Script" uid="uid://b5an13nv6em7m" path="res://chars/attack.gd" id="25_53axh"]
+[ext_resource type="Script" uid="uid://cvo1e5meai30k" path="res://Component/functions/CombatStateChangeHandler.gd" id="25_yhec4"]
+[ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="26_luk7s"]
+[ext_resource type="PackedScene" uid="uid://e8y61qs02r7p" path="res://Component/ball_procetile.tscn" id="27_0e5u2"]
+[ext_resource type="Script" uid="uid://doi7s32f3duwj" path="res://chars/dodge.gd" id="27_yw64w"]
+[ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="28_yhec4"]
+[ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="29_8t56l"]
+[ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="35_8t56l"]
+[ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="36_54l2b"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ngkqw"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"atk_1",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"atk_2",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"atk_3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_vk1fx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_kbb6k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_34xo2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8kxdo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_bwuha")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_q7gmp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_3nf0a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"reload",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"shoot",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_durt0"]
+radius = 12.0
+height = 44.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3nf0a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ngkqw"]
+size = Vector2(26, 43)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_54l2b"]
+size = Vector2(48, 45)
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_q7gmp"]
+
+[node name="GuardEnemy" type="CharacterBody2D" groups=["Enemy"]]
+script = ExtResource("1_4q725")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ngkqw")
+animation = &"reload"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 22)
+shape = SubResource("CapsuleShape2D_durt0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("8_kbb6k")
+metadata/_custom_type_script = "uid://cnxm24jqclb68"
+
+[node name="Stagger" type="Node" parent="."]
+script = ExtResource("9_34xo2")
+metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
+
+[node name="NavigationTimer" type="Timer" parent="."]
+
+[node name="JumpTimer" type="Timer" parent="."]
+
+[node name="ParryTimer" type="Timer" parent="."]
+
+[node name="ChaseTimer" type="Timer" parent="."]
+
+[node name="DeathTimer" type="Timer" parent="."]
+
+[node name="DodgeTimer" type="Timer" parent="."]
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[node name="StaggerTimer" type="Timer" parent="."]
+
+[node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("stagger")]
+script = ExtResource("10_bwuha")
+stagger = NodePath("../Stagger")
+metadata/_custom_type_script = "uid://5ijvah6jjgdb"
+
+[node name="hb_collision" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("RectangleShape2D_3nf0a")
+
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+script = ExtResource("11_q7gmp")
+health = NodePath("../Health")
+metadata/_custom_type_script = "uid://bet3nodk2voxv"
+
+[node name="hurt_box_collision" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-1, 22.5)
+shape = SubResource("RectangleShape2D_ngkqw")
+
+[node name="AttackRange" type="Area2D" parent="."]
+collision_layer = 1024
+collision_mask = 2
+script = ExtResource("13_8t56l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+position = Vector2(0, 23)
+shape = SubResource("RectangleShape2D_54l2b")
+
+[node name="TargetLock" type="Node2D" parent="."]
+position = Vector2(0, 5)
+script = ExtResource("12_q7gmp")
+metadata/_custom_type_script = "uid://b0uasmutdnguo"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("15_j02m3")
+blackboard_plan = SubResource("BlackboardPlan_q7gmp")
+
+[node name="Turret" type="Node2D" parent="."]
+position = Vector2(9, 18)
+script = ExtResource("14_53axh")
+metadata/_custom_type_script = "uid://tifgdq27rt6g"
+
+[node name="PlayerTrackingHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("13_72jhu")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://cx8bi64kwoulc"
+
+[node name="MovementHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
+script = ExtResource("14_dc187")
+actor = NodePath("..")
+state_machine = NodePath("../LimboHSM")
+vision_handler = NodePath("../VisionHandler")
+metadata/_custom_type_script = "uid://bsha0mnmfnjww"
+
+[node name="JumpHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine")]
+script = ExtResource("15_6yr1f")
+actor = NodePath("..")
+state_machine = NodePath("../LimboHSM")
+metadata/_custom_type_script = "uid://dgyx4da7oymh2"
+
+[node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "animation_player")]
+script = ExtResource("16_78yqy")
+actor = NodePath("..")
+sm = NodePath("../LimboHSM")
+animation_player = NodePath("../AnimationPlayer")
+metadata/_custom_type_script = "uid://cr58jnxs33hft"
+
+[node name="VisionHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "csm")]
+script = ExtResource("17_i7oh3")
+actor = NodePath("..")
+sm = NodePath("../LimboHSM")
+csm = NodePath("../CombatStateMachine")
+metadata/_custom_type_script = "uid://wkp4a7ybuj21"
+
+[node name="MeleeAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("18_8ivtl")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://ddhk64y60klpg"
+
+[node name="ShootAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor", "animation_player", "turret")]
+script = ExtResource("21_luk7s")
+actor = NodePath("..")
+animation_player = NodePath("../AnimationPlayer")
+turret = NodePath("../Turret")
+metadata/_custom_type_script = "uid://5h8g0n4mebtm"
+
+[node name="GetPlayerInfoHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("19_vppyt")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://co05jfawt7xsm"
+
+[node name="DodgeManager" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine", "bt_player")]
+script = ExtResource("20_f16nn")
+actor = NodePath("..")
+state_machine = NodePath("../LimboHSM")
+bt_player = NodePath("../BTPlayer")
+metadata/_custom_type_script = "uid://cp2j3xnu5vd7q"
+
+[node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]
+script = ExtResource("24_yw64w")
+actor = NodePath("..")
+projectile = ExtResource("27_0e5u2")
+turret = NodePath("../Turret")
+metadata/_custom_type_script = "uid://5gt6g8063rb4"
+
+[node name="CombatStateChangeHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player")]
+script = ExtResource("25_yhec4")
+actor = NodePath("..")
+sm = NodePath("../LimboHSM")
+combat_state_machine = NodePath("../CombatStateMachine")
+bt_player = NodePath("../BTPlayer")
+metadata/_custom_type_script = "uid://cvo1e5meai30k"
+
+[node name="LimboHSM" type="LimboHSM" parent="."]
+
+[node name="IDLE" type="LimboState" parent="LimboHSM"]
+script = ExtResource("21_vbc8h")
+
+[node name="CHASING" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("bt_player")]
+script = ExtResource("22_4q725")
+bt_player = NodePath("")
+
+[node name="JUMP" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("state_machine", "jump_handler")]
+script = ExtResource("23_qiptk")
+state_machine = NodePath("..")
+jump_handler = NodePath("")
+
+[node name="DEATH" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("animation_player")]
+script = ExtResource("24_t40re")
+animation_player = NodePath("")
+
+[node name="ATTACK" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("bt_player")]
+script = ExtResource("25_53axh")
+bt_player = NodePath("")
+
+[node name="SHOOTING" type="LimboState" parent="LimboHSM"]
+script = ExtResource("26_luk7s")
+
+[node name="DODGE" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("bt_player", "animation_player")]
+script = ExtResource("27_yw64w")
+bt_player = NodePath("")
+animation_player = NodePath("")
+
+[node name="HIT" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("animation_player")]
+script = ExtResource("28_yhec4")
+animation_player = NodePath("")
+
+[node name="STAGGERED" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("movement_handler", "stagger", "bt_player")]
+script = ExtResource("29_8t56l")
+movement_handler = NodePath("")
+stagger = NodePath("")
+bt_player = NodePath("")
+
+[node name="CombatStateMachine" type="LimboHSM" parent="."]
+
+[node name="RANGED" type="LimboState" parent="CombatStateMachine" node_paths=PackedStringArray("bt_player")]
+script = ExtResource("35_8t56l")
+bt_player = NodePath("")
+
+[node name="MELEE" type="LimboState" parent="CombatStateMachine" node_paths=PackedStringArray("bt_player")]
+script = ExtResource("36_54l2b")
+bt_player = NodePath("")

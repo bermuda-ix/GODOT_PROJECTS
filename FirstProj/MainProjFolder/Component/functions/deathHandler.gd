@@ -10,9 +10,9 @@ func death():
 	Events.unlock_from.emit()
 	#actor.parry_timer.stop()
 	sm.dispatch(&"die")
-	actor.hb_collision.disabled=false
 	animation_player.play("death")
 	await animation_player.animation_finished
 	animation_player.play("dead")
+	
 	#print("dead")
 	

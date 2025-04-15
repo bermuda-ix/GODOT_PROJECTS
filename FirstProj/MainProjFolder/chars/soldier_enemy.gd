@@ -117,6 +117,7 @@ var distance
 @onready var ranged: LimboState = $CombatStateMachine/RANGED
 @onready var melee: LimboState = $CombatStateMachine/MELEE
 
+@onready var ammo_count
 
 
 enum CombatStates{
@@ -132,6 +133,7 @@ var player_state : int
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	#set_state(current_state, States.CHASE)
+	ammo_count=turret.ammo_count
 	bullet = BALL_PROCETILE
 	animation_player.play("guard")
 	state="guard"
@@ -184,6 +186,7 @@ func _init_combat_state_machine():
 
 	
 func _process(_delta):
+	ammo_count=turret.ammo_count
 	##FOR TESTING REMOVE LATER
 	##current_state=States.GUARD
 	##if current_state==States.GUARD:
@@ -512,6 +515,9 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
+	hb_collision.disabled=true
+	movement_handler.active=false
+	animated_sprite_2d.scale.x = 1
 	death_handler.death()
 
 func _on_attack_timer_timeout() -> void:

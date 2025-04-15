@@ -5,6 +5,7 @@ extends Node
 @export var actor : Node2D
 @export var animation_player : AnimationPlayer
 @export var turret : Turret
+@export var reload_timer : float
 
 func shoot():
 	if turret.infinite_ammo:

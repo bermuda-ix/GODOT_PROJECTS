@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=15 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_7j8nt"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="7_h0p3s"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="8_bi776"]
 [ext_resource type="PackedScene" uid="uid://b5d2nkkrrcixy" path="res://chars/soldier_enemy.tscn" id="9_grstv"]
+[ext_resource type="PackedScene" uid="uid://mve6miefg0i0" path="res://chars/turret_enemies/turret_base_3.tscn" id="10_kabbc"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_htxyq"]
 vertices = PackedVector2Array(1645.83, 430, 1122, 430, 1122, 322, 1882.08, 322)
@@ -91,20 +92,35 @@ max_enemy = 1
 
 [node name="Enemies" type="Node" parent="." index="10"]
 
-[node name="soldier_enemy" parent="Enemies" index="0" instance=ExtResource("9_grstv")]
-position = Vector2(525, 457)
+[node name="soldiers" type="Node" parent="Enemies" index="0"]
 
-[node name="flying_enemy" parent="Enemies" index="1" instance=ExtResource("8_bi776")]
+[node name="soldier_enemy" parent="Enemies/soldiers" index="0" instance=ExtResource("9_grstv")]
+position = Vector2(807, 462)
+
+[node name="soldier_enemy2" parent="Enemies/soldiers" index="1" instance=ExtResource("9_grstv")]
+position = Vector2(2264, 272)
+
+[node name="flying" type="Node" parent="Enemies" index="1"]
+
+[node name="flying_enemy" parent="Enemies/flying" index="0" instance=ExtResource("8_bi776")]
 position = Vector2(1248, 336)
 
-[node name="flying_enemy2" parent="Enemies" index="2" instance=ExtResource("8_bi776")]
+[node name="flying_enemy2" parent="Enemies/flying" index="1" instance=ExtResource("8_bi776")]
 position = Vector2(952, -56)
 
-[node name="flying_enemy3" parent="Enemies" index="3" instance=ExtResource("8_bi776")]
+[node name="flying_enemy3" parent="Enemies/flying" index="2" instance=ExtResource("8_bi776")]
 position = Vector2(1312, 0)
 
-[node name="soldier_enemy2" parent="Enemies" index="4" instance=ExtResource("9_grstv")]
-position = Vector2(2264, 272)
+[node name="turrets" type="Node" parent="Enemies" index="2"]
+
+[node name="turret_base_3" parent="Enemies/turrets" index="0" instance=ExtResource("10_kabbc")]
+position = Vector2(1967, 206)
+rotation = -1.5708
+scale = Vector2(0.1, 0.1)
+
+[node name="turret_base_4" parent="Enemies/turrets" index="1" instance=ExtResource("10_kabbc")]
+position = Vector2(938, 71)
+scale = Vector2(-0.1, 0.1)
 
 [node name="AirNavs" type="Node2D" parent="." index="11"]
 

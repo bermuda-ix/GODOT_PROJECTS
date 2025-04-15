@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=10 format=3 uid="uid://b1t5gv0bt5din"]
+[gd_resource type="BehaviorTree" load_steps=9 format=3 uid="uid://b1t5gv0bt5din"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_cecvh"]
 var/attack_mode/name = &"attack_mode"
@@ -29,12 +29,9 @@ duration = 0.2
 start_cooled = true
 children = [SubResource("BTCallMethod_n0ccg")]
 
-[sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_cecvh"]
-children = [SubResource("BTCooldown_l7px2")]
-
 [sub_resource type="BTSequence" id="BTSequence_n0ccg"]
 custom_name = "Attack"
-children = [SubResource("BTCheckVar_n0ccg"), SubResource("BTRepeatUntilFailure_cecvh")]
+children = [SubResource("BTCheckVar_n0ccg"), SubResource("BTCooldown_l7px2")]
 
 [sub_resource type="BTSelector" id="BTSelector_l7px2"]
 children = [SubResource("BTSequence_n0ccg")]

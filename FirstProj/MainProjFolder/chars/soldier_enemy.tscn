@@ -1,4 +1,4 @@
-[gd_scene load_steps=138 format=3 uid="uid://b5d2nkkrrcixy"]
+[gd_scene load_steps=139 format=3 uid="uid://b5d2nkkrrcixy"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_ojqla"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ibi2a"]
@@ -114,6 +114,7 @@
 [ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="95_ivw15"]
 [ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="96_0nqgj"]
 [ext_resource type="Script" uid="uid://doi7s32f3duwj" path="res://chars/dodge.gd" id="98_ovyjq"]
+[ext_resource type="PackedScene" uid="uid://bro4najrj7577" path="res://Component/UI_Rec/npc_stats.tscn" id="115_p17nh"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p1s76"]
 animations = [{
@@ -1552,6 +1553,7 @@ behavior_tree = ExtResource("58_n1sc2")
 blackboard_plan = SubResource("BlackboardPlan_x6bu2")
 
 [node name="HBar" type="Label" parent="." index="24"]
+visible = false
 offset_left = -24.0
 offset_top = -48.0
 offset_right = 16.0
@@ -1656,9 +1658,10 @@ actor = NodePath("../..")
 state_machine = NodePath("..")
 jump_handler = NodePath("../../JumpHandler")
 
-[node name="DEATH" type="LimboState" parent="LimboHSM" index="3" node_paths=PackedStringArray("actor")]
+[node name="DEATH" type="LimboState" parent="LimboHSM" index="3" node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("87_24o4m")
 actor = NodePath("../..")
+animation_player = NodePath("../../AnimationPlayer")
 
 [node name="ATTACK" type="LimboState" parent="LimboHSM" index="4" node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("88_24o4m")
@@ -1697,6 +1700,16 @@ bt_player = NodePath("../../BTPlayer")
 script = ExtResource("95_ivw15")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
+
+[node name="NPCStats" parent="." index="40" node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("115_p17nh")]
+offset_left = -34.0
+offset_top = -45.0
+offset_right = -34.0
+offset_bottom = -45.0
+scale = Vector2(0.5, 0.5)
+health = NodePath("../Health")
+stagger = NodePath("../Stagger")
+actor = NodePath("..")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
