@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=9 format=3 uid="uid://b1t5gv0bt5din"]
+[gd_resource type="BehaviorTree" load_steps=11 format=3 uid="uid://b1t5gv0bt5din"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_cecvh"]
 var/attack_mode/name = &"attack_mode"
@@ -24,10 +24,18 @@ resource_name = "ShootAttackManager"
 node = SubResource("BBNode_cecvh")
 method = &"shoot"
 
+[sub_resource type="BBNode" id="BBNode_n0ccg"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_l7px2"]
+animation_player = SubResource("BBNode_n0ccg")
+animation_name = &"reload"
+
 [sub_resource type="BTCooldown" id="BTCooldown_l7px2"]
 duration = 0.2
 start_cooled = true
-children = [SubResource("BTCallMethod_n0ccg")]
+children = [SubResource("BTCallMethod_n0ccg"), SubResource("BTAwaitAnimation_l7px2")]
 
 [sub_resource type="BTSequence" id="BTSequence_n0ccg"]
 custom_name = "Attack"

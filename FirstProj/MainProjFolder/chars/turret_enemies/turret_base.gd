@@ -8,6 +8,7 @@ extends StaticBody2D
 @onready var turret_top: TurretTop = $turret_top
 @onready var despawn_handler: DespawnHandler = $DespawnHandler
 
+@onready var hit_stop: HitStop = $HitStop
 
 @onready var state_machine: LimboHSM = $StateMachine
 @onready var death: LimboState = $StateMachine/Death
@@ -65,7 +66,5 @@ func _on_health_health_depleted() -> void:
 	print("despawning")
 	despawn_handler.despawn()
 
-
-
-
-		
+func _on_hurt_box_received_damage(damage: int) -> void:
+	hit_stop.hit_stop(0.05,0.1)

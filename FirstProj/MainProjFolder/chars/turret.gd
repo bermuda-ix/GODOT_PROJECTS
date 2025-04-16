@@ -20,13 +20,13 @@ var pos = position
 @export var max_ammo : int
 @export var infinite_ammo : bool
 @export var slow_track : bool = false
+@export var shoot_speed : float = 0.2
 
 var dist_to_player : get = get_dist_to_player
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
-	#setup(3)
+	setup(shoot_speed)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -38,7 +38,7 @@ func _process(delta):
 	
 func setup(time : float):
 	player = get_tree().get_first_node_in_group("player")
-	shoot_timer.start(time)
+	shoot_timer.start(0.2)
 	#turret_body.visible=false
 	shoot_timer.paused=false
 

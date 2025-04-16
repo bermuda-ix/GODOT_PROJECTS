@@ -95,20 +95,17 @@ max_enemy = 1
 [node name="soldiers" type="Node" parent="Enemies" index="0"]
 
 [node name="soldier_enemy" parent="Enemies/soldiers" index="0" instance=ExtResource("9_grstv")]
-position = Vector2(807, 462)
+position = Vector2(1402, 452)
 
 [node name="soldier_enemy2" parent="Enemies/soldiers" index="1" instance=ExtResource("9_grstv")]
 position = Vector2(2264, 272)
 
 [node name="flying" type="Node" parent="Enemies" index="1"]
 
-[node name="flying_enemy" parent="Enemies/flying" index="0" instance=ExtResource("8_bi776")]
-position = Vector2(1248, 336)
-
-[node name="flying_enemy2" parent="Enemies/flying" index="1" instance=ExtResource("8_bi776")]
+[node name="flying_enemy2" parent="Enemies/flying" index="0" instance=ExtResource("8_bi776")]
 position = Vector2(952, -56)
 
-[node name="flying_enemy3" parent="Enemies/flying" index="2" instance=ExtResource("8_bi776")]
+[node name="flying_enemy3" parent="Enemies/flying" index="1" instance=ExtResource("8_bi776")]
 position = Vector2(1312, 0)
 
 [node name="turrets" type="Node" parent="Enemies" index="2"]

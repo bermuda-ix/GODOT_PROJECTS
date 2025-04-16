@@ -5,7 +5,7 @@ extends Node
 @export var actor : Node2D
 @export var animation_player : AnimationPlayer
 @export var turret : Turret
-@export var reload_timer : float
+@export var reload_timer : int
 
 func shoot():
 	if turret.infinite_ammo:
@@ -19,8 +19,16 @@ func shoot():
 			actor.turret.shoot()
 			turret.ammo_count-=1
 		else:
-			animation_player.play("reload")
-			await animation_player.animation_finished
+			
+			if reload_timer>0:
+				for i in reload_timer:
+					animation_player.play("reload")
+					print(i)
+					await animation_player.animation_finished
+					
+			else:
+				animation_player.play("reload")
+				await animation_player.animation_finished
 			turret.ammo_count=turret.max_ammo
 	
 func shoot_setup(value : float):

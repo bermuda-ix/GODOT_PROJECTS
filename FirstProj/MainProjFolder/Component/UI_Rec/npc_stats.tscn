@@ -26,6 +26,7 @@ grow_vertical = 2
 script = ExtResource("1_sly68")
 
 [node name="HealthBar" parent="." instance=ExtResource("1_kfdb0")]
+layout_mode = 0
 offset_left = -2.0
 offset_top = 1.0
 offset_right = 46.0
@@ -33,6 +34,7 @@ offset_bottom = 13.0
 scale = Vector2(2.04851, 1.9269)
 
 [node name="StaggerBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
 offset_top = 25.0
 offset_right = 40.0
 offset_bottom = 65.0

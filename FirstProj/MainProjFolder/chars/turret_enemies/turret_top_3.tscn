@@ -126,6 +126,18 @@ tracks/5/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprite2D:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_7vnq2"]
 resource_name = "dead"
@@ -183,6 +195,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(72.376, 75.138, 74.585, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(72.376, 75.138, 74.585, 1), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_ksx82"]
@@ -347,6 +371,7 @@ script = ExtResource("10_j0ghf")
 actor = NodePath("..")
 animation_player = NodePath("../AnimationPlayer")
 turret = NodePath("../Sprite2D/Turret")
+reload_timer = 3
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
 [node name="RotationManager" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine")]

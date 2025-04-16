@@ -92,6 +92,7 @@ var atk_state="ATK_1"
 @onready var audio_stream_player_2d = $AudioStreamPlayer2D
 @onready var hit_sound = hit1
 @onready var player_hit: GPUParticles2D = $AnimatedSprite2D/PlayerHit
+@onready var hit_stop: HitStop = $HitStop
 
 @onready var enemies : Array =[]
 
@@ -819,7 +820,7 @@ func _on_hazard_detector_area_entered(area):
 		health.health -= 1
 		
 	elif area.is_in_group("Enemy"):
-		
+		hit_stop.hit_stop(0.05, 0.1)
 		knockback.x = input_dir.x * knockback.x *0.5
 	
 	
@@ -976,7 +977,8 @@ func _on_hit_timer_timeout() -> void:
 
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("bullet"):
-		knockback.x = -350
+		hit_stop.hit_stop(0.05, 0.05)
+		knockback.x = -250
 		kb_dir=global_position.direction_to(area.global_position)
 		#"knockback")
 		kb_dir=round(kb_dir)
@@ -1150,7 +1152,7 @@ func parry_success():
 func _on_hit_box_area_entered(area):
 	hit_sound=hit1
 	AudioStreamManager.play(hit_sound)
-	
+	hit_stop.hit_stop(0.05, 0.1)
 
 
 func _on_hit_box_body_entered(body):
@@ -1160,10 +1162,11 @@ func _on_hit_box_body_entered(body):
 		target_string_test=str(body.name)
 		target = body
 		combat_state=CombatStates.LOCKED
-
+	
+	
 func flip_over():
 	
-	flip_speed=movement_data.speed * 90
+	flip_speed=movement_data.speed * 80
 	
 	set_state(state, States.FLIP)
 	#state=States.FLIP
@@ -1338,6 +1341,7 @@ func _on_animation_player_animation_started(anim_name):
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:
+	hit_stop.hit_stop(0.05, 0.1)
 	if state==States.FLIP:
 		#print("countered! your moves are weak!")
 		if target_right:

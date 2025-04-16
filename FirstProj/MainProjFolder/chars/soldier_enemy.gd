@@ -96,6 +96,8 @@ var distance
 @onready var melee_attack_manager: MeleeAttackManager = $MeleeAttackManager
 @onready var shoot_attack_manager: ShootAttackManager = $ShootAttackManager
 
+@onready var hit_stop: HitStop = $HitStop
+@onready var hit_stop_dur = 0.1
 
 @onready var death_handler: DeathHandler = $DeathHandler
 
@@ -135,7 +137,7 @@ func _ready():
 	#set_state(current_state, States.CHASE)
 	ammo_count=turret.ammo_count
 	bullet = BALL_PROCETILE
-	animation_player.play("guard")
+	animation_player.play("idle")
 	state="guard"
 	next=nav_agent.get_next_path_position()
 	bt_player.blackboard.set_var("attack_mode", false)
@@ -145,7 +147,7 @@ func _ready():
 	bt_player.blackboard.set_var("counter_attack", false)
 	bt_player.blackboard.set_var("counter_kick_flag", false)
 	bt_player.blackboard.set_var("staggered", false)
-	turret.setup(0.2)
+	#turret.setup(0.2)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 	_init_combat_state_machine()
@@ -210,6 +212,7 @@ func _process(_delta):
 		bt_player.blackboard.set_var("within_range", false)
 	#bt_player.blackboard.get_var("attack_mode"))
 	attack_timer.one_shot=true
+	counter_select()
 	#get_player_state(player)
 	#on_screen.is_on_screen()
 		#print(parry_timer.time_left)
@@ -391,6 +394,13 @@ func get_width() -> int:
 func get_height() -> int:
 	return collision_shape_2d.get_shape().radius+10
 
+func _on_animation_player_animation_started(anim_name: StringName) -> void:
+	if anim_name=="atk_counter":
+		hit_stop_dur=0.2
+		await animation_player.animation_finished
+	else:
+		hit_stop_dur=0.1
+
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	match anim_name:
 		"atk_1":
@@ -453,10 +463,6 @@ func _on_stagger_staggered() -> void:
 
 
 func _on_parry_timer_timeout() -> void:
-	#set_state(current_state, prev_state)
-	print("timeout")
-	#print(state_machine.get_previous_active_state())
-	#bt_player.blackboard.set_var("attack_mode", true)
 	if state_machine.get_active_state()==staggered:
 		state_machine.dispatch(&"stagger_recover")
 	elif state_machine.get_active_state()==hit:
@@ -476,15 +482,23 @@ func adjust_counter():
 			counter_kick_chance -=10
 		
 func counter_select()->void:
-	if randi_range(0,100)<=counter_kick_chance:
+	if ammo_count>0:
+		if randi_range(0,100)<=counter_kick_chance:
+			bt_player.blackboard.set_var("counter_kick_flag", true)
+			counter_flag=true
+		else:
+			bt_player.blackboard.set_var("counter_kick_flag", false)
+			counter_flag=false
+	else:
+		
 		bt_player.blackboard.set_var("counter_kick_flag", true)
 		counter_flag=true
-	else:
-		bt_player.blackboard.set_var("counter_kick_flag", false)
-		counter_flag=false
+		
+func rapid_shoot(value : bool)->void:
+	turret.multi_shot=value
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	
+	hit_stop.hit_stop(0.05,0.1)
 	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 		Events.allied_enemy_hit.emit()
 	
@@ -565,3 +579,8 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 	if current==jump:
 		if previous==attack:
 			print("down attack")
+
+
+
+func _on_hit_box_area_entered(area: Area2D) -> void:
+	hit_stop.hit_stop(0.05,0.1)
