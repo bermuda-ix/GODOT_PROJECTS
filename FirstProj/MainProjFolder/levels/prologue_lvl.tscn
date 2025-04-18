@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=16 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_7j8nt"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="8_bi776"]
 [ext_resource type="PackedScene" uid="uid://b5d2nkkrrcixy" path="res://chars/soldier_enemy.tscn" id="9_grstv"]
 [ext_resource type="PackedScene" uid="uid://mve6miefg0i0" path="res://chars/turret_enemies/turret_base_3.tscn" id="10_kabbc"]
+[ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="11_vtk8u"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_htxyq"]
 vertices = PackedVector2Array(1645.83, 430, 1122, 430, 1122, 322, 1882.08, 322)
@@ -118,6 +119,12 @@ scale = Vector2(0.1, 0.1)
 [node name="turret_base_4" parent="Enemies/turrets" index="1" instance=ExtResource("10_kabbc")]
 position = Vector2(938, 71)
 scale = Vector2(-0.1, 0.1)
+
+[node name="Guards" type="Node" parent="Enemies" index="3"]
+
+[node name="GuardEnemy" parent="Enemies/Guards" index="0" instance=ExtResource("11_vtk8u")]
+position = Vector2(649, 432)
+scale = Vector2(0.75, 0.75)
 
 [node name="AirNavs" type="Node2D" parent="." index="11"]
 

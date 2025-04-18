@@ -1,4 +1,4 @@
-[gd_scene load_steps=140 format=3 uid="uid://b5d2nkkrrcixy"]
+[gd_scene load_steps=142 format=3 uid="uid://b5d2nkkrrcixy"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_ojqla"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ibi2a"]
@@ -115,6 +115,7 @@
 [ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="96_0nqgj"]
 [ext_resource type="Script" uid="uid://doi7s32f3duwj" path="res://chars/dodge.gd" id="98_ovyjq"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStotop.gd" id="105_yvx0r"]
+[ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="115_he81y"]
 [ext_resource type="PackedScene" uid="uid://bro4najrj7577" path="res://Component/UI_Rec/npc_stats.tscn" id="115_p17nh"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p1s76"]
@@ -695,60 +696,6 @@ tracks/16/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_2kcob"]
-resource_name = "Staggered"
-length = 0.65
-loop_mode = 1
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:animation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"stunned"]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Color(0.454524, 0.454524, 0.454524, 1), Color(1, 1, 1, 1), Color(0.454524, 0.454524, 0.454524, 1), Color(1, 1, 1, 1), Color(0.454524, 0.454524, 0.454524, 1), Color(1, 1, 1, 1), Color(0.454524, 0.454524, 0.454524, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D:self_modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.521141, 0.521141, 0.521141, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_0vyy2"]
 resource_name = "atk_1"
 length = 0.45
@@ -1246,6 +1193,36 @@ tracks/4/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_hssic"]
+resource_name = "idle"
+length = 0.65
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+
 [sub_resource type="Animation" id="Animation_dhr1a"]
 resource_name = "reload"
 step = 0.1
@@ -1381,8 +1358,8 @@ tracks/3/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_hssic"]
-resource_name = "idle"
+[sub_resource type="Animation" id="Animation_2kcob"]
+resource_name = "staggered"
 length = 0.65
 loop_mode = 1
 step = 0.1
@@ -1408,13 +1385,36 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"default"]
+"values": [&"stunned"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.454524, 0.454524, 0.454524, 1), Color(1, 1, 1, 1), Color(0.454524, 0.454524, 0.454524, 1), Color(1, 1, 1, 1), Color(0.454524, 0.454524, 0.454524, 1), Color(1, 1, 1, 1), Color(0.454524, 0.454524, 0.454524, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.521141, 0.521141, 0.521141, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c6g3t"]
 _data = {
 &"RESET": SubResource("Animation_rh5v8"),
-&"Staggered": SubResource("Animation_2kcob"),
 &"atk_1": SubResource("Animation_0vyy2"),
 &"atk_2": SubResource("Animation_dhh13"),
 &"atk_3": SubResource("Animation_i54iy"),
@@ -1426,7 +1426,8 @@ _data = {
 &"idle": SubResource("Animation_hssic"),
 &"reload": SubResource("Animation_dhr1a"),
 &"run": SubResource("Animation_48047"),
-&"shoot": SubResource("Animation_buxyb")
+&"shoot": SubResource("Animation_buxyb"),
+&"staggered": SubResource("Animation_2kcob")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3lv2e"]
@@ -1443,6 +1444,8 @@ size = Vector2(16, 12)
 size = Vector2(48, 59)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_x6bu2"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_jjike"]
 
 [node name="soldier_enemy" node_paths=PackedStringArray("hitbox", "state_machine") instance=ExtResource("1_ojqla")]
 collision_layer = 16384
@@ -1464,7 +1467,7 @@ sprite_frames = SubResource("SpriteFrames_p1s76")
 modulate = Color(1, 0.238975, 0.0150355, 1)
 position = Vector2(0, 24)
 emitting = false
-lifetime = 0.7
+lifetime = 0.5
 one_shot = true
 speed_scale = 2.0
 explosiveness = 1.0
@@ -1613,7 +1616,19 @@ animation_player = NodePath("../AnimationPlayer")
 turret = NodePath("../Turret")
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
-[node name="CombatStateChangeHandler" type="Node" parent="." index="34" node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player")]
+[node name="GetPlayerInfoHandler" type="Node" parent="." index="34" node_paths=PackedStringArray("actor")]
+script = ExtResource("90_r7ycw")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://co05jfawt7xsm"
+
+[node name="DodgeManager" type="Node" parent="." index="35" node_paths=PackedStringArray("actor", "state_machine", "bt_player")]
+script = ExtResource("92_233jl")
+actor = NodePath("..")
+state_machine = NodePath("../LimboHSM")
+bt_player = NodePath("../BTPlayer")
+metadata/_custom_type_script = "uid://cp2j3xnu5vd7q"
+
+[node name="CombatStateChangeHandler" type="Node" parent="." index="36" node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player")]
 script = ExtResource("88_ivw15")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
@@ -1621,7 +1636,7 @@ combat_state_machine = NodePath("../CombatStateMachine")
 bt_player = NodePath("../BTPlayer")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
-[node name="CounterAttackHandler" type="Node" parent="." index="35" node_paths=PackedStringArray("actor", "jump_handler", "shoot_attack_manager", "state_machine", "bt_player")]
+[node name="CounterAttackHandler" type="Node" parent="." index="37" node_paths=PackedStringArray("actor", "jump_handler", "shoot_attack_manager", "state_machine", "bt_player")]
 script = ExtResource("89_j0qvy")
 actor = NodePath("..")
 jump_handler = NodePath("../JumpHandler")
@@ -1629,18 +1644,6 @@ shoot_attack_manager = NodePath("../ShootAttackManager")
 state_machine = NodePath("../LimboHSM")
 bt_player = NodePath("../BTPlayer")
 metadata/_custom_type_script = "uid://d04qf1jqrfg1h"
-
-[node name="GetPlayerInfoHandler" type="Node" parent="." index="36" node_paths=PackedStringArray("actor")]
-script = ExtResource("90_r7ycw")
-actor = NodePath("..")
-metadata/_custom_type_script = "uid://co05jfawt7xsm"
-
-[node name="DodgeManager" type="Node" parent="." index="37" node_paths=PackedStringArray("actor", "state_machine", "bt_player")]
-script = ExtResource("92_233jl")
-actor = NodePath("..")
-state_machine = NodePath("../LimboHSM")
-bt_player = NodePath("../BTPlayer")
-metadata/_custom_type_script = "uid://cp2j3xnu5vd7q"
 
 [node name="NPCStats" parent="." index="38" node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("115_p17nh")]
 offset_left = -34.0
@@ -1703,6 +1706,10 @@ actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
 stagger = NodePath("../../Stagger")
 bt_player = NodePath("../../BTPlayer")
+
+[node name="DYING" type="BTState" parent="LimboHSM" index="9"]
+behavior_tree = ExtResource("115_he81y")
+blackboard_plan = SubResource("BlackboardPlan_jjike")
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." index="41"]
 

@@ -13,7 +13,7 @@ const JUMP_VELOCITY = -400.0
 #Target lock
 @onready var target_lock_node: TargetLock = $TargetLock
 #Visible on screen
-@onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var  on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 #Behaviour Tree Player
 @onready var bt_player: BTPlayer = $BTPlayer
 #Particles
@@ -73,6 +73,7 @@ var player_state : int
 @onready var chasing: LimboState = $LimboHSM/CHASING
 @onready var jump: LimboState = $LimboHSM/JUMP
 @onready var death: LimboState = $LimboHSM/DEATH
+@onready var dying: BTState = $LimboHSM/DYING
 @onready var attack: LimboState = $LimboHSM/ATTACK
 @onready var shooting: LimboState = $LimboHSM/SHOOTING
 @onready var dodge: LimboState = $LimboHSM/DODGE
@@ -85,6 +86,8 @@ var state
 @onready var combat_state_machine: LimboHSM = $CombatStateMachine
 @onready var ranged: LimboState = $CombatStateMachine/RANGED
 @onready var melee: LimboState = $CombatStateMachine/MELEE
+
+
 
 #ATTACKS
 @onready var melee_attack_manager: MeleeAttackManager = $MeleeAttackManager
@@ -122,6 +125,7 @@ func _ready():
 	bt_player.blackboard.set_var("ranged_mode", true)
 	bt_player.blackboard.set_var("within_range", false)
 	bt_player.blackboard.set_var("staggered", false)
+	dying.blackboard.set_var("hit_the_floor", false)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 	_init_combat_state_machine()
@@ -147,7 +151,8 @@ func _init_state_machine():
 	state_machine.add_transition(dodge, attack, &"dodge_end")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
-	state_machine.add_transition(state_machine.ANYSTATE, death, &"die")
+	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
+	state_machine.add_transition(dying, death, dying.success_event)
 	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
 	
 func _init_combat_state_machine():
@@ -164,6 +169,7 @@ func _process(_delta):
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
 	
+	
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collision.disabled=true
 		return
@@ -179,7 +185,6 @@ func _process(_delta):
 func _physics_process(delta):
 #	knockback return to zero
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
-	
 #	stop movement when hit, staggered, or dead
 	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
 		#hb_collison.disabled=true
@@ -187,6 +192,11 @@ func _physics_process(delta):
 		velocity.x=0
 		move_and_slide()
 		return
+	elif state_machine.get_active_state()==dying:
+		move_and_slide()
+		if is_on_floor() and not jump_timer.is_stopped():
+			dying.blackboard.set_var("hit_the_floor", true)
+		velocity.x=knockback.x
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
 		return
@@ -201,6 +211,7 @@ func _physics_process(delta):
 	#handle_movement()
 	if state_machine.get_active_state()==chasing:
 		velocity.x = current_speed + knockback.x
+		velocity.y = knockback.y
 	else:
 		velocity.x= knockback.x
 	move_and_slide()
@@ -297,6 +308,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	if damage<=health.health:
 		parry_timer.start(0.5)
 		state_machine.dispatch(&"hit")
+		gpu_particles_2d.restart()
 		gpu_particles_2d.emitting=true
 		
 	else:
@@ -304,9 +316,12 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
+	hit_stop.hit_stop(0.05,0.2)
 	hb_collision.disabled=true
-	movement_handler.active=false
 	animated_sprite_2d.scale.x = 1
+	movement_handler.active=false
+	knockback.x=250
+	jump_handler.handle_jump(0.2)
 	death_handler.death()
 
 func _on_attack_timer_timeout() -> void:

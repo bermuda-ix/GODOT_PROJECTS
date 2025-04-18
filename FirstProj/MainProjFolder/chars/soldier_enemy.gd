@@ -108,6 +108,7 @@ var distance
 @onready var chasing: LimboState = $LimboHSM/CHASING
 @onready var jump: LimboState = $LimboHSM/JUMP
 @onready var death: LimboState = $LimboHSM/DEATH
+@onready var dying: BTState = $LimboHSM/DYING
 @onready var attack: LimboState = $LimboHSM/ATTACK
 @onready var shooting: LimboState = $LimboHSM/SHOOTING
 @onready var dodge: LimboState = $LimboHSM/DODGE
@@ -175,7 +176,8 @@ func _init_state_machine():
 	state_machine.add_transition(dodge, attack, &"dodge_end")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
-	state_machine.add_transition(state_machine.ANYSTATE, death, &"die")
+	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
+	state_machine.add_transition(dying, death, dying.success_event)
 	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
 	
 func _init_combat_state_machine():
@@ -234,6 +236,11 @@ func _physics_process(delta):
 		velocity.x=0
 		move_and_slide()
 		return
+	elif state_machine.get_active_state()==dying:
+		move_and_slide()
+		if is_on_floor() and not jump_timer.is_stopped():
+			dying.blackboard.set_var("hit_the_floor", true)
+		velocity.x=knockback.x
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
 		return
@@ -529,9 +536,13 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
+	hit_stop.hit_stop(0.05,0.2)
 	hb_collision.disabled=true
 	movement_handler.active=false
 	animated_sprite_2d.scale.x = 1
+	movement_handler.active=false
+	knockback.x=250
+	jump_handler.handle_jump(0.2)
 	death_handler.death()
 
 func _on_attack_timer_timeout() -> void:

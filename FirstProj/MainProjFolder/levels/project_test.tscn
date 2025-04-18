@@ -19,9 +19,9 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(8, 80, 8, 112, 168, 112
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_yrn8s"]
-vertices = PackedVector2Array(198, 102, 18, 102, 18, 90, 198, 90)
+vertices = PackedVector2Array(196, 106, 6, 106, 6, 89, 196, 89)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(8, 80, 8, 112, 208, 112, 208, 80)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-4, 79, -4, 116, 206, 116, 206, 79)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_b6fvs"]
@@ -81,7 +81,7 @@ navigation_polygon = SubResource("NavigationPolygon_yrn8s")
 navigation_layers = 2
 
 [node name="NavigationRegion2D8" type="NavigationRegion2D" parent="." index="10"]
-position = Vector2(208, -376)
+position = Vector2(203, -374)
 navigation_polygon = SubResource("NavigationPolygon_yrn8s")
 navigation_layers = 2
 

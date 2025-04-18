@@ -1,0 +1,46 @@
+[gd_resource type="BehaviorTree" load_steps=11 format=3 uid="uid://dutys3rie5tyk"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_jeokm"]
+var/hit_the_floor/name = &"hit_the_floor"
+var/hit_the_floor/type = 1
+var/hit_the_floor/value = false
+var/hit_the_floor/hint = 0
+var/hit_the_floor/hint_string = ""
+
+[sub_resource type="BBNode" id="BBNode_2nf5j"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_cyi20"]
+animation_player = SubResource("BBNode_2nf5j")
+animation_name = &"death"
+
+[sub_resource type="BBNode" id="BBNode_jeokm"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_2nf5j"]
+animation_player = SubResource("BBNode_jeokm")
+animation_name = &"death"
+max_time = 0.2
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_jeokm"]
+variable = &"hit_the_floor"
+
+[sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_2nf5j"]
+children = [SubResource("BTCheckTrigger_jeokm")]
+
+[sub_resource type="BBNode" id="BBNode_y0sur"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_xh2lj"]
+animation_player = SubResource("BBNode_y0sur")
+animation_name = &"dead"
+
+[sub_resource type="BTSequence" id="BTSequence_2o85m"]
+children = [SubResource("BTPlayAnimation_cyi20"), SubResource("BTAwaitAnimation_2nf5j"), SubResource("BTRepeatUntilSuccess_2nf5j"), SubResource("BTPlayAnimation_xh2lj")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_jeokm")
+root_task = SubResource("BTSequence_2o85m")
