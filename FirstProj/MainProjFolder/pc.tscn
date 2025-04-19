@@ -56,7 +56,7 @@
 [ext_resource type="Texture2D" uid="uid://opipugigc3oa" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Walk/Walk07.png" id="29_00lx6"]
 [ext_resource type="Texture2D" uid="uid://8q0mks87sm2s" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/FrontFlip/FrontFlip14.png" id="29_7nr8h"]
 [ext_resource type="Texture2D" uid="uid://6ne5ipkky6bv" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Walk/Walk08.png" id="30_kuuhk"]
-[ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStotop.gd" id="53_jef5t"]
+[ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="53_jef5t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
 size = Vector2(6.58371, 20)

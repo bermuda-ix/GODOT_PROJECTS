@@ -1,3 +1,4 @@
+class_name GuardEnemy
 extends CharacterBody2D
 
 const SPEED = 300.0
@@ -13,12 +14,13 @@ const JUMP_VELOCITY = -400.0
 #Target lock
 @onready var target_lock_node: TargetLock = $TargetLock
 #Visible on screen
-@onready var  on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+
 #Behaviour Tree Player
 @onready var bt_player: BTPlayer = $BTPlayer
 #Particles
 @onready var gpu_particles_2d: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
-
+#On Screen
 
 #Defense
 @onready var health: Health = $Health
@@ -110,6 +112,8 @@ var attacking : bool = false
 #DEATH
 @export var drop = preload("res://heart.tscn")
 @onready var death_handler: DeathHandler = $DeathHandler
+@export var death_time_scale: float = 1.0
+@onready var norm_delta
 
 #Debug var
 var combat_state : String = "RANGED"
@@ -168,6 +172,7 @@ func _init_combat_state_machine():
 func _process(_delta):
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
+	norm_delta=_delta
 	
 	
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
@@ -182,7 +187,9 @@ func _process(_delta):
 	#bt_player.blackboard.get_var("attack_mode"))
 	attack_timer.one_shot=true
 	
+	
 func _physics_process(delta):
+	# standard delta
 #	knockback return to zero
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 #	stop movement when hit, staggered, or dead
@@ -196,6 +203,17 @@ func _physics_process(delta):
 		move_and_slide()
 		if is_on_floor() and not jump_timer.is_stopped():
 			dying.blackboard.set_var("hit_the_floor", true)
+		else:
+			
+			if death_timer.is_stopped():
+				delta=delta
+				velocity.y += gravity * delta
+				animation_player.speed_scale=1
+			else:
+				delta*=lerpf(death_time_scale, 0, 0.2)
+				animation_player.speed_scale=.5
+				velocity.y += gravity * delta
+				velocity.y=lerpf(velocity.y,0,0.2)
 		velocity.x=knockback.x
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
@@ -297,7 +315,7 @@ func _on_parry_timer_timeout() -> void:
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	hit_stop.hit_stop(0.05,0.1)
+	
 	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 		Events.allied_enemy_hit.emit()
 	
@@ -305,23 +323,26 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	if state_machine.get_active_state()==death:
 		return
 	health.set_temporary_immortality(0.2)
-	if damage<=health.health:
+	if damage<health.health:
+		if state_machine.get_active_state()!=dying or state_machine.get_active_date()!=death:
+			hit_stop.hit_stop(0.05,0.25)
 		parry_timer.start(0.5)
 		state_machine.dispatch(&"hit")
 		gpu_particles_2d.restart()
 		gpu_particles_2d.emitting=true
 		
 	else:
+		
 		print("kill shot")
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
-	hit_stop.hit_stop(0.05,0.2)
 	hb_collision.disabled=true
 	animated_sprite_2d.scale.x = 1
 	movement_handler.active=false
 	knockback.x=250
-	jump_handler.handle_jump(0.2)
+	jump_handler.handle_jump(0.5)
+	death_timer.start()
 	death_handler.death()
 
 func _on_attack_timer_timeout() -> void:
@@ -345,4 +366,6 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 			print("down attack")
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
-	hit_stop.hit_stop(0.05,0.1)
+	
+	if state_machine.get_active_state()!=dying or state_machine.get_active_state()!=death:
+		hit_stop.hit_stop(0.05,0.1)

@@ -14,6 +14,7 @@ func death():
 	if tree_active:
 		actor.bt_player.blackboard.set_var("attack_mode", false)
 		actor.bt_player.restart()
+	#actor.hit_stop.hit_stop(0.05,5)
 	sm.dispatch(&"die")
 	
 	#print("dead")

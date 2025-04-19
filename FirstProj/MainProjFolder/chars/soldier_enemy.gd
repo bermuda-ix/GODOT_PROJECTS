@@ -505,7 +505,7 @@ func rapid_shoot(value : bool)->void:
 	turret.multi_shot=value
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	hit_stop.hit_stop(0.05,0.1)
+	
 	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 		Events.allied_enemy_hit.emit()
 	
@@ -516,7 +516,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	if damage<=health.health:
 		parry_timer.start(0.5)
 		state_machine.dispatch(&"hit")
-		
+		hit_stop.hit_stop(0.05,0.25)
 		#set_state(current_state, States.HIT)
 		gpu_particles_2d.emitting=true
 		
@@ -536,7 +536,6 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
-	hit_stop.hit_stop(0.05,0.2)
 	hb_collision.disabled=true
 	movement_handler.active=false
 	animated_sprite_2d.scale.x = 1

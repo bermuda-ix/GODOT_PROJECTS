@@ -771,10 +771,12 @@ func find_closest_enemy():
 	var closest_enemy = enemies[0]
 	
 	for enemy in enemies:
-		if not is_instance_valid(enemy):
+		if is_instance_valid(enemy):
 			if (enemy.global_position.distance_to(global_position) < closest_enemy.global_position.distance_to(global_position))\
-			and enemy.current_state!=target.States.DEATH or (enemy.state_machine.get_active_state()!=enemy.death):
+			and (enemy.state_machine.get_active_state()!=enemy.death):
+				
 				closest_enemy=enemy
+
 			else:
 				continue
 		else:
