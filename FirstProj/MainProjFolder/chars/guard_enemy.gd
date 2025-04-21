@@ -229,7 +229,7 @@ func _physics_process(delta):
 	#handle_movement()
 	if state_machine.get_active_state()==chasing:
 		velocity.x = current_speed + knockback.x
-		velocity.y = knockback.y
+		velocity.y += gravity * delta
 	else:
 		velocity.x= knockback.x
 	move_and_slide()

@@ -129,6 +129,7 @@ var target_right : bool = false
 var vector_away : Vector2 = Vector2.ZERO
 var target_below : bool = false
 var vel_y : float = 0.0
+var hitstop_time_left : float
 
 #locked on target info
 @onready var target_testing = $TargetLocking/TargetTesting
@@ -163,6 +164,7 @@ func _ready():
 
 
 func _process(delta):
+	#print(hit_stop.dur.time_left)
 	var input_axis = Input.get_axis("walk_left", "walk_right")
 	vel_x=velocity.x
 	current_state_label()
@@ -334,6 +336,7 @@ func jump(input_axis, delta):
 
 #breaking out of a flip. Test without timer later
 func break_out():
+	
 	if Input.is_action_just_pressed("jump") and not Input.is_action_pressed("sprint"):
 		
 		#state=States.IDLE
@@ -355,7 +358,7 @@ func jump_out(jumpout_vel : float):
 		knockback.x=knockback.x
 	velocity.y=movement_data.jump_velocity
 	velocity.x = knockback.x
-	
+	hit_stop.hit_stop(1,0)
 	set_collision_mask_value(15, true)
 
 
@@ -823,13 +826,14 @@ func _on_hazard_detector_area_entered(area):
 		
 	elif area.is_in_group("Enemy"):
 		hit_stop.hit_stop(0.05, 0.1)
-		knockback.x = input_dir.x * knockback.x *0.5
+		knockback.x = input_dir.x * knockback.x *0.25
 	
 	
 	
 #State machine for animations currently
 func set_state(current_state, new_state: int) -> void:
 	#current_state, new_state)
+
 	if(current_state == new_state):
 		#"no change")
 		return
@@ -865,6 +869,11 @@ func set_state(current_state, new_state: int) -> void:
 				await anim_player.animation_finished
 				sp_atk_chn=0
 			anim_player.play(sp_atk_combo)
+			if current_state==States.FLIP:
+				hitstop_time_left=hit_stop.get_time_left()
+				print(hitstop_time_left)
+				hit_stop.hit_stop(.1,.1)
+					
 			#if not is_on_floor():
 				#velocity=Vector2.ZERO
 				#gravity=0
@@ -908,6 +917,8 @@ func set_state(current_state, new_state: int) -> void:
 			anim_player.play("flip")
 			cur_state="Flipping"
 			set_collision_mask_value(15, false)
+			if current_state==States.SPECIAL_ATTACK:
+				hit_stop.hit_stop(.5, (hitstop_time_left-0.1))
 		States.SPRINTING:
 			anim_player.speed_scale=1
 			#if jumping:
@@ -980,7 +991,7 @@ func _on_hit_timer_timeout() -> void:
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("bullet"):
 		hit_stop.hit_stop(0.05, 0.05)
-		knockback.x = -250
+		knockback.x = -50
 		kb_dir=global_position.direction_to(area.global_position)
 		#"knockback")
 		kb_dir=round(kb_dir)
@@ -1197,6 +1208,7 @@ func flipping(delta):
 			else:
 				#"no lerp")
 				flipped_over=true
+				hit_stop.hit_stop(.2, .5)
 				#gravity = 980
 		else:
 			#gravity = 0
@@ -1209,12 +1221,14 @@ func flipping(delta):
 			else:
 				#"no lerp")
 				flipped_over=true
+				hit_stop.hit_stop(.2, .5)
 				#gravity = 980
 #	flipping over
 	else:
 		health.immortality=false
 		hurt_box_detect.disabled=false
 		flipped_over=true
+		
 		if not target_right:
 			movement = target_direction.rotated(CLOCKWISE)
 			
