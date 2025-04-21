@@ -121,7 +121,7 @@ var combat_state : String = "RANGED"
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	#set_state(current_state, States.CHASE)
-	animation_player.play("guard")
+	animation_player.play("idle")
 	state="guard"
 	next=nav_agent.get_next_path_position()
 	bt_player.blackboard.set_var("attack_mode", false)
