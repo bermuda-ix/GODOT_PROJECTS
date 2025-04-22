@@ -38,7 +38,7 @@ func _process(delta):
 	
 func setup(time : float):
 	player = get_tree().get_first_node_in_group("player")
-	shoot_timer.start(0.2)
+	shoot_timer.start(time)
 	#turret_body.visible=false
 	shoot_timer.paused=false
 

@@ -171,6 +171,8 @@ func _process(delta):
 	get_target_info()
 	previous_state()
 	atk_state_debug()
+	if target != null:
+		label.text=str(target_size_x, " , ",target_size_y)
 	#if atk_chain >= 1 and sp_atk_chn >=1:
 		#label.text=str("chain ready. Vel:", velocity)
 	#else:
@@ -245,7 +247,7 @@ func _physics_process(delta):
 			apply_friction(input_axis, delta)
 			apply_air_resistance(input_axis, delta)
 			sp_atk()
-			label.text=str(cur_state, " ", previous)
+			#label.text=str(cur_state, " ", previous)
 			#jump_out()
 			
 		

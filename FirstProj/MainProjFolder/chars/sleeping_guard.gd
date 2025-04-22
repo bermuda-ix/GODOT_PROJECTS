@@ -1,6 +1,9 @@
 class_name IdleEnemy
 extends CharacterBody2D
 
+@onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
@@ -30,9 +33,10 @@ func _ready():
 	_init_state_machine()
 
 func _process(delta: float) -> void:
-	if on_screen.is_on_screen():
-		print("on screen")
-
+	if not is_on_floor():
+		velocity.y += gravity * delta
+	move_and_slide()
+	
 func _init_state_machine():
 	state_machine.initial_state=idle
 	state_machine.initialize(self)

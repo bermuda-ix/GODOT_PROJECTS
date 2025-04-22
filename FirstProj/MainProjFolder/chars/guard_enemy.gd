@@ -219,9 +219,7 @@ func _physics_process(delta):
 		hb_collision.disabled=true
 		return
 	
-#	apply gravity when in air
-	if not is_on_floor():
-		velocity.y += gravity * delta
+
 	
 	if state_machine.get_active_state()==staggered and parry_timer.time_left>0.0:
 		state_machine.change_active_state(staggered)
@@ -232,6 +230,10 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 	else:
 		velocity.x= knockback.x
+		
+	#	apply gravity when in air
+	if not is_on_floor():
+		velocity.y += gravity * delta
 	move_and_slide()
 
 func makepath() -> void:

@@ -4,6 +4,7 @@ extends LimboState
 @export var movement_handler : MovementHandler
 @export var stagger : Stagger
 @export var bt_player : BTPlayer
+@export var movement_able : bool = true 
 
 func _enter() -> void:
 	actor.animation_player.stop()
@@ -14,9 +15,11 @@ func _enter() -> void:
 	actor.hurt_box.set_damage_mulitplyer(3)
 	print("staggered")
 	
-	actor.movement_handler.active=false
-	movement_handler.active=false
-	actor.state="STAGGERED"
+	if movement_able:
+		actor.movement_handler.active=false
+		movement_handler.active=false
+	
+	#actor.state="STAGGERED"
 	
 func _update(delta: float) -> void:
 	print(actor.parry_timer.time_left)
@@ -24,6 +27,7 @@ func _update(delta: float) -> void:
 func _exit() -> void:
 	print("recovered")
 	actor.bt_player.blackboard.set_var("staggered", false)
-	movement_handler.active=true
+	if movement_able:
+		movement_handler.active=true
 	actor.hurt_box.set_damage_mulitplyer(1)
 	stagger.stagger = stagger.max_stagger

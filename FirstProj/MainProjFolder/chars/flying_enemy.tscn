@@ -164,6 +164,7 @@ position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_gt2wk")
 
 [node name="Turret" parent="." index="17" instance=ExtResource("4_g2l3k")]
+shoot_speed = 3.0
 
 [node name="stg_laber" type="Label" parent="." index="18"]
 offset_left = -46.0

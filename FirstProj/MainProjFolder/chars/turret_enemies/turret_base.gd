@@ -7,6 +7,9 @@ extends StaticBody2D
 @onready var death_handler: DeathHandler = $DeathHandler
 @onready var turret_top: TurretTop = $turret_top
 @onready var despawn_handler: DespawnHandler = $DespawnHandler
+@onready var hurt_box: HurtBox = $HurtBox
+@onready var hurt_box_collision: CollisionPolygon2D = $HurtBox/HurtBoxCollision
+
 
 @onready var hit_stop: HitStop = $HitStop
 
@@ -24,6 +27,8 @@ extends StaticBody2D
 func _ready() -> void:
 	_init_state_machine()
 	ammo_count=turret_top.turret.ammo_count
+	turret_top.health.set_max_health(health.get_max_health())
+	
 
 func _process(delta: float) -> void:
 	ammo_count=turret_top.turret.ammo_count
@@ -44,9 +49,9 @@ func dying():
 	pass
 	
 func get_width() -> int:
-	return collision_shape_2d.get_shape().size.x * scale.x
+	return abs(collision_shape_2d.get_shape().size.x * scale.x)
 func get_height() -> int:
-	return collision_shape_2d.get_shape().size.y * scale.y
+	return abs(collision_shape_2d.get_shape().size.y * scale.y)
 
 func target_lock():
 	Events.unlock_from.emit()
@@ -68,3 +73,17 @@ func _on_health_health_depleted() -> void:
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05,0.1)
+
+
+func _on_stagger_staggered() -> void:
+	turret_top.staggered()
+	hurt_box.set_damage_mulitplyer(3)
+
+
+func _on_hurt_box_area_entered(area: Area2D) -> void:
+	if area.is_in_group("sp_atk_default"):
+		stagger.stagger -= 1
+
+func stagger_recover()->void:
+	stagger.stagger=stagger.max_stagger
+	hurt_box.set_damage_mulitplyer(1)

@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=11 format=3 uid="uid://b1t5gv0bt5din"]
+[gd_resource type="BehaviorTree" load_steps=13 format=3 uid="uid://b1t5gv0bt5din"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_cecvh"]
 var/attack_mode/name = &"attack_mode"
@@ -6,6 +6,20 @@ var/attack_mode/type = 1
 var/attack_mode/value = false
 var/attack_mode/hint = 0
 var/attack_mode/hint_string = ""
+var/staggered/name = &"staggered"
+var/staggered/type = 1
+var/staggered/value = false
+var/staggered/hint = 0
+var/staggered/hint_string = ""
+
+[sub_resource type="BBVariant" id="BBVariant_n0ccg"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_l7px2"]
+variable = &"staggered"
+value = SubResource("BBVariant_n0ccg")
 
 [sub_resource type="BBVariant" id="BBVariant_cecvh"]
 type = 1
@@ -24,6 +38,11 @@ resource_name = "ShootAttackManager"
 node = SubResource("BBNode_cecvh")
 method = &"shoot"
 
+[sub_resource type="BTCooldown" id="BTCooldown_l7px2"]
+duration = 0.2
+start_cooled = true
+children = [SubResource("BTCallMethod_n0ccg")]
+
 [sub_resource type="BBNode" id="BBNode_n0ccg"]
 saved_value = NodePath("AnimationPlayer")
 resource_name = "AnimationPlayer"
@@ -32,14 +51,9 @@ resource_name = "AnimationPlayer"
 animation_player = SubResource("BBNode_n0ccg")
 animation_name = &"reload"
 
-[sub_resource type="BTCooldown" id="BTCooldown_l7px2"]
-duration = 0.2
-start_cooled = true
-children = [SubResource("BTCallMethod_n0ccg"), SubResource("BTAwaitAnimation_l7px2")]
-
 [sub_resource type="BTSequence" id="BTSequence_n0ccg"]
 custom_name = "Attack"
-children = [SubResource("BTCheckVar_n0ccg"), SubResource("BTCooldown_l7px2")]
+children = [SubResource("BTCheckVar_l7px2"), SubResource("BTCheckVar_n0ccg"), SubResource("BTCooldown_l7px2"), SubResource("BTAwaitAnimation_l7px2")]
 
 [sub_resource type="BTSelector" id="BTSelector_l7px2"]
 children = [SubResource("BTSequence_n0ccg")]

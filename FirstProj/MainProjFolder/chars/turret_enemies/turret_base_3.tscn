@@ -167,7 +167,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7atgd"]
-size = Vector2(416, 352)
+size = Vector2(576, 352)
 
 [node name="turret_base_3" type="StaticBody2D" groups=["Enemy"]]
 script = ExtResource("1_61vfk")
@@ -250,6 +250,7 @@ script = ExtResource("7_afqy1")
 actor = NodePath("..")
 sm = NodePath("../StateMachine")
 animation_player = NodePath("../AnimationPlayer")
+tree_active = false
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
 
 [node name="DespawnHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
@@ -262,7 +263,7 @@ metadata/_custom_type_script = "uid://cbt5pqmf6i7rj"
 [node name="Size" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Size"]
-position = Vector2(40, -80)
+position = Vector2(32, -80)
 shape = SubResource("RectangleShape2D_7atgd")
 
 [node name="TargetLock" type="Node2D" parent="."]
@@ -281,6 +282,8 @@ tree_active = false
 
 [node name="Alive" type="LimboState" parent="StateMachine"]
 
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
+[connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
