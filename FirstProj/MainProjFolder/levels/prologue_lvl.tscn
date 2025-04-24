@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=19 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_7j8nt"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
@@ -29,9 +29,14 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Arr
 outlines = Array[PackedVector2Array]([PackedVector2Array(64, 448, 64, 496, 1632, 496, 1968, 320, 1968, 272, 1632, 448)])
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_olhh5"]
-vertices = PackedVector2Array(2598, 310, 2010, 310, 2010, 274, 2598, 274)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(2000, 264, 2000, 320, 2608, 320, 2608, 264)])
+vertices = PackedVector2Array(2289.24, 308.992, 2010, 309.961, 2010, 274, 2290.9, 274, 2374.9, 311, 2344.25, 349, 3571, 349, 3571, 311)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(0, 3, 4, 5), PackedInt32Array(6, 5, 4, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(2000, 264, 2000, 320, 3583, 319, 3582, 264)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_jyauw"]
+vertices = PackedVector2Array(3560, 79, 3560, 109.992, 2361.76, 109, 2358.25, 79, 2299.76, 72, 2294.25, 41, 2050, 72, 2050, 41)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(5, 4, 6, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(2040, 82, 2297, 82, 2359, 119, 3570, 120, 3570, 69, 2361, 69, 2297, 31, 2040, 31)])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jyauw"]
 size = Vector2(68, 577)
@@ -63,6 +68,12 @@ polygon = PackedVector2Array(1648, 97.1055, 1976, -67.2269, 2008, -67.2269, 2016
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="LabArchitect/Non_TilesetCollisions/stairs_2_1st_area" index="0"]
 polygon = PackedVector2Array(1504, -224.09, 1480, -224.09, 1352, -276.377, 1352, -291.317, 1384, -291.317, 1504, -231.559)
+
+[node name="stairs_1_2nd_area" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="2"]
+position = Vector2(966, -37.3483)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="LabArchitect/Non_TilesetCollisions/stairs_1_2nd_area" index="0"]
+polygon = PackedVector2Array(1335, -253.035, 1391, -218.487, 1410, -218.487, 1355, -251.167)
 
 [node name="Desert_Background" parent="." index="3" instance=ExtResource("4_iov4b")]
 position = Vector2(5, 14)
@@ -103,6 +114,9 @@ max_enemy = 1
 [node name="soldier_enemy2" parent="Enemy/soldiers" index="0" instance=ExtResource("9_grstv")]
 position = Vector2(2264, 272)
 
+[node name="soldier_enemy3" parent="Enemy/soldiers" index="1" instance=ExtResource("9_grstv")]
+position = Vector2(2416, 92)
+
 [node name="flying" type="Node" parent="Enemy" index="1"]
 
 [node name="flying_enemy2" parent="Enemy/flying" index="0" instance=ExtResource("8_bi776")]
@@ -127,10 +141,41 @@ position = Vector2(770, -6)
 rotation = 1.57333
 scale = Vector2(-0.1, 0.1)
 
+[node name="turret_base_6" parent="Enemy/turrets" index="3" instance=ExtResource("10_kabbc")]
+position = Vector2(2100, -9)
+rotation = 3.14159
+scale = Vector2(0.1, 0.1)
+
+[node name="turret_base_7" parent="Enemy/turrets" index="4" instance=ExtResource("10_kabbc")]
+position = Vector2(2373, -9)
+rotation = 3.14159
+scale = Vector2(0.1, 0.1)
+
+[node name="turret_base_9" parent="Enemy/turrets" index="5" instance=ExtResource("10_kabbc")]
+position = Vector2(3448, -8)
+rotation = 3.14159
+scale = Vector2(0.1, 0.1)
+
 [node name="Guards" type="Node" parent="Enemy" index="3"]
 
 [node name="GuardEnemy" parent="Enemy/Guards" index="0" instance=ExtResource("11_vtk8u")]
 position = Vector2(1378, 465)
+scale = Vector2(0.75, 0.75)
+
+[node name="GuardEnemy2" parent="Enemy/Guards" index="1" instance=ExtResource("11_vtk8u")]
+position = Vector2(2828, 301)
+scale = Vector2(0.75, 0.75)
+
+[node name="GuardEnemy3" parent="Enemy/Guards" index="2" instance=ExtResource("11_vtk8u")]
+position = Vector2(3299, 302)
+scale = Vector2(0.75, 0.75)
+
+[node name="GuardEnemy4" parent="Enemy/Guards" index="3" instance=ExtResource("11_vtk8u")]
+position = Vector2(3404, 90)
+scale = Vector2(0.75, 0.75)
+
+[node name="GuardEnemy5" parent="Enemy/Guards" index="4" instance=ExtResource("11_vtk8u")]
+position = Vector2(3485, 302)
 scale = Vector2(0.75, 0.75)
 
 [node name="SleepingGuard" parent="Enemy" index="4" instance=ExtResource("12_jyauw")]
@@ -153,9 +198,12 @@ navigation_layers = 2
 [node name="GroundNav2_Inside" type="NavigationRegion2D" parent="GroundNavs" index="1"]
 navigation_polygon = SubResource("NavigationPolygon_olhh5")
 navigation_layers = 2
-travel_cost = 2.0
 
-[node name="Links" type="Node2D" parent="GroundNavs" index="2"]
+[node name="GroundNav3_Inside" type="NavigationRegion2D" parent="GroundNavs" index="2"]
+navigation_polygon = SubResource("NavigationPolygon_jyauw")
+navigation_layers = 2
+
+[node name="Links" type="Node2D" parent="GroundNavs" index="3"]
 
 [node name="GNav_1Inside_2Inside" type="NavigationLink2D" parent="GroundNavs/Links" index="0"]
 navigation_layers = 2

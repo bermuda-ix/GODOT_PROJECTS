@@ -10,7 +10,6 @@ extends StaticBody2D
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var hurt_box_collision: CollisionPolygon2D = $HurtBox/HurtBoxCollision
 
-
 @onready var hit_stop: HitStop = $HitStop
 
 @onready var state_machine: LimboHSM = $StateMachine
@@ -22,6 +21,7 @@ extends StaticBody2D
 @onready var stagger: Stagger = $Stagger
 
 @onready var ammo_count
+
 
 
 func _ready() -> void:
