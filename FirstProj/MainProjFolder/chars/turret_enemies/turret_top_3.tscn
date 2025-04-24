@@ -484,4 +484,6 @@ theme_override_font_sizes/font_size = 128
 [connection signal="shoot_bullet" from="Sprite2D/Turret" to="." method="_on_turret_shoot_bullet"]
 [connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
+[connection signal="reloading" from="ShootAttackManager" to="." method="_on_shoot_attack_manager_reloading"]
+[connection signal="reloading_done" from="ShootAttackManager" to="." method="_on_shoot_attack_manager_reloading_done"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]

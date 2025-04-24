@@ -22,13 +22,24 @@ extends StaticBody2D
 
 @onready var ammo_count
 
+@onready var linked_turrets : Array[TurretBase]
 
+@export var turret_link_control : TurretLink
+@onready var turret_link_order : int
 
 func _ready() -> void:
 	_init_state_machine()
 	ammo_count=turret_top.turret.ammo_count
 	turret_top.health.set_max_health(health.get_max_health())
-	
+	if turret_link_control == null:
+		print("no link")
+		if linked_turrets.size()<=1:
+			print("no link")
+	else:
+		linked_turrets=turret_link_control.turrets
+		for i in range(linked_turrets.size()):
+			print(linked_turrets[i].name, " linked")
+			turret_link_order=linked_turrets.find(self)
 
 func _process(delta: float) -> void:
 	ammo_count=turret_top.turret.ammo_count
@@ -68,6 +79,7 @@ func _on_health_health_depleted() -> void:
 	death_handler.death()
 	turret_top.death_handler.death()
 	turret_top.bt_player.restart()
+	linked_turrets.remove_at(turret_link_order)
 	print("despawning")
 	despawn_handler.despawn()
 
