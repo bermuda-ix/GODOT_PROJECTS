@@ -1,0 +1,85 @@
+[gd_scene load_steps=8 format=3 uid="uid://dpxyvs3nt3yix"]
+
+[ext_resource type="Texture2D" uid="uid://cm36bhcpc0hsc" path="res://Art_Components/tile_maps/_PNG/1. main platforms.png" id="1_4nnvn"]
+[ext_resource type="Script" uid="uid://ce10ghjlr801m" path="res://Component/interactables/elevator.gd" id="1_ophm4"]
+
+[sub_resource type="Curve2D" id="Curve2D_ophm4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 24, 3, 0, 0, 0, 0, 24, -400)
+}
+point_count = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7nof"]
+atlas = ExtResource("1_4nnvn")
+region = Rect2(905.675, 1.37667, 12.4556, 32.7833)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rkleh"]
+atlas = ExtResource("1_4nnvn")
+region = Rect2(905.542, -1.03982, 12.9032, 97.6959)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4h0vo"]
+atlas = ExtResource("1_4nnvn")
+region = Rect2(906.208, 0.152078, 12.108, 94.952)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ophm4"]
+atlas = ExtResource("1_4nnvn")
+region = Rect2(831.92, 223.808, 64.3857, 64.0002)
+
+[node name="Elevator" type="Node2D"]
+script = ExtResource("1_ophm4")
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(-24, -3)
+curve = SubResource("Curve2D_ophm4")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(24, 3)
+rotates = false
+loop = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Path2D/PathFollow2D"]
+position = Vector2(-46, -57)
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+position = Vector2(44, 5)
+texture = SubResource("AtlasTexture_p7nof")
+offset = Vector2(-43.0768, -24.3987)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+position = Vector2(9, 6)
+polygon = PackedVector2Array(-14, -9, -14, -52, 83, -52, 83, 63, -14, 63, -14, 52, 73, 52, 73, -41, -1.99999, -41, -1.99999, -9)
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+
+[node name="Sprite2D2" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+position = Vector2(41, 4)
+rotation = 1.5708
+texture = SubResource("AtlasTexture_rkleh")
+offset = Vector2(-44.741, -2.22652)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+z_index = -1
+position = Vector2(41, 13)
+texture = SubResource("AtlasTexture_4h0vo")
+offset = Vector2(46.0914, -1.21437)
+
+[node name="Sprite2D4" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+position = Vector2(45.2595, 22.6657)
+rotation = 1.5708
+texture = SubResource("AtlasTexture_rkleh")
+offset = Vector2(40.3343, 1.25954)
+
+[node name="Sprite2D5" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+self_modulate = Color(0.151276, 0.151276, 0.151276, 1)
+z_index = -1
+position = Vector2(44, 12)
+scale = Vector2(1.5, 1.5)
+texture = SubResource("AtlasTexture_ophm4")
+
+[node name="PauseMove" type="Timer" parent="."]
+one_shot = true
+
+[node name="Resume" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="PauseMove" to="." method="_on_pause_move_timeout"]

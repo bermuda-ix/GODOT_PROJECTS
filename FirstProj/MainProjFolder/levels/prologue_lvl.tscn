@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=21 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_7j8nt"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
@@ -10,8 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="8_bi776"]
 [ext_resource type="PackedScene" uid="uid://b5d2nkkrrcixy" path="res://chars/soldier_enemy.tscn" id="9_grstv"]
 [ext_resource type="PackedScene" uid="uid://mve6miefg0i0" path="res://chars/turret_enemies/turret_base_3.tscn" id="10_kabbc"]
+[ext_resource type="PackedScene" uid="uid://idc8e7mjacdd" path="res://Component/turret_link.tscn" id="11_kpmgs"]
 [ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="11_vtk8u"]
 [ext_resource type="PackedScene" uid="uid://dak3j323lms0s" path="res://chars/sleeping_guard.tscn" id="12_jyauw"]
+[ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="14_dmeha"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_htxyq"]
 vertices = PackedVector2Array(1645.83, 430, 1122, 430, 1122, 322, 1882.08, 322)
@@ -44,7 +46,7 @@ size = Vector2(68, 577)
 [node name="PrologueLvl" instance=ExtResource("1_7j8nt")]
 
 [node name="PC" parent="." index="1" instance=ExtResource("2_dtpw0")]
-position = Vector2(141, 460)
+position = Vector2(3037, 489)
 scale = Vector2(2, 2)
 
 [node name="LabArchitect" parent="." index="2" instance=ExtResource("3_fyow3")]
@@ -74,6 +76,13 @@ position = Vector2(966, -37.3483)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="LabArchitect/Non_TilesetCollisions/stairs_1_2nd_area" index="0"]
 polygon = PackedVector2Array(1335, -253.035, 1391, -218.487, 1410, -218.487, 1355, -251.167)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="3"]
+position = Vector2(2755, 260.504)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LabArchitect/Non_TilesetCollisions/StaticBody2D" index="0"]
+position = Vector2(10, -5.60224)
+polygon = PackedVector2Array(233, -128.852, -271, 124.183, -285, 126.984, -279, 142.857, 244, -101.774, 247, -128.852)
 
 [node name="Desert_Background" parent="." index="3" instance=ExtResource("4_iov4b")]
 position = Vector2(5, 14)
@@ -132,29 +141,41 @@ position = Vector2(1967, 206)
 rotation = -1.5708
 scale = Vector2(0.1, 0.1)
 
-[node name="turret_base_4" parent="Enemy/turrets" index="1" instance=ExtResource("10_kabbc")]
+[node name="turret_base_4" parent="Enemy/turrets" index="1" node_paths=PackedStringArray("turret_link_control") instance=ExtResource("10_kabbc")]
 position = Vector2(938, 71)
 scale = Vector2(-0.1, 0.1)
+turret_link_control = NodePath("../TurretLink")
 
-[node name="turret_base_5" parent="Enemy/turrets" index="2" instance=ExtResource("10_kabbc")]
+[node name="turret_base_5" parent="Enemy/turrets" index="2" node_paths=PackedStringArray("turret_link_control") instance=ExtResource("10_kabbc")]
 position = Vector2(770, -6)
 rotation = 1.57333
 scale = Vector2(-0.1, 0.1)
+turret_link_control = NodePath("../TurretLink")
 
-[node name="turret_base_6" parent="Enemy/turrets" index="3" instance=ExtResource("10_kabbc")]
+[node name="turret_base_6" parent="Enemy/turrets" index="3" node_paths=PackedStringArray("turret_link_control") instance=ExtResource("10_kabbc")]
 position = Vector2(2100, -9)
 rotation = 3.14159
 scale = Vector2(0.1, 0.1)
+turret_link_control = NodePath("../TurretLink2")
 
-[node name="turret_base_7" parent="Enemy/turrets" index="4" instance=ExtResource("10_kabbc")]
+[node name="turret_base_7" parent="Enemy/turrets" index="4" node_paths=PackedStringArray("turret_link_control") instance=ExtResource("10_kabbc")]
 position = Vector2(2373, -9)
 rotation = 3.14159
 scale = Vector2(0.1, 0.1)
+turret_link_control = NodePath("../TurretLink2")
 
 [node name="turret_base_9" parent="Enemy/turrets" index="5" instance=ExtResource("10_kabbc")]
 position = Vector2(3448, -8)
 rotation = 3.14159
 scale = Vector2(0.1, 0.1)
+
+[node name="TurretLink" parent="Enemy/turrets" index="6" node_paths=PackedStringArray("turrets") instance=ExtResource("11_kpmgs")]
+position = Vector2(850, 98)
+turrets = [NodePath("../turret_base_4"), NodePath("../turret_base_5")]
+
+[node name="TurretLink2" parent="Enemy/turrets" index="7" node_paths=PackedStringArray("turrets") instance=ExtResource("11_kpmgs")]
+position = Vector2(2221, -6)
+turrets = [NodePath("../turret_base_6"), NodePath("../turret_base_7")]
 
 [node name="Guards" type="Node" parent="Enemy" index="3"]
 
@@ -248,3 +269,13 @@ collision_mask = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bounderies" index="0"]
 position = Vector2(24, 278.5)
 shape = SubResource("RectangleShape2D_jyauw")
+
+[node name="DoorsAndSwitches" type="Node" parent="." index="18"]
+
+[node name="Elevator" parent="DoorsAndSwitches" index="0" instance=ExtResource("14_dmeha")]
+position = Vector2(3627, 525)
+stops_ratio = Array[float]([0.0, 0.5, 0.0])
+
+[node name="lab_door_switch" parent="DoorsAndSwitches" index="1" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
+position = Vector2(2072, 65)
+door_connect = NodePath("../Elevator")
