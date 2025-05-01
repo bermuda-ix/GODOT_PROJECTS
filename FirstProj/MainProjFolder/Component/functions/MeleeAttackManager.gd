@@ -12,3 +12,6 @@ func melee_counter():
 	actor.state_machine.change_active_state(actor.attack)
 	#print("counter")
 	actor.animation_player.play("atk_counter")
+
+func slam():
+	actor.state_machine.dispach(&"slam_attack")

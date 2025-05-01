@@ -1,0 +1,49 @@
+[gd_resource type="BehaviorTree" load_steps=13 format=3 uid="uid://b2063wq6t8myb"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_2iwtk"]
+
+[sub_resource type="BBNode" id="BBNode_srwxd"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_234kk"]
+animation_player = SubResource("BBNode_srwxd")
+animation_name = &"slam"
+
+[sub_resource type="BBNode" id="BBNode_ose5i"]
+saved_value = NodePath("MeleeAttackManager")
+resource_name = "MeleeAttackManager"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_5wqhu"]
+node = SubResource("BBNode_ose5i")
+method = &"slam"
+
+[sub_resource type="BBVariant" id="BBVariant_2iwtk"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckAgentProperty" id="BTCheckAgentProperty_srwxd"]
+property = &"is_on_floor()"
+value = SubResource("BBVariant_2iwtk")
+
+[sub_resource type="BBNode" id="BBNode_234kk"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_ose5i"]
+animation_player = SubResource("BBNode_234kk")
+animation_name = &"landed"
+
+[sub_resource type="BTSequence" id="BTSequence_5wqhu"]
+children = [SubResource("BTCheckAgentProperty_srwxd"), SubResource("BTPlayAnimation_ose5i")]
+
+[sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_c0vtd"]
+children = [SubResource("BTSequence_5wqhu")]
+
+[sub_resource type="BTSequence" id="BTSequence_micmu"]
+children = [SubResource("BTPlayAnimation_234kk"), SubResource("BTCallMethod_5wqhu"), SubResource("BTRepeatUntilSuccess_c0vtd")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_2iwtk")
+root_task = SubResource("BTSequence_micmu")

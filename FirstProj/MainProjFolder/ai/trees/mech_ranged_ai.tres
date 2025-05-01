@@ -1,0 +1,162 @@
+[gd_resource type="BehaviorTree" load_steps=40 format=3 uid="uid://vca7j8b0cpkl"]
+
+[ext_resource type="BlackboardPlan" uid="uid://cn6i86litai7s" path="res://Component/blackboard_plans/enemy_ai.tres" id="1_57cnw"]
+[ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="2_6mf02"]
+
+[sub_resource type="BBVariant" id="BBVariant_glts4"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_ug3cp"]
+variable = &"attack_mode"
+value = SubResource("BBVariant_glts4")
+custom_name = "AttackMode"
+
+[sub_resource type="BBVariant" id="BBVariant_cdgcv"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_gi0ss"]
+variable = &"staggered"
+value = SubResource("BBVariant_cdgcv")
+
+[sub_resource type="BBVariant" id="BBVariant_ff6r7"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_roqn8"]
+variable = &"melee_mode"
+value = SubResource("BBVariant_ff6r7")
+
+[sub_resource type="BBVariant" id="BBVariant_sdlxl"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_s0pl0"]
+variable = &"within_range"
+value = SubResource("BBVariant_sdlxl")
+
+[sub_resource type="BTAction" id="BTAction_f2l8t"]
+script = ExtResource("2_6mf02")
+group = &"player"
+target_var = &"target"
+
+[sub_resource type="BBVariant" id="BBVariant_trp4a"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_2nwck"]
+variable = &"melee_mode"
+value = SubResource("BBVariant_trp4a")
+
+[sub_resource type="BBNode" id="BBNode_57cnw"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_6mf02"]
+node = SubResource("BBNode_57cnw")
+method = &"jump_up"
+
+[sub_resource type="BTWait" id="BTWait_glts4"]
+duration = 1.5
+
+[sub_resource type="BBNode" id="BBNode_6mf02"]
+saved_value = NodePath("MeleeAttackManager")
+resource_name = "MeleeAttackManager"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_glts4"]
+node = SubResource("BBNode_6mf02")
+method = &"slam_down"
+
+[sub_resource type="BTSequence" id="BTSequence_oqvss"]
+custom_name = "Attack"
+children = [SubResource("BTCheckVar_2nwck"), SubResource("BTCallMethod_6mf02"), SubResource("BTWait_glts4"), SubResource("BTCallMethod_glts4")]
+
+[sub_resource type="BTCooldown" id="BTCooldown_38pg2"]
+duration = 0.8
+start_cooled = true
+children = [SubResource("BTSequence_oqvss")]
+
+[sub_resource type="BTSelector" id="BTSelector_4nrsl"]
+custom_name = "attacks"
+children = [SubResource("BTCooldown_38pg2")]
+
+[sub_resource type="BTSequence" id="BTSequence_my7wn"]
+custom_name = "AttackRange"
+children = [SubResource("BTCheckVar_s0pl0"), SubResource("BTAction_f2l8t"), SubResource("BTSelector_4nrsl")]
+
+[sub_resource type="BTAction" id="BTAction_d25vw"]
+script = ExtResource("2_6mf02")
+group = &"player"
+target_var = &"target"
+
+[sub_resource type="BBNode" id="BBNode_vynsm"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_gm5h1"]
+node = SubResource("BBNode_vynsm")
+method = &"chase"
+
+[sub_resource type="BTSequence" id="BTSequence_71byw"]
+custom_name = "Get In Range"
+children = [SubResource("BTAction_d25vw"), SubResource("BTCallMethod_gm5h1")]
+
+[sub_resource type="BTSelector" id="BTSelector_4j6sx"]
+custom_name = "Getting in range"
+children = [SubResource("BTSequence_my7wn"), SubResource("BTSequence_71byw")]
+
+[sub_resource type="BTSequence" id="BTSequence_10ead"]
+custom_name = "Melee"
+children = [SubResource("BTCheckVar_roqn8"), SubResource("BTSelector_4j6sx")]
+
+[sub_resource type="BBVariant" id="BBVariant_utq68"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_3yycb"]
+variable = &"ranged_mode"
+value = SubResource("BBVariant_utq68")
+
+[sub_resource type="BBNode" id="BBNode_esods"]
+saved_value = NodePath("ShootAttackManager")
+resource_name = "ShootAttackManager"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_vyp80"]
+node = SubResource("BBNode_esods")
+method = &"shoot"
+
+[sub_resource type="BTSequence" id="BTSequence_r1cm4"]
+custom_name = "Shoot"
+children = [SubResource("BTCheckVar_3yycb"), SubResource("BTCallMethod_vyp80")]
+
+[sub_resource type="BTCooldown" id="BTCooldown_n65d2"]
+duration = 0.5
+start_cooled = true
+children = [SubResource("BTSequence_r1cm4")]
+
+[sub_resource type="BTSelector" id="BTSelector_vjpus"]
+children = [SubResource("BTSequence_10ead"), SubResource("BTCooldown_n65d2")]
+
+[sub_resource type="BTSequence" id="BTSequence_ivh4q"]
+children = [SubResource("BTCheckVar_gi0ss"), SubResource("BTSelector_vjpus")]
+
+[sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_ygnh2"]
+children = [SubResource("BTSequence_ivh4q")]
+
+[sub_resource type="BTSequence" id="BTSequence_pigy8"]
+custom_name = "Attacks"
+children = [SubResource("BTCheckVar_ug3cp"), SubResource("BTRepeatUntilFailure_ygnh2")]
+
+[sub_resource type="BTSelector" id="BTSelector_8x2b1"]
+children = [SubResource("BTSequence_pigy8")]
+
+[resource]
+blackboard_plan = ExtResource("1_57cnw")
+root_task = SubResource("BTSelector_8x2b1")
