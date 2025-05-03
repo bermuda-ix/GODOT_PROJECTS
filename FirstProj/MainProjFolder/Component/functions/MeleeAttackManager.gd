@@ -13,5 +13,12 @@ func melee_counter():
 	#print("counter")
 	actor.animation_player.play("atk_counter")
 
+#func slam(value: String):
+	##pass
+	#var slam_type=value.capitalize()
+	#match slam_type:
+		#"DOWN":
+			#actor.slam_vel+=actor.gravity+200
+
 func slam():
-	actor.state_machine.dispach(&"slam_attack")
+	actor.slam_vel=actor.gravity+1000

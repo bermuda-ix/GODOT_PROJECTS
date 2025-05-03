@@ -46,7 +46,7 @@ size = Vector2(68, 577)
 [node name="PrologueLvl" instance=ExtResource("1_7j8nt")]
 
 [node name="PC" parent="." index="1" instance=ExtResource("2_dtpw0")]
-position = Vector2(3037, 489)
+position = Vector2(1115, 481)
 scale = Vector2(2, 2)
 
 [node name="LabArchitect" parent="." index="2" instance=ExtResource("3_fyow3")]

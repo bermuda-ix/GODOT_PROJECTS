@@ -1,6 +1,11 @@
-[gd_resource type="BehaviorTree" load_steps=13 format=3 uid="uid://b2063wq6t8myb"]
+[gd_resource type="BehaviorTree" load_steps=16 format=3 uid="uid://b2063wq6t8myb"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_2iwtk"]
+var/landed/name = &"landed"
+var/landed/type = 1
+var/landed/value = false
+var/landed/hint = 0
+var/landed/hint_string = ""
 
 [sub_resource type="BBNode" id="BBNode_srwxd"]
 saved_value = NodePath("AnimationPlayer")
@@ -10,6 +15,15 @@ resource_name = "AnimationPlayer"
 animation_player = SubResource("BBNode_srwxd")
 animation_name = &"slam"
 
+[sub_resource type="BBNode" id="BBNode_2iwtk"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_srwxd"]
+animation_player = SubResource("BBNode_2iwtk")
+animation_name = &"slam"
+max_time = 0.5
+
 [sub_resource type="BBNode" id="BBNode_ose5i"]
 saved_value = NodePath("MeleeAttackManager")
 resource_name = "MeleeAttackManager"
@@ -18,14 +32,8 @@ resource_name = "MeleeAttackManager"
 node = SubResource("BBNode_ose5i")
 method = &"slam"
 
-[sub_resource type="BBVariant" id="BBVariant_2iwtk"]
-type = 1
-saved_value = true
-resource_name = "true"
-
-[sub_resource type="BTCheckAgentProperty" id="BTCheckAgentProperty_srwxd"]
-property = &"is_on_floor()"
-value = SubResource("BBVariant_2iwtk")
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_2iwtk"]
+variable = &"landed"
 
 [sub_resource type="BBNode" id="BBNode_234kk"]
 saved_value = NodePath("AnimationPlayer")
@@ -35,14 +43,22 @@ resource_name = "AnimationPlayer"
 animation_player = SubResource("BBNode_234kk")
 animation_name = &"landed"
 
+[sub_resource type="BBNode" id="BBNode_5wqhu"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_c0vtd"]
+animation_player = SubResource("BBNode_5wqhu")
+animation_name = &"landed"
+
 [sub_resource type="BTSequence" id="BTSequence_5wqhu"]
-children = [SubResource("BTCheckAgentProperty_srwxd"), SubResource("BTPlayAnimation_ose5i")]
+children = [SubResource("BTCheckTrigger_2iwtk"), SubResource("BTPlayAnimation_ose5i"), SubResource("BTAwaitAnimation_c0vtd")]
 
 [sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_c0vtd"]
 children = [SubResource("BTSequence_5wqhu")]
 
 [sub_resource type="BTSequence" id="BTSequence_micmu"]
-children = [SubResource("BTPlayAnimation_234kk"), SubResource("BTCallMethod_5wqhu"), SubResource("BTRepeatUntilSuccess_c0vtd")]
+children = [SubResource("BTPlayAnimation_234kk"), SubResource("BTAwaitAnimation_srwxd"), SubResource("BTCallMethod_5wqhu"), SubResource("BTRepeatUntilSuccess_c0vtd")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_2iwtk")

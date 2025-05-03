@@ -78,6 +78,7 @@ var player_state : int
 @onready var attack: LimboState = $LimboHSM/ATTACK
 @onready var shooting: LimboState = $LimboHSM/SHOOTING
 @onready var slam: BTState = $LimboHSM/SLAM
+
 @onready var dodge: LimboState = $LimboHSM/DODGE
 @onready var hit: LimboState = $LimboHSM/HIT
 @onready var staggered: LimboState = $LimboHSM/STAGGERED
@@ -95,12 +96,14 @@ var state
 @onready var melee_attack_manager: MeleeAttackManager = $MeleeAttackManager
 @onready var dodge_manager: DodgeManager = $DodgeManager
 @onready var attack_range: AttackRange = $AttackRange
+@onready var ar_box: CollisionShape2D = $AttackRange/CollisionShape2D
 @onready var hit_box: HitBox = $HitBox
 @onready var hb_collision: CollisionShape2D = $HitBox/hb_collision
 @onready var atk_chain : String = "_1"
 @export var hitbox: HitBox
 var parried : bool = false 
 var attacking : bool = false
+var slam_vel : float = 0.0
 
 #Shooting
 @onready var shoot_attack_manager: ShootAttackManager = $ShootAttackManager
@@ -117,6 +120,7 @@ var attacking : bool = false
 
 #Debug var
 var combat_state : String = "RANGED"
+@onready var debuging: Label = $DEBUGING
 
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
@@ -139,6 +143,7 @@ func _ready():
 	###########################
 	bt_player.blackboard.set_var("attack_mode", true)
 	bt_player.blackboard.set_var("melee_mode", true)
+	shoot_handler.set_projectile(Projectiles.BALL_PROCETILE)
 	
 func _init_state_machine():
 	state_machine.initial_state=idle
@@ -148,6 +153,7 @@ func _init_state_machine():
 	state_machine.add_transition(idle, attack, &"attack_mode")
 	state_machine.add_transition(staggered, chasing, &"stagger_recover")
 	state_machine.add_transition(attack, chasing, &"start_chase")
+	state_machine.add_transition(idle, chasing, &"start_chase")
 	state_machine.add_transition(chasing, attack, &"start_attack")
 	state_machine.add_transition(jump, slam, &"slam_attack")
 	state_machine.add_transition(attack, idle, &"idle_mode")
@@ -170,7 +176,8 @@ func _init_state_machine():
 func _process(delta: float) -> void:
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
-	
+	debuging.text=str(global_position.x)
+	#print(velocity.y)
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collision.disabled=true
 		return
@@ -192,6 +199,12 @@ func _physics_process(delta: float) -> void:
 		velocity.x=0
 		move_and_slide()
 		return
+	elif state_machine.get_active_state()==jump:
+		global_position.x=lerpf(global_position.x, player.global_position.x, 0.6*delta)
+	elif state_machine.get_active_state()==slam:
+		#print("slamming")
+		velocity.y += slam_vel * delta
+		move_and_slide()
 	elif state_machine.get_active_state()==dying:
 		move_and_slide()
 		if is_on_floor() and not jump_timer.is_stopped():
@@ -225,7 +238,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x= knockback.x
 		
 	#	apply gravity when in air
-	if not is_on_floor():
+	if not is_on_floor() and state_machine.get_active_state()!=slam:
 		velocity.y += gravity * delta
 	move_and_slide()
 
@@ -239,7 +252,7 @@ func target_lock():
 	
 func chase():
 	#set_state(current_state, States.CHASE)
-	state_machine.change_active_state(chasing)
+	state_machine.dispatch(&"start_chase")
 	
 func get_width() -> int:
 	return abs(collision_shape_2d.get_shape().size.x * scale.x)
@@ -247,8 +260,10 @@ func get_height() -> int:
 	return abs(collision_shape_2d.get_shape().size.y * scale.y)
 
 func jump_up() -> void:
-	jump_handler.handle_jump(JUMP_VELOCITY)
-	lerpf(global_position.x, player.global_position.x, 0.8)
+	state_machine.dispatch(&"jump_attack")
+	
+func slam_down() -> void:
+	state_machine.dispatch(&"slam_attack")
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	vision_handler.always_on=true
@@ -256,7 +271,7 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 
 
 func _on_slam_exited() -> void:
-	slam.behavior_tree.state
+	slam_vel=0
 
 
 func _on_navigation_timer_timeout() -> void:
@@ -266,3 +281,10 @@ func _on_navigation_timer_timeout() -> void:
 func _on_attack_range_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
 		bt_player.blackboard.set_var("within_range", true)
+		state_machine.dispatch(&"start_attack")
+
+
+func _on_attack_range_body_exited(body: Node2D) -> void:
+	if body.is_in_group("player") and state_machine.get_active_state()!=staggered and state_machine.get_active_state()!=slam:
+		bt_player.blackboard.set_var("within_range", false)
+		state_machine.dispatch(&"start_chase")

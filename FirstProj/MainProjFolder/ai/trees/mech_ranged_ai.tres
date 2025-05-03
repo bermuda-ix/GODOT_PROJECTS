@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=40 format=3 uid="uid://vca7j8b0cpkl"]
+[gd_resource type="BehaviorTree" load_steps=51 format=3 uid="uid://vca7j8b0cpkl"]
 
 [ext_resource type="BlackboardPlan" uid="uid://cn6i86litai7s" path="res://Component/blackboard_plans/enemy_ai.tres" id="1_57cnw"]
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="2_6mf02"]
@@ -54,6 +54,36 @@ resource_name = "true"
 variable = &"melee_mode"
 value = SubResource("BBVariant_trp4a")
 
+[sub_resource type="BBVariant" id="BBVariant_57cnw"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BBNode" id="BBNode_glts4"]
+saved_value = NodePath("MovementHandler")
+resource_name = "MovementHandler"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_ug3cp"]
+node = SubResource("BBNode_glts4")
+method = &"set_active"
+args = Array[BBVariant]([SubResource("BBVariant_57cnw")])
+
+[sub_resource type="BBNode" id="BBNode_ug3cp"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_cdgcv"]
+animation_player = SubResource("BBNode_ug3cp")
+animation_name = &"lift_off"
+
+[sub_resource type="BBNode" id="BBNode_gi0ss"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_ff6r7"]
+animation_player = SubResource("BBNode_gi0ss")
+animation_name = &"lift_off"
+
 [sub_resource type="BBNode" id="BBNode_57cnw"]
 saved_value = NodePath(".")
 resource_name = "."
@@ -63,19 +93,35 @@ node = SubResource("BBNode_57cnw")
 method = &"jump_up"
 
 [sub_resource type="BTWait" id="BTWait_glts4"]
-duration = 1.5
+duration = 0.5
 
 [sub_resource type="BBNode" id="BBNode_6mf02"]
-saved_value = NodePath("MeleeAttackManager")
-resource_name = "MeleeAttackManager"
+saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_glts4"]
 node = SubResource("BBNode_6mf02")
 method = &"slam_down"
 
+[sub_resource type="BBVariant" id="BBVariant_6mf02"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BBNode" id="BBNode_cdgcv"]
+saved_value = NodePath("MovementHandler")
+resource_name = "MovementHandler"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_gi0ss"]
+node = SubResource("BBNode_cdgcv")
+method = &"set_active"
+args = Array[BBVariant]([SubResource("BBVariant_6mf02")])
+
+[sub_resource type="BTFail" id="BTFail_57cnw"]
+
 [sub_resource type="BTSequence" id="BTSequence_oqvss"]
 custom_name = "Attack"
-children = [SubResource("BTCheckVar_2nwck"), SubResource("BTCallMethod_6mf02"), SubResource("BTWait_glts4"), SubResource("BTCallMethod_glts4")]
+children = [SubResource("BTCheckVar_2nwck"), SubResource("BTCallMethod_ug3cp"), SubResource("BTPlayAnimation_cdgcv"), SubResource("BTAwaitAnimation_ff6r7"), SubResource("BTCallMethod_6mf02"), SubResource("BTWait_glts4"), SubResource("BTCallMethod_glts4"), SubResource("BTCallMethod_gi0ss"), SubResource("BTFail_57cnw")]
 
 [sub_resource type="BTCooldown" id="BTCooldown_38pg2"]
 duration = 0.8

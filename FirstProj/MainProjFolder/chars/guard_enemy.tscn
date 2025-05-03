@@ -1323,11 +1323,11 @@ sm = NodePath("../LimboHSM")
 animation_player = NodePath("../AnimationPlayer")
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
 
-[node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]
+[node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turrets")]
 script = ExtResource("24_yw64w")
 actor = NodePath("..")
 projectile = ExtResource("27_0e5u2")
-turret = NodePath("../Turret")
+turrets = [NodePath("../Turret")]
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
 [node name="VisionHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "csm")]
@@ -1342,11 +1342,11 @@ script = ExtResource("18_8ivtl")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://ddhk64y60klpg"
 
-[node name="ShootAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor", "animation_player", "turret")]
+[node name="ShootAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor", "animation_player", "turrets")]
 script = ExtResource("21_luk7s")
 actor = NodePath("..")
 animation_player = NodePath("../AnimationPlayer")
-turret = NodePath("../Turret")
+turrets = [NodePath("../Turret")]
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
 [node name="GetPlayerInfoHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]

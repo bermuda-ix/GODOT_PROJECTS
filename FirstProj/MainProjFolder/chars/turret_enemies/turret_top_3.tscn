@@ -433,18 +433,16 @@ sm = NodePath("../LimboHSM")
 combat_state_active = false
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
-[node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]
+[node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("9_fl7l4")
 actor = NodePath("..")
 projectile = ExtResource("10_ik7so")
-turret = NodePath("../Sprite2D/Turret")
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
-[node name="ShootAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor", "animation_player", "turret")]
+[node name="ShootAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("10_j0ghf")
 actor = NodePath("..")
 animation_player = NodePath("../AnimationPlayer")
-turret = NodePath("../Sprite2D/Turret")
 reload_timer = 3
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
