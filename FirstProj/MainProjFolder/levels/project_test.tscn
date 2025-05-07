@@ -154,4 +154,4 @@ active = false
 enemy_single = ExtResource("5_fkwqf")
 
 [node name="MechRanged" parent="." index="23" instance=ExtResource("4_ec6ti")]
-position = Vector2(1200, 67)
+position = Vector2(1238, 72)

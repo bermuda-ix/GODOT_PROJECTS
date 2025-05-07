@@ -16,3 +16,7 @@ func get_player_relative_loc():
 		actor.player_right=true
 	else:
 		actor.player_right=false
+
+func get_player_distance()->float:
+	var distance = abs(actor.global_position.x-actor.player.global_position.x)
+	return distance

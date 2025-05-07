@@ -51,7 +51,7 @@ func _ready():
 	turret.shoot_timer.paused=true
 	bt_player.blackboard.set_var("shoot_active", false)
 	_init_state_machine()
-
+	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 
 func _process(_delta):
 	vision_handler.handle_vision()

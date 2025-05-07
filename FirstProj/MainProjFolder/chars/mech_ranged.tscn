@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://bvvdaxqcb1uvh"]
+[gd_scene load_steps=99 format=3 uid="uid://bvvdaxqcb1uvh"]
 
 [ext_resource type="Script" uid="uid://coxn6onpxcpm0" path="res://chars/mech_ranged.gd" id="1_k650x"]
 [ext_resource type="Texture2D" uid="uid://eu5suk6k1xrx" path="res://Art_Components/Enemies/battle-mecha-sprites-pixel-art-pack/1/Idle.png" id="1_mgo1l"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dhxom2qijhw7g" path="res://Art_Components/Enemies/battle-mecha-sprites-pixel-art-pack/1/Walk.png" id="5_qiwga"]
 [ext_resource type="Script" uid="uid://5ijvah6jjgdb" path="res://Component/hitbox_template.gd" id="6_b1fa8"]
 [ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="7_4yse5"]
+[ext_resource type="Texture2D" uid="uid://dkna5x65cxbd6" path="res://Art_Components/Enemies/battle-mecha-sprites-pixel-art-pack/1/Walk_attack.png" id="8_5ekbx"]
 [ext_resource type="Script" uid="uid://cf3jqneer6g2o" path="res://Component/attack_range.gd" id="8_n2kri"]
 [ext_resource type="Script" uid="uid://b0uasmutdnguo" path="res://chars/target_lock.gd" id="9_lxr2d"]
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="10_on1mf"]
@@ -21,6 +22,7 @@
 [ext_resource type="Script" uid="uid://co05jfawt7xsm" path="res://Component/functions/GetPlayerInfoHandler.gd" id="13_m7k7s"]
 [ext_resource type="Script" uid="uid://bsha0mnmfnjww" path="res://Component/functions/MovementHandler.gd" id="14_14qye"]
 [ext_resource type="Script" uid="uid://5h8g0n4mebtm" path="res://Component/functions/ShootAttackManager.gd" id="15_k650x"]
+[ext_resource type="Script" uid="uid://blxqfemdneani" path="res://chars/turret_loc.gd" id="16_170qj"]
 [ext_resource type="PackedScene" uid="uid://bp1du2xw1dfrr" path="res://Component/explosion.tscn" id="18_14qye"]
 [ext_resource type="Script" uid="uid://cr58jnxs33hft" path="res://Component/functions/deathHandler.gd" id="18_ecxaq"]
 [ext_resource type="Script" uid="uid://daq7xh1e6l7u6" path="res://chars/idle.gd" id="18_m7k7s"]
@@ -35,8 +37,12 @@
 [ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="23_ecxaq"]
 [ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="24_qm0db"]
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="25_4e554"]
+[ext_resource type="Script" uid="uid://cvo1e5meai30k" path="res://Component/functions/CombatStateChangeHandler.gd" id="26_d6wri"]
 [ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="26_qiwga"]
 [ext_resource type="BehaviorTree" uid="uid://b2063wq6t8myb" path="res://ai/trees/slam.tres" id="28_ecxaq"]
+[ext_resource type="Script" uid="uid://ckhujnpjai7n" path="res://chars/shoot_run.gd" id="37_4jbc4"]
+[ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="39_8j4gk"]
+[ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="40_d6wri"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dsgs3"]
 size = Vector2(71, 72)
@@ -152,6 +158,30 @@ region = Rect2(384, 28, 96, 68)
 [sub_resource type="AtlasTexture" id="AtlasTexture_8jeee"]
 atlas = ExtResource("2_m488d")
 region = Rect2(480, 28, 96, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u28qu"]
+atlas = ExtResource("8_5ekbx")
+region = Rect2(0, 28, 79, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ab2tr"]
+atlas = ExtResource("8_5ekbx")
+region = Rect2(98, 28, 79, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ptalq"]
+atlas = ExtResource("8_5ekbx")
+region = Rect2(196, 28, 79, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_45h7i"]
+atlas = ExtResource("8_5ekbx")
+region = Rect2(294, 28, 79, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1yj1r"]
+atlas = ExtResource("8_5ekbx")
+region = Rect2(392, 28, 79, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ha1m0"]
+atlas = ExtResource("8_5ekbx")
+region = Rect2(490, 28, 79, 68)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jjsq0"]
 animations = [{
@@ -271,6 +301,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_u28qu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ab2tr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ptalq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_45h7i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1yj1r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ha1m0")
+}],
+"loop": true,
+"name": &"shoot_move",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_5ekbx")
 }, {
 "duration": 1.0,
@@ -324,6 +377,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [&"idle"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Turret:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-13, -10)]
 }
 
 [sub_resource type="Animation" id="Animation_83ysn"]
@@ -408,7 +473,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.166667, 0.333333, 0.533333),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [0, 1, 2, 3]
 }
 tracks/1/type = "value"
@@ -420,7 +485,7 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"idle"]
 }
 
@@ -451,6 +516,33 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [&"jump"]
+}
+
+[sub_resource type="Animation" id="Animation_170qj"]
+resource_name = "landed"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.533333, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"land"]
 }
 
 [sub_resource type="Animation" id="Animation_u28qu"]
@@ -513,6 +605,16 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_ml4a6"]
 resource_name = "shoot"
 length = 0.6
+loop_mode = 1
+markers = [{
+"color": Color(0.781578, 0.0430024, 0.0241948, 1),
+"name": &"Shoot_Here",
+"time": 0.101308
+}, {
+"color": Color(0.188735, 0.383997, 0.860403, 1),
+"name": &"Shoot_Here_2",
+"time": 0.402456
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -522,7 +624,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [0, 1, 2, 3, 4, 5]
 }
 tracks/1/type = "value"
@@ -534,8 +636,37 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [&"shoot"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Turret:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.366667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(15, -10), Vector2(-13, -10)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShootAttackManager")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"shoot"
+}, {
+"args": [],
+"method": &"shoot"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_5w46r"]
@@ -565,8 +696,10 @@ tracks/1/keys = {
 "values": [&"slam"]
 }
 
-[sub_resource type="Animation" id="Animation_170qj"]
-resource_name = "landed"
+[sub_resource type="Animation" id="Animation_4jbc4"]
+resource_name = "shoot_move"
+length = 0.75
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -574,10 +707,10 @@ tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.0333333, 0.533333, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 0.533333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [3, 4, 5]
+"values": [0, 1, 2, 3, 4, 5]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -588,8 +721,37 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [&"land"]
+"update": 1,
+"values": [&"shoot_move"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Turret:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.266667, 0.666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(15, -10), Vector2(-13, -10)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShootAttackManager")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.3, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"shoot"
+}, {
+"args": [],
+"method": &"shoot"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ml4a6"]
@@ -603,6 +765,7 @@ _data = {
 &"lift_off": SubResource("Animation_u28qu"),
 &"run": SubResource("Animation_5ekbx"),
 &"shoot": SubResource("Animation_ml4a6"),
+&"shoot_move": SubResource("Animation_4jbc4"),
 &"slam": SubResource("Animation_5w46r")
 }
 
@@ -651,7 +814,7 @@ chase_speed = 30.0
 hitbox = NodePath("HitBox")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 0)
+position = Vector2(2, -2)
 shape = SubResource("RectangleShape2D_dsgs3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -684,6 +847,7 @@ libraries = {
 
 [node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot"]
 target_position = Vector2(400, 0)
+collision_mask = 3
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 navigation_layers = 3
@@ -721,6 +885,9 @@ one_shot = true
 one_shot = true
 
 [node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("stagger")]
+position = Vector2(-1, -2)
+collision_layer = 8
+collision_mask = 128
 script = ExtResource("6_b1fa8")
 stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://5ijvah6jjgdb"
@@ -730,7 +897,9 @@ position = Vector2(2, 28)
 shape = SubResource("RectangleShape2D_4e554")
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
-position = Vector2(-9, 1)
+position = Vector2(-9, -1)
+collision_layer = 16
+collision_mask = 64
 script = ExtResource("7_4yse5")
 health = NodePath("../Health")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
@@ -740,6 +909,7 @@ position = Vector2(11, -1)
 shape = SubResource("RectangleShape2D_qiwga")
 
 [node name="AttackRange" type="Area2D" parent="."]
+position = Vector2(0, -4)
 collision_layer = 1024
 collision_mask = 3
 script = ExtResource("8_n2kri")
@@ -762,20 +932,33 @@ blackboard_plan = SubResource("BlackboardPlan_06h7c")
 
 [node name="Turret" parent="." instance=ExtResource("10_on1mf")]
 position = Vector2(-13, -10)
+multi_shot = true
+infinite_ammo = true
+shoot_speed = 0.1
 
-[node name="Turret2" parent="." instance=ExtResource("10_on1mf")]
-position = Vector2(16, -8)
+[node name="TurretLocs" type="Node" parent="."]
+
+[node name="TurretLoc1" type="Node2D" parent="TurretLocs" node_paths=PackedStringArray("turret")]
+position = Vector2(-15, -9)
+script = ExtResource("16_170qj")
+turret = NodePath("../../Turret")
+
+[node name="TurretLoc2" type="Node2D" parent="TurretLocs" node_paths=PackedStringArray("turret")]
+position = Vector2(15, -9)
+script = ExtResource("16_170qj")
+turret = NodePath("../../Turret")
 
 [node name="PlayerTrackingHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("11_ry2j3")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="VisionHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm")]
+[node name="VisionHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking")]
 script = ExtResource("12_6r60y")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
-combat_state_active = false
+csm = NodePath("../CombatStateMachine")
+player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
 [node name="GetPlayerInfoHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
@@ -796,24 +979,34 @@ actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
 metadata/_custom_type_script = "uid://dgyx4da7oymh2"
 
-[node name="ShootAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor", "animation_player", "turrets")]
+[node name="ShootAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor", "animation_player", "turret")]
 script = ExtResource("15_k650x")
 actor = NodePath("..")
 animation_player = NodePath("../AnimationPlayer")
-turrets = [NodePath("../Turret"), NodePath("../Turret2")]
+turret = NodePath("../Turret")
+multi_wield = true
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
-[node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turrets")]
+[node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]
 script = ExtResource("22_84h27")
 actor = NodePath("..")
 projectile = ExtResource("23_5w46r")
-turrets = [NodePath("../Turret"), NodePath("../Turret2")]
+turret = NodePath("../Turret")
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
 [node name="MeleeAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("18_ml4a6")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://ddhk64y60klpg"
+
+[node name="CombatStateChangeHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player")]
+script = ExtResource("26_d6wri")
+actor = NodePath("..")
+sm = NodePath("../LimboHSM")
+combat_state_machine = NodePath("../CombatStateMachine")
+bt_player = NodePath("../BTPlayer")
+ranged_dist = 50
+metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
 [node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "animation_player")]
 script = ExtResource("18_ecxaq")
@@ -861,6 +1054,11 @@ script = ExtResource("23_ecxaq")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
+[node name="SHOOT_RUN" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "bt_player")]
+script = ExtResource("37_4jbc4")
+actor = NodePath("../..")
+bt_player = NodePath("../../BTPlayer")
+
 [node name="SLAM" type="BTState" parent="LimboHSM" node_paths=PackedStringArray("actor")]
 behavior_tree = ExtResource("28_ecxaq")
 monitor_performance = true
@@ -884,6 +1082,20 @@ bt_player = NodePath("../../BTPlayer")
 behavior_tree = ExtResource("26_qiwga")
 blackboard_plan = SubResource("BlackboardPlan_83ysn")
 
+[node name="CombatStateMachine" type="LimboHSM" parent="."]
+
+[node name="ranged" type="LimboState" parent="CombatStateMachine" node_paths=PackedStringArray("actor", "bt_player")]
+script = ExtResource("39_8j4gk")
+actor = NodePath("../..")
+bt_player = NodePath("../../BTPlayer")
+metadata/_custom_type_script = "uid://koggvl8cxowm"
+
+[node name="melee" type="LimboState" parent="CombatStateMachine" node_paths=PackedStringArray("actor", "bt_player")]
+script = ExtResource("40_d6wri")
+actor = NodePath("../..")
+bt_player = NodePath("../../BTPlayer")
+metadata/_custom_type_script = "uid://dfqe6u0d8wpgw"
+
 [node name="DEBUGING" type="Label" parent="."]
 offset_left = -21.0
 offset_top = -61.0
@@ -894,4 +1106,7 @@ offset_bottom = -38.0
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
 [connection signal="body_exited" from="AttackRange" to="." method="_on_attack_range_body_exited"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
+[connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]
 [connection signal="exited" from="LimboHSM/SLAM" to="." method="_on_slam_exited"]
+[connection signal="active_state_changed" from="CombatStateMachine" to="." method="_on_combat_state_machine_active_state_changed"]

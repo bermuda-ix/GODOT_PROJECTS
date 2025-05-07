@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=51 format=3 uid="uid://vca7j8b0cpkl"]
+[gd_resource type="BehaviorTree" load_steps=54 format=3 uid="uid://vca7j8b0cpkl"]
 
 [ext_resource type="BlackboardPlan" uid="uid://cn6i86litai7s" path="res://Component/blackboard_plans/enemy_ai.tres" id="1_57cnw"]
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="2_6mf02"]
@@ -186,9 +186,23 @@ children = [SubResource("BTCheckVar_3yycb"), SubResource("BTCallMethod_vyp80")]
 duration = 0.5
 start_cooled = true
 children = [SubResource("BTSequence_r1cm4")]
+_enabled = false
+
+[sub_resource type="BBVariant" id="BBVariant_ug3cp"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_cdgcv"]
+variable = &"ranged_mode"
+value = SubResource("BBVariant_ug3cp")
+
+[sub_resource type="BTSequence" id="BTSequence_ff6r7"]
+custom_name = "RangedDEBUG"
+children = [SubResource("BTCheckVar_cdgcv")]
 
 [sub_resource type="BTSelector" id="BTSelector_vjpus"]
-children = [SubResource("BTSequence_10ead"), SubResource("BTCooldown_n65d2")]
+children = [SubResource("BTSequence_10ead"), SubResource("BTCooldown_n65d2"), SubResource("BTSequence_ff6r7")]
 
 [sub_resource type="BTSequence" id="BTSequence_ivh4q"]
 children = [SubResource("BTCheckVar_gi0ss"), SubResource("BTSelector_vjpus")]

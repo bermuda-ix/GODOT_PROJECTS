@@ -7,6 +7,7 @@ extends Node
 @export var combat_state_machine: LimboHSM
 @export var bt_player : BTPlayer
 @export var active : bool = true
+@export var ranged_dist : int = 100
 
 func _physics_process(delta: float) -> void:
 	if not active:
@@ -18,7 +19,7 @@ func _physics_process(delta: float) -> void:
 		#print(actor.distance)
 #		RANGED ATTACK
 
-		if actor.distance>100:
+		if actor.distance>ranged_dist:
 			#print("ranged")
 			actor.turret.shoot_timer.paused=false
 			combat_state_machine.dispatch(&"ranged_mode")

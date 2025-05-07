@@ -117,8 +117,8 @@ var distance
 
 
 @onready var combat_state_machine: LimboHSM = $CombatStateMachine
-@onready var ranged: LimboState = $CombatStateMachine/RANGED
-@onready var melee: LimboState = $CombatStateMachine/MELEE
+@onready var ranged_mode: LimboState = $CombatStateMachine/RANGED
+@onready var melee_mode: LimboState = $CombatStateMachine/MELEE
 
 @onready var ammo_count
 
@@ -154,7 +154,7 @@ func _ready():
 	_init_combat_state_machine()
 	hurt_box.set_damage_mulitplyer(1)
 	Events.allied_enemy_hit.connect(adjust_counter)
-	
+	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 
 # initialize state
 func _init_state_machine():
@@ -181,12 +181,12 @@ func _init_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
 	
 func _init_combat_state_machine():
-	combat_state_machine.initial_state=ranged
+	combat_state_machine.initial_state=ranged_mode
 	combat_state_machine.initialize(self)
 	combat_state_machine.set_active(true)
 	
-	combat_state_machine.add_transition(ranged, melee, &"melee_mode")
-	combat_state_machine.add_transition(melee, ranged, &"ranged_mode")
+	combat_state_machine.add_transition(ranged_mode, melee_mode, &"melee_mode")
+	combat_state_machine.add_transition(melee_mode, ranged_mode, &"ranged_mode")
 
 	
 func _process(_delta):

@@ -426,11 +426,12 @@ script = ExtResource("2_3hw1p")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="VisionHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm")]
+[node name="VisionHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "player_tracking")]
 script = ExtResource("3_3ligv")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 combat_state_active = false
+player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
 [node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]

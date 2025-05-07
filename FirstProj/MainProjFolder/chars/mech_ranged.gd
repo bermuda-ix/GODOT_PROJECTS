@@ -45,6 +45,7 @@ const JUMP_VELOCITY = -400.0
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @export var jump_speed : float = 120.0
 @export var chase_speed : float = 80.0
+@export var keep_dis_speed : float = 40.0
 
 var current_speed : float = 40.0
 var prev_speed : float = 40.0
@@ -63,7 +64,7 @@ var dir
 @onready var get_player_info_handler: GetPlayerInfoHandler = $GetPlayerInfoHandler
 @onready var player_tracker_pivot: Node2D = $PlayerTrackerPivot
 @onready var player_tracking: RayCast2D = $PlayerTrackerPivot/PlayerTracking
-var player_found : bool = true
+var player_found : bool = false
 var player : PlayerEntity = null
 var distance
 var player_state : int
@@ -77,6 +78,7 @@ var player_state : int
 @onready var dying: BTState = $LimboHSM/DYING
 @onready var attack: LimboState = $LimboHSM/ATTACK
 @onready var shooting: LimboState = $LimboHSM/SHOOTING
+@onready var shoot_run: LimboState = $LimboHSM/SHOOT_RUN
 @onready var slam: BTState = $LimboHSM/SLAM
 
 @onready var dodge: LimboState = $LimboHSM/DODGE
@@ -87,9 +89,8 @@ var state
 #Combat States
 @onready var combat_state_change_handler: CombatStateChangeHandler = $CombatStateChangeHandler
 @onready var combat_state_machine: LimboHSM = $CombatStateMachine
-@onready var ranged: LimboState = $CombatStateMachine/RANGED
-@onready var melee: LimboState = $CombatStateMachine/MELEE
-
+@onready var ranged_mode: ranged = $CombatStateMachine/ranged
+@onready var melee_mode: melee = $CombatStateMachine/melee
 
 
 #ATTACKS
@@ -118,6 +119,8 @@ var slam_vel : float = 0.0
 @export var death_time_scale: float = 1.0
 @onready var norm_delta
 
+
+
 #Debug var
 var combat_state : String = "RANGED"
 @onready var debuging: Label = $DEBUGING
@@ -126,23 +129,24 @@ func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	#set_state(current_state, States.CHASE)
 	_init_state_machine()
+	_init_combat_state_machine()
 	animation_player.play("idle")
-	state="guard"
 	next=nav_agent.get_next_path_position()
-	#bt_player.blackboard.set_var("attack_mode", false)
-	#bt_player.blackboard.set_var("melee_mode", false)
+	bt_player.blackboard.set_var("attack_mode", false)
+	bt_player.blackboard.set_var("melee_mode", false)
 	bt_player.blackboard.set_var("within_range", false)
 	bt_player.blackboard.set_var("staggered", false)
 	dying.blackboard.set_var("hit_the_floor", false)
 	turret.shoot_timer.paused=true
 	hurt_box.set_damage_mulitplyer(1)
 	ammo_count=turret.ammo_count
+	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 	
 	###########################
 	#Debug inits to be removed#
 	###########################
-	bt_player.blackboard.set_var("attack_mode", true)
-	bt_player.blackboard.set_var("melee_mode", true)
+	#bt_player.blackboard.set_var("attack_mode", true)
+	#bt_player.blackboard.set_var("melee_mode", true)
 	shoot_handler.set_projectile(Projectiles.BALL_PROCETILE)
 	
 func _init_state_machine():
@@ -154,7 +158,13 @@ func _init_state_machine():
 	state_machine.add_transition(staggered, chasing, &"stagger_recover")
 	state_machine.add_transition(attack, chasing, &"start_chase")
 	state_machine.add_transition(idle, chasing, &"start_chase")
+	state_machine.add_transition(shoot_run, chasing, &"start_chase")
+	state_machine.add_transition(shooting, chasing, &"start_chase")
 	state_machine.add_transition(chasing, attack, &"start_attack")
+	state_machine.add_transition(shooting, shoot_run, &"run_and_shoot")
+	state_machine.add_transition(shoot_run, shooting, &"start_shoot")
+	state_machine.add_transition(attack, shooting, &"start_shoot")
+	
 	state_machine.add_transition(jump, slam, &"slam_attack")
 	state_machine.add_transition(attack, idle, &"idle_mode")
 	state_machine.add_transition(attack, jump, &"jump_attack")
@@ -167,16 +177,24 @@ func _init_state_machine():
 	state_machine.add_transition(slam, attack, slam.success_event)
 	state_machine.add_transition(slam, hit, slam.failure_event)
 	
-	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
 	state_machine.add_transition(dying, death, dying.success_event)
 	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
 	
+func _init_combat_state_machine():
+	combat_state_machine.initial_state=ranged_mode
+	combat_state_machine.initialize(self)
+	combat_state_machine.set_active(true)
+	
+	combat_state_machine.add_transition(ranged_mode, melee_mode, &"melee_mode")
+	combat_state_machine.add_transition(melee_mode, ranged_mode, &"ranged_mode")
+
 func _process(delta: float) -> void:
+	#print(turret.shoot_timer.time_left)
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
-	debuging.text=str(global_position.x)
+	debuging.text=str(get_player_info_handler.get_player_distance())
 	#print(velocity.y)
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collision.disabled=true
@@ -234,6 +252,9 @@ func _physics_process(delta: float) -> void:
 	if state_machine.get_active_state()==chasing:
 		velocity.x = current_speed + knockback.x
 		velocity.y += gravity * delta
+	elif movement_handler.keep_distance and state_machine.get_active_state()==shoot_run:
+		velocity.x = current_speed + knockback.x
+		velocity.y += gravity * delta
 	else:
 		velocity.x= knockback.x
 		
@@ -266,7 +287,8 @@ func slam_down() -> void:
 	state_machine.dispatch(&"slam_attack")
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
-	vision_handler.always_on=true
+	return
+	#vision_handler.always_on=true
 
 
 
@@ -288,3 +310,27 @@ func _on_attack_range_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player") and state_machine.get_active_state()!=staggered and state_machine.get_active_state()!=slam:
 		bt_player.blackboard.set_var("within_range", false)
 		state_machine.dispatch(&"start_chase")
+
+
+func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
+	match current:
+		attack:
+			if combat_state_machine.get_active_state()==ranged_mode:
+				#movement_handler.keep_distance=true
+				state_machine.dispatch(&"start_shoot")
+			elif combat_state_machine.get_active_state()==melee_mode:
+				#movement_handler.keep_distance=false
+				state_machine.dispatch(&"start_chase")
+		shooting:
+			animation_player.play("shoot")
+
+
+func _on_combat_state_machine_active_state_changed(current: LimboState, previous: LimboState) -> void:
+	if current==ranged_mode:
+		movement_handler.keep_distance=true
+	elif current==melee_mode:
+		movement_handler.keep_distance=false
+
+
+func _on_turret_shoot_bullet() -> void:
+	shoot_handler.shoot_bullet()

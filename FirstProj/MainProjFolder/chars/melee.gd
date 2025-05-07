@@ -1,3 +1,5 @@
+class_name melee
+
 extends LimboState
 
 @export var actor : Node2D
