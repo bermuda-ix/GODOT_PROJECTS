@@ -44,7 +44,7 @@ texture_under = SubResource("AtlasTexture_ekdya")
 texture_over = SubResource("AtlasTexture_6uqvd")
 texture_progress = SubResource("AtlasTexture_yiy1h")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="Ammo" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 96.0
 offset_right = 177.0
@@ -52,7 +52,7 @@ offset_bottom = 25.0
 scale = Vector2(1.58639, 1.68951)
 text = "Ammo:"
 
-[node name="AmmoCount" type="RichTextLabel" parent="RichTextLabel"]
+[node name="AmmoCount" type="RichTextLabel" parent="Ammo"]
 layout_mode = 0
 offset_left = 61.0
 offset_top = 1.0

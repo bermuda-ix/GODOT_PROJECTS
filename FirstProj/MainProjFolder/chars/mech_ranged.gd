@@ -8,6 +8,8 @@ const JUMP_VELOCITY = -400.0
 #Basic
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var npc_stats: Control = $NPCStats
+
 #Animation Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 #Target lock
@@ -111,7 +113,7 @@ var slam_vel : float = 0.0
 @onready var shoot_handler: ShootHandler = $ShootHandler
 @onready var bullet_dir = Vector2.RIGHT
 @onready var turret: Turret = $Turret
-@onready var ammo_count
+@onready var ammo_count = 0
 
 #DEATH
 @export var drop = preload("res://heart.tscn")
@@ -141,7 +143,7 @@ func _ready():
 	hurt_box.set_damage_mulitplyer(1)
 	ammo_count=turret.ammo_count
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
-	
+	npc_stats.ammo.visible=false
 	###########################
 	#Debug inits to be removed#
 	###########################
@@ -281,7 +283,10 @@ func get_height() -> int:
 	return abs(collision_shape_2d.get_shape().size.y * scale.y)
 
 func jump_up() -> void:
-	state_machine.dispatch(&"jump_attack")
+	if state_machine.get_active_state()==attack:
+		state_machine.dispatch(&"jump_attack")
+	else:
+		state_machine.dispatch(&"jump")
 	
 func slam_down() -> void:
 	state_machine.dispatch(&"slam_attack")
@@ -307,7 +312,7 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
-	if body.is_in_group("player") and state_machine.get_active_state()!=staggered and state_machine.get_active_state()!=slam:
+	if body.is_in_group("player") and state_machine.get_active_state()!=staggered and (state_machine.get_active_state()!=slam or state_machine.get_active_state()!=jump):
 		bt_player.blackboard.set_var("within_range", false)
 		state_machine.dispatch(&"start_chase")
 
@@ -334,3 +339,47 @@ func _on_combat_state_machine_active_state_changed(current: LimboState, previous
 
 func _on_turret_shoot_bullet() -> void:
 	shoot_handler.shoot_bullet()
+
+
+func _on_health_health_depleted() -> void:
+	parry_timer.stop()
+	hit_stop.hit_stop(0.2,1)
+	hb_collision.disabled=true
+	animated_sprite_2d.scale.x = 1
+	movement_handler.active=false
+	knockback.x=250
+	death_timer.start()
+	death_handler.death()
+
+
+func _on_hurt_box_received_damage(damage: int) -> void:
+	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
+		Events.allied_enemy_hit.emit()
+	
+	bt_player.restart()
+	if state_machine.get_active_state()==death:
+		return
+	health.set_temporary_immortality(0.2)
+	if damage<=health.health:
+		parry_timer.start(0.5)
+		state_machine.dispatch(&"hit")
+		hit_stop.hit_stop(0.05,0.1)
+		#set_state(current_state, States.HIT)
+		gpu_particles_2d.emitting=true
+		
+	else:
+		print("kill shot")
+		
+	
+func _on_hit_box_area_entered(area: Area2D) -> void:
+	if state_machine.get_active_state()!=dying or state_machine.get_active_state()!=death:
+		hit_stop.hit_stop(0.05,0.1)
+
+
+func _on_parry_timer_timeout() -> void:
+	if state_machine.get_active_state()==staggered:
+		state_machine.dispatch(&"stagger_recover")
+	elif state_machine.get_active_state()==hit:
+		state_machine.dispatch(&"hit_recover")
+	movement_handler.active=true
+	hurt_box.set_damage_mulitplyer(1)

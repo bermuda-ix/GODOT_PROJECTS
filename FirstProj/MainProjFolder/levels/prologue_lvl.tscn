@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=23 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_7j8nt"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="11_vtk8u"]
 [ext_resource type="PackedScene" uid="uid://dak3j323lms0s" path="res://chars/sleeping_guard.tscn" id="12_jyauw"]
 [ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="14_dmeha"]
+[ext_resource type="PackedScene" uid="uid://bvvdaxqcb1uvh" path="res://chars/mech_ranged.tscn" id="14_h7re7"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_htxyq"]
 vertices = PackedVector2Array(1645.83, 430, 1122, 430, 1122, 322, 1882.08, 322)
@@ -39,6 +40,11 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(2000, 264, 2000, 320, 3
 vertices = PackedVector2Array(3560, 79, 3560, 109.992, 2361.76, 109, 2358.25, 79, 2299.76, 72, 2294.25, 41, 2050, 72, 2050, 41)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(5, 4, 6, 7)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(2040, 82, 2297, 82, 2359, 119, 3570, 120, 3570, 69, 2361, 69, 2297, 31, 2040, 31)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_dmeha"]
+vertices = PackedVector2Array(2478.47, 790, 1959, 790.977, 1959, 748, 2478.5, 748, 2994.49, 514, 2993.5, 473, 3558, 473, 3558, 514)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(4, 5, 6, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1949, 738, 1949, 801, 2481, 800, 2997, 524, 3568, 524, 3568, 463, 2991, 463, 2476, 738)])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jyauw"]
 size = Vector2(68, 577)
@@ -199,8 +205,19 @@ scale = Vector2(0.75, 0.75)
 position = Vector2(3485, 302)
 scale = Vector2(0.75, 0.75)
 
+[node name="GuardEnemy6" parent="Enemy/Guards" index="5" instance=ExtResource("11_vtk8u")]
+position = Vector2(3427, 490)
+
+[node name="GuardEnemy7" parent="Enemy/Guards" index="6" instance=ExtResource("11_vtk8u")]
+position = Vector2(3349, 487)
+
 [node name="SleepingGuard" parent="Enemy" index="4" instance=ExtResource("12_jyauw")]
 position = Vector2(656, 457)
+
+[node name="MiniBosses" type="Node" parent="Enemy" index="5"]
+
+[node name="MechRanged" parent="Enemy/MiniBosses" index="0" instance=ExtResource("14_h7re7")]
+position = Vector2(2000, 764)
 
 [node name="AirNavs" type="Node2D" parent="." index="11"]
 
@@ -224,7 +241,11 @@ navigation_layers = 2
 navigation_polygon = SubResource("NavigationPolygon_jyauw")
 navigation_layers = 2
 
-[node name="Links" type="Node2D" parent="GroundNavs" index="3"]
+[node name="GroundNav1_B1" type="NavigationRegion2D" parent="GroundNavs" index="3"]
+navigation_polygon = SubResource("NavigationPolygon_dmeha")
+navigation_layers = 2
+
+[node name="Links" type="Node2D" parent="GroundNavs" index="4"]
 
 [node name="GNav_1Inside_2Inside" type="NavigationLink2D" parent="GroundNavs/Links" index="0"]
 navigation_layers = 2

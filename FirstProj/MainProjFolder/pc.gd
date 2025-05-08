@@ -309,6 +309,7 @@ func return_to_idle():
 	if is_on_floor() and state==States.FLIP and flipped_over:
 		#"flip end")
 		set_state(state, States.IDLE)
+		set_collision_mask_value(16384, true)
 	
 # Handle jump.
 func jump(input_axis, delta):
@@ -973,6 +974,7 @@ func _on_hurt_box_got_hit(hitbox):
 			
 			set_state(state, States.HIT)
 	else:
+		set_collision_mask_value(16384, false)
 		knockback.x = -350
 		kb_dir=global_position.direction_to(hitbox.global_position)
 		#"knockback")
@@ -1167,7 +1169,7 @@ func parry_success():
 func _on_hit_box_area_entered(area):
 	hit_sound=hit1
 	AudioStreamManager.play(hit_sound)
-	hit_stop.hit_stop(0.05, 0.1)
+	#hit_stop.hit_stop(0.05, 0.1)
 
 
 func _on_hit_box_body_entered(body):

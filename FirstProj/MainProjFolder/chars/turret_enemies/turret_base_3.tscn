@@ -176,6 +176,7 @@ script = ExtResource("1_61vfk")
 texture = ExtResource("1_8k2it")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D"]
+z_index = 1
 position = Vector2(-104, 64)
 emitting = false
 amount = 16
@@ -185,6 +186,7 @@ randomness = 0.5
 process_material = SubResource("ParticleProcessMaterial_wstjc")
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="AnimatedSprite2D"]
+z_index = 1
 position = Vector2(112, 24)
 emitting = false
 explosiveness = 0.25
@@ -192,6 +194,7 @@ randomness = 0.5
 process_material = SubResource("ParticleProcessMaterial_wstjc")
 
 [node name="GPUParticles2D3" type="GPUParticles2D" parent="AnimatedSprite2D"]
+z_index = 1
 position = Vector2(56, -72)
 emitting = false
 explosiveness = 0.25

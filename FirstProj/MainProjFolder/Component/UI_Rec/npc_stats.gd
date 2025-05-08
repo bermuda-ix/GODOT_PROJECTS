@@ -6,8 +6,8 @@ extends Control
 
 @onready var health_bar: TextureProgressBar = $HealthBar
 @onready var stagger_bar: TextureProgressBar = $StaggerBar
-@onready var rich_text_label: RichTextLabel = $RichTextLabel
-@onready var ammo_count: RichTextLabel = $RichTextLabel/AmmoCount
+@onready var ammo: RichTextLabel = $Ammo
+@onready var ammo_count: RichTextLabel = $Ammo/AmmoCount
 
 var has_ammo : bool = true
 
@@ -15,6 +15,7 @@ func _ready() -> void:
 	set_max_health(health.get_max_health())
 	set_max_stagger(stagger.get_max_stagger())
 	#set_ammo(actor.turret_top.turret.ammo_count)
+	
 	
 func _process(delta: float) -> void:
 	set_health(health.health)
