@@ -155,9 +155,10 @@ wait_time = 0.35
 max_health = 1
 immortality = false
 
-[node name="HurtBox" parent="." index="16" node_paths=PackedStringArray("health")]
+[node name="HurtBox" parent="." index="16" node_paths=PackedStringArray("health", "stagger")]
 collision_mask = 8768
 health = NodePath("../Health")
+stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(0.5, 0)

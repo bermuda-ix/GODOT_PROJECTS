@@ -22,3 +22,6 @@ func melee_counter():
 
 func slam():
 	actor.slam_vel=actor.gravity+1000
+
+func blast_attack():
+	actor.animation_player.play("blast_attack")

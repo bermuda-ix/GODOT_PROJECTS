@@ -130,6 +130,7 @@ var vector_away : Vector2 = Vector2.ZERO
 var target_below : bool = false
 var vel_y : float = 0.0
 var hitstop_time_left : float
+var high_target : bool = false
 
 #locked on target info
 @onready var target_testing = $TargetLocking/TargetTesting
@@ -143,6 +144,7 @@ var hitstop_time_left : float
 @onready var target_right_edge=0
 @onready var vel_x=0
 #flipping
+var high_target_jump_height
 @onready var jump_out_timer = $JumpOutTimer
 var flipped_over : bool = false
 
@@ -171,8 +173,8 @@ func _process(delta):
 	get_target_info()
 	previous_state()
 	atk_state_debug()
-	if target != null:
-		label.text=str(target_size_x, " , ",target_size_y)
+	#if target != null:
+		#label.text=str(target_size_x, " , ",target_size_y)
 	#if atk_chain >= 1 and sp_atk_chn >=1:
 		#label.text=str("chain ready. Vel:", velocity)
 	#else:
@@ -297,7 +299,7 @@ func _physics_process(delta):
 			gravity = 0
 	
 	#return_to_idle()
-		
+
 
 # Add the gravity.
 func apply_gravity(delta):
@@ -799,8 +801,13 @@ func get_target_info():
 		target_size_x = target.get_width()
 		target_size_y = target.get_height()
 		target_top = target.global_position.y-(target_size_y/2-5)
-		target_left_edge=target.global_position.x-(target_size_x*2)
-		target_right_edge=target.global_position.x+(target_size_x*2)
+		target_left_edge=target.global_position.x-(target_size_x/2)
+		target_right_edge=target.global_position.x+(target_size_x/2)
+		
+		if target_size_y > collision_shape_2d.get_shape().size.y*1.5:
+			high_target=true
+		else:
+			high_target=false
 
 func locked_combat():
 	if target==null:
@@ -920,6 +927,7 @@ func set_state(current_state, new_state: int) -> void:
 			anim_player.play("flip")
 			cur_state="Flipping"
 			set_collision_mask_value(15, false)
+			high_target_jump_height = (global_position.y-collision_shape_2d.get_shape().size.y)
 			if current_state==States.SPECIAL_ATTACK:
 				hit_stop.hit_stop(.5, (hitstop_time_left-0.1))
 		States.SPRINTING:
@@ -973,6 +981,16 @@ func _on_hurt_box_got_hit(hitbox):
 		if state!=States.FLIP:
 			
 			set_state(state, States.HIT)
+	elif hitbox.is_in_group("heavy_hitbox"):
+		knockback.x = -400
+		kb_dir=global_position.direction_to(hitbox.global_position)
+		#"knockback")
+		kb_dir=round(kb_dir)
+		#kb_dir.x, " ", knockback)
+		knockback.x = kb_dir.x * knockback.x
+		velocity.y=movement_data.jump_velocity/2
+		velocity.x = movement_data.speed + knockback.x
+		health.set_temporary_immortality(0.2)
 	else:
 		set_collision_mask_value(16384, false)
 		knockback.x = -350
@@ -1194,63 +1212,69 @@ func flipping(delta):
 	var pos_above_y=target.global_position.y-global_position.y
 	target_pos_x=(target.global_position.x)
 	var pos_above_x=target.global_position.x-global_position.x
-	
+	print(global_position)
 #	Jumping before flipping over
 	if not flipped_over:
 		health.immortality=true
 		hurt_box_detect.disabled=true
 		#position.y, " ",target_size_y+target.position.y)
-		if target_right:
-			#velocity.y=movement_data.jump_velocit/2
-			#gravity = 0
-			if global_position.y>target_top-15:
+		if global_position.y>target_top-15 and not high_target:
+			if target_right:
 				if global_position<Vector2((target_left_edge-15),(target_top-25)):
-					#"lerping dawg: ", global_position)
 					global_position=lerp(global_position, Vector2((target_left_edge-5),(target_top-40)), delta*3)
 				else:
 					velocity.y=movement_data.jump_velocity
 			else:
-				#"no lerp")
-				flipped_over=true
-				hit_stop.hit_stop(.2, .5)
-				#gravity = 980
-		else:
-			#gravity = 0
-			if global_position.y>target_top-15:
 				if global_position>Vector2((target_right_edge+15),(target_top-25)):
-					#"lerping dawg", global_position)
 					global_position=lerp(global_position, Vector2((target_right_edge+5),(target_top-40)), delta*3)
 				else:
 					velocity.y=movement_data.jump_velocity
+							
+		elif global_position.y>(high_target_jump_height-15) and high_target:
+			if target_right:
+				if global_position<Vector2((target_left_edge),(high_target_jump_height)):
+					global_position=lerp(global_position, Vector2((target_left_edge-5),(high_target_jump_height*0.7)), delta*3)
+				else:
+					velocity.y=movement_data.jump_velocity
 			else:
-				#"no lerp")
-				flipped_over=true
-				hit_stop.hit_stop(.2, .5)
-				#gravity = 980
+				
+				if global_position>Vector2((target_right_edge),(high_target_jump_height)):
+					global_position=lerp(global_position, Vector2((target_right_edge+5),(high_target_jump_height*0.7)), delta*3)
+				else:
+					velocity.y=movement_data.jump_velocity
+
+		else:
+			flipped_over=true
+			hit_stop.hit_stop(.2, .5)
+
 #	flipping over
 	else:
 		health.immortality=false
 		hurt_box_detect.disabled=false
 		flipped_over=true
-		
-		if not target_right:
-			movement = target_direction.rotated(CLOCKWISE)
+		if not high_target:
+			if not target_right:
+				movement = target_direction.rotated(CLOCKWISE)
+				
+				#"flip_right")
+			else:
+				movement = target_direction.rotated(COUNTER_CLOCKWISE)
+				#"flip_left"
 			
-			#"flip_right")
+			if global_position.y<target_top:
+				velocity = movement * flip_speed * delta
+				
+			else:
+				velocity.y += gravity * movement_data.gravity_scale * delta
 		else:
-			movement = target_direction.rotated(COUNTER_CLOCKWISE)
-			#"flip_left")
-		if global_position.y<target_top:
-			velocity = movement * flip_speed * delta
-			
-		else:
-			velocity.y += gravity * movement_data.gravity_scale * delta
-			
+			hit_stop.hit_stop(.1, .5)
+			jump_out_timer.start(0.05)
+			velocity.y=0
 		
 
 
 func _on_jump_out_timer_timeout():
-	pass
+	jump_out(200)
 	
 func current_state_label():
 	match state:

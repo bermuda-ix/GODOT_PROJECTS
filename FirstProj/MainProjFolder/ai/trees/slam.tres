@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=16 format=3 uid="uid://b2063wq6t8myb"]
+[gd_resource type="BehaviorTree" load_steps=19 format=3 uid="uid://b2063wq6t8myb"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_2iwtk"]
 var/landed/name = &"landed"
@@ -51,8 +51,22 @@ resource_name = "AnimationPlayer"
 animation_player = SubResource("BBNode_5wqhu")
 animation_name = &"landed"
 
+[sub_resource type="BBVariant" id="BBVariant_2iwtk"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BBNode" id="BBNode_c0vtd"]
+saved_value = NodePath("MovementHandler")
+resource_name = "MovementHandler"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_micmu"]
+node = SubResource("BBNode_c0vtd")
+method = &"set_active"
+args = Array[BBVariant]([SubResource("BBVariant_2iwtk")])
+
 [sub_resource type="BTSequence" id="BTSequence_5wqhu"]
-children = [SubResource("BTCheckTrigger_2iwtk"), SubResource("BTPlayAnimation_ose5i"), SubResource("BTAwaitAnimation_c0vtd")]
+children = [SubResource("BTCheckTrigger_2iwtk"), SubResource("BTPlayAnimation_ose5i"), SubResource("BTAwaitAnimation_c0vtd"), SubResource("BTCallMethod_micmu")]
 
 [sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_c0vtd"]
 children = [SubResource("BTSequence_5wqhu")]

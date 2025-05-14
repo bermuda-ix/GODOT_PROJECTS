@@ -1,4 +1,4 @@
-[gd_scene load_steps=382 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=383 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -56,6 +56,7 @@
 [ext_resource type="Texture2D" uid="uid://opipugigc3oa" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Walk/Walk07.png" id="29_00lx6"]
 [ext_resource type="Texture2D" uid="uid://8q0mks87sm2s" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/FrontFlip/FrontFlip14.png" id="29_7nr8h"]
 [ext_resource type="Texture2D" uid="uid://6ne5ipkky6bv" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Walk/Walk08.png" id="30_kuuhk"]
+[ext_resource type="Script" uid="uid://ba6pwl0vfuyp" path="res://Component/stagger.gd" id="53_7ax8a"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="53_jef5t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
@@ -4257,6 +4258,10 @@ disabled = true
 script = ExtResource("4_q0gnn")
 max_health = 100
 
+[node name="Stagger" type="Node" parent="."]
+script = ExtResource("53_7ax8a")
+metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
+
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
@@ -4305,6 +4310,7 @@ one_shot = true
 [node name="JumpOutTimer" type="Timer" parent="."]
 wait_time = 0.05
 one_shot = true
+ignore_time_scale = true
 
 [node name="STATE" type="Label" parent="."]
 offset_left = -27.0
@@ -4315,11 +4321,12 @@ scale = Vector2(0.463877, 0.379525)
 text = "State"
 metadata/_edit_use_anchors_ = true
 
-[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
 collision_layer = 128
 collision_mask = 12
 script = ExtResource("9_s8nmr")
 health = NodePath("../Health")
+stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(-0.250014, -1)

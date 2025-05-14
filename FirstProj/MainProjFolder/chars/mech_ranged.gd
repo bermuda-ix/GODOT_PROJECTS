@@ -21,6 +21,13 @@ const JUMP_VELOCITY = -400.0
 @onready var bt_player: BTPlayer = $BTPlayer
 #Particles
 @onready var gpu_particles_2d: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
+
+@onready var left_explosion: GPUParticles2D = $AnimatedSprite2D/LeftExplosion
+@onready var left_sparks: GPUParticles2D = $AnimatedSprite2D/LeftExplosion/GPUParticles2D
+@onready var right_explosion: GPUParticles2D = $AnimatedSprite2D/RightExplosion
+@onready var right_sparks: GPUParticles2D = $AnimatedSprite2D/RightExplosion/GPUParticles2D
+
+
 #On Screen
 
 #Defense
@@ -196,7 +203,7 @@ func _process(delta: float) -> void:
 	#print(turret.shoot_timer.time_left)
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
-	debuging.text=str(get_player_info_handler.get_player_distance())
+	debuging.text=str(velocity.y)
 	#print(velocity.y)
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collision.disabled=true
@@ -211,16 +218,22 @@ func _process(delta: float) -> void:
 	attack_timer.one_shot=true
 	
 func _physics_process(delta: float) -> void:
+	#flip_particles()
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
+	print(state_machine.get_active_state())
 #	stop movement when hit, staggered, or dead
 	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
 		#hb_collison.disabled=true
-		velocity.y += gravity * delta
+		apply_gravity(delta)
 		velocity.x=0
 		move_and_slide()
 		return
 	elif state_machine.get_active_state()==jump:
-		global_position.x=lerpf(global_position.x, player.global_position.x, 0.6*delta)
+		if player_right:
+			global_position.x=lerpf(global_position.x, global_position.x+400, .6*delta)
+		else:
+			global_position.x=lerpf(global_position.x, global_position.x-400, .6*delta)
+		move_and_slide()
 	elif state_machine.get_active_state()==slam:
 		#print("slamming")
 		velocity.y += slam_vel * delta
@@ -233,12 +246,12 @@ func _physics_process(delta: float) -> void:
 			
 			if death_timer.is_stopped():
 				delta=delta
-				velocity.y += gravity * delta
+				apply_gravity(delta)
 				animation_player.speed_scale=1
 			else:
 				delta*=lerpf(death_time_scale, 0, 0.2)
 				animation_player.speed_scale=.5
-				velocity.y += gravity * delta
+				apply_gravity(delta)
 				velocity.y=lerpf(velocity.y,0,0.2)
 		velocity.x=knockback.x
 	elif state_machine.get_active_state()==death :
@@ -253,10 +266,10 @@ func _physics_process(delta: float) -> void:
 	#handle_movement()
 	if state_machine.get_active_state()==chasing:
 		velocity.x = current_speed + knockback.x
-		velocity.y += gravity * delta
+		apply_gravity(delta)
 	elif movement_handler.keep_distance and state_machine.get_active_state()==shoot_run:
 		velocity.x = current_speed + knockback.x
-		velocity.y += gravity * delta
+		apply_gravity(delta)
 	else:
 		velocity.x= knockback.x
 		
@@ -264,6 +277,10 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor() and state_machine.get_active_state()!=slam:
 		velocity.y += gravity * delta
 	move_and_slide()
+
+func apply_gravity(delta : float) -> void:
+	if not is_on_floor():
+		velocity.y += gravity * delta
 
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
@@ -284,12 +301,37 @@ func get_height() -> int:
 
 func jump_up() -> void:
 	if state_machine.get_active_state()==attack:
+		
 		state_machine.dispatch(&"jump_attack")
 	else:
 		state_machine.dispatch(&"jump")
+func jump_away() -> void:
+	if player_right:
+		knockback.x=-500
+	else:
+		knockback.x=500
+	jump.jump_vel=0.2
+	jump_up()
+	
 	
 func slam_down() -> void:
 	state_machine.dispatch(&"slam_attack")
+
+func flip_particles() -> void:
+	if not animated_sprite_2d.flip_h:
+		var left_exp = left_explosion.texture.get_image()
+		left_exp.flip_x()
+		left_explosion.texture = ImageTexture.create_from_image(left_exp)
+		var right_exp = right_explosion.texture.get_image()
+		right_exp.flip_x()
+		right_explosion.texture = ImageTexture.create_from_image(right_exp)
+		var left_spk = left_sparks.texture.get_image()
+		left_spk.flip_x()
+		left_sparks.texture = ImageTexture.create_from_image(left_spk)
+		var right_spk = right_sparks.texture.get_image()
+		right_exp.flip_x()
+		right_sparks.texture = ImageTexture.create_from_image(right_exp)
+
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	return
@@ -311,10 +353,6 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 		state_machine.dispatch(&"start_attack")
 
 
-func _on_attack_range_body_exited(body: Node2D) -> void:
-	if body.is_in_group("player") and state_machine.get_active_state()!=staggered and (state_machine.get_active_state()!=slam or state_machine.get_active_state()!=jump):
-		bt_player.blackboard.set_var("within_range", false)
-		state_machine.dispatch(&"start_chase")
 
 
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
@@ -323,12 +361,23 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 			if combat_state_machine.get_active_state()==ranged_mode:
 				#movement_handler.keep_distance=true
 				state_machine.dispatch(&"start_shoot")
-			elif combat_state_machine.get_active_state()==melee_mode:
-				#movement_handler.keep_distance=false
-				state_machine.dispatch(&"start_chase")
+			#elif combat_state_machine.get_active_state()==melee_mode:
+				##movement_handler.keep_distance=false
+				#if previous!=attack:
+					#state_machine.dispatch(&"start_chase")
+				#else:
+					#return
 		shooting:
 			animation_player.play("shoot")
-
+		jump:
+			jump.jump_vel=1.2
+			
+			
+	match previous:
+		hit:
+			bt_player.restart()
+			animation_player.play("blast_attack")
+			await animation_player.animation_finished
 
 func _on_combat_state_machine_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if current==ranged_mode:
@@ -361,7 +410,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		return
 	health.set_temporary_immortality(0.2)
 	if damage<=health.health:
-		parry_timer.start(0.5)
+		parry_timer.start(0.1)
 		state_machine.dispatch(&"hit")
 		hit_stop.hit_stop(0.05,0.1)
 		#set_state(current_state, States.HIT)
@@ -370,7 +419,12 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	else:
 		print("kill shot")
 		
+		
 	
+func _on_hurt_box_weak_point_area_entered(area: Area2D) -> void:
+	if area.is_in_group("sp_atk_default"):
+		stagger.stagger-=3
+
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	if state_machine.get_active_state()!=dying or state_machine.get_active_state()!=death:
 		hit_stop.hit_stop(0.05,0.1)
@@ -383,3 +437,24 @@ func _on_parry_timer_timeout() -> void:
 		state_machine.dispatch(&"hit_recover")
 	movement_handler.active=true
 	hurt_box.set_damage_mulitplyer(1)
+
+
+func _on_animation_player_animation_started(anim_name: StringName) -> void:
+	if anim_name=="blast_attack":
+		#movement_handler.active=false
+		current_speed=0
+	
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name=="blast_attack" or anim_name=="landed":
+		movement_handler.active=true
+		jump.jump_vel=1
+
+func _on_stagger_staggered() -> void:
+	bt_player.restart()
+	parry_timer.start(3)
+	
+	hb_collision.disabled=true
+	print("staggered")
+	state_machine.dispatch(&"staggered")

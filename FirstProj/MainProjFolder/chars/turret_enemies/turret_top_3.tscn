@@ -364,12 +364,13 @@ max_distance = 500.0
 attenuation = 0.287175
 max_polyphony = 12
 
-[node name="HurtBox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("health")]
+[node name="HurtBox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("health", "stagger")]
 rotation = 0.267087
 collision_layer = 16
 collision_mask = 8192
 script = ExtResource("18_hnah5")
 health = NodePath("../../Health")
+stagger = NodePath("../../Stagger")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
 [node name="turret_top_collision" type="CollisionShape2D" parent="Sprite2D/HurtBox"]

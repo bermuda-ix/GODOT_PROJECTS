@@ -1520,9 +1520,10 @@ one_shot = true
 position = Vector2(0, -24)
 script = ExtResource("57_d6os8")
 
-[node name="HurtBox" parent="." index="18" node_paths=PackedStringArray("health") groups=["regular_enemy_hb"]]
+[node name="HurtBox" parent="." index="18" node_paths=PackedStringArray("health", "stagger") groups=["regular_enemy_hb"]]
 collision_mask = 8768
 health = NodePath("../Health")
+stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
 shape = SubResource("RectangleShape2D_xhp7j")

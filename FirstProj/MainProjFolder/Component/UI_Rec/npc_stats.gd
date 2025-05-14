@@ -9,13 +9,15 @@ extends Control
 @onready var ammo: RichTextLabel = $Ammo
 @onready var ammo_count: RichTextLabel = $Ammo/AmmoCount
 
+@export var ammo_count_vis : bool = true
+
 var has_ammo : bool = true
 
 func _ready() -> void:
 	set_max_health(health.get_max_health())
 	set_max_stagger(stagger.get_max_stagger())
 	#set_ammo(actor.turret_top.turret.ammo_count)
-	
+	ammo_count.visible=ammo_count_vis
 	
 func _process(delta: float) -> void:
 	set_health(health.health)

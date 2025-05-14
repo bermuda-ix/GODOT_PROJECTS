@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=54 format=3 uid="uid://vca7j8b0cpkl"]
+[gd_resource type="BehaviorTree" load_steps=63 format=3 uid="uid://vca7j8b0cpkl"]
 
 [ext_resource type="BlackboardPlan" uid="uid://cn6i86litai7s" path="res://Component/blackboard_plans/enemy_ai.tres" id="1_57cnw"]
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="2_6mf02"]
@@ -68,32 +68,52 @@ node = SubResource("BBNode_glts4")
 method = &"set_active"
 args = Array[BBVariant]([SubResource("BBVariant_57cnw")])
 
+[sub_resource type="BBNode" id="BBNode_f2l8t"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_trp4a"]
+animation_player = SubResource("BBNode_f2l8t")
+animation_name = &"blast_attack"
+
+[sub_resource type="BBNode" id="BBNode_roqn8"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_sdlxl"]
+animation_player = SubResource("BBNode_roqn8")
+animation_name = &"blast_attack"
+
+[sub_resource type="BBNode" id="BBNode_ff6r7"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_roqn8"]
+node = SubResource("BBNode_ff6r7")
+method = &"chase"
+
+[sub_resource type="BTSequence" id="BTSequence_57cnw"]
+custom_name = "Counter"
+children = [SubResource("BTPlayAnimation_trp4a"), SubResource("BTAwaitAnimation_sdlxl"), SubResource("BTCallMethod_roqn8")]
+
+[sub_resource type="BTProbability" id="BTProbability_57cnw"]
+children = [SubResource("BTSequence_57cnw")]
+
+[sub_resource type="BBNode" id="BBNode_57cnw"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_6mf02"]
+animation_player = SubResource("BBNode_57cnw")
+animation_name = &"lift_off"
+
 [sub_resource type="BBNode" id="BBNode_ug3cp"]
 saved_value = NodePath("AnimationPlayer")
 resource_name = "AnimationPlayer"
 
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_cdgcv"]
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_cdgcv"]
 animation_player = SubResource("BBNode_ug3cp")
 animation_name = &"lift_off"
-
-[sub_resource type="BBNode" id="BBNode_gi0ss"]
-saved_value = NodePath("AnimationPlayer")
-resource_name = "AnimationPlayer"
-
-[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_ff6r7"]
-animation_player = SubResource("BBNode_gi0ss")
-animation_name = &"lift_off"
-
-[sub_resource type="BBNode" id="BBNode_57cnw"]
-saved_value = NodePath(".")
-resource_name = "."
-
-[sub_resource type="BTCallMethod" id="BTCallMethod_6mf02"]
-node = SubResource("BBNode_57cnw")
-method = &"jump_up"
-
-[sub_resource type="BTWait" id="BTWait_glts4"]
-duration = 0.5
 
 [sub_resource type="BBNode" id="BBNode_6mf02"]
 saved_value = NodePath(".")
@@ -116,15 +136,33 @@ resource_name = "MovementHandler"
 node = SubResource("BBNode_cdgcv")
 method = &"set_active"
 args = Array[BBVariant]([SubResource("BBVariant_6mf02")])
+_enabled = false
 
-[sub_resource type="BTFail" id="BTFail_57cnw"]
+[sub_resource type="BBNode" id="BBNode_sdlxl"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_s0pl0"]
+node = SubResource("BBNode_sdlxl")
+method = &"chase"
+
+[sub_resource type="BTSequence" id="BTSequence_6mf02"]
+custom_name = "Slam"
+children = [SubResource("BTPlayAnimation_6mf02"), SubResource("BTAwaitAnimation_cdgcv"), SubResource("BTCallMethod_glts4"), SubResource("BTCallMethod_gi0ss"), SubResource("BTCallMethod_s0pl0")]
+
+[sub_resource type="BTProbability" id="BTProbability_6mf02"]
+run_chance = 1.0
+children = [SubResource("BTSequence_6mf02")]
+
+[sub_resource type="BTSelector" id="BTSelector_glts4"]
+children = [SubResource("BTProbability_57cnw"), SubResource("BTProbability_6mf02")]
 
 [sub_resource type="BTSequence" id="BTSequence_oqvss"]
 custom_name = "Attack"
-children = [SubResource("BTCheckVar_2nwck"), SubResource("BTCallMethod_ug3cp"), SubResource("BTPlayAnimation_cdgcv"), SubResource("BTAwaitAnimation_ff6r7"), SubResource("BTCallMethod_6mf02"), SubResource("BTWait_glts4"), SubResource("BTCallMethod_glts4"), SubResource("BTCallMethod_gi0ss"), SubResource("BTFail_57cnw")]
+children = [SubResource("BTCheckVar_2nwck"), SubResource("BTCallMethod_ug3cp"), SubResource("BTSelector_glts4")]
 
 [sub_resource type="BTCooldown" id="BTCooldown_38pg2"]
-duration = 0.8
+duration = 2.0
 start_cooled = true
 children = [SubResource("BTSequence_oqvss")]
 
@@ -152,6 +190,7 @@ method = &"chase"
 [sub_resource type="BTSequence" id="BTSequence_71byw"]
 custom_name = "Get In Range"
 children = [SubResource("BTAction_d25vw"), SubResource("BTCallMethod_gm5h1")]
+_enabled = false
 
 [sub_resource type="BTSelector" id="BTSelector_4j6sx"]
 custom_name = "Getting in range"
@@ -207,12 +246,12 @@ children = [SubResource("BTSequence_10ead"), SubResource("BTCooldown_n65d2"), Su
 [sub_resource type="BTSequence" id="BTSequence_ivh4q"]
 children = [SubResource("BTCheckVar_gi0ss"), SubResource("BTSelector_vjpus")]
 
-[sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_ygnh2"]
+[sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_57cnw"]
 children = [SubResource("BTSequence_ivh4q")]
 
 [sub_resource type="BTSequence" id="BTSequence_pigy8"]
 custom_name = "Attacks"
-children = [SubResource("BTCheckVar_ug3cp"), SubResource("BTRepeatUntilFailure_ygnh2")]
+children = [SubResource("BTCheckVar_ug3cp"), SubResource("BTRepeatUntilSuccess_57cnw")]
 
 [sub_resource type="BTSelector" id="BTSelector_8x2b1"]
 children = [SubResource("BTSequence_pigy8")]
