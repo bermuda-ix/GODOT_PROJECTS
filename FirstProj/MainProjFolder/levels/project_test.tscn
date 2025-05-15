@@ -44,7 +44,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(562, 77, 562, 123, 1524
 [node name="project_test" instance=ExtResource("1_07jkq")]
 
 [node name="PC" parent="." index="0"]
-position = Vector2(994, 82)
+position = Vector2(282, -141)
 
 [node name="LevelTileMap" parent="." index="2"]
 position = Vector2(1, 0)

@@ -64,8 +64,12 @@ var atk_state="ATK_1"
 
 #Animation var
 @onready var animated_sprite_2d = $AnimatedSprite2D
-
 @onready var anim_player = $AnimationPlayer
+@onready var cutscene_dir : int = clampi(0, -1, 1) : set=set_cutscene_dir
+@export var player_control_active : bool = true : set=set_player_control
+@onready var speech: Label = $Speech
+#Keeping Track on different reused animations in cutscenes
+@onready var anim_count : int = 0
 
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var attack_timer = $AttackTimer
@@ -164,8 +168,13 @@ func _ready():
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
 
-
+	Events.start_cutscene.connect(start_cutscene)
+	Events.end_cutsene.connect(end_cutscene)
+	Events.queue_cutscene.connect(queue_cutscene)
+	
 func _process(delta):
+	if not player_control_active:
+		return
 	#print(hit_stop.dur.time_left)
 	var input_axis = Input.get_axis("walk_left", "walk_right")
 	vel_x=velocity.x
@@ -173,6 +182,7 @@ func _process(delta):
 	get_target_info()
 	previous_state()
 	atk_state_debug()
+	label.text=str(anim_count)
 	#if target != null:
 		#label.text=str(target_size_x, " , ",target_size_y)
 	#if atk_chain >= 1 and sp_atk_chn >=1:
@@ -208,6 +218,11 @@ func _process(delta):
 	#air_atk)
 
 func _physics_process(delta):
+	if not player_control_active:
+		apply_gravity(delta)
+		cutscene_acceleration(cutscene_dir, delta)
+		move_and_slide()
+		return
 	
 	if s_atk==true:
 		return
@@ -299,6 +314,10 @@ func _physics_process(delta):
 			gravity = 0
 	
 	#return_to_idle()
+
+#Toggle player control
+func set_player_control(value : bool)->void:
+	player_control_active=value
 
 
 # Add the gravity.
@@ -427,7 +446,27 @@ func handle_acceleration(input_axis, delta):
 	if not is_on_floor(): return
 	if input_axis != 0:
 		velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.acceleration * delta)
+
+# Movement for cutscenes		
+func cutscene_acceleration(dir, delta):
+	if dir!=0:
+		velocity.x = move_toward(velocity.x, (movement_data.speed/3) * dir, movement_data.acceleration * delta)
+	else:
+		velocity.x=0
 		
+		
+func set_cutscene_dir(value : int) -> void:
+	cutscene_dir=value
+func set_movement_data(value : int) -> void:
+	match value:
+		0:
+			movement_data = load("res://DefaultMovementData.tres")
+		1:
+			movement_data = load("res://SlowMovementData.tres")
+		2:
+			movement_data = load("res://FasterMovementData.tres")
+
+
 func handle_air_acceleration(input_axis, delta):
 	if is_on_floor(): return
 	if input_axis != 0:
@@ -1043,6 +1082,7 @@ func set_start_pos(checkpoint_position):
 
 
 func _on_animation_player_animation_finished(anim_name):
+	anim_count_up()
 	if state==States.ATTACK:
 		#"attack finished")
 		hit_success=false
@@ -1383,7 +1423,6 @@ func _on_animation_player_animation_started(anim_name):
 		s_atk=true
 	
 
-
 func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05, 0.1)
 	if state==States.FLIP:
@@ -1394,3 +1433,32 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			knockback.x=-400
 		velocity.x = movement_data.speed + knockback.x
 		set_state(state, States.HIT)
+
+
+####################
+#Cutscene Functions#
+####################
+
+func set_speech_text(value : String) -> void:
+	speech.text=str(value)
+
+
+func start_cutscene(value : String) -> void:
+	set_player_control(false)
+	anim_player.play(value)
+	
+func queue_cutscene(cutscenes : Array[String]) -> void:
+	for cutscene in cutscenes:
+		anim_player.queue(cutscene)
+	
+func end_cutscene() -> void:
+	set_player_control(true)
+	anim_player.play("RESET")
+	anim_count=0
+	set_movement_data(0)
+
+func anim_count_up() -> void:
+	if not player_control_active:
+		anim_count+=1
+	else:
+		pass

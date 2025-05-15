@@ -36,6 +36,11 @@ func _ready():
 	Events.pause.connect(show_pause)
 	Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
+
+	Events.start_cutscene.emit(Cutscenes.intro_cutscene[0])
+	Events.queue_cutscene.emit(Cutscenes.intro_cutscene)
+	
+	
 	
 	#score=45
 func _process(_delta):

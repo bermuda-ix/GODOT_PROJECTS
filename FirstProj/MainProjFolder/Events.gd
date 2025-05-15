@@ -36,3 +36,8 @@ signal get_player_data
 #Lockon
 signal lockon_to
 signal unlock_from
+
+#Cutscenes
+signal start_cutscene
+signal queue_cutscene
+signal end_cutsene

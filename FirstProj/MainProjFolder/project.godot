@@ -22,6 +22,7 @@ LevelTransition="*res://LVL_Transitions/level_transition.tscn"
 AudioStreamManager="*res://AudioStreamManager.gd"
 SoundFx="*res://Component/resources/sound_fx.gd"
 Projectiles="*res://Component/resources/projectiles.gd"
+Cutscenes="*res://Component/resources/cutscenes.gd"
 
 [display]
 

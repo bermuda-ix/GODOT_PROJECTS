@@ -220,7 +220,7 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	#flip_particles()
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
-	print(state_machine.get_active_state())
+	#print(state_machine.get_active_state())
 #	stop movement when hit, staggered, or dead
 	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
 		#hb_collison.disabled=true
