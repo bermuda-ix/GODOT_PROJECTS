@@ -23,7 +23,6 @@ action_mode = 0
 text = "Practice"
 
 [node name="guanlet" type="Button" parent="VBoxContainer"]
-visible = false
 layout_mode = 2
 action_mode = 0
 text = "Gauntlet"

@@ -12,6 +12,11 @@ extends Node2D
 @onready var pause_menu = $CanvasLayer/PauseMenu
 @onready var score : int = 0
 
+#Cutscenes
+@onready var cutscene_player: AnimationPlayer = $CutscenePlayer
+var qte_options : Array[String] = ["1","1","1","1","1"]
+
+
 @export var lvl_type = "goal"
 @export var elite_spawn : int = 20
 @export var boss_spawn : int = 40
@@ -40,9 +45,15 @@ func _ready():
 	Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
 	
-	Events.start_cutscene.emit(Cutscenes.intro_cutscene[0])
-	Events.queue_cutscene.emit(Cutscenes.intro_cutscene)
+	
+	#Events.start_cutscene.emit()
+	#Events.end_cutsene.connect(end_cutscene)
+	#Events.queue_cutscene.emit(Cutscenes.intro_cutscene)
 	#score=45
+	if lvl_type=="adv":
+		cutscene_player.play("TEST")
+	else:
+		end_cutscene()
 	
 func _process(_delta):
 	
@@ -132,3 +143,39 @@ func handle_spawn():
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 	#pass
+
+func end_cutscene():
+	Events.end_cutsene.emit()
+
+func start_qte(qte_time : int):
+	Events.start_qte.emit(qte_time)
+
+func load_qte_animations(atk_opt : String, dodge_opt : String, block_opt : String, spc_atk_opt : String, no_input : String):
+	qte_options[0]=atk_opt
+	qte_options[1]=dodge_opt
+	qte_options[2]=block_opt
+	qte_options[3]=spc_atk_opt
+	qte_options[4]=no_input
+	
+	
+	
+	
+
+func _on_pc_attack_qte() -> void:
+	cutscene_player.queue(qte_options[0])
+
+
+func _on_pc_block_qte() -> void:
+	cutscene_player.queue(qte_options[1])
+
+
+func _on_pc_dodge_qte() -> void:
+	cutscene_player.queue(qte_options[2])
+
+
+func _on_pc_special_atk_qte() -> void:
+	cutscene_player.queue(qte_options[3])
+
+
+func _on_pc_no_input_qte() -> void:
+	cutscene_player.queue(qte_options[4])

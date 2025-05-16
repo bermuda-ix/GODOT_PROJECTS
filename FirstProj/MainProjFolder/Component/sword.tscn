@@ -1,0 +1,77 @@
+[gd_scene load_steps=14 format=3 uid="uid://c1ypxd5tov0tn"]
+
+[ext_resource type="Texture2D" uid="uid://djofndr06vodg" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/SpritesSeparated/Combat/SwordCombo01/Weapon/SwordCombo0102.png" id="1_yhgj1"]
+[ext_resource type="Texture2D" uid="uid://ci76sm45rwhai" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Weapons/BladeWallImpact/BladeWallImpact01.png" id="2_sbx8p"]
+[ext_resource type="Texture2D" uid="uid://dlnh1rhnrgugd" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Weapons/BladeWallImpact/BladeWallImpact02.png" id="3_ckrjs"]
+[ext_resource type="Texture2D" uid="uid://biu8g6socpew1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Weapons/BladeWallImpact/BladeWallImpact03.png" id="4_w4imo"]
+[ext_resource type="Texture2D" uid="uid://cugke6yghaqvd" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Weapons/BladeWallImpact/BladeWallImpact04.png" id="5_mk5pe"]
+[ext_resource type="Texture2D" uid="uid://dgk0nj5v5o2gm" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Weapons/BladeWallImpact/BladeWallImpact05.png" id="6_c8tvt"]
+[ext_resource type="Texture2D" uid="uid://baek2184w3y1i" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Weapons/BladeWallImpact/BladeWallImpact06.png" id="7_1dkdn"]
+[ext_resource type="Texture2D" uid="uid://cqs0rkwfe1xi3" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Weapons/BladeThrow/BladeThrow01.png" id="8_mih75"]
+[ext_resource type="Texture2D" uid="uid://ctb855x3eegef" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Weapons/BladeThrow/BladeThrow02.png" id="9_sdtm5"]
+[ext_resource type="Texture2D" uid="uid://b4vdo7wvqe7hv" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Weapons/BladeThrow/BladeThrow03.png" id="10_vbeq3"]
+[ext_resource type="Texture2D" uid="uid://bqw408m6yk60n" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Weapons/BladeThrow/BladeThrow04.png" id="11_ku8fd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v7ql0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_yhgj1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_sbx8p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ckrjs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_w4imo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_mk5pe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_c8tvt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_1dkdn")
+}],
+"loop": true,
+"name": &"impact",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_mih75")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_sdtm5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_vbeq3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ku8fd")
+}],
+"loop": true,
+"name": &"throw",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3jcos"]
+
+[node name="Sword" type="StaticBody2D"]
+collision_layer = 0
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_v7ql0")
+animation = &"impact"
+offset = Vector2(10, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_3jcos")

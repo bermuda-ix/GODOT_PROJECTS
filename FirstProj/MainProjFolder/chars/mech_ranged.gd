@@ -128,7 +128,8 @@ var slam_vel : float = 0.0
 @export var death_time_scale: float = 1.0
 @onready var norm_delta
 
-
+#LVL Boss flag
+@export var lvl_boss : bool = false
 
 #Debug var
 var combat_state : String = "RANGED"
@@ -399,6 +400,8 @@ func _on_health_health_depleted() -> void:
 	knockback.x=250
 	death_timer.start()
 	death_handler.death()
+	if lvl_boss:
+		Events.boss_died.emit()
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:

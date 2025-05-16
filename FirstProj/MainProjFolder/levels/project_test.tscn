@@ -1,9 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=23 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="4_4kfue"]
-[ext_resource type="PackedScene" uid="uid://bvvdaxqcb1uvh" path="res://chars/mech_ranged.tscn" id="4_ec6ti"]
+[ext_resource type="PackedScene" uid="uid://d3jixkbstt3qn" path="res://Component/qte_start.tscn" id="4_ec6ti"]
+[ext_resource type="PackedScene" uid="uid://dr88ya64be2de" path="res://Component/gun.tscn" id="5_82t0r"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
+[ext_resource type="PackedScene" uid="uid://c1ypxd5tov0tn" path="res://Component/sword.tscn" id="6_t1ldw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ec6ti"]
+resource_local_to_scene = true
+size = Vector2(37.8948, 53.5486)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ys1t2"]
 vertices = PackedVector2Array(518.367, -227, 691, -227, 691, -213, 493.172, -213, 430.289, -291.047, 478.703, -216.781, 409.883, -277, 388.906, 93, 523, 93, 523, 107, 371.094, 107, 331.094, 27, 348.906, 13, 253.063, 13, 172.609, 27, 140.617, 107, 29, 107, 29, 77, 123.469, 77, 147.469, 13, 223.688, 13, 210.203, -64.1484, 187.25, -69, 13, -69, 13, -91, 169.633, -91, 257.617, -155, 253.227, -133, 445.172, -133, 434.57, -155, 222.563, -299.047, 209.422, -277, 105.422, -341, 126.648, -355, -59, -355, -59, -341)
@@ -41,10 +47,225 @@ vertices = PackedVector2Array(1514.21, 113, 572, 113, 572, 87, 1514.78, 87)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(562, 77, 562, 123, 1524, 123, 1525, 77)])
 
+[sub_resource type="Animation" id="Animation_ca064"]
+resource_name = "TEST"
+length = 4.0
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("idle_walk", "idle_walk", "idle_walk", "idle_speech", "idle_speech"),
+"times": PackedFloat32Array(0, 0.833333, 1.66667, 2.5, 3.23333)
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333, 3.9),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": ["pick_sword", "box", "stretch", "pick_gun", "do_nothing"],
+"method": &"load_qte_animations"
+}, {
+"args": [5],
+"method": &"start_qte"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_05gy0"]
+resource_name = "QTE_TEST"
+
+[sub_resource type="Animation" id="Animation_82t0r"]
+resource_name = "pick_sword"
+length = 5.0
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("idle_walk", "idle_speech", "Attack", "Attack_2", "Attack_3", "idle"),
+"times": PackedFloat32Array(0, 0.833333, 1.9, 2.6, 3.2, 3.86667)
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(4.63333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_t1ldw"]
+resource_name = "pick_gun"
+length = 4.6
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("idle_walk", "check_equipment"),
+"times": PackedFloat32Array(0.0333333, 3)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PC/AnimatedSprite2D/Shotty:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(4.56667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_01tlq"]
+resource_name = "stretch"
+length = 2.0
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("hit", "dodge_roll", "flip", "idle_speech"),
+"times": PackedFloat32Array(0, 0.3, 0.8, 1.63333)
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.93333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_be4ge"]
+resource_name = "box"
+length = 2.8
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("Cutscene/punch_1", "Cutscene/punch_2", "Cutscene/punch_3", "Cutscene/punch_2"),
+"times": PackedFloat32Array(0, 0.733333, 1.26667, 2.13333)
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.76667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_gem31"]
+resource_name = "do_nothing"
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("idle_speech"),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.933333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_fof0c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimatedSprite2D/Shotty:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_82t0r"]
+_data = {
+&"QTE_TEST": SubResource("Animation_05gy0"),
+&"RESET": SubResource("Animation_fof0c"),
+&"TEST": SubResource("Animation_ca064"),
+&"box": SubResource("Animation_be4ge"),
+&"do_nothing": SubResource("Animation_gem31"),
+&"pick_gun": SubResource("Animation_t1ldw"),
+&"pick_sword": SubResource("Animation_82t0r"),
+&"stretch": SubResource("Animation_01tlq")
+}
+
 [node name="project_test" instance=ExtResource("1_07jkq")]
 
 [node name="PC" parent="." index="0"]
-position = Vector2(282, -141)
+position = Vector2(789, 89)
+
+[node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
+shape = SubResource("RectangleShape2D_ec6ti")
 
 [node name="LevelTileMap" parent="." index="2"]
 position = Vector2(1, 0)
@@ -153,5 +374,30 @@ position = Vector2(624, -272)
 active = false
 enemy_single = ExtResource("5_fkwqf")
 
-[node name="MechRanged" parent="." index="23" instance=ExtResource("4_ec6ti")]
-position = Vector2(1197, 72)
+[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="23"]
+libraries = {
+&"": SubResource("AnimationLibrary_82t0r")
+}
+
+[node name="QTE_Start" parent="." index="24" node_paths=PackedStringArray("cutscene_player") instance=ExtResource("4_ec6ti")]
+position = Vector2(866, -70)
+first_qte_anim = "TEST"
+cutscene_player = NodePath("../CutscenePlayer")
+
+[node name="gun" parent="." index="25" instance=ExtResource("5_82t0r")]
+position = Vector2(961, 94)
+rotation = -1.5708
+scale = Vector2(0.5, 0.5)
+
+[node name="Sword" parent="." index="26" instance=ExtResource("6_t1ldw")]
+position = Vector2(910, 100)
+rotation = -1.5708
+scale = Vector2(0.75, 0.75)
+
+[connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
+[connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]
+[connection signal="dodge_qte" from="PC" to="." method="_on_pc_dodge_qte"]
+[connection signal="no_input_qte" from="PC" to="." method="_on_pc_no_input_qte"]
+[connection signal="special_atk_qte" from="PC" to="." method="_on_pc_special_atk_qte"]
+
+[editable path="PC"]

@@ -94,3 +94,12 @@ func knockback_set(value_x : int, value_y : int) -> void:
 	else:
 		value_x*=-1
 	actor.knockback=Vector2(value_x,value_y)
+
+func cutscene_move(dir : int , speed : float):
+	dir = clampi(dir, -1, 1)
+	if dir==1:
+		actor.current_speed  = speed
+	elif dir==-1:
+		actor.current_speed  = -speed
+	else:
+		actor.current_speed=0

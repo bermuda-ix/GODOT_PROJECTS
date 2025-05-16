@@ -22,6 +22,11 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var jump_timer = $JumpTimer
 @onready var movement_handler: MovementHandler = $MovementHandler
 
+#Cutscene Vars
+@onready var speed: Label = $Speed
+@onready var cutscene_handler: CutsceneHandler = $CutsceneHandler
+@onready var qte_handler: QTEHandler = $QTEHandler
+
 
 @export var drop = preload("res://heart.tscn")
 @onready var death_timer = $DeathTimer
@@ -190,6 +195,8 @@ func _init_combat_state_machine():
 
 	
 func _process(_delta):
+	if not cutscene_handler.actor_control_active or qte_handler.actor_control_active:
+		return
 	ammo_count=turret.ammo_count
 	##FOR TESTING REMOVE LATER
 	##current_state=States.GUARD
@@ -227,6 +234,12 @@ func _physics_process(delta):
 	#if state_machine.get_active_state() == idle:
 		#return
 ##	END OF TEST
+	if not cutscene_handler.actor_control_active or qte_handler.actor_control_active:
+		apply_gravity(delta)
+		#cutscene_acceleration(cutscene_handler.cutscene_dir, delta)
+		move_and_slide()
+		return
+	
 	
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	
@@ -260,7 +273,9 @@ func _physics_process(delta):
 		velocity.x= knockback.x
 	move_and_slide()
 	
-	
+func apply_gravity(delta : float) -> void:
+	if not is_on_floor():
+		velocity.y += gravity * delta
 	
 func handle_vision():
 	vision_handler.handle_vision()

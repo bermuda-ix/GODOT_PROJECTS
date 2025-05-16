@@ -9,7 +9,7 @@
 position = Vector2(8, -8)
 texture = ExtResource("1_c3kw8")
 
-[node name="Hazard" parent="." instance=ExtResource("2_8sepb")]
+[node name="Hazard" parent="." groups=["hazard"] instance=ExtResource("2_8sepb")]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hazard"]
 polygon = PackedVector2Array(0, 0, 3, -8, 4, -8, 7, 0)

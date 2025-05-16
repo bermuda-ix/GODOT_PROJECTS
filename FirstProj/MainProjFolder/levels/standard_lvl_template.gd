@@ -1,3 +1,5 @@
+class_name adv_level
+
 extends Node2D
 
 @export var next_level: PackedScene
@@ -12,7 +14,11 @@ extends Node2D
 @onready var pause_menu = $CanvasLayer/PauseMenu
 @onready var score : int = 0
 
+@onready var cutscene_player: AnimationPlayer = $CutscenePlayer
+var qte_options : Array[String]
+
 @export var lvl_type = "goal"
+@onready var boss_dead : bool = false
 
 var cur_state = "IDLE"
 var cur_health = 3
@@ -33,13 +39,13 @@ func _ready():
 	#polygon_2d.polygon = collision_polygon_2d.polygon
 	#Events.level_completed.connect(show_level_complete)
 	Events.game_over.connect(show_game_over)
+	Events.boss_died.connect(boss_died)
 	Events.pause.connect(show_pause)
 	Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
 
-	Events.start_cutscene.emit(Cutscenes.intro_cutscene[0])
-	Events.queue_cutscene.emit(Cutscenes.intro_cutscene)
-	
+	Events.start_cutscene.emit()
+	cutscene_player.play("INTRO")
 	
 	
 	#score=45
@@ -52,17 +58,19 @@ func _process(_delta):
 	get_health()
 	set_health()
 	
-	#if lvl_type=="goal":
-	#
-		#if obj<=1:s
-			#Events.level_completed.connect(show_level_complete)
-			##print("leven complete")
-		#label.text=str("Obj: ",obj)
-	#else:
-	label.text = str("Score: ", score)
-	handle_spawn()
-	if Input.is_action_just_pressed("Pause"):
-		show_pause()
+	if lvl_type=="goal":
+	
+		if obj<=1:
+			Events.level_completed.connect(show_level_complete)
+			#print("leven complete")
+		label.text=str("Obj: ",obj)
+	elif lvl_type=="adv":
+		Events.level_completed.connect(show_level_complete)
+	else:
+		label.text = str("Score: ", score)
+		handle_spawn()
+		if Input.is_action_just_pressed("Pause"):
+			show_pause()
 
 
 func show_level_complete():
@@ -110,3 +118,37 @@ func inc_score():
 
 func handle_spawn():
 	pass
+
+func end_cutscene():
+	Events.end_cutsene.emit()
+	
+func boss_died():
+	Events.level_completed.emit()
+
+func load_qte_animations(atk_opt : String, dodge_opt : String, block_opt : String, spc_atk_opt : String, no_input : String):
+	qte_options[0]=atk_opt
+	qte_options[1]=dodge_opt
+	qte_options[2]=block_opt
+	qte_options[3]=spc_atk_opt
+	qte_options[4]=no_input
+	
+
+
+func _on_pc_attack_qte() -> void:
+	cutscene_player.queue(qte_options[0])
+
+
+func _on_pc_block_qte() -> void:
+	cutscene_player.queue(qte_options[1])
+
+
+func _on_pc_dodge_qte() -> void:
+	cutscene_player.queue(qte_options[2])
+
+
+func _on_pc_special_atk_qte() -> void:
+	cutscene_player.queue(qte_options[3])
+
+
+func _on_pc_no_input_qte() -> void:
+	cutscene_player.queue(qte_options[4])

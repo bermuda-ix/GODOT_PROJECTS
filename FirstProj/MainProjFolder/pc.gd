@@ -65,11 +65,18 @@ var atk_state="ATK_1"
 #Animation var
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var anim_player = $AnimationPlayer
-@onready var cutscene_dir : int = clampi(0, -1, 1) : set=set_cutscene_dir
-@export var player_control_active : bool = true : set=set_player_control
+
 @onready var speech: Label = $Speech
-#Keeping Track on different reused animations in cutscenes
+#Cutscenes
 @onready var anim_count : int = 0
+@onready var cutscene_handler: CutsceneHandler = $CutsceneHandler
+#Quick-Time Events
+@onready var qte_handler: QTEHandler = $QTEHandler
+signal attack_qte
+signal dodge_qte
+signal block_qte
+signal special_atk_qte
+signal no_input_qte
 
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var attack_timer = $AttackTimer
@@ -168,12 +175,12 @@ func _ready():
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
 
-	Events.start_cutscene.connect(start_cutscene)
-	Events.end_cutsene.connect(end_cutscene)
-	Events.queue_cutscene.connect(queue_cutscene)
+
 	
 func _process(delta):
-	if not player_control_active:
+	if not cutscene_handler.actor_control_active:
+		if qte_handler.actor_control_active:
+			qte_input()
 		return
 	#print(hit_stop.dur.time_left)
 	var input_axis = Input.get_axis("walk_left", "walk_right")
@@ -218,9 +225,9 @@ func _process(delta):
 	#air_atk)
 
 func _physics_process(delta):
-	if not player_control_active:
+	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		apply_gravity(delta)
-		cutscene_acceleration(cutscene_dir, delta)
+		cutscene_acceleration(cutscene_handler.cutscene_dir, delta)
 		move_and_slide()
 		return
 	
@@ -316,8 +323,8 @@ func _physics_process(delta):
 	#return_to_idle()
 
 #Toggle player control
-func set_player_control(value : bool)->void:
-	player_control_active=value
+#func set_actor_control(value : bool)->void:
+	#actor_control_active=value
 
 
 # Add the gravity.
@@ -455,8 +462,8 @@ func cutscene_acceleration(dir, delta):
 		velocity.x=0
 		
 		
-func set_cutscene_dir(value : int) -> void:
-	cutscene_dir=value
+#func set_cutscene_dir(value : int) -> void:
+	#cutscene_dir=value
 func set_movement_data(value : int) -> void:
 	match value:
 		0:
@@ -761,6 +768,9 @@ func lockon():
 	var target_dist : Vector2 = Vector2.ZERO
 	
 	if Input.is_action_just_pressed("lockon"):
+		enemies = get_tree().get_nodes_in_group("Enemy")
+		if enemies.is_empty():
+			return
 		
 		Events.unlock_from.emit()
 		find_closest_enemy()
@@ -1082,7 +1092,7 @@ func set_start_pos(checkpoint_position):
 
 
 func _on_animation_player_animation_finished(anim_name):
-	anim_count_up()
+	cutscene_handler.anim_count_up()
 	if state==States.ATTACK:
 		#"attack finished")
 		hit_success=false
@@ -1436,29 +1446,51 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 
 
 ####################
-#Cutscene Functions#
+#QTE Functions#
 ####################
 
-func set_speech_text(value : String) -> void:
-	speech.text=str(value)
-
-
-func start_cutscene(value : String) -> void:
-	set_player_control(false)
-	anim_player.play(value)
-	
-func queue_cutscene(cutscenes : Array[String]) -> void:
-	for cutscene in cutscenes:
-		anim_player.queue(cutscene)
-	
-func end_cutscene() -> void:
-	set_player_control(true)
-	anim_player.play("RESET")
-	anim_count=0
-	set_movement_data(0)
-
-func anim_count_up() -> void:
-	if not player_control_active:
-		anim_count+=1
+func qte_input():
+	if Input.is_action_just_pressed("attack"):
+		attack_qte.emit()
+		hit_stop.end_hit_stop()
+	elif Input.is_action_just_pressed("Dodge"):
+		dodge_qte.emit()
+		hit_stop.end_hit_stop()
+	elif Input.is_action_just_pressed("parry"):
+		block_qte.emit()
+		hit_stop.end_hit_stop()
+	elif Input.is_action_just_pressed("special_attack"):
+		special_atk_qte.emit()
+		hit_stop.end_hit_stop()
 	else:
 		pass
+		
+		
+func _on_hit_stop_hit_stop_finished() -> void:
+	if qte_handler.actor_control_active:
+		no_input_qte.emit()
+	else:
+		pass
+#func set_speech_text(value : String) -> void:
+	#speech.text=str(value)
+#
+#
+#func start_cutscene(value : String) -> void:
+	#set_actor_control(false)
+	#anim_player.play(value)
+	#
+#func queue_cutscene(cutscenes : Array[String]) -> void:
+	#for cutscene in cutscenes:
+		#anim_player.queue(cutscene)
+	#
+#func end_cutscene() -> void:
+	#set_actor_control(true)
+	#anim_player.play("RESET")
+	#anim_count=0
+	#set_movement_data(0)
+#
+#func anim_count_up() -> void:
+	#if not player_control_active:
+		#anim_count+=1
+	#else:
+		#pass

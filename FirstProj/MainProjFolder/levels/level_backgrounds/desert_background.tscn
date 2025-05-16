@@ -8,6 +8,7 @@
 [node name="Desert_Background" type="Node2D"]
 
 [node name="ParallaxLayer" type="ParallaxBackground" parent="."]
+scroll_ignore_camera_zoom = true
 
 [node name="Sky" type="ParallaxLayer" parent="ParallaxLayer"]
 motion_scale = Vector2(0, 0)

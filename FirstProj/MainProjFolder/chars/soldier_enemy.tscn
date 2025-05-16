@@ -1,4 +1,4 @@
-[gd_scene load_steps=142 format=3 uid="uid://b5d2nkkrrcixy"]
+[gd_scene load_steps=145 format=3 uid="uid://b5d2nkkrrcixy"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_ojqla"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ibi2a"]
@@ -117,6 +117,8 @@
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="105_yvx0r"]
 [ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="115_he81y"]
 [ext_resource type="PackedScene" uid="uid://bro4najrj7577" path="res://Component/UI_Rec/npc_stats.tscn" id="115_p17nh"]
+[ext_resource type="Script" uid="uid://wai5i0eghoou" path="res://Component/functions/QTEHandler.gd" id="118_6eofm"]
+[ext_resource type="Script" uid="uid://fi6gye6mlsb6" path="res://Component/functions/CutsceneHandler.gd" id="118_jjike"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p1s76"]
 animations = [{
@@ -1430,6 +1432,8 @@ _data = {
 &"staggered": SubResource("Animation_2kcob")
 }
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_he81y"]
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3lv2e"]
 radius = 8.0
 height = 38.0
@@ -1478,7 +1482,8 @@ process_material = SubResource("ParticleProcessMaterial_j0qvy")
 
 [node name="AnimationPlayer" parent="." index="2"]
 libraries = {
-&"": SubResource("AnimationLibrary_c6g3t")
+&"": SubResource("AnimationLibrary_c6g3t"),
+&"Cutscene": SubResource("AnimationLibrary_he81y")
 }
 
 [node name="CollisionShape2D" parent="." index="3"]
@@ -1724,6 +1729,25 @@ bt_player = NodePath("../../BTPlayer")
 script = ExtResource("95_ivw15")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
+
+[node name="Speed" type="Label" parent="." index="42"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="QTEHandler" type="Node" parent="." index="43" node_paths=PackedStringArray("actor", "anim_player", "speech", "qte_pause")]
+script = ExtResource("118_6eofm")
+actor = NodePath("..")
+anim_player = NodePath("../AnimationPlayer")
+speech = NodePath("../Speed")
+qte_pause = NodePath("../HitStop")
+metadata/_custom_type_script = "uid://wai5i0eghoou"
+
+[node name="CutsceneHandler" type="Node" parent="." index="44" node_paths=PackedStringArray("actor", "anim_player", "speech")]
+script = ExtResource("118_jjike")
+actor = NodePath("..")
+anim_player = NodePath("../AnimationPlayer")
+speech = NodePath("../Speed")
+metadata/_custom_type_script = "uid://fi6gye6mlsb6"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]

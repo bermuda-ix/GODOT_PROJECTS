@@ -1,7 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=28 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_7j8nt"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
+[ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_tnflb"]
 [ext_resource type="PackedScene" uid="uid://2t2be0q7lqvs" path="res://Art_Components/tile_maps/lab_architect.tscn" id="3_fyow3"]
 [ext_resource type="PackedScene" uid="uid://blsmgy883jm3a" path="res://levels/level_backgrounds/desert_background.tscn" id="4_iov4b"]
 [ext_resource type="PackedScene" uid="uid://bt6url6xt1nqm" path="res://Component/interactables/lab_door_switch.tscn" id="5_ru525"]
@@ -15,6 +16,10 @@
 [ext_resource type="PackedScene" uid="uid://dak3j323lms0s" path="res://chars/sleeping_guard.tscn" id="12_jyauw"]
 [ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="14_dmeha"]
 [ext_resource type="PackedScene" uid="uid://bvvdaxqcb1uvh" path="res://chars/mech_ranged.tscn" id="14_h7re7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h7re7"]
+resource_local_to_scene = true
+size = Vector2(37.8948, 53.5486)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_htxyq"]
 vertices = PackedVector2Array(1645.83, 430, 1122, 430, 1122, 322, 1882.08, 322)
@@ -49,11 +54,152 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(1949, 738, 1949, 801, 2
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jyauw"]
 size = Vector2(68, 577)
 
+[sub_resource type="Animation" id="Animation_h7re7"]
+resource_name = "INTRO"
+length = 11.6
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("idle_walk", "idle_speech", "check_equipment"),
+"times": PackedFloat32Array(0, 2.5, 7.7)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PC/Speech:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(3.26667, 5.29185),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PC/Speech:text")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3.26667, 3.5, 3.73333, 4, 4.23333, 4.46667, 4.73333, 4.96509, 5.19843),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [".", "..", "...", ".", "..", "...", ".", "..", "..."]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PC/Camera_Position:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 5.29302, 6, 7, 7.46667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(226.5, -98.5), Vector2(226.5, -98.5), Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PC/Camera_Position/Camera2D:zoom")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 5.29086, 6, 7, 7.46451),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1, 1)]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(11.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_tnflb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/Speech:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PC/Speech:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["..."]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PC/Camera_Position:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PC/Camera_Position/Camera2D:zoom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tnflb"]
+_data = {
+&"INTRO": SubResource("Animation_h7re7"),
+&"RESET": SubResource("Animation_tnflb")
+}
+
 [node name="PrologueLvl" instance=ExtResource("1_7j8nt")]
+next_level = ExtResource("2_tnflb")
+lvl_type = "adv"
 
 [node name="PC" parent="." index="1" instance=ExtResource("2_dtpw0")]
-position = Vector2(138, 450)
+position = Vector2(97, 438)
 scale = Vector2(2, 2)
+
+[node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
+shape = SubResource("RectangleShape2D_h7re7")
+
+[node name="Speech" parent="PC" index="21"]
+visible = true
 
 [node name="LabArchitect" parent="." index="2" instance=ExtResource("3_fyow3")]
 position = Vector2(-8, 392)
@@ -218,6 +364,7 @@ position = Vector2(656, 457)
 
 [node name="MechRanged" parent="Enemy/MiniBosses" index="0" instance=ExtResource("14_h7re7")]
 position = Vector2(2000, 764)
+lvl_boss = true
 
 [node name="AirNavs" type="Node2D" parent="." index="11"]
 
@@ -283,7 +430,15 @@ offset_right = 1206.0
 offset_bottom = 77.0
 text = "Shift + Space while locked on: Flip over"
 
-[node name="Bounderies" type="StaticBody2D" parent="." index="17"]
+[node name="Bounderies2" type="StaticBody2D" parent="." index="17"]
+position = Vector2(1886, 460)
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounderies2" index="0"]
+position = Vector2(24, 278.5)
+shape = SubResource("RectangleShape2D_jyauw")
+
+[node name="Bounderies" type="StaticBody2D" parent="." index="18"]
 position = Vector2(-1, 0)
 collision_mask = 3
 
@@ -291,7 +446,12 @@ collision_mask = 3
 position = Vector2(24, 278.5)
 shape = SubResource("RectangleShape2D_jyauw")
 
-[node name="DoorsAndSwitches" type="Node" parent="." index="18"]
+[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="19"]
+libraries = {
+&"": SubResource("AnimationLibrary_tnflb")
+}
+
+[node name="DoorsAndSwitches" type="Node" parent="." index="20"]
 
 [node name="Elevator" parent="DoorsAndSwitches" index="0" instance=ExtResource("14_dmeha")]
 position = Vector2(3627, 525)
@@ -300,3 +460,11 @@ stops_ratio = Array[float]([0.0, 0.5, 0.0])
 [node name="lab_door_switch" parent="DoorsAndSwitches" index="1" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
 position = Vector2(2072, 65)
 door_connect = NodePath("../Elevator")
+
+[connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
+[connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]
+[connection signal="dodge_qte" from="PC" to="." method="_on_pc_dodge_qte"]
+[connection signal="no_input_qte" from="PC" to="." method="_on_pc_no_input_qte"]
+[connection signal="special_atk_qte" from="PC" to="." method="_on_pc_special_atk_qte"]
+
+[editable path="PC"]

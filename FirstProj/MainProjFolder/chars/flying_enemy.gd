@@ -233,3 +233,8 @@ func target_lock():
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	player_found=true
 	set_state(current_state, States.CHASE)
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	player_found=false
+	set_state(current_state, States.WANDER)

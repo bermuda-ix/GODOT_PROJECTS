@@ -21,6 +21,9 @@ signal deactivate_boss
 signal activate_regular
 signal deactivate_regular
 signal allied_enemy_hit
+signal boss_died
+
+
 
 signal activate
 signal deactivate
@@ -37,7 +40,10 @@ signal get_player_data
 signal lockon_to
 signal unlock_from
 
-#Cutscenes
+#Cutscenes and QTEs
 signal start_cutscene
 signal queue_cutscene
 signal end_cutsene
+signal start_qte
+signal qte_choice
+signal qte_end

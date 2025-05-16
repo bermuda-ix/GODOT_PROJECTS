@@ -12,7 +12,7 @@ func _process(delta):
 
 
 func _on_main_menu_pressed():
-	get_tree().change_scene_to_file("res://.godot/exported/133200997/export-8b03550a1e82db90fe95208a9e9dbb82-main_menu.scn")
+	get_tree().change_scene_to_file(LevelList.MAIN_MENU)
 	
 
 func _on_quit_pressed():
