@@ -1,21 +1,27 @@
-[gd_scene load_steps=402 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=412 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
 [ext_resource type="Texture2D" uid="uid://d2ggaktiv0hrj" path="res://knight.png" id="2_b7jgr"]
 [ext_resource type="Texture2D" uid="uid://rl1y4h8u1rk5" path="res://Art_Components/PixelPrototypePlayer/MC/mc_combat_test.png" id="3_81nyk"]
 [ext_resource type="Texture2D" uid="uid://c74d14ub8w3oa" path="res://Art_Components/Shotgun/Escopeta.png" id="4_2ahp4"]
+[ext_resource type="Texture2D" uid="uid://fstxohulr1fd" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Crouch/Crouch01.png" id="4_aon2p"]
 [ext_resource type="Texture2D" uid="uid://jrn865h2pyur" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash01.png" id="4_gobm8"]
 [ext_resource type="Script" uid="uid://cnxm24jqclb68" path="res://Component/health.gd" id="4_q0gnn"]
+[ext_resource type="Texture2D" uid="uid://c5vhg44ckc638" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Crouch/Crouch02.png" id="5_6tjyr"]
 [ext_resource type="Texture2D" uid="uid://3d6b01276t3v" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash02.png" id="5_77biq"]
 [ext_resource type="Texture2D" uid="uid://dus86lxw4ytis" path="res://Art_Components/Shotgun/Efecto.png" id="5_pvc8c"]
+[ext_resource type="Texture2D" uid="uid://wmwa7xk2fpuu" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Crouch/Crouch03.png" id="6_cdo2o"]
 [ext_resource type="Texture2D" uid="uid://dv3l2s77h7bq8" path="res://Art_Components/Shotgun/BalaEscopeta.png" id="6_mbdqo"]
 [ext_resource type="Texture2D" uid="uid://b1xxofqwimhtb" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash03.png" id="6_mlauo"]
 [ext_resource type="Script" uid="uid://5ijvah6jjgdb" path="res://Component/hitbox_template.gd" id="6_y7jp7"]
 [ext_resource type="AudioStream" uid="uid://dxedk74ivrhne" path="res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - small knock.wav" id="7_02w0c"]
 [ext_resource type="Texture2D" uid="uid://dgvmkb487nm32" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash04.png" id="7_ctn4q"]
+[ext_resource type="Texture2D" uid="uid://dm0e10xhd34i" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Crouch/Crouch04.png" id="7_q58rh"]
 [ext_resource type="Script" uid="uid://dj5amth02vbhe" path="res://Component/parrybox_template.gd" id="8_7q1rp"]
 [ext_resource type="Texture2D" uid="uid://tcp20ojs7fam" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash05.png" id="8_e6snp"]
+[ext_resource type="Texture2D" uid="uid://bjwl7mwx5bykl" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Crouch/Crouch05.png" id="8_hpd44"]
+[ext_resource type="Texture2D" uid="uid://c7mm3nbl4d3fm" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Crouch/Crouch06.png" id="9_7k7vw"]
 [ext_resource type="Texture2D" uid="uid://cmul76rmqdspd" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash06.png" id="9_k204x"]
 [ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="9_s8nmr"]
 [ext_resource type="Texture2D" uid="uid://cxc05461s8ihy" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Dash/Dash07.png" id="10_uef4t"]
@@ -68,9 +74,9 @@
 [ext_resource type="FontFile" uid="uid://n231m6uqsq6x" path="res://demo/assets/fonts/junction_bold.otf" id="59_4yxaj"]
 [ext_resource type="Script" uid="uid://fi6gye6mlsb6" path="res://Component/functions/CutsceneHandler.gd" id="67_67eo0"]
 [ext_resource type="Script" uid="uid://wai5i0eghoou" path="res://Component/functions/QTEHandler.gd" id="68_2ttag"]
+[ext_resource type="AudioStream" uid="uid://bh3fmbavwgkpt" path="res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/10 Guage Shotgun-SoundBible.com-74120584.wav" id="69_6tjyr"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
-size = Vector2(6.58371, 20)
+[sub_resource type="Curve2D" id="Curve2D_2ttag"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pqdiw"]
 atlas = ExtResource("3_81nyk")
@@ -1350,6 +1356,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("4_aon2p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_6tjyr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_cdo2o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_q58rh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hpd44")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_7k7vw")
+}],
+"loop": true,
+"name": &"Crouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_maiqs")
 }, {
 "duration": 1.0,
@@ -2605,6 +2634,9 @@ size = Vector2(37.8948, 53.5486)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_grfiy"]
 size = Vector2(55.579, 3.26311)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
+size = Vector2(6.58371, 20)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_52hex"]
 size = Vector2(7, 12)
 
@@ -2614,7 +2646,7 @@ length = 0.55
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -2637,7 +2669,7 @@ tracks/1/use_blend = true
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -2649,7 +2681,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D:animation")
+tracks/3/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -2661,7 +2693,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
+tracks/4/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -2673,7 +2705,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
+tracks/5/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:shape:size")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -2685,7 +2717,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
+tracks/6/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -2701,7 +2733,7 @@ length = 0.45
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -2713,7 +2745,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -2725,7 +2757,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:animation")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -2737,7 +2769,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
+tracks/3/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -2749,7 +2781,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
+tracks/4/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -2761,7 +2793,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
+tracks/5/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:shape:size")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -2777,7 +2809,7 @@ length = 0.45
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -2789,7 +2821,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -2801,7 +2833,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:animation")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -2813,7 +2845,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
+tracks/3/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -2825,7 +2857,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
+tracks/4/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -2841,7 +2873,7 @@ length = 0.45
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -2853,7 +2885,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -2865,7 +2897,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:animation")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -2881,7 +2913,7 @@ length = 0.45
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -2904,7 +2936,7 @@ tracks/1/use_blend = true
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -2916,7 +2948,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D:animation")
+tracks/3/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -2932,7 +2964,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -2955,7 +2987,7 @@ tracks/1/use_blend = true
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -2967,7 +2999,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D:animation")
+tracks/3/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -2983,7 +3015,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -2995,7 +3027,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -3007,7 +3039,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D/HitBox/CollisionShape2D:disabled")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -3019,7 +3051,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/HitBox/CollisionShape2D:shape:size")
+tracks/3/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/CollisionShape2D:shape:size")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -3031,7 +3063,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D/HitBox/CollisionShape2D:position")
+tracks/4/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/CollisionShape2D:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -3047,7 +3079,7 @@ length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3070,7 +3102,7 @@ tracks/1/use_blend = true
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -3082,7 +3114,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D:animation")
+tracks/3/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -3094,7 +3126,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D:rotation")
+tracks/4/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -3106,7 +3138,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
+tracks/5/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -3118,7 +3150,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
+tracks/6/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:shape:size")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -3135,7 +3167,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3163,7 +3195,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3175,7 +3207,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -3187,7 +3219,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:rotation")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -3237,7 +3269,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3249,7 +3281,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -3261,7 +3293,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:rotation")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -3273,7 +3305,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
+tracks/3/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -3285,7 +3317,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast:visible")
+tracks/4/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -3297,7 +3329,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast3:visible")
+tracks/5/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast3:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -3309,7 +3341,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast4:visible")
+tracks/6/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast4:visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -3321,7 +3353,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast2:visible")
+tracks/7/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast2:visible")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -3333,7 +3365,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast5:visible")
+tracks/8/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast5:visible")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -3345,7 +3377,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:disabled")
+tracks/9/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:disabled")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -3357,7 +3389,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("AnimatedSprite2D:modulate")
+tracks/10/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:modulate")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -3369,7 +3401,7 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/11/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:self_modulate")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
@@ -3393,7 +3425,7 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("AnimatedSprite2D/Shotty/CPUParticles2D:emitting")
+tracks/13/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/CPUParticles2D:emitting")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
@@ -3429,7 +3461,7 @@ tracks/15/keys = {
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("AnimatedSprite2D/Shell:visible")
+tracks/16/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shell:visible")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
@@ -3441,7 +3473,7 @@ tracks/16/keys = {
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("AnimatedSprite2D/Shell:scale")
+tracks/17/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shell:scale")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
@@ -3453,7 +3485,7 @@ tracks/17/keys = {
 tracks/18/type = "value"
 tracks/18/imported = false
 tracks/18/enabled = true
-tracks/18/path = NodePath("AnimatedSprite2D/Shell:position")
+tracks/18/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shell:position")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
@@ -3465,7 +3497,7 @@ tracks/18/keys = {
 tracks/19/type = "value"
 tracks/19/imported = false
 tracks/19/enabled = true
-tracks/19/path = NodePath("AnimatedSprite2D/Shell:rotation")
+tracks/19/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shell:rotation")
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
@@ -3477,7 +3509,7 @@ tracks/19/keys = {
 tracks/20/type = "value"
 tracks/20/imported = false
 tracks/20/enabled = true
-tracks/20/path = NodePath("AnimatedSprite2D/HitBox/CollisionShape2D:disabled")
+tracks/20/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/CollisionShape2D:disabled")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
@@ -3489,7 +3521,7 @@ tracks/20/keys = {
 tracks/21/type = "value"
 tracks/21/imported = false
 tracks/21/enabled = true
-tracks/21/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
+tracks/21/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:position")
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
@@ -3501,7 +3533,7 @@ tracks/21/keys = {
 tracks/22/type = "value"
 tracks/22/imported = false
 tracks/22/enabled = true
-tracks/22/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
+tracks/22/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:rotation")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
@@ -3513,7 +3545,7 @@ tracks/22/keys = {
 tracks/23/type = "value"
 tracks/23/imported = false
 tracks/23/enabled = true
-tracks/23/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
+tracks/23/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision:shape:size")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = {
@@ -3525,7 +3557,7 @@ tracks/23/keys = {
 tracks/24/type = "value"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath("AnimatedSprite2D/HitBox/CollisionShape2D:shape:size")
+tracks/24/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/CollisionShape2D:shape:size")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
@@ -3537,7 +3569,7 @@ tracks/24/keys = {
 tracks/25/type = "value"
 tracks/25/imported = false
 tracks/25/enabled = true
-tracks/25/path = NodePath("AnimatedSprite2D/HitBox/CollisionShape2D:position")
+tracks/25/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox/CollisionShape2D:position")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
@@ -3549,38 +3581,26 @@ tracks/25/keys = {
 tracks/26/type = "value"
 tracks/26/imported = false
 tracks/26/enabled = true
-tracks/26/path = NodePath("Camera_Position/Camera2D:zoom")
+tracks/26/path = NodePath("Speech:visible")
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
 tracks/26/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
+"update": 1,
+"values": [false]
 }
 tracks/27/type = "value"
 tracks/27/imported = false
 tracks/27/enabled = true
-tracks/27/path = NodePath("Camera_Position/Camera2D:position")
+tracks/27/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty:rotation")
 tracks/27/interp = 1
 tracks/27/loop_wrap = true
 tracks/27/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/28/type = "value"
-tracks/28/imported = false
-tracks/28/enabled = true
-tracks/28/path = NodePath("Speech:visible")
-tracks/28/interp = 1
-tracks/28/loop_wrap = true
-tracks/28/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"values": [-1.5643]
 }
 
 [sub_resource type="Animation" id="Animation_67eo0"]
@@ -3589,7 +3609,7 @@ length = 3.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3601,7 +3621,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -3643,7 +3663,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3655,7 +3675,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -3671,7 +3691,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3683,7 +3703,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -3699,7 +3719,7 @@ length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3711,7 +3731,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -3721,12 +3741,40 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 }
 
+[sub_resource type="Animation" id="Animation_k8ewf"]
+resource_name = "flip_backwards"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"FrontFlip"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.133333, 0.2, 0.266667, 0.333333, 0.4, 0.433333, 0.466667, 0.5, 0.533333, 0.566667, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+}
+
 [sub_resource type="Animation" id="Animation_2ttag"]
 resource_name = "guard"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3738,7 +3786,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -3754,7 +3802,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3766,7 +3814,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -3783,7 +3831,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:rotation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3795,7 +3843,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -3807,7 +3855,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:animation")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -3824,7 +3872,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:rotation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3836,7 +3884,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -3848,7 +3896,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:animation")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -3879,7 +3927,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3891,7 +3939,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -3935,7 +3983,7 @@ length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3947,7 +3995,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -3959,11 +4007,11 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_tj0ec"]
 resource_name = "roll"
-length = 0.65
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -3975,14 +4023,14 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [5, 1, 2, 3, 4, 5, 9]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 }
 
 [sub_resource type="Animation" id="Animation_i1mvx"]
@@ -3992,7 +4040,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -4004,7 +4052,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -4019,7 +4067,7 @@ resource_name = "shotgun_attack"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -4031,7 +4079,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast:visible")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -4043,7 +4091,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast3:visible")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast3:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -4055,7 +4103,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast4:visible")
+tracks/3/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast4:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -4067,7 +4115,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast2:visible")
+tracks/4/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast2:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -4079,7 +4127,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast5:visible")
+tracks/5/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast5:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -4091,7 +4139,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:disabled")
+tracks/6/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:disabled")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -4103,7 +4151,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("AnimatedSprite2D/Shotty/CPUParticles2D:emitting")
+tracks/7/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/CPUParticles2D:emitting")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -4119,7 +4167,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -4131,7 +4179,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast:visible")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -4143,7 +4191,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast3:visible")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast3:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -4155,7 +4203,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast4:visible")
+tracks/3/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast4:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -4167,7 +4215,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast2:visible")
+tracks/4/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast2:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -4179,7 +4227,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast5:visible")
+tracks/5/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast5:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -4191,7 +4239,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:disabled")
+tracks/6/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:disabled")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -4203,7 +4251,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("AnimatedSprite2D/Shotty/CPUParticles2D:emitting")
+tracks/7/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/CPUParticles2D:emitting")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -4219,7 +4267,7 @@ length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/Shell:visible")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shell:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -4231,7 +4279,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D/Shell:scale")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shell:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -4243,7 +4291,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D/Shell:position")
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shell:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -4255,7 +4303,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/Shell:rotation")
+tracks/3/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shell:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -4272,7 +4320,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -4284,7 +4332,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -4301,7 +4349,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -4313,7 +4361,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -4329,46 +4377,22 @@ length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera_Position/Camera2D:zoom")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 2.5, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera_Position/Camera2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1, 2.5, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(429, -160), Vector2(429, -160), Vector2(0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"Idle"]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
@@ -4392,6 +4416,7 @@ _data = {
 &"dodge": SubResource("Animation_pskkv"),
 &"dodge_roll": SubResource("Animation_yo2cx"),
 &"flip": SubResource("Animation_s1lpt"),
+&"flip_backwards": SubResource("Animation_k8ewf"),
 &"guard": SubResource("Animation_2ttag"),
 &"hit": SubResource("Animation_aki4b"),
 &"idle": SubResource("Animation_xowcg"),
@@ -4414,7 +4439,7 @@ length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -4426,7 +4451,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -4442,7 +4467,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -4454,7 +4479,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -4470,7 +4495,7 @@ length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -4482,7 +4507,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -4492,11 +4517,119 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6]
 }
 
+[sub_resource type="Animation" id="Animation_2kwqt"]
+resource_name = "shoot_down"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Crouch"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-1.5643, 0.928515]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.80508, 0.928526, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast2:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.533333, 0.80508, 0.961859, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast3:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.566667, 0.80508, 0.995192, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast4:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.80508, 1.02853, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/Shotty/ShottyBlast5:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.80508, 1.02853, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+tracks/7/type = "audio"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AudioStreamPlayer2D")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("69_6tjyr")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("69_6tjyr")
+}],
+"times": PackedFloat32Array(0.466667, 0.9)
+}
+tracks/7/use_blend = true
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7nr8h"]
 _data = {
 &"punch_1": SubResource("Animation_7nr8h"),
 &"punch_2": SubResource("Animation_3lr8b"),
-&"punch_3": SubResource("Animation_vnnqj")
+&"punch_3": SubResource("Animation_vnnqj"),
+&"shoot_down": SubResource("Animation_2kwqt")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oupih"]
@@ -4532,14 +4665,14 @@ floor_snap_length = 2.0
 script = ExtResource("1_x210m")
 movement_data = ExtResource("2_4grev")
 health = NodePath("Health")
-hitbox = NodePath("AnimatedSprite2D/HitBox")
+hitbox = NodePath("Path2D/PathFollow2D/AnimatedSprite2D/HitBox")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, -1)
-scale = Vector2(1.06323, 0.994939)
-shape = SubResource("RectangleShape2D_pmx5o")
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_2ttag")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Path2D/PathFollow2D"]
 texture_filter = 1
 position = Vector2(0, 8)
 scale = Vector2(0.395833, 0.490476)
@@ -4567,28 +4700,28 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "e40bf6776b8b2a4268a34f1cf42c192c"
 
-[node name="Shotty" type="Sprite2D" parent="AnimatedSprite2D"]
+[node name="Shotty" type="Sprite2D" parent="Path2D/PathFollow2D/AnimatedSprite2D"]
 position = Vector2(-1.0757e-09, -16.3107)
 rotation = -1.5643
 scale = Vector2(0.0885122, 0.0871019)
 texture = ExtResource("4_2ahp4")
 offset = Vector2(10.6825, 104.176)
 
-[node name="ShottyBlast" type="Sprite2D" parent="AnimatedSprite2D/Shotty"]
+[node name="ShottyBlast" type="Sprite2D" parent="Path2D/PathFollow2D/AnimatedSprite2D/Shotty"]
 visible = false
 position = Vector2(423.221, -0.696136)
 rotation = -0.518327
 scale = Vector2(0.190735, 0.158192)
 texture = ExtResource("5_pvc8c")
 
-[node name="ShottyBlast2" type="Sprite2D" parent="AnimatedSprite2D/Shotty"]
+[node name="ShottyBlast2" type="Sprite2D" parent="Path2D/PathFollow2D/AnimatedSprite2D/Shotty"]
 position = Vector2(623.146, 118.605)
 rotation = -0.518327
 scale = Vector2(0.190735, 0.158192)
 texture = ExtResource("5_pvc8c")
 flip_h = true
 
-[node name="ShottyBlast3" type="Sprite2D" parent="AnimatedSprite2D/Shotty"]
+[node name="ShottyBlast3" type="Sprite2D" parent="Path2D/PathFollow2D/AnimatedSprite2D/Shotty"]
 position = Vector2(621.907, -77.8284)
 rotation = -0.518327
 scale = Vector2(0.190735, 0.158192)
@@ -4596,19 +4729,19 @@ texture = ExtResource("5_pvc8c")
 flip_h = true
 flip_v = true
 
-[node name="ShottyBlast4" type="Sprite2D" parent="AnimatedSprite2D/Shotty"]
+[node name="ShottyBlast4" type="Sprite2D" parent="Path2D/PathFollow2D/AnimatedSprite2D/Shotty"]
 position = Vector2(795.862, -128.103)
 rotation = -0.518327
 scale = Vector2(0.190735, 0.158192)
 texture = ExtResource("5_pvc8c")
 
-[node name="ShottyBlast5" type="Sprite2D" parent="AnimatedSprite2D/Shotty"]
+[node name="ShottyBlast5" type="Sprite2D" parent="Path2D/PathFollow2D/AnimatedSprite2D/Shotty"]
 position = Vector2(747.466, 93.2176)
 rotation = -2.39415
 scale = Vector2(0.190735, 0.158192)
 texture = ExtResource("5_pvc8c")
 
-[node name="SpAtkHitBox" type="Area2D" parent="AnimatedSprite2D/Shotty" groups=["sp_atk_default"]]
+[node name="SpAtkHitBox" type="Area2D" parent="Path2D/PathFollow2D/AnimatedSprite2D/Shotty" groups=["sp_atk_default"]]
 position = Vector2(-7.62939e-06, 1.46776e-06)
 rotation = -0.00477064
 scale = Vector2(24.5547, 24.8954)
@@ -4616,11 +4749,11 @@ skew = -9.54866e-05
 collision_layer = 8192
 collision_mask = 16
 
-[node name="SpAtkCone" type="CollisionPolygon2D" parent="AnimatedSprite2D/Shotty/SpAtkHitBox"]
+[node name="SpAtkCone" type="CollisionPolygon2D" parent="Path2D/PathFollow2D/AnimatedSprite2D/Shotty/SpAtkHitBox"]
 polygon = PackedVector2Array(0, 0, 36, 11, 36, -11)
 disabled = true
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="AnimatedSprite2D/Shotty"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Path2D/PathFollow2D/AnimatedSprite2D/Shotty"]
 position = Vector2(273.844, -1.83301)
 emitting = false
 amount = 15
@@ -4632,13 +4765,13 @@ gravity = Vector2(0, 0)
 initial_velocity_min = 620.88
 initial_velocity_max = 703.3
 
-[node name="Shell" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
+[node name="Shell" type="AnimatedSprite2D" parent="Path2D/PathFollow2D/AnimatedSprite2D"]
 visible = false
 position = Vector2(-2.69225, -22.5)
 scale = Vector2(0.0186319, 0.0196802)
 sprite_frames = SubResource("SpriteFrames_v22jq")
 
-[node name="PlayerHit" type="GPUParticles2D" parent="AnimatedSprite2D"]
+[node name="PlayerHit" type="GPUParticles2D" parent="Path2D/PathFollow2D/AnimatedSprite2D"]
 modulate = Color(0.827053, 0, 0.0905092, 1)
 position = Vector2(0, -18.3495)
 emitting = false
@@ -4651,21 +4784,26 @@ trail_enabled = true
 trail_lifetime = 0.1
 process_material = SubResource("ParticleProcessMaterial_34r87")
 
-[node name="HitBox" type="Area2D" parent="AnimatedSprite2D"]
+[node name="HitBox" type="Area2D" parent="Path2D/PathFollow2D/AnimatedSprite2D"]
 position = Vector2(0, -16.3107)
 collision_layer = 64
 collision_mask = 17
 script = ExtResource("6_y7jp7")
 
-[node name="HBCollision" type="CollisionShape2D" parent="AnimatedSprite2D/HitBox"]
+[node name="HBCollision" type="CollisionShape2D" parent="Path2D/PathFollow2D/AnimatedSprite2D/HitBox"]
 light_mask = 0
 position = Vector2(9, -5)
 shape = SubResource("RectangleShape2D_0g83a")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/AnimatedSprite2D/HitBox"]
 position = Vector2(6.02321e-07, 20.7956)
 shape = SubResource("RectangleShape2D_grfiy")
 disabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -1)
+scale = Vector2(1.06323, 0.994939)
+shape = SubResource("RectangleShape2D_pmx5o")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("4_q0gnn")
@@ -4678,12 +4816,6 @@ metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
-
-[node name="Camera_Position" type="Node2D" parent="."]
-
-[node name="Camera2D" type="Camera2D" parent="Camera_Position"]
-position_smoothing_enabled = true
-position_smoothing_speed = 3.0
 
 [node name="HazardDetector" type="Area2D" parent="."]
 collision_layer = 0
@@ -4805,8 +4937,8 @@ speech = NodePath("../Speech")
 qte_pause = NodePath("../HitStop")
 metadata/_custom_type_script = "uid://wai5i0eghoou"
 
-[connection signal="area_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_area_entered"]
-[connection signal="body_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="area_entered" from="Path2D/PathFollow2D/AnimatedSprite2D/HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="body_entered" from="Path2D/PathFollow2D/AnimatedSprite2D/HitBox" to="." method="_on_hit_box_body_entered"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="area_entered" from="HazardDetector" to="." method="_on_hazard_detector_area_entered"]
 [connection signal="body_entered" from="HazardDetector" to="." method="_on_hazard_detector_body_entered"]

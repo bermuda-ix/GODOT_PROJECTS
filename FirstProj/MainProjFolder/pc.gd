@@ -63,13 +63,21 @@ var previous = "IDLE"
 var atk_state="ATK_1"
 
 #Animation var
-@onready var animated_sprite_2d = $AnimatedSprite2D
+@onready var animated_sprite_2d = $Path2D/PathFollow2D/AnimatedSprite2D
 @onready var anim_player = $AnimationPlayer
 
 @onready var speech: Label = $Speech
 #Cutscenes
 @onready var anim_count : int = 0
 @onready var cutscene_handler: CutsceneHandler = $CutsceneHandler
+@onready var path_2d: Path2D = $Path2D
+@onready var path_follow_2d: PathFollow2D = $Path2D/PathFollow2D
+@onready var path_speed : int = 0 : set=set_path_speed
+@onready var path_start : bool = false : set=set_path_start
+@export var camera_pos : camera_position
+#@onready var camera_2d: Camera2D = $Camera2D
+
+
 #Quick-Time Events
 @onready var qte_handler: QTEHandler = $QTEHandler
 signal attack_qte
@@ -86,23 +94,22 @@ signal no_input_qte
 @onready var starting_position : set = set_start_pos, get = get_start_pos
 @onready var label = $STATE
 
-@onready var hit_box: HitBox = $AnimatedSprite2D/HitBox
-@onready var hb_collision: CollisionShape2D = $AnimatedSprite2D/HitBox/HBCollision
+@onready var hit_box: HitBox = $Path2D/PathFollow2D/AnimatedSprite2D/HitBox
+@onready var hb_collision: CollisionShape2D = $Path2D/PathFollow2D/AnimatedSprite2D/HitBox/HBCollision
 @onready var pb_rot = $ParryBox/PBRot
 @onready var parry_box = $ParryBox
 @onready var counter_box_collision = $CounterBox/CounterBoxCollision
 
-
 @onready var hurt_box_detect = $HurtBox/CollisionShape2D
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var hurt_box = $HurtBox
-@onready var shotty = $AnimatedSprite2D/Shotty
-@onready var sp_atk_hit_box = $AnimatedSprite2D/Shotty/SpAtkHitBox
-@onready var sp_atk_cone = $AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone
-@onready var cpu_particles_2d = $AnimatedSprite2D/Shotty/CPUParticles2D
+@onready var shotty = $Path2D/PathFollow2D/AnimatedSprite2D/Shotty
+@onready var sp_atk_hit_box = $Path2D/PathFollow2D/AnimatedSprite2D/Shotty/SpAtkHitBox
+@onready var sp_atk_cone = $Path2D/PathFollow2D/AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone
+@onready var cpu_particles_2d = $Path2D/PathFollow2D/AnimatedSprite2D/Shotty/CPUParticles2D
 @onready var audio_stream_player_2d = $AudioStreamPlayer2D
 @onready var hit_sound = hit1
-@onready var player_hit: GPUParticles2D = $AnimatedSprite2D/PlayerHit
+@onready var player_hit: GPUParticles2D = $Path2D/PathFollow2D/AnimatedSprite2D/PlayerHit
 @onready var hit_stop: HitStop = $HitStop
 
 @onready var enemies : Array =[]
@@ -179,6 +186,7 @@ func _ready():
 	
 func _process(delta):
 	if not cutscene_handler.actor_control_active:
+		
 		if qte_handler.actor_control_active:
 			qte_input()
 		return
@@ -225,12 +233,17 @@ func _process(delta):
 	#air_atk)
 
 func _physics_process(delta):
+	#position=path_follow_2d.position
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		apply_gravity(delta)
 		cutscene_acceleration(cutscene_handler.cutscene_dir, delta)
 		move_and_slide()
+		#if path_start:
+			##position=path_follow_2d.position
+			#run_path()
+		#camera_2d.global_position=camera_pos.global_position
 		return
-	
+		
 	if s_atk==true:
 		return
 	elif state==States.FLIP:
@@ -1443,11 +1456,28 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			knockback.x=-400
 		velocity.x = movement_data.speed + knockback.x
 		set_state(state, States.HIT)
-
-
 ####################
+#Cutscene Functions#
+####################
+
+func attach_path(path : Curve2D):
+	path_2d.curve=path
+func set_path_speed(speed : int) -> void:
+	path_speed=speed
+	print(path_speed)
+func start_path(speed : int):
+	set_path_start(true)
+	set_path_speed(speed)
+	print(speed)
+func set_path_start(value) -> void:
+	path_start=value
+func run_path() -> void:
+	path_follow_2d.progress+=path_speed
+	print(path_speed)
+	print(path_follow_2d.progress)
+###############
 #QTE Functions#
-####################
+###############
 
 func qte_input():
 	if Input.is_action_just_pressed("attack"):
@@ -1471,6 +1501,8 @@ func _on_hit_stop_hit_stop_finished() -> void:
 		no_input_qte.emit()
 	else:
 		pass
+		
+
 #func set_speech_text(value : String) -> void:
 	#speech.text=str(value)
 #

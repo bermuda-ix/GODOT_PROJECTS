@@ -1,10 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=34 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_7j8nt"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
 [ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_tnflb"]
 [ext_resource type="PackedScene" uid="uid://2t2be0q7lqvs" path="res://Art_Components/tile_maps/lab_architect.tscn" id="3_fyow3"]
 [ext_resource type="PackedScene" uid="uid://blsmgy883jm3a" path="res://levels/level_backgrounds/desert_background.tscn" id="4_iov4b"]
+[ext_resource type="Curve2D" uid="uid://jo0boc3igvpj" path="res://Component/resources/curves/prologue_lvl.tres" id="4_p4nhw"]
 [ext_resource type="PackedScene" uid="uid://bt6url6xt1nqm" path="res://Component/interactables/lab_door_switch.tscn" id="5_ru525"]
 [ext_resource type="PackedScene" uid="uid://b8htmq8u3ykss" path="res://Component/interactables/door.tscn" id="6_jykkx"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="7_h0p3s"]
@@ -16,8 +17,9 @@
 [ext_resource type="PackedScene" uid="uid://dak3j323lms0s" path="res://chars/sleeping_guard.tscn" id="12_jyauw"]
 [ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="14_dmeha"]
 [ext_resource type="PackedScene" uid="uid://bvvdaxqcb1uvh" path="res://chars/mech_ranged.tscn" id="14_h7re7"]
+[ext_resource type="Script" uid="uid://b5xtckuuvqief" path="res://levels/camera_pos.gd" id="17_cxkws"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_h7re7"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cxkws"]
 resource_local_to_scene = true
 size = Vector2(37.8948, 53.5486)
 
@@ -53,6 +55,12 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(1949, 738, 1949, 801, 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jyauw"]
 size = Vector2(68, 577)
+
+[sub_resource type="Curve2D" id="Curve2D_p4nhw"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 100, 0.5)
+}
+point_count = 2
 
 [sub_resource type="Animation" id="Animation_h7re7"]
 resource_name = "INTRO"
@@ -91,43 +99,91 @@ tracks/2/keys = {
 "update": 1,
 "values": [".", "..", "...", ".", "..", "...", ".", "..", "..."]
 }
-tracks/3/type = "value"
+tracks/3/type = "method"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PC/Camera_Position:position")
+tracks/3/path = NodePath(".")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 5.29302, 6, 7, 7.46667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 0), Vector2(226.5, -98.5), Vector2(226.5, -98.5), Vector2(0, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PC/Camera_Position/Camera2D:zoom")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 5.29086, 6, 7, 7.46451),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1, 1), Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1, 1)]
-}
-tracks/5/type = "method"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath(".")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
 "times": PackedFloat32Array(11.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
 "method": &"end_cutscene"
 }]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CameraPos:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 4.93333, 5.3, 7.3, 7.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(221, 396), Vector2(221, 396), Vector2(660, 219), Vector2(660, 219), Vector2(221, 396)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("PC:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 2)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("PC/Path2D/PathFollow2D/AnimatedSprite2D:flip_h")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CameraPos/Camera2D:zoom")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 4.93333, 5.30313, 7.3, 7.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("PC/Path2D:curve")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 2.5, 2.56667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [SubResource("Curve2D_p4nhw"), SubResource("Curve2D_p4nhw"), null]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("PC/Path2D/PathFollow2D:progress_ratio")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 2.50112),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_tnflb"]
@@ -159,46 +215,400 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("PC/Camera_Position:position")
+tracks/2/path = NodePath("Enemy/MiniBosses/MechRanged:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(2098, 761)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PC/Camera_Position/Camera2D:zoom")
+tracks/3/path = NodePath("Enemy/MiniBosses/MechRanged/NPCStats:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Enemy/MiniBosses/MechRanged:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("PC:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2325, 776)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("PC:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 2)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("PC/Path2D:curve")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_p4nhw")]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CameraPos:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(221, 396)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("PC/Path2D/PathFollow2D/AnimatedSprite2D:flip_h")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("PC/Path2D/PathFollow2D:progress_ratio")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("PC/Path2D/PathFollow2D:rotates")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/12/type = "animation"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Enemy/MiniBosses/MechRanged/AnimationPlayer")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"clips": PackedStringArray("RESET", "RESET"),
+"times": PackedFloat32Array(0, 0.0333333)
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("PC/Path2D/PathFollow2D/AnimatedSprite2D:scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-0.396, 0.49)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("CameraPos/Camera2D:zoom")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Enemy/MiniBosses/MechRanged/AnimatedSprite2D:flip_h")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Curve2D" id="Curve2D_e3spa"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 90.5, -33.1084, 8.35928, 3.48741, -8.35928, -3.48741, 64, -56.5, 13.494, -4.90691, -13.494, 4.90691, 35.5, -58.5, 3.69771, -9.84888, -3.69771, 9.84888, 9, -31, 0, 0, 0, 0, -0.5, -2.10837)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_kcvht"]
+
+[sub_resource type="Animation" id="Animation_cxkws"]
+resource_name = "mini_boss_kill"
+length = 5.0
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy/MiniBosses/MechRanged/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("shoot_left", "shoot_right", "death"),
+"times": PackedFloat32Array(0.166667, 1.2, 2.93333)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Enemy/MiniBosses/MechRanged:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.53333, 2.66667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(2019, 758), Vector2(2019, 758), Vector2(1999.24, 758)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Enemy/MiniBosses/MechRanged/NPCStats:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Enemy/MiniBosses/MechRanged:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PC:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.16667, 2.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(2325, 776), Vector2(2202, 776), Vector2(2202, 776)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("PC:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-2, 2)]
+}
+tracks/6/type = "animation"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("PC/AnimationPlayer")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"clips": PackedStringArray("flip_backwards", "idle", "roll", "flip", "Cutscene/shoot_down", "flip_backwards"),
+"times": PackedFloat32Array(0, 0.533333, 0.733333, 1.13333, 2.2, 2.96667)
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("PC/Path2D:curve")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.1501, 2.95668, 3.66667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("4_p4nhw"), SubResource("Curve2D_e3spa"), SubResource("Curve2D_kcvht")]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CameraPos:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(2210, 724), Vector2(2210, 724)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("PC/Path2D/PathFollow2D:progress_ratio")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(1.16, 1.86667, 2.06667, 2.96667, 3.66667),
+"transitions": PackedFloat32Array(1, 1, 1e+06, 1, 1),
+"update": 0,
+"values": [0.0, 0.8045, 1.0, 0.0, 1.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("PC/Path2D/PathFollow2D:rotates")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "method"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+tracks/12/type = "method"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("PC/HitStop")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0.333333, 1.67993, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [0.2, 0.5],
+"method": &"hit_stop"
+}, {
+"args": [0.2, 0.5],
+"method": &"hit_stop"
+}, {
+"args": [0.2, 0.5],
+"method": &"hit_stop"
+}]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("PC/Path2D/PathFollow2D/AnimatedSprite2D:scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.396, 0.49)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Enemy/MiniBosses/MechRanged/AnimatedSprite2D:flip_h")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tnflb"]
 _data = {
 &"INTRO": SubResource("Animation_h7re7"),
-&"RESET": SubResource("Animation_tnflb")
+&"RESET": SubResource("Animation_tnflb"),
+&"mini_boss_kill": SubResource("Animation_cxkws")
 }
 
-[node name="PrologueLvl" instance=ExtResource("1_7j8nt")]
+[node name="PrologueLvl" node_paths=PackedStringArray("player") instance=ExtResource("1_7j8nt")]
 next_level = ExtResource("2_tnflb")
+player = NodePath("PC")
 lvl_type = "adv"
 
-[node name="PC" parent="." index="1" instance=ExtResource("2_dtpw0")]
-position = Vector2(97, 438)
+[node name="PC" parent="." index="1" node_paths=PackedStringArray("camera_pos") instance=ExtResource("2_dtpw0")]
+position = Vector2(2325, 776)
 scale = Vector2(2, 2)
+camera_pos = NodePath("../CameraPos")
 
-[node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
-shape = SubResource("RectangleShape2D_h7re7")
+[node name="Path2D" parent="PC" index="0"]
+curve = ExtResource("4_p4nhw")
 
-[node name="Speech" parent="PC" index="21"]
+[node name="PathFollow2D" parent="PC/Path2D" index="0"]
+position = Vector2(1.5, -1.56599)
+rotates = false
+loop = false
+
+[node name="AnimatedSprite2D" parent="PC/Path2D/PathFollow2D" index="0"]
+scale = Vector2(-0.396, 0.49)
+
+[node name="HBCollision" parent="PC/Path2D/PathFollow2D/AnimatedSprite2D/HitBox" index="0"]
+shape = SubResource("RectangleShape2D_cxkws")
+
+[node name="Speech" parent="PC" index="20"]
 visible = true
 
 [node name="LabArchitect" parent="." index="2" instance=ExtResource("3_fyow3")]
@@ -363,7 +773,7 @@ position = Vector2(656, 457)
 [node name="MiniBosses" type="Node" parent="Enemy" index="5"]
 
 [node name="MechRanged" parent="Enemy/MiniBosses" index="0" instance=ExtResource("14_h7re7")]
-position = Vector2(2000, 764)
+position = Vector2(2098, 761)
 lvl_boss = true
 
 [node name="AirNavs" type="Node2D" parent="." index="11"]
@@ -461,6 +871,14 @@ stops_ratio = Array[float]([0.0, 0.5, 0.0])
 position = Vector2(2072, 65)
 door_connect = NodePath("../Elevator")
 
+[node name="CameraPos" type="Node2D" parent="." index="21"]
+position = Vector2(221, 396)
+script = ExtResource("17_cxkws")
+
+[node name="Camera2D" type="Camera2D" parent="CameraPos" index="0"]
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
+
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]
 [connection signal="dodge_qte" from="PC" to="." method="_on_pc_dodge_qte"]
@@ -468,3 +886,4 @@ door_connect = NodePath("../Elevator")
 [connection signal="special_atk_qte" from="PC" to="." method="_on_pc_special_atk_qte"]
 
 [editable path="PC"]
+[editable path="Enemy/MiniBosses/MechRanged"]

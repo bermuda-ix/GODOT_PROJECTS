@@ -1,0 +1,12 @@
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://ieyig6bxo8co"]
+
+[sub_resource type="AudioEffectLowShelfFilter" id="AudioEffectLowShelfFilter_j3pel"]
+resource_name = "LowShelfFilter"
+cutoff_hz = 700.0
+resonance = 0.1
+gain = 2.0
+
+[resource]
+bus/0/volume_db = 1.25825
+bus/0/effect/0/effect = SubResource("AudioEffectLowShelfFilter_j3pel")
+bus/0/effect/0/enabled = true

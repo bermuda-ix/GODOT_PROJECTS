@@ -30,7 +30,7 @@ func end_cutscene() -> void:
 	set_actor_control(true)
 	anim_player.play("RESET")
 	anim_count=0
-	actor.set_movement_data(0)
+	#actor.set_movement_data(0)
 
 func anim_count_up() -> void:
 	if not actor_control_active:

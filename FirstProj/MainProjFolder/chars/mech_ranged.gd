@@ -27,7 +27,9 @@ const JUMP_VELOCITY = -400.0
 @onready var right_explosion: GPUParticles2D = $AnimatedSprite2D/RightExplosion
 @onready var right_sparks: GPUParticles2D = $AnimatedSprite2D/RightExplosion/GPUParticles2D
 
-
+#Cutscene Handler
+@onready var cutscene_handler: CutsceneHandler = $CutsceneHandler
+signal death_cutscene
 #On Screen
 
 #Defense
@@ -201,6 +203,9 @@ func _init_combat_state_machine():
 	combat_state_machine.add_transition(melee_mode, ranged_mode, &"ranged_mode")
 
 func _process(delta: float) -> void:
+	if not cutscene_handler.actor_control_active: 
+		vision_handler.handle_vision()
+		return
 	#print(turret.shoot_timer.time_left)
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
@@ -219,6 +224,11 @@ func _process(delta: float) -> void:
 	attack_timer.one_shot=true
 	
 func _physics_process(delta: float) -> void:
+	if not cutscene_handler.actor_control_active:
+		apply_gravity(delta)
+		current_speed=0
+		move_and_slide()
+		return
 	#flip_particles()
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	#print(state_machine.get_active_state())
@@ -399,9 +409,12 @@ func _on_health_health_depleted() -> void:
 	movement_handler.active=false
 	knockback.x=250
 	death_timer.start()
-	death_handler.death()
+	
 	if lvl_boss:
-		Events.boss_died.emit()
+		Events.boss_died.emit("mini_boss_kill")
+		
+	else:
+		death_handler.death()
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:

@@ -4,6 +4,11 @@ extends Node2D
 
 @export var next_level: PackedScene
 
+@export var player : PlayerEntity
+@onready var cutscene_active : bool = false
+@onready var camera_pos: camera_position = $CameraPos
+@onready var camera_2d: Camera2D = $CameraPos/Camera2D
+
 #@onready var collision_polygon_2d = $StaticBody2D/CollisionPolygon2D
 #@onready var polygon_2d = $StaticBody2D/CollisionPolygon2D/Polygon2D
 @onready var level_completed = $CanvasLayer/LevelCompleted
@@ -15,7 +20,7 @@ extends Node2D
 @onready var score : int = 0
 
 @onready var cutscene_player: AnimationPlayer = $CutscenePlayer
-var qte_options : Array[String]
+var qte_options : Array[String]  = ["1", "2", "3", "4", "0"]
 
 @export var lvl_type = "goal"
 @onready var boss_dead : bool = false
@@ -44,8 +49,8 @@ func _ready():
 	Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
 
-	Events.start_cutscene.emit()
-	cutscene_player.play("INTRO")
+	#Events.start_cutscene.emit()
+	#cutscene_player.play("INTRO")
 	
 	
 	#score=45
@@ -72,6 +77,9 @@ func _process(_delta):
 		if Input.is_action_just_pressed("Pause"):
 			show_pause()
 
+func _physics_process(delta: float) -> void:
+	if not cutscene_active:
+		camera_pos.global_position=player.global_position
 
 func show_level_complete():
 
@@ -121,9 +129,16 @@ func handle_spawn():
 
 func end_cutscene():
 	Events.end_cutsene.emit()
+	cutscene_active=false
 	
-func boss_died():
+func boss_died(cutscene: String):
+	Events.start_cutscene.emit()
+	cutscene_player.play(cutscene)
+	cutscene_active=true
+
+func end_level():
 	Events.level_completed.emit()
+
 
 func load_qte_animations(atk_opt : String, dodge_opt : String, block_opt : String, spc_atk_opt : String, no_input : String):
 	qte_options[0]=atk_opt

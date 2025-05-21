@@ -53,7 +53,7 @@ func track_player():
 		
 		player_tracker.target_position = to_local(player.global_position)
 		
-		direction_to_player = player.position - pos
+		direction_to_player = player.global_position - pos
 		#turret_body.rotation=direction_to_player.angle()
 		dist_to_player = direction_to_player
 	
