@@ -39,7 +39,8 @@ func _ready():
 	if not next_level is PackedScene:
 		next_level = load("res://LVL_Transitions/victory_screen.tscn")
 		
-		
+	if lvl_type=="adv":
+		Events.level_completed.connect(show_level_complete)
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	#polygon_2d.polygon = collision_polygon_2d.polygon
 	#Events.level_completed.connect(show_level_complete)
@@ -49,8 +50,8 @@ func _ready():
 	Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
 
-	#Events.start_cutscene.emit()
-	#cutscene_player.play("INTRO")
+	Events.start_cutscene.emit()
+	cutscene_player.play("INTRO")
 	
 	
 	#score=45
@@ -69,8 +70,6 @@ func _process(_delta):
 			Events.level_completed.connect(show_level_complete)
 			#print("leven complete")
 		label.text=str("Obj: ",obj)
-	elif lvl_type=="adv":
-		Events.level_completed.connect(show_level_complete)
 	else:
 		label.text = str("Score: ", score)
 		handle_spawn()

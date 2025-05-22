@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8htmq8u3ykss"]
+[gd_scene load_steps=7 format=3 uid="uid://b8htmq8u3ykss"]
 
 [ext_resource type="Texture2D" uid="uid://cm36bhcpc0hsc" path="res://Art_Components/tile_maps/_PNG/1. main platforms.png" id="1_4moad"]
 [ext_resource type="Script" uid="uid://d0d3rflso77ye" path="res://Component/interactables/path_follow_2d.gd" id="1_opf7r"]
@@ -15,6 +15,9 @@ size = Vector2(16, 96)
 [sub_resource type="AtlasTexture" id="AtlasTexture_1s761"]
 atlas = ExtResource("1_4moad")
 region = Rect2(906.885, -0.0078454, 10.4645, 95.9792)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_80ptt"]
+polygon = PackedVector2Array(-5.99983, 47, -5.99983, 47, 5.00017, 47, 4.99983, -48, -6.00017, -48)
 
 [node name="Door" type="Node2D"]
 position = Vector2(64, 152)
@@ -41,3 +44,6 @@ vertices = PackedVector2Array(-8.00017, -48, -7.99982, 48, 8.00018, 48, 7.99983,
 affect_navigation_mesh = true
 carve_navigation_mesh = true
 avoidance_layers = 2
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+occluder = SubResource("OccluderPolygon2D_80ptt")

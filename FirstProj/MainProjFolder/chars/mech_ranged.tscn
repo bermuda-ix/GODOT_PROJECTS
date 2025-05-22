@@ -1,4 +1,4 @@
-[gd_scene load_steps=130 format=3 uid="uid://bvvdaxqcb1uvh"]
+[gd_scene load_steps=129 format=3 uid="uid://bvvdaxqcb1uvh"]
 
 [ext_resource type="Script" uid="uid://coxn6onpxcpm0" path="res://chars/mech_ranged.gd" id="1_k650x"]
 [ext_resource type="Texture2D" uid="uid://eu5suk6k1xrx" path="res://Art_Components/Enemies/battle-mecha-sprites-pixel-art-pack/1/Idle.png" id="1_mgo1l"]
@@ -776,8 +776,6 @@ tracks/4/keys = {
 "values": [true, true]
 }
 
-[sub_resource type="AudioStream" id="AudioStream_ha1m0"]
-
 [sub_resource type="Animation" id="Animation_ab2tr"]
 resource_name = "blast_attack"
 tracks/0/type = "value"
@@ -928,25 +926,10 @@ tracks/11/keys = {
 "method": &"set_active"
 }]
 }
-tracks/12/type = "audio"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("AudioStreamPlayer2D")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": SubResource("AudioStream_ha1m0")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/12/use_blend = true
 
 [sub_resource type="Animation" id="Animation_qgd3n"]
 resource_name = "dead"
-length = 0.1
+length = 0.5
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -971,6 +954,20 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [5]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DespawnHandler")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.433333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"despawn"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_euip0"]

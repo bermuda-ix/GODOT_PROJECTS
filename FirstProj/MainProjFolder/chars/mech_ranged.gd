@@ -409,13 +409,17 @@ func _on_health_health_depleted() -> void:
 	movement_handler.active=false
 	knockback.x=250
 	death_timer.start()
+		
+	
 	
 	if lvl_boss:
 		Events.boss_died.emit("mini_boss_kill")
-		
+		bt_player.active=false
 	else:
 		death_handler.death()
 
+func cutscnene_death():
+	death_handler.death()
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
@@ -437,7 +441,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		
 		
 	
-func _on_hurt_box_weak_point_area_entered(area: Area2D) -> void:
+func _on_hurt_box_weak_point_area_entered(area: Node2D) -> void:
 	if area.is_in_group("sp_atk_default"):
 		stagger.stagger-=3
 

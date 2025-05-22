@@ -264,7 +264,7 @@ _data = {
 [node name="PC" parent="." index="0"]
 position = Vector2(789, 89)
 
-[node name="HBCollision" parent="PC/Path2D/PathFollow2D/AnimatedSprite2D/HitBox" index="0"]
+[node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
 shape = SubResource("RectangleShape2D_82t0r")
 
 [node name="LevelTileMap" parent="." index="2"]

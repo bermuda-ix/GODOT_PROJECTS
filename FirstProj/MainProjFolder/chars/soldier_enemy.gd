@@ -42,7 +42,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var turret = $Turret
 @onready var bullet = BALL_PROCETILE
 @onready var bullet_dir = Vector2.RIGHT
-@onready var shooting_cooldown = $ShootingCooldown
+#@onready var shooting_cooldown = $ShootingCooldown
 @onready var shoot_handler: ShootHandler = $ShootHandler
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $Turret/AudioStreamPlayer2D
 
@@ -57,7 +57,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var parry_timer = $ParryTimer as Timer
 var immortal = false
 @onready var stagger = $Stagger
-@onready var hurt_box_weak_point = $AnimatedSprite2D/HurtBox_WeakPoint
+#@onready var hurt_box_weak_point = $AnimatedSprite2D/HurtBox_WeakPoint
 @onready var attack_timer: Timer = $AttackTimer
 @onready var stagger_timer: Timer = $StaggerTimer
 @onready var gpu_particles_2d: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D

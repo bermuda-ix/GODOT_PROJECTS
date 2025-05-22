@@ -1,12 +1,12 @@
-[gd_scene load_steps=34 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=38 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_7j8nt"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
 [ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_tnflb"]
 [ext_resource type="PackedScene" uid="uid://2t2be0q7lqvs" path="res://Art_Components/tile_maps/lab_architect.tscn" id="3_fyow3"]
 [ext_resource type="PackedScene" uid="uid://blsmgy883jm3a" path="res://levels/level_backgrounds/desert_background.tscn" id="4_iov4b"]
-[ext_resource type="Curve2D" uid="uid://jo0boc3igvpj" path="res://Component/resources/curves/prologue_lvl.tres" id="4_p4nhw"]
 [ext_resource type="PackedScene" uid="uid://bt6url6xt1nqm" path="res://Component/interactables/lab_door_switch.tscn" id="5_ru525"]
+[ext_resource type="PackedScene" uid="uid://m5ullq0dey1k" path="res://Art_Components/misc/lights_indoor.tscn" id="6_e3spa"]
 [ext_resource type="PackedScene" uid="uid://b8htmq8u3ykss" path="res://Component/interactables/door.tscn" id="6_jykkx"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="7_h0p3s"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="8_bi776"]
@@ -18,10 +18,23 @@
 [ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="14_dmeha"]
 [ext_resource type="PackedScene" uid="uid://bvvdaxqcb1uvh" path="res://chars/mech_ranged.tscn" id="14_h7re7"]
 [ext_resource type="Script" uid="uid://b5xtckuuvqief" path="res://levels/camera_pos.gd" id="17_cxkws"]
+[ext_resource type="Script" uid="uid://7cyh5ujpo4sp" path="res://levels/Boundery.gd" id="19_kcvht"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cxkws"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kcvht"]
 resource_local_to_scene = true
 size = Vector2(37.8948, 53.5486)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_p4nhw"]
+polygon = PackedVector2Array(699, 393, 758, 393, 1049, 389, 1081, 367, 1081, 358, 1070, 358, 1070, 290, 1426, 290, 1479, 254, 1893, 243, 1894, 202, 1501, 212, 1500, 147, 1382, 76, 766, 78, 761, -20, 728, -21, 729, -120, 725, -22, 698, -21)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_e3spa"]
+polygon = PackedVector2Array(1973, 224, 2009, 224, 2072, 157, 3706, 158, 3706, -54, 3482, -54, 3482, -261, 3415, -261, 3415, -59, 2105, -60, 2105, -263, 2034, -263, 2034, -97, 1974, -97)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_hjny2"]
+polygon = PackedVector2Array(2039, -21, 3477, -22, 3483, -2, 3524, 14, 3669, 17, 3670, -55, 2101, -55, 2102, -91, 1975, -94, 1977, 214, 2007, 217, 2071, 156, 3571, 153, 3564, 109, 2350, 117, 2305, 81, 2037, 79)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_kcvht"]
+polygon = PackedVector2Array(-2, 559, 1944, 561, 2610, 562, 2910, 402, 3577, 404, 3580, 357, 1978, 325, 1640, 502, 55, 496, 10, 525)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_htxyq"]
 vertices = PackedVector2Array(1645.83, 430, 1122, 430, 1122, 322, 1882.08, 322)
@@ -55,12 +68,6 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(1949, 738, 1949, 801, 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jyauw"]
 size = Vector2(68, 577)
-
-[sub_resource type="Curve2D" id="Curve2D_p4nhw"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 100, 0.5)
-}
-point_count = 2
 
 [sub_resource type="Animation" id="Animation_h7re7"]
 resource_name = "INTRO"
@@ -140,51 +147,33 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("PC/Path2D/PathFollow2D/AnimatedSprite2D:flip_h")
+tracks/6/path = NodePath("CameraPos/Camera2D:zoom")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("CameraPos/Camera2D:zoom")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
 "times": PackedFloat32Array(0, 4.93333, 5.30313, 7.3, 7.7),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(1, 1), Vector2(1, 1), Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1, 1)]
 }
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("PC/Path2D:curve")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 2.5, 2.56667),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [SubResource("Curve2D_p4nhw"), SubResource("Curve2D_p4nhw"), null]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("PC/Path2D/PathFollow2D:progress_ratio")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0, 2.50112),
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("PC:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 2.50407),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.0, 1.0]
+"values": [Vector2(88, 471), Vector2(283, 471)]
 }
+
+[sub_resource type="Curve2D" id="Curve2D_e3spa"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 2202, 777, 55.0275, 15.7722, -55.0275, -15.7722, 2131, 690, 0, 0, 0, 0, 2016, 738)
+}
+point_count = 3
 
 [sub_resource type="Animation" id="Animation_tnflb"]
 length = 0.001
@@ -250,7 +239,7 @@ tracks/4/keys = {
 }
 tracks/5/type = "value"
 tracks/5/imported = false
-tracks/5/enabled = true
+tracks/5/enabled = false
 tracks/5/path = NodePath("PC:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
@@ -275,117 +264,151 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("PC/Path2D:curve")
+tracks/7/path = NodePath("CameraPos:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("4_p4nhw")]
+"update": 0,
+"values": [Vector2(221, 396)]
 }
-tracks/8/type = "value"
+tracks/8/type = "animation"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("CameraPos:position")
+tracks/8/path = NodePath("Enemy/MiniBosses/MechRanged/AnimationPlayer")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(221, 396)]
+"clips": PackedStringArray("RESET", "RESET"),
+"times": PackedFloat32Array(0, 0.0333333)
 }
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("PC/Path2D/PathFollow2D/AnimatedSprite2D:flip_h")
+tracks/9/path = NodePath("CameraPos/Camera2D:zoom")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2(1, 1)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("PC/Path2D/PathFollow2D:progress_ratio")
+tracks/10/path = NodePath("Enemy/MiniBosses/MechRanged/AnimatedSprite2D:flip_h")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [true]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("PC/Path2D/PathFollow2D:rotates")
+tracks/11/path = NodePath("Paths/Path2D:curve")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [SubResource("Curve2D_e3spa")]
 }
-tracks/12/type = "animation"
+tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("Enemy/MiniBosses/MechRanged/AnimationPlayer")
+tracks/12/path = NodePath("Paths/Path2D/PathFollow2D:progress_ratio")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"clips": PackedStringArray("RESET", "RESET"),
-"times": PackedFloat32Array(0, 0.0333333)
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("PC/Path2D/PathFollow2D/AnimatedSprite2D:scale")
+tracks/13/path = NodePath("Paths/Path2D/PathFollow2D/RemoteTransform2D:remote_path")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-0.396, 0.49)]
+"update": 1,
+"values": [NodePath("")]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("CameraPos/Camera2D:zoom")
+tracks/14/path = NodePath("PC:rotation")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [0.0]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("Enemy/MiniBosses/MechRanged/AnimatedSprite2D:flip_h")
+tracks/15/path = NodePath("Paths/Path2D/PathFollow2D:rotates")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
-
-[sub_resource type="Curve2D" id="Curve2D_e3spa"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 90.5, -33.1084, 8.35928, 3.48741, -8.35928, -3.48741, 64, -56.5, 13.494, -4.90691, -13.494, 4.90691, 35.5, -58.5, 3.69771, -9.84888, -3.69771, 9.84888, 9, -31, 0, 0, 0, 0, -0.5, -2.10837)
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Paths/Path2D/PathFollow2D/RemoteTransform2D:update_rotation")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
-point_count = 5
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Paths/Path2D/PathFollow2D/RemoteTransform2D:update_scale")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("CanvasLayer/ScreenFlash:color")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Curve2D" id="Curve2D_kcvht"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 2017, 738, -43.0152, 9.24029, 43.0152, -9.24029, 2079, 702, -18.4806, -16.5688, 18.4806, 16.5688, 2166, 728, 0, 0, 0, 0, 2209, 794)
+}
+point_count = 4
 
 [sub_resource type="Animation" id="Animation_cxkws"]
 resource_name = "mini_boss_kill"
@@ -397,8 +420,8 @@ tracks/0/path = NodePath("Enemy/MiniBosses/MechRanged/AnimationPlayer")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": PackedStringArray("shoot_left", "shoot_right", "death"),
-"times": PackedFloat32Array(0.166667, 1.2, 2.93333)
+"clips": PackedStringArray("shoot_left", "shoot_right"),
+"times": PackedFloat32Array(0.166667, 1.2)
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -407,10 +430,10 @@ tracks/1/path = NodePath("Enemy/MiniBosses/MechRanged:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 2.53333, 2.66667),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.566667, 2.53333, 2.66667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(2019, 758), Vector2(2019, 758), Vector2(1999.24, 758)]
+"values": [Vector2(2158, 765), Vector2(2019, 758), Vector2(2019, 758), Vector2(1999.24, 758)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -443,10 +466,10 @@ tracks/4/path = NodePath("PC:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 1.16667, 2.2),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.404378, 0.566667, 1.16667, 2.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(2325, 776), Vector2(2202, 776), Vector2(2202, 776)]
+"values": [Vector2(2172, 732), Vector2(2300, 675), Vector2(2325, 776), Vector2(2325, 776), Vector2(2202, 776), Vector2(2202, 776)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -457,7 +480,7 @@ tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [Vector2(-2, 2)]
 }
 tracks/6/type = "animation"
@@ -473,58 +496,22 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("PC/Path2D:curve")
+tracks/7/path = NodePath("CameraPos:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(1.1501, 2.95668, 3.66667),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [ExtResource("4_p4nhw"), SubResource("Curve2D_e3spa"), SubResource("Curve2D_kcvht")]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("CameraPos:position")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
 "times": PackedFloat32Array(0, 5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2(2210, 724), Vector2(2210, 724)]
 }
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("PC/Path2D/PathFollow2D:progress_ratio")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(1.16, 1.86667, 2.06667, 2.96667, 3.66667),
-"transitions": PackedFloat32Array(1, 1, 1e+06, 1, 1),
-"update": 0,
-"values": [0.0, 0.8045, 1.0, 0.0, 1.0]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("PC/Path2D/PathFollow2D:rotates")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/11/type = "method"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath(".")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
+tracks/8/type = "method"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
 "times": PackedFloat32Array(5),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -532,13 +519,13 @@ tracks/11/keys = {
 "method": &"end_cutscene"
 }]
 }
-tracks/12/type = "method"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("PC/HitStop")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
+tracks/9/type = "method"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("PC/HitStop")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
 "times": PackedFloat32Array(0.333333, 1.67993, 3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
@@ -552,29 +539,141 @@ tracks/12/keys = {
 "method": &"hit_stop"
 }]
 }
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Enemy/MiniBosses/MechRanged/AnimatedSprite2D:flip_h")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Paths/Path2D:curve")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(1.17, 2.94, 3.86667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [SubResource("Curve2D_e3spa"), SubResource("Curve2D_kcvht"), null]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Paths/Path2D/PathFollow2D:progress_ratio")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(1.17, 1.92, 2.9, 2.94, 3.86667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 1.0, 0.0, 1.0]
+}
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("PC/Path2D/PathFollow2D/AnimatedSprite2D:scale")
+tracks/13/path = NodePath("Paths/Path2D/PathFollow2D/RemoteTransform2D:remote_path")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.396, 0.49)]
+"times": PackedFloat32Array(0, 1.18, 4.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [NodePath(""), NodePath("../../../../PC"), NodePath("")]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("Enemy/MiniBosses/MechRanged/AnimatedSprite2D:flip_h")
+tracks/14/path = NodePath("PC:rotation")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Paths/Path2D/PathFollow2D:rotates")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Paths/Path2D/PathFollow2D/RemoteTransform2D:update_rotation")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Paths/Path2D/PathFollow2D/RemoteTransform2D:update_scale")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/18/type = "method"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Enemy/MiniBosses/MechRanged")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(2.96667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"cutscnene_death"
+}]
+}
+tracks/19/type = "method"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Enemy/MiniBosses/MechRanged/DespawnHandler")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(4.96667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"despawn"
+}]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("CanvasLayer/ScreenFlash:color")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 0.406126),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tnflb"]
@@ -589,29 +688,91 @@ next_level = ExtResource("2_tnflb")
 player = NodePath("PC")
 lvl_type = "adv"
 
+[node name="ScreenFlash" type="ColorRect" parent="CanvasLayer" index="5"]
+z_index = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
 [node name="PC" parent="." index="1" node_paths=PackedStringArray("camera_pos") instance=ExtResource("2_dtpw0")]
-position = Vector2(2325, 776)
+position = Vector2(88, 471)
 scale = Vector2(2, 2)
 camera_pos = NodePath("../CameraPos")
 
-[node name="Path2D" parent="PC" index="0"]
-curve = ExtResource("4_p4nhw")
-
-[node name="PathFollow2D" parent="PC/Path2D" index="0"]
-position = Vector2(1.5, -1.56599)
-rotates = false
-loop = false
-
-[node name="AnimatedSprite2D" parent="PC/Path2D/PathFollow2D" index="0"]
-scale = Vector2(-0.396, 0.49)
-
-[node name="HBCollision" parent="PC/Path2D/PathFollow2D/AnimatedSprite2D/HitBox" index="0"]
-shape = SubResource("RectangleShape2D_cxkws")
+[node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
+shape = SubResource("RectangleShape2D_kcvht")
 
 [node name="Speech" parent="PC" index="20"]
 visible = true
 
-[node name="LabArchitect" parent="." index="2" instance=ExtResource("3_fyow3")]
+[node name="CameraPos" type="Node2D" parent="." index="2"]
+position = Vector2(221, 396)
+script = ExtResource("17_cxkws")
+
+[node name="Camera2D" type="Camera2D" parent="CameraPos" index="0"]
+z_index = 1
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
+
+[node name="Moonlight" type="DirectionalLight2D" parent="." index="3"]
+position = Vector2(257, 26)
+rotation = -0.523599
+color = Color(0.361187, 0.505418, 0.579718, 1)
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.63)
+shadow_filter = 2
+height = 0.25
+
+[node name="Lights" type="Node" parent="." index="4"]
+
+[node name="lights_indoors" parent="Lights" index="0" instance=ExtResource("6_e3spa")]
+self_modulate = Color(1, 1, 1, 0.464)
+position = Vector2(2351, 164)
+shadow_enabled = true
+
+[node name="lights_indoors2" parent="Lights" index="1" instance=ExtResource("6_e3spa")]
+position = Vector2(3153, 167)
+shadow_enabled = true
+
+[node name="lights_indoors3" parent="Lights" index="2" instance=ExtResource("6_e3spa")]
+position = Vector2(3036, -17)
+shadow_enabled = true
+
+[node name="lights_indoors4" parent="Lights" index="3" instance=ExtResource("6_e3spa")]
+position = Vector2(2274, -17)
+shadow_enabled = true
+
+[node name="lights_indoors5" parent="Lights" index="4" instance=ExtResource("6_e3spa")]
+position = Vector2(3202, 405)
+shadow_enabled = true
+
+[node name="lights_indoors6" parent="Lights" index="5" instance=ExtResource("6_e3spa")]
+position = Vector2(2309, 565)
+shadow_enabled = true
+
+[node name="lights_indoors7" parent="Lights" index="6" instance=ExtResource("6_e3spa")]
+position = Vector2(1051, 391)
+shadow_enabled = true
+
+[node name="Shadows" type="Node" parent="." index="5"]
+
+[node name="Outisde" type="LightOccluder2D" parent="Shadows" index="0"]
+occluder = SubResource("OccluderPolygon2D_p4nhw")
+
+[node name="Inside1" type="LightOccluder2D" parent="Shadows" index="1"]
+position = Vector2(0, -1)
+occluder = SubResource("OccluderPolygon2D_e3spa")
+
+[node name="Inside2" type="LightOccluder2D" parent="Shadows" index="2"]
+occluder = SubResource("OccluderPolygon2D_hjny2")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Shadows" index="3"]
+occluder = SubResource("OccluderPolygon2D_kcvht")
+
+[node name="LabArchitect" parent="." index="6" instance=ExtResource("3_fyow3")]
 position = Vector2(-8, 392)
 scale = Vector2(1, 1.071)
 collision_visibility_mode = 1
@@ -646,39 +807,39 @@ position = Vector2(2755, 260.504)
 position = Vector2(10, -5.60224)
 polygon = PackedVector2Array(233, -128.852, -271, 124.183, -285, 126.984, -279, 142.857, 244, -101.774, 247, -128.852)
 
-[node name="Desert_Background" parent="." index="3" instance=ExtResource("4_iov4b")]
+[node name="Desert_Background" parent="." index="7" instance=ExtResource("4_iov4b")]
 position = Vector2(5, 14)
 
-[node name="lab_door_switch" parent="." index="4" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
+[node name="lab_door_switch" parent="." index="8" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
 z_index = -1
 position = Vector2(680, 480)
 door_connect = NodePath("../Door")
 
-[node name="Door" parent="." index="5" instance=ExtResource("6_jykkx")]
+[node name="Door" parent="." index="9" instance=ExtResource("6_jykkx")]
 position = Vector2(736, 448)
 scale = Vector2(1.03607, 1.19587)
 
-[node name="lab_door_switch2" parent="." index="6" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
+[node name="lab_door_switch2" parent="." index="10" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
 position = Vector2(1040, 344)
 door_connect = NodePath("../Door2")
 
-[node name="Door2" parent="." index="7" instance=ExtResource("6_jykkx")]
+[node name="Door2" parent="." index="11" instance=ExtResource("6_jykkx")]
 z_index = -1
 position = Vector2(1984, 264)
 scale = Vector2(1, 1.18132)
 
-[node name="SpawnPoint" parent="." index="8" instance=ExtResource("7_h0p3s")]
+[node name="SpawnPoint" parent="." index="12" instance=ExtResource("7_h0p3s")]
 position = Vector2(1360, 424)
 active = false
 enemy_single = ExtResource("8_bi776")
 
-[node name="SpawnPoint2" parent="." index="9" instance=ExtResource("7_h0p3s")]
+[node name="SpawnPoint2" parent="." index="13" instance=ExtResource("7_h0p3s")]
 position = Vector2(2264, 272)
 active = false
 enemy_single = ExtResource("8_bi776")
 max_enemy = 1
 
-[node name="Enemy" type="Node" parent="." index="10"]
+[node name="Enemy" type="Node" parent="." index="14"]
 
 [node name="soldiers" type="Node" parent="Enemy" index="0"]
 
@@ -776,7 +937,7 @@ position = Vector2(656, 457)
 position = Vector2(2098, 761)
 lvl_boss = true
 
-[node name="AirNavs" type="Node2D" parent="." index="11"]
+[node name="AirNavs" type="Node2D" parent="." index="15"]
 
 [node name="AirNav1_Inside" type="NavigationRegion2D" parent="AirNavs" index="0"]
 navigation_polygon = SubResource("NavigationPolygon_htxyq")
@@ -784,7 +945,7 @@ navigation_polygon = SubResource("NavigationPolygon_htxyq")
 [node name="AirNav1_Above" type="NavigationRegion2D" parent="AirNavs" index="1"]
 navigation_polygon = SubResource("NavigationPolygon_nlf3e")
 
-[node name="GroundNavs" type="Node2D" parent="." index="12"]
+[node name="GroundNavs" type="Node2D" parent="." index="16"]
 
 [node name="GroundNav1_Inside" type="NavigationRegion2D" parent="GroundNavs" index="0"]
 navigation_polygon = SubResource("NavigationPolygon_pxxff")
@@ -809,7 +970,7 @@ navigation_layers = 2
 start_position = Vector2(2048, 296)
 end_position = Vector2(1944, 304)
 
-[node name="TutorialText" type="RichTextLabel" parent="." index="13"]
+[node name="TutorialText" type="RichTextLabel" parent="." index="17"]
 offset_left = 467.0
 offset_top = 377.0
 offset_right = 590.0
@@ -817,7 +978,7 @@ offset_bottom = 432.0
 text = "LMB:ATTACK
 ALT: LOCKON"
 
-[node name="TutorialText2" type="RichTextLabel" parent="." index="14"]
+[node name="TutorialText2" type="RichTextLabel" parent="." index="18"]
 offset_left = 978.0
 offset_top = 396.0
 offset_right = 1101.0
@@ -825,7 +986,7 @@ offset_bottom = 451.0
 text = "CTRL: Dodge
 SHIFT: Sprint"
 
-[node name="TutorialText3" type="RichTextLabel" parent="." index="15"]
+[node name="TutorialText3" type="RichTextLabel" parent="." index="19"]
 offset_left = 1599.0
 offset_top = 255.0
 offset_right = 1929.0
@@ -834,50 +995,65 @@ text = "RMB: Shoot (High Stagger Low Damage)
 Hold Shift: Wall Stick
 Space on wall: Wall Jump"
 
-[node name="TutorialText4" type="RichTextLabel" parent="." index="16"]
+[node name="TutorialText4" type="RichTextLabel" parent="." index="20"]
 offset_left = 876.0
 offset_right = 1206.0
 offset_bottom = 77.0
 text = "Shift + Space while locked on: Flip over"
 
-[node name="Bounderies2" type="StaticBody2D" parent="." index="17"]
-position = Vector2(1886, 460)
-collision_mask = 3
+[node name="Bounderies3" type="Node" parent="." index="21"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounderies2" index="0"]
-position = Vector2(24, 278.5)
-shape = SubResource("RectangleShape2D_jyauw")
-
-[node name="Bounderies" type="StaticBody2D" parent="." index="18"]
+[node name="Bounderies" type="StaticBody2D" parent="Bounderies3" index="0"]
 position = Vector2(-1, 0)
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounderies" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounderies3/Bounderies" index="0"]
 position = Vector2(24, 278.5)
 shape = SubResource("RectangleShape2D_jyauw")
 
-[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="19"]
+[node name="MiniBossCutscene" type="StaticBody2D" parent="Bounderies3" index="1" node_paths=PackedStringArray("objective")]
+position = Vector2(1886, 460)
+collision_mask = 3
+script = ExtResource("19_kcvht")
+objective = NodePath("../../Enemy/MiniBosses/MechRanged")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounderies3/MiniBossCutscene" index="0"]
+position = Vector2(24, 278.5)
+shape = SubResource("RectangleShape2D_jyauw")
+
+[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="22"]
 libraries = {
 &"": SubResource("AnimationLibrary_tnflb")
 }
 
-[node name="DoorsAndSwitches" type="Node" parent="." index="20"]
+[node name="DoorsAndSwitches" type="Node" parent="." index="23"]
 
 [node name="Elevator" parent="DoorsAndSwitches" index="0" instance=ExtResource("14_dmeha")]
 position = Vector2(3627, 525)
 stops_ratio = Array[float]([0.0, 0.5, 0.0])
 
-[node name="lab_door_switch" parent="DoorsAndSwitches" index="1" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
+[node name="Elevator2" parent="DoorsAndSwitches" index="1" instance=ExtResource("14_dmeha")]
+position = Vector2(1899, 799)
+scale = Vector2(-1, 1)
+top_floor = 0.0
+
+[node name="lab_door_switch" parent="DoorsAndSwitches" index="2" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
 position = Vector2(2072, 65)
 door_connect = NodePath("../Elevator")
 
-[node name="CameraPos" type="Node2D" parent="." index="21"]
-position = Vector2(221, 396)
-script = ExtResource("17_cxkws")
+[node name="Paths" type="Node" parent="." index="24"]
 
-[node name="Camera2D" type="Camera2D" parent="CameraPos" index="0"]
-position_smoothing_enabled = true
-position_smoothing_speed = 3.0
+[node name="Path2D" type="Path2D" parent="Paths" index="0"]
+curve = SubResource("Curve2D_e3spa")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Paths/Path2D" index="0"]
+position = Vector2(2202, 777)
+rotation = -2.25527
+rotates = false
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Paths/Path2D/PathFollow2D" index="0"]
+update_rotation = false
+update_scale = false
 
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]
