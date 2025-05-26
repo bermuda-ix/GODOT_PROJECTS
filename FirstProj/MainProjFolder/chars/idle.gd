@@ -1,3 +1,5 @@
+class_name Idle
+
 extends LimboState
 
 @export var actor : Node2D

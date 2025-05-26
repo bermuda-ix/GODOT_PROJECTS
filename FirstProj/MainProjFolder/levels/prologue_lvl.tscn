@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
 [ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_tnflb"]
 [ext_resource type="PackedScene" uid="uid://2t2be0q7lqvs" path="res://Art_Components/tile_maps/lab_architect.tscn" id="3_fyow3"]
+[ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="4_e3spa"]
 [ext_resource type="PackedScene" uid="uid://blsmgy883jm3a" path="res://levels/level_backgrounds/desert_background.tscn" id="4_iov4b"]
 [ext_resource type="PackedScene" uid="uid://bt6url6xt1nqm" path="res://Component/interactables/lab_door_switch.tscn" id="5_ru525"]
 [ext_resource type="PackedScene" uid="uid://m5ullq0dey1k" path="res://Art_Components/misc/lights_indoor.tscn" id="6_e3spa"]
@@ -17,7 +18,6 @@
 [ext_resource type="PackedScene" uid="uid://dak3j323lms0s" path="res://chars/sleeping_guard.tscn" id="12_jyauw"]
 [ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="14_dmeha"]
 [ext_resource type="PackedScene" uid="uid://bvvdaxqcb1uvh" path="res://chars/mech_ranged.tscn" id="14_h7re7"]
-[ext_resource type="Script" uid="uid://b5xtckuuvqief" path="res://levels/camera_pos.gd" id="17_cxkws"]
 [ext_resource type="Script" uid="uid://7cyh5ujpo4sp" path="res://levels/Boundery.gd" id="19_kcvht"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kcvht"]
@@ -697,10 +697,9 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
-[node name="PC" parent="." index="1" node_paths=PackedStringArray("camera_pos") instance=ExtResource("2_dtpw0")]
+[node name="PC" parent="." index="1" instance=ExtResource("2_dtpw0")]
 position = Vector2(88, 471)
 scale = Vector2(2, 2)
-camera_pos = NodePath("../CameraPos")
 
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
 shape = SubResource("RectangleShape2D_kcvht")
@@ -708,14 +707,8 @@ shape = SubResource("RectangleShape2D_kcvht")
 [node name="Speech" parent="PC" index="20"]
 visible = true
 
-[node name="CameraPos" type="Node2D" parent="." index="2"]
+[node name="CameraPos" parent="." index="2" instance=ExtResource("4_e3spa")]
 position = Vector2(221, 396)
-script = ExtResource("17_cxkws")
-
-[node name="Camera2D" type="Camera2D" parent="CameraPos" index="0"]
-z_index = 1
-position_smoothing_enabled = true
-position_smoothing_speed = 3.0
 
 [node name="Moonlight" type="DirectionalLight2D" parent="." index="3"]
 position = Vector2(257, 26)

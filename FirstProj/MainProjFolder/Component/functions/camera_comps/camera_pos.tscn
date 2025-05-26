@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://vxei7p72t0rb"]
+
+[ext_resource type="Script" uid="uid://b5xtckuuvqief" path="res://levels/camera_pos.gd" id="1_3sw4l"]
+
+[node name="CameraPos" type="Node2D"]
+script = ExtResource("1_3sw4l")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+z_index = 1
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0

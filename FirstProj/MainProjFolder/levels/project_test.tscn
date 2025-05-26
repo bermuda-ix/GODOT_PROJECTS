@@ -1,11 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=22 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="4_4kfue"]
-[ext_resource type="PackedScene" uid="uid://d3jixkbstt3qn" path="res://Component/qte_start.tscn" id="4_ec6ti"]
-[ext_resource type="PackedScene" uid="uid://dr88ya64be2de" path="res://Component/gun.tscn" id="5_82t0r"]
+[ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="4_ec6ti"]
+[ext_resource type="PackedScene" uid="uid://dn0fhusgltn4m" path="res://chars/heavy_soldier.tscn" id="5_ca064"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
-[ext_resource type="PackedScene" uid="uid://c1ypxd5tov0tn" path="res://Component/sword.tscn" id="6_t1ldw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_82t0r"]
 resource_local_to_scene = true
@@ -259,10 +258,13 @@ _data = {
 &"stretch": SubResource("Animation_01tlq")
 }
 
-[node name="project_test" instance=ExtResource("1_07jkq")]
+[node name="project_test" node_paths=PackedStringArray("player") instance=ExtResource("1_07jkq")]
+position = Vector2(124, 1)
+lvl_type = "test"
+player = NodePath("PC")
 
 [node name="PC" parent="." index="0"]
-position = Vector2(789, 89)
+position = Vector2(846, 92)
 
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
 shape = SubResource("RectangleShape2D_82t0r")
@@ -379,20 +381,16 @@ libraries = {
 &"": SubResource("AnimationLibrary_82t0r")
 }
 
-[node name="QTE_Start" parent="." index="24" node_paths=PackedStringArray("cutscene_player") instance=ExtResource("4_ec6ti")]
-position = Vector2(866, -70)
-first_qte_anim = "TEST"
-cutscene_player = NodePath("../CutscenePlayer")
+[node name="CameraPos" parent="." index="24" instance=ExtResource("4_ec6ti")]
+position = Vector2(790, 58)
 
-[node name="gun" parent="." index="25" instance=ExtResource("5_82t0r")]
-position = Vector2(961, 94)
-rotation = -1.5708
-scale = Vector2(0.5, 0.5)
+[node name="Camera2D" parent="CameraPos" index="0"]
+zoom = Vector2(1.5, 1.5)
 
-[node name="Sword" parent="." index="26" instance=ExtResource("6_t1ldw")]
-position = Vector2(910, 100)
-rotation = -1.5708
-scale = Vector2(0.75, 0.75)
+[node name="HeavySoldier" parent="." index="25" node_paths=PackedStringArray("hitbox") instance=ExtResource("5_ca064")]
+position = Vector2(1010, 76)
+scale = Vector2(0.3, 0.3)
+hitbox = NodePath("../PC/AnimatedSprite2D/HitBox")
 
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]
@@ -401,3 +399,4 @@ scale = Vector2(0.75, 0.75)
 [connection signal="special_atk_qte" from="PC" to="." method="_on_pc_special_atk_qte"]
 
 [editable path="PC"]
+[editable path="CameraPos"]

@@ -18,6 +18,7 @@ func _physics_process(delta: float) -> void:
 		return
 		
 	else:
+		
 		face_player()
 		if vision_handler.player_found == true:
 			
@@ -103,3 +104,7 @@ func cutscene_move(dir : int , speed : float):
 		actor.current_speed  = -speed
 	else:
 		actor.current_speed=0
+
+func apply_gravity(delta : float) -> void:
+	if not actor.is_on_floor():
+		actor.velocity.y += actor.gravity * delta

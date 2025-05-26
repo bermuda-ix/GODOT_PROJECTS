@@ -8,6 +8,7 @@ extends Node
 @export var combat_state_active : bool = true
 @export var vision_range : int = 200
 @export var player_tracking : RayCast2D
+@export var bt_active : bool = true
 
 @onready var player_found : bool = false
 
@@ -47,11 +48,13 @@ func handle_vision():
 			#actor.set_state(actor.current_state, actor.States.ATTACK)
 			sm.dispatch(&"attack_mode")
 		elif csm.get_active_state()==actor.melee_mode:
-			if actor.bt_player.blackboard.get_var("within_range"):
-				#actor.set_state(actor.current_state, actor.States.ATTACK)
-				sm.dispatch(&"start_attack")
+			if bt_active:
+				if actor.bt_player.blackboard.get_var("within_range"):
+					#actor.set_state(actor.current_state, actor.States.ATTACK)
+					sm.dispatch(&"start_attack")
+				else:
+					#actor.set_state(actor.current_state, actor.States.CHASE)
+					sm.dispatch(&"start_chase")
 			else:
-				#actor.set_state(actor.current_state, actor.States.CHASE)
-				sm.dispatch(&"start_chase")
-				#chase_timer.start(1)
+				pass
 	#player_found = true

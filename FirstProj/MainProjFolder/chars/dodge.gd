@@ -1,3 +1,5 @@
+class_name Dodge
+
 extends LimboState
 
 @export var actor : Node2D

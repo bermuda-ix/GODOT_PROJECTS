@@ -21,6 +21,11 @@ var qte_options : Array[String] = ["1","1","1","1","1"]
 @export var elite_spawn : int = 20
 @export var boss_spawn : int = 40
 
+@export var player : PlayerEntity
+@onready var camera_pos: camera_position = $CameraPos
+
+@onready var cutscene_active : bool = false
+
 var cur_state = "IDLE"
 var cur_health = 3
 var max_health = 3
@@ -77,7 +82,9 @@ func _process(_delta):
 	if Input.is_action_just_pressed("Pause"):
 		show_pause()
 	
-	
+func _physics_process(delta: float) -> void:
+	if not cutscene_active:
+		camera_pos.global_position=player.global_position
 	
 func show_level_complete():
 

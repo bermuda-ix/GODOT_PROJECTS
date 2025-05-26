@@ -31,6 +31,8 @@ signal spawn_update
 #spawn_update(Enemy type, true=add false=remove)\
 
 signal parried
+signal staggered
+signal enemy_parried
 
 #Handle Player Data
 signal set_player_data

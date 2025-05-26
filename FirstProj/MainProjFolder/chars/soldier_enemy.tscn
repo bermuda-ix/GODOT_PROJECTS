@@ -1693,8 +1693,10 @@ script = ExtResource("88_24o4m")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="SHOOTING" type="LimboState" parent="LimboHSM" index="5"]
+[node name="SHOOTING" type="LimboState" parent="LimboHSM" index="5" node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("96_0nqgj")
+actor = NodePath("../..")
+bt_player = NodePath("../../BTPlayer")
 
 [node name="DODGE" type="LimboState" parent="LimboHSM" index="6" node_paths=PackedStringArray("actor", "bt_player", "animation_player")]
 script = ExtResource("98_ovyjq")

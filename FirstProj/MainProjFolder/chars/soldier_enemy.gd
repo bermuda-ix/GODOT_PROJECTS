@@ -298,95 +298,6 @@ func makepath() -> void:
 	nav_agent.target_position = player.global_position
 	
 
-#func set_state(cur_state, new_state) -> void:
-#
-	#if(cur_state == new_state):
-		#return
-	#elif(cur_state==States.DEATH):
-		#return
-	#elif(cur_state==States.STAGGERED and not parry_timer.is_stopped()) and not (new_state==States.DEATH):
-		#return
-	#
-	#else:
-		#current_state = new_state
-		#prev_state = cur_state
-		##current_state, " : ", prev_state)
-		#match current_state:
-			##States.ATTACK:
-				##state="ATTACK"
-				##bt_player.blackboard.set_var("attack_mode", true)
-				##attacking=true
-				##gravity=0
-			##States.IDLE:
-				##state="GUARD"
-				##hb_collison.disabled=false
-				##bt_player.blackboard.set_var("attack_mode", false)
-				##animation_player.speed_scale = 1
-				##animation_player.play("idle")
-			#States.CHASE:
-				##player_found=true
-				##hb_collison.disabled=false
-				##state="CHASE"
-				##bt_player.blackboard.set_var("attack_mode", true)
-				##animation_player.play("run")
-				#if prev_state==States.JUMP:
-					#current_speed=prev_speed
-			##States.JUMP:
-				##prev_speed=current_speed
-				###"jumping")
-				##state="JUMP"
-				##if current_speed < 0:
-					##current_speed = -jump_speed
-				##else:
-					##current_speed = jump_speed
-			#States.PARRY:
-				#hb_collison.disabled=true
-			##States.DEATH:
-				##hb_collison.disabled=true
-				##state="DEATH"
-				##bt_player.blackboard.set_var("attack_mode", false)
-			#States.SHOOTING:
-				#state="shooting"
-			##States.STAGGERED:
-				##state="staggered"
-				##animation_player.play("Staggered")
-				##hb_collison.disabled=true
-				##bt_player.blackboard.set_var("attack_mode", false)
-			#States.DODGE:
-				#state="Dodging"
-			##States.HIT:
-				##state="Hit"
-				##bt_player.blackboard.set_var("attack_mode", false)
-				##animation_player.play("hit")
-				
-#func set_combat_state(cur_state, new_state) -> void:
-	##cur_state, " ", new_state)
-	#if(cur_state == new_state):
-		#return
-		#print("no change")
-	#elif(state_machine.get_active_state()==death):
-		#return
-	#elif(state_machine.get_active_state()==staggered):
-		#return
-	#
-	#else:
-		#current_combat_state = new_state
-		#prev_combat_state = cur_state
-		#
-		#match current_combat_state:
-			#CombatStates.RANGED:
-				#combat_state="Ranged"
-				#bt_player.blackboard.set_var("ranged_mode", true)
-				#bt_player.blackboard.set_var("melee_mode", false)
-				#
-				##animation_player.play("shoot")
-			#CombatStates.MELEE:
-				#bt_player.blackboard.set_var("melee_mode", true)
-				#bt_player.blackboard.set_var("ranged_mode", false)
-				#combat_state="Melee"
-					
-					
-					#animation_player.play("atk_1")
 		
 func get_player_state(player: PlayerEntity) -> void:
 	player_state=player.get_state_enum()
@@ -397,19 +308,7 @@ func get_player_relative_loc():
 	else:
 		false
 
-#func counter_attack():
-	#if player_state == player.States.SPECIAL_ATTACK:
-		##"jump")
-		#if state_machine.get_active_state()!=attack:
-			#if player_state == player.States.FLIP:
-				#shoot_attack_manager.shoot()
-			#else:
-				##handle_jump(0.5)
-				#jump_handler.handle_jump(0.5)
-				#
-			
-			
-		
+
 
 func get_width() -> int:
 	return collision_shape_2d.get_shape().radius

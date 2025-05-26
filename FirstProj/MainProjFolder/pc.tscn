@@ -1,4 +1,4 @@
-[gd_scene load_steps=412 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=413 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -4400,6 +4400,46 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1]
 }
 
+[sub_resource type="Animation" id="Animation_6tjyr"]
+resource_name = "staggered"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"ShockHeavy"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.00108495, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qyq63"]
 _data = {
 &"Attack": SubResource("Animation_1ru25"),
@@ -4429,6 +4469,7 @@ _data = {
 &"shotgun_attack": SubResource("Animation_on8rs"),
 &"shotgun_attack_fast": SubResource("Animation_okwur"),
 &"shotgun_finish": SubResource("Animation_dr66y"),
+&"staggered": SubResource("Animation_6tjyr"),
 &"walk": SubResource("Animation_hm6eq"),
 &"walk_back": SubResource("Animation_padls"),
 &"zoom_lvl_examine": SubResource("Animation_v152k")
@@ -4780,11 +4821,12 @@ trail_enabled = true
 trail_lifetime = 0.1
 process_material = SubResource("ParticleProcessMaterial_34r87")
 
-[node name="HitBox" type="Area2D" parent="AnimatedSprite2D"]
+[node name="HitBox" type="Area2D" parent="AnimatedSprite2D" node_paths=PackedStringArray("stagger")]
 position = Vector2(0, -16.3107)
 collision_layer = 64
-collision_mask = 17
+collision_mask = 273
 script = ExtResource("6_y7jp7")
+stagger = NodePath("../../Stagger")
 
 [node name="HBCollision" type="CollisionShape2D" parent="AnimatedSprite2D/HitBox"]
 light_mask = 0
@@ -4938,7 +4980,9 @@ metadata/_custom_type_script = "uid://wai5i0eghoou"
 
 [connection signal="area_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="parried" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
+[connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="area_entered" from="HazardDetector" to="." method="_on_hazard_detector_area_entered"]
 [connection signal="body_entered" from="HazardDetector" to="." method="_on_hazard_detector_body_entered"]
 [connection signal="body_exited" from="HazardDetector" to="." method="_on_hazard_detector_body_exited"]

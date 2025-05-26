@@ -3,6 +3,11 @@ class_name GetPlayerInfoHandler
 extends Node
 
 @export var actor : Node2D
+var distance
+
+func _process(delta: float) -> void:
+	get_player_distance()
+	#print(distance)
 
 func _physics_process(delta: float) -> void:
 	get_player_state(actor.player)
@@ -18,5 +23,5 @@ func get_player_relative_loc():
 		actor.player_right=false
 
 func get_player_distance()->float:
-	var distance = abs(actor.global_position.x-actor.player.global_position.x)
+	distance = abs(actor.global_position.x-actor.player.global_position.x)
 	return distance

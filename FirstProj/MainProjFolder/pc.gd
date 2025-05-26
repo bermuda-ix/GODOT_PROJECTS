@@ -27,7 +27,7 @@ signal jump_out_signal
 
 #Base FSM
 enum States {IDLE, WALKING, JUMP, ATTACK, SPECIAL_ATTACK, WALL_STICK, PARRY, DODGE, SPRINTING,
-FLIP,THRUST, HIT}
+FLIP,THRUST, HIT, STAGGERED}
 #FSM for lock on
 enum CombatStates {LOCKED, UNLOCKED}
 #FSM for combo attacks:
@@ -101,6 +101,7 @@ signal no_input_qte
 @onready var pb_rot = $ParryBox/PBRot
 @onready var parry_box = $ParryBox
 @onready var counter_box_collision = $CounterBox/CounterBoxCollision
+@onready var stagger: Stagger = $Stagger
 
 @onready var hurt_box_detect = $HurtBox/CollisionShape2D
 @onready var collision_shape_2d = $CollisionShape2D
@@ -192,6 +193,8 @@ func _process(delta):
 		if qte_handler.actor_control_active:
 			qte_input()
 		return
+	elif state==States.STAGGERED:
+		return
 	#print(hit_stop.dur.time_left)
 	var input_axis = Input.get_axis("walk_left", "walk_right")
 	vel_x=velocity.x
@@ -261,6 +264,10 @@ func _physics_process(delta):
 				set_state(state, States.IDLE)
 			
 		#velocity = movement * SPEED * delta
+	elif state==States.STAGGERED:
+		move_and_slide()
+		apply_gravity(delta)
+		velocity.x=0
 	else:
 		if combat_state==CombatStates.LOCKED:
 			locked_combat()	
@@ -298,6 +305,7 @@ func _physics_process(delta):
 		
 		
 		var was_on_floor = is_on_floor()
+		velocity=velocity + knockback
 		move_and_slide()
 		var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
 		if just_left_ledge:
@@ -1004,6 +1012,9 @@ func set_state(current_state, new_state: int) -> void:
 		States.HIT:
 			anim_player.play("hit")
 			hurt_box_detect.disabled=true
+		States.STAGGERED:
+			anim_player.play("staggered")
+			knockback=Vector2.ZERO
 	if state != States.DODGE:
 		hurt_box_detect.disabled=false
 			
@@ -1168,6 +1179,9 @@ func _on_animation_player_animation_finished(anim_name):
 	elif state==States.JUMP:
 		if anim_name=="jump":
 			falling=true
+	elif anim_name=="staggered":
+		set_state(state, States.IDLE)
+		stagger.stagger=stagger.get_max_stagger()
 	
 	elif anim_name=="dodge_roll":
 		
@@ -1458,6 +1472,22 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			knockback.x=-400
 		velocity.x = movement_data.speed + knockback.x
 		set_state(state, States.HIT)
+
+func _on_stagger_staggered() -> void:
+	knockback.x=0
+	velocity=Vector2.ZERO
+	set_state(state, States.STAGGERED)
+	
+func _on_hit_box_parried() -> void:
+	anim_player.play("parried")
+	hb_collision.disabled=true
+	if target_right:
+		knockback.x=-40
+	else:
+		knockback.x=40
+	Events.enemy_parried.emit()
+	#velocity.x = movement_data.speed + knockback.x
+
 ####################
 #Cutscene Functions#
 ####################
@@ -1499,28 +1529,3 @@ func _on_hit_stop_hit_stop_finished() -> void:
 		no_input_qte.emit()
 	else:
 		pass
-		
-
-#func set_speech_text(value : String) -> void:
-	#speech.text=str(value)
-#
-#
-#func start_cutscene(value : String) -> void:
-	#set_actor_control(false)
-	#anim_player.play(value)
-	#
-#func queue_cutscene(cutscenes : Array[String]) -> void:
-	#for cutscene in cutscenes:
-		#anim_player.queue(cutscene)
-	#
-#func end_cutscene() -> void:
-	#set_actor_control(true)
-	#anim_player.play("RESET")
-	#anim_count=0
-	#set_movement_data(0)
-#
-#func anim_count_up() -> void:
-	#if not player_control_active:
-		#anim_count+=1
-	#else:
-		#pass

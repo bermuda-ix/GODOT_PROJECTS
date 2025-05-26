@@ -1,3 +1,5 @@
+class_name Death
+
 extends LimboState
 
 @export var actor : Node2D

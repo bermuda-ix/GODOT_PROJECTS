@@ -1,6 +1,8 @@
 class_name TargetLock
 extends Node2D
 
+@export var actor : Node2D
+
 func target_lock():
 	var target_lock_inst
 	const TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")

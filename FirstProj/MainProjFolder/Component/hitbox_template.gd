@@ -17,5 +17,6 @@ func get_damage() -> int:
 
 func _on_parried(parrybox: ParryBox) -> void:
 	if parrybox!= null:
+		#print("parried!")
 		stagger.stagger -= 1
 		parried.emit()

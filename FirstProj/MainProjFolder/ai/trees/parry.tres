@@ -1,0 +1,57 @@
+[gd_resource type="BehaviorTree" load_steps=14 format=3 uid="uid://t2han52xa64j"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_8nivn"]
+var/parry_success/name = &"parry_success"
+var/parry_success/type = 1
+var/parry_success/value = false
+var/parry_success/hint = 0
+var/parry_success/hint_string = ""
+
+[sub_resource type="BBNode" id="BBNode_mrfpj"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_dldvm"]
+animation_player = SubResource("BBNode_mrfpj")
+animation_name = &"parry"
+
+[sub_resource type="BTWait" id="BTWait_8nivn"]
+duration = 0.1
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_8nivn"]
+variable = &"parry_success"
+
+[sub_resource type="BBNode" id="BBNode_dldvm"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_56rwc"]
+animation_player = SubResource("BBNode_dldvm")
+animation_name = &"parry_success"
+
+[sub_resource type="BBNode" id="BBNode_jvmod"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_mlegg"]
+animation_player = SubResource("BBNode_jvmod")
+animation_name = &"parry_success"
+
+[sub_resource type="BTSequence" id="BTSequence_mrfpj"]
+children = [SubResource("BTWait_8nivn"), SubResource("BTCheckTrigger_8nivn"), SubResource("BTPlayAnimation_56rwc"), SubResource("BTAwaitAnimation_mlegg")]
+
+[sub_resource type="BTRepeat" id="BTRepeat_8nivn"]
+times = 10
+children = [SubResource("BTSequence_mrfpj")]
+
+[sub_resource type="BTRunLimit" id="BTRunLimit_dldvm"]
+run_limit = 10
+count_policy = 1
+children = [SubResource("BTRepeat_8nivn")]
+
+[sub_resource type="BTSequence" id="BTSequence_8nivn"]
+children = [SubResource("BTPlayAnimation_dldvm"), SubResource("BTRunLimit_dldvm")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_8nivn")
+root_task = SubResource("BTSequence_8nivn")

@@ -1,3 +1,5 @@
+class_name Jump
+
 extends LimboState
 
 @export var actor : Node2D

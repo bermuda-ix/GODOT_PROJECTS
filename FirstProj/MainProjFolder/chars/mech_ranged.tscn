@@ -926,6 +926,21 @@ tracks/11/keys = {
 "method": &"set_active"
 }]
 }
+tracks/12/type = "audio"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("AudioStreamPlayer2D")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("13_45h7i")
+}],
+"times": PackedFloat32Array(0.366667)
+}
+tracks/12/use_blend = true
 
 [sub_resource type="Animation" id="Animation_qgd3n"]
 resource_name = "dead"
