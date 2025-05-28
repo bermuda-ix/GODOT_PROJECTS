@@ -8,9 +8,12 @@ extends Node
 @export var bt_player : BTPlayer
 
 @export var shoot_counter_active : bool = true
-
+@export var active : bool = true
 
 func _physics_process(delta: float) -> void:
+	if not active:
+		return
+	
 	if shoot_counter_active:
 		shoot_counter()
 				

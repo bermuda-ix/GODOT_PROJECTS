@@ -154,6 +154,10 @@ func _ready():
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 
 func _process(delta: float) -> void:
+	if state_machine.get_active_state()==death:
+		hb_collision.disabled=true
+		return
+	
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	ammo_count=turret.ammo_count
@@ -162,11 +166,24 @@ func _process(delta: float) -> void:
 	distance = abs(global_position.x-player.global_position.x)
 	defense_shoot()
 	reload_gun()
+	being_flipped()
 	#print(distance)
 
 func _physics_process(delta: float) -> void:
 	if combat_state_machine.get_active_state()==ranged_mode or state_machine.get_active_state()==parry:
 		current_speed=0
+	
+	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
+		#hb_collison.disabled=true
+		velocity.y += gravity * delta
+		velocity.x=0
+		move_and_slide()
+		return
+	elif state_machine.get_active_state()==dying:
+		death_handler.dying()
+	elif state_machine.get_active_state()==death :
+		hb_collision.disabled=true
+		return
 	
 	velocity.x = current_speed + knockback.x
 	move_and_slide()
@@ -303,10 +320,10 @@ func _on_attack_entered() -> void:
 
 
 func being_flipped() -> void:
-	if player_state==player.States.FLIP:
-		movement_handler.face_player_active=false
+	if player_state==player.States.FLIP or player.prev_state==player.States.FLIP:
+		movement_handler.active=false
 	else:
-		movement_handler.face_player_active=true
+		movement_handler.active=true
 
 func _on_shooting_states_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	pass
@@ -369,6 +386,7 @@ func _on_stagger_staggered() -> void:
 	stagger_timer.start(3)
 	hb_collision.disabled=true
 	current_speed=0
+	velocity.x=0
 	state_machine.dispatch(&"staggered")
 
 
@@ -409,3 +427,8 @@ func _on_health_health_depleted() -> void:
 	knockback.x=250
 	jump_handler.handle_jump(0.2)
 	death_handler.death()
+
+
+func _on_dying_entered() -> void:
+	movement_handler.active=false
+	hit_stop.hit_stop(0.3, 0.3)

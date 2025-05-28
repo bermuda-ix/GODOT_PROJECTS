@@ -251,10 +251,7 @@ func _physics_process(delta):
 		move_and_slide()
 		return
 	elif state_machine.get_active_state()==dying:
-		move_and_slide()
-		if is_on_floor() and not jump_timer.is_stopped():
-			dying.blackboard.set_var("hit_the_floor", true)
-		velocity.x=knockback.x
+		death_handler.dying()
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
 		return

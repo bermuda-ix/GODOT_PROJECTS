@@ -18,6 +18,11 @@ func death():
 	sm.dispatch(&"die")
 	
 	#print("dead")
+func dying():
+	actor.move_and_slide()
+	if actor.is_on_floor() and not actor.jump_timer.is_stopped():
+		actor.dying.blackboard.set_var("hit_the_floor", true)
+	actor.velocity.x=actor.knockback.x
 
 func dead():
 	pass

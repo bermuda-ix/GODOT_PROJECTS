@@ -1,4 +1,4 @@
-[gd_scene load_steps=135 format=3 uid="uid://dn0fhusgltn4m"]
+[gd_scene load_steps=140 format=3 uid="uid://dn0fhusgltn4m"]
 
 [ext_resource type="Texture2D" uid="uid://cj1e5ggio6406" path="res://Art_Components/Enemies/SWAT_2/Dead.png" id="1_4nhfo"]
 [ext_resource type="Script" uid="uid://ivyj1p60rf7r" path="res://chars/heavy_soldier.gd" id="1_ct51r"]
@@ -25,9 +25,10 @@
 [ext_resource type="Script" uid="uid://5h8g0n4mebtm" path="res://Component/functions/ShootAttackManager.gd" id="18_pk3h2"]
 [ext_resource type="PackedScene" uid="uid://e8y61qs02r7p" path="res://Component/ball_procetile.tscn" id="20_ao47q"]
 [ext_resource type="Script" uid="uid://cx8bi64kwoulc" path="res://Component/functions/PlayerTrackingHandler.gd" id="20_eopqg"]
+[ext_resource type="Script" uid="uid://cr58jnxs33hft" path="res://Component/functions/deathHandler.gd" id="20_jdney"]
 [ext_resource type="Script" uid="uid://co05jfawt7xsm" path="res://Component/functions/GetPlayerInfoHandler.gd" id="20_vtt0c"]
 [ext_resource type="Script" uid="uid://ddhk64y60klpg" path="res://Component/functions/MeleeAttackManager.gd" id="22_rumpe"]
-[ext_resource type="Script" uid="uid://d04qf1jqrfg1h" path="res://Component/functions/CounterAttackHandler.gd" id="23_okbgj"]
+[ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="24_ni375"]
 [ext_resource type="Script" uid="uid://cvo1e5meai30k" path="res://Component/functions/CombatStateChangeHandler.gd" id="25_uhne8"]
 [ext_resource type="Script" uid="uid://daq7xh1e6l7u6" path="res://chars/idle.gd" id="26_i7wao"]
 [ext_resource type="Script" uid="uid://d2wausty5l457" path="res://chars/jump.gd" id="26_rumpe"]
@@ -46,7 +47,9 @@
 [ext_resource type="Script" uid="uid://6lcwbcgt2hxx" path="res://chars/reload.gd" id="39_i83c4"]
 [ext_resource type="Script" uid="uid://bdhtg4sor0v57" path="res://chars/shooting_defense.gd" id="39_iqleq"]
 [ext_resource type="BehaviorTree" uid="uid://t2han52xa64j" path="res://ai/trees/parry.tres" id="40_iqleq"]
+[ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="45_jdney"]
 [ext_resource type="PackedScene" uid="uid://bro4najrj7577" path="res://Component/UI_Rec/npc_stats.tscn" id="47_b8y0i"]
+[ext_resource type="Script" uid="uid://cyc80ne8pluln" path="res://chars/dying.gd" id="47_cl2c2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv57o"]
 size = Vector2(42, 76)
@@ -904,6 +907,34 @@ tracks/6/keys = {
 "values": [Vector2(0, 0), Vector2(-10, 0), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_b8y0i"]
+resource_name = "reload"
+length = 1.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"reload"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.366667, 0.433333, 0.5, 0.566667, 0.633333, 0.7, 0.9, 0.966667, 1.03333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 2, 1, 0]
+}
+
 [sub_resource type="Animation" id="Animation_s0mi6"]
 resource_name = "run"
 length = 0.8
@@ -1005,34 +1036,6 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 0]
 }
 
-[sub_resource type="Animation" id="Animation_b8y0i"]
-resource_name = "reload"
-length = 1.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"reload"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.366667, 0.433333, 0.5, 0.566667, 0.633333, 0.7, 0.9, 0.966667, 1.03333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 2, 1, 0]
-}
-
 [sub_resource type="Animation" id="Animation_jdney"]
 resource_name = "staggered"
 length = 0.2
@@ -1074,9 +1077,68 @@ tracks/2/keys = {
 "values": [Color(1, 1, 1, 1), Color(100, 100, 100, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_cl2c2"]
+resource_name = "death"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_86qvh"]
+resource_name = "dead"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"dead"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n5mdn"]
 _data = {
 &"RESET": SubResource("Animation_vtt0c"),
+&"dead": SubResource("Animation_86qvh"),
+&"death": SubResource("Animation_cl2c2"),
 &"hit": SubResource("Animation_a5flw"),
 &"idle": SubResource("Animation_ct51r"),
 &"parry": SubResource("Animation_2a376"),
@@ -1261,6 +1323,14 @@ autostart = true
 
 [node name="DeathTimer" type="Timer" parent="."]
 
+[node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "animation_player")]
+script = ExtResource("20_jdney")
+actor = NodePath("..")
+sm = NodePath("../StateMachine")
+animation_player = NodePath("../AnimationPlayer")
+tree_active = false
+metadata/_custom_type_script = "uid://cr58jnxs33hft"
+
 [node name="PlayerTrackingHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("20_eopqg")
 actor = NodePath("..")
@@ -1284,6 +1354,10 @@ active = false
 state_machine = NodePath("../StateMachine")
 vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
+
+[node name="HitStop" type="Node" parent="."]
+script = ExtResource("24_ni375")
+metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
 [node name="GetPlayerInfoHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("20_vtt0c")
@@ -1316,16 +1390,6 @@ metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 script = ExtResource("22_rumpe")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://ddhk64y60klpg"
-
-[node name="CounterAttackHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "jump_handler", "shoot_attack_manager", "state_machine", "bt_player")]
-script = ExtResource("23_okbgj")
-actor = NodePath("..")
-jump_handler = NodePath("../JumpHandler")
-shoot_attack_manager = NodePath("../ShootAttackManager")
-state_machine = NodePath("../StateMachine")
-bt_player = NodePath("../BTPlayer")
-shoot_counter_active = false
-metadata/_custom_type_script = "uid://d04qf1jqrfg1h"
 
 [node name="CombatStateChangeHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player")]
 script = ExtResource("25_uhne8")
@@ -1415,7 +1479,9 @@ script = ExtResource("34_s0mi6")
 metadata/_custom_type_script = "uid://c4yno8xy5erif"
 
 [node name="Dying" type="BTState" parent="StateMachine"]
+behavior_tree = ExtResource("45_jdney")
 blackboard_plan = SubResource("BlackboardPlan_vtt0c")
+script = ExtResource("47_cl2c2")
 
 [node name="CombatStateMachine" type="LimboHSM" parent="."]
 
@@ -1460,4 +1526,5 @@ actor = NodePath("..")
 [connection signal="entered" from="StateMachine/ShootingStates/Shooting" to="." method="_on_shooting_entered"]
 [connection signal="entered" from="StateMachine/ShootingStates/ShootingDefense" to="." method="_on_shooting_defense_entered"]
 [connection signal="exited" from="StateMachine/Parry" to="." method="_on_parry_exited"]
+[connection signal="entered" from="StateMachine/Dying" to="." method="_on_dying_entered"]
 [connection signal="active_state_changed" from="CombatStateMachine" to="." method="_on_combat_state_machine_active_state_changed"]

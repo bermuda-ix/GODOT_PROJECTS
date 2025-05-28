@@ -396,22 +396,29 @@ func break_out():
 		
 		#state=States.IDLE
 		set_state(state, States.JUMP)
-		jump_out_signal.emit(250)
+		jump_out_signal.emit(30)
 	elif Input.is_action_just_pressed("attack"):
 		attack_combo="Flip_Attack"
 		set_state(state, States.ATTACK)
-		jump_out(200)
+		jump_out(15)
 		
 		
 #jump out of flip
 func jump_out(jumpout_vel : float):
 	knockback.x=jumpout_vel
-	if vector_away.x<0:
-		print("jump left")
+	print(knockback.x)
+	print(vector_away.x)
+	var jump_left
+	if global_position.x - target.global_position.x > 0:
+		jump_left=true
+	else:
+		jump_left=false
+	if not jump_left:
+		#print("jump left")
 		knockback.x = knockback.x*-1
 	else:
 		knockback.x=knockback.x
-	velocity.y=movement_data.jump_velocity
+	velocity.y=movement_data.jump_velocity*0.8
 	#velocity.x = knockback.x
 	hit_stop.hit_stop(1,0)
 	set_collision_mask_value(15, true)
@@ -1088,14 +1095,14 @@ func _on_hit_timer_timeout() -> void:
 
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("bullet"):
-		hit_stop.hit_stop(0.05, 0.05)
-		knockback.x = -50
+		hit_stop.hit_stop(0.05, 0.1)
+		knockback.x = -10
 		kb_dir=global_position.direction_to(area.global_position)
 		#"knockback")
 		kb_dir=round(kb_dir)
 		#kb_dir.x, " ", knockback)
 		knockback.x = kb_dir.x * knockback.x
-		velocity.y=movement_data.jump_velocity/2
+		knockback.y=-5
 		#velocity.x = movement_data.speed + knockback.x
 		health.health -= 1
 		health.set_temporary_immortality(0.2)
@@ -1292,7 +1299,7 @@ func flipping(delta):
 	var pos_above_y=target.global_position.y-global_position.y
 	target_pos_x=(target.global_position.x)
 	var pos_above_x=target.global_position.x-global_position.x
-	print(global_position)
+	#print(global_position)
 #	Jumping before flipping over
 	if not flipped_over:
 		health.immortality=true
@@ -1496,11 +1503,11 @@ func _on_hit_box_parried() -> void:
 
 func set_path_speed(speed : int) -> void:
 	path_speed=speed
-	print(path_speed)
+	#print(path_speed)
 func start_path(speed : int):
 	set_path_start(true)
 	set_path_speed(speed)
-	print(speed)
+	#print(speed)
 func set_path_start(value) -> void:
 	path_start=value
 
