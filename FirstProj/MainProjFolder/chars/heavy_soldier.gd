@@ -431,4 +431,4 @@ func _on_health_health_depleted() -> void:
 
 func _on_dying_entered() -> void:
 	movement_handler.active=false
-	hit_stop.hit_stop(0.3, 0.3)
+	hit_stop.hit_stop(0.1, 0.3)

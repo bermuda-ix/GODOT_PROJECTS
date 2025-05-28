@@ -966,7 +966,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_ypkgb"]
 resource_name = "shoot"
-length = 0.2
+length = 0.3
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1474,8 +1474,11 @@ stagger = NodePath("../../Stagger")
 bt_player = NodePath("../../BTPlayer")
 metadata/_custom_type_script = "uid://bmeh2aawck5wy"
 
-[node name="Death" type="LimboState" parent="StateMachine"]
+[node name="Death" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("34_s0mi6")
+actor = NodePath("../..")
+animation_player = NodePath("../../AnimationPlayer")
+tree_active = false
 metadata/_custom_type_script = "uid://c4yno8xy5erif"
 
 [node name="Dying" type="BTState" parent="StateMachine"]
