@@ -15,6 +15,9 @@ var turret_order : int =0
 signal reloading
 signal reloading_done
 
+#REFACTORED RELOADING. To be added to all actors
+@export var refactored_reloading : bool = false
+
 func shoot():
 	if turret.infinite_ammo:
 		if not multi_wield:
@@ -31,22 +34,34 @@ func shoot():
 			turret.ammo_count-=1
 			
 		else:
-			shooting=false
-			reloading.emit()
-			
-			if reload_timer>0:
-				for i in reload_timer:
+			if not refactored_reloading:
+				shooting=false
+				reloading.emit()
+				
+				if reload_timer>0:
+					for i in reload_timer:
+						animation_player.play("reload")
+						#print(i)
+						await animation_player.animation_finished
+						
+						
+				else:
 					animation_player.play("reload")
-					#print(i)
 					await animation_player.animation_finished
 					
-					
+				reloading_done.emit()
+				turret.ammo_count=turret.max_ammo
 			else:
-				animation_player.play("reload")
-				await animation_player.animation_finished
-				
-			reloading_done.emit()
-			turret.ammo_count=turret.max_ammo
+				pass
+	
+func shoot_refactor():
+	turret.shoot()
+	turret.ammo_count-=1
+
+func reload():
+	animation_player.play("reload")
+	turret.ammo_count=turret.max_ammo
+	
 	
 func shoot_setup(value : float):
 	turret.setup(value)

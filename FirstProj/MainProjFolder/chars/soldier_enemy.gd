@@ -153,6 +153,7 @@ func _ready():
 	bt_player.blackboard.set_var("counter_attack", false)
 	bt_player.blackboard.set_var("counter_kick_flag", false)
 	bt_player.blackboard.set_var("staggered", false)
+	dying.blackboard.set_var("hit_the_floor", false)
 	#turret.setup(0.2)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
@@ -262,6 +263,8 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
+	else:
+		dying.blackboard.set_var("hit_the_floor", true)
 		
 	if state_machine.get_active_state()==staggered and parry_timer.time_left>0.0:
 		state_machine.change_active_state(staggered)

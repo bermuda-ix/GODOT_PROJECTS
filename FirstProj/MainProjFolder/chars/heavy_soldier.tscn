@@ -1,4 +1,4 @@
-[gd_scene load_steps=131 format=3 uid="uid://dn0fhusgltn4m"]
+[gd_scene load_steps=135 format=3 uid="uid://dn0fhusgltn4m"]
 
 [ext_resource type="Texture2D" uid="uid://cj1e5ggio6406" path="res://Art_Components/Enemies/SWAT_2/Dead.png" id="1_4nhfo"]
 [ext_resource type="Script" uid="uid://ivyj1p60rf7r" path="res://chars/heavy_soldier.gd" id="1_ct51r"]
@@ -43,8 +43,10 @@
 [ext_resource type="Script" uid="uid://f8o0kgomg38" path="res://chars/parry.gd" id="34_i7wao"]
 [ext_resource type="Script" uid="uid://c4yno8xy5erif" path="res://chars/death.gd" id="34_s0mi6"]
 [ext_resource type="Script" uid="uid://dxm8lwrnlvxmj" path="res://chars/shooting_states.gd" id="37_ypkgb"]
+[ext_resource type="Script" uid="uid://6lcwbcgt2hxx" path="res://chars/reload.gd" id="39_i83c4"]
 [ext_resource type="Script" uid="uid://bdhtg4sor0v57" path="res://chars/shooting_defense.gd" id="39_iqleq"]
 [ext_resource type="BehaviorTree" uid="uid://t2han52xa64j" path="res://ai/trees/parry.tres" id="40_iqleq"]
+[ext_resource type="PackedScene" uid="uid://bro4najrj7577" path="res://Component/UI_Rec/npc_stats.tscn" id="47_b8y0i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv57o"]
 size = Vector2(42, 76)
@@ -959,6 +961,20 @@ tracks/1/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 0]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShootAttackManager")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.0666667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"shoot_refactor"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_iqleq"]
 resource_name = "shoot_defense"
@@ -989,6 +1005,75 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 0]
 }
 
+[sub_resource type="Animation" id="Animation_b8y0i"]
+resource_name = "reload"
+length = 1.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"reload"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.366667, 0.433333, 0.5, 0.566667, 0.633333, 0.7, 0.9, 0.966667, 1.03333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 2, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_jdney"]
+resource_name = "staggered"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(100, 100, 100, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n5mdn"]
 _data = {
 &"RESET": SubResource("Animation_vtt0c"),
@@ -996,9 +1081,11 @@ _data = {
 &"idle": SubResource("Animation_ct51r"),
 &"parry": SubResource("Animation_2a376"),
 &"parry_success": SubResource("Animation_n5mdn"),
+&"reload": SubResource("Animation_b8y0i"),
 &"run": SubResource("Animation_s0mi6"),
 &"shoot": SubResource("Animation_ypkgb"),
-&"shoot_defense": SubResource("Animation_iqleq")
+&"shoot_defense": SubResource("Animation_iqleq"),
+&"staggered": SubResource("Animation_jdney")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ct51r"]
@@ -1082,6 +1169,7 @@ metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [node name="PlayerTrackerPivot" type="Node2D" parent="."]
+position = Vector2(0, 11)
 
 [node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot"]
 collision_mask = 3
@@ -1140,6 +1228,7 @@ script = ExtResource("15_8nnwq")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 dmg_mult = 2
+weakpoint = true
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox_Weakpoint"]
@@ -1185,6 +1274,7 @@ csm = NodePath("../CombatStateMachine")
 vision_range = 400
 player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 bt_active = false
+stay_on = true
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
 [node name="MovementHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
@@ -1219,6 +1309,7 @@ actor = NodePath("..")
 animation_player = NodePath("../AnimationPlayer")
 turret = NodePath("../Turret")
 reload_timer = 3
+refactored_reloading = true
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
 [node name="MeleeAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor")]
@@ -1233,6 +1324,7 @@ jump_handler = NodePath("../JumpHandler")
 shoot_attack_manager = NodePath("../ShootAttackManager")
 state_machine = NodePath("../StateMachine")
 bt_player = NodePath("../BTPlayer")
+shoot_counter_active = false
 metadata/_custom_type_script = "uid://d04qf1jqrfg1h"
 
 [node name="CombatStateChangeHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player")]
@@ -1275,11 +1367,12 @@ actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 metadata/_custom_type_script = "uid://b5an13nv6em7m"
 
-[node name="ShootingStates" type="LimboHSM" parent="StateMachine" node_paths=PackedStringArray("actor", "shooting_states", "player_info")]
+[node name="ShootingStates" type="LimboHSM" parent="StateMachine" node_paths=PackedStringArray("actor", "player_info", "shoot_attack_handler", "turret")]
 script = ExtResource("37_ypkgb")
 actor = NodePath("../..")
-shooting_states = NodePath(".")
 player_info = NodePath("../../GetPlayerInfoHandler")
+shoot_attack_handler = NodePath("../../ShootAttackManager")
+turret = NodePath("../../Turret")
 
 [node name="Shooting" type="LimboState" parent="StateMachine/ShootingStates" node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("30_vtt0c")
@@ -1289,6 +1382,11 @@ metadata/_custom_type_script = "uid://pjji1dxbp6vy"
 
 [node name="ShootingDefense" type="LimboState" parent="StateMachine/ShootingStates"]
 script = ExtResource("39_iqleq")
+
+[node name="Reload" type="LimboState" parent="StateMachine/ShootingStates" node_paths=PackedStringArray("animation_player", "turret")]
+script = ExtResource("39_i83c4")
+animation_player = NodePath("../../../AnimationPlayer")
+turret = NodePath("../../../Turret")
 
 [node name="Hit" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("32_a5flw")
@@ -1333,8 +1431,28 @@ actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 metadata/_custom_type_script = "uid://koggvl8cxowm"
 
+[node name="NPCStats" parent="." node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("47_b8y0i")]
+offset_left = -28.0
+offset_top = -17.0
+offset_right = -28.0
+offset_bottom = -17.0
+scale = Vector2(0.3, 0.3)
+health = NodePath("../Health")
+stagger = NodePath("../Stagger")
+actor = NodePath("..")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
+[connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
+[connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
+[connection signal="area_entered" from="HurtBox_Weakpoint" to="." method="_on_hurt_box_weakpoint_area_entered"]
+[connection signal="weakpoint_hit" from="HurtBox_Weakpoint" to="." method="_on_hurt_box_weakpoint_weakpoint_hit"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
+[connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
+[connection signal="timeout" from="StaggerTimer" to="." method="_on_stagger_timer_timeout"]
 [connection signal="active_state_changed" from="StateMachine" to="." method="_on_state_machine_active_state_changed"]
 [connection signal="entered" from="StateMachine/Chasing" to="." method="_on_chasing_entered"]
 [connection signal="entered" from="StateMachine/Attack" to="." method="_on_attack_entered"]

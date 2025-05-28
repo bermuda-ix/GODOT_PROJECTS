@@ -10,7 +10,7 @@ extends LimboState
 
 func _enter() -> void:
 	actor.animation_player.stop()
-	actor.animation_player.play("Staggered")
+	actor.animation_player.play("staggered")
 	#actor.hb_collision.disabled=true
 	actor.bt_player.blackboard.set_var("staggered", true)
 	#actor.parry_timer.start(3)

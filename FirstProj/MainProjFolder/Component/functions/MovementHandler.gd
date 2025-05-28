@@ -10,6 +10,8 @@ extends Node
 @export var move_away_speed_scale : float = .8
 @export var air_turn : bool = true
 
+@export var face_player_active : bool = true
+
 func _physics_process(delta: float) -> void:
 	
 	var direction= actor.global_position - actor.player.global_position
@@ -19,7 +21,9 @@ func _physics_process(delta: float) -> void:
 		
 	else:
 		
-		face_player()
+		if face_player_active:
+			face_player()
+		
 		if vision_handler.player_found == true:
 			
 			if keep_distance:

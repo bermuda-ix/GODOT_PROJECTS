@@ -118,7 +118,7 @@ signal no_input_qte
 @onready var enemies : Array =[]
 
 
-var knockback : Vector2 = Vector2.ZERO
+var knockback : Vector2
 var kb_dir : Vector2 = Vector2.ZERO
 var hit_success : bool = false
 var forward_thrust : Vector2 = Vector2.ZERO
@@ -188,6 +188,7 @@ func _ready():
 
 	
 func _process(delta):
+	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	if not cutscene_handler.actor_control_active:
 		
 		if qte_handler.actor_control_active:
@@ -411,7 +412,7 @@ func jump_out(jumpout_vel : float):
 	else:
 		knockback.x=knockback.x
 	velocity.y=movement_data.jump_velocity
-	velocity.x = knockback.x
+	#velocity.x = knockback.x
 	hit_stop.hit_stop(1,0)
 	set_collision_mask_value(15, true)
 
@@ -1064,7 +1065,7 @@ func _on_hurt_box_got_hit(hitbox):
 		#kb_dir.x, " ", knockback)
 		knockback.x = kb_dir.x * knockback.x
 		velocity.y=movement_data.jump_velocity/2
-		velocity.x = movement_data.speed + knockback.x
+		#velocity.x = movement_data.speed + knockback.x
 		health.set_temporary_immortality(0.2)
 	else:
 		set_collision_mask_value(16384, false)
@@ -1075,7 +1076,7 @@ func _on_hurt_box_got_hit(hitbox):
 		#kb_dir.x, " ", knockback)
 		knockback.x = kb_dir.x * knockback.x
 		velocity.y=movement_data.jump_velocity/2
-		velocity.x = movement_data.speed + knockback.x
+		#velocity.x = movement_data.speed + knockback.x
 		health.set_temporary_immortality(0.2)
 
 func _on_hit_timer_timeout() -> void:
@@ -1095,7 +1096,7 @@ func _on_hurt_box_area_entered(area):
 		#kb_dir.x, " ", knockback)
 		knockback.x = kb_dir.x * knockback.x
 		velocity.y=movement_data.jump_velocity/2
-		velocity.x = movement_data.speed + knockback.x
+		#velocity.x = movement_data.speed + knockback.x
 		health.health -= 1
 		health.set_temporary_immortality(0.2)
 		if state==States.FLIP:
@@ -1470,7 +1471,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			knockback.x=400
 		else:
 			knockback.x=-400
-		velocity.x = movement_data.speed + knockback.x
+		#velocity.x = movement_data.speed + knockback.x
 		set_state(state, States.HIT)
 
 func _on_stagger_staggered() -> void:

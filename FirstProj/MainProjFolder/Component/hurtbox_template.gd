@@ -6,7 +6,7 @@ signal received_damage(damage: int)
 signal got_hit(hitbox: HitBox)
 signal knockback(hitbox: HitBox)
 signal parried()
-
+signal weakpoint_hit()
 
 @export var health: Health
 @export var stagger: Stagger
@@ -34,7 +34,7 @@ func _on_parried(parrybox: ParryBox) -> void:
 
 func _on_weakpoint_hit(area: Area2D) -> void:
 	if area.is_in_group("spc_atk"):
-		stagger.stagger-=3
+		weakpoint_hit.emit()
 		
 
 func set_damage_mulitplyer(value:int):

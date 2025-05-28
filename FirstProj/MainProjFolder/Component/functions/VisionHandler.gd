@@ -9,6 +9,7 @@ extends Node
 @export var vision_range : int = 200
 @export var player_tracking : RayCast2D
 @export var bt_active : bool = true
+@export var stay_on : bool = false
 
 @onready var player_found : bool = false
 
@@ -37,8 +38,11 @@ func handle_vision():
 		else:
 		
 			#actor.set_state(actor.current_state, actor.States.IDLE)
-			sm.dispatch(&"idle_mode")
-			player_found = false
+			if stay_on:
+				sm.dispatch(&"start_chase")
+			else:
+				sm.dispatch(&"idle_mode")
+				player_found = false
 		
 
 		
