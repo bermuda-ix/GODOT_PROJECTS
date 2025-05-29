@@ -25,6 +25,9 @@ func _enter() -> void:
 	
 func _update(delta: float) -> void:
 	print(actor.parry_timer.time_left)
+	if movement_able:
+		actor.movement_handler.active=false
+		movement_handler.active=false
 	
 func _exit() -> void:
 	print("recovered")

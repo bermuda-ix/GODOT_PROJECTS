@@ -432,3 +432,8 @@ func _on_health_health_depleted() -> void:
 func _on_dying_entered() -> void:
 	movement_handler.active=false
 	hit_stop.hit_stop(0.1, 0.3)
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	if state_machine.get_active_state()==death:
+		queue_free()
