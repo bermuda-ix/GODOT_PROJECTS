@@ -12,7 +12,7 @@ extends Node
 func _physics_process(delta: float) -> void:
 	if not active:
 		return
-	elif sm.get_active_state()==actor.staggered:
+	elif sm.get_active_state()==actor.staggered or sm.get_active_state()==actor.idle:
 		return
 	else:
 		actor.distance=abs(actor.global_position.x-actor.player.global_position.x)

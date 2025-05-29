@@ -1,4 +1,4 @@
-[gd_scene load_steps=140 format=3 uid="uid://dn0fhusgltn4m"]
+[gd_scene load_steps=141 format=3 uid="uid://dn0fhusgltn4m"]
 
 [ext_resource type="Texture2D" uid="uid://cj1e5ggio6406" path="res://Art_Components/Enemies/SWAT_2/Dead.png" id="1_4nhfo"]
 [ext_resource type="Script" uid="uid://ivyj1p60rf7r" path="res://chars/heavy_soldier.gd" id="1_ct51r"]
@@ -38,6 +38,7 @@
 [ext_resource type="Script" uid="uid://b5an13nv6em7m" path="res://chars/attack.gd" id="29_ct51r"]
 [ext_resource type="Script" uid="uid://b0uasmutdnguo" path="res://chars/target_lock.gd" id="30_a5flw"]
 [ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="30_vtt0c"]
+[ext_resource type="Script" uid="uid://bnpx2avsix2an" path="res://Component/functions/GroupEnemyManager.gd" id="32_86qvh"]
 [ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="32_a5flw"]
 [ext_resource type="Script" uid="uid://d20gnlqqx7l6k" path="res://chars/heavy_soldier_state_machine.gd" id="32_s0mi6"]
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="33_eopqg"]
@@ -712,6 +713,63 @@ tracks/10/keys = {
 "values": [Vector2(-25, 9)]
 }
 
+[sub_resource type="Animation" id="Animation_86qvh"]
+resource_name = "dead"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"dead"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_cl2c2"]
+resource_name = "death"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
 [sub_resource type="Animation" id="Animation_a5flw"]
 resource_name = "hit"
 length = 0.3
@@ -1127,63 +1185,6 @@ tracks/2/keys = {
 "values": [Color(1, 1, 1, 1), Color(100, 100, 100, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_cl2c2"]
-resource_name = "death"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"death"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3]
-}
-
-[sub_resource type="Animation" id="Animation_86qvh"]
-resource_name = "dead"
-length = 0.3
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"dead"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n5mdn"]
 _data = {
 &"RESET": SubResource("Animation_vtt0c"),
@@ -1451,6 +1452,11 @@ bt_player = NodePath("../BTPlayer")
 ranged_dist = 30
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
+[node name="GroupEnemyManager" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("32_86qvh")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://bnpx2avsix2an"
+
 [node name="BTPlayer" type="BTPlayer" parent="."]
 blackboard_plan = SubResource("BlackboardPlan_uhne8")
 
@@ -1502,6 +1508,8 @@ script = ExtResource("39_iqleq")
 script = ExtResource("39_i83c4")
 animation_player = NodePath("../../../AnimationPlayer")
 turret = NodePath("../../../Turret")
+
+[node name="ShootIdle" type="LimboState" parent="StateMachine/ShootingStates"]
 
 [node name="Hit" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("32_a5flw")
@@ -1561,6 +1569,12 @@ health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 actor = NodePath("..")
 
+[node name="Label" type="Label" parent="."]
+offset_left = -25.0
+offset_top = -41.0
+offset_right = 15.0
+offset_bottom = -18.0
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
@@ -1574,10 +1588,12 @@ actor = NodePath("..")
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="StaggerTimer" to="." method="_on_stagger_timer_timeout"]
+[connection signal="player_sighted" from="VisionHandler" to="." method="_on_vision_handler_player_sighted"]
 [connection signal="active_state_changed" from="StateMachine" to="." method="_on_state_machine_active_state_changed"]
 [connection signal="entered" from="StateMachine/Chasing" to="." method="_on_chasing_entered"]
 [connection signal="entered" from="StateMachine/Attack" to="." method="_on_attack_entered"]
 [connection signal="active_state_changed" from="StateMachine/ShootingStates" to="." method="_on_shooting_states_active_state_changed"]
+[connection signal="entered" from="StateMachine/ShootingStates" to="." method="_on_shooting_states_entered"]
 [connection signal="entered" from="StateMachine/ShootingStates/Shooting" to="." method="_on_shooting_entered"]
 [connection signal="entered" from="StateMachine/ShootingStates/ShootingDefense" to="." method="_on_shooting_defense_entered"]
 [connection signal="exited" from="StateMachine/Parry" to="." method="_on_parry_exited"]

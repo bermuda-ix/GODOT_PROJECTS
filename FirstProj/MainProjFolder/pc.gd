@@ -203,7 +203,6 @@ func _process(delta):
 	get_target_info()
 	previous_state()
 	atk_state_debug()
-	label.text=str(anim_count)
 	#if target != null:
 		#label.text=str(target_size_x, " , ",target_size_y)
 	#if atk_chain >= 1 and sp_atk_chn >=1:

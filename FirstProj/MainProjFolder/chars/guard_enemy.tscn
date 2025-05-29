@@ -1218,7 +1218,7 @@ avoidance_enabled = true
 debug_enabled = true
 
 [node name="PlayerTrackerPivot" type="Node2D" parent="."]
-position = Vector2(0, -38)
+position = Vector2(0, -16)
 
 [node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot"]
 target_position = Vector2(239, 0)

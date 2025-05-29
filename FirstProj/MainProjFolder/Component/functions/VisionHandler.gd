@@ -13,6 +13,7 @@ extends Node
 
 @onready var player_found : bool = false
 
+signal player_sighted
 #func _ready() -> void:
 	#actor.player_tracking.target_position = Vector2(vision_range, 0)
 
@@ -33,8 +34,11 @@ func handle_vision():
 				sm.dispatch(&"attack_mode")
 				
 				#chase_timer.start(1)
+				if player_found==false:
+					player_sighted.emit()
 				player_found = true
 				
+			
 		else:
 		
 			#actor.set_state(actor.current_state, actor.States.IDLE)
@@ -51,7 +55,7 @@ func handle_vision():
 		if csm.get_active_state()==actor.ranged_mode and player_found:
 			#actor.set_state(actor.current_state, actor.States.ATTACK)
 			sm.dispatch(&"attack_mode")
-		elif csm.get_active_state()==actor.melee_mode:
+		elif csm.get_active_state()==actor.melee_mode and player_found:
 			if bt_active:
 				if actor.bt_player.blackboard.get_var("within_range"):
 					#actor.set_state(actor.current_state, actor.States.ATTACK)

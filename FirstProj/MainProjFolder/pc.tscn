@@ -4917,7 +4917,7 @@ script = ExtResource("9_s8nmr")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" groups=["player"]]
 position = Vector2(-0.250014, -1)
 shape = SubResource("RectangleShape2D_oupih")
 

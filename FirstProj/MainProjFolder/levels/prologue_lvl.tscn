@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=39 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_7j8nt"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://idc8e7mjacdd" path="res://Component/turret_link.tscn" id="11_kpmgs"]
 [ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="11_vtk8u"]
 [ext_resource type="PackedScene" uid="uid://dak3j323lms0s" path="res://chars/sleeping_guard.tscn" id="12_jyauw"]
+[ext_resource type="PackedScene" uid="uid://dn0fhusgltn4m" path="res://chars/heavy_soldier.tscn" id="13_kcvht"]
 [ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="14_dmeha"]
 [ext_resource type="PackedScene" uid="uid://bvvdaxqcb1uvh" path="res://chars/mech_ranged.tscn" id="14_h7re7"]
 [ext_resource type="Script" uid="uid://7cyh5ujpo4sp" path="res://levels/Boundery.gd" id="19_kcvht"]
@@ -836,11 +837,24 @@ max_enemy = 1
 
 [node name="soldiers" type="Node" parent="Enemy" index="0"]
 
-[node name="soldier_enemy2" parent="Enemy/soldiers" index="0" instance=ExtResource("9_grstv")]
-position = Vector2(2264, 272)
-
-[node name="soldier_enemy3" parent="Enemy/soldiers" index="1" instance=ExtResource("9_grstv")]
+[node name="soldier_enemy3" parent="Enemy/soldiers" index="0" instance=ExtResource("9_grstv")]
 position = Vector2(2416, 92)
+
+[node name="HeavySoldier" parent="Enemy/soldiers" index="1" instance=ExtResource("13_kcvht")]
+position = Vector2(2216, 280)
+scale = Vector2(0.5, 0.5)
+
+[node name="HeavySoldier2" parent="Enemy/soldiers" index="2" instance=ExtResource("13_kcvht")]
+position = Vector2(3389, 285)
+scale = Vector2(0.5, 0.5)
+
+[node name="HeavySoldier3" parent="Enemy/soldiers" index="3" instance=ExtResource("13_kcvht")]
+position = Vector2(3285, 485)
+scale = Vector2(0.5, 0.5)
+
+[node name="HeavySoldier4" parent="Enemy/soldiers" index="4" instance=ExtResource("13_kcvht")]
+position = Vector2(3348, 482)
+scale = Vector2(0.5, 0.5)
 
 [node name="flying" type="Node" parent="Enemy" index="1"]
 
@@ -918,9 +932,6 @@ scale = Vector2(0.75, 0.75)
 [node name="GuardEnemy6" parent="Enemy/Guards" index="5" instance=ExtResource("11_vtk8u")]
 position = Vector2(3427, 490)
 
-[node name="GuardEnemy7" parent="Enemy/Guards" index="6" instance=ExtResource("11_vtk8u")]
-position = Vector2(3349, 487)
-
 [node name="SleepingGuard" parent="Enemy" index="4" instance=ExtResource("12_jyauw")]
 position = Vector2(656, 457)
 
@@ -989,9 +1000,10 @@ Hold Shift: Wall Stick
 Space on wall: Wall Jump"
 
 [node name="TutorialText4" type="RichTextLabel" parent="." index="20"]
-offset_left = 876.0
-offset_right = 1206.0
-offset_bottom = 77.0
+offset_left = 2105.0
+offset_top = 242.0
+offset_right = 2435.0
+offset_bottom = 319.0
 text = "Shift + Space while locked on: Flip over"
 
 [node name="Bounderies3" type="Node" parent="." index="21"]

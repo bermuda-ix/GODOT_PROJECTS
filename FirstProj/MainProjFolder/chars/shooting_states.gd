@@ -5,13 +5,13 @@ extends LimboHSM
 @export var shoot_attack_handler : ShootAttackManager
 @export var turret : Turret
 
-#func _enter() -> void:
-	#print("begin shoot")
+func _enter() -> void:
+	actor.state="SHOOTING"
 	#
-#func _update(delta: float) -> void:
+func _update(delta: float) -> void:
 	#print(turret.ammo_count)
-	#if turret.ammo_count<=0:
-		#actor.shooting_states.dispatch(&"reload")
+	if turret.ammo_count<=0:
+		actor.shooting_states.dispatch(&"reload")
 #
 #
 #func _on_animation_player_animation_finished(anim_name: StringName) -> void:
