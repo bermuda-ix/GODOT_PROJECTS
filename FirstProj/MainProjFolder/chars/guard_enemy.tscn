@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=3 uid="uid://berbmq4u2lo3s"]
+[gd_scene load_steps=123 format=3 uid="uid://berbmq4u2lo3s"]
 
 [ext_resource type="Script" uid="uid://ds31ngno5boru" path="res://chars/guard_enemy.gd" id="1_4q725"]
 [ext_resource type="Texture2D" uid="uid://cshwi53lwaqph" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle01.png" id="1_vk1fx"]
@@ -99,6 +99,7 @@
 [ext_resource type="Texture2D" uid="uid://b0ve4x1jtfkm5" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run06.png" id="55_s7q1o"]
 [ext_resource type="Texture2D" uid="uid://jtbb0utqt4by" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run07.png" id="56_mg5cm"]
 [ext_resource type="Texture2D" uid="uid://bs6mlkbsi1yvh" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run08.png" id="57_1kl2o"]
+[ext_resource type="Script" uid="uid://bnpx2avsix2an" path="res://Component/functions/GroupEnemyManager.gd" id="86_m3s8r"]
 [ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="97_onb8s"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ngkqw"]
@@ -1053,6 +1054,20 @@ tracks/1/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShootAttackManager")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.333333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"reload"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_w7cvb"]
 resource_name = "run"
@@ -1085,7 +1100,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_es3xv"]
 resource_name = "shoot"
-length = 0.3
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1105,10 +1120,24 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.266667),
+"times": PackedFloat32Array(0, 0.1, 0.133333, 0.166667, 0.266667),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShootAttackManager")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"shoot_refactor"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_onb8s"]
@@ -1336,7 +1365,9 @@ script = ExtResource("17_i7oh3")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 csm = NodePath("../CombatStateMachine")
+vision_range = 250
 player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
+stay_on = true
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
 [node name="MeleeAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor")]
@@ -1349,6 +1380,7 @@ script = ExtResource("21_luk7s")
 actor = NodePath("..")
 animation_player = NodePath("../AnimationPlayer")
 turret = NodePath("../Turret")
+refactored_reloading = true
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
 [node name="GetPlayerInfoHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
@@ -1369,7 +1401,13 @@ actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 combat_state_machine = NodePath("../CombatStateMachine")
 bt_player = NodePath("../BTPlayer")
+ranged_dist = 70
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
+
+[node name="GroupEnemyManager" type="Node" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("86_m3s8r")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://bnpx2avsix2an"
 
 [node name="HitStop" type="Node" parent="."]
 script = ExtResource("29_deb7u")
@@ -1470,5 +1508,6 @@ metadata/_edit_use_anchors_ = true
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
 [connection signal="body_exited" from="AttackRange" to="." method="_on_attack_range_body_exited"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="player_sighted" from="VisionHandler" to="." method="_on_vision_handler_player_sighted"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
 [connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]

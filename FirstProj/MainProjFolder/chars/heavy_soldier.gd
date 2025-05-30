@@ -165,18 +165,7 @@ func _ready():
 	hurt_box.set_damage_mulitplyer(1)
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 	
-	if group_link_control == null:
-		print("no link")
-		if linked_enemies.size()<=1:
-			print("no link")
-	else:
-		linked_enemies=group_link_control.all_grouped_enemies
-		for i in range(linked_enemies.size()):
-			#print(linked_enemies[i].name, " linked")
-			group_link_order=linked_enemies.find(self)
-			print(group_link_order)
-	group_enemy_manager.set_leader(group_link_order)
-	group_enemy_manager.set_even_order(group_link_order)
+	_init_group_link()
 
 func _process(delta: float) -> void:
 	if state_machine.get_active_state()==death:
@@ -218,6 +207,20 @@ func _physics_process(delta: float) -> void:
 	velocity.x = current_speed + knockback.x
 	move_and_slide()
 	movement_handler.apply_gravity(delta)
+
+func _init_group_link():
+	if group_link_control == null:
+		print("no link")
+		if linked_enemies.size()<=1:
+			print("no link")
+	else:
+		linked_enemies=group_link_control.all_grouped_enemies
+		for i in range(linked_enemies.size()):
+			#print(linked_enemies[i].name, " linked")
+			group_link_order=linked_enemies.find(self)
+			print(group_link_order)
+	group_enemy_manager.set_leader(group_link_order)
+	group_enemy_manager.set_even_order(group_link_order)
 
 func _init_state_machine():
 	state_machine.initial_state=idle

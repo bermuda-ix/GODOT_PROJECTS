@@ -115,6 +115,14 @@ var attacking : bool = false
 @export var death_time_scale: float = 1.0
 @onready var norm_delta
 
+#Grouping enemies
+@onready var linked_enemies : Array[Node2D]
+@export var group_link_control : EnemyGroup
+@onready var group_link_order : int
+@onready var is_leader : bool = false
+@onready var is_even_order : bool = false
+@onready var group_enemy_manager: GroupEnemyManager = $GroupEnemyManager
+
 #Debug var
 var combat_state : String = "RANGED"
 
@@ -136,6 +144,9 @@ func _ready():
 	hurt_box.set_damage_mulitplyer(1)
 	ammo_count=turret.ammo_count
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
+	
+	_init_group_link()
+	
 	
 func _init_state_machine():
 	state_machine.initial_state=idle
@@ -168,10 +179,23 @@ func _init_combat_state_machine():
 	combat_state_machine.add_transition(ranged_mode, melee_mode, &"melee_mode")
 	combat_state_machine.add_transition(melee_mode, ranged_mode, &"ranged_mode")
 
-
+func _init_group_link():
+	if group_link_control == null:
+		print("no link")
+		if linked_enemies.size()<=1:
+			print("no link")
+	else:
+		linked_enemies=group_link_control.all_grouped_enemies
+		for i in range(linked_enemies.size()):
+			#print(linked_enemies[i].name, " linked")
+			group_link_order=linked_enemies.find(self)
+			print(group_link_order)
+	group_enemy_manager.set_leader(group_link_order)
+	group_enemy_manager.set_even_order(group_link_order)
 
 func _process(_delta):
 	ammo_count=turret.ammo_count
+	bt_player.blackboard.set_var("ammo",ammo_count)
 	dir = to_local(next)
 	norm_delta=_delta
 	
@@ -372,3 +396,14 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 	
 	if state_machine.get_active_state()!=dying or state_machine.get_active_state()!=death:
 		hit_stop.hit_stop(0.05,0.1)
+
+
+func _on_vision_handler_player_sighted() -> void:
+	if linked_enemies!=null:
+		for i in range(linked_enemies.size()):
+			linked_enemies[i].alerted()
+			
+func alerted() -> void :
+	print("alerted!")
+	vision_handler.always_on=true
+	state_machine.dispatch(&"attack_mode")

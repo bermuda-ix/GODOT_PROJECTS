@@ -1,8 +1,13 @@
-[gd_resource type="BehaviorTree" load_steps=38 format=3 uid="uid://cynrrfs5iidbs"]
+[gd_resource type="BehaviorTree" load_steps=52 format=3 uid="uid://cynrrfs5iidbs"]
 
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_dk6q0"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_fopnx"]
+var/ammo/name = &"ammo"
+var/ammo/type = 2
+var/ammo/value = 0
+var/ammo/hint = 0
+var/ammo/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_2nsp0"]
 type = 1
@@ -72,11 +77,9 @@ duration = 0.8
 start_cooled = true
 children = [SubResource("BTSequence_virdo")]
 
-[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_fcnui"]
-
 [sub_resource type="BTSelector" id="BTSelector_heplg"]
 custom_name = "attacks"
-children = [SubResource("BTCooldown_gb5fh"), SubResource("BTAlwaysSucceed_fcnui")]
+children = [SubResource("BTCooldown_gb5fh")]
 
 [sub_resource type="BTSequence" id="BTSequence_mqn1v"]
 custom_name = "AttackRange"
@@ -116,17 +119,74 @@ resource_name = "true"
 variable = &"ranged_mode"
 value = SubResource("BBVariant_7tj05")
 
-[sub_resource type="BBNode" id="BBNode_pquhl"]
-saved_value = NodePath("ShootAttackManager")
-resource_name = "ShootAttackManager"
+[sub_resource type="BBVariant" id="BBVariant_fopnx"]
+type = 2
+saved_value = 0
+resource_name = "<null>"
 
-[sub_resource type="BTCallMethod" id="BTCallMethod_fh6a1"]
-node = SubResource("BBNode_pquhl")
-method = &"shoot"
+[sub_resource type="BTCheckVar" id="BTCheckVar_2nsp0"]
+variable = &"ammo"
+check_type = 2
+value = SubResource("BBVariant_fopnx")
+
+[sub_resource type="BTConsolePrint" id="BTConsolePrint_7tj05"]
+
+[sub_resource type="BBNode" id="BBNode_dy0rb"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_pquhl"]
+animation_player = SubResource("BBNode_dy0rb")
+animation_name = &"reload"
+
+[sub_resource type="BBNode" id="BBNode_fh6a1"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_bob2m"]
+animation_player = SubResource("BBNode_fh6a1")
+animation_name = &"reload"
+
+[sub_resource type="BTSequence" id="BTSequence_exfju"]
+children = [SubResource("BTCheckVar_2nsp0"), SubResource("BTConsolePrint_7tj05"), SubResource("BTPlayAnimation_pquhl"), SubResource("BTAwaitAnimation_bob2m")]
+
+[sub_resource type="BBVariant" id="BBVariant_wkd5u"]
+type = 2
+saved_value = 0
+resource_name = "<null>"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_8sobk"]
+variable = &"ammo"
+check_type = 3
+value = SubResource("BBVariant_wkd5u")
+
+[sub_resource type="BTConsolePrint" id="BTConsolePrint_ru3pv"]
+
+[sub_resource type="BBNode" id="BBNode_virdo"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_gb5fh"]
+animation_player = SubResource("BBNode_virdo")
+animation_name = &"shoot"
+
+[sub_resource type="BBNode" id="BBNode_fcnui"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_heplg"]
+animation_player = SubResource("BBNode_fcnui")
+animation_name = &"shoot"
+
+[sub_resource type="BTSequence" id="BTSequence_2k4od"]
+children = [SubResource("BTCheckVar_8sobk"), SubResource("BTConsolePrint_ru3pv"), SubResource("BTPlayAnimation_gb5fh"), SubResource("BTAwaitAnimation_heplg")]
+
+[sub_resource type="BTSelector" id="BTSelector_uiybs"]
+children = [SubResource("BTSequence_exfju"), SubResource("BTSequence_2k4od")]
 
 [sub_resource type="BTSequence" id="BTSequence_bob2m"]
 custom_name = "Shoot"
-children = [SubResource("BTCheckVar_dy0rb"), SubResource("BTCallMethod_fh6a1")]
+children = [SubResource("BTCheckVar_dy0rb"), SubResource("BTSelector_uiybs")]
 
 [sub_resource type="BTCooldown" id="BTCooldown_hp7h8"]
 duration = 0.5
