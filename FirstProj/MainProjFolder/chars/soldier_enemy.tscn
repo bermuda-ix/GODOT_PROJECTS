@@ -1601,6 +1601,7 @@ script = ExtResource("83_ue1j6")
 actor = NodePath("..")
 projectile = ExtResource("95_1dxn7")
 turret = NodePath("../Turret")
+bullet_scale = 0.5
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
 [node name="VisionHandler" type="Node" parent="." index="31" node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking")]

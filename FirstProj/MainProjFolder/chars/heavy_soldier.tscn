@@ -1427,6 +1427,7 @@ script = ExtResource("17_tlhl2")
 actor = NodePath("..")
 projectile = ExtResource("20_ao47q")
 turret = NodePath("../Turret")
+bullet_scale = 0.5
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
 [node name="ShootAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor", "animation_player", "turret")]
