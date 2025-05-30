@@ -1038,9 +1038,12 @@ position = Vector2(3627, 525)
 stops_ratio = Array[float]([0.0, 0.5, 0.0])
 
 [node name="Elevator2" parent="DoorsAndSwitches" index="1" instance=ExtResource("14_dmeha")]
-position = Vector2(1899, 799)
+position = Vector2(1893, 1008)
 scale = Vector2(-1, 1)
-top_floor = 0.0
+
+[node name="PathFollow2D" parent="DoorsAndSwitches/Elevator2/Path2D" index="0"]
+position = Vector2(24, -206)
+progress = 477.001
 
 [node name="lab_door_switch" parent="DoorsAndSwitches" index="2" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
 position = Vector2(2072, 65)
@@ -1068,3 +1071,4 @@ update_scale = false
 
 [editable path="PC"]
 [editable path="Enemy/MiniBosses/MechRanged"]
+[editable path="DoorsAndSwitches/Elevator2"]
