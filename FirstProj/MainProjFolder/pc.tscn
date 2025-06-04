@@ -1,4 +1,4 @@
-[gd_scene load_steps=459 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=467 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -71,6 +71,10 @@
 [ext_resource type="Texture2D" uid="uid://bwdp8hfv8bdyl" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle07.png" id="36_k8ewf"]
 [ext_resource type="Texture2D" uid="uid://yxlldbqfjb1q" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Land/Land01.png" id="43_iuxlr"]
 [ext_resource type="Texture2D" uid="uid://xxhrnu0kk1ih" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Land/Land02.png" id="44_fewpr"]
+[ext_resource type="Texture2D" uid="uid://b2yxwheqrdptj" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Die/Die07.png" id="45_58awq"]
+[ext_resource type="Texture2D" uid="uid://ckrfei1u51cmu" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Die/Die03.png" id="46_o2pa3"]
+[ext_resource type="Texture2D" uid="uid://dbogkdhnf6xwc" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Die/Die02.png" id="47_ctchq"]
+[ext_resource type="Texture2D" uid="uid://f4e3v7wnt8gb" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Die/Die01.png" id="48_c28o2"]
 [ext_resource type="Script" uid="uid://ba6pwl0vfuyp" path="res://Component/stagger.gd" id="53_7ax8a"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="53_jef5t"]
 [ext_resource type="FontFile" uid="uid://n231m6uqsq6x" path="res://demo/assets/fonts/junction_bold.otf" id="59_4yxaj"]
@@ -109,7 +113,9 @@
 [ext_resource type="Script" uid="uid://cqfxvqdbsrwg5" path="res://pc_dodge_state.gd" id="107_yif7d"]
 [ext_resource type="Script" uid="uid://554bph4u05lo" path="res://locked.gd" id="108_i6d51"]
 [ext_resource type="Script" uid="uid://com2k6ecy67nq" path="res://pc_flip_state.gd" id="108_mj1xc"]
+[ext_resource type="Script" uid="uid://bhagg1dj0c8sf" path="res://pc_hit.gd" id="109_egqmi"]
 [ext_resource type="Script" uid="uid://c4y7p687qpyyb" path="res://pc_unlocked.gd" id="109_mj1xc"]
+[ext_resource type="Script" uid="uid://xedmaqcy6kxf" path="res://pc_recovery.gd" id="110_162b8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pqdiw"]
 atlas = ExtResource("3_81nyk")
@@ -2094,6 +2100,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("45_58awq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_o2pa3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_ctchq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_c28o2")
+}],
+"loop": true,
+"name": &"Recover",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("13_ofvdd")
 }, {
 "duration": 1.0,
@@ -3810,10 +3833,10 @@ tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.266667, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.266667, 0.393049, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [true, false, true]
+"values": [true, false, false, true]
 }
 tracks/1/type = "audio"
 tracks/1/imported = false
@@ -4187,6 +4210,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"SwordIdle"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_4yxaj"]
@@ -4994,6 +5029,62 @@ tracks/2/keys = {
 "values": [Vector2(0, 8), Vector2(0, 0), Vector2(0, 8)]
 }
 
+[sub_resource type="Animation" id="Animation_162b8"]
+resource_name = "hit_recover"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Recover"]
+}
+
+[sub_resource type="Animation" id="Animation_58awq"]
+resource_name = "stagger_recover"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.233333, 0.366667, 0.466667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Recover"]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qyq63"]
 _data = {
 &"Attack": SubResource("Animation_1ru25"),
@@ -5018,6 +5109,7 @@ _data = {
 &"flip_backwards": SubResource("Animation_k8ewf"),
 &"guard": SubResource("Animation_2ttag"),
 &"hit": SubResource("Animation_aki4b"),
+&"hit_recover": SubResource("Animation_162b8"),
 &"idle": SubResource("Animation_xowcg"),
 &"idle_speech": SubResource("Animation_4yxaj"),
 &"idle_walk": SubResource("Animation_7ax8a"),
@@ -5028,6 +5120,7 @@ _data = {
 &"shotgun_attack": SubResource("Animation_on8rs"),
 &"shotgun_attack_fast": SubResource("Animation_okwur"),
 &"shotgun_finish": SubResource("Animation_dr66y"),
+&"stagger_recover": SubResource("Animation_58awq"),
 &"staggered": SubResource("Animation_6tjyr"),
 &"walk": SubResource("Animation_hm6eq"),
 &"walk_back": SubResource("Animation_padls"),
@@ -5659,9 +5752,17 @@ hit_stop = NodePath("../../HitStop")
 
 [node name="Staggered" type="LimboState" parent="StateMachine"]
 
-[node name="Hit" type="LimboState" parent="StateMachine"]
+[node name="Hit" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
+script = ExtResource("109_egqmi")
+anim_player = NodePath("../../AnimationPlayer")
+pc = NodePath("../..")
+state_machine = NodePath("..")
 
-[node name="Recovery" type="LimboState" parent="StateMachine"]
+[node name="Recovery" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
+script = ExtResource("110_162b8")
+anim_player = NodePath("../../AnimationPlayer")
+pc = NodePath("../..")
+state_machine = NodePath("..")
 
 [node name="CombatStates" type="LimboHSM" parent="."]
 
@@ -5676,6 +5777,7 @@ pc = NodePath("../..")
 [connection signal="area_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_body_entered"]
 [connection signal="parried" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_parried"]
+[connection signal="parried_success" from="AnimatedSprite2D/ParryBox" to="." method="_on_parry_box_parried_success"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="area_entered" from="HazardDetector" to="." method="_on_hazard_detector_area_entered"]
@@ -5690,6 +5792,8 @@ pc = NodePath("../..")
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/ParrySuccessState/Riposte" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/ParrySuccessState/DodgeBack" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/DodgeState" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Hit" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Recovery" method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
 [connection signal="timeout" from="HitTimer" to="." method="_on_hit_timer_timeout"]
 [connection signal="timeout" from="JumpOutTimer" to="." method="_on_jump_out_timer_timeout"]

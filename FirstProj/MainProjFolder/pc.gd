@@ -696,6 +696,8 @@ func attack_animate():
 
 
 	if Input.is_action_just_pressed("attack") and attack_timer.paused==false:
+		if state_machine.get_active_state()==parry_success_state:
+			return
 		attack_timer.start()
 		attack_timer.paused=true
 			
@@ -795,7 +797,7 @@ func sp_atk():
 
 func parry():
 	
-	if Input.is_action_just_pressed("parry"):
+	if Input.is_action_just_pressed("parry") and state_machine.get_active_state()!=parry_success_state:
 		parry_timer.start()
 		parry_stance=true
 		#set_state(state, States.PARRY)
@@ -1104,6 +1106,8 @@ func _on_health_health_depleted():
 	##kb_dir.x, " ", knockback)
 
 func _on_hurt_box_got_hit(_hitbox):
+	if state_machine.get_active_state()==parry_state:
+		return
 	if hitbox.is_in_group("regular_enemy_hb"):
 		if hit_timer.is_stopped():
 			AudioStreamManager.play(SoundFx.PUNCH_DESIGNED_HEAVY_12)
@@ -1142,7 +1146,9 @@ func _on_hit_timer_timeout() -> void:
 		state_machine.dispatch(&"return_to_idle")
 	player_hit.emitting=false
 
-
+func _on_parry_box_parried_success() -> void:
+	state_machine.dispatch(&"parry_successful")
+	
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("bullet"):
 		hit_stop.hit_stop(0.05, 0.1)
@@ -1242,22 +1248,22 @@ func _on_animation_player_animation_finished(anim_name):
 	#elif state==States.JUMP:
 		#if anim_name=="jump":
 			#falling=true
-	#elif anim_name=="staggered":
-		#state_machine.dispatch(&"return_to_idle")
-		#stagger.stagger=stagger.get_max_stagger()
+	elif anim_name=="staggered":
+		state_machine.dispatch(&"return_to_idle")
+		stagger.stagger=stagger.get_max_stagger()
 	#
-	#elif anim_name=="dodge_roll":
-		#
-		#velocity.x=0
-		#counter_box_collision.disabled=true
-		#set_collision_mask_value(15, true)
-	#elif anim_name=="dodge":
-		#
-		#counter_box_collision.disabled=true
-	#elif anim_name=="flip":
-		#
-		#anim_player.speed_scale=1
-		#state_machine.dispatch(&"landed")
+	elif anim_name=="dodge_roll":
+		
+		velocity.x=0
+		counter_box_collision.disabled=true
+		set_collision_mask_value(15, true)
+	elif anim_name=="dodge":
+		
+		counter_box_collision.disabled=true
+	elif anim_name=="flip":
+		
+		anim_player.speed_scale=1
+		state_machine.dispatch(&"landed")
 	#
 	#
 	#
@@ -1315,8 +1321,8 @@ func _on_parry_timer_timeout():
 	parry_timer.stop()
 	parry_stance=false
 	#state=States.IDLE
-	#state_machine.dispatch(&"return_to_idle")
-	state_machine.dispatch(&"parry_successful")
+	state_machine.dispatch(&"return_to_idle")
+	
 	#anim_player.stop()
 	
 func parry_success():
@@ -1332,6 +1338,7 @@ func parry_success():
 func _on_hit_box_area_entered(_area):
 	hit_sound=hit1
 	AudioStreamManager.play(hit_sound)
+	hb_collision.disabled
 	#hit_stop.hit_stop(0.05, 0.1)
 
 
@@ -1507,6 +1514,7 @@ func _on_hit_box_parried() -> void:
 	else:
 		knockback.x=40
 	Events.enemy_parried.emit()
+	
 	#velocity.x = movement_data.speed + knockback.x
 
 #####################
@@ -1580,7 +1588,13 @@ func _on_state_machine_active_state_changed(current: LimboState, _previous: Limb
 			cur_state = "PARRY"
 		flip_state:
 			cur_state = "FLIP"
-	
+		parry_success_state:
+			cur_state= "PARRY SUCCESS"
+		recovery:
+			if _previous==hit:
+				recovery.recover_anim="hit_recover"
+			elif _previous==staggered:
+				recovery.recover_anim="stagger_recover"
 	match _previous:
 		attack_state:
 			cur_state="ATTACK"
@@ -1602,7 +1616,8 @@ func _on_state_machine_active_state_changed(current: LimboState, _previous: Limb
 			cur_state = "PARRY"
 		flip_state:
 			cur_state = "FLIP"
-			
+		parry_success_state:
+			cur_state= "PARRY SUCCESS"
 
 
 func _on_attack_state_active_state_changed(current: LimboState, previous: LimboState) -> void:

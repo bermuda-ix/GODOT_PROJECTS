@@ -8,5 +8,6 @@ extends LimboState
 	#print("entering attack")
 #
 #
-#func _exit() -> void:
+func _exit() -> void:
+	pc.attack_timer.paused=false
 	#print("exit attack")

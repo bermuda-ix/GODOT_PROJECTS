@@ -31,7 +31,9 @@ func _update(delta: float) -> void:
 		hit_stop.end_hit_stop()
 		
 	
-
+func _exit() -> void:
+	pc.attack_timer.paused=false
+	pc.attack_timer.stop()
 
 func _on_dur_timeout() -> void:
 	pc.state_machine.dispatch(&"no_nothing")

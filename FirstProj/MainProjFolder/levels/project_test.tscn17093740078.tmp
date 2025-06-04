@@ -1,0 +1,401 @@
+[gd_scene load_steps=22 format=3 uid="uid://dkouym7pf4wi"]
+
+[ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
+[ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="4_4kfue"]
+[ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="4_ec6ti"]
+[ext_resource type="PackedScene" uid="uid://b5d2nkkrrcixy" path="res://chars/soldier_enemy.tscn" id="5_ca064"]
+[ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_82t0r"]
+resource_local_to_scene = true
+size = Vector2(37.8948, 53.5486)
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ys1t2"]
+vertices = PackedVector2Array(518.367, -227, 691, -227, 691, -213, 493.172, -213, 430.289, -291.047, 478.703, -216.781, 409.883, -277, 388.906, 93, 523, 93, 523, 107, 371.094, 107, 331.094, 27, 348.906, 13, 253.063, 13, 172.609, 27, 140.617, 107, 29, 107, 29, 77, 123.469, 77, 147.469, 13, 223.688, 13, 210.203, -64.1484, 187.25, -69, 13, -69, 13, -91, 169.633, -91, 257.617, -155, 253.227, -133, 445.172, -133, 434.57, -155, 222.563, -299.047, 209.422, -277, 105.422, -341, 126.648, -355, -59, -355, -59, -341)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5, 6), PackedInt32Array(7, 8, 9, 10), PackedInt32Array(7, 10, 11, 12), PackedInt32Array(13, 12, 11, 14), PackedInt32Array(15, 16, 17, 18), PackedInt32Array(14, 15, 18, 19), PackedInt32Array(14, 19, 20), PackedInt32Array(13, 14, 20), PackedInt32Array(21, 13, 20, 22), PackedInt32Array(22, 23, 24, 25), PackedInt32Array(21, 22, 25, 26, 27), PackedInt32Array(28, 27, 26, 29), PackedInt32Array(3, 28, 29, 5), PackedInt32Array(30, 4, 6, 31), PackedInt32Array(30, 31, 32, 33), PackedInt32Array(34, 33, 32, 35)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(24, 112, 144, 112, 176, 32, 328, 32, 368, 112, 528, 112, 528, 88, 392, 88, 352, 8, 256, 8, 216, -64, 256, -128, 448, -128, 496, -208, 696, -208, 696, -232, 520, -232, 432, -296, 224, -304, 128, -360, -64, -360, -64, -336, 104, -336, 208, -272, 408, -272, 472, -216, 432, -160, 256, -160, 168, -96, 8, -96, 8, -64, 184, -64, 216, 8, 144, 8, 120, 72, 24, 72)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 5.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_f2p4u"]
+vertices = PackedVector2Array(158, 102, 18, 102, 18, 90, 158, 90)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(8, 80, 8, 112, 168, 112, 168, 80)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_yrn8s"]
+vertices = PackedVector2Array(196, 106, 6, 106, 6, 89, 196, 89)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-4, 79, -4, 116, 206, 116, 206, 79)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_b6fvs"]
+vertices = PackedVector2Array(174, 102, 18, 102, 18, 90, 174, 90)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(8, 112, 184, 112, 184, 80, 8, 80)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_nxtlr"]
+vertices = PackedVector2Array(438, -238, 438, -154, 190, -154, 10, -238, 10, -90, 190, -90)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 2, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -248, 0, -80, 200, -80, 200, -144, 448, -144, 448, -248)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ec6ti"]
+vertices = PackedVector2Array(1514.21, 113, 572, 113, 572, 87, 1514.78, 87)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(562, 77, 562, 123, 1524, 123, 1525, 77)])
+
+[sub_resource type="Animation" id="Animation_05gy0"]
+resource_name = "QTE_TEST"
+
+[sub_resource type="Animation" id="Animation_fof0c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimatedSprite2D/Shotty:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ca064"]
+resource_name = "TEST"
+length = 4.0
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("idle_walk", "idle_walk", "idle_walk", "idle_speech", "idle_speech"),
+"times": PackedFloat32Array(0, 0.833333, 1.66667, 2.5, 3.23333)
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333, 3.9),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": ["pick_sword", "box", "stretch", "pick_gun", "do_nothing"],
+"method": &"load_qte_animations"
+}, {
+"args": [5],
+"method": &"start_qte"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_be4ge"]
+resource_name = "box"
+length = 2.8
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("Cutscene/punch_1", "Cutscene/punch_2", "Cutscene/punch_3", "Cutscene/punch_2"),
+"times": PackedFloat32Array(0, 0.733333, 1.26667, 2.13333)
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.76667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_gem31"]
+resource_name = "do_nothing"
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("idle_speech"),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.933333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_t1ldw"]
+resource_name = "pick_gun"
+length = 4.6
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("idle_walk", "check_equipment"),
+"times": PackedFloat32Array(0.0333333, 3)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PC/AnimatedSprite2D/Shotty:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(4.56667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_82t0r"]
+resource_name = "pick_sword"
+length = 5.0
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("idle_walk", "idle_speech", "Attack", "Attack_2", "Attack_3", "idle"),
+"times": PackedFloat32Array(0, 0.833333, 1.9, 2.6, 3.2, 3.86667)
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(4.63333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_01tlq"]
+resource_name = "stretch"
+length = 2.0
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("hit", "dodge_roll", "flip", "idle_speech"),
+"times": PackedFloat32Array(0, 0.3, 0.8, 1.63333)
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.93333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_82t0r"]
+_data = {
+&"QTE_TEST": SubResource("Animation_05gy0"),
+&"RESET": SubResource("Animation_fof0c"),
+&"TEST": SubResource("Animation_ca064"),
+&"box": SubResource("Animation_be4ge"),
+&"do_nothing": SubResource("Animation_gem31"),
+&"pick_gun": SubResource("Animation_t1ldw"),
+&"pick_sword": SubResource("Animation_82t0r"),
+&"stretch": SubResource("Animation_01tlq")
+}
+
+[node name="project_test" node_paths=PackedStringArray("player") instance=ExtResource("1_07jkq")]
+lvl_type = "test"
+player = NodePath("PC")
+
+[node name="PC" parent="." index="0"]
+position = Vector2(730, 91)
+scale = Vector2(0.5, 0.5)
+
+[node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
+shape = SubResource("RectangleShape2D_82t0r")
+
+[node name="LevelTileMap" parent="." index="2"]
+position = Vector2(1, 0)
+layer_0/tile_data = PackedInt32Array(458752, 393216, 3, 458753, 327680, 1, 524289, 0, 3, 458754, 0, 0, 524290, 65536, 3, 458755, 65536, 0, 524291, 65536, 3, 458756, 131072, 0, 524292, 65536, 3, 458757, 131072, 0, 524293, 65536, 3, 458758, 65536, 0, 524294, 65536, 3, 458759, 131072, 0, 524295, 65536, 3, 458760, 65536, 0, 524296, 65536, 3, 458761, 65536, 0, 524297, 65536, 3, 458762, 131072, 0, 524298, 65536, 3, 458763, 65536, 0, 524299, 65536, 3, 458764, 65536, 1, 524300, 65536, 3, 458765, 131072, 2, 524301, 65536, 3, 458766, 131072, 1, 524302, 65536, 3, 458767, 65536, 1, 524303, 65536, 3, 458768, 65536, 2, 524304, 65536, 3, 458769, 131072, 1, 524305, 65536, 3, 458770, 131072, 1, 524306, 65536, 3, 524307, 65536, 3, 393216, 393216, 0, 327680, 393216, 2, 262144, 393216, 2, 196608, 393216, 0, 131072, 393216, 0, 65536, 393216, 0, 0, 393216, 0, -65536, 393216, 0, -131072, 393216, 0, -196608, 393216, 0, 458771, 65536, 0, 458772, 131072, 0, 524308, 65536, 3, 458773, 65536, 0, 524309, 65536, 3, 458774, 131072, 0, 524310, 65536, 3, 458775, 131072, 0, 524311, 65536, 3, 458776, 65536, 0, 524312, 65536, 3, 458777, 131072, 0, 524313, 65536, 3, 458778, 65536, 0, 524314, 65536, 3, 458779, 65536, 0, 524315, 65536, 3, 458780, 65536, 0, 524316, 65536, 3, 458781, 131072, 0, 524317, 65536, 3, 458782, 131072, 0, 524318, 65536, 3, 458783, 131072, 0, 524319, 65536, 3, 458784, 65536, 0, 524320, 65536, 3, 458785, 196608, 0, 393228, 0, 1, 393229, 131072, 2, 393230, 65536, 2, 327692, 0, 1, 262156, 0, 1, 196620, 0, 1, 131084, 0, 0, 131085, 131072, 0, 196621, 131072, 1, 131086, 65536, 0, 196622, 65536, 1, 131087, 131072, 0, 196623, 131072, 1, 262159, 131072, 2, 262158, 131072, 2, 327695, 131072, 2, 327694, 65536, 1, 327693, 65536, 1, 262157, 65536, 2, 524321, 131072, 3, 393249, 393216, 3, 327713, 393216, 0, 262177, 393216, 0, 196641, 393216, 0, 131105, 393216, 0, 65569, 393216, 0, 65570, 458752, 3, 33, 393216, 0, 34, 458752, 1, -65503, 393216, 0, -65502, 458752, 2, -131039, 393216, 0, -131038, 458752, 1, -196575, 393216, 0, -196574, 458752, 2, -262111, 393216, 0, -262110, 458752, 2, -327647, 393216, 0, 393235, 458752, 2, 327699, 458752, 3, 262163, 458752, 3, 196627, 458752, 3, 131091, 196608, 0, 327698, 131072, 2, 262162, 65536, 2, 196626, 65536, 2, 131090, 131072, 0, 327697, 131072, 1, 262161, 65536, 2, 196625, 65536, 2, 131089, 65536, 0, 327696, 131072, 2, 262160, 131072, 2, 196624, 131072, 2, 131088, 65536, 0, -262143, 65536, 0, -262144, 0, 0, 393227, 393216, 3, 327691, 393216, 0, 262155, 393216, 0, 196619, 393216, 0, 131083, 393216, 0, 393231, 131072, 2, 393232, 65536, 1, 393233, 131072, 2, 393234, 65536, 2, -524262, 65536, 0, -524263, 131072, 0, -524264, 65536, 0, -524265, 131072, 0, -524266, 131072, 0, -524267, 65536, 0, -524268, 65536, 0, -524269, 65536, 0, -524270, 65536, 0, -524271, 131072, 0, -524272, 0, 0, -458734, 65536, 3, -458733, 65536, 3, -458732, 65536, 3, -458731, 65536, 3, -458730, 65536, 3, -458729, 65536, 3, -458728, 65536, 3, -458727, 65536, 3, -458726, 65536, 3, -524261, 196608, 0, -851926, 131072, 0, -851927, 65536, 0, -851928, 65536, 0, -851929, 65536, 0, -851930, 131072, 0, -851931, 65536, 0, -851932, 65536, 0, -851933, 65536, 0, -851934, 131072, 0, -851935, 131072, 0, -851936, 131072, 0, -851937, 0, 0, -786400, 65536, 3, -786401, 0, 3, -786399, 65536, 3, -786398, 65536, 3, -786397, 65536, 3, -786396, 65536, 3, -786395, 65536, 3, -786394, 65536, 3, -786393, 65536, 3, -786392, 65536, 3, -786391, 65536, 3, -786390, 65536, 3, -851925, 196608, 0, -786389, 131072, 3, -1114088, 196608, 0, -1114089, 131072, 0, -1114090, 65536, 0, -1114091, 65536, 0, -1114092, 131072, 0, -1114093, 131072, 0, -1114094, 65536, 0, -1114095, 131072, 0, -1114096, 131072, 0, -1114097, 131072, 0, -1114098, 131072, 0, -1114099, 0, 0, -1048562, 65536, 3, -1048563, 0, 3, -1048561, 65536, 3, -1048560, 65536, 3, -1048559, 65536, 3, -1048558, 65536, 3, -1048557, 65536, 3, -1048556, 65536, 3, -1048555, 65536, 3, -1048554, 65536, 3, -1048553, 65536, 3, -1048552, 131072, 3, -1376251, 131072, 0, -1376252, 65536, 0, -1376253, 65536, 0, -1376254, 65536, 0, -1376255, 131072, 0, -1376256, 131072, 0, -1310721, 131072, 0, -1310722, 65536, 0, -1310723, 65536, 0, -1310724, 65536, 0, -1245187, 65536, 3, -1245188, 65536, 3, -1245189, 0, 3, -1245186, 65536, 3, -1245185, 65536, 3, -1310720, 65536, 3, -1310719, 65536, 3, -1310718, 65536, 3, -1310717, 65536, 3, -1310716, 65536, 3, -1310715, 65536, 3, -1376250, 196608, 0, -1310714, 131072, 3, -196607, 65536, 3, -262142, 131072, 0, -196606, 65536, 3, -262141, 65536, 0, -196605, 65536, 3, -262140, 65536, 0, -196604, 65536, 3, -262139, 65536, 0, -196603, 65536, 3, -262138, 65536, 0, -196602, 65536, 3, -262137, 65536, 0, -196601, 65536, 3, -458725, 458752, 1, -458735, 65536, 3, -262136, 65536, 0, -196600, 65536, 3, -262135, 131072, 0, -196599, 65536, 3, -262134, 196608, 0, -196598, 458752, 0, -458736, 0, 3, -1310725, 0, 0, 458786, 65536, 0, 524322, 65536, 3, 458787, 65536, 0, 524323, 65536, 3, 458788, 65536, 0, 524324, 65536, 3, 458789, 65536, 0, 524325, 65536, 3, 458790, 131072, 0, 524326, 65536, 3, 458791, 131072, 0, 524327, 65536, 3, 458792, 65536, 0, 524328, 65536, 3, 458793, 131072, 0, 524329, 65536, 3, 458794, 65536, 0, 524330, 65536, 3, 458795, 131072, 0, 524331, 65536, 3, 458796, 65536, 0, 524332, 65536, 3, 458797, 65536, 0, 524333, 65536, 3, 458798, 65536, 0, 524334, 65536, 3, 458799, 131072, 0, 524335, 65536, 3, 458800, 65536, 0, 524336, 65536, 3, 458801, 131072, 0, 524337, 65536, 3, 458802, 131072, 0, 524338, 65536, 3, 458803, 131072, 0, 524339, 65536, 3, 458804, 131072, 0, 524340, 65536, 3, 458805, 131072, 0, 524341, 65536, 3, 458806, 131072, 0, 524342, 65536, 3, 458807, 65536, 0, 524343, 65536, 3, 458808, 65536, 0, 524344, 65536, 3, 458809, 65536, 0, 524345, 65536, 3, 458810, 131072, 0, 524346, 65536, 3, 458811, 65536, 0, 524347, 65536, 3, 458812, 131072, 0, 524348, 65536, 3, 458813, 131072, 0, 524349, 65536, 3, 458814, 131072, 0, 524350, 65536, 3, 458815, 65536, 0, 524351, 65536, 3, 458816, 131072, 0, 524352, 65536, 3, 458817, 131072, 0, 524353, 65536, 3, 458818, 131072, 0, 524354, 65536, 3, 458819, 131072, 0, 524355, 65536, 3, 458820, 65536, 0, 524356, 65536, 3, 458821, 65536, 0, 524357, 65536, 3, 458822, 131072, 0, 524358, 65536, 3, 458823, 65536, 0, 524359, 65536, 3, 458824, 131072, 0, 524360, 65536, 3, 458825, 65536, 0, 524361, 65536, 3, 458826, 65536, 0, 524362, 65536, 3, 458827, 65536, 0, 524363, 65536, 3, 458828, 65536, 0, 524364, 65536, 3, 458829, 131072, 0, 524365, 65536, 3, 458830, 131072, 0, 524366, 65536, 3, 458831, 131072, 0, 524367, 65536, 3, 458832, 131072, 0, 524368, 65536, 3, 458833, 65536, 0, 524369, 65536, 3, 458834, 131072, 0, 524370, 65536, 3, 458835, 65536, 0, 524371, 65536, 3, 458836, 65536, 0, 524372, 65536, 3, 458837, 65536, 0, 524373, 65536, 3, 458838, 65536, 0, 524374, 65536, 3, 458839, 131072, 0, 524375, 65536, 3, 458840, 65536, 0, 524376, 65536, 3, 458841, 131072, 0, 524377, 65536, 3, 458842, 65536, 0, 524378, 65536, 3, 458843, 131072, 0, 524379, 65536, 3, 458844, 65536, 0, 524380, 65536, 3, 458845, 65536, 0, 524381, 65536, 3, 458846, 65536, 0, 524382, 65536, 3, 458847, 393216, 1, 393311, 393216, 0, 327775, 393216, 0, 262239, 393216, 0, 196703, 393216, 0, 131167, 393216, 0, 65631, 393216, 0, 95, 393216, 0, -65441, 393216, 0, -130977, 393216, 0, -196513, 393216, 0, -262049, 393216, 0)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." index="3"]
+navigation_polygon = SubResource("NavigationPolygon_ys1t2")
+enabled = false
+navigation_layers = 2
+
+[node name="NavigationRegion2D2" type="NavigationRegion2D" parent="." index="4"]
+position = Vector2(16, 9)
+navigation_polygon = SubResource("NavigationPolygon_f2p4u")
+navigation_layers = 2
+
+[node name="NavigationRegion2D3" type="NavigationRegion2D" parent="." index="5"]
+position = Vector2(320, 8)
+navigation_polygon = SubResource("NavigationPolygon_yrn8s")
+navigation_layers = 2
+
+[node name="NavigationRegion2D4" type="NavigationRegion2D" parent="." index="6"]
+position = Vector2(160, -72)
+navigation_polygon = SubResource("NavigationPolygon_b6fvs")
+navigation_layers = 2
+
+[node name="NavigationRegion2D5" type="NavigationRegion2D" parent="." index="7"]
+position = Vector2(-8, -168)
+navigation_polygon = SubResource("NavigationPolygon_yrn8s")
+navigation_layers = 2
+
+[node name="NavigationRegion2D6" type="NavigationRegion2D" parent="." index="8"]
+position = Vector2(240, -232)
+navigation_polygon = SubResource("NavigationPolygon_yrn8s")
+navigation_layers = 2
+
+[node name="NavigationRegion2D7" type="NavigationRegion2D" parent="." index="9"]
+position = Vector2(488, -312)
+navigation_polygon = SubResource("NavigationPolygon_yrn8s")
+navigation_layers = 2
+
+[node name="NavigationRegion2D8" type="NavigationRegion2D" parent="." index="10"]
+position = Vector2(203, -374)
+navigation_polygon = SubResource("NavigationPolygon_yrn8s")
+navigation_layers = 2
+
+[node name="NavigationRegion2D9" type="NavigationRegion2D" parent="." index="11"]
+position = Vector2(-72, -440)
+navigation_polygon = SubResource("NavigationPolygon_yrn8s")
+navigation_layers = 2
+
+[node name="NavigationLink2D" type="NavigationLink2D" parent="." index="12"]
+position = Vector2(151, 104)
+navigation_layers = 2
+start_position = Vector2(32, -80)
+
+[node name="NavigationLink2D2" type="NavigationLink2D" parent="." index="13"]
+position = Vector2(-3, 12)
+navigation_layers = 2
+start_position = Vector2(347, 92)
+end_position = Vector2(331, 12)
+
+[node name="NavigationLink2D3" type="NavigationLink2D" parent="." index="14"]
+position = Vector2(-3, 9)
+navigation_layers = 2
+start_position = Vector2(204, 12)
+end_position = Vector2(184, -80)
+
+[node name="NavigationLink2D4" type="NavigationLink2D" parent="." index="15"]
+position = Vector2(-4, 12)
+navigation_layers = 2
+start_position = Vector2(168, -80)
+end_position = Vector2(256, -144)
+
+[node name="NavigationLink2D5" type="NavigationLink2D" parent="." index="16"]
+position = Vector2(228, -108)
+navigation_layers = 2
+start_position = Vector2(272, -104)
+end_position = Vector2(200, -24)
+
+[node name="NavigationLink2D6" type="NavigationLink2D" parent="." index="17"]
+position = Vector2(-4, 12)
+navigation_layers = 2
+start_position = Vector2(520, -224)
+end_position = Vector2(400, -288)
+
+[node name="NavigationLink2D7" type="NavigationLink2D" parent="." index="18"]
+position = Vector2(-12, 4)
+navigation_layers = 2
+start_position = Vector2(232, -280)
+end_position = Vector2(128, -344)
+
+[node name="NavigationRegion2D10" type="NavigationRegion2D" parent="." index="19"]
+position = Vector2(160, -72)
+navigation_polygon = SubResource("NavigationPolygon_f2p4u")
+navigation_layers = 2
+
+[node name="NavigationRegion2D11" type="NavigationRegion2D" parent="." index="20"]
+navigation_polygon = SubResource("NavigationPolygon_nxtlr")
+
+[node name="NavigationRegion2D12" type="NavigationRegion2D" parent="." index="21"]
+navigation_polygon = SubResource("NavigationPolygon_ec6ti")
+navigation_layers = 2
+
+[node name="SpawnPoint" parent="." index="22" instance=ExtResource("4_4kfue")]
+position = Vector2(624, -272)
+active = false
+enemy_single = ExtResource("5_fkwqf")
+
+[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="23"]
+libraries = {
+&"": SubResource("AnimationLibrary_82t0r")
+}
+
+[node name="CameraPos" parent="." index="24" instance=ExtResource("4_ec6ti")]
+position = Vector2(790, 58)
+
+[node name="Camera2D" parent="CameraPos" index="0"]
+zoom = Vector2(1.5, 1.5)
+
+[node name="soldier_enemy" parent="." index="25" instance=ExtResource("5_ca064")]
+position = Vector2(859, 88)
+scale = Vector2(0.5, 0.5)
+
+[connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
+[connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]
+[connection signal="dodge_qte" from="PC" to="." method="_on_pc_dodge_qte"]
+[connection signal="no_input_qte" from="PC" to="." method="_on_pc_no_input_qte"]
+[connection signal="special_atk_qte" from="PC" to="." method="_on_pc_special_atk_qte"]
+
+[editable path="PC"]
+[editable path="CameraPos"]
