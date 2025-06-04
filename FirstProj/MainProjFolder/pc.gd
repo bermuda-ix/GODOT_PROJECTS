@@ -239,6 +239,7 @@ func _init_state_machine():
 	state_machine.add_transition(landed, idle, &"return_to_idle")
 	state_machine.add_transition(parry_state, idle, &"return_to_idle")
 	state_machine.add_transition(parry_success_state, idle, &"return_to_idle")
+	state_machine.add_transition(dodge_state, idle, &"return_to_idle")
 	
 	#Landing
 	state_machine.add_transition(jump_state, landed, &"landing")
@@ -284,6 +285,9 @@ func _init_state_machine():
 	state_machine.add_transition(sprint, staggered, &"got_staggered")
 	state_machine.add_transition(sprint, hit, &"got_hit")
 	
+	#Hit
+	state_machine.add_transition(parry_success_state, hit, &"got_hit")
+	
 	#Attack Combos
 	#state_machine.add_transition(attack_state, special_attack, &"attack_to_special")
 	#state_machine.add_transition(special_attack, attack_state, &"special_to_attack")
@@ -307,12 +311,13 @@ func _init_state_machine():
 
 
 func _init_combat_state_machine():
-	state_machine.initial_state=unlocked
-	state_machine.initialize(self)
-	state_machine.set_active(true)
+	combat_states.initial_state=unlocked
+	label.text=str(unlocked.name)
+	combat_states.initialize(self)
+	combat_states.set_active(true)
 	
-	combat_states.add_transition(locked, unlocked, &"locking_on")
-	combat_states.add_transition(unlocked, locked, &"unlocking")
+	combat_states.add_transition(locked, unlocked, &"unlocking")
+	combat_states.add_transition(unlocked, locked, &"locking_on")
 	
 func _init_parry_success_state_machine():
 	parry_success_state.initial_state=await_input
@@ -324,7 +329,6 @@ func _init_parry_success_state_machine():
 	
 func _init_attack_states():
 	attack_state.initial_state=attack_1
-	state_machine.set_active(true)
 
 	attack_state.add_transition(attack_1, attack_2, &"next_attack")
 	attack_state.add_transition(attack_2, attack_3, &"next_attack")
@@ -376,7 +380,7 @@ func _process(_delta):
 		if Input.is_action_just_pressed("attack"):
 			dash_attack()
 	#
-	#lockon()
+	lockon()
 
 func _physics_process(delta):
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
@@ -396,14 +400,15 @@ func _physics_process(delta):
 		if is_on_floor():
 			if state_machine.get_active_state()==jump_state or (state_machine.get_active_state()==flip_state and flipped_over):
 				state_machine.dispatch(&"landing")
+				
 			
 	elif state_machine.get_active_state()==staggered:
 		move_and_slide()
 		apply_gravity(delta)
 		velocity.x=0
 	else:
-		#if combat_state==CombatStates.LOCKED:
-			#locked_combat()	
+		if combat_states.get_active_state()==locked:
+			locked_combat()	
 #
 		##if dodge_state == true:
 			##state = States.DODGE
@@ -465,7 +470,7 @@ func apply_gravity(delta):
 	
 #condtions to return to idle
 func return_to_idle():
-	if is_on_floor() and state==States.FLIP and flipped_over:
+	if is_on_floor() and state_machine.get_previous_active_state()==flip_state and flipped_over:
 		#"flip end")
 		state_machine.dispatch(&"return_to_idle")
 		set_collision_mask_value(16384, true)
@@ -481,7 +486,7 @@ func jump(input_axis, delta):
 			state_machine.dispatch(&"start_jumping")
 			velocity.y = movement_data.jump_velocity
 			
-	elif not is_on_floor() and parry_stance==false and state != States.FLIP:
+	elif not is_on_floor() and parry_stance==false and state_machine.get_previous_active_state()!=flip_state:
 		#state = States.JUMP
 		if Input.is_action_just_released("jump") and velocity.y<movement_data.jump_velocity/2:
 			
@@ -638,7 +643,7 @@ func update_animation(input_axis):
 				animated_sprite_2d.scale.x=1
 				
 					
-			if state != States.ATTACK and s_atk==false:
+			if state_machine.get_previous_active_state()!=attack_state and s_atk==false:
 				#state = States.WALKING
 				
 				if Input.is_action_pressed("sprint"):
@@ -669,7 +674,7 @@ func update_animation(input_axis):
 				walk_anim="walk"
 			else:
 				walk_anim="walk_back"
-		if (state != States.ATTACK and s_atk==false) and input_axis!=0:
+		if (state_machine.get_previous_active_state()!=attack_state and s_atk==false) and input_axis!=0:
 			state_machine.dispatch(&"start_walking")
 		if Input.is_action_pressed("sprint"):
 			movement_data = load("res://FasterMovementData.tres")
@@ -681,7 +686,7 @@ func update_animation(input_axis):
 		
 	if is_on_floor():
 		jumping=false
-		if state == States.JUMP:
+		if state_machine.get_previous_active_state()==jump_state:
 			falling=false
 			state_machine.dispatch(&"return_to_idle")
 	
@@ -744,11 +749,11 @@ func dash_attack():
 	#set_state(state, States.ATTACK)
 
 func sp_atk():
-	if state==States.FLIP:
+	if state_machine.get_previous_active_state()==flip_state:
 		shotty.look_at(target.global_position)
 	else:
 		shotty.look_at(get_global_mouse_position())
-	if Input.is_action_just_pressed("special_attack") and state != States.SPECIAL_ATTACK:
+	if Input.is_action_just_pressed("special_attack") and state_machine.get_active_state()==special_attack and state_machine.get_active_state()==parry_success_state:
 		
 		if attack_timer.is_stopped():
 			attack_timer.start()
@@ -762,20 +767,20 @@ func sp_atk():
 			if atk_chain==0:
 				if sp_atk_chn == 0 and (not attack_timer.is_stopped()):
 					sp_atk_combo="shotgun_attack"
-					if state!=States.HIT:
+					if state_machine.get_previous_active_state()!=hit:
 						AudioStreamManager.play(shotgun_fire)
 					sp_atk_dmg=1
 
 				elif sp_atk_chn == 1 and (not attack_timer.is_stopped()):
 					sp_atk_combo="shotgun_attack"
 
-					if state!=States.HIT:
+					if state_machine.get_previous_active_state()!=hit:
 						AudioStreamManager.play(shotgun_fire)
 					sp_atk_dmg=1
 
 				elif sp_atk_chn == 2 and (not attack_timer.is_stopped()):
 
-					if state!=States.HIT:
+					if state_machine.get_previous_active_state()!=hit:
 						AudioStreamManager.play(reload)
 					sp_atk_combo="shotgun_attack"
 					sp_atk_dmg=2
@@ -823,16 +828,16 @@ func dodge(input_axis):
 		if input_axis == 0:
 			dodge_anim_run=dodge_anim
 			velocity.x=0
-			#set_state(state, States.DODGE)
+			state_machine.dispatch(&"start_dodge")
 		else:
 			dodge_anim_run=dodge_anim+"_roll"
-			#set_state(state, States.DODGE)
+			state_machine.dispatch(&"start_dodge")
 			velocity.x=movement_data.dodge_speed*input_axis
 
 		
 	
 	
-	if (dodge_timer.is_stopped()) and state == States.DODGE:
+	if (dodge_timer.is_stopped()) and state_machine.get_previous_active_state()==dodge_back:
 		
 		#dodge_state=false
 		dodge_timer.stop()
@@ -862,15 +867,15 @@ func lockon():
 	if target == null:
 		
 		target_string_test="NONE"
-		combat_state=CombatStates.UNLOCKED
+		combat_states.dispatch(&"unlocking")
 	else:
 		
 		target_dist=abs(global_position-target.global_position)
 		if (target.state_machine.get_active_state()==target.death):
-			combat_state=CombatStates.UNLOCKED
+			combat_states.dispatch(&"unlocking")
 			return
 		
-		combat_state=CombatStates.LOCKED
+		combat_states.dispatch(&"locking_on")
 		var direction_to_target : Vector2 = Vector2(target.position.x, target.position.y) - global_position
 		
 		var arc_vector = Vector2(position-Vector2(target.position)).normalized()
@@ -882,7 +887,7 @@ func lockon():
 		target_locking.look_at(dir_away_from_target)
 		vector_away=-((target_testing.to_global(target_testing.target_position) - target_testing.to_global(Vector2.ZERO)).normalized())
 		
-		if state!=States.FLIP and state!=States.SPECIAL_ATTACK:
+		if state_machine.get_active_state()!=flip_state:
 			if arc_vector<Vector2.RIGHT and Vector2.UP<arc_vector:
 				
 				#"on right")
@@ -1106,7 +1111,7 @@ func _on_hurt_box_got_hit(_hitbox):
 		player_hit.restart()
 		hurt_box_detect.disabled=true
 		hit_timer.start(0.2)
-		if state!=States.FLIP:
+		if state_machine.get_previous_active_state()!=flip_state:
 			
 			state_machine.dispatch(&"got_hit")
 	elif hitbox.is_in_group("heavy_hitbox"):
@@ -1133,7 +1138,7 @@ func _on_hurt_box_got_hit(_hitbox):
 
 func _on_hit_timer_timeout() -> void:
 	hurt_box_detect.disabled=false
-	if state!=States.FLIP:
+	if state_machine.get_previous_active_state()!=flip_state:
 		state_machine.dispatch(&"return_to_idle")
 	player_hit.emitting=false
 
@@ -1151,7 +1156,7 @@ func _on_hurt_box_area_entered(area):
 		#velocity.x = movement_data.speed + knockback.x
 		health.health -= 1
 		health.set_temporary_immortality(0.2)
-		if state==States.FLIP:
+		if state_machine.get_previous_active_state()==flip_state:
 			state_machine.dispatch(&"return_to_idle")
 		
 	if area.is_in_group("Hearts"):
@@ -1331,12 +1336,13 @@ func _on_hit_box_area_entered(_area):
 
 
 func _on_hit_box_body_entered(body):
-	if body.is_in_group("Enemy") and combat_state==CombatStates.UNLOCKED:
+	if body.is_in_group("Enemy") and combat_states.get_active_state()==unlocked:
 		Events.unlock_from.emit()
 		#str(body.name))
 		target_string_test=str(body.name)
 		target = body
 		combat_state=CombatStates.LOCKED
+		combat_states.dispatch(&"locking_on")
 	
 	
 func flip_over():
@@ -1473,12 +1479,10 @@ func _on_animation_player_animation_started(anim_name):
 	elif anim_name=="shotgun_attack":
 		vel_y=velocity.y
 		s_atk=true
-	elif anim_name=="idle":
-		print("entering idle")
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05, 0.1)
-	if state==States.FLIP:
+	if state_machine.get_active_state()==flip_state:
 		#print("countered! your moves are weak!")
 		if target_right:
 			knockback.x=400
@@ -1486,6 +1490,9 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			knockback.x=-400
 		#velocity.x = movement_data.speed + knockback.x
 		state_machine.dispatch(&"got_hit")
+	elif state_machine.get_active_state()==parry_success_state:
+		state_machine.dispatch(&"got_hit")
+		stagger.stagger-=3
 
 func _on_stagger_staggered() -> void:
 	knockback.x=0
@@ -1601,3 +1608,7 @@ func _on_state_machine_active_state_changed(current: LimboState, _previous: Limb
 func _on_attack_state_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	print(current.name)
 	
+
+
+func _on_combat_states_active_state_changed(current: LimboState, previous: LimboState) -> void:
+	pass

@@ -17,7 +17,7 @@ func _physics_process(delta: float) -> void:
 	if shoot_counter_active:
 		shoot_counter()
 				
-	if actor.player_state == actor.player.States.FLIP:
+	if actor.player_state == actor.player.flip_state:
 		if actor.player_right:
 			actor.animated_sprite_2d.scale.x = -1
 		else:
@@ -28,9 +28,9 @@ func _physics_process(delta: float) -> void:
 		bt_player.blackboard.set_var("counter_attack", false)
 		
 func shoot_counter():
-	if actor.player_state == actor.player.States.SPECIAL_ATTACK:
+	if actor.player_state == actor.player.special_attack:
 		if state_machine.get_active_state()!=actor.attack:
-			if actor.player_state == actor.player.States.FLIP:
+			if actor.player_state == actor.player.flip_state:
 				shoot_attack_manager.shoot()
 			else:
 				#handle_jump(0.5)

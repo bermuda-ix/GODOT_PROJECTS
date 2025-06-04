@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=22 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="4_4kfue"]
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="4_ec6ti"]
+[ext_resource type="PackedScene" uid="uid://b5d2nkkrrcixy" path="res://chars/soldier_enemy.tscn" id="5_ca064"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_82t0r"]
@@ -262,7 +263,7 @@ lvl_type = "test"
 player = NodePath("PC")
 
 [node name="PC" parent="." index="0"]
-position = Vector2(309, -282)
+position = Vector2(730, 91)
 scale = Vector2(0.5, 0.5)
 
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
@@ -385,6 +386,10 @@ position = Vector2(790, 58)
 
 [node name="Camera2D" parent="CameraPos" index="0"]
 zoom = Vector2(1.5, 1.5)
+
+[node name="soldier_enemy" parent="." index="25" instance=ExtResource("5_ca064")]
+position = Vector2(859, 88)
+scale = Vector2(0.5, 0.5)
 
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]

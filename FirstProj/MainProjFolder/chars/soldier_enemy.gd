@@ -355,7 +355,7 @@ func _on_attack_range_body_exited(body: Node2D) -> void:
 		
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("sp_atk_default"):
-		if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
+		if player.state_machine.get_active_state()==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 			Events.allied_enemy_hit.emit()
 		print("spc_hit")
 		if animated_sprite_2d.flip_h:
@@ -423,7 +423,7 @@ func rapid_shoot(value : bool)->void:
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	
-	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
+	if player.state_machine.get_active_state()==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 		Events.allied_enemy_hit.emit()
 	
 	bt_player.restart()
