@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=43 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_7j8nt"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
@@ -19,7 +19,9 @@
 [ext_resource type="PackedScene" uid="uid://dn0fhusgltn4m" path="res://chars/heavy_soldier.tscn" id="13_kcvht"]
 [ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="14_dmeha"]
 [ext_resource type="PackedScene" uid="uid://bvvdaxqcb1uvh" path="res://chars/mech_ranged.tscn" id="14_h7re7"]
+[ext_resource type="PackedScene" uid="uid://b7ppm0ysps4q6" path="res://Component/resources/enemy_group.tscn" id="19_dxt6w"]
 [ext_resource type="Script" uid="uid://7cyh5ujpo4sp" path="res://levels/Boundery.gd" id="19_kcvht"]
+[ext_resource type="PackedScene" uid="uid://d3jixkbstt3qn" path="res://Component/qte_start.tscn" id="21_hjny2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kcvht"]
 resource_local_to_scene = true
@@ -67,8 +69,53 @@ vertices = PackedVector2Array(2478.47, 790, 1959, 790.977, 1959, 748, 2478.5, 74
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(4, 5, 6, 7)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(1949, 738, 1949, 801, 2481, 800, 2997, 524, 3568, 524, 3568, 463, 2991, 463, 2476, 738)])
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_dxt6w"]
+vertices = PackedVector2Array(2956, 1211, 1955, 1211, 1955, 1192.99, 2956, 1192)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1945, 1221, 1945, 1183, 2966, 1182, 2966, 1221)])
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jyauw"]
 size = Vector2(68, 577)
+
+[sub_resource type="Animation" id="Animation_hjny2"]
+resource_name = "ElevatorToBasement"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-2, 2), Vector2(2, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PC:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1918, 782), Vector2(1893, 782)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DoorsAndSwitches/Elevator2/Path2D/PathFollow2D:progress_ratio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 1.0, 0.0]
+}
 
 [sub_resource type="Animation" id="Animation_h7re7"]
 resource_name = "INTRO"
@@ -404,6 +451,18 @@ tracks/18/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("DoorsAndSwitches/Elevator2/Path2D/PathFollow2D:progress_ratio")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
 
 [sub_resource type="Curve2D" id="Curve2D_kcvht"]
 _data = {
@@ -679,6 +738,7 @@ tracks/20/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tnflb"]
 _data = {
+&"ElevatorToBasement": SubResource("Animation_hjny2"),
 &"INTRO": SubResource("Animation_h7re7"),
 &"RESET": SubResource("Animation_tnflb"),
 &"mini_boss_kill": SubResource("Animation_cxkws")
@@ -699,13 +759,13 @@ grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
 [node name="PC" parent="." index="1" instance=ExtResource("2_dtpw0")]
-position = Vector2(88, 471)
+position = Vector2(1893, 782)
 scale = Vector2(2, 2)
 
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
 shape = SubResource("RectangleShape2D_kcvht")
 
-[node name="Speech" parent="PC" index="20"]
+[node name="Speech" parent="PC" index="19"]
 visible = true
 
 [node name="CameraPos" parent="." index="2" instance=ExtResource("4_e3spa")]
@@ -929,9 +989,6 @@ scale = Vector2(0.75, 0.75)
 position = Vector2(3485, 302)
 scale = Vector2(0.75, 0.75)
 
-[node name="GuardEnemy6" parent="Enemy/Guards" index="5" instance=ExtResource("11_vtk8u")]
-position = Vector2(3427, 490)
-
 [node name="SleepingGuard" parent="Enemy" index="4" instance=ExtResource("12_jyauw")]
 position = Vector2(656, 457)
 
@@ -940,6 +997,45 @@ position = Vector2(656, 457)
 [node name="MechRanged" parent="Enemy/MiniBosses" index="0" instance=ExtResource("14_h7re7")]
 position = Vector2(2098, 761)
 lvl_boss = true
+
+[node name="Underground" type="Node" parent="Enemy" index="6"]
+
+[node name="EnemyGroup" parent="Enemy/Underground" index="0" node_paths=PackedStringArray("heavy_soldier_enemies", "guard_enemies") instance=ExtResource("19_dxt6w")]
+heavy_soldier_enemies = [NodePath("../HeavySoldier5"), NodePath("../HeavySoldier6")]
+guard_enemies = [NodePath("../GuardEnemy6")]
+
+[node name="HeavySoldier5" parent="Enemy/Underground" index="1" node_paths=PackedStringArray("group_link_control") instance=ExtResource("13_kcvht")]
+position = Vector2(2190, 1169)
+scale = Vector2(0.5, 0.5)
+group_link_control = NodePath("../EnemyGroup")
+
+[node name="HeavySoldier6" parent="Enemy/Underground" index="2" node_paths=PackedStringArray("group_link_control") instance=ExtResource("13_kcvht")]
+position = Vector2(2236, 1169)
+scale = Vector2(0.5, 0.5)
+group_link_control = NodePath("../EnemyGroup")
+
+[node name="GuardEnemy6" parent="Enemy/Underground" index="3" node_paths=PackedStringArray("group_link_control") instance=ExtResource("11_vtk8u")]
+position = Vector2(2152, 1191)
+scale = Vector2(0.75, 0.75)
+group_link_control = NodePath("../EnemyGroup")
+
+[node name="Turrets" type="Node" parent="Enemy/Underground" index="4"]
+
+[node name="turret_base_3" parent="Enemy/Underground/Turrets" index="0" instance=ExtResource("10_kabbc")]
+position = Vector2(2420, 1096)
+scale = Vector2(-0.15, -0.15)
+
+[node name="turret_base_4" parent="Enemy/Underground/Turrets" index="1" instance=ExtResource("10_kabbc")]
+position = Vector2(2678, 1097)
+scale = Vector2(-0.15, -0.15)
+
+[node name="turret_base_5" parent="Enemy/Underground/Turrets" index="2" instance=ExtResource("10_kabbc")]
+position = Vector2(2947, 1097)
+scale = Vector2(-0.15, -0.15)
+
+[node name="TurretLink" parent="Enemy/Underground/Turrets" index="3" node_paths=PackedStringArray("turrets") instance=ExtResource("11_kpmgs")]
+position = Vector2(2453, 1049)
+turrets = [NodePath("../turret_base_3"), NodePath("../turret_base_4"), NodePath("../turret_base_5")]
 
 [node name="AirNavs" type="Node2D" parent="." index="15"]
 
@@ -973,6 +1069,9 @@ navigation_layers = 2
 navigation_layers = 2
 start_position = Vector2(2048, 296)
 end_position = Vector2(1944, 304)
+
+[node name="Underground1" type="NavigationRegion2D" parent="GroundNavs" index="5"]
+navigation_polygon = SubResource("NavigationPolygon_dxt6w")
 
 [node name="TutorialText" type="RichTextLabel" parent="." index="17"]
 offset_left = 467.0
@@ -1017,7 +1116,7 @@ position = Vector2(24, 278.5)
 shape = SubResource("RectangleShape2D_jyauw")
 
 [node name="MiniBossCutscene" type="StaticBody2D" parent="Bounderies3" index="1" node_paths=PackedStringArray("objective")]
-position = Vector2(1886, 460)
+position = Vector2(1900, 460)
 collision_mask = 3
 script = ExtResource("19_kcvht")
 objective = NodePath("../../Enemy/MiniBosses/MechRanged")
@@ -1038,18 +1137,24 @@ position = Vector2(3627, 525)
 stops_ratio = Array[float]([0.0, 0.5, 0.0])
 
 [node name="Elevator2" parent="DoorsAndSwitches" index="1" instance=ExtResource("14_dmeha")]
-position = Vector2(1893, 1008)
+position = Vector2(1893, 1203)
 scale = Vector2(-1, 1)
 
 [node name="PathFollow2D" parent="DoorsAndSwitches/Elevator2/Path2D" index="0"]
-position = Vector2(24, -206)
-progress = 477.001
+position = Vector2(24, -400)
+progress = 403.0
 
 [node name="lab_door_switch" parent="DoorsAndSwitches" index="2" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
 position = Vector2(2072, 65)
 door_connect = NodePath("../Elevator")
 
-[node name="Paths" type="Node" parent="." index="24"]
+[node name="QTEFlags" type="Node" parent="." index="24"]
+
+[node name="QTE_Start" parent="QTEFlags" index="0" node_paths=PackedStringArray("cutscene_player") instance=ExtResource("21_hjny2")]
+position = Vector2(1916, 713)
+cutscene_player = NodePath("../../CutscenePlayer")
+
+[node name="Paths" type="Node" parent="." index="25"]
 
 [node name="Path2D" type="Path2D" parent="Paths" index="0"]
 curve = SubResource("Curve2D_e3spa")

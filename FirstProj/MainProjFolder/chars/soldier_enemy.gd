@@ -136,7 +136,7 @@ enum CombatStates{
 var current_combat_state = CombatStates.RANGED
 var prev_combat_state = CombatStates.RANGED
 var combat_state : String = "RANGED"
-var player_state : int
+var player_state : LimboState
 	
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
@@ -171,6 +171,7 @@ func _init_state_machine():
 	state_machine.add_transition(idle, attack, &"attack_mode")
 	state_machine.add_transition(staggered, chasing, &"stagger_recover")
 	state_machine.add_transition(attack, chasing, &"start_chase")
+	state_machine.add_transition(shooting, chasing, &"start_chase")
 	state_machine.add_transition(chasing, attack, &"start_attack")
 	state_machine.add_transition(attack, idle, &"idle_mode")
 	state_machine.add_transition(attack, jump, &"jump_attack")
@@ -196,7 +197,7 @@ func _init_combat_state_machine():
 
 	
 func _process(_delta):
-	if not cutscene_handler.actor_control_active or qte_handler.actor_control_active:
+	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		return
 	ammo_count=turret.ammo_count
 	##FOR TESTING REMOVE LATER
@@ -217,12 +218,13 @@ func _process(_delta):
 	health_bar()
 	#track_player()
 	#combat_state_change()
-	handle_vision()
+	vision_handler.handle_vision()
 	if not attack_range.has_overlapping_bodies():
 		bt_player.blackboard.set_var("within_range", false)
 	#bt_player.blackboard.get_var("attack_mode"))
 	attack_timer.one_shot=true
 	counter_select()
+	bt_player.blackboard.set_var("ammo",ammo_count)
 	#get_player_state(player)
 	#on_screen.is_on_screen()
 		#print(parry_timer.time_left)
@@ -235,7 +237,7 @@ func _physics_process(delta):
 	#if state_machine.get_active_state() == idle:
 		#return
 ##	END OF TEST
-	if not cutscene_handler.actor_control_active or qte_handler.actor_control_active:
+	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		apply_gravity(delta)
 		#cutscene_acceleration(cutscene_handler.cutscene_dir, delta)
 		move_and_slide()
@@ -288,7 +290,8 @@ func target_lock():
 
 func chase():
 	#set_state(current_state, States.CHASE)
-	state_machine.change_active_state(chasing)
+	state_machine.dispatch(&"start_chase")
+	#state_machine.change_active_state(chasing)
 	
 
 func health_bar():
@@ -462,7 +465,7 @@ func _on_attack_timer_timeout() -> void:
 	#"begin move")
 	if state_machine.get_active_state()==staggered:
 		return
-	if bt_player.blackboard.get_var("within_range"):
+	if bt_player.blackboard.get_var("within_range")==true:
 		#set_state(current_state, States.ATTACK)
 		state_machine.dispatch(&"start_attack")
 	else:
@@ -500,6 +503,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
+	print(current.name)
 	if current==jump:
 		if previous==attack:
 			print("down attack")

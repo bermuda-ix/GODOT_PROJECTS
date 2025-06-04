@@ -32,6 +32,7 @@ func end_cutscene() -> void:
 	anim_count=0
 	if actor.is_in_group("player"):
 		actor.set_movement_data(0)
+		anim_player.play("idle")
 
 func anim_count_up() -> void:
 	if not actor_control_active:

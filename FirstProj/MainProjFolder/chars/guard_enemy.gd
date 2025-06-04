@@ -370,6 +370,8 @@ func _on_health_health_depleted() -> void:
 	knockback.x=250
 	jump_handler.handle_jump(0.5)
 	death_timer.start()
+	if linked_enemies!=null:
+		linked_enemies.remove_at(group_link_order)
 	death_handler.death()
 
 func _on_attack_timer_timeout() -> void:

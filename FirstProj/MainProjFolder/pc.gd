@@ -28,8 +28,43 @@ signal jump_out_signal
 #Base FSM
 enum States {IDLE, WALKING, JUMP, ATTACK, SPECIAL_ATTACK, WALL_STICK, PARRY, DODGE, SPRINTING,
 FLIP,THRUST, HIT, STAGGERED}
+@onready var state_machine: LimboHSM = $StateMachine
+@onready var idle: LimboState = $StateMachine/Idle
+@onready var walking: LimboState = $StateMachine/Walking
+@onready var sprint: LimboState = $StateMachine/Sprint
+@onready var jump_state: LimboState = $StateMachine/JumpState
+@onready var falling_state: LimboState = $StateMachine/FallingState
+@onready var landed: LimboState = $StateMachine/Landed
+@onready var wall_stick: LimboState = $StateMachine/WallStick
+@onready var special_attack: LimboState = $StateMachine/SpecialAttack
+@onready var parry_state: LimboState = $StateMachine/ParryState
+@onready var dodge_state: LimboState = $StateMachine/DodgeState
+@onready var flip_state: LimboState = $StateMachine/FlipState
+@onready var staggered: LimboState = $StateMachine/Staggered
+@onready var hit: LimboState = $StateMachine/Hit
+@onready var recovery: LimboState = $StateMachine/Recovery
+
+#Parry Success State
+@onready var parry_success_state: LimboHSM = $StateMachine/ParrySuccessState
+@onready var riposte: LimboState = $StateMachine/ParrySuccessState/Riposte
+@onready var heavy_riposte: LimboState = $StateMachine/ParrySuccessState/HeavyRiposte
+@onready var dodge_back: LimboState = $StateMachine/ParrySuccessState/DodgeBack
+@onready var nothing: LimboState = $StateMachine/ParrySuccessState/Nothing
+@onready var await_input: LimboState = $StateMachine/ParrySuccessState/AwaitInput
+
+#Attack Combos
+@onready var attack_state: LimboHSM = $StateMachine/AttackState
+@onready var attack_1: LimboState = $StateMachine/AttackState/Attack1
+@onready var attack_2: LimboState = $StateMachine/AttackState/Attack2
+@onready var attack_3: LimboState = $StateMachine/AttackState/Attack3
+@onready var cur_combo : LimboState = attack_1
+
 #FSM for lock on
 enum CombatStates {LOCKED, UNLOCKED}
+@onready var combat_states: LimboHSM = $CombatStates
+@onready var locked: LimboState = $CombatStates/Locked
+@onready var unlocked: LimboState = $CombatStates/Unlocked
+
 #FSM for combo attacks:
 enum ComboStates {ATK_1,ATK_2,ATK_3,SPC_ATK,SPC_ATK_STRONG,SPC_ATK_BACK,THRUST}
 
@@ -53,7 +88,7 @@ var sp_atk_chn = 0
 var face_right = true
 var input_dir=Input.get_axis("walk_left","walk_right")
 #dodge dir
-var dodge_state = false
+#var dodge_state = false
 var dodge_v = 0.0
 var falling : bool = false
 var jumping : bool = false
@@ -63,8 +98,9 @@ var previous = "IDLE"
 var atk_state="ATK_1"
 
 #Animation var
-@onready var animated_sprite_2d = $AnimatedSprite2D
-@onready var anim_player = $AnimationPlayer
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
+
 
 @onready var speech: Label = $Speech
 #Cutscenes
@@ -98,11 +134,12 @@ signal no_input_qte
 
 @onready var hit_box: HitBox = $AnimatedSprite2D/HitBox
 @onready var hb_collision: CollisionShape2D = $AnimatedSprite2D/HitBox/HBCollision
-@onready var pb_rot = $ParryBox/PBRot
-@onready var parry_box = $ParryBox
+@onready var pb_rot: CollisionShape2D = $AnimatedSprite2D/ParryBox/PBRot
+@onready var parry_box: ParryBox = $AnimatedSprite2D/ParryBox
 @onready var counter_box_collision = $CounterBox/CounterBoxCollision
 @onready var stagger: Stagger = $Stagger
 
+@onready var sprite_fx: AnimatedSprite2D = $AnimatedSprite2D/sprite_fx
 @onready var hurt_box_detect = $HurtBox/CollisionShape2D
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var hurt_box = $HurtBox
@@ -184,108 +221,202 @@ func _ready():
 	Events.parried.connect(parry_success)
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
+	_init_state_machine()
+	_init_combat_state_machine()
+	_init_parry_success_state_machine()
+	_init_attack_states()
 
-
+func _init_state_machine():
+	state_machine.initial_state=idle
+	state_machine.initialize(self)
+	state_machine.set_active(true)
 	
-func _process(delta):
+	#Return to Idle
+	state_machine.add_transition(walking, idle, &"return_to_idle")
+	state_machine.add_transition(sprint, idle, &"return_to_idle")
+	state_machine.add_transition(attack_state, idle, &"return_to_idle")
+	state_machine.add_transition(special_attack, idle, &"return_to_idle")
+	state_machine.add_transition(landed, idle, &"return_to_idle")
+	state_machine.add_transition(parry_state, idle, &"return_to_idle")
+	state_machine.add_transition(parry_success_state, idle, &"return_to_idle")
+	
+	#Landing
+	state_machine.add_transition(jump_state, landed, &"landing")
+	state_machine.add_transition(falling_state, landed, &"landing")
+	state_machine.add_transition(dodge_state, landed, &"landing")
+	state_machine.add_transition(flip_state, landed, &"landing")
+	
+	#Recovery
+	state_machine.add_transition(hit, recovery, &"recovering")
+	state_machine.add_transition(staggered, recovery, &"recovering")
+	
+	#From Idle
+	state_machine.add_transition(idle, walking, &"start_walking")
+	state_machine.add_transition(idle, sprint, &"start_sprinting")
+	state_machine.add_transition(idle, jump_state, &"start_jumping")
+	state_machine.add_transition(idle, attack_state, &"start_attack")
+	state_machine.add_transition(idle, special_attack, &"start_spc_attack")
+	state_machine.add_transition(idle, dodge_state, &"start_dodge")
+	state_machine.add_transition(idle, parry_state, &"start_parry")
+	state_machine.add_transition(idle, flip_state, &"start_flip")
+	state_machine.add_transition(idle, staggered, &"got_staggered")
+	state_machine.add_transition(idle, hit, &"got_hit")
+	
+	#From Walking
+	state_machine.add_transition(walking, sprint, &"start_sprinting")
+	state_machine.add_transition(walking, jump_state, &"start_jumping")
+	state_machine.add_transition(walking, attack_state, &"start_attack")
+	state_machine.add_transition(walking, special_attack, &"start_spc_attack")
+	state_machine.add_transition(walking, dodge_state, &"start_dodge")
+	state_machine.add_transition(walking, parry_state, &"start_parry")
+	state_machine.add_transition(walking, flip_state, &"start_flip")
+	state_machine.add_transition(walking, staggered, &"got_staggered")
+	state_machine.add_transition(walking, hit, &"got_hit")
+	
+	#From Sprinting
+	state_machine.add_transition(sprint, walking, &"start_walking")
+	state_machine.add_transition(sprint, jump_state, &"start_jumping")
+	state_machine.add_transition(sprint, attack_state, &"start_attack")
+	state_machine.add_transition(sprint, special_attack, &"start_spc_attack")
+	state_machine.add_transition(sprint, dodge_state, &"start_dodge")
+	state_machine.add_transition(sprint, parry_state, &"start_parry")
+	state_machine.add_transition(sprint, flip_state, &"start_flip")
+	state_machine.add_transition(sprint, staggered, &"got_staggered")
+	state_machine.add_transition(sprint, hit, &"got_hit")
+	
+	#Attack Combos
+	#state_machine.add_transition(attack_state, special_attack, &"attack_to_special")
+	#state_machine.add_transition(special_attack, attack_state, &"special_to_attack")
+	state_machine.add_transition(jump_state, attack_state, &"jump_attack")
+	state_machine.add_transition(jump_state, special_attack, &"jump_spc_attack")
+	state_machine.add_transition(dodge_state, attack_state, &"dash_attack")
+	
+	#Flipping State
+	state_machine.add_transition(flip_state, jump_state, &"jump_out")
+	state_machine.add_transition(flip_state, attack_state, &"flip_attack")
+	#state_machine.add_transition(flip_state, jump_state, &"jump_out")
+	
+	#Parry Success
+	state_machine.add_transition(parry_state, parry_success_state, &"parry_successful")
+
+	#Wall Stick
+	state_machine.add_transition(jump_state, wall_stick, &"stick_to_wall")
+	state_machine.add_transition(wall_stick, jump_state, &"jump_off_wall")
+	state_machine.add_transition(wall_stick, falling_state, &"fall_off_wall")
+
+
+
+func _init_combat_state_machine():
+	state_machine.initial_state=unlocked
+	state_machine.initialize(self)
+	state_machine.set_active(true)
+	
+	combat_states.add_transition(locked, unlocked, &"locking_on")
+	combat_states.add_transition(unlocked, locked, &"unlocking")
+	
+func _init_parry_success_state_machine():
+	parry_success_state.initial_state=await_input
+	
+	parry_success_state.add_transition(await_input, riposte, &"riposte")
+	parry_success_state.add_transition(await_input, heavy_riposte, &"heavy_riposte")
+	parry_success_state.add_transition(await_input, dodge_back, &"dodge_back")
+	parry_success_state.add_transition(await_input, nothing, &"do_nothing")
+	
+func _init_attack_states():
+	attack_state.initial_state=attack_1
+	state_machine.set_active(true)
+
+	attack_state.add_transition(attack_1, attack_2, &"next_attack")
+	attack_state.add_transition(attack_2, attack_3, &"next_attack")
+	attack_state.add_transition(attack_3, attack_1, &"next_attack")
+	
+	attack_state.add_transition(attack_state.ANYSTATE, attack_1, &"reset_combo")
+
+func _process(_delta):
+	#if anim_player.is_playing():
+		#print("animation playing")
+	#else:
+		#print("no play")
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	if not cutscene_handler.actor_control_active:
 		
 		if qte_handler.actor_control_active:
 			qte_input()
 		return
-	elif state==States.STAGGERED:
-		return
-	#print(hit_stop.dur.time_left)
+	#elif state==States.STAGGERED:
+		#return
+#
 	var input_axis = Input.get_axis("walk_left", "walk_right")
 	vel_x=velocity.x
-	current_state_label()
+	#current_state_label()
 	get_target_info()
-	previous_state()
+	#previous_state()
 	atk_state_debug()
-	#if target != null:
-		#label.text=str(target_size_x, " , ",target_size_y)
-	#if atk_chain >= 1 and sp_atk_chn >=1:
-		#label.text=str("chain ready. Vel:", velocity)
-	#else:
-		#label.text=str("chain not ready. Vel:", velocity)
-	dodge(input_axis, delta)
-	if Input.is_action_just_pressed("walk_right"):
-		face_right = true
-		move_axis = 1
-		parry_box.scale.x=1
-	elif Input.is_action_just_pressed("walk_left"):
-		face_right = false
-		move_axis = -1
-		parry_box.scale.x=-1
-	elif input_axis == 0:
-		move_axis = 0
-	
-	#handle_hitbox(input_axis, face_right)
-	#air_atk)
-	
-	if(state!=States.DODGE and s_atk==false and state!=States.FLIP):
+#
+	dodge(input_axis)
+	#if Input.is_action_just_pressed("walk_right"):
+		#face_right = true
+		#move_axis = 1
+		#parry_box.scale.x=1
+	#elif Input.is_action_just_pressed("walk_left"):
+		#face_right = false
+		#move_axis = -1
+		#parry_box.scale.x=-1
+	#elif input_axis == 0:
+		#move_axis = 0
+#
+	#
+	if(state_machine.get_active_state()!=dodge_state and s_atk==false and state_machine.get_active_state()!=flip_state):
 		parry()
 		attack_animate()
 		update_animation(input_axis)
-	elif state == States.FLIP:
+	elif state_machine.get_active_state()==flip_state:
 		break_out()
-	elif state==States.DODGE:
+	elif state_machine.get_active_state()==dodge_state:
 		if Input.is_action_just_pressed("attack"):
 			dash_attack()
-	
-	lockon()
-	#air_atk)
+	#
+	#lockon()
 
 func _physics_process(delta):
-	#position=path_follow_2d.position
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		apply_gravity(delta)
 		cutscene_acceleration(cutscene_handler.cutscene_dir, delta)
 		move_and_slide()
-		#if path_start:
-			##position=path_follow_2d.position
-			#run_path()
-		#camera_2d.global_position=camera_pos.global_position
+
 		return
 		
 	if s_atk==true:
 		return
-	elif state==States.FLIP:
-		#pass
-		
-		#apply_gravity(delta)
+	elif state_machine.get_active_state()==flip_state:
 		flipping(delta)
 		sp_atk()
 		move_and_slide()
 		
 		if is_on_floor():
-			if state==States.JUMP or (state==States.FLIP and flipped_over):
-				set_state(state, States.IDLE)
+			if state_machine.get_active_state()==jump_state or (state_machine.get_active_state()==flip_state and flipped_over):
+				state_machine.dispatch(&"landing")
 			
-		#velocity = movement * SPEED * delta
-	elif state==States.STAGGERED:
+	elif state_machine.get_active_state()==staggered:
 		move_and_slide()
 		apply_gravity(delta)
 		velocity.x=0
 	else:
-		if combat_state==CombatStates.LOCKED:
-			locked_combat()	
-
-		if dodge_state == true:
-			state = States.DODGE
-		# Add the gravity.
-		if(dodge_state==false and parry_stance==false):
+		#if combat_state==CombatStates.LOCKED:
+			#locked_combat()	
+#
+		##if dodge_state == true:
+			##state = States.DODGE
+		## Add the gravity.
+		if(parry_stance==false):
 			apply_gravity(delta) 
 		var input_axis = Input.get_axis("walk_left", "walk_right")
 		
 
 		
-		#dodge_timer.time_left)
-		#parry_stance)
+
 		var wall_hold = false
-		if(state!=States.DODGE and parry_stance==false and state!=States.FLIP):
-			#"not flip")
+		if(state_machine.get_active_state()!=dodge_state and parry_stance==false and state_machine.get_active_state()!=flip_state):
 			handle_wall_jump(wall_hold, delta)
 			jump(input_axis, delta)
 			handle_acceleration(input_axis, delta)
@@ -293,15 +424,7 @@ func _physics_process(delta):
 			apply_friction(input_axis, delta)
 			apply_air_resistance(input_axis, delta)
 			sp_atk()
-			#label.text=str(cur_state, " ", previous)
-			#jump_out()
-			
 		
-		#elif state==States.SPECIAL_ATTACK and combo_state!=ComboStates.SPC_ATK_BACK:
-			#velocity=Vector2.ZERO
-			#gravity=0
-			#"no fall")
-		#input_axis)
 		
 		
 		var was_on_floor = is_on_floor()
@@ -310,23 +433,15 @@ func _physics_process(delta):
 		var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
 		if just_left_ledge:
 			coyote_jump_timer.start()
-		#if Input.is_action_pressed("sprint"):
-			#state=States.SPRINTING
-			#movement_data = load("res://FasterMovementData.tres")
-		#if Input.is_action_pressed("walk"):
-			#movement_data = load("res://SlowMovementData.tres")
-		#if Input.is_action_just_released("sprint") or Input.is_action_just_released("walk"):
-			#movement_data = load("res://DefaultMovementData.tres")
 		just_wall_jump = false
 		
 
 		#cur_state)
-		var side
-		if target_right:
-			side = "Right"
-		else:
-			side = "Left"
-		#label.text=str("Vel: ",velocity)
+		#var side
+		#if target_right:
+			#side = "Right"
+		#else:
+			#side = "Left"
 		
 		
 		knockback = lerp(knockback, Vector2.ZERO, 0.1)
@@ -334,21 +449,14 @@ func _physics_process(delta):
 		#wall hold check
 		if not is_on_wall() or not Input.is_action_pressed("sprint"):
 			wall_hold=false
-			#"wall hold false")
 			gravity = 980
 		else:
-			#"wall hold true")
-			state = States.WALL_STICK
+			state_machine.dispatch(&"stick_to_wall")
 			velocity.x =0
 			velocity.y = 0
 			gravity = 0
 	
 	#return_to_idle()
-
-#Toggle player control
-#func set_actor_control(value : bool)->void:
-	#actor_control_active=value
-
 
 # Add the gravity.
 func apply_gravity(delta):
@@ -359,7 +467,7 @@ func apply_gravity(delta):
 func return_to_idle():
 	if is_on_floor() and state==States.FLIP and flipped_over:
 		#"flip end")
-		set_state(state, States.IDLE)
+		state_machine.dispatch(&"return_to_idle")
 		set_collision_mask_value(16384, true)
 	
 # Handle jump.
@@ -370,7 +478,7 @@ func jump(input_axis, delta):
 	if is_on_floor() or coyote_jump_timer.time_left>0.0:
 		if Input.is_action_just_pressed("jump"):
 			#state = States.JUMP
-			set_state(state, States.JUMP)
+			state_machine.dispatch(&"start_jumping")
 			velocity.y = movement_data.jump_velocity
 			
 	elif not is_on_floor() and parry_stance==false and state != States.FLIP:
@@ -379,26 +487,25 @@ func jump(input_axis, delta):
 			
 			velocity.y = movement_data.jump_velocity/2
 			#state = States.JUMP
-			set_state(state, States.JUMP)
+			state_machine.dispatch(&"start_jumping")
 		if Input.is_action_just_pressed("jump") and double_jump_flag == true and just_wall_jump == false:
 			
 			velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.acceleration*10 * delta)
 			velocity.y = movement_data.jump_velocity *0.8
 			double_jump_flag = false
 			#state = States.JUMP
-			set_state(state, States.JUMP)
+			state_machine.dispatch(&"start_jumping")
 
 #breaking out of a flip. Test without timer later
 func break_out():
 	
 	if Input.is_action_just_pressed("jump") and not Input.is_action_pressed("sprint"):
 		
-		#state=States.IDLE
-		set_state(state, States.JUMP)
+		state_machine.dispatch(&"jump_out")
 		jump_out_signal.emit(30)
 	elif Input.is_action_just_pressed("attack"):
 		attack_combo="Flip_Attack"
-		set_state(state, States.ATTACK)
+		state_machine.dispatch(&"flip_attack")
 		jump_out(15)
 		
 		
@@ -413,12 +520,10 @@ func jump_out(jumpout_vel : float):
 	else:
 		jump_left=false
 	if not jump_left:
-		#print("jump left")
 		knockback.x = knockback.x*-1
 	else:
 		knockback.x=knockback.x
 	velocity.y=movement_data.jump_velocity*0.8
-	#velocity.x = knockback.x
 	hit_stop.hit_stop(1,0)
 	set_collision_mask_value(15, true)
 
@@ -431,13 +536,13 @@ func handle_wall_jump(wall_hold, delta):
 	
 	if Input.is_action_just_pressed("walk_left") and wall_normal == Vector2.LEFT and wall_hold == true:
 		#state = States.WALL_STICK
-		set_state(state, States.WALL_STICK)
+		state_machine.dispatch(&"stick_to_wall")
 		velocity.x =0
 		velocity.y = 0
 		gravity = 0
 		
 	elif Input.is_action_just_pressed("walk_right") or Input.is_action_just_pressed("jump") or Input.is_action_just_released("sprint"):
-		set_state(state, States.JUMP)
+		state_machine.dispatch(&"jump_off_wall")
 		velocity.x = move_toward(velocity.x, movement_data.speed * wall_normal.x * 1.5, movement_data.acceleration*10 * delta)
 		velocity.y = movement_data.jump_velocity
 		just_wall_jump = true
@@ -446,13 +551,13 @@ func handle_wall_jump(wall_hold, delta):
 		
 		
 	if Input.is_action_just_pressed("walk_right") and wall_normal == Vector2.RIGHT and wall_hold == true:
-		set_state(state, States.WALL_STICK)
+		state_machine.dispatch(&"stick_to_wall")
 		velocity.x =0
 		velocity.y = 0
 		gravity = 0
 	
 	elif Input.is_action_just_pressed("walk_left") or Input.is_action_just_pressed("jump")  or Input.is_action_just_released("sprint"):
-		set_state(state, States.JUMP)
+		state_machine.dispatch(&"jump_off_wall")
 		velocity.x = move_toward(velocity.x, movement_data.speed * wall_normal.x * 1.5, movement_data.acceleration*10 * delta)
 		velocity.y = movement_data.jump_velocity
 		just_wall_jump = true
@@ -492,8 +597,6 @@ func cutscene_acceleration(dir, delta):
 		velocity.x=0
 		
 		
-#func set_cutscene_dir(value : int) -> void:
-	#cutscene_dir=value
 func set_movement_data(value : int) -> void:
 	match value:
 		0:
@@ -502,7 +605,7 @@ func set_movement_data(value : int) -> void:
 			movement_data = load("res://SlowMovementData.tres")
 		2:
 			movement_data = load("res://FasterMovementData.tres")
-
+#
 
 func handle_air_acceleration(input_axis, delta):
 	if is_on_floor(): return
@@ -522,79 +625,72 @@ func update_animation(input_axis):
 				parry_box.rotation=-(PI/2)
 	elif Input.is_action_just_released("up") :
 		parry_box.rotation=0
-	#var left = Input.is_action_pressed("walk_left")
-	#var right = Input.is_action_pressed("walk_right")
+
 	
 	
-	if combat_state!=CombatStates.LOCKED:
+	if combat_states.get_active_state()!=locked:
 		if input_axis != 0:
 		
-		#animated_sprite_2d.flip_h = (input_axis<0)
 			if input_axis<0:
-				if animated_sprite_2d.scale.x>0:
-					animated_sprite_2d.scale.x *= -1
+				animated_sprite_2d.scale.x=-1
+				
 			else:
-				if animated_sprite_2d.scale.x<0:
-					animated_sprite_2d.scale.x *= -1
+				animated_sprite_2d.scale.x=1
+				
 					
 			if state != States.ATTACK and s_atk==false:
 				#state = States.WALKING
 				
 				if Input.is_action_pressed("sprint"):
-					if combat_state!=CombatStates.LOCKED:
+					if combat_states.get_active_state()!=locked:
 						walk_anim="run"
-						set_state(state, States.SPRINTING)
+						state_machine.dispatch(&"start_sprinting")
 					else:
-						set_state(state, States.WALKING)
+						state_machine.dispatch(&"start_walking")
 					movement_data = load("res://FasterMovementData.tres")
 				elif Input.is_action_just_released("sprint"):
 					movement_data = load("res://DefaultMovementData.tres")
 					walk_anim="walk"
-					set_state(state, States.WALKING)
+					state_machine.dispatch(&"start_walking")
 				else:
-					set_state(state, States.WALKING)
 					walk_anim="walk"
-			#idle_state=false
+					state_machine.dispatch(&"start_walking")
+					
 	else:
 		if not target_right:
-			if animated_sprite_2d.scale.x>0:
-				animated_sprite_2d.scale.x *= -1
+			animated_sprite_2d.scale.x=-1
 			if input_axis>0:
 				walk_anim="walk_back"
 			else:
 				walk_anim="walk"
 		else:
-			if animated_sprite_2d.scale.x<0:
-				animated_sprite_2d.scale.x *= -1
+			animated_sprite_2d.scale.x=1
 			if input_axis>0:
 				walk_anim="walk"
 			else:
 				walk_anim="walk_back"
 		if (state != States.ATTACK and s_atk==false) and input_axis!=0:
-			#state = States.WALKING
-			set_state(state, States.WALKING)
+			state_machine.dispatch(&"start_walking")
 		if Input.is_action_pressed("sprint"):
 			movement_data = load("res://FasterMovementData.tres")
 		elif Input.is_action_just_released("sprint"):
 			movement_data = load("res://DefaultMovementData.tres")
 	if (Input.is_action_just_released("walk_left") or Input.is_action_just_released("walk_right")) and input_axis==0:
 		#state = States.IDLE
-		set_state(state, States.IDLE)
+		state_machine.dispatch(&"return_to_idle")
 		
 	if is_on_floor():
 		jumping=false
 		if state == States.JUMP:
 			falling=false
-			set_state(state, States.IDLE)
-		#animated_sprite_2d.play("jump")
+			state_machine.dispatch(&"return_to_idle")
 	
 		
 		
 func attack_animate():
 
-	
-		
-	if Input.is_action_just_pressed("attack") and state != States.ATTACK:
+
+	if Input.is_action_just_pressed("attack") and attack_timer.paused==false:
 		attack_timer.start()
 		attack_timer.paused=true
 			
@@ -613,21 +709,18 @@ func attack_animate():
 			hit_box.set_damage(1)
 			if not attack_timer.is_stopped():
 				if atk_chain == 0:
-					#animated_sprite_2d.play("attack_1")
-					attack_combo = "Attack"
-					hit_sound = hit1
+					#attack_combo = "Attack"
+					#hit_sound = hit1
 					AudioStreamManager.play(swing1)
 
 				elif atk_chain == 1 and sp_atk_chn<1:
-					#animated_sprite_2d.play("attack_2")
-					attack_combo = "Attack_2"
-					hit_sound = hit2
+					#attack_combo = "Attack_2"
+					#hit_sound = hit2
 					AudioStreamManager.play(swing2)
 				
 				elif atk_chain == 2:
-					#animated_sprite_2d.play("attack_3")
-					attack_combo = "Attack_3"
-					hit_sound = hit3
+					#attack_combo = "Attack_3"
+					#hit_sound = hit3
 					AudioStreamManager.play(swing3)
 				elif sp_atk_chn>=1:
 					attack_combo = "Attack_Chain"
@@ -635,25 +728,26 @@ func attack_animate():
 					AudioStreamManager.play(swing2)
 		
 		
-		#state=States.ATTACK
-		set_state(state, States.ATTACK)
-		
-		await anim_player.animation_finished
-		attack_timer.paused=false
+		#set_state(state, States.ATTACK)
+		if state_machine.get_active_state()==attack_state:
+			attack_state.dispatch(&"next_attack")
+		else:
+			state_machine.dispatch(&"start_attack")
+		#await anim_player.animation_finished
+		#attack_timer.paused=false
 		
 		
 func dash_attack():
 	attack_combo = "Attack_Dash"
 	hit_sound = hit1
 	AudioStreamManager.play(swing1)
-	set_state(state, States.ATTACK)
+	#set_state(state, States.ATTACK)
 
 func sp_atk():
 	if state==States.FLIP:
 		shotty.look_at(target.global_position)
 	else:
 		shotty.look_at(get_global_mouse_position())
-	#sp_atk_hit_box.look_at(get_global_mouse_position())
 	if Input.is_action_just_pressed("special_attack") and state != States.SPECIAL_ATTACK:
 		
 		if attack_timer.is_stopped():
@@ -668,78 +762,58 @@ func sp_atk():
 			if atk_chain==0:
 				if sp_atk_chn == 0 and (not attack_timer.is_stopped()):
 					sp_atk_combo="shotgun_attack"
-					#"sp_atk 1")
 					if state!=States.HIT:
 						AudioStreamManager.play(shotgun_fire)
 					sp_atk_dmg=1
 
 				elif sp_atk_chn == 1 and (not attack_timer.is_stopped()):
-					#animated_sprite_2d.play("attack_2")
 					sp_atk_combo="shotgun_attack"
-					#"sp_atk 2")
+
 					if state!=States.HIT:
 						AudioStreamManager.play(shotgun_fire)
 					sp_atk_dmg=1
 
 				elif sp_atk_chn == 2 and (not attack_timer.is_stopped()):
-					#animated_sprite_2d.play("attack_3")
-					#"reload anim playing")
+
 					if state!=States.HIT:
 						AudioStreamManager.play(reload)
 					sp_atk_combo="shotgun_attack"
-					#"sp_atk 3")
 					sp_atk_dmg=2
 					
 			else:
 				sp_atk_combo="shotgun_attack_fast"
-				#AudioStreamManager.play(shotgun_fire)
-			
-		#state=States.SPECIAL_ATTACK
-		set_state(state, States.SPECIAL_ATTACK)
+
+		#set_state(state, States.SPECIAL_ATTACK)
 		attack_timer.paused = false
-		#s_atk=true
-		#cpu_particles_2d.emitting=true
-		
-		#await anim_player.animation_finished
-		#attack_timer.paused=false
-		#s_atk=false
+
 
 
 func parry():
-	#parry_box.look_at(get_global_mouse_position())
-	#Enter/Exit parry state
-	
 	
 	if Input.is_action_just_pressed("parry"):
 		parry_timer.start()
 		parry_stance=true
-		#state=States.PARRY
-		set_state(state, States.PARRY)
+		#set_state(state, States.PARRY)
+		state_machine.dispatch(&"start_parry")
 		pb_rot.disabled=false
-		#if face_right==true:
-			#parry_box.scale.x=1
-		#if face_right==false:
-			#parry_box.scale.x=-1
 
-	elif Input.is_action_just_released("parry"):
+
+	elif Input.is_action_just_released("parry") and state_machine.get_active_state()!=parry_success_state:
 		parry_timer.stop()
 		parry_stance=false
-		#state=States.IDLE
-		set_state(state, States.IDLE)
-		anim_player.stop()
-		#idle_state = true
+		state_machine.dispatch(&"return_to_idle")
+		#anim_player.stop()
 		
 	
 	#parry interactions
 	if parry_stance==true:
-		#animated_sprite_2d.play("parry_stance")
 		velocity.x=0
 		velocity.y=0
 
 		
 			
-# DODGE NEEDS WORK!!!
-func dodge(input_axis, delta):
+## DODGE NEEDS WORK!!!
+func dodge(input_axis):
 
 	if Input.is_action_just_pressed("Dodge"):
 		dodge_timer.start()
@@ -749,50 +823,22 @@ func dodge(input_axis, delta):
 		if input_axis == 0:
 			dodge_anim_run=dodge_anim
 			velocity.x=0
-			#state = States.DODGE
-			set_state(state, States.DODGE)
+			#set_state(state, States.DODGE)
 		else:
-			#position.x = lerpf(position.x, position.x + (input_axis*2), delta)
 			dodge_anim_run=dodge_anim+"_roll"
-			#state = States.DODGE
-			set_state(state, States.DODGE)
+			#set_state(state, States.DODGE)
 			velocity.x=movement_data.dodge_speed*input_axis
-		#if input_axis == 0:
-			#position.x = lerpf(position.x, position.x, delta)
-			#state = States.DODGE
-		#else:
-			#if face_right==true:
-				#position.x = lerpf(position.x, position.x-1, delta)
-				#state = States.DODGE
-				#
-				#
-			#elif face_right==false:
-				#position.x = lerpf(position.x, position.x+1, delta)
-				#state = States.DODGE
-				#
+
 		
 	
 	
 	if (dodge_timer.is_stopped()) and state == States.DODGE:
-		#parry_stance=false
-		dodge_state=false
+		
+		#dodge_state=false
 		dodge_timer.stop()
 		#state=States.IDLE
-		set_state(state, States.IDLE)
+		state_machine.dispatch(&"return_to_idle")
 	
-	
-#func handle_hitbox(input_axis, face_right):
-	#if state== States.ATTACK:
-		#if combat_state!=CombatStates.LOCKED:
-			#if not face_right:
-				#hit_box.scale.x=1
-			#else:
-				#hit_box.scale.x=-1
-		#else:
-			#if not target_right:
-				#hit_box.scale.x=1
-			#else:
-				#hit_box.scale.x=-1
 
 func lockon():
 	var target_dist : Vector2 = Vector2.ZERO
@@ -919,123 +965,123 @@ func _on_hazard_detector_area_entered(area):
 	
 	
 	
-#State machine for animations currently
-func set_state(current_state, new_state: int) -> void:
-	#current_state, new_state)
-
-	if(current_state == new_state):
-		#"no change")
-		return
-	#else:
-		#current_state, new_state)
-		##"changing")
-	
-	if current_state==States.JUMP:
-		air_atk=true
-		#if not is_on_floor():
-			#return
-		#air_atk)
-	if current_state == States.PARRY and parry_stance==true:
-		pass
-	
-	prev_state=current_state
-	state=new_state
-	match new_state:
-		States.ATTACK:
-			#cur_state="ATTACK"
-			anim_player.speed_scale=1.5
-			anim_player.play(attack_combo)
-			if air_atk==true:
-			
-				velocity=Vector2.ZERO
-				gravity=0
-				
-		States.SPECIAL_ATTACK:
-			anim_player.speed_scale=1.5
-			#sp_atk_chn+=1
-			if sp_atk_chn==2:
-				anim_player.play("shotgun_finish")
-				await anim_player.animation_finished
-				sp_atk_chn=0
-			anim_player.play(sp_atk_combo)
-			if current_state==States.FLIP:
-				hitstop_time_left=hit_stop.get_time_left()
-				print(hitstop_time_left)
-				hit_stop.hit_stop(.1,.1)
-					
-			#if not is_on_floor():
-				#velocity=Vector2.ZERO
-				#gravity=0
-		States.IDLE:
-			anim_player.speed_scale=1
-			anim_player.play("idle")
-			#"playing idle")
-			movement_data.friction=1000
-			s_atk=false
-			counter_box_collision.disabled=true
-			hb_collision.disabled=true
-			air_atk=false
-			flipped_over=false
-		States.WALKING:
-			anim_player.speed_scale=1
-			#if jumping:
-				#pass
-			#else:
-				#anim_player.play("walk")
-			anim_player.play("walk")
-		States.JUMP:
-			jumping=true
-			#if falling==false:
-				#anim_player.play("jump")
-			#else:
-				#pass
-			cur_state="JUMP"
-			anim_player.play("jump")
-		States.DODGE:
-			hurt_box_detect.disabled=true
-			counter_box_collision.disabled=false
-			anim_player.speed_scale=1
-			anim_player.play(dodge_anim_run)
-			set_collision_mask_value(15, false)
-			velocity.y=0
-			#velocity.x=100 * move_axis
-		States.PARRY:
-			hurt_box_detect.disabled=true			
-			anim_player.play("Parry")
-		States.FLIP:
-			anim_player.play("flip")
-			cur_state="Flipping"
-			set_collision_mask_value(15, false)
-			high_target_jump_height = (global_position.y-collision_shape_2d.get_shape().size.y)
-			if current_state==States.SPECIAL_ATTACK:
-				hit_stop.hit_stop(.5, (hitstop_time_left-0.1))
-		States.SPRINTING:
-			anim_player.speed_scale=1
-			#if jumping:
-				#pass
-			#else:
-				#anim_player.play("run")
-			anim_player.play("run")
-		States.HIT:
-			anim_player.play("hit")
-			hurt_box_detect.disabled=true
-		States.STAGGERED:
-			anim_player.play("staggered")
-			knockback=Vector2.ZERO
-	if state != States.DODGE:
-		hurt_box_detect.disabled=false
-			
-	
-				
-			
-	if state!=States.PARRY:
-		pb_rot.disabled=true
-
+##State machine for animations currently
+##func set_state(current_state, new_state: int) -> void:
+	###current_state, new_state)
+##
+	##if(current_state == new_state):
+		###"no change")
+		##return
+	###else:
+		###current_state, new_state)
+		####"changing")
+	##
+	##if current_state==States.JUMP:
+		##air_atk=true
+		###if not is_on_floor():
+			###return
+		###air_atk)
+	##if current_state == States.PARRY and parry_stance==true:
+		##pass
+	##
+	##prev_state=current_state
+	##state=new_state
+	##match new_state:
+		##States.ATTACK:
+			###cur_state="ATTACK"
+			##anim_player.speed_scale=1.5
+			##anim_player.play(attack_combo)
+			##if air_atk==true:
+			##
+				##velocity=Vector2.ZERO
+				##gravity=0
+				##
+		##States.SPECIAL_ATTACK:
+			##anim_player.speed_scale=1.5
+			###sp_atk_chn+=1
+			##if sp_atk_chn==2:
+				##anim_player.play("shotgun_finish")
+				##await anim_player.animation_finished
+				##sp_atk_chn=0
+			##anim_player.play(sp_atk_combo)
+			##if current_state==States.FLIP:
+				##hitstop_time_left=hit_stop.get_time_left()
+				##print(hitstop_time_left)
+				##hit_stop.hit_stop(.1,.1)
+					##
+			###if not is_on_floor():
+				###velocity=Vector2.ZERO
+				###gravity=0
+		##States.IDLE:
+			##anim_player.speed_scale=1
+			##anim_player.play("idle")
+			###"playing idle")
+			##movement_data.friction=1000
+			##s_atk=false
+			##counter_box_collision.disabled=true
+			##hb_collision.disabled=true
+			##air_atk=false
+			##flipped_over=false
+		##States.WALKING:
+			##anim_player.speed_scale=1
+			###if jumping:
+				###pass
+			###else:
+				###anim_player.play("walk")
+			##anim_player.play("walk")
+		##States.JUMP:
+			##jumping=true
+			###if falling==false:
+				###anim_player.play("jump")
+			###else:
+				###pass
+			##cur_state="JUMP"
+			##anim_player.play("jump")
+		##States.DODGE:
+			##hurt_box_detect.disabled=true
+			##counter_box_collision.disabled=false
+			##anim_player.speed_scale=1
+			##anim_player.play(dodge_anim_run)
+			##set_collision_mask_value(15, false)
+			##velocity.y=0
+			###velocity.x=100 * move_axis
+		##States.PARRY:
+			##hurt_box_detect.disabled=true			
+			##anim_player.play("Parry")
+		##States.FLIP:
+			##anim_player.play("flip")
+			##cur_state="Flipping"
+			##set_collision_mask_value(15, false)
+			##high_target_jump_height = (global_position.y-collision_shape_2d.get_shape().size.y)
+			##if current_state==States.SPECIAL_ATTACK:
+				##hit_stop.hit_stop(.5, (hitstop_time_left-0.1))
+		##States.SPRINTING:
+			##anim_player.speed_scale=1
+			###if jumping:
+				###pass
+			###else:
+				###anim_player.play("run")
+			##anim_player.play("run")
+		##States.HIT:
+			##anim_player.play("hit")
+			##hurt_box_detect.disabled=true
+		##States.STAGGERED:
+			##anim_player.play("staggered")
+			##knockback=Vector2.ZERO
+	##if state != States.DODGE:
+		##hurt_box_detect.disabled=false
+			##
+	##
+				##
+			##
+	##if state!=States.PARRY:
+		##pb_rot.disabled=true
+#
 func get_state() -> String:
 	return cur_state
-func get_state_enum() -> int:
-	return state
-
+func get_state_enum() -> LimboState:
+	return state_machine.get_active_state()
+#
 func get_health() -> int:
 	return health.health
 func get_max_health() -> int:
@@ -1052,7 +1098,7 @@ func _on_health_health_depleted():
 	##kb_dir=round(kb_dir)
 	##kb_dir.x, " ", knockback)
 
-func _on_hurt_box_got_hit(hitbox):
+func _on_hurt_box_got_hit(_hitbox):
 	if hitbox.is_in_group("regular_enemy_hb"):
 		if hit_timer.is_stopped():
 			AudioStreamManager.play(SoundFx.PUNCH_DESIGNED_HEAVY_12)
@@ -1062,7 +1108,7 @@ func _on_hurt_box_got_hit(hitbox):
 		hit_timer.start(0.2)
 		if state!=States.FLIP:
 			
-			set_state(state, States.HIT)
+			state_machine.dispatch(&"got_hit")
 	elif hitbox.is_in_group("heavy_hitbox"):
 		knockback.x = -400
 		kb_dir=global_position.direction_to(hitbox.global_position)
@@ -1088,7 +1134,7 @@ func _on_hurt_box_got_hit(hitbox):
 func _on_hit_timer_timeout() -> void:
 	hurt_box_detect.disabled=false
 	if state!=States.FLIP:
-		set_state(state, States.IDLE)
+		state_machine.dispatch(&"return_to_idle")
 	player_hit.emitting=false
 
 
@@ -1106,7 +1152,7 @@ func _on_hurt_box_area_entered(area):
 		health.health -= 1
 		health.set_temporary_immortality(0.2)
 		if state==States.FLIP:
-			set_state(state, States.IDLE)
+			state_machine.dispatch(&"return_to_idle")
 		
 	if area.is_in_group("Hearts"):
 		health.health+=1
@@ -1126,91 +1172,98 @@ func set_start_pos(checkpoint_position):
 
 func _on_animation_player_animation_finished(anim_name):
 	cutscene_handler.anim_count_up()
-	if state==States.ATTACK:
+	if state_machine.get_active_state()==attack_state:
 		#"attack finished")
 		hit_success=false
 		if anim_name=="Attack_Counter":
 			counter_flag=false
 			return
 		elif anim_name=="Attack_Chain":
-			set_state(state, States.IDLE)
+			state_machine.dispatch(&"return_to_idle")
 			sp_atk_chn=0
 			atk_chain=0
-			attack_timer.start(1)
+			attack_timer.start(0.2)
 			combo_state=ComboStates.SPC_ATK_BACK
 			return
-		if atk_chain < 2:
-			atk_chain += 1
-		elif atk_chain >=2:
-			atk_chain = 0
-			attack_combo = "Attack"
-		if prev_state==States.FLIP:
-			set_state(state, States.JUMP)
-			
+		#if atk_chain < 2:
+			#atk_chain += 1
+		#elif atk_chain >=2:
+			#atk_chain = 0
+			#attack_combo = "Attack"
 		else:
-			set_state(state, prev_state)
+			attack_timer.start(1)
+			attack_timer.paused=false
+			anim_player.play("idle")
+			
+		if state_machine.get_previous_active_state()==flip_state:
+			state_machine.dispatch(&"jump_out")
+			
+		#else:
+			#state_machine.dispatch(&"return_to_idle")
 		hb_collision.disabled=true
 		
-	elif state==States.SPECIAL_ATTACK:
-		if prev_state==States.FLIP:
-			if anim_name=="shotgun_attack":
-				#flip.emit()
-				
-				set_state(state, States.FLIP)
-				s_atk=false
-		else:
-			if anim_name=="shotgun_attack":
-				if sp_atk_chn < 2:
-				
-					sp_atk_chn += 1
-				#"Attack Chain")
-				elif sp_atk_chn >=2:
-					sp_atk_chn = 0
-				#"special finished")
-				s_atk=false
-				#state=States.IDLE
-				if falling:
-					velocity.y=vel_y
-				set_state(state, States.IDLE)
-			elif anim_name=="shotgun_finish":
-				AudioStreamManager.play(shotgun_fire)
-				#state=States.IDLE
-				s_atk=false
-				set_state(state, States.IDLE)
-			elif anim_name=="shotgun_attack_fast":
+	#elif state==States.SPECIAL_ATTACK:
+		#if prev_state==States.FLIP:
+			#if anim_name=="shotgun_attack":
+				##flip.emit()
+				#
+				##set_state(state, States.FLIP)
+				#s_atk=false
+		#else:
+			#if anim_name=="shotgun_attack":
+				#if sp_atk_chn < 2:
+				#
+					#sp_atk_chn += 1
+				##"Attack Chain")
+				#elif sp_atk_chn >=2:
+					#sp_atk_chn = 0
+				##"special finished")
+				#s_atk=false
+				##state=States.IDLE
+				#if falling:
+					#velocity.y=vel_y
+				#state_machine.dispatch(&"return_to_idle")
+			#elif anim_name=="shotgun_finish":
 				#AudioStreamManager.play(shotgun_fire)
-				sp_atk_chn += 1
-				#state=States.IDLE
-				s_atk=false
-				set_state(state, States.IDLE)
-	elif state==States.JUMP:
-		if anim_name=="jump":
-			falling=true
-	elif anim_name=="staggered":
-		set_state(state, States.IDLE)
-		stagger.stagger=stagger.get_max_stagger()
-	
-	elif anim_name=="dodge_roll":
-		
-		velocity.x=0
-		counter_box_collision.disabled=true
-		set_collision_mask_value(15, true)
-	elif anim_name=="dodge":
-		
-		counter_box_collision.disabled=true
-	elif anim_name=="flip":
-		
-		anim_player.speed_scale=1
-		set_state(state, prev_state)
-	
-	
-	
-	else:
-		pass
+				##state=States.IDLE
+				#s_atk=false
+				#state_machine.dispatch(&"return_to_idle")
+			#elif anim_name=="shotgun_attack_fast":
+				##AudioStreamManager.play(shotgun_fire)
+				#sp_atk_chn += 1
+				##state=States.IDLE
+				#s_atk=false
+				#state_machine.dispatch(&"return_to_idle")
+	#elif state==States.JUMP:
+		#if anim_name=="jump":
+			#falling=true
+	#elif anim_name=="staggered":
+		#state_machine.dispatch(&"return_to_idle")
+		#stagger.stagger=stagger.get_max_stagger()
+	#
+	#elif anim_name=="dodge_roll":
+		#
+		#velocity.x=0
+		#counter_box_collision.disabled=true
+		#set_collision_mask_value(15, true)
+	#elif anim_name=="dodge":
+		#
+		#counter_box_collision.disabled=true
+	#elif anim_name=="flip":
+		#
+		#anim_player.speed_scale=1
+		#state_machine.dispatch(&"landed")
+	#
+	#
+	#
+	#else:
+		#pass
 
 func _on_attack_timer_timeout():
 	atk_chain = 0
 	attack_combo = "Attack"
+	attack_state.dispatch(&"reset_combo")
+	state_machine.dispatch(&"return_to_idle")
 	sp_atk_chn = 0
 	combo_state=ComboStates.ATK_1
 
@@ -1257,8 +1310,9 @@ func _on_parry_timer_timeout():
 	parry_timer.stop()
 	parry_stance=false
 	#state=States.IDLE
-	set_state(state, States.IDLE)
-	anim_player.stop()
+	#state_machine.dispatch(&"return_to_idle")
+	state_machine.dispatch(&"parry_successful")
+	#anim_player.stop()
 	
 func parry_success():
 	parry_timer.stop()
@@ -1266,11 +1320,11 @@ func parry_success():
 	
 	AudioStreamManager.play(parry_sfx)
 	await anim_player.animation_finished
-	anim_player.stop()
+	#anim_player.stop()
 
 
 
-func _on_hit_box_area_entered(area):
+func _on_hit_box_area_entered(_area):
 	hit_sound=hit1
 	AudioStreamManager.play(hit_sound)
 	#hit_stop.hit_stop(0.05, 0.1)
@@ -1289,9 +1343,9 @@ func flip_over():
 	
 	flip_speed=movement_data.speed * 80
 	
-	set_state(state, States.FLIP)
+	state_machine.dispatch(&"start_flip")
 	#state=States.FLIP
-
+#
 func flipping(delta):
 #	variables set and declared
 	target_pos_y=(target.global_position.y)
@@ -1362,53 +1416,8 @@ func flipping(delta):
 func _on_jump_out_timer_timeout():
 	jump_out(200)
 	
-func current_state_label():
-	match state:
-		States.ATTACK:
-			cur_state="ATTACK"
-		States.SPECIAL_ATTACK:
-			cur_state="SPECIAL_ATTACK"
-		States.IDLE:
-			cur_state="IDLE"
-		States.WALKING:
-			cur_state="WALKING"
-		States.JUMP:
-			cur_state="JUMP"
-		States.DODGE:
-			cur_state="DODGE"
-		States.WALL_STICK:
-			cur_state="WALL STICK"
-		States.SPRINTING:
-			cur_state = "SPRINTING"
-		States.PARRY:
-			cur_state = "PARRY"
-		States.FLIP:
-			cur_state = "FLIP"
-	
-func previous_state():
 
-	match prev_state:
-		States.ATTACK:
-			previous="ATTACK"
-		States.SPECIAL_ATTACK:
-			previous="SPECIAL_ATTACK"
-		States.IDLE:
-			previous="IDLE"
-		States.WALKING:
-			previous="WALKING"
-		States.JUMP:
-			previous="JUMP"
-		States.DODGE:
-			previous="DODGE"
-		States.WALL_STICK:
-			previous="WALL STICK"
-		States.SPRINTING:
-			previous = "SPRINTING"
-		States.PARRY:
-			previous = "PARRY"
-		States.FLIP:
-			previous = "FLIP"
-			
+
 
 func atk_state_debug():
 	match combo_state:
@@ -1453,9 +1462,6 @@ func _on_animation_player_animation_started(anim_name):
 		velocity.x = forward_thrust.x
 	elif anim_name=="shotgun_attack_fast":
 		AudioStreamManager.play(shotgun_fire)
-		#sp_atk_chn += 1
-		#state=States.IDLE
-		#set_state(state, States.IDLE)
 		if combo_state==ComboStates.SPC_ATK_BACK:
 			knockback.y=-100
 			if face_right:
@@ -1467,7 +1473,8 @@ func _on_animation_player_animation_started(anim_name):
 	elif anim_name=="shotgun_attack":
 		vel_y=velocity.y
 		s_atk=true
-	
+	elif anim_name=="idle":
+		print("entering idle")
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05, 0.1)
@@ -1478,12 +1485,12 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		else:
 			knockback.x=-400
 		#velocity.x = movement_data.speed + knockback.x
-		set_state(state, States.HIT)
+		state_machine.dispatch(&"got_hit")
 
 func _on_stagger_staggered() -> void:
 	knockback.x=0
 	velocity=Vector2.ZERO
-	set_state(state, States.STAGGERED)
+	state_machine.dispatch(&"got_staggered")
 	
 func _on_hit_box_parried() -> void:
 	anim_player.play("parried")
@@ -1495,11 +1502,11 @@ func _on_hit_box_parried() -> void:
 	Events.enemy_parried.emit()
 	#velocity.x = movement_data.speed + knockback.x
 
-####################
-#Cutscene Functions#
-####################
-
-
+#####################
+##Cutscene Functions#
+#####################
+#
+#
 func set_path_speed(speed : int) -> void:
 	path_speed=speed
 	#print(path_speed)
@@ -1509,10 +1516,10 @@ func start_path(speed : int):
 	#print(speed)
 func set_path_start(value) -> void:
 	path_start=value
-
-###############
-#QTE Functions#
-###############
+#
+################
+##QTE Functions#
+################
 
 func qte_input():
 	if Input.is_action_just_pressed("attack"):
@@ -1536,3 +1543,61 @@ func _on_hit_stop_hit_stop_finished() -> void:
 		no_input_qte.emit()
 	else:
 		pass
+
+
+
+func _on_idle_entered() -> void:
+	anim_player.play("idle")
+
+
+func _on_state_machine_active_state_changed(current: LimboState, _previous: LimboState) -> void:
+	label.text=str(current.name)
+	match current:
+		attack_state:
+			cur_state="ATTACK"
+		special_attack:
+			cur_state="SPECIAL_ATTACK"
+		idle:
+			cur_state="IDLE"
+		walking:
+			cur_state="WALKING"
+		jumping:
+			cur_state="JUMP"
+		dodge_state:
+			cur_state="DODGE"
+		wall_stick:
+			cur_state="WALL STICK"
+		sprint:
+			cur_state = "SPRINTING"
+		parry_state:
+			cur_state = "PARRY"
+		flip_state:
+			cur_state = "FLIP"
+	
+	match _previous:
+		attack_state:
+			cur_state="ATTACK"
+		special_attack:
+			cur_state="SPECIAL_ATTACK"
+		idle:
+			cur_state="IDLE"
+		walking:
+			cur_state="WALKING"
+		jumping:
+			cur_state="JUMP"
+		dodge_state:
+			cur_state="DODGE"
+		wall_stick:
+			cur_state="WALL STICK"
+		sprint:
+			cur_state = "SPRINTING"
+		parry_state:
+			cur_state = "PARRY"
+		flip_state:
+			cur_state = "FLIP"
+			
+
+
+func _on_attack_state_active_state_changed(current: LimboState, previous: LimboState) -> void:
+	print(current.name)
+	

@@ -74,7 +74,7 @@ var dir
 var player_found : bool = true
 var player : PlayerEntity = null
 var distance
-var player_state : int
+var player_state : LimboState
 
 #States
 @onready var state_machine: LimboHSM = $StateMachine
@@ -371,7 +371,7 @@ func _on_attack_entered() -> void:
 
 
 func being_flipped() -> void:
-	if player_state==player.States.FLIP or player.prev_state==player.States.FLIP:
+	if player_state==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 		movement_handler.active=false
 	else:
 		movement_handler.active=true
@@ -404,10 +404,10 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
-	if state_machine.get_active_state()==parry and player_state!=player.States.FLIP:
+	if state_machine.get_active_state()==parry and player_state!=player.flip_state:
 		return
 	if area.is_in_group("sp_atk_default"):
-		if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
+		if player_state==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 			Events.allied_enemy_hit.emit()
 		print("spc_hit")
 		if animated_sprite_2d.flip_h:
@@ -418,7 +418,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 
 		
 func _on_hurt_box_weakpoint_weakpoint_hit() -> void:
-	if state_machine.get_active_state()==parry and player_state!=player.States.FLIP:
+	if state_machine.get_active_state()==parry and player_state!=player.flip_state :
 		return
 	else:
 		if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
@@ -476,6 +476,8 @@ func _on_health_health_depleted() -> void:
 	movement_handler.active=false
 	knockback.x=250
 	jump_handler.handle_jump(0.2)
+	if linked_enemies!=null:
+		linked_enemies.remove_at(group_link_order)
 	death_handler.death()
 
 

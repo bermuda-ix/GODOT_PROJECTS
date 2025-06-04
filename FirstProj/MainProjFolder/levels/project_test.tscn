@@ -1,12 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=21 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="4_4kfue"]
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="4_ec6ti"]
-[ext_resource type="PackedScene" uid="uid://dn0fhusgltn4m" path="res://chars/heavy_soldier.tscn" id="5_ca064"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
-[ext_resource type="PackedScene" uid="uid://b7ppm0ysps4q6" path="res://Component/resources/enemy_group.tscn" id="6_82t0r"]
-[ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="7_t1ldw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_82t0r"]
 resource_local_to_scene = true
@@ -265,7 +262,8 @@ lvl_type = "test"
 player = NodePath("PC")
 
 [node name="PC" parent="." index="0"]
-position = Vector2(715, 99)
+position = Vector2(309, -282)
+scale = Vector2(0.5, 0.5)
 
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
 shape = SubResource("RectangleShape2D_82t0r")
@@ -387,26 +385,6 @@ position = Vector2(790, 58)
 
 [node name="Camera2D" parent="CameraPos" index="0"]
 zoom = Vector2(1.5, 1.5)
-
-[node name="EnemyGroup" parent="." index="25" node_paths=PackedStringArray("heavy_soldier_enemies", "guard_enemies") instance=ExtResource("6_82t0r")]
-heavy_soldier_enemies = [NodePath("../HeavySoldier"), NodePath("../HeavySoldier2")]
-guard_enemies = [NodePath("../GuardEnemy")]
-
-[node name="HeavySoldier2" parent="." index="26" node_paths=PackedStringArray("group_link_control") instance=ExtResource("5_ca064")]
-position = Vector2(1037, 89)
-scale = Vector2(0.3, 0.3)
-group_link_control = NodePath("../EnemyGroup")
-
-[node name="HeavySoldier" parent="." index="27" node_paths=PackedStringArray("hitbox", "group_link_control") instance=ExtResource("5_ca064")]
-position = Vector2(1071, 89)
-scale = Vector2(0.3, 0.3)
-hitbox = NodePath("../PC/AnimatedSprite2D/HitBox")
-group_link_control = NodePath("../EnemyGroup")
-
-[node name="GuardEnemy" parent="." index="28" node_paths=PackedStringArray("group_link_control") instance=ExtResource("7_t1ldw")]
-position = Vector2(996, 97)
-scale = Vector2(0.5, 0.5)
-group_link_control = NodePath("../EnemyGroup")
 
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]
