@@ -59,6 +59,8 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var attack_3: LimboState = $StateMachine/AttackState/Attack3
 @onready var special_combo: LimboState = $StateMachine/AttackState/SpecialCombo
 @onready var special_combo_2: LimboState = $StateMachine/AttackState/SpecialCombo2
+@onready var dash_attack: LimboState = $StateMachine/AttackState/DashAttack
+
 
 @onready var atk_1_resume : bool = false
 @onready var atk_2_resume : bool = false
@@ -297,6 +299,7 @@ func _init_state_machine():
 	state_machine.add_transition(jump_state, attack_state, &"jump_attack")
 	state_machine.add_transition(jump_state, special_attack, &"jump_spc_attack")
 	state_machine.add_transition(dodge_state, attack_state, &"dash_attack")
+	state_machine.add_transition(dodge_state, attack_state, &"combo_resume")
 	
 	state_machine.add_transition(idle, special_attack, &"special_attack")
 	state_machine.add_transition(walking, special_attack, &"special_attack")
@@ -304,6 +307,7 @@ func _init_state_machine():
 	state_machine.add_transition(jump_state, special_attack, &"special_attack")
 	state_machine.add_transition(special_attack, jump_state, &"return_from_special")
 	#state_machine.add_transition(idle, special_attack, &"special_attack")
+	state_machine.add_transition(attack_state, dodge_state, &"start_dodge")
 	
 	#Flipping State
 	state_machine.add_transition(flip_state, jump_state, &"jump_out")
@@ -346,6 +350,7 @@ func _init_attack_states():
 	attack_state.add_transition(attack_1, special_combo, &"special_combo")
 	attack_state.add_transition(attack_2, special_combo, &"special_combo")
 	attack_state.add_transition(attack_3, special_combo_2, &"special_combo")
+	attack_state.add_transition(attack_state.ANYSTATE, dash_attack, &"dash_attack")
 	
 	#Resume Combos
 	attack_state.add_transition(special_combo, attack_2, &"combo_resume")
@@ -395,7 +400,7 @@ func _process(_delta):
 		break_out()
 	elif state_machine.get_active_state()==dodge_state:
 		if Input.is_action_just_pressed("attack"):
-			dash_attack()
+			dash_attack_enter()
 	#
 	lockon()
 
@@ -757,11 +762,10 @@ func attack_animate():
 		
 		#set_state(state, States.ATTACK)
 		if state_machine.get_active_state()==attack_state:
-			if attack_state.get_active_state()==special_combo:
-				if atk_1_resume:
-					attack_state.dispatch(&"combo_resume")
-				elif atk_2_resume:
-					attack_state.dispatch(&"combo_resume_2")
+			if atk_1_resume:
+				attack_state.dispatch(&"combo_resume")
+			elif atk_2_resume:
+				attack_state.dispatch(&"combo_resume_2")
 			else:
 				attack_state.dispatch(&"next_attack")
 		else:
@@ -770,11 +774,16 @@ func attack_animate():
 		#attack_timer.paused=false
 		
 		
-func dash_attack():
-	attack_combo = "Attack_Dash"
-	hit_sound = hit1
-	AudioStreamManager.play(swing1)
-	#set_state(state, States.ATTACK)
+func dash_attack_enter():
+	if state_machine.get_active_state()==attack_state:
+		return
+	attack_timer.paused=true
+	attack_state.dispatch(&"dash_attack")
+	state_machine.dispatch(&"dash_attack")
+	#attack_combo = "Attack_Dash"
+	#hit_sound = hit1
+	#AudioStreamManager.play(swing1)
+	##set_state(state, States.ATTACK)
 
 func sp_atk():
 	if s_atk:
@@ -1240,6 +1249,10 @@ func _on_animation_player_animation_finished(anim_name):
 		#elif atk_chain >=2:
 			#atk_chain = 0
 			#attack_combo = "Attack"
+		elif anim_name=="Attack_Dash":
+			attack_timer.start(.2)
+			attack_timer.paused=false
+			anim_player.play("landed")
 		else:
 			attack_timer.start(1)
 			attack_timer.paused=false
@@ -1316,6 +1329,8 @@ func _on_attack_timer_timeout():
 	state_machine.dispatch(&"return_to_idle")
 	sp_atk_chn = 0
 	combo_state=ComboStates.ATK_1
+	atk_1_resume=false
+	atk_2_resume=false
 
 func load_player_data():
 	var file = FileAccess.open("user://player_data/stats/player_stats.txt", FileAccess.READ)
@@ -1606,6 +1621,12 @@ func _on_idle_entered() -> void:
 
 func _on_state_machine_active_state_changed(current: LimboState, _previous: LimboState) -> void:
 	label.text=str(current.name)
+	if current==dodge_state:
+		if attack_state.get_active_state()==attack_1:
+			atk_1_resume=true
+		elif attack_state.get_active_state()==attack_2:
+			atk_2_resume=true
+	#FOR DEBUGGING TO BE REMOVED
 	match current:
 		attack_state:
 			cur_state="ATTACK"
@@ -1658,7 +1679,6 @@ func _on_state_machine_active_state_changed(current: LimboState, _previous: Limb
 		parry_success_state:
 			cur_state= "PARRY SUCCESS"
 
-
 func _on_attack_state_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if current==special_combo:
 		if previous==attack_1:
@@ -1668,6 +1688,11 @@ func _on_attack_state_active_state_changed(current: LimboState, previous: LimboS
 	if previous==special_combo:
 		atk_1_resume=false
 		atk_2_resume=false
+	#if current==attack_1:
+		#atk_1_resume=true
+	#elif current==attack_2:
+		#atk_1_resume=true
+
 
 func _on_combat_states_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	pass

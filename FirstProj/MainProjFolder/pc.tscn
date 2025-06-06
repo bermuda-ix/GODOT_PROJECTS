@@ -1,4 +1,4 @@
-[gd_scene load_steps=471 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=472 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -113,6 +113,7 @@
 [ext_resource type="Script" uid="uid://ch23gfcrvnygf" path="res://pc_special_combo.gd" id="104_l1qeb"]
 [ext_resource type="Script" uid="uid://w8gvomelqjbq" path="res://pc_dodge_back.gd" id="105_13tdc"]
 [ext_resource type="Script" uid="uid://d18mk2acneknl" path="res://pc_special_attack_2.gd" id="105_c28o2"]
+[ext_resource type="Script" uid="uid://b4a55e4hqbyqj" path="res://pc_dash_attack.gd" id="106_dkh4i"]
 [ext_resource type="Script" uid="uid://cqfxvqdbsrwg5" path="res://pc_dodge_state.gd" id="107_yif7d"]
 [ext_resource type="Script" uid="uid://554bph4u05lo" path="res://locked.gd" id="108_i6d51"]
 [ext_resource type="Script" uid="uid://com2k6ecy67nq" path="res://pc_flip_state.gd" id="108_mj1xc"]
@@ -5894,6 +5895,11 @@ pc = NodePath("../../..")
 
 [node name="SpecialCombo2" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("105_c28o2")
+anim_player = NodePath("../../../AnimationPlayer")
+pc = NodePath("../../..")
+
+[node name="DashAttack" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
+script = ExtResource("106_dkh4i")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 
