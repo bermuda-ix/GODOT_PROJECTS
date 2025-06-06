@@ -60,6 +60,8 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var special_combo: LimboState = $StateMachine/AttackState/SpecialCombo
 @onready var special_combo_2: LimboState = $StateMachine/AttackState/SpecialCombo2
 
+@onready var atk_1_resume : bool = false
+@onready var atk_2_resume : bool = false
 
 @onready var cur_combo : LimboState = attack_1
 
@@ -341,9 +343,13 @@ func _init_attack_states():
 	attack_state.add_transition(attack_1, attack_2, &"next_attack")
 	attack_state.add_transition(attack_2, attack_3, &"next_attack")
 	attack_state.add_transition(attack_3, attack_1, &"next_attack")
-	attack_state.add_transition(attack_1, special_combo, &"special_attack")
-	attack_state.add_transition(attack_2, special_combo, &"special_attack")
-	attack_state.add_transition(attack_3, special_combo_2, &"special_attack")
+	attack_state.add_transition(attack_1, special_combo, &"special_combo")
+	attack_state.add_transition(attack_2, special_combo, &"special_combo")
+	attack_state.add_transition(attack_3, special_combo_2, &"special_combo")
+	
+	#Resume Combos
+	attack_state.add_transition(special_combo, attack_2, &"combo_resume")
+	attack_state.add_transition(special_combo, attack_3, &"combo_resume_2")
 	
 	attack_state.add_transition(attack_state.ANYSTATE, attack_1, &"reset_combo")
 
@@ -712,7 +718,8 @@ func attack_animate():
 		if state_machine.get_active_state()==parry_success_state:
 			return
 		attack_timer.start()
-		attack_timer.paused=true
+		if state_machine.get_active_state()!=attack_state:
+			attack_timer.paused=true
 			
 		if counter_flag:
 			attack_combo = "Attack_Counter"
@@ -750,7 +757,13 @@ func attack_animate():
 		
 		#set_state(state, States.ATTACK)
 		if state_machine.get_active_state()==attack_state:
-			attack_state.dispatch(&"next_attack")
+			if attack_state.get_active_state()==special_combo:
+				if atk_1_resume:
+					attack_state.dispatch(&"combo_resume")
+				elif atk_2_resume:
+					attack_state.dispatch(&"combo_resume_2")
+			else:
+				attack_state.dispatch(&"next_attack")
 		else:
 			state_machine.dispatch(&"start_attack")
 		#await anim_player.animation_finished
@@ -773,7 +786,11 @@ func sp_atk():
 	if Input.is_action_just_pressed("special_attack") and state_machine.get_active_state()!=parry_success_state and state_machine.get_active_state()!=special_attack:
 		
 		if state_machine.get_active_state()==attack_state:
-			pass
+			if attack_timer.is_stopped():
+				attack_timer.start(1)
+				attack_timer.paused=false
+			
+			attack_state.dispatch(&"special_combo")
 		else:
 			
 			if attack_timer.is_stopped():
@@ -1643,9 +1660,14 @@ func _on_state_machine_active_state_changed(current: LimboState, _previous: Limb
 
 
 func _on_attack_state_active_state_changed(current: LimboState, previous: LimboState) -> void:
-	print(current.name)
-	
-
+	if current==special_combo:
+		if previous==attack_1:
+			atk_1_resume=true
+		elif previous==attack_2:
+			atk_2_resume=true
+	if previous==special_combo:
+		atk_1_resume=false
+		atk_2_resume=false
 
 func _on_combat_states_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	pass
