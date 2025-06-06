@@ -263,7 +263,7 @@ lvl_type = "test"
 player = NodePath("PC")
 
 [node name="PC" parent="." index="0"]
-position = Vector2(730, 91)
+position = Vector2(269, -294)
 scale = Vector2(0.5, 0.5)
 
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]

@@ -7,6 +7,7 @@ extends LimboState
 func _enter() -> void:
 	print("dodging")
 	anim_player.play(pc.dodge_anim_run)
+	pc.set_collision_mask_value(15, false)
 	
 
 #func _update(delta: float) -> void:
@@ -18,3 +19,4 @@ func _exit() -> void:
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name==pc.dodge_anim_run:
 		pc.state_machine.dispatch(&"return_to_idle")
+		pc.set_collision_mask_value(15, true)

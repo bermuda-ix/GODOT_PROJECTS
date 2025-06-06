@@ -457,7 +457,10 @@ func _on_health_health_depleted() -> void:
 	movement_handler.active=false
 	animated_sprite_2d.scale.x = 1
 	movement_handler.active=false
-	knockback.x=250
+	if player_right:
+		knockback.x=-250
+	else:
+		knockback.x=250
 	jump_handler.handle_jump(0.2)
 	death_handler.death()
 

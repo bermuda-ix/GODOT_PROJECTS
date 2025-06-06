@@ -57,6 +57,10 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var attack_1: LimboState = $StateMachine/AttackState/Attack1
 @onready var attack_2: LimboState = $StateMachine/AttackState/Attack2
 @onready var attack_3: LimboState = $StateMachine/AttackState/Attack3
+@onready var special_combo: LimboState = $StateMachine/AttackState/SpecialCombo
+@onready var special_combo_2: LimboState = $StateMachine/AttackState/SpecialCombo2
+
+
 @onready var cur_combo : LimboState = attack_1
 
 #FSM for lock on
@@ -235,11 +239,11 @@ func _init_state_machine():
 	state_machine.add_transition(walking, idle, &"return_to_idle")
 	state_machine.add_transition(sprint, idle, &"return_to_idle")
 	state_machine.add_transition(attack_state, idle, &"return_to_idle")
-	state_machine.add_transition(special_attack, idle, &"return_to_idle")
 	state_machine.add_transition(landed, idle, &"return_to_idle")
 	state_machine.add_transition(parry_state, idle, &"return_to_idle")
 	state_machine.add_transition(parry_success_state, idle, &"return_to_idle")
 	state_machine.add_transition(dodge_state, idle, &"return_to_idle")
+	state_machine.add_transition(special_attack, idle, &"return_to_idle")
 	
 	#Landing
 	state_machine.add_transition(jump_state, landed, &"landing")
@@ -256,7 +260,6 @@ func _init_state_machine():
 	state_machine.add_transition(idle, sprint, &"start_sprinting")
 	state_machine.add_transition(idle, jump_state, &"start_jumping")
 	state_machine.add_transition(idle, attack_state, &"start_attack")
-	state_machine.add_transition(idle, special_attack, &"start_spc_attack")
 	state_machine.add_transition(idle, dodge_state, &"start_dodge")
 	state_machine.add_transition(idle, parry_state, &"start_parry")
 	state_machine.add_transition(idle, flip_state, &"start_flip")
@@ -267,7 +270,6 @@ func _init_state_machine():
 	state_machine.add_transition(walking, sprint, &"start_sprinting")
 	state_machine.add_transition(walking, jump_state, &"start_jumping")
 	state_machine.add_transition(walking, attack_state, &"start_attack")
-	state_machine.add_transition(walking, special_attack, &"start_spc_attack")
 	state_machine.add_transition(walking, dodge_state, &"start_dodge")
 	state_machine.add_transition(walking, parry_state, &"start_parry")
 	state_machine.add_transition(walking, flip_state, &"start_flip")
@@ -278,7 +280,6 @@ func _init_state_machine():
 	state_machine.add_transition(sprint, walking, &"start_walking")
 	state_machine.add_transition(sprint, jump_state, &"start_jumping")
 	state_machine.add_transition(sprint, attack_state, &"start_attack")
-	state_machine.add_transition(sprint, special_attack, &"start_spc_attack")
 	state_machine.add_transition(sprint, dodge_state, &"start_dodge")
 	state_machine.add_transition(sprint, parry_state, &"start_parry")
 	state_machine.add_transition(sprint, flip_state, &"start_flip")
@@ -294,6 +295,13 @@ func _init_state_machine():
 	state_machine.add_transition(jump_state, attack_state, &"jump_attack")
 	state_machine.add_transition(jump_state, special_attack, &"jump_spc_attack")
 	state_machine.add_transition(dodge_state, attack_state, &"dash_attack")
+	
+	state_machine.add_transition(idle, special_attack, &"special_attack")
+	state_machine.add_transition(walking, special_attack, &"special_attack")
+	state_machine.add_transition(sprint, special_attack, &"special_attack")
+	state_machine.add_transition(jump_state, special_attack, &"special_attack")
+	state_machine.add_transition(special_attack, jump_state, &"return_from_special")
+	#state_machine.add_transition(idle, special_attack, &"special_attack")
 	
 	#Flipping State
 	state_machine.add_transition(flip_state, jump_state, &"jump_out")
@@ -333,6 +341,9 @@ func _init_attack_states():
 	attack_state.add_transition(attack_1, attack_2, &"next_attack")
 	attack_state.add_transition(attack_2, attack_3, &"next_attack")
 	attack_state.add_transition(attack_3, attack_1, &"next_attack")
+	attack_state.add_transition(attack_1, special_combo, &"special_attack")
+	attack_state.add_transition(attack_2, special_combo, &"special_attack")
+	attack_state.add_transition(attack_3, special_combo_2, &"special_attack")
 	
 	attack_state.add_transition(attack_state.ANYSTATE, attack_1, &"reset_combo")
 
@@ -370,7 +381,7 @@ func _process(_delta):
 		#move_axis = 0
 #
 	#
-	if(state_machine.get_active_state()!=dodge_state and s_atk==false and state_machine.get_active_state()!=flip_state):
+	if(state_machine.get_active_state()!=dodge_state and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=flip_state):
 		parry()
 		attack_animate()
 		update_animation(input_axis)
@@ -389,9 +400,7 @@ func _physics_process(delta):
 		move_and_slide()
 
 		return
-		
-	if s_atk==true:
-		return
+	
 	elif state_machine.get_active_state()==flip_state:
 		flipping(delta)
 		sp_atk()
@@ -466,7 +475,10 @@ func _physics_process(delta):
 # Add the gravity.
 func apply_gravity(delta):
 	if not is_on_floor():
-		velocity.y += gravity * movement_data.gravity_scale * delta
+		if s_atk:
+			velocity.y += gravity/3 * movement_data.gravity_scale * delta
+		else:
+			velocity.y += gravity * movement_data.gravity_scale * delta
 	
 #condtions to return to idle
 func return_to_idle():
@@ -581,7 +593,7 @@ func handle_wall_jump(wall_hold, delta):
 
 
 func apply_air_resistance(input_axis, delta):
-	if input_axis == 0 and not is_on_floor():
+	if input_axis == 0 and not is_on_floor() and not s_atk:
 		velocity.x = move_toward(velocity.x, 0 , movement_data.air_resistance * delta)
 # Get the input direction and handle the movement/deceleration.
 func apply_friction(input_axis, delta):
@@ -591,6 +603,7 @@ func apply_friction(input_axis, delta):
 # Apply friction after dtopping.
 func handle_acceleration(input_axis, delta):
 	if not is_on_floor(): return
+	if s_atk: return
 	if input_axis != 0:
 		velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.acceleration * delta)
 
@@ -751,44 +764,53 @@ func dash_attack():
 	#set_state(state, States.ATTACK)
 
 func sp_atk():
+	if s_atk:
+		return
 	if state_machine.get_previous_active_state()==flip_state:
 		shotty.look_at(target.global_position)
 	else:
 		shotty.look_at(get_global_mouse_position())
-	if Input.is_action_just_pressed("special_attack") and state_machine.get_active_state()==special_attack and state_machine.get_active_state()==parry_success_state:
+	if Input.is_action_just_pressed("special_attack") and state_machine.get_active_state()!=parry_success_state and state_machine.get_active_state()!=special_attack:
 		
-		if attack_timer.is_stopped():
-			attack_timer.start()
-			attack_timer.paused=true
-			
-			
-		if combo_state==ComboStates.SPC_ATK_BACK:
-			
-			sp_atk_combo="shotgun_attack_fast"
+		if state_machine.get_active_state()==attack_state:
+			pass
 		else:
-			if atk_chain==0:
-				if sp_atk_chn == 0 and (not attack_timer.is_stopped()):
-					sp_atk_combo="shotgun_attack"
-					if state_machine.get_previous_active_state()!=hit:
-						AudioStreamManager.play(shotgun_fire)
-					sp_atk_dmg=1
-
-				elif sp_atk_chn == 1 and (not attack_timer.is_stopped()):
-					sp_atk_combo="shotgun_attack"
-
-					if state_machine.get_previous_active_state()!=hit:
-						AudioStreamManager.play(shotgun_fire)
-					sp_atk_dmg=1
-
-				elif sp_atk_chn == 2 and (not attack_timer.is_stopped()):
-
-					if state_machine.get_previous_active_state()!=hit:
-						AudioStreamManager.play(reload)
-					sp_atk_combo="shotgun_attack"
-					sp_atk_dmg=2
-					
-			else:
-				sp_atk_combo="shotgun_attack_fast"
+			
+			if attack_timer.is_stopped():
+				attack_timer.start(1)
+				attack_timer.paused=false
+			
+			state_machine.dispatch(&"special_attack")
+				
+			
+			
+		#if combo_state==ComboStates.SPC_ATK_BACK:
+			#
+			#sp_atk_combo="shotgun_attack_fast"
+		#else:
+			#if atk_chain==0:
+				#if sp_atk_chn == 0 and (not attack_timer.is_stopped()):
+					#sp_atk_combo="shotgun_attack"
+					#if state_machine.get_previous_active_state()!=hit:
+						#AudioStreamManager.play(shotgun_fire)
+					#sp_atk_dmg=1
+#
+				#elif sp_atk_chn == 1 and (not attack_timer.is_stopped()):
+					#sp_atk_combo="shotgun_attack"
+#
+					#if state_machine.get_previous_active_state()!=hit:
+						#AudioStreamManager.play(shotgun_fire)
+					#sp_atk_dmg=1
+#
+				#elif sp_atk_chn == 2 and (not attack_timer.is_stopped()):
+#
+					#if state_machine.get_previous_active_state()!=hit:
+						#AudioStreamManager.play(reload)
+					#sp_atk_combo="shotgun_attack"
+					#sp_atk_dmg=2
+					#
+			#else:
+				#sp_atk_combo="shotgun_attack_fast"
 
 		#set_state(state, States.SPECIAL_ATTACK)
 		attack_timer.paused = false
@@ -1485,7 +1507,7 @@ func _on_animation_player_animation_started(anim_name):
 			velocity.y = knockback.y
 	elif anim_name=="shotgun_attack":
 		vel_y=velocity.y
-		s_atk=true
+		#s_atk=true
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05, 0.1)

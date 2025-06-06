@@ -6,6 +6,7 @@ extends LimboState
 func _enter() -> void:
 	anim_player.speed_scale=1
 	anim_player.play("idle")
+	pc.s_atk=false
 
 
 func _exit() -> void:

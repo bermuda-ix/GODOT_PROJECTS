@@ -5,4 +5,4 @@ extends LimboState
 
 func _enter() -> void:
 	anim_player.speed_scale=1.5
-	anim_player.play("shotgun_fast")
+	anim_player.play("Attack_2")
