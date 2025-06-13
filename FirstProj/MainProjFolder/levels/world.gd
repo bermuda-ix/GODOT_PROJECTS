@@ -58,6 +58,7 @@ func _ready():
 	if lvl_type=="adv":
 		cutscene_player.play("TEST")
 	else:
+		Events.spawn_update.emit(enemy_list.REG_ENEMIES, true)
 		end_cutscene()
 	
 func _process(_delta):
@@ -77,6 +78,7 @@ func _process(_delta):
 		label.text=str("Obj: ",obj)
 	else:
 		label.text = str("Score: ", score)
+		
 		handle_spawn()
 	
 	if Input.is_action_just_pressed("Pause"):
@@ -84,7 +86,7 @@ func _process(_delta):
 	
 func _physics_process(delta: float) -> void:
 	if not cutscene_active:
-		camera_pos.global_position=player.global_position
+		camera_pos.global_position=Vector2(player.global_position.x, player.global_position.y-40)
 	
 func show_level_complete():
 
@@ -130,10 +132,11 @@ func inc_score():
 	score += 1
 
 func handle_spawn():
+	
 	if score>=20 and score<40:
 		if elite_spawn_flag == false:
 			print("adding mech")
-			Events.spawn_update.emit(enemy_list.MECH_ENEMY, true)
+			#Events.spawn_update.emit(enemy_list.BOSSES, true)
 			elite_spawn_flag = true
 			
 	elif score>=40:

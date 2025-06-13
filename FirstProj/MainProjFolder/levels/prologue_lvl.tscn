@@ -884,12 +884,10 @@ scale = Vector2(1, 1.18132)
 
 [node name="SpawnPoint" parent="." index="12" instance=ExtResource("7_h0p3s")]
 position = Vector2(1360, 424)
-active = false
 enemy_single = ExtResource("8_bi776")
 
 [node name="SpawnPoint2" parent="." index="13" instance=ExtResource("7_h0p3s")]
 position = Vector2(2264, 272)
-active = false
 enemy_single = ExtResource("8_bi776")
 max_enemy = 1
 

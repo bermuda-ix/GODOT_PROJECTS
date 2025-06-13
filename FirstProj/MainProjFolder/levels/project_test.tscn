@@ -1,9 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=21 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="4_4kfue"]
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="4_ec6ti"]
-[ext_resource type="PackedScene" uid="uid://b5d2nkkrrcixy" path="res://chars/soldier_enemy.tscn" id="5_ca064"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_82t0r"]
@@ -36,9 +35,9 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(8, 112, 184, 112, 184, 
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_nxtlr"]
-vertices = PackedVector2Array(438, -238, 438, -154, 190, -154, 10, -238, 10, -90, 190, -90)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 2, 5)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(0, -248, 0, -80, 200, -80, 200, -144, 448, -144, 448, -248)])
+vertices = PackedVector2Array(946, -237.008, 946, -90.9766, 199.992, -90, 10, -90, 10, -238, 447.977, -238)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -248, 0, -80, 200, -80, 956, -81, 956, -247, 448, -248)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ec6ti"]
@@ -263,7 +262,7 @@ lvl_type = "test"
 player = NodePath("PC")
 
 [node name="PC" parent="." index="0"]
-position = Vector2(269, -294)
+position = Vector2(966, 63)
 scale = Vector2(0.5, 0.5)
 
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
@@ -367,14 +366,13 @@ navigation_layers = 2
 [node name="NavigationRegion2D11" type="NavigationRegion2D" parent="." index="20"]
 navigation_polygon = SubResource("NavigationPolygon_nxtlr")
 
-[node name="NavigationRegion2D12" type="NavigationRegion2D" parent="." index="21"]
+[node name="NavigationRegion2D13" type="NavigationRegion2D" parent="." index="21"]
+position = Vector2(567, 171)
+navigation_polygon = SubResource("NavigationPolygon_nxtlr")
+
+[node name="NavigationRegion2D12" type="NavigationRegion2D" parent="." index="22"]
 navigation_polygon = SubResource("NavigationPolygon_ec6ti")
 navigation_layers = 2
-
-[node name="SpawnPoint" parent="." index="22" instance=ExtResource("4_4kfue")]
-position = Vector2(624, -272)
-active = false
-enemy_single = ExtResource("5_fkwqf")
 
 [node name="CutscenePlayer" type="AnimationPlayer" parent="." index="23"]
 libraries = {
@@ -382,14 +380,24 @@ libraries = {
 }
 
 [node name="CameraPos" parent="." index="24" instance=ExtResource("4_ec6ti")]
-position = Vector2(790, 58)
+position = Vector2(964, 58)
 
 [node name="Camera2D" parent="CameraPos" index="0"]
 zoom = Vector2(1.5, 1.5)
 
-[node name="soldier_enemy" parent="." index="25" instance=ExtResource("5_ca064")]
-position = Vector2(859, 88)
-scale = Vector2(0.5, 0.5)
+[node name="SpawnPoint" parent="CameraPos" index="1" instance=ExtResource("4_4kfue")]
+position = Vector2(233, -45)
+active = true
+single_spawn = false
+enemy_single = ExtResource("5_fkwqf")
+max_enemy = 2
+
+[node name="SpawnPoint2" parent="CameraPos" index="2" instance=ExtResource("4_4kfue")]
+position = Vector2(-225, -45)
+active = true
+single_spawn = false
+enemy_single = ExtResource("5_fkwqf")
+max_enemy = 2
 
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]

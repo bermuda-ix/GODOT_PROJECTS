@@ -4,6 +4,7 @@
 
 [node name="SpawnPoint" type="Node2D"]
 script = ExtResource("1_0y5md")
+active = false
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 5.0

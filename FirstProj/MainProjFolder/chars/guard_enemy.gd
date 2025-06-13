@@ -67,7 +67,7 @@ var dir
 var player_found : bool = true
 var player : PlayerEntity = null
 var distance
-var player_state : int
+var player_state : LimboState
 
 #States
 @onready var state_machine: LimboHSM = $LimboHSM
