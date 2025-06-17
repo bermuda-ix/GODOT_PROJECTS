@@ -42,6 +42,11 @@ signal get_player_data
 signal lockon_to
 signal unlock_from
 
+#Enemy Reactions
+
+signal parry_failed
+signal parry_success
+
 #Cutscenes and QTEs
 signal start_cutscene
 signal queue_cutscene

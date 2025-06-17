@@ -64,6 +64,7 @@ var dir
 @onready var get_player_info_handler: GetPlayerInfoHandler = $GetPlayerInfoHandler
 @onready var player_tracker_pivot: Node2D = $PlayerTrackerPivot
 @onready var player_tracking: RayCast2D = $PlayerTrackerPivot/PlayerTracking
+@onready var locked_on : bool = false
 var player_found : bool = true
 var player : PlayerEntity = null
 var distance
@@ -270,6 +271,7 @@ func handle_vision():
 func target_lock():
 	Events.unlock_from.emit()
 	target_lock_node.target_lock()
+	locked_on=true
 	
 func chase():
 	#set_state(current_state, States.CHASE)

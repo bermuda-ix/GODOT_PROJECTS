@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://2n8eqdqt683t"]
+[gd_scene load_steps=3 format=3 uid="uid://2n8eqdqt683t"]
 
 [ext_resource type="Script" uid="uid://d1kpmg4xikyjc" path="res://Component/spawn_point.gd" id="1_0y5md"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1ntvx"]
 
 [node name="SpawnPoint" type="Node2D"]
 script = ExtResource("1_0y5md")
@@ -11,4 +13,13 @@ wait_time = 5.0
 one_shot = true
 autostart = true
 
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 131072
+collision_mask = 131071
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_1ntvx")
+
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

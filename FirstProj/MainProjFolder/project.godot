@@ -172,6 +172,8 @@ up={
 2d_physics/layer_14="SpAtkPlayer"
 2d_physics/layer_15="Enemy"
 2d_physics/layer_16="QTE"
+2d_physics/layer_17="NoSpawnZone"
+2d_physics/layer_18="SpawnPoint"
 
 [rendering]
 

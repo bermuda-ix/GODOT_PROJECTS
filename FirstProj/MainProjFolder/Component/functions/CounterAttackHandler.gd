@@ -10,6 +10,9 @@ extends Node
 @export var shoot_counter_active : bool = true
 @export var active : bool = true
 
+func _ready() -> void:
+	Events.parry_success.connect(parry_counter)
+
 func _physics_process(delta: float) -> void:
 	if not active:
 		return
@@ -39,3 +42,13 @@ func shoot_counter():
 					state_machine.dispatch(&"jump")
 				elif state_machine.get_active_state()==actor.chasing:
 					state_machine.dispatch(&"jump")
+
+func parry_counter(value: String) -> void:
+	if actor.parried:
+		if actor.stagger.stagger>=0:
+			print(value)
+			
+		else:
+			pass
+		actor.parried=false
+			

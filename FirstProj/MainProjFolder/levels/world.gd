@@ -86,7 +86,7 @@ func _process(_delta):
 	
 func _physics_process(delta: float) -> void:
 	if not cutscene_active:
-		camera_pos.global_position=Vector2(player.global_position.x, player.global_position.y-40)
+		camera_pos.global_position=Vector2(player.global_position.x, player.global_position.y-50)
 	
 func show_level_complete():
 

@@ -77,6 +77,8 @@ var immortal = false
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @export var counter_kick_chance : int = 0
 @onready var counter_flag : bool = false
+@onready var locked_on : bool = false
+
 
 var current_speed : float = 40.0
 var prev_speed : float = 40.0
@@ -286,6 +288,7 @@ func handle_vision():
 func target_lock():
 	Events.unlock_from.emit()
 	target_lock_node.target_lock()
+	locked_on=true
 	
 
 func chase():
@@ -515,3 +518,7 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	hit_stop.hit_stop(0.05,0.1)
+
+
+func _on_hit_box_parried() -> void:
+	parried=true

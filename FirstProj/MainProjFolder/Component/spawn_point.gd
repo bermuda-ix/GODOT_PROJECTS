@@ -17,6 +17,12 @@ class_name SpawnPoint
 @export var max_enemy : int = 5
 @export var spawn_type : String = "enemy"
 
+#Limits
+@export var limit_spawn : bool = false
+@export var no_spawn_entered : bool = false
+@export var spawn_pos_limit_upper : Vector2 = Vector2.ZERO
+@export var spawn_pos_limit_lower : Vector2 = Vector2.ZERO
+
 func _ready():
 	spawn_timer.start()
 	spawn_size = enemy.size()
@@ -37,6 +43,13 @@ func _ready():
 func _on_spawn_timer_timeout():
 	var spawn_ind
 	var enemy_inst
+	if limit_spawn:
+		if global_position.x<spawn_pos_limit_lower.x or global_position.x>spawn_pos_limit_upper.x \
+		or global_position.y<spawn_pos_limit_lower.y or global_position.y>spawn_pos_limit_upper.y:
+			return
+		else:
+			pass
+			
 	if active:
 		if spawn_type=="boss":
 			if boss_rand:
@@ -67,7 +80,7 @@ func _on_spawn_timer_timeout():
 				
 			
 				enemy_inst.global_position = Vector2(global_position.x, global_position.y)
-				enemy_inst.scale=0.5
+				#enemy_inst.scale*=0.5
 				get_tree().current_scene.add_child(enemy_inst)
 				
 			else:
@@ -113,3 +126,13 @@ func spawn_update(enemy_spawn, add : bool):
 		spawn_size = enemy.size()
 		
 	print(enemy.size())
+
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	no_spawn_entered=true
+	print("no spawn")
+
+
+func _on_area_2d_area_exited(area: Area2D) -> void:
+	no_spawn_entered=false
+	print("spawn")

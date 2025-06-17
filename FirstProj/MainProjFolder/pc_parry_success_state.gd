@@ -7,6 +7,7 @@ extends LimboHSM
 
 signal dur_timeout
 
+
 func _ready() -> void:
 	add_child(dur)
 	dur.autostart=false
@@ -21,12 +22,15 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	if Input.is_action_just_pressed("attack"):
+		Events.parry_success.emit("riposte counter")
 		pc.state_machine.dispatch(&"riposte")
 		hit_stop.end_hit_stop()
 	elif Input.is_action_just_pressed("Dodge"):
+		Events.parry_success.emit("dodge counter")
 		pc.state_machine.dispatch(&"dodge_back")
 		hit_stop.end_hit_stop()
 	elif Input.is_action_just_pressed("special_attack"):
+		Events.parry_success.emit("heavy riposte counter")
 		pc.state_machine.dispatch(&"heavy_riposte")
 		hit_stop.end_hit_stop()
 		
@@ -36,5 +40,6 @@ func _exit() -> void:
 	pc.attack_timer.stop()
 
 func _on_dur_timeout() -> void:
+	Events.parry_failed
 	pc.state_machine.dispatch(&"no_nothing")
 	hit_stop.end_hit_stop()
