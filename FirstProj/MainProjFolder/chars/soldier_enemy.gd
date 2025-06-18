@@ -78,6 +78,8 @@ var immortal = false
 @export var counter_kick_chance : int = 0
 @onready var counter_flag : bool = false
 @onready var locked_on : bool = false
+@onready var clash_mult : int = 1
+@onready var clash_timer: Timer = $ClashTimer
 
 
 var current_speed : float = 40.0
@@ -122,6 +124,11 @@ var distance
 @onready var hit: LimboState = $LimboHSM/HIT
 @onready var staggered: LimboState = $LimboHSM/STAGGERED
 
+#Counter States
+@onready var counter_sm: LimboHSM = $LimboHSM/COUNTER
+@onready var begin_counter: LimboState = $LimboHSM/COUNTER/BeginCounter
+@onready var kick_counter: LimboState = $LimboHSM/COUNTER/KickCounter
+
 
 @onready var combat_state_machine: LimboHSM = $CombatStateMachine
 @onready var ranged_mode: LimboState = $CombatStateMachine/RANGED
@@ -160,6 +167,7 @@ func _ready():
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 	_init_combat_state_machine()
+	_init_counter_state_machine()
 	hurt_box.set_damage_mulitplyer(1)
 	Events.allied_enemy_hit.connect(adjust_counter)
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
@@ -183,12 +191,19 @@ func _init_state_machine():
 	state_machine.add_transition(hit, attack, &"hit_recover")
 	state_machine.add_transition(attack, dodge, &"dodge")
 	state_machine.add_transition(dodge, attack, &"dodge_end")
+	state_machine.add_transition(attack, counter_sm, &"counter")
+	state_machine.add_transition(counter_sm, attack, &"counter_end")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
 	state_machine.add_transition(dying, death, dying.success_event)
 	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
 	
+func _init_counter_state_machine():
+	counter_sm.initial_state=begin_counter
+	counter_sm.add_transition(begin_counter, kick_counter, &"kick_counter")
+
+
 func _init_combat_state_machine():
 	combat_state_machine.initial_state=ranged_mode
 	combat_state_machine.initialize(self)
@@ -217,6 +232,8 @@ func _process(_delta):
 		return
 	elif state_machine.get_active_state()==idle:
 		hb_collision.disabled=true
+	if state_machine.get_active_state()==counter_sm:
+		hurt_box_collision.disabled=true
 	health_bar()
 	#track_player()
 	#combat_state_change()
@@ -365,7 +382,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 			knockback.x=50
 		else:
 			knockback.x=-50
-		stagger.stagger -= player.sp_atk_dmg
+		stagger.stagger -= player.sp_atk_dmg*clash_mult
 		
 		
 
@@ -425,7 +442,8 @@ func rapid_shoot(value : bool)->void:
 	turret.multi_shot=value
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	
+	if clash_mult>1:
+		stagger.stagger-=(clash_mult-1)
 	if player.state_machine.get_active_state()==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 		Events.allied_enemy_hit.emit()
 	
@@ -522,3 +540,20 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 
 func _on_hit_box_parried() -> void:
 	parried=true
+	state_machine.dispatch(&"counter")
+	bt_player.restart()
+	bt_player.active=false
+
+
+func _on_kick_counter_exited() -> void:
+	bt_player.active=true
+	hurt_box_collision.disabled=false
+
+
+func _on_counter_exited() -> void:
+	bt_player.active=true
+	hurt_box_collision.disabled=false
+
+
+func _on_clash_timer_timeout() -> void:
+	clash_mult=1

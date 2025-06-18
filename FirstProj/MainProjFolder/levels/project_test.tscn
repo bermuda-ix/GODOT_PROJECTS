@@ -388,14 +388,12 @@ zoom = Vector2(1.5, 1.5)
 
 [node name="SpawnPoint" parent="CameraPos" index="1" instance=ExtResource("4_4kfue")]
 position = Vector2(233, -45)
-active = true
 single_spawn = false
 enemy_single = ExtResource("5_fkwqf")
 max_enemy = 2
 
 [node name="SpawnPoint2" parent="CameraPos" index="2" instance=ExtResource("4_4kfue")]
 position = Vector2(-225, -45)
-active = true
 single_spawn = false
 enemy_single = ExtResource("5_fkwqf")
 max_enemy = 2

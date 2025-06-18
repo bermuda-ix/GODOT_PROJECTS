@@ -248,6 +248,7 @@ func _init_state_machine():
 	state_machine.add_transition(parry_success_state, idle, &"return_to_idle")
 	state_machine.add_transition(dodge_state, idle, &"return_to_idle")
 	state_machine.add_transition(special_attack, idle, &"return_to_idle")
+	state_machine.add_transition(recovery, idle, &"return_to_idle")
 	
 	#Landing
 	state_machine.add_transition(jump_state, landed, &"landing")
