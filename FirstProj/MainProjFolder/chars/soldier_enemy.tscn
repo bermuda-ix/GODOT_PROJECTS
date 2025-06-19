@@ -1543,7 +1543,7 @@ size = Vector2(32, 42)
 size = Vector2(16, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0c6of"]
-size = Vector2(48, 59)
+size = Vector2(38, 59)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_x6bu2"]
 

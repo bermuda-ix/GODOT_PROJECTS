@@ -147,6 +147,7 @@ signal no_input_qte
 @onready var counter_box_collision = $CounterBox/CounterBoxCollision
 @onready var stagger: Stagger = $Stagger
 
+
 @onready var sprite_fx: AnimatedSprite2D = $AnimatedSprite2D/sprite_fx
 @onready var hurt_box_detect = $HurtBox/CollisionShape2D
 @onready var collision_shape_2d = $CollisionShape2D
@@ -245,7 +246,7 @@ func _init_state_machine():
 	state_machine.add_transition(attack_state, idle, &"return_to_idle")
 	state_machine.add_transition(landed, idle, &"return_to_idle")
 	state_machine.add_transition(parry_state, idle, &"return_to_idle")
-	state_machine.add_transition(parry_success_state, idle, &"return_to_idle")
+	state_machine.add_transition(parry_success_state, idle, &"return_from_parry")
 	state_machine.add_transition(dodge_state, idle, &"return_to_idle")
 	state_machine.add_transition(special_attack, idle, &"return_to_idle")
 	state_machine.add_transition(recovery, idle, &"return_to_idle")
@@ -315,8 +316,9 @@ func _init_state_machine():
 	state_machine.add_transition(flip_state, attack_state, &"flip_attack")
 	#state_machine.add_transition(flip_state, jump_state, &"jump_out")
 	
-	#Parry Success
+	#Counter Success
 	state_machine.add_transition(parry_state, parry_success_state, &"parry_successful")
+	state_machine.add_transition(dodge_state, parry_success_state, &"dodge_successful")
 
 	#Wall Stick
 	state_machine.add_transition(jump_state, wall_stick, &"stick_to_wall")
@@ -1165,8 +1167,13 @@ func _on_hurt_box_got_hit(_hitbox):
 		hurt_box_detect.disabled=true
 		hit_timer.start(0.2)
 		if state_machine.get_previous_active_state()!=flip_state:
-			
+			if parry_success_state.get_previous_active_state()==heavy_riposte:
+				if target_right:
+					knockback.x=400
+				else:
+					knockback.x=-400
 			state_machine.dispatch(&"got_hit")
+			
 	elif hitbox.is_in_group("heavy_hitbox"):
 		knockback.x = -400
 		kb_dir=global_position.direction_to(hitbox.global_position)
@@ -1308,11 +1315,11 @@ func _on_animation_player_animation_finished(anim_name):
 	elif anim_name=="dodge_roll":
 		
 		velocity.x=0
-		counter_box_collision.disabled=true
+		counter_box_collision.disabled=false
 		set_collision_mask_value(15, true)
 	elif anim_name=="dodge":
 		
-		counter_box_collision.disabled=true
+		counter_box_collision.disabled=false
 	elif anim_name=="flip":
 		
 		anim_player.speed_scale=1
@@ -1324,6 +1331,8 @@ func _on_animation_player_animation_finished(anim_name):
 		#pass
 
 func _on_attack_timer_timeout():
+	if state_machine.get_active_state()==parry_success_state:
+		return
 	atk_chain = 0
 	attack_combo = "Attack"
 	attack_state.dispatch(&"reset_combo")
@@ -1499,8 +1508,11 @@ func _on_counter_box_area_entered(area):
 		counter_flag = true
 		counter_timer.start()
 		
-	elif area.is_in_group("Enemy"):
+	elif area.is_in_group("regular_enemy_hb"):
 		print("enemy dodge")
+		state_machine.dispatch(&"dodge_successful")
+		
+		
 
 
 func _on_counter_timer_timeout():
@@ -1555,6 +1567,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	elif state_machine.get_active_state()==parry_success_state:
 		state_machine.dispatch(&"got_hit")
 		stagger.stagger-=3
+		
 
 func _on_stagger_staggered() -> void:
 	knockback.x=0

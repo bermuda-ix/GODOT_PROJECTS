@@ -765,9 +765,6 @@ scale = Vector2(2, 2)
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
 shape = SubResource("RectangleShape2D_kcvht")
 
-[node name="CollisionShape2D" parent="PC/HurtBox" index="0"]
-position = Vector2(1, -10)
-
 [node name="Speech" parent="PC" index="19"]
 visible = true
 

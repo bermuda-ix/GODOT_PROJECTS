@@ -4,6 +4,7 @@ extends LimboHSM
 @export var pc : PlayerEntity
 @export var hit_stop : HitStop
 @onready var dur : Timer = Timer.new()
+@onready var success : bool = false
 
 signal dur_timeout
 
@@ -22,24 +23,33 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	if Input.is_action_just_pressed("attack"):
+		success=true
 		Events.parry_success.emit("riposte counter")
 		pc.state_machine.dispatch(&"riposte")
 		hit_stop.end_hit_stop()
+		dur.stop()
 	elif Input.is_action_just_pressed("Dodge"):
+		success=true
 		Events.parry_success.emit("dodge counter")
 		pc.state_machine.dispatch(&"dodge_back")
 		hit_stop.end_hit_stop()
+		dur.stop()
 	elif Input.is_action_just_pressed("special_attack"):
+		success=true
 		Events.parry_success.emit("heavy riposte counter")
 		pc.state_machine.dispatch(&"heavy_riposte")
 		hit_stop.end_hit_stop()
+		dur.stop()
 		
 	
 func _exit() -> void:
 	pc.attack_timer.paused=false
 	pc.attack_timer.stop()
+	success=false
 
 func _on_dur_timeout() -> void:
+	if success==true:
+		return
 	Events.parry_failed
 	pc.state_machine.dispatch(&"no_nothing")
 	hit_stop.end_hit_stop()

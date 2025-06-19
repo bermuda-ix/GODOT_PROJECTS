@@ -5,7 +5,7 @@ extends LimboState
 
 func _enter() -> void:
 	pc.anim_player.play("Parry")
-	pc.pb_rot.disabled=false
+	pc.pb_rot.set_deferred("disabled", false)
 
 func _exit() -> void:
-	pc.pb_rot.disabled=true
+	pc.pb_rot.set_deferred("disabled", true)
