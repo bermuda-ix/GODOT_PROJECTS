@@ -4,12 +4,17 @@ extends LimboHSM
 
 func _ready() -> void:
 	Events.parry_success.connect(counter)
+	Events.parry_failed.connect(punish)
 
 func _enter() -> void:
-	print("begin counter")
+	#print("begin counter")
 	actor.hurt_box_collision.disabled=true
-	actor.clash_multi+=1
+	actor.clash_mult+=1
 
 func counter(value : String) -> void:
-	print(value)
+	#print(value)
 	actor.counter_sm.dispatch(&"kick_counter")
+
+func punish() -> void:
+	actor.counter_sm.dispatch(&"counter_end")
+	actor.clash_mult=1

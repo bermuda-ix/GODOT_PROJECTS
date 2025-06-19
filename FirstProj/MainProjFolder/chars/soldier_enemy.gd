@@ -170,6 +170,7 @@ func _ready():
 	_init_counter_state_machine()
 	hurt_box.set_damage_mulitplyer(1)
 	Events.allied_enemy_hit.connect(adjust_counter)
+	
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 
 # initialize state
@@ -232,9 +233,7 @@ func _process(_delta):
 		return
 	elif state_machine.get_active_state()==idle:
 		hb_collision.disabled=true
-	if state_machine.get_active_state()==counter_sm:
-		hurt_box_collision.disabled=true
-	health_bar()
+	#health_bar()
 	#track_player()
 	#combat_state_change()
 	vision_handler.handle_vision()
@@ -402,7 +401,6 @@ func _on_stagger_staggered() -> void:
 	parry_timer.start(3)
 	
 	hb_collision.disabled=true
-	print("staggered")
 	state_machine.dispatch(&"staggered")
 
 
@@ -422,7 +420,6 @@ func adjust_counter():
 	else:
 		
 		if counter_kick_chance > 10:
-			print("lower chance")
 			counter_kick_chance -=10
 		
 func counter_select()->void:
@@ -444,6 +441,7 @@ func rapid_shoot(value : bool)->void:
 func _on_hurt_box_received_damage(damage: int) -> void:
 	if clash_mult>1:
 		stagger.stagger-=(clash_mult-1)
+		print("BIG DAMAGE")
 	if player.state_machine.get_active_state()==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 		Events.allied_enemy_hit.emit()
 	
@@ -527,7 +525,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
-	print(current.name)
+	h_bar.text=str(current.name)
 	if current==jump:
 		if previous==attack:
 			print("down attack")
@@ -557,3 +555,13 @@ func _on_counter_exited() -> void:
 
 func _on_clash_timer_timeout() -> void:
 	clash_mult=1
+
+
+func _on_counter_updated(delta: float) -> void:
+	if player.state_machine.get_active_state()!=player.parry_success_state:
+		state_machine.dispatch(&"counter_end")
+
+
+func _on_staggered_exited() -> void:
+	bt_player.blackboard.set_var("staggered", false)
+	bt_player.active=true

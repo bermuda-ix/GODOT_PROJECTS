@@ -3452,6 +3452,42 @@ tracks/2/keys = {
 "update": 1,
 "values": [&"Guard"]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HurtBox/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HurtBox/CollisionShape2D:shape:size")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5, 41)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HurtBox/CollisionShape2D:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-4, -10)]
+}
 
 [sub_resource type="Animation" id="Animation_irs7o"]
 resource_name = "Parry_Success"
@@ -3925,6 +3961,42 @@ tracks/32/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [2.0]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("HurtBox/CollisionShape2D:disabled")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("HurtBox/CollisionShape2D:shape:size")
+tracks/34/interp = 1
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(18, 41)]
+}
+tracks/35/type = "value"
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/path = NodePath("HurtBox/CollisionShape2D:position")
+tracks/35/interp = 1
+tracks/35/loop_wrap = true
+tracks/35/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, -10)]
 }
 
 [sub_resource type="Animation" id="Animation_oktus"]
@@ -5511,7 +5583,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oupih"]
-size = Vector2(19, 41)
+size = Vector2(18, 41)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qebxi"]
 size = Vector2(17, 41)
@@ -5699,6 +5771,7 @@ script = ExtResource("8_7q1rp")
 [node name="PBRot" type="CollisionShape2D" parent="AnimatedSprite2D/ParryBox"]
 position = Vector2(6, 0)
 shape = SubResource("RectangleShape2D_rnh6k")
+disabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/ParryBox/PBRot"]
 self_modulate = Color(1, 1, 1, 0.227451)
@@ -5782,7 +5855,7 @@ health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" groups=["player"]]
-position = Vector2(1.5, -10.5)
+position = Vector2(1, -10)
 shape = SubResource("RectangleShape2D_oupih")
 
 [node name="CounterBox" type="Area2D" parent="."]

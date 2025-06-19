@@ -4,7 +4,7 @@ extends LimboState
 @export var actor : Node2D
 
 func _enter() -> void:
-	print("kick counter")
+	#print("kick counter")
 	anim_player.play("kick_counter")
 	
 

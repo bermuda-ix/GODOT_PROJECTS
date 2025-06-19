@@ -31,7 +31,7 @@ func _update(delta: float) -> void:
 	
 func _exit() -> void:
 	print("recovered")
-	actor.bt_player.blackboard.set_var("staggered", false)
+
 	if movement_able:
 		movement_handler.active=true
 	actor.hurt_box.set_damage_mulitplyer(1)

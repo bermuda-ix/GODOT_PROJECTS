@@ -5487,6 +5487,9 @@ scale = Vector2(1.2, 1.2)
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
 shape = SubResource("RectangleShape2D_dpadw")
 
+[node name="CollisionShape2D" parent="PC/HurtBox" index="0"]
+position = Vector2(1, -10)
+
 [node name="UI_Level" parent="CanvasLayer" index="1"]
 offset_left = 3378.0
 offset_right = 3378.0
