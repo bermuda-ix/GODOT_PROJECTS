@@ -10,6 +10,7 @@ func _enter() -> void:
 	print("how do you pronouce riposte")
 	anim_player.play("dodge_back")
 	hit_stop.end_hit_stop()
+	pc.set_collision_mask_value(15, false)
 	
 func _update(delta: float) -> void:
 	if pc.animated_sprite_2d.scale.x<0:
@@ -25,3 +26,4 @@ func _exit() -> void:
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="dodge_back":
 		pc.state_machine.dispatch(&"return_from_parry")
+		pc.set_collision_mask_value(15, true)

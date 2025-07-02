@@ -11,6 +11,7 @@ func death():
 	#print("dying")
 	Events.unlock_from.emit()
 	#actor.parry_timer.stop()
+	Events.inc_score.emit()
 	if tree_active:
 		actor.bt_player.blackboard.set_var("attack_mode", false)
 		actor.bt_player.restart()

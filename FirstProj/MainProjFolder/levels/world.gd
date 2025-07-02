@@ -11,6 +11,8 @@ extends Node2D
 @onready var label = $CanvasLayer/Label
 @onready var pause_menu = $CanvasLayer/PauseMenu
 @onready var score : int = 0
+@onready var heat_handler: HeatHandler = $HeatHandler
+
 
 #Cutscenes
 @onready var cutscene_player: AnimationPlayer = $CutscenePlayer
@@ -33,6 +35,7 @@ var elite_spawn_flag : bool = false
 var boss_spawn_flag : bool = false
 
 var spawn_type : Array[String] = ["enemy", "boss"]
+var spawn_points
 
 var obj : int
 
@@ -50,7 +53,10 @@ func _ready():
 	Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
 	
-	
+	spawn_points = get_tree().get_nodes_in_group("SpawnPoint")
+	heat_handler.heat_lvl_spawn()
+	for i in spawn_points.size():
+		print(spawn_points[i].name)
 	#Events.start_cutscene.emit()
 	#Events.end_cutsene.connect(end_cutscene)
 	#Events.queue_cutscene.emit(Cutscenes.intro_cutscene)
@@ -130,6 +136,11 @@ func set_health():
 	
 func inc_score():
 	score += 1
+	if ui_level.heat_lvl<6:
+		ui_level.heat_lvl+=1
+	else:
+		ui_level.heat_lvl=0
+		ui_level.heat_fill+=1
 
 func handle_spawn():
 	
@@ -149,6 +160,10 @@ func handle_spawn():
 				print("boss activate")
 				boss_spawn_flag=true
 				Events.activate.emit(spawn_type[1])
+
+
+
+		
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -189,3 +204,9 @@ func _on_pc_special_atk_qte() -> void:
 
 func _on_pc_no_input_qte() -> void:
 	cutscene_player.queue(qte_options[4])
+
+
+func _on_ui_level_heat_lvl_raise() -> void:
+	print("HEAT RISING")
+	ui_level.heat_fill+=1
+	heat_handler.heat_lvl_spawn()

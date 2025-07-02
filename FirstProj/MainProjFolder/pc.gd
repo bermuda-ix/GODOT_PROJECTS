@@ -122,7 +122,7 @@ var atk_state="ATK_1"
 @onready var path_start : bool = false : set=set_path_start
 @export var camera_pos : camera_position
 #@onready var camera_2d: Camera2D = $Camera2D
-
+var input_axis
 
 #Quick-Time Events
 @onready var qte_handler: QTEHandler = $QTEHandler
@@ -329,7 +329,7 @@ func _init_state_machine():
 
 func _init_combat_state_machine():
 	combat_states.initial_state=unlocked
-	label.text=str(unlocked.name)
+	#label.text=str(unlocked.name)
 	combat_states.initialize(self)
 	combat_states.set_active(true)
 	
@@ -366,6 +366,7 @@ func _process(_delta):
 		#print("animation playing")
 	#else:
 		#print("no play")
+	label.text=str(velocity.x)
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	if not cutscene_handler.actor_control_active:
 		
@@ -375,7 +376,7 @@ func _process(_delta):
 	#elif state==States.STAGGERED:
 		#return
 #
-	var input_axis = Input.get_axis("walk_left", "walk_right")
+	input_axis = Input.get_axis("walk_left", "walk_right")
 	vel_x=velocity.x
 	#current_state_label()
 	get_target_info()
@@ -620,6 +621,8 @@ func handle_acceleration(input_axis, delta):
 	if s_atk: return
 	if input_axis != 0:
 		velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.acceleration * delta)
+		if state_machine.get_active_state()==idle:
+			state_machine.dispatch(&"start_walking")
 
 # Movement for cutscenes		
 func cutscene_acceleration(dir, delta):
@@ -1264,7 +1267,10 @@ func _on_animation_player_animation_finished(anim_name):
 		else:
 			attack_timer.start(1)
 			attack_timer.paused=false
-			anim_player.play("idle")
+			if input_axis!=0:
+				anim_player.play(walk_anim)
+			else:
+				anim_player.play("idle")
 			
 		if state_machine.get_previous_active_state()==flip_state:
 			state_machine.dispatch(&"jump_out")
@@ -1335,8 +1341,12 @@ func _on_attack_timer_timeout():
 		return
 	atk_chain = 0
 	attack_combo = "Attack"
-	attack_state.dispatch(&"reset_combo")
-	state_machine.dispatch(&"return_to_idle")
+	
+	if input_axis!=0:
+		state_machine.dispatch(&"start_walking")
+	else:
+		state_machine.dispatch(&"return_to_idle")
+	#attack_state.dispatch(&"reset_combo")
 	sp_atk_chn = 0
 	combo_state=ComboStates.ATK_1
 	atk_1_resume=false
@@ -1634,7 +1644,7 @@ func _on_idle_entered() -> void:
 
 
 func _on_state_machine_active_state_changed(current: LimboState, _previous: LimboState) -> void:
-	label.text=str(current.name)
+	#label.text=str(current.name)
 	if current==dodge_state:
 		if attack_state.get_active_state()==attack_1:
 			atk_1_resume=true
@@ -1669,29 +1679,29 @@ func _on_state_machine_active_state_changed(current: LimboState, _previous: Limb
 				recovery.recover_anim="hit_recover"
 			elif _previous==staggered:
 				recovery.recover_anim="stagger_recover"
-	match _previous:
-		attack_state:
-			cur_state="ATTACK"
-		special_attack:
-			cur_state="SPECIAL_ATTACK"
-		idle:
-			cur_state="IDLE"
-		walking:
-			cur_state="WALKING"
-		jumping:
-			cur_state="JUMP"
-		dodge_state:
-			cur_state="DODGE"
-		wall_stick:
-			cur_state="WALL STICK"
-		sprint:
-			cur_state = "SPRINTING"
-		parry_state:
-			cur_state = "PARRY"
-		flip_state:
-			cur_state = "FLIP"
-		parry_success_state:
-			cur_state= "PARRY SUCCESS"
+	#match _previous:
+		#attack_state:
+			#cur_state="ATTACK"
+		#special_attack:
+			#cur_state="SPECIAL_ATTACK"
+		#idle:
+			#cur_state="IDLE"
+		#walking:
+			#cur_state="WALKING"
+		#jumping:
+			#cur_state="JUMP"
+		#dodge_state:
+			#cur_state="DODGE"
+		#wall_stick:
+			#cur_state="WALL STICK"
+		#sprint:
+			#cur_state = "SPRINTING"
+		#parry_state:
+			#cur_state = "PARRY"
+		#flip_state:
+			#cur_state = "FLIP"
+		#parry_success_state:
+			#cur_state= "PARRY SUCCESS"
 
 func _on_attack_state_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if current==special_combo:

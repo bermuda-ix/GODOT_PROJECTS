@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://fvrl0oqgar1f"]
+
+[ext_resource type="Texture2D" uid="uid://c800m2au07hfq" path="res://Art_Components/UI/04.png" id="1_hdocx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlwqi"]
+atlas = ExtResource("1_hdocx")
+region = Rect2(3.42999, 198.129, 9.2159, 31.9095)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5c14x"]
+atlas = ExtResource("1_hdocx")
+region = Rect2(243.553, 197.977, 7.40503, 34.1732)
+
+[node name="HeatFillGauge" type="TextureProgressBar"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -9.0
+offset_top = -226.0
+offset_right = -9.0
+offset_bottom = -226.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 50.0
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_qlwqi")
+texture_progress = SubResource("AtlasTexture_5c14x")

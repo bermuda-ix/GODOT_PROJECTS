@@ -1498,10 +1498,9 @@ player_info = NodePath("../../GetPlayerInfoHandler")
 shoot_attack_handler = NodePath("../../ShootAttackManager")
 turret = NodePath("../../Turret")
 
-[node name="Shooting" type="LimboState" parent="StateMachine/ShootingStates" node_paths=PackedStringArray("actor", "bt_player")]
+[node name="Shooting" type="LimboState" parent="StateMachine/ShootingStates" node_paths=PackedStringArray("actor")]
 script = ExtResource("30_vtt0c")
 actor = NodePath("../../..")
-bt_player = NodePath("../../../BTPlayer")
 metadata/_custom_type_script = "uid://pjji1dxbp6vy"
 
 [node name="ShootingDefense" type="LimboState" parent="StateMachine/ShootingStates"]

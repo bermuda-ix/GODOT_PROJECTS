@@ -1366,6 +1366,7 @@ script = ExtResource("17_i7oh3")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 csm = NodePath("../CombatStateMachine")
+always_on = true
 vision_range = 250
 player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 stay_on = true
@@ -1446,10 +1447,9 @@ script = ExtResource("25_53axh")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="SHOOTING" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "bt_player")]
+[node name="SHOOTING" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor")]
 script = ExtResource("26_luk7s")
 actor = NodePath("../..")
-bt_player = NodePath("../../BTPlayer")
 
 [node name="DODGE" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "bt_player", "animation_player")]
 script = ExtResource("27_yw64w")

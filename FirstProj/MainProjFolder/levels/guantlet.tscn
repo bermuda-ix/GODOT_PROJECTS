@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://djj0ggyoi07b2"]
+[gd_scene load_steps=22 format=4 uid="uid://djj0ggyoi07b2"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_1mh5l"]
 [ext_resource type="PackedScene" uid="uid://c3ytqa5narkcx" path="res://Component/TileLayers/factory_main_platform.tscn" id="2_v7bxa"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cidnvxi453yo8" path="res://Art_Components/Backgrounds/factory_background_para.tscn" id="5_hpdw1"]
 [ext_resource type="PackedScene" uid="uid://m5ullq0dey1k" path="res://Art_Components/misc/lights_indoor.tscn" id="6_fhqwg"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="8_ylpkt"]
+[ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="10_riclf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dpadw"]
 resource_local_to_scene = true
@@ -5472,9 +5473,14 @@ polygon = PackedVector2Array(-1, -2, 451, -2, 456, 231, 503, 232, 491, -756, -40
 polygon = PackedVector2Array(1, 3, 669, 2, 669, 142, 641, 138, 642, 47, 1, 52)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_dp3go"]
-vertices = PackedVector2Array(3694, 1209.41, 2289, 1268.57, 2289, 1008, 2569, 1008, 3694, 1003, 2569, 848, 11.0391, 7, 6287.11, 7, 6295.88, 763, 5639, 763, 2289, 366, 5639, 1003, 2289, 747.742, 1497, 366, 1497, 1207, 661, 1207, 661, 1030, 107.063, 1030, 14.9688, 967.68, 2362.08, 848)
+vertices = PackedVector2Array(3694, 1209.21, 2288.04, 1239.77, 2288.96, 1008, 2569, 1008, 3694, 1003, 2569, 848, 11.0391, 7, 6287.11, 7, 6295.88, 763, 5639, 763, 2289, 366, 5639, 1003, 2289, 747.742, 1497, 366, 1497, 1207, 661, 1207, 661, 1030, 107.063, 1030, 14.9688, 967.68, 2362.08, 848)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(6, 7, 8, 9, 10), PackedInt32Array(10, 9, 11, 4, 5, 12), PackedInt32Array(13, 14, 15, 16), PackedInt32Array(16, 17, 18, 6, 13), PackedInt32Array(5, 19, 12), PackedInt32Array(6, 10, 13)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(1, -3, 5, 973, 104, 1040, 651, 1040, 651, 1217, 1507, 1217, 1507, 376, 2279, 376, 2279, 751, 2357, 858, 2559, 858, 2559, 998, 2279, 998, 2279, 1279, 3704, 1219, 3704, 1013, 4772, 1013, 5649, 1013, 5649, 773, 6306, 773, 6297, -3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1, -3, 5, 973, 104, 1040, 651, 1040, 651, 1217, 1507, 1217, 1507, 376, 2279, 376, 2279, 751, 2357, 858, 2559, 858, 2559, 998, 2279, 998, 2278, 1250, 3704, 1219, 3704, 1013, 4772, 1013, 5649, 1013, 5649, 773, 6306, 773, 6297, -3)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_riclf"]
+vertices = PackedVector2Array(5611, 21.9766, 5611, 62, 11, 65.9922, 11, 14.0078)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1, 4, 1, 76, 5621, 72, 5621, 12)])
 
 [node name="guantlet" node_paths=PackedStringArray("player") instance=ExtResource("1_1mh5l")]
 lvl_type = "guantlet"
@@ -5488,8 +5494,7 @@ scale = Vector2(1.2, 1.2)
 shape = SubResource("RectangleShape2D_dpadw")
 
 [node name="UI_Level" parent="CanvasLayer" index="1"]
-offset_left = 3378.0
-offset_right = 3378.0
+z_index = 9
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" parent="CanvasLayer" index="3"]
@@ -5684,6 +5689,10 @@ occluder = SubResource("OccluderPolygon2D_fj8y8")
 position = Vector2(811, -1054)
 navigation_polygon = SubResource("NavigationPolygon_dp3go")
 
+[node name="NavigationRegion2D2" type="NavigationRegion2D" parent="Navigation/NavReg" index="1"]
+position = Vector2(811, 187)
+navigation_polygon = SubResource("NavigationPolygon_riclf")
+
 [node name="NavLink" type="Node" parent="Navigation" index="1"]
 
 [node name="None-Tileset-Collision" type="Node" parent="." index="7"]
@@ -5742,7 +5751,7 @@ collision_layer = 65536
 collision_mask = 131072
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="NoSpawnZone/Zone1" index="0"]
-position = Vector2(666.5, 695.5)
+position = Vector2(674, 706)
 polygon = PackedVector2Array(-667.5, -699.5, -671.5, 687.5, 650.5, 687.5, 655.5, 387.5, 82.5, 382.5, 48.5, 286.5, 48.5, -699.5)
 
 [node name="Zone2" type="Area2D" parent="NoSpawnZone" index="1"]
@@ -5782,6 +5791,16 @@ single_spawn = false
 [node name="FactoryBackgroundPara" parent="." index="10" instance=ExtResource("5_hpdw1")]
 z_index = -3
 position = Vector2(3378, 0)
+
+[node name="HeatHandler" type="Node" parent="." index="11" node_paths=PackedStringArray("lvl", "ui_level")]
+script = ExtResource("10_riclf")
+lvl = NodePath("..")
+ui_level = NodePath("../CanvasLayer/UI_Level")
+heat_spawn_rate = Array[float]([5.0, 4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0, 0.5])
+heat_spawn_max = Array[int]([2, 2, 4, 5, 5, 6, 7, 7, 9, 10])
+metadata/_custom_type_script = "uid://2hjmonf4ss5y"
+
+[connection signal="heat_lvl_raise" from="CanvasLayer/UI_Level" to="." method="_on_ui_level_heat_lvl_raise"]
 
 [editable path="PC"]
 [editable path="CameraPos"]

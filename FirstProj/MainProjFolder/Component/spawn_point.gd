@@ -127,6 +127,8 @@ func spawn_update(enemy_spawn, add : bool):
 		
 	print(enemy.size())
 
+func spawn_timer_update(value : float) -> void:
+	spawn_timer.wait_time=value
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	no_spawn_entered=true

@@ -4,7 +4,7 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ntvx"]
 
-[node name="SpawnPoint" type="Node2D"]
+[node name="SpawnPoint" type="Node2D" groups=["SpawnPoint"]]
 script = ExtResource("1_0y5md")
 active = false
 

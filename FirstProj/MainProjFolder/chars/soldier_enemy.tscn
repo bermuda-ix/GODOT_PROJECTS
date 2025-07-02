@@ -1800,10 +1800,9 @@ script = ExtResource("88_24o4m")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="SHOOTING" type="LimboState" parent="LimboHSM" index="5" node_paths=PackedStringArray("actor", "bt_player")]
+[node name="SHOOTING" type="LimboState" parent="LimboHSM" index="5" node_paths=PackedStringArray("actor")]
 script = ExtResource("96_0nqgj")
 actor = NodePath("../..")
-bt_player = NodePath("../../BTPlayer")
 
 [node name="COUNTER" type="LimboHSM" parent="LimboHSM" index="6" node_paths=PackedStringArray("actor")]
 blackboard_plan = SubResource("BlackboardPlan_6eofm")

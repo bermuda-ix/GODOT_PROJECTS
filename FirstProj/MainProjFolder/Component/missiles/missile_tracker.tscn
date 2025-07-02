@@ -43,13 +43,11 @@ scale_curve = SubResource("CurveTexture_rrkwm")
 color = Color(0.950249, 0.458249, 5.77569e-07, 1)
 color_ramp = SubResource("GradientTexture1D_tg5ar")
 
-[node name="missile_tracker" groups=["bullet"] instance=ExtResource("1_2xtrp")]
-position = Vector2(181, 88)
+[node name="missile_tracker" groups=["bullet", "missile"] instance=ExtResource("1_2xtrp")]
 scale = Vector2(0.5, 0.5)
 script = ExtResource("2_ialjw")
 
 [node name="AnimatedSprite2D" parent="." index="0"]
-rotation = -1.5708
 sprite_frames = SubResource("SpriteFrames_e7c7u")
 
 [node name="RayCast2D" parent="AnimatedSprite2D" index="0"]

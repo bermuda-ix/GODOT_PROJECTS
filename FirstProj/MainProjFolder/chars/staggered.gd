@@ -15,7 +15,6 @@ func _enter() -> void:
 	actor.bt_player.blackboard.set_var("staggered", true)
 	#actor.parry_timer.start(3)
 	actor.hurt_box.set_damage_mulitplyer(3)
-	print("staggered")
 	
 	if movement_able:
 		actor.movement_handler.active=false
@@ -24,13 +23,11 @@ func _enter() -> void:
 	#actor.state="STAGGERED"
 	
 func _update(delta: float) -> void:
-	print(actor.parry_timer.time_left)
 	if movement_able:
 		actor.movement_handler.active=false
 		movement_handler.active=false
 	
 func _exit() -> void:
-	print("recovered")
 
 	if movement_able:
 		movement_handler.active=true

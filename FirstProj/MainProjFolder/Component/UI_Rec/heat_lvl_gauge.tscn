@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1r2gnplhmhoc"]
+
+[ext_resource type="Texture2D" uid="uid://gnmq466umlgc" path="res://Art_Components/UI/05.png" id="1_i2lmr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bub1b"]
+atlas = ExtResource("1_i2lmr")
+region = Rect2(340.8, 1.94205, 37.1701, 14.18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yv2ff"]
+atlas = ExtResource("1_i2lmr")
+region = Rect2(4.88583, 1.98608, 36.1959, 13.2024)
+
+[node name="HeatLvlGauge" type="TextureProgressBar"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 7.0
+texture_under = SubResource("AtlasTexture_bub1b")
+texture_progress = SubResource("AtlasTexture_yv2ff")

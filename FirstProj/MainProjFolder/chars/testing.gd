@@ -35,6 +35,10 @@ var rotate_around : bool = false
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var state_machine: LimboHSM = $LimboHSM
 @onready var death: LimboState = $LimboHSM/DEATH
+@onready var shooting: Shooting = $LimboHSM/Shooting
+@onready var shoot_timer: Timer = $ShootTimer
+@onready var missile_shoot_handler: MissileShootHandler = $MissileShootHandler
+
 
 enum States{
 	GUARD,
@@ -52,8 +56,16 @@ func _ready():
 	#position.y = -264
 	#position.x = 408
 	player = get_tree().get_first_node_in_group("player")
-	
-	
+	_init_state_machine()
+
+
+func _init_state_machine():
+	state_machine.initial_state=shooting
+	state_machine.initialize(self)
+	state_machine.set_active(true)
+
+	#state_machine.add_transition(shooting, death, &"die")
+
 func _process(delta):
 	track_player()
 	
@@ -132,3 +144,17 @@ func target_lock():
 	
 	
 	
+
+
+func _on_shooting_entered() -> void:
+	shoot_timer.start()
+	shoot_timer.paused=false
+
+
+func _on_shooting_exited() -> void:
+	shoot_timer.stop()
+	shoot_timer.paused=true
+
+
+func _on_shoot_timer_timeout() -> void:
+	missile_shoot_handler.shoot_missile()
