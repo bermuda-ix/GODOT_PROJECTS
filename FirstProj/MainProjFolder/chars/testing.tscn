@@ -124,6 +124,7 @@ turret = NodePath("../Turret")
 missile_rotation = -90.0
 fixed_rot = true
 missile_speed = 100.0
+missile_rot_speed = 25.0
 metadata/_custom_type_script = "uid://dr8hs1ssva6sy"
 
 [node name="ShootAttackManager" type="Node" parent="." index="23" node_paths=PackedStringArray("actor", "animation_player", "turret")]

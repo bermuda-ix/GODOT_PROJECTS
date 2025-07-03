@@ -10,6 +10,7 @@ extends Node
 @export var missile_rotation : float = 90.0 : set = set_missile_rot, get = get_missile_rot
 @export var fixed_rot : bool = false
 @export var missile_speed : float = 400.0
+@export var missile_rot_speed : float = 5
 @export var missile_accel : float = 20.0
 @export var missile_afterburn : bool = true
 
@@ -18,6 +19,7 @@ func shoot_missile():
 	var bullet_inst = missile.instantiate()
 	bullet_inst.set_speed(missile_speed)
 	bullet_inst.set_accel(missile_accel)
+	bullet_inst.set_rot_speed(missile_rot_speed)
 	bullet_inst.tracking_time=1
 	#bullet_inst.dir = (turret.player_tracker.target_position).normalized()
 	bullet_inst.spawnPos = Vector2(turret.global_position.x, turret.global_position.y)

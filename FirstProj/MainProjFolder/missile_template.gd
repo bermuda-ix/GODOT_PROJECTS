@@ -20,7 +20,6 @@ var initial_time : float = 0.05
 @onready var tracking_timer = $TrackingTimer
 @onready var initial_fire_timer = $InitialFireTimer
 @onready var rotation_speed : float = 5.0
-var missile_rotation
 
 var elapsed=0.0
 
@@ -35,7 +34,7 @@ func _ready():
 	global_position = spawnPos
 	#spawnRot = -90
 	animated_sprite_2d.global_rotation=deg_to_rad(spawnRot)
-	missile_rotation=spawnRot
+	#missile_rotation=spawnRot
 	tracking_rot=animated_sprite_2d.global_rotation_degrees
 	
 	init_dir=(player_tracker.to_global(player_tracker.target_position) -player_tracker.to_global(Vector2.ZERO)).normalized()
@@ -50,7 +49,7 @@ func _physics_process(delta):
 	if not tracking_timer.is_stopped():
 		track_player()
 		rotate_missile(delta)
-		animated_sprite_2d.global_rotation_degrees=wrapf(missile_rotation, 0, 360)
+		#animated_sprite_2d.global_rotation_degrees=wrapf(missile_rotation, 0, 360)
 		dir=Vector2.RIGHT.rotated(animated_sprite_2d.global_rotation)
 		
 	else:
@@ -66,26 +65,30 @@ func _physics_process(delta):
 	#dir=position.normalized()
 	
 	position += (dir * (SPEED +accel) * delta)
-	print(round(animated_sprite_2d.global_rotation_degrees)," , ", round(tracking_rot), " , ",round(dir))
 	
 	
 func set_speed(value: float):
 	SPEED=value
+func set_rot_speed(value: float):
+	rotation_speed=value
 
 func get_speed() -> float:
 	return SPEED
 func rotate_missile(delta : float) -> void:
 	#animated_sprite_2d.rotation_degrees=move_toward(animated_sprite_2d.rotation_degrees, tracking_rot, delta*50)
-	var _missile_rot=wrapf(tracking_rot, 0, 360)
-	if abs(animated_sprite_2d.global_rotation_degrees-tracking_rot)<=rotation_speed:
-		pass
-	elif 90>=_missile_rot or _missile_rot>=270:
-		missile_rotation += rotation_speed
-	elif 90<_missile_rot and _missile_rot<270:
-		missile_rotation -= rotation_speed
-	else:
-		pass
-	
+	#var current_rot=animated_sprite_2d.rotation_degrees
+	animated_sprite_2d.global_rotation=rotate_toward(animated_sprite_2d.global_rotation,tracking_rot, deg_to_rad(rotation_speed))
+	print(animated_sprite_2d.global_rotation_degrees," , ",tracking_rot)
+	#var new_rot=animated_sprite_2d.rotation_degrees
+	#if abs(animated_sprite_2d.global_rotation_degrees-tracking_rot)<=rotation_speed:
+		#pass
+	#elif tracking_rot<current_rot:
+		#animated_sprite_2d.global_rotation_degrees -= rotation_speed
+	#elif tracking_rot>=current_rot:
+		#animated_sprite_2d.global_rotation_degrees += rotation_speed
+	#else:
+		#pass
+	#
 
 func _on_visible_on_screen_enabler_2d_screen_exited():
 	queue_free()
@@ -118,12 +121,12 @@ func _on_area_2d_body_entered(body):
 func track_player():
 	
 	
-	var direction_to_player : Vector2 = Vector2(player.global_position.x, player.global_position.y)\
+	var direction_to_player : Vector2 = Vector2(player.global_position.x, player.global_position.y+5)\
 	- global_position
 	
 	
 	
-	tracking_rot=wrapf(rad_to_deg(direction_to_player.angle()), 0, 360)
+	tracking_rot=direction_to_player.angle()
 	
 	tracking_vector=direction_to_player.normalized()
 	
