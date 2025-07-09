@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cmbh5yrvkl5a6"]
+[gd_scene load_steps=19 format=3 uid="uid://cmbh5yrvkl5a6"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_4opfk"]
 [ext_resource type="Script" uid="uid://csh8rjbhyvxoc" path="res://chars/flying_enemy.gd" id="2_avqxo"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="4_g2l3k"]
 [ext_resource type="AudioStream" uid="uid://kwfnuck85oo7" path="res://Art_Components/Effects/sound/alienshoot1.ogg" id="5_o3mrs"]
 [ext_resource type="Script" uid="uid://c4yno8xy5erif" path="res://chars/death.gd" id="6_cfr2g"]
+[ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="7_k0mf2"]
+[ext_resource type="Script" uid="uid://dr8hs1ssva6sy" path="res://Component/functions/MissleShootHandler.gd" id="8_5wgfp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kgcfl"]
 atlas = ExtResource("2_ga466")
@@ -195,6 +197,21 @@ stream = ExtResource("5_o3mrs")
 [node name="DEATH" type="LimboState" parent="LimboHSM" index="0"]
 script = ExtResource("6_cfr2g")
 
+[node name="Shooting" type="LimboState" parent="LimboHSM" index="1"]
+script = ExtResource("7_k0mf2")
+metadata/_custom_type_script = "uid://pjji1dxbp6vy"
+
+[node name="ShootTimer" type="Timer" parent="." index="25"]
+wait_time = 5.0
+autostart = true
+
+[node name="MissileShootHandler" type="Node" parent="." index="26" node_paths=PackedStringArray("turret")]
+script = ExtResource("8_5wgfp")
+turret = NodePath("../Turret")
+missile_rotation = -90.0
+fixed_rot = true
+metadata/_custom_type_script = "uid://dr8hs1ssva6sy"
+
 [connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
@@ -204,3 +221,4 @@ script = ExtResource("6_cfr2g")
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

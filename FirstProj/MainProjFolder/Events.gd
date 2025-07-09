@@ -23,8 +23,10 @@ signal deactivate_regular
 signal allied_enemy_hit
 signal boss_died
 
+#Camera Effects
+signal camera_shake
 
-
+#Spawn control
 signal activate
 signal deactivate
 signal spawn_update

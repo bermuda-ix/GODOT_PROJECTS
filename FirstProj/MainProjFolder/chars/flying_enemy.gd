@@ -13,13 +13,15 @@ const MISSILE_TRACKER = preload("res://Component/missiles/missile_tracker.tscn")
 @onready var chase_timer = $ChaseTimer
 @onready var turret = $Turret
 @onready var animation_player = $AnimationPlayer
-@onready var bullet = MISSILE_TRACKER
+@onready var bullet = BALL_PROCETILE
 @onready var bullet_dir = Vector2.RIGHT
 @onready var audio_stream_player_2d = $AudioStreamPlayer2D
 @onready var stagger = $Stagger
 @onready var hb_detect = $HitBox/CollisionShape2D
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var shoot_timer: Timer = $ShootTimer
+@onready var missile_shoot_handler: MissileShootHandler = $MissileShootHandler
 
 
 @onready var stg_laber = $stg_laber
@@ -53,7 +55,7 @@ var state : String
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	animation_player.play("default")
-	turret.setup(2)
+	turret.setup(1)
 	turret.shoot_timer.paused=true
 	player_found=true
 	found=true
@@ -233,8 +235,18 @@ func target_lock():
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	player_found=true
 	set_state(current_state, States.CHASE)
+	missile_shoot_handler.active=true
+	shoot_timer.start()
+	shoot_timer.paused=false
+	
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	player_found=false
 	set_state(current_state, States.WANDER)
+	missile_shoot_handler.active=false
+	shoot_timer.paused=true
+
+
+func _on_shoot_timer_timeout() -> void:
+	missile_shoot_handler.shoot_missile()

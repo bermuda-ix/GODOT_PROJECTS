@@ -19,11 +19,15 @@ const COUNTER_CLOCKWISE=-PI/2
 signal flip
 signal jump_out_signal
 
+#Player Stats
 @export var movement_data : PlayerMovementData
 @export var health: Health
 @export var hitbox: HitBox
 @export var ammo : int = 0
 @export var TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
+@onready var clash_power: ClashPower = $ClashPower
+@onready var clash_timer: Timer = $ClashPower/ClashTimer
+
 
 #Base FSM
 enum States {IDLE, WALKING, JUMP, ATTACK, SPECIAL_ATTACK, WALL_STICK, PARRY, DODGE, SPRINTING,
@@ -108,6 +112,7 @@ var atk_state="ATK_1"
 #Animation var
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var clash_visual: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
 
 
 @onready var speech: Label = $Speech
@@ -366,6 +371,10 @@ func _process(_delta):
 		#print("animation playing")
 	#else:
 		#print("no play")
+	if clash_power.clash_power>0:
+		clash_visual.self_modulate.a = (1/clash_power.clash_power) +0.1
+	else:
+		clash_visual.self_modulate.a = 0
 	label.text=str(velocity.x)
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	if not cutscene_handler.actor_control_active:
@@ -1160,26 +1169,37 @@ func _on_health_health_depleted():
 	##kb_dir.x, " ", knockback)
 
 func _on_hurt_box_got_hit(_hitbox):
+	var hb_dir_right
+	if _hitbox.global_position.x-global_position.x>0 :
+		hb_dir_right=true
+	else:
+		hb_dir_right=false
 	if state_machine.get_active_state()==parry_state:
 		return
-	if hitbox.is_in_group("regular_enemy_hb"):
+	if _hitbox.is_in_group("regular_enemy_hb"):
 		if hit_timer.is_stopped():
 			AudioStreamManager.play(SoundFx.PUNCH_DESIGNED_HEAVY_12)
 		player_hit.emitting=true
 		player_hit.restart()
 		hurt_box_detect.disabled=true
 		hit_timer.start(0.2)
+		stagger.stagger-=1
 		if state_machine.get_previous_active_state()!=flip_state:
 			if parry_success_state.get_previous_active_state()==heavy_riposte:
 				if target_right:
 					knockback.x=400
 				else:
 					knockback.x=-400
+			else:
+				if hb_dir_right:
+					knockback.x=-15
+				else:
+					knockback.x=15
 			state_machine.dispatch(&"got_hit")
 			
 	elif hitbox.is_in_group("heavy_hitbox"):
 		knockback.x = -400
-		kb_dir=global_position.direction_to(hitbox.global_position)
+		kb_dir=global_position.direction_to(_hitbox.global_position)
 		#"knockback")
 		kb_dir=round(kb_dir)
 		#kb_dir.x, " ", knockback)
@@ -1190,7 +1210,7 @@ func _on_hurt_box_got_hit(_hitbox):
 	else:
 		set_collision_mask_value(16384, false)
 		knockback.x = -350
-		kb_dir=global_position.direction_to(hitbox.global_position)
+		kb_dir=global_position.direction_to(_hitbox.global_position)
 		#"knockback")
 		kb_dir=round(kb_dir)
 		#kb_dir.x, " ", knockback)
@@ -1207,6 +1227,8 @@ func _on_hit_timer_timeout() -> void:
 
 func _on_parry_box_parried_success() -> void:
 	state_machine.dispatch(&"parry_successful")
+	clash_power.increase_clash()
+	clash_visual.emitting=true
 	
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("bullet"):
@@ -1223,6 +1245,13 @@ func _on_hurt_box_area_entered(area):
 		health.set_temporary_immortality(0.2)
 		if state_machine.get_previous_active_state()==flip_state:
 			state_machine.dispatch(&"return_to_idle")
+		if clash_power.clash_power>1:
+			health.health-=clash_power.clash_power
+			stagger.stagger-=clash_power.clash_power
+			clash_power.reset_clash()
+			clash_timer.stop()
+			if clash_power.clash_power==clash_power.clash_max:
+				hit_stop.hit_stop(.3,.5)
 		
 	if area.is_in_group("Hearts"):
 		health.health+=1
@@ -1413,17 +1442,21 @@ func _on_hit_box_area_entered(_area):
 	hit_sound=hit1
 	AudioStreamManager.play(hit_sound)
 	hb_collision.disabled
-	#hit_stop.hit_stop(0.05, 0.1)
 
 
 func _on_hit_box_body_entered(body):
 	if body.is_in_group("Enemy") and combat_states.get_active_state()==unlocked:
 		Events.unlock_from.emit()
-		#str(body.name))
 		target_string_test=str(body.name)
 		target = body
 		combat_state=CombatStates.LOCKED
 		combat_states.dispatch(&"locking_on")
+		if clash_power.clash_power>1:
+			stagger.stagger+=clash_power.clash_power
+			clash_power.reset_clash()
+			clash_timer.stop()
+			if clash_power.clash_power==clash_power.clash_max:
+				hit_stop.hit_stop(.3,.5)
 	
 	
 func flip_over():
@@ -1523,6 +1556,10 @@ func _on_counter_box_area_entered(area):
 		state_machine.dispatch(&"dodge_successful")
 		
 		
+	clash_power.increase_clash()
+	clash_visual.emitting=true
+	clash_timer.start()
+		
 
 
 func _on_counter_timer_timeout():
@@ -1566,6 +1603,7 @@ func _on_animation_player_animation_started(anim_name):
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05, 0.1)
+	Events.camera_shake.emit(2,20)
 	if state_machine.get_active_state()==flip_state:
 		#print("countered! your moves are weak!")
 		if target_right:
@@ -1583,6 +1621,7 @@ func _on_stagger_staggered() -> void:
 	knockback.x=0
 	velocity=Vector2.ZERO
 	state_machine.dispatch(&"got_staggered")
+	Events.camera_shake.emit(2,15)
 	
 func _on_hit_box_parried() -> void:
 	anim_player.play("parried")
@@ -1720,3 +1759,9 @@ func _on_attack_state_active_state_changed(current: LimboState, previous: LimboS
 
 func _on_combat_states_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	pass
+
+
+func _on_clash_timer_timeout() -> void:
+	clash_power.reset_clash()
+	clash_visual.emitting=false
+	

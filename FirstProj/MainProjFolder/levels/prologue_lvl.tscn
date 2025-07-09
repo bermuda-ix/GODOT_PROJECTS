@@ -765,7 +765,7 @@ scale = Vector2(2, 2)
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
 shape = SubResource("RectangleShape2D_kcvht")
 
-[node name="Speech" parent="PC" index="19"]
+[node name="Speech" parent="PC" index="20"]
 visible = true
 
 [node name="CameraPos" parent="." index="2" instance=ExtResource("4_e3spa")]

@@ -1886,6 +1886,7 @@ func _update(delta: float) -> void:
 func _exit() -> void:
 	if actor.is_on_floor():
 		print(\"landed correctly\")
+		Events.camera_shake.emit(3,15)
 	else:
 		print(\"exiting too soon\")
 "
@@ -2261,10 +2262,9 @@ script = ExtResource("22_ml4a6")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="SHOOTING" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "bt_player")]
+[node name="SHOOTING" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor")]
 script = ExtResource("23_ecxaq")
 actor = NodePath("../..")
-bt_player = NodePath("../../BTPlayer")
 
 [node name="SHOOT_RUN" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("37_4jbc4")

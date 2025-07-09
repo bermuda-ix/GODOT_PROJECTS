@@ -56,3 +56,4 @@ func _on_dur_timeout() -> void:
 	Events.parry_failed
 	pc.state_machine.dispatch(&"no_nothing")
 	hit_stop.end_hit_stop()
+	pc.clash_timer.start()

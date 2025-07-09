@@ -5756,6 +5756,8 @@ polygon = PackedVector2Array(-667.5, -699.5, -671.5, 687.5, 650.5, 687.5, 655.5,
 
 [node name="Zone2" type="Area2D" parent="NoSpawnZone" index="1"]
 position = Vector2(2307, -1120)
+collision_layer = 65536
+collision_mask = 131072
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="NoSpawnZone/Zone2" index="0"]
 position = Vector2(666.5, 695.5)
@@ -5763,6 +5765,8 @@ polygon = PackedVector2Array(-686.5, -289.5, -697.5, 692.5, 188.5, 686.5, 162.5,
 
 [node name="Zone3" type="Area2D" parent="NoSpawnZone" index="2"]
 position = Vector2(4413, -1120)
+collision_layer = 65536
+collision_mask = 131072
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="NoSpawnZone/Zone3" index="0"]
 position = Vector2(804, 706)
@@ -5770,6 +5774,8 @@ polygon = PackedVector2Array(-695, 357, -697.5, 692.5, -610, 694, -579, 533, 294
 
 [node name="Zone4" type="Area2D" parent="NoSpawnZone" index="3"]
 position = Vector2(5659, -1120)
+collision_layer = 65536
+collision_mask = 131072
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="NoSpawnZone/Zone4" index="0"]
 position = Vector2(805, 706)

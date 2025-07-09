@@ -78,7 +78,8 @@ var immortal = false
 @export var counter_kick_chance : int = 0
 @onready var counter_flag : bool = false
 @onready var locked_on : bool = false
-@onready var clash_mult : int = 1
+@onready var clash_power: ClashPower = $ClashPower
+@onready var clash_mult = clash_power.clash_power
 @onready var clash_timer: Timer = $ClashTimer
 
 
@@ -402,6 +403,7 @@ func _on_stagger_staggered() -> void:
 	
 	hb_collision.disabled=true
 	state_machine.dispatch(&"staggered")
+	Events.camera_shake.emit(2,20)
 
 
 func _on_parry_timer_timeout() -> void:

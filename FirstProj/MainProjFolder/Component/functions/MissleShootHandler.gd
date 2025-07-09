@@ -13,9 +13,11 @@ extends Node
 @export var missile_rot_speed : float = 5
 @export var missile_accel : float = 20.0
 @export var missile_afterburn : bool = true
-
+@export var active : bool =true
 
 func shoot_missile():
+	if not active:
+		return
 	var bullet_inst = missile.instantiate()
 	bullet_inst.set_speed(missile_speed)
 	bullet_inst.set_accel(missile_accel)

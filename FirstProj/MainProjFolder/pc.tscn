@@ -1,4 +1,4 @@
-[gd_scene load_steps=472 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=476 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -95,6 +95,8 @@
 [ext_resource type="Script" uid="uid://ldj3a8xnrvge" path="res://pc_landed.gd" id="79_7k7vw"]
 [ext_resource type="AudioStream" uid="uid://266rkppmswxk" path="res://Art_Components/Effects/sound/swishes/swishes/swish-1.wav" id="80_jesqx"]
 [ext_resource type="AudioStream" uid="uid://bmbijx41c06ke" path="res://Art_Components/Effects/sound/swishes/swishes/swish-7.wav" id="81_0o5du"]
+[ext_resource type="Texture2D" uid="uid://ckokytw486hoj" path="res://Art_Components/Effects/Spritesheets/Smoke Simple 3.png" id="81_mdoa6"]
+[ext_resource type="Script" uid="uid://byay512l00w0p" path="res://Component/functions/ClashPower.gd" id="82_h0fyw"]
 [ext_resource type="AudioStream" uid="uid://ps6ukg2feqoj" path="res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/Pump Shotgun-SoundBible.com-1653268682.wav" id="83_dlcc0"]
 [ext_resource type="Script" uid="uid://dlgmk4r2ns83i" path="res://pc_jump_state.gd" id="87_qd7yk"]
 [ext_resource type="Script" uid="uid://b01l0umvqjncl" path="res://pc_falling_state.gd" id="88_3ciys"]
@@ -2786,6 +2788,20 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kd7ms"]
+particles_animation = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 2
+particles_anim_loop = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cdmbu"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 1.2
+scale_max = 1.2
+anim_speed_min = 0.7
+anim_speed_max = 0.7
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
 size = Vector2(15.989, 41.2086)
@@ -5779,6 +5795,18 @@ position = Vector2(-1, -3)
 scale = Vector2(0.416667, 1.23333)
 sprite_frames = SubResource("SpriteFrames_47tfd")
 
+[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D"]
+modulate = Color(0.976471, 0.611765, 0, 0.462745)
+z_index = -1
+material = SubResource("CanvasItemMaterial_kd7ms")
+position = Vector2(3, -25)
+emitting = false
+amount = 1
+texture = ExtResource("81_mdoa6")
+speed_scale = 2.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_cdmbu")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.5, -9.5)
 scale = Vector2(1.06323, 0.994939)
@@ -5787,6 +5815,14 @@ shape = SubResource("RectangleShape2D_pmx5o")
 [node name="Health" type="Node" parent="."]
 script = ExtResource("4_q0gnn")
 max_health = 100
+
+[node name="ClashPower" type="Node" parent="." node_paths=PackedStringArray("health", "stagger")]
+script = ExtResource("82_h0fyw")
+health = NodePath("../Health")
+stagger = NodePath("../Stagger")
+metadata/_custom_type_script = "uid://byay512l00w0p"
+
+[node name="ClashTimer" type="Timer" parent="ClashPower"]
 
 [node name="Stagger" type="Node" parent="."]
 script = ExtResource("53_7ax8a")
@@ -6058,6 +6094,7 @@ pc = NodePath("../..")
 [connection signal="parried" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="parried_success" from="AnimatedSprite2D/ParryBox" to="." method="_on_parry_box_parried_success"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
+[connection signal="timeout" from="ClashPower/ClashTimer" to="." method="_on_clash_timer_timeout"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="area_entered" from="HazardDetector" to="." method="_on_hazard_detector_area_entered"]
 [connection signal="body_entered" from="HazardDetector" to="." method="_on_hazard_detector_body_entered"]
