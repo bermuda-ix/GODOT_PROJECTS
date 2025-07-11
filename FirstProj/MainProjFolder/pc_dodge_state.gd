@@ -2,17 +2,24 @@ extends LimboState
 
 @export var anim_player : AnimationPlayer
 @export var pc : PlayerEntity
-
+var dodge_dist : float = 0.0
+var counter_dist : float = 0.0
 
 func _enter() -> void:
 	print("dodging")
 	anim_player.play(pc.dodge_anim_run)
 	pc.set_collision_mask_value(15, false)
 	pc.counter_box_collision.disabled=false
+	dodge_dist=pc.global_position.x+10*pc.face_dir
+	counter_dist = pc.global_position.x-10*pc.face_dir
+	
 	
 
-#func _update(delta: float) -> void:
-	#pc.global_position.x=move_toward(pc.global_position.x, pc.global_position.x+10*pc.dir.x, 10*delta)
+func _update(delta: float) -> void:
+	#pc.global_position.x=move_toward(pc.global_position.x, pc.global_position.x+10*pc.face_dir, 100*delta)
+	if pc.input_axis==0:
+		pc.global_position.x=lerpf(pc.global_position.x, dodge_dist, 0.2)
+	
 
 func _exit() -> void:
 	pc.velocity.x=0

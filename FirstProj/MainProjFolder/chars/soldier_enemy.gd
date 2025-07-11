@@ -220,6 +220,8 @@ func _process(_delta):
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		return
 	ammo_count=turret.ammo_count
+	if health.health<=0 and (state_machine.get_active_state()!=death or state_machine.get_active_state()!=dying):
+		state_machine.dispatch(&"die")
 	##FOR TESTING REMOVE LATER
 	##current_state=States.GUARD
 	##if current_state==States.GUARD:

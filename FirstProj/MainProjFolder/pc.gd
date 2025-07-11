@@ -98,9 +98,13 @@ var atk_chain = 0
 var sp_atk_chn = 0
 #true = facing right fals= facing left
 var face_right = true
+var face_dir = clampi(1, -1, 1)
 var input_dir=Input.get_axis("walk_left","walk_right")
 #dodge dir
 #var dodge_state = false
+
+var dodge_dist = 0.0
+var dodge_succ = false
 var dodge_v = 0.0
 var falling : bool = false
 var jumping : bool = false
@@ -445,11 +449,18 @@ func _physics_process(delta):
 #
 		##if dodge_state == true:
 			##state = States.DODGE
+		
 		## Add the gravity.
 		if(parry_stance==false):
 			apply_gravity(delta) 
 		var input_axis = Input.get_axis("walk_left", "walk_right")
-		
+		if input_axis<0:
+			face_right=true
+			face_dir=1
+		elif input_axis>0:
+			face_right=false
+			face_dir=-1
+		##Dodge back on success
 
 		
 
@@ -895,6 +906,7 @@ func dodge(input_axis):
 			velocity.x=0
 			state_machine.dispatch(&"start_dodge")
 		else:
+			
 			dodge_anim_run=dodge_anim+"_roll"
 			state_machine.dispatch(&"start_dodge")
 			velocity.x=movement_data.dodge_speed*input_axis
@@ -1547,7 +1559,8 @@ func atk_state_debug():
 			atk_state="AKT_1"
 		ComboStates.SPC_ATK_BACK:
 			atk_state="SPC_ATK_BACK"
-		
+			
+
 func _on_counter_box_area_entered(area):
 	if area.is_in_group("bullet"):
 		counter_flag = true
@@ -1686,7 +1699,9 @@ func _on_idle_entered() -> void:
 
 func _on_state_machine_active_state_changed(current: LimboState, _previous: LimboState) -> void:
 	#label.text=str(current.name)
+
 	if current==dodge_state:
+		
 		if attack_state.get_active_state()==attack_1:
 			atk_1_resume=true
 		elif attack_state.get_active_state()==attack_2:
