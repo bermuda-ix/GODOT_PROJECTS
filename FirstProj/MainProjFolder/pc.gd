@@ -1170,6 +1170,8 @@ func _on_health_health_depleted():
 
 func _on_hurt_box_got_hit(_hitbox):
 	var hb_dir_right
+	if not hit_timer.is_stopped():
+		return
 	if _hitbox.global_position.x-global_position.x>0 :
 		hb_dir_right=true
 	else:

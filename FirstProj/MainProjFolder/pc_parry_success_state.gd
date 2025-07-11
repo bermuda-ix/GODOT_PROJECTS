@@ -49,6 +49,7 @@ func _exit() -> void:
 	pc.attack_timer.paused=false
 	pc.attack_timer.stop()
 	success=false
+	#pc.hurt_box_detect.disabled=false
 
 func _on_dur_timeout() -> void:
 	if success==true:

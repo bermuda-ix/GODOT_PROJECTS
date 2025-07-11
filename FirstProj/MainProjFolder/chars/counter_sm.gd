@@ -8,6 +8,7 @@ func _ready() -> void:
 
 func _enter() -> void:
 	#print("begin counter")
+	actor.counter_timer.start()
 	actor.hurt_box_collision.disabled=true
 	actor.clash_mult+=1
 

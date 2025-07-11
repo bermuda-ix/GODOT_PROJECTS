@@ -62,6 +62,7 @@ var immortal = false
 @onready var stagger_timer: Timer = $StaggerTimer
 @onready var gpu_particles_2d: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
 @onready var dodge_timer: Timer = $DodgeTimer
+@onready var counter_timer: Timer = $CounterTimer
 
 
 @onready var collision_shape_2d = $CollisionShape2D
@@ -382,7 +383,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 			knockback.x=50
 		else:
 			knockback.x=-50
-		stagger.stagger -= player.sp_atk_dmg*clash_mult
+		stagger.stagger -= player.sp_atk_dmg*player.clash_power.clash_power
 		
 		
 
@@ -437,6 +438,8 @@ func counter_select()->void:
 		bt_player.blackboard.set_var("counter_kick_flag", true)
 		counter_flag=true
 		
+
+	
 func rapid_shoot(value : bool)->void:
 	turret.multi_shot=value
 
@@ -560,7 +563,7 @@ func _on_clash_timer_timeout() -> void:
 
 
 func _on_counter_updated(delta: float) -> void:
-	if player.state_machine.get_active_state()!=player.parry_success_state:
+	if player.state_machine.get_active_state()!=player.parry_success_state and counter_timer.is_stopped():
 		state_machine.dispatch(&"counter_end")
 
 
