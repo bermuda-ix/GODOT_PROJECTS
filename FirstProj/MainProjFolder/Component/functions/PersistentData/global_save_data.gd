@@ -35,6 +35,11 @@ func save_game() -> void:
 	pass
 	
 func load_game() -> void:
+	var file := FileAccess.open( SAVE_PATH + "player_data//stats//player_stats_json.sav", FileAccess.READ)
+	var load_json = JSON.new()
+	load_json.parse(file.get_line())
+	var save_dict_temp : Dictionary = load_json.get_data() as Dictionary
+	current_save=save_dict_temp
 	pass
 
 func load_player_stats() -> void:

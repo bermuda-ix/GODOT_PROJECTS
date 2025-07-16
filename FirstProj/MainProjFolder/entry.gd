@@ -1,6 +1,7 @@
 extends Area2D
 
 #signal player_entered_door(door : Door, transition_type : String)
+signal enter_area(room : PackedScene)
 
 @export_enum("left", "right") var entry_dir
 @export var entry_loc : Vector2 = Vector2(0,0)
