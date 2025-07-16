@@ -1,0 +1,63 @@
+extends Node
+
+const SAVE_PATH = "user://"
+
+signal game_save
+signal game_load
+signal auto_save
+signal save_level_state
+signal load_level_state
+signal clean_start
+
+var current_save : Dictionary = {
+	scene_path = "",
+	player = {
+		health = 100,
+		max_health=100,
+		stagger=3,
+		max_stagger=3,
+		pos_x = 0,
+		pos_y=0
+	}
+}
+
+var level_state : Dictionary = {
+	scene_path="",
+	items=[],
+	persistence = []
+	
+	}
+	
+func save_game() -> void:
+	var file := FileAccess.open( SAVE_PATH + "player_data//stats//player_stats_json.sav", FileAccess.WRITE)
+	var save_json = JSON.stringify(current_save)
+	file.store_line(save_json)
+	pass
+	
+func load_game() -> void:
+	pass
+
+func load_player_stats() -> void:
+	game_load.emit()
+
+	
+func save_level() -> void:
+	pass
+	
+func load_level() -> void:
+	pass
+	
+func add_persistent_value(value : String) -> void:
+	if check_persistent_value(value)==false:
+		level_state.persistence.append(value)
+	pass
+	
+func check_persistent_value(value : String) -> bool:
+	return level_state.has(value)
+	
+
+func reset_level() -> void:
+	clear_persistent_values()
+
+func clear_persistent_values() -> void:
+	level_state.persistence.clear()

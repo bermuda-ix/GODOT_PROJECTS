@@ -23,6 +23,7 @@ AudioStreamManager="*res://AudioStreamManager.gd"
 SoundFx="*res://Component/resources/sound_fx.gd"
 Projectiles="*res://Component/resources/projectiles.gd"
 Cutscenes="*res://Component/resources/cutscenes.gd"
+GlobalSaveData="*res://Component/functions/PersistentData/global_save_data.gd"
 
 [debug]
 

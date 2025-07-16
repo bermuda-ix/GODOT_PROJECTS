@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b8htmq8u3ykss"]
+[gd_scene load_steps=8 format=3 uid="uid://b8htmq8u3ykss"]
 
 [ext_resource type="Texture2D" uid="uid://cm36bhcpc0hsc" path="res://Art_Components/tile_maps/_PNG/1. main platforms.png" id="1_4moad"]
 [ext_resource type="Script" uid="uid://d0d3rflso77ye" path="res://Component/interactables/path_follow_2d.gd" id="1_opf7r"]
+[ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="3_flptw"]
 
 [sub_resource type="Curve2D" id="Curve2D_2h5dv"]
 _data = {
@@ -47,3 +48,7 @@ avoidance_layers = 2
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Path2D/PathFollow2D/StaticBody2D"]
 occluder = SubResource("OccluderPolygon2D_80ptt")
+
+[node name="IsOpen" type="Node" parent="."]
+script = ExtResource("3_flptw")
+metadata/_custom_type_script = "uid://bv1k14bnql5dy"

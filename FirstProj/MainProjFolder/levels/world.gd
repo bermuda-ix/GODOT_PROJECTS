@@ -52,6 +52,7 @@ func _ready():
 	Events.pause.connect(show_pause)
 	Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
+	GlobalSaveData.save_game()
 	
 	spawn_points = get_tree().get_nodes_in_group("SpawnPoint")
 	heat_handler.heat_lvl_spawn()

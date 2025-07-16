@@ -1397,42 +1397,54 @@ func _on_attack_timer_timeout():
 
 func load_player_data():
 	var file = FileAccess.open("user://player_data/stats/player_stats.txt", FileAccess.READ)
-	if file.file_exists("user://player_data/stats/player_stats.txt"):
-		while file.is_open():
-			var content = file.get_line()
-			var stat : String = content.get_slice(":", 0)
-			var stat_val : int = int(content.get_slice(":", 1))
-			
-			if stat != null:
-				match stat:
-					"health":
-						health.set_health(100)
-					"max_health":
-						health.set_max_health(100)
-					"max_stagger":
-						pass
-					"ammo":
-						ammo=stat_val
-						
-			if file.eof_reached():
-				break
-		file.close()
-	else:
-		print("file not found")
+	#if file.file_exists("user://player_data/stats/player_stats.txt"):
+		#while file.is_open():
+			#var content = file.get_line()
+			#var stat : String = content.get_slice(":", 0)
+			#var stat_val : int = int(content.get_slice(":", 1))
+			#
+			#if stat != null:
+				#match stat:
+					#"health":
+						#health.set_health(100)
+					#"max_health":
+						#health.set_max_health(100)
+					#"max_stagger":
+						#pass
+					#"ammo":
+						#ammo=stat_val
+						#
+			#if file.eof_reached():
+				#break
+		#file.close()
+	health.health = GlobalSaveData.current_save.player.health
+	health.max_health = GlobalSaveData.current_save.player.max_health
+	stagger.stagger = GlobalSaveData.current_save.player.stagger
+	stagger.max_stagger = GlobalSaveData.current_save.player.max_stagger
+	
+	
+	#else:
+		#print("file not found")
+		
+	
 
 func save_player_data():
-	var file = FileAccess.open("user://player_data/stats/player_stats.txt", FileAccess.READ_WRITE)
-	if file.file_exists("user://player_data/stats/player_stats.txt"):
-		var stat : String = str("health: ", health.get_health())
-		file.store_string(stat)
-		file.store_string("\n")
-		stat = str("max_health: ", health.get_max_health())
-		file.store_string(stat)
-		file.store_string("\n")
-		file.close()
-	else:
-		print("file not found")
-
+	#var file = FileAccess.open("user://player_data/stats/player_stats.txt", FileAccess.READ_WRITE)
+	#if file.file_exists("user://player_data/stats/player_stats.txt"):
+		#var stat : String = str("health: ", health.get_health())
+		#file.store_string(stat)
+		#file.store_string("\n")
+		#stat = str("max_health: ", health.get_max_health())
+		#file.store_string(stat)
+		#file.store_string("\n")
+		#file.close()
+	#else:
+		#print("file not found")
+	GlobalSaveData.current_save.player.health=health.health
+	GlobalSaveData.current_save.player.max_health=health.max_health
+	GlobalSaveData.current_save.player.stagger=stagger.stagger
+	GlobalSaveData.current_save.player.max_stagger=stagger.max_tagger
+	GlobalSaveData.save_game()
 
 func _on_parry_timer_timeout():
 	parry_timer.stop()

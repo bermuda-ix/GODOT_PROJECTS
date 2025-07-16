@@ -1,0 +1,118 @@
+[gd_scene load_steps=13 format=3 uid="uid://c77d0eq03vp0j"]
+
+[ext_resource type="Texture2D" uid="uid://dwgdq8nj8ak1m" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/IdleSmoke/IdleSmoke01.png" id="1_wkboy"]
+[ext_resource type="Texture2D" uid="uid://c8c88i3i24cxc" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/IdleSmoke/IdleSmoke02.png" id="2_fhq1c"]
+[ext_resource type="Texture2D" uid="uid://c15akajpj031q" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/IdleSmoke/IdleSmoke03.png" id="3_urg51"]
+[ext_resource type="Texture2D" uid="uid://6n0mixmlc1pi" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/IdleSmoke/IdleSmoke04.png" id="4_suvv1"]
+[ext_resource type="Texture2D" uid="uid://xiq4irbu2ftg" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/IdleSmoke/IdleSmoke05.png" id="5_6ikbm"]
+[ext_resource type="Texture2D" uid="uid://qi5t0ddpf0lg" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/IdleSmoke/IdleSmoke06.png" id="6_u3ros"]
+[ext_resource type="Texture2D" uid="uid://ktg2vqmaq4uf" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/IdleSmoke/IdleSmoke07.png" id="7_yksdu"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a5vku"]
+height = 46.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3e6be"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_wkboy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_fhq1c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_urg51")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_suvv1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_6ikbm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_u3ros")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_yksdu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_kui5e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_kypla"]
+resource_name = "idle"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.266667, 0.333333, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ldpld"]
+_data = {
+&"RESET": SubResource("Animation_kui5e"),
+&"idle": SubResource("Animation_kypla")
+}
+
+[node name="DemonPhase1" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 20)
+shape = SubResource("CapsuleShape2D_a5vku")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3e6be")
+animation = &"idle"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ldpld")
+}

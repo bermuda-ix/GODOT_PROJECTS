@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxdgwyutj2qya"]
+
+[ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="1_dvv5h"]
+
+[node name="PersistentDataHandler" type="Node"]
+script = ExtResource("1_dvv5h")
