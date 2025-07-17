@@ -1043,7 +1043,7 @@ func locked_combat():
 
 func enter_door() -> void:
 	if in_door_way:
-		if Input.is_action_pressed("up"):
+		if Input.is_action_just_pressed("up"):
 			Global.game_controller.change_2d_scene(next_room)
 
 

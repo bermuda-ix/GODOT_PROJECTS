@@ -18,6 +18,8 @@ extends Node2D
 @onready var label = $CanvasLayer/Label
 @onready var pause_menu = $CanvasLayer/PauseMenu
 @onready var score : int = 0
+@export var starting_pos: Array[Node2D]
+
 
 @onready var cutscene_player: AnimationPlayer = $CutscenePlayer
 var qte_options : Array[String]  = ["1", "2", "3", "4", "0"]

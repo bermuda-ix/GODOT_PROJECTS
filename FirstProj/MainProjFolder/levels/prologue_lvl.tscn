@@ -746,9 +746,10 @@ _data = {
 &"mini_boss_kill": SubResource("Animation_cxkws")
 }
 
-[node name="PrologueLvl" node_paths=PackedStringArray("player") instance=ExtResource("1_7j8nt")]
+[node name="PrologueLvl" node_paths=PackedStringArray("player", "starting_pos") instance=ExtResource("1_7j8nt")]
 next_level = ExtResource("2_tnflb")
 player = NodePath("PC")
+starting_pos = [NodePath("StartingPos/Default")]
 lvl_type = "adv"
 
 [node name="ScreenFlash" type="ColorRect" parent="CanvasLayer" index="5"]
@@ -1176,6 +1177,11 @@ rotates = false
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Paths/Path2D/PathFollow2D" index="0"]
 update_rotation = false
 update_scale = false
+
+[node name="StartingPos" type="Node" parent="." index="26"]
+
+[node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
+position = Vector2(3732, 1141)
 
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]

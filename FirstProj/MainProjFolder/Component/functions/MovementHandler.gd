@@ -14,13 +14,13 @@ extends Node
 
 func _physics_process(delta: float) -> void:
 	
-	var direction= actor.global_position - actor.player.global_position
+	
 	
 	if not active:
 		return
 		
 	else:
-		
+		var direction= actor.global_position - actor.player.global_position
 		if face_player_active:
 			face_player()
 		

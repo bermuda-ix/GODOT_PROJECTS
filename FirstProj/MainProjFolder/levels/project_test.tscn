@@ -272,9 +272,10 @@ _data = {
 &"stretch": SubResource("Animation_01tlq")
 }
 
-[node name="project_test" node_paths=PackedStringArray("player") instance=ExtResource("1_07jkq")]
+[node name="project_test" node_paths=PackedStringArray("player", "starting_pos") instance=ExtResource("1_07jkq")]
 lvl_type = "test"
 player = NodePath("PC")
+starting_pos = [NodePath("StartingPos/Default")]
 
 [node name="LevelTileMap" parent="." index="1"]
 position = Vector2(1, 0)
