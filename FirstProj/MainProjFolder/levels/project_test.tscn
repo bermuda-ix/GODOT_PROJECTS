@@ -422,6 +422,11 @@ lvl = NodePath("..")
 ui_level = NodePath("../CanvasLayer/UI_Level")
 metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 
+[node name="StartingPos" type="Node" parent="." index="26"]
+
+[node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
+position = Vector2(1078, 42)
+
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]
 [connection signal="dodge_qte" from="PC" to="." method="_on_pc_dodge_qte"]

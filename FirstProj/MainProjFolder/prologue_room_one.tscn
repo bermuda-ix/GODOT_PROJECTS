@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://b2ll7yf0xbexn"]
+[gd_scene load_steps=10 format=4 uid="uid://b2ll7yf0xbexn"]
 
 [ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://LVL_Transitions/level_completed.tscn" id="1_jvlwe"]
 [ext_resource type="PackedScene" uid="uid://cxqapy0tyeigc" path="res://ui_level.tscn" id="2_337yx"]
@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="4_i38eo"]
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="5_337yx"]
 [ext_resource type="TileSet" uid="uid://duvitr2o4lrsy" path="res://levels/level_components/factory_tile_set_building_platform.tres" id="7_jih07"]
+[ext_resource type="PackedScene" uid="uid://dnliwh5g1v8xb" path="res://levels/level_components/entry.tscn" id="8_7gcpd"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="8_w2xyb"]
+[ext_resource type="PackedScene" uid="uid://bwy4dfs27ji8h" path="res://levels/prologue_lvl.tscn" id="9_jih07"]
 
 [node name="PrologueRoomOne" type="Node2D"]
 
@@ -43,3 +45,8 @@ polygon = PackedVector2Array(-5, -5, -4, 410, 708, 411, 710, 2, 652, 4, 651, 329
 
 [node name="PC" parent="." instance=ExtResource("8_w2xyb")]
 position = Vector2(510, 301)
+
+[node name="Entry" parent="." instance=ExtResource("8_7gcpd")]
+position = Vector2(581, 278)
+new_scene_path = ExtResource("9_jih07")
+exit = 1

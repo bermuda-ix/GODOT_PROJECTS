@@ -170,6 +170,11 @@ signal no_input_qte
 @onready var player_hit: GPUParticles2D = $AnimatedSprite2D/PlayerHit
 @onready var hit_stop: HitStop = $HitStop
 
+#Moving rooms
+@onready var next_room : String
+@onready var in_door_way : bool = false
+@onready var game_controller : GameController
+
 @onready var enemies : Array =[]
 
 
@@ -420,6 +425,7 @@ func _process(_delta):
 			dash_attack_enter()
 	#
 	lockon()
+	enter_door()
 
 func _physics_process(delta):
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
@@ -1035,6 +1041,12 @@ func locked_combat():
 				#set_state(state, States.FLIP)
 				flip.emit()
 
+func enter_door() -> void:
+	if in_door_way:
+		if Input.is_action_pressed("up"):
+			Global.game_controller.change_2d_scene(next_room)
+
+
 func _on_hazard_detector_area_entered(area):
 	if area.is_in_group("hazard"):
 		global_position=starting_position
@@ -1427,6 +1439,7 @@ func load_player_data():
 		#print("file not found")
 		
 	
+
 
 func save_player_data():
 	#var file = FileAccess.open("user://player_data/stats/player_stats.txt", FileAccess.READ_WRITE)

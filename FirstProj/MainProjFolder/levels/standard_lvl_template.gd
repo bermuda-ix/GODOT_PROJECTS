@@ -7,7 +7,7 @@ extends Node2D
 @export var player : PlayerEntity
 @onready var cutscene_active : bool = false
 @onready var camera_pos: camera_position = $CameraPos
-@onready var camera_2d: Camera2D = $CameraPos/Camera2D
+@onready var camera_2d: Camera2D = $CameraPos/Camera2D	
 
 #@onready var collision_polygon_2d = $StaticBody2D/CollisionPolygon2D
 #@onready var polygon_2d = $StaticBody2D/CollisionPolygon2D/Polygon2D
@@ -50,8 +50,8 @@ func _ready():
 	Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
 
-	Events.start_cutscene.emit()
-	cutscene_player.play("INTRO")
+	#Events.start_cutscene.emit()
+	#cutscene_player.play("INTRO")
 	
 	
 	#score=45

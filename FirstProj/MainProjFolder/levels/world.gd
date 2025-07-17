@@ -25,6 +25,9 @@ var qte_options : Array[String] = ["1","1","1","1","1"]
 
 @export var player : PlayerEntity
 @onready var camera_pos: camera_position = $CameraPos
+@onready var starting_pos: Array[Node]
+@onready var default: Node2D = $StartingPos/Default
+signal get_entry_position
 
 @onready var cutscene_active : bool = false
 
@@ -43,8 +46,9 @@ var obj : int
 func _ready():
 	if not next_level is PackedScene:
 		next_level = load("res://LVL_Transitions/victory_screen.tscn")
-		
-		
+	print(starting_pos[0])
+	
+	
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	#polygon_2d.polygon = collision_polygon_2d.polygon
 	#Events.level_completed.connect(show_level_complete)
@@ -94,6 +98,12 @@ func _process(_delta):
 func _physics_process(delta: float) -> void:
 	if not cutscene_active:
 		camera_pos.global_position=Vector2(player.global_position.x, player.global_position.y-50)
+	
+	
+func set_starting_pos() -> void:
+	starting_pos = get_tree().get_nodes_in_group("start_pos")
+
+	
 	
 func show_level_complete():
 

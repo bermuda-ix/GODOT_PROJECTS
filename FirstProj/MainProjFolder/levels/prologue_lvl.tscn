@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=45 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_7j8nt"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_dtpw0"]
@@ -22,6 +22,8 @@
 [ext_resource type="PackedScene" uid="uid://b7ppm0ysps4q6" path="res://Component/resources/enemy_group.tscn" id="19_dxt6w"]
 [ext_resource type="Script" uid="uid://7cyh5ujpo4sp" path="res://levels/Boundery.gd" id="19_kcvht"]
 [ext_resource type="PackedScene" uid="uid://d3jixkbstt3qn" path="res://Component/qte_start.tscn" id="21_hjny2"]
+[ext_resource type="PackedScene" uid="uid://dnliwh5g1v8xb" path="res://levels/level_components/entry.tscn" id="22_vxvrt"]
+[ext_resource type="PackedScene" uid="uid://dkouym7pf4wi" path="res://levels/project_test.tscn" id="23_vxvrt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kcvht"]
 resource_local_to_scene = true
@@ -759,7 +761,7 @@ grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
 [node name="PC" parent="." index="1" instance=ExtResource("2_dtpw0")]
-position = Vector2(140, 439)
+position = Vector2(3791, 1174)
 scale = Vector2(2, 2)
 
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
@@ -1145,6 +1147,15 @@ progress = 403.0
 [node name="lab_door_switch" parent="DoorsAndSwitches" index="2" node_paths=PackedStringArray("door_connect") instance=ExtResource("5_ru525")]
 position = Vector2(2072, 65)
 door_connect = NodePath("../Elevator")
+
+[node name="Entries" type="Node" parent="DoorsAndSwitches" index="3"]
+
+[node name="Entry" parent="DoorsAndSwitches/Entries" index="0" instance=ExtResource("22_vxvrt")]
+position = Vector2(3512, 1159)
+scale = Vector2(2, 2)
+collision_mask = 2
+new_scene_path = ExtResource("23_vxvrt")
+exit = 1
 
 [node name="QTEFlags" type="Node" parent="." index="24"]
 
