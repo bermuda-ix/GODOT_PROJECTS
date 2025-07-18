@@ -21,9 +21,6 @@ func _ready() -> void:
 
 func change_2d_scene(new_scene: String, delete: bool = true, keep_running: bool = false, starting_pos: int = 0) -> void:
 	
-	#####
-	#Add code to reparent player node to world2D
-	####
 	player.reparent(world_2d)
 	await LevelTransition.fade_to_black()
 	if current_2d_scene != null:
@@ -37,11 +34,9 @@ func change_2d_scene(new_scene: String, delete: bool = true, keep_running: bool 
 	
 	var new = load(new_scene).instantiate()
 	world_2d.add_child(new)
-	#####
-	#Add code to reparent player node to new level
-	#####
 	player.reparent(new)
 	new.player.global_position=new.starting_pos[starting_pos].global_position
 	LevelTransition.fade_from_black()
+	current_2d_scene=new
 	
 	

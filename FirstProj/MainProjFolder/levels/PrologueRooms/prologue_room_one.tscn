@@ -82,3 +82,5 @@ occluder = SubResource("OccluderPolygon2D_uf1fl")
 [node name="PointLight2D" parent="Lights" instance=ExtResource("12_2evft")]
 position = Vector2(310, 111)
 shadow_enabled = true
+
+[node name="CutscenePlayer" type="AnimationPlayer" parent="."]
