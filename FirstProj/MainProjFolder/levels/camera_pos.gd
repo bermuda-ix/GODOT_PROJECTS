@@ -6,6 +6,8 @@ extends Node2D
 @export var shake_fade : float = 20
 @onready var camera_2d: Camera2D = $Camera2D
 
+@export var camera_zoom : int
+@export var stationary : bool = false
 
 
 var rng = RandomNumberGenerator.new()
@@ -16,6 +18,7 @@ func _ready() -> void:
 	Events.camera_shake.connect(camera_shake)
 
 func _process(delta: float) -> void:
+	
 	
 	
 	if shake_strength>0:

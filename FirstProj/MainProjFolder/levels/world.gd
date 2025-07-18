@@ -46,7 +46,7 @@ var obj : int
 func _ready():
 	if not next_level is PackedScene:
 		next_level = load("res://LVL_Transitions/victory_screen.tscn")
-	print(starting_pos[0].global_position)
+	#print(starting_pos[0].global_position)
 	
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	#polygon_2d.polygon = collision_polygon_2d.polygon
@@ -95,7 +95,7 @@ func _process(_delta):
 		show_pause()
 	
 func _physics_process(delta: float) -> void:
-	if not cutscene_active:
+	if not cutscene_active and not camera_pos.stationary:
 		camera_pos.global_position=Vector2(player.global_position.x, player.global_position.y-50)
 	
 

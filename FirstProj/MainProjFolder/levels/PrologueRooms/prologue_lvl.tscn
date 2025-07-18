@@ -1,0 +1,980 @@
+[gd_scene load_steps=42 format=3 uid="uid://bwy4dfs27ji8h"]
+
+[ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_w82j5"]
+[ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_mb6gy"]
+[ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="4_7klgn"]
+[ext_resource type="PackedScene" uid="uid://m5ullq0dey1k" path="res://Art_Components/misc/lights_indoor.tscn" id="5_8qkpr"]
+[ext_resource type="PackedScene" uid="uid://2t2be0q7lqvs" path="res://Art_Components/tile_maps/lab_architect.tscn" id="6_drpgx"]
+[ext_resource type="PackedScene" uid="uid://blsmgy883jm3a" path="res://levels/level_backgrounds/desert_background.tscn" id="7_veiog"]
+[ext_resource type="PackedScene" uid="uid://bt6url6xt1nqm" path="res://Component/interactables/lab_door_switch.tscn" id="8_2mqv2"]
+[ext_resource type="PackedScene" uid="uid://b8htmq8u3ykss" path="res://Component/interactables/door.tscn" id="9_kuq7b"]
+[ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="10_j2fky"]
+[ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="11_52g4u"]
+[ext_resource type="PackedScene" uid="uid://b5d2nkkrrcixy" path="res://chars/soldier_enemy.tscn" id="12_f1jjf"]
+[ext_resource type="PackedScene" uid="uid://dn0fhusgltn4m" path="res://chars/heavy_soldier.tscn" id="13_rfxm3"]
+[ext_resource type="PackedScene" uid="uid://mve6miefg0i0" path="res://chars/turret_enemies/turret_base_3.tscn" id="14_r2uf8"]
+[ext_resource type="PackedScene" uid="uid://idc8e7mjacdd" path="res://Component/turret_link.tscn" id="15_ffcw5"]
+[ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="16_vw32t"]
+[ext_resource type="PackedScene" uid="uid://dak3j323lms0s" path="res://chars/sleeping_guard.tscn" id="17_61h8j"]
+[ext_resource type="PackedScene" uid="uid://bvvdaxqcb1uvh" path="res://chars/mech_ranged.tscn" id="18_lt1cf"]
+[ext_resource type="PackedScene" uid="uid://b7ppm0ysps4q6" path="res://Component/resources/enemy_group.tscn" id="19_658m8"]
+[ext_resource type="Script" uid="uid://7cyh5ujpo4sp" path="res://levels/Boundery.gd" id="20_e156f"]
+[ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="21_7qfih"]
+[ext_resource type="PackedScene" uid="uid://dnliwh5g1v8xb" path="res://levels/level_components/entry.tscn" id="22_5m18i"]
+[ext_resource type="PackedScene" uid="uid://d3jixkbstt3qn" path="res://Component/qte_start.tscn" id="24_4koma"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_p4nhw"]
+polygon = PackedVector2Array(699, 393, 758, 393, 1049, 389, 1081, 367, 1081, 358, 1070, 358, 1070, 290, 1426, 290, 1479, 254, 1893, 243, 1894, 202, 1501, 212, 1500, 147, 1382, 76, 766, 78, 761, -20, 728, -21, 729, -120, 725, -22, 698, -21)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_e3spa"]
+polygon = PackedVector2Array(1973, 224, 2009, 224, 2072, 157, 3706, 158, 3706, -54, 3482, -54, 3482, -261, 3415, -261, 3415, -59, 2105, -60, 2105, -263, 2034, -263, 2034, -97, 1974, -97)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_hjny2"]
+polygon = PackedVector2Array(2039, -21, 3477, -22, 3483, -2, 3524, 14, 3669, 17, 3670, -55, 2101, -55, 2102, -91, 1975, -94, 1977, 214, 2007, 217, 2071, 156, 3571, 153, 3564, 109, 2350, 117, 2305, 81, 2037, 79)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_kcvht"]
+polygon = PackedVector2Array(-2, 559, 1944, 561, 2610, 562, 2910, 402, 3577, 404, 3580, 357, 1978, 325, 1640, 502, 55, 496, 10, 525)
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_htxyq"]
+vertices = PackedVector2Array(1645.83, 430, 1122, 430, 1122, 322, 1882.08, 322)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1112, 312, 1112, 440, 1648, 440, 1928, 312)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_nlf3e"]
+vertices = PackedVector2Array(1926, -110, 1926, 158, 1618.8, 158, 1434.8, 46, 802, 46, 802, -110)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 4, 5, 0)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(792, -120, 792, 56, 1432, 56, 1616, 168, 1936, 168, 1936, -120)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_pxxff"]
+vertices = PackedVector2Array(1634.46, 458, 1958, 288.523, 1958, 313.938, 1629.54, 486, 74, 458, 74, 486)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(64, 448, 64, 496, 1632, 496, 1968, 320, 1968, 272, 1632, 448)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_olhh5"]
+vertices = PackedVector2Array(2289.24, 308.992, 2010, 309.961, 2010, 274, 2290.9, 274, 2374.9, 311, 2344.25, 349, 3571, 349, 3571, 311)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(0, 3, 4, 5), PackedInt32Array(6, 5, 4, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(2000, 264, 2000, 320, 3583, 319, 3582, 264)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_jyauw"]
+vertices = PackedVector2Array(3560, 79, 3560, 109.992, 2361.76, 109, 2358.25, 79, 2299.76, 72, 2294.25, 41, 2050, 72, 2050, 41)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(5, 4, 6, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(2040, 82, 2297, 82, 2359, 119, 3570, 120, 3570, 69, 2361, 69, 2297, 31, 2040, 31)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_dmeha"]
+vertices = PackedVector2Array(2478.47, 790, 1959, 790.977, 1959, 748, 2478.5, 748, 2994.49, 514, 2993.5, 473, 3558, 473, 3558, 514)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(4, 5, 6, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1949, 738, 1949, 801, 2481, 800, 2997, 524, 3568, 524, 3568, 463, 2991, 463, 2476, 738)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_dxt6w"]
+vertices = PackedVector2Array(2956, 1211, 1955, 1211, 1955, 1192.99, 2956, 1192)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1945, 1221, 1945, 1183, 2966, 1182, 2966, 1221)])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jyauw"]
+size = Vector2(68, 577)
+
+[sub_resource type="Animation" id="Animation_hjny2"]
+resource_name = "ElevatorToBasement"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DoorsAndSwitches/Elevator2/Path2D/PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_h7re7"]
+resource_name = "INTRO"
+length = 11.6
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(11.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CameraPos:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4.93333, 5.3, 7.3, 7.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(221, 396), Vector2(221, 396), Vector2(660, 219), Vector2(660, 219), Vector2(221, 396)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CameraPos/Camera2D:zoom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 4.93333, 5.30313, 7.3, 7.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1, 1)]
+}
+
+[sub_resource type="Curve2D" id="Curve2D_e3spa"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 2202, 777, 55.0275, 15.7722, -55.0275, -15.7722, 2131, 690, 0, 0, 0, 0, 2016, 738)
+}
+point_count = 3
+
+[sub_resource type="Animation" id="Animation_tnflb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy/MiniBosses/MechRanged:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2098, 761)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Enemy/MiniBosses/MechRanged/NPCStats:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Enemy/MiniBosses/MechRanged:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CameraPos:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(221, 396)]
+}
+tracks/4/type = "animation"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Enemy/MiniBosses/MechRanged/AnimationPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": PackedStringArray("RESET", "RESET"),
+"times": PackedFloat32Array(0, 0.0333333)
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CameraPos/Camera2D:zoom")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Enemy/MiniBosses/MechRanged/AnimatedSprite2D:flip_h")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Paths/Path2D:curve")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("Curve2D_e3spa")]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Paths/Path2D/PathFollow2D:progress_ratio")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Paths/Path2D/PathFollow2D/RemoteTransform2D:remote_path")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [NodePath("")]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Paths/Path2D/PathFollow2D:rotates")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Paths/Path2D/PathFollow2D/RemoteTransform2D:update_rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Paths/Path2D/PathFollow2D/RemoteTransform2D:update_scale")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("CanvasLayer/ScreenFlash:color")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("DoorsAndSwitches/Elevator2/Path2D/PathFollow2D:progress_ratio")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Curve2D" id="Curve2D_kcvht"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 2017, 738, -43.0152, 9.24029, 43.0152, -9.24029, 2079, 702, -18.4806, -16.5688, 18.4806, 16.5688, 2166, 728, 0, 0, 0, 0, 2209, 794)
+}
+point_count = 4
+
+[sub_resource type="Animation" id="Animation_cxkws"]
+resource_name = "mini_boss_kill"
+length = 5.0
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy/MiniBosses/MechRanged/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("shoot_left", "shoot_right"),
+"times": PackedFloat32Array(0.166667, 1.2)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Enemy/MiniBosses/MechRanged:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.566667, 2.53333, 2.66667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(2158, 765), Vector2(2019, 758), Vector2(2019, 758), Vector2(1999.24, 758)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Enemy/MiniBosses/MechRanged/NPCStats:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Enemy/MiniBosses/MechRanged:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CameraPos:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(2210, 724), Vector2(2210, 724)]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Enemy/MiniBosses/MechRanged/AnimatedSprite2D:flip_h")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Paths/Path2D:curve")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.17, 2.94, 3.86667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [SubResource("Curve2D_e3spa"), SubResource("Curve2D_kcvht"), null]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Paths/Path2D/PathFollow2D:progress_ratio")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(1.17, 1.92, 2.9, 2.94, 3.86667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 1.0, 0.0, 1.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Paths/Path2D/PathFollow2D/RemoteTransform2D:remote_path")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 1.18, 4.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [NodePath(""), NodePath("../../../../PC"), NodePath("")]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Paths/Path2D/PathFollow2D:rotates")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Paths/Path2D/PathFollow2D/RemoteTransform2D:update_rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Paths/Path2D/PathFollow2D/RemoteTransform2D:update_scale")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/13/type = "method"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Enemy/MiniBosses/MechRanged")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(2.96667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"cutscnene_death"
+}]
+}
+tracks/14/type = "method"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Enemy/MiniBosses/MechRanged/DespawnHandler")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(4.96667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"despawn"
+}]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("CanvasLayer/ScreenFlash:color")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 0.406126),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tnflb"]
+_data = {
+&"ElevatorToBasement": SubResource("Animation_hjny2"),
+&"INTRO": SubResource("Animation_h7re7"),
+&"RESET": SubResource("Animation_tnflb"),
+&"mini_boss_kill": SubResource("Animation_cxkws")
+}
+
+[node name="PrologueLvl" node_paths=PackedStringArray("starting_pos") instance=ExtResource("1_w82j5")]
+next_level = ExtResource("2_mb6gy")
+starting_pos = [NodePath("DoorsAndSwitches/Entries/Entry")]
+lvl_type = "adv"
+
+[node name="ScreenFlash" type="ColorRect" parent="CanvasLayer" index="5"]
+z_index = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="CameraPos" parent="." index="1" instance=ExtResource("4_7klgn")]
+position = Vector2(221, 396)
+
+[node name="Moonlight" type="DirectionalLight2D" parent="." index="2"]
+position = Vector2(257, 26)
+rotation = -0.523599
+color = Color(0.361187, 0.505418, 0.579718, 1)
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.63)
+shadow_filter = 2
+height = 0.25
+
+[node name="Lights" type="Node" parent="." index="3"]
+
+[node name="lights_indoors" parent="Lights" index="0" instance=ExtResource("5_8qkpr")]
+self_modulate = Color(1, 1, 1, 0.464)
+position = Vector2(2351, 164)
+shadow_enabled = true
+
+[node name="lights_indoors2" parent="Lights" index="1" instance=ExtResource("5_8qkpr")]
+position = Vector2(3153, 167)
+shadow_enabled = true
+
+[node name="lights_indoors3" parent="Lights" index="2" instance=ExtResource("5_8qkpr")]
+position = Vector2(3036, -17)
+shadow_enabled = true
+
+[node name="lights_indoors4" parent="Lights" index="3" instance=ExtResource("5_8qkpr")]
+position = Vector2(2274, -17)
+shadow_enabled = true
+
+[node name="lights_indoors5" parent="Lights" index="4" instance=ExtResource("5_8qkpr")]
+position = Vector2(3202, 405)
+shadow_enabled = true
+
+[node name="lights_indoors6" parent="Lights" index="5" instance=ExtResource("5_8qkpr")]
+position = Vector2(2309, 565)
+shadow_enabled = true
+
+[node name="lights_indoors7" parent="Lights" index="6" instance=ExtResource("5_8qkpr")]
+position = Vector2(1051, 391)
+shadow_enabled = true
+
+[node name="Shadows" type="Node" parent="." index="4"]
+
+[node name="Outisde" type="LightOccluder2D" parent="Shadows" index="0"]
+occluder = SubResource("OccluderPolygon2D_p4nhw")
+
+[node name="Inside1" type="LightOccluder2D" parent="Shadows" index="1"]
+position = Vector2(0, -1)
+occluder = SubResource("OccluderPolygon2D_e3spa")
+
+[node name="Inside2" type="LightOccluder2D" parent="Shadows" index="2"]
+occluder = SubResource("OccluderPolygon2D_hjny2")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Shadows" index="3"]
+occluder = SubResource("OccluderPolygon2D_kcvht")
+
+[node name="LabArchitect" parent="." index="5" instance=ExtResource("6_drpgx")]
+position = Vector2(-8, 392)
+scale = Vector2(1, 1.071)
+collision_visibility_mode = 1
+
+[node name="Non_TilesetCollisions" type="Node2D" parent="LabArchitect" index="7"]
+
+[node name="stairs_1_1st_area" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="0"]
+position = Vector2(1664, 67.2269)
+scale = Vector2(1, 0.933707)
+collision_mask = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LabArchitect/Non_TilesetCollisions/stairs_1_1st_area" index="0"]
+position = Vector2(-1664, -72)
+scale = Vector2(1, 1.071)
+polygon = PackedVector2Array(1648, 97.1055, 1976, -67.2269, 2008, -67.2269, 2016, -59.7572, 1664, 104.575)
+
+[node name="stairs_2_1st_area" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="1"]
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="LabArchitect/Non_TilesetCollisions/stairs_2_1st_area" index="0"]
+polygon = PackedVector2Array(1504, -224.09, 1480, -224.09, 1352, -276.377, 1352, -291.317, 1384, -291.317, 1504, -231.559)
+
+[node name="stairs_1_2nd_area" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="2"]
+position = Vector2(966, -37.3483)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="LabArchitect/Non_TilesetCollisions/stairs_1_2nd_area" index="0"]
+polygon = PackedVector2Array(1335, -253.035, 1391, -218.487, 1410, -218.487, 1355, -251.167)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="3"]
+position = Vector2(2755, 260.504)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LabArchitect/Non_TilesetCollisions/StaticBody2D" index="0"]
+position = Vector2(10, -5.60224)
+polygon = PackedVector2Array(233, -128.852, -271, 124.183, -285, 126.984, -279, 142.857, 244, -101.774, 247, -128.852)
+
+[node name="Desert_Background" parent="." index="6" instance=ExtResource("7_veiog")]
+position = Vector2(5, 14)
+
+[node name="lab_door_switch" parent="." index="7" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
+z_index = -1
+position = Vector2(680, 480)
+door_connect = NodePath("../Door")
+
+[node name="Door" parent="." index="8" instance=ExtResource("9_kuq7b")]
+position = Vector2(736, 448)
+scale = Vector2(1.03607, 1.19587)
+
+[node name="lab_door_switch2" parent="." index="9" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
+position = Vector2(1040, 344)
+door_connect = NodePath("../Door2")
+
+[node name="Door2" parent="." index="10" instance=ExtResource("9_kuq7b")]
+z_index = -1
+position = Vector2(1984, 264)
+scale = Vector2(1, 1.18132)
+
+[node name="SpawnPoint" parent="." index="11" instance=ExtResource("10_j2fky")]
+position = Vector2(1360, 424)
+enemy_single = ExtResource("11_52g4u")
+
+[node name="SpawnPoint2" parent="." index="12" instance=ExtResource("10_j2fky")]
+position = Vector2(2264, 272)
+enemy_single = ExtResource("11_52g4u")
+max_enemy = 1
+
+[node name="Enemy" type="Node" parent="." index="13"]
+
+[node name="soldiers" type="Node" parent="Enemy" index="0"]
+
+[node name="soldier_enemy3" parent="Enemy/soldiers" index="0" instance=ExtResource("12_f1jjf")]
+position = Vector2(2416, 92)
+
+[node name="HeavySoldier" parent="Enemy/soldiers" index="1" instance=ExtResource("13_rfxm3")]
+position = Vector2(2216, 280)
+scale = Vector2(0.5, 0.5)
+
+[node name="HeavySoldier2" parent="Enemy/soldiers" index="2" instance=ExtResource("13_rfxm3")]
+position = Vector2(3389, 285)
+scale = Vector2(0.5, 0.5)
+
+[node name="HeavySoldier3" parent="Enemy/soldiers" index="3" instance=ExtResource("13_rfxm3")]
+position = Vector2(3285, 485)
+scale = Vector2(0.5, 0.5)
+
+[node name="HeavySoldier4" parent="Enemy/soldiers" index="4" instance=ExtResource("13_rfxm3")]
+position = Vector2(3348, 482)
+scale = Vector2(0.5, 0.5)
+
+[node name="flying" type="Node" parent="Enemy" index="1"]
+
+[node name="flying_enemy2" parent="Enemy/flying" index="0" instance=ExtResource("11_52g4u")]
+position = Vector2(952, -56)
+
+[node name="flying_enemy3" parent="Enemy/flying" index="1" instance=ExtResource("11_52g4u")]
+position = Vector2(1312, 0)
+
+[node name="turrets" type="Node" parent="Enemy" index="2"]
+
+[node name="turret_base_3" parent="Enemy/turrets" index="0" instance=ExtResource("14_r2uf8")]
+position = Vector2(1967, 206)
+rotation = -1.5708
+scale = Vector2(0.1, 0.1)
+
+[node name="turret_base_4" parent="Enemy/turrets" index="1" node_paths=PackedStringArray("turret_link_control") instance=ExtResource("14_r2uf8")]
+position = Vector2(938, 71)
+scale = Vector2(-0.1, 0.1)
+turret_link_control = NodePath("../TurretLink")
+
+[node name="turret_base_5" parent="Enemy/turrets" index="2" node_paths=PackedStringArray("turret_link_control") instance=ExtResource("14_r2uf8")]
+position = Vector2(770, -6)
+rotation = 1.57333
+scale = Vector2(-0.1, 0.1)
+turret_link_control = NodePath("../TurretLink")
+
+[node name="turret_base_6" parent="Enemy/turrets" index="3" node_paths=PackedStringArray("turret_link_control") instance=ExtResource("14_r2uf8")]
+position = Vector2(2100, -9)
+rotation = 3.14159
+scale = Vector2(0.1, 0.1)
+turret_link_control = NodePath("../TurretLink2")
+
+[node name="turret_base_7" parent="Enemy/turrets" index="4" node_paths=PackedStringArray("turret_link_control") instance=ExtResource("14_r2uf8")]
+position = Vector2(2373, -9)
+rotation = 3.14159
+scale = Vector2(0.1, 0.1)
+turret_link_control = NodePath("../TurretLink2")
+
+[node name="turret_base_9" parent="Enemy/turrets" index="5" instance=ExtResource("14_r2uf8")]
+position = Vector2(3448, -8)
+rotation = 3.14159
+scale = Vector2(0.1, 0.1)
+
+[node name="TurretLink" parent="Enemy/turrets" index="6" node_paths=PackedStringArray("turrets") instance=ExtResource("15_ffcw5")]
+position = Vector2(850, 98)
+turrets = [NodePath("../turret_base_4"), NodePath("../turret_base_5")]
+
+[node name="TurretLink2" parent="Enemy/turrets" index="7" node_paths=PackedStringArray("turrets") instance=ExtResource("15_ffcw5")]
+position = Vector2(2221, -6)
+turrets = [NodePath("../turret_base_6"), NodePath("../turret_base_7")]
+
+[node name="Guards" type="Node" parent="Enemy" index="3"]
+
+[node name="GuardEnemy" parent="Enemy/Guards" index="0" instance=ExtResource("16_vw32t")]
+position = Vector2(1378, 465)
+scale = Vector2(0.75, 0.75)
+
+[node name="GuardEnemy2" parent="Enemy/Guards" index="1" instance=ExtResource("16_vw32t")]
+position = Vector2(2828, 301)
+scale = Vector2(0.75, 0.75)
+
+[node name="GuardEnemy3" parent="Enemy/Guards" index="2" instance=ExtResource("16_vw32t")]
+position = Vector2(3299, 302)
+scale = Vector2(0.75, 0.75)
+
+[node name="GuardEnemy4" parent="Enemy/Guards" index="3" instance=ExtResource("16_vw32t")]
+position = Vector2(3404, 90)
+scale = Vector2(0.75, 0.75)
+
+[node name="GuardEnemy5" parent="Enemy/Guards" index="4" instance=ExtResource("16_vw32t")]
+position = Vector2(3485, 302)
+scale = Vector2(0.75, 0.75)
+
+[node name="SleepingGuard" parent="Enemy" index="4" instance=ExtResource("17_61h8j")]
+position = Vector2(656, 457)
+
+[node name="MiniBosses" type="Node" parent="Enemy" index="5"]
+
+[node name="MechRanged" parent="Enemy/MiniBosses" index="0" instance=ExtResource("18_lt1cf")]
+position = Vector2(2098, 761)
+lvl_boss = true
+
+[node name="Underground" type="Node" parent="Enemy" index="6"]
+
+[node name="EnemyGroup" parent="Enemy/Underground" index="0" node_paths=PackedStringArray("heavy_soldier_enemies", "guard_enemies") instance=ExtResource("19_658m8")]
+heavy_soldier_enemies = [NodePath("../HeavySoldier5"), NodePath("../HeavySoldier6")]
+guard_enemies = [NodePath("../GuardEnemy6")]
+
+[node name="HeavySoldier5" parent="Enemy/Underground" index="1" node_paths=PackedStringArray("group_link_control") instance=ExtResource("13_rfxm3")]
+position = Vector2(2749, 1175)
+scale = Vector2(0.5, 0.5)
+group_link_control = NodePath("../EnemyGroup")
+
+[node name="HeavySoldier6" parent="Enemy/Underground" index="2" node_paths=PackedStringArray("group_link_control") instance=ExtResource("13_rfxm3")]
+position = Vector2(2808, 1175)
+scale = Vector2(0.5, 0.5)
+group_link_control = NodePath("../EnemyGroup")
+
+[node name="GuardEnemy6" parent="Enemy/Underground" index="3" node_paths=PackedStringArray("group_link_control") instance=ExtResource("16_vw32t")]
+position = Vector2(2490, 1187)
+scale = Vector2(0.75, 0.75)
+group_link_control = NodePath("../EnemyGroup")
+
+[node name="Turrets" type="Node" parent="Enemy/Underground" index="4"]
+
+[node name="turret_base_3" parent="Enemy/Underground/Turrets" index="0" instance=ExtResource("14_r2uf8")]
+position = Vector2(2420, 1096)
+scale = Vector2(-0.15, -0.15)
+
+[node name="turret_base_4" parent="Enemy/Underground/Turrets" index="1" instance=ExtResource("14_r2uf8")]
+position = Vector2(2678, 1097)
+scale = Vector2(-0.15, -0.15)
+
+[node name="turret_base_5" parent="Enemy/Underground/Turrets" index="2" instance=ExtResource("14_r2uf8")]
+position = Vector2(2947, 1097)
+scale = Vector2(-0.15, -0.15)
+
+[node name="TurretLink" parent="Enemy/Underground/Turrets" index="3" node_paths=PackedStringArray("turrets") instance=ExtResource("15_ffcw5")]
+position = Vector2(2453, 1049)
+turrets = [NodePath("../turret_base_3"), NodePath("../turret_base_4"), NodePath("../turret_base_5")]
+
+[node name="AirNavs" type="Node2D" parent="." index="14"]
+
+[node name="AirNav1_Inside" type="NavigationRegion2D" parent="AirNavs" index="0"]
+navigation_polygon = SubResource("NavigationPolygon_htxyq")
+
+[node name="AirNav1_Above" type="NavigationRegion2D" parent="AirNavs" index="1"]
+navigation_polygon = SubResource("NavigationPolygon_nlf3e")
+
+[node name="GroundNavs" type="Node2D" parent="." index="15"]
+
+[node name="GroundNav1_Inside" type="NavigationRegion2D" parent="GroundNavs" index="0"]
+navigation_polygon = SubResource("NavigationPolygon_pxxff")
+navigation_layers = 2
+
+[node name="GroundNav2_Inside" type="NavigationRegion2D" parent="GroundNavs" index="1"]
+navigation_polygon = SubResource("NavigationPolygon_olhh5")
+navigation_layers = 2
+
+[node name="GroundNav3_Inside" type="NavigationRegion2D" parent="GroundNavs" index="2"]
+navigation_polygon = SubResource("NavigationPolygon_jyauw")
+navigation_layers = 2
+
+[node name="GroundNav1_B1" type="NavigationRegion2D" parent="GroundNavs" index="3"]
+navigation_polygon = SubResource("NavigationPolygon_dmeha")
+navigation_layers = 2
+
+[node name="Links" type="Node2D" parent="GroundNavs" index="4"]
+
+[node name="GNav_1Inside_2Inside" type="NavigationLink2D" parent="GroundNavs/Links" index="0"]
+navigation_layers = 2
+start_position = Vector2(2048, 296)
+end_position = Vector2(1944, 304)
+
+[node name="Underground1" type="NavigationRegion2D" parent="GroundNavs" index="5"]
+navigation_polygon = SubResource("NavigationPolygon_dxt6w")
+
+[node name="TutorialText" type="RichTextLabel" parent="." index="16"]
+offset_left = 467.0
+offset_top = 377.0
+offset_right = 590.0
+offset_bottom = 432.0
+text = "LMB:ATTACK
+ALT: LOCKON"
+
+[node name="TutorialText2" type="RichTextLabel" parent="." index="17"]
+offset_left = 978.0
+offset_top = 396.0
+offset_right = 1101.0
+offset_bottom = 451.0
+text = "CTRL: Dodge
+SHIFT: Sprint"
+
+[node name="TutorialText3" type="RichTextLabel" parent="." index="18"]
+offset_left = 1599.0
+offset_top = 255.0
+offset_right = 1929.0
+offset_bottom = 332.0
+text = "RMB: Shoot (High Stagger Low Damage)
+Hold Shift: Wall Stick
+Space on wall: Wall Jump"
+
+[node name="TutorialText4" type="RichTextLabel" parent="." index="19"]
+offset_left = 2105.0
+offset_top = 242.0
+offset_right = 2435.0
+offset_bottom = 319.0
+text = "Shift + Space while locked on: Flip over"
+
+[node name="Bounderies3" type="Node" parent="." index="20"]
+
+[node name="Bounderies" type="StaticBody2D" parent="Bounderies3" index="0"]
+position = Vector2(-1, 0)
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounderies3/Bounderies" index="0"]
+position = Vector2(24, 278.5)
+shape = SubResource("RectangleShape2D_jyauw")
+
+[node name="MiniBossCutscene" type="StaticBody2D" parent="Bounderies3" index="1" node_paths=PackedStringArray("objective")]
+position = Vector2(1900, 460)
+collision_mask = 3
+script = ExtResource("20_e156f")
+objective = NodePath("../../Enemy/MiniBosses/MechRanged")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounderies3/MiniBossCutscene" index="0"]
+position = Vector2(24, 278.5)
+shape = SubResource("RectangleShape2D_jyauw")
+
+[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="21"]
+libraries = {
+&"": SubResource("AnimationLibrary_tnflb")
+}
+
+[node name="DoorsAndSwitches" type="Node" parent="." index="22"]
+
+[node name="Elevator" parent="DoorsAndSwitches" index="0" instance=ExtResource("21_7qfih")]
+position = Vector2(3627, 525)
+stops_ratio = Array[float]([0.0, 0.5, 0.0])
+
+[node name="Elevator2" parent="DoorsAndSwitches" index="1" instance=ExtResource("21_7qfih")]
+position = Vector2(1893, 1203)
+scale = Vector2(-1, 1)
+
+[node name="PathFollow2D" parent="DoorsAndSwitches/Elevator2/Path2D" index="0"]
+position = Vector2(24, -400)
+progress = 403.0
+
+[node name="lab_door_switch" parent="DoorsAndSwitches" index="2" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
+position = Vector2(2072, 65)
+door_connect = NodePath("../Elevator")
+
+[node name="Entries" type="Node" parent="DoorsAndSwitches" index="3"]
+
+[node name="Entry" parent="DoorsAndSwitches/Entries" index="0" instance=ExtResource("22_5m18i")]
+position = Vector2(2199, 273)
+scale = Vector2(2, 2)
+new_scene_path = "prologue_room_1"
+
+[node name="Entry2" parent="DoorsAndSwitches/Entries" index="1" instance=ExtResource("22_5m18i")]
+position = Vector2(3030, 279)
+scale = Vector2(2, 2)
+
+[node name="Entry3" parent="DoorsAndSwitches/Entries" index="2" instance=ExtResource("22_5m18i")]
+position = Vector2(3030, 66)
+scale = Vector2(2, 2)
+
+[node name="Entry4" parent="DoorsAndSwitches/Entries" index="3" instance=ExtResource("22_5m18i")]
+position = Vector2(3513, 1161)
+scale = Vector2(2, 2)
+
+[node name="Entry5" parent="DoorsAndSwitches/Entries" index="4" instance=ExtResource("22_5m18i")]
+position = Vector2(4216, 1161)
+scale = Vector2(2, 2)
+
+[node name="Entry6" parent="DoorsAndSwitches/Entries" index="5" instance=ExtResource("22_5m18i")]
+position = Vector2(4793, 1162)
+scale = Vector2(2, 2)
+
+[node name="QTEFlags" type="Node" parent="." index="23"]
+
+[node name="QTE_Start" parent="QTEFlags" index="0" node_paths=PackedStringArray("cutscene_player") instance=ExtResource("24_4koma")]
+position = Vector2(1916, 713)
+cutscene_player = NodePath("../../CutscenePlayer")
+
+[node name="Paths" type="Node" parent="." index="24"]
+
+[node name="Path2D" type="Path2D" parent="Paths" index="0"]
+curve = SubResource("Curve2D_e3spa")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Paths/Path2D" index="0"]
+position = Vector2(2202, 777)
+rotation = -2.25527
+rotates = false
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Paths/Path2D/PathFollow2D" index="0"]
+update_rotation = false
+update_scale = false
+
+[node name="StartingPos" type="Node" parent="." index="25"]
+
+[node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
+position = Vector2(3732, 1141)
+
+[editable path="Enemy/MiniBosses/MechRanged"]
+[editable path="DoorsAndSwitches/Elevator2"]

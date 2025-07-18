@@ -4,7 +4,7 @@ class_name GameController extends Node
 
 @export var gui : Control
 
-@onready var player : PlayerEntity
+@onready var player: PlayerEntity = $World2D/PrologueLvl/Player
 
 var current_2d_scene
 var current_gui_scene
@@ -16,12 +16,15 @@ func _ready() -> void:
 	current_2d_scene=$World2D/PrologueLvl
 	#var test_scene="res://levels/prologue_lvl.tscn"
 	#change_2d_scene(test_scene, true, false, 0)
-
+	current_2d_scene.player=player
 
 
 func change_2d_scene(new_scene: String, delete: bool = true, keep_running: bool = false, starting_pos: int = 0) -> void:
 	
-	
+	#####
+	#Add code to reparent player node to world2D
+	####
+	player.reparent(world_2d)
 	await LevelTransition.fade_to_black()
 	if current_2d_scene != null:
 		if delete:
@@ -34,6 +37,10 @@ func change_2d_scene(new_scene: String, delete: bool = true, keep_running: bool 
 	
 	var new = load(new_scene).instantiate()
 	world_2d.add_child(new)
+	#####
+	#Add code to reparent player node to new level
+	#####
+	player.reparent(new)
 	new.player.global_position=new.starting_pos[starting_pos].global_position
 	LevelTransition.fade_from_black()
 	
