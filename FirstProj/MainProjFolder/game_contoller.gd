@@ -7,6 +7,7 @@ class_name GameController extends Node
 @onready var player: PlayerEntity = $World2D/PrologueLvl/Player
 
 var current_2d_scene
+var prev_2d_scene
 var current_gui_scene
 
 #@onready var prologue_lvl: adv_level = $World2D/PrologueLvl
@@ -14,6 +15,7 @@ var current_gui_scene
 func _ready() -> void:	
 	Global.game_controller = self
 	current_2d_scene=$World2D/PrologueLvl
+	prev_2d_scene=current_2d_scene
 	#var test_scene="res://levels/prologue_lvl.tscn"
 	#change_2d_scene(test_scene, true, false, 0)
 	current_2d_scene.player=player
@@ -32,11 +34,22 @@ func change_2d_scene(new_scene: String, delete: bool = true, keep_running: bool 
 			world_2d.remove_child(current_2d_scene) #Keep in mem, not running
 	
 	
-	var new = load(new_scene).instantiate()
-	world_2d.add_child(new)
-	player.reparent(new)
-	new.player.global_position=new.starting_pos[starting_pos].global_position
-	LevelTransition.fade_from_black()
-	current_2d_scene=new
+	
+	if new_scene==prev_2d_scene.get_scene_file_path():
+		world_2d.add_child(prev_2d_scene)
+		player.reparent(prev_2d_scene)
+		prev_2d_scene.player.global_position=prev_2d_scene.starting_pos[starting_pos].global_position
+		LevelTransition.fade_from_black()
+		var temp = prev_2d_scene
+		prev_2d_scene=current_2d_scene
+		current_2d_scene=temp
+	else:
+		var new = load(new_scene).instantiate()
+		world_2d.add_child(new)
+		player.reparent(new)
+		new.player.global_position=new.starting_pos[starting_pos].global_position
+		LevelTransition.fade_from_black()
+		prev_2d_scene=current_2d_scene
+		current_2d_scene=new
 	
 	
