@@ -145,8 +145,9 @@ func _ready():
 	hurt_box.set_damage_mulitplyer(1)
 	ammo_count=turret.ammo_count
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
-	
 	_init_group_link()
+	if health.health<=0:
+		state_machine.change_active_state(death)
 	
 	
 func _init_state_machine():
