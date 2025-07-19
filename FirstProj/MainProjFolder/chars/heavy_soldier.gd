@@ -164,13 +164,16 @@ func _ready():
 	_init_shooting_states()
 	hurt_box.set_damage_mulitplyer(1)
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
-	
+	if health.health<=0:
+		queue_free()
 	_init_group_link()
 
 func _process(delta: float) -> void:
 	if state_machine.get_active_state()==death:
 		hb_collision.disabled=true
 		return
+	if health.health<=0 and (state_machine.get_active_state()!=death or state_machine.get_active_state()!=dying):
+		state_machine.dispatch(&"die")
 	#even_order(group_link_order)
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)

@@ -6,9 +6,6 @@ extends Node
 @export var animation_player : AnimationPlayer
 @export var tree_active : bool = true
 
-func _ready() -> void:
-	if actor.health.health<=0:
-		actor.queue_free()
 
 func death():
 	#print("dying")
