@@ -35,3 +35,12 @@ func get_player_entry_dir() -> String:
 
 func get_player_entry_loc() -> Vector2:
 	return entry_loc
+
+
+func _on_body_exited(body: Node2D) -> void:
+	if not body is PlayerEntity:
+		return
+	#player_entered_door.emit(self)
+	player.in_door_way=false
+#	SceneManager.load_new_scene(new_scene_path, transition_type)
+	#queue_free()

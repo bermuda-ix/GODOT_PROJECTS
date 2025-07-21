@@ -4,7 +4,7 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_646mt"]
 
-[node name="Entry" type="Area2D"]
+[node name="Entry" type="Area2D" groups=["entry"]]
 collision_mask = 2
 script = ExtResource("1_leoei")
 entry_dir = 0
@@ -13,3 +13,4 @@ entry_dir = 0
 shape = SubResource("RectangleShape2D_646mt")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

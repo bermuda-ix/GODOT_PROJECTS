@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://b8htmq8u3ykss"]
 
 [ext_resource type="Texture2D" uid="uid://cm36bhcpc0hsc" path="res://Art_Components/tile_maps/_PNG/1. main platforms.png" id="1_4moad"]
-[ext_resource type="Script" uid="uid://d0d3rflso77ye" path="res://Component/interactables/path_follow_2d.gd" id="1_opf7r"]
+[ext_resource type="Script" uid="uid://bjx74gi53j4rg" path="res://Component/interactables/door.gd" id="1_flptw"]
 [ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="3_flptw"]
 
 [sub_resource type="Curve2D" id="Curve2D_2h5dv"]
@@ -21,8 +21,7 @@ region = Rect2(906.885, -0.0078454, 10.4645, 95.9792)
 polygon = PackedVector2Array(-5.99983, 47, -5.99983, 47, 5.00017, 47, 4.99983, -48, -6.00017, -48)
 
 [node name="Door" type="Node2D"]
-position = Vector2(64, 152)
-script = ExtResource("1_opf7r")
+script = ExtResource("1_flptw")
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_2h5dv")
