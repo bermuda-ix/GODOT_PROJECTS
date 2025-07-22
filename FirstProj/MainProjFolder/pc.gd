@@ -1044,7 +1044,7 @@ func locked_combat():
 func enter_door() -> void:
 	if in_door_way:
 		if Input.is_action_just_pressed("up"):
-			Global.game_controller.change_2d_scene(next_room, false, false, 0)
+			Global.game_controller.change_2d_scene(next_room, false, false, 0, "fade_to_black_quick", "fade_from_black_quick")
 
 
 func _on_hazard_detector_area_entered(area):

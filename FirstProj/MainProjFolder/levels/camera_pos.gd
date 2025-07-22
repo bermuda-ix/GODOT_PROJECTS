@@ -41,3 +41,8 @@ func get_rand_strength() -> float:
 	
 func set_rand_strength(value : float):
 	rand_strength=value
+
+
+func set_cam_smooth(value: bool, _speed: float = 3.0) -> void:
+	camera_2d.position_smoothing_enabled=value
+	camera_2d.position_smoothing_speed=_speed

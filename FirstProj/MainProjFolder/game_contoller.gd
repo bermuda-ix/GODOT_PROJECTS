@@ -5,6 +5,8 @@ class_name GameController extends Node
 @export var gui : Control
 
 @onready var player: PlayerEntity = $World2D/PrologueLvl/Player
+@onready var pause_menu: ColorRect = $GUI/CanvasLayer/PauseMenu
+
 
 var current_2d_scene
 var prev_2d_scene
@@ -19,12 +21,32 @@ func _ready() -> void:
 	#var test_scene="res://levels/prologue_lvl.tscn"
 	#change_2d_scene(test_scene, true, false, 0)
 	current_2d_scene.player=player
+	Events.pause.connect(show_pause)
+	Events.unpause.connect(unpause)
+	
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("Pause"):
+		show_pause()
+	
+func show_pause():
+	pause_menu.show()
+	get_tree().paused = true
+	
+func unpause():
+	pause_menu.hide()
+	get_tree().paused = false
+	
 
 
-func change_2d_scene(new_scene: String, delete: bool = true, keep_running: bool = false, starting_pos: int = 0) -> void:
+func change_2d_scene(new_scene: String, \
+	delete: bool = true, \
+	keep_running: bool = false, \
+	starting_pos: int = 0, \
+	_transition_in : String="fade_to_black", \
+	_transition_out : String="fade_from_black") -> void:
 	
 	player.reparent(world_2d)
-	await LevelTransition.fade_to_black()
+	await LevelTransition.transition_in(_transition_in)
 	if current_2d_scene != null:
 		if delete:
 			current_2d_scene.queue_free() #Deletes node entirely
@@ -39,7 +61,7 @@ func change_2d_scene(new_scene: String, delete: bool = true, keep_running: bool 
 		world_2d.add_child(prev_2d_scene)
 		player.reparent(prev_2d_scene)
 		prev_2d_scene.player.global_position=prev_2d_scene.starting_pos[starting_pos].global_position
-		LevelTransition.fade_from_black()
+		LevelTransition.transition_out(_transition_out)
 		var temp = prev_2d_scene
 		prev_2d_scene=current_2d_scene
 		current_2d_scene=temp
@@ -48,7 +70,7 @@ func change_2d_scene(new_scene: String, delete: bool = true, keep_running: bool 
 		world_2d.add_child(new)
 		player.reparent(new)
 		new.player.global_position=new.starting_pos[starting_pos].global_position
-		LevelTransition.fade_from_black()
+		LevelTransition.transition_out(_transition_out)
 		prev_2d_scene=current_2d_scene
 		current_2d_scene=new
 	

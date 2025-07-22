@@ -7,5 +7,4 @@ script = ExtResource("1_3sw4l")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 z_index = 1
-position_smoothing_enabled = true
 position_smoothing_speed = 3.0

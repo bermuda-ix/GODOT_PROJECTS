@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://j0pkbfaqdg0d"]
+[gd_scene load_steps=5 format=3 uid="uid://j0pkbfaqdg0d"]
 
 [ext_resource type="Script" uid="uid://bh56xedc4u1vv" path="res://game_contoller.gd" id="1_xrdjs"]
 [ext_resource type="PackedScene" uid="uid://bwy4dfs27ji8h" path="res://levels/PrologueRooms/prologue_lvl.tscn" id="2_kht82"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="3_e06k0"]
+[ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="4_218mp"]
 
 [node name="GameContoller" type="Node"]
 script = ExtResource("1_xrdjs")
@@ -19,3 +20,8 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="GUI"]
+
+[node name="PauseMenu" parent="GUI/CanvasLayer" instance=ExtResource("4_218mp")]
+visible = false

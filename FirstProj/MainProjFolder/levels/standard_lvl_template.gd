@@ -50,8 +50,8 @@ func _ready():
 	#Events.level_completed.connect(show_level_complete)
 	Events.game_over.connect(show_game_over)
 	Events.boss_died.connect(boss_died)
-	Events.pause.connect(show_pause)
-	Events.unpause.connect(unpause)
+	#Events.pause.connect(show_pause)
+	#Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
 	player=get_tree().get_first_node_in_group("player")
 	
@@ -64,6 +64,9 @@ func _ready():
 	player.scale = Vector2(pc_scale, pc_scale)
 	#Events.start_cutscene.emit()
 	#cutscene_player.play("INTRO")
+	if not cutscene_active and not camera_pos.stationary:
+		camera_pos.global_position=player.global_position
+		camera_pos.set_cam_smooth(true)
 	
 	
 	#score=45
@@ -85,8 +88,8 @@ func _process(_delta):
 	else:
 		#label.text = str("Score: ", score)
 		handle_spawn()
-		if Input.is_action_just_pressed("Pause"):
-			show_pause()
+		#if Input.is_action_just_pressed("Pause"):
+			#show_pause()
 
 func _physics_process(delta: float) -> void:
 	if not cutscene_active and not camera_pos.stationary:
@@ -108,14 +111,14 @@ func show_game_over():
 	game_over.show()
 	get_tree().paused = true
 
-func show_pause():
-	pause_menu.show()
-	get_tree().paused = true
-	
-func unpause():
-	pause_menu.hide()
-	get_tree().paused = false
-	
+#func show_pause():
+	#pause_menu.show()
+	#get_tree().paused = true
+	#
+#func unpause():
+	#pause_menu.hide()
+	#get_tree().paused = false
+	#
 	
 func get_state():
 	cur_state = player.get_state()
