@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://b2ll7yf0xbexn"]
+[gd_scene load_steps=14 format=4 uid="uid://b2ll7yf0xbexn"]
 
 [ext_resource type="Script" uid="uid://hpw22p1bmgy7" path="res://levels/standard_lvl_template.gd" id="1_2evft"]
 [ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://LVL_Transitions/level_completed.tscn" id="1_ltuwt"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dnliwh5g1v8xb" path="res://levels/level_components/entry.tscn" id="9_burwx"]
 [ext_resource type="PackedScene" uid="uid://d2i1l2qqhpag0" path="res://Art_Components/tile_maps/tile_layers/lab_props_2.tscn" id="11_3s3xp"]
 [ext_resource type="PackedScene" uid="uid://m5ullq0dey1k" path="res://Art_Components/misc/lights_indoor.tscn" id="12_2evft"]
+[ext_resource type="PackedScene" uid="uid://d05v7tm7kmcj7" path="res://heart.tscn" id="12_3s3xp"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_uf1fl"]
 polygon = PackedVector2Array(38, 89, 274, 88, 273, 99, 262, 100, 262, 106, 358, 106, 358, 100, 349, 100, 349, 86, 650, 87, 673, 87, 673, 61, 11, 64, 11, 349, 664, 344, 675, 87, 649, 88, 649, 99, 642, 98, 627, 109, 635, 112, 647, 102, 651, 315, 367, 316, 370, 289, 370, 284, 335, 284, 332, 276, 324, 276, 322, 284, 289, 284, 288, 268, 265, 268, 265, 284, 261, 284, 259, 276, 248, 275, 244, 286, 244, 315, 174, 314, 174, 245, 113, 247, 113, 317, 36, 318)
@@ -84,3 +85,6 @@ position = Vector2(310, 111)
 shadow_enabled = true
 
 [node name="CutscenePlayer" type="AnimationPlayer" parent="."]
+
+[node name="Heart" parent="." instance=ExtResource("12_3s3xp")]
+position = Vector2(138, 289)

@@ -6,6 +6,10 @@ class_name GameController extends Node
 
 @onready var player: PlayerEntity = $World2D/PrologueLvl/Player
 @onready var pause_menu: ColorRect = $GUI/CanvasLayer/PauseMenu
+@onready var levels: Levels = $Levels
+@onready var queued_rooms : Array[String] = []
+@onready var loaded_rooms : Array[PackedScene] = []
+@onready var current_room : int = 0
 
 
 var current_2d_scene
@@ -23,6 +27,8 @@ func _ready() -> void:
 	current_2d_scene.player=player
 	Events.pause.connect(show_pause)
 	Events.unpause.connect(unpause)
+	load_levels(LevelsList.prologue_levels)
+
 	
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Pause"):
@@ -35,6 +41,17 @@ func show_pause():
 func unpause():
 	pause_menu.hide()
 	get_tree().paused = false
+	
+func load_levels(dict : Dictionary) -> void:
+	for key in dict.keys():
+		queued_rooms.append(dict[key])
+	loaded_rooms.append(load(queued_rooms[0]))
+	loaded_rooms.append(load(queued_rooms[1]))
+	loaded_rooms.append(load(queued_rooms[2]))
+	loaded_rooms.append(load(queued_rooms[2]))
+	loaded_rooms.append(load(queued_rooms[3]))
+	loaded_rooms.append(load(queued_rooms[2]))
+	loaded_rooms.append(load(queued_rooms[3]))
 	
 
 
