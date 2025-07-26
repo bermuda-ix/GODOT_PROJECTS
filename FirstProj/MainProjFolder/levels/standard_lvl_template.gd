@@ -6,6 +6,7 @@ extends Node2D
 
 var player : PlayerEntity
 @onready var cutscene_active : bool = false
+@onready var init_starting_pos: Node2D = $DoorsAndSwitches/Entries/StartingPos
 @onready var camera_pos: camera_position = $CameraPos
 @onready var camera_2d: Camera2D = $CameraPos/Camera2D	
 @export var camera_offset_y : int = 0
@@ -120,6 +121,7 @@ func show_game_over():
 	#get_tree().paused = false
 	#
 	
+
 func get_state():
 	cur_state = player.get_state()
 	

@@ -534,7 +534,7 @@ _data = {
 
 [node name="PrologueLvl" node_paths=PackedStringArray("starting_pos") instance=ExtResource("1_w82j5")]
 next_level = ExtResource("2_mb6gy")
-starting_pos = [NodePath("DoorsAndSwitches/Entries/Entry")]
+starting_pos = [NodePath("DoorsAndSwitches/Entries/Entry"), NodePath("DoorsAndSwitches/Entries/Entry2"), NodePath("DoorsAndSwitches/Entries/Entry3"), NodePath("DoorsAndSwitches/Entries/Entry4"), NodePath("DoorsAndSwitches/Entries/Entry5"), NodePath("DoorsAndSwitches/Entries/Entry6")]
 lvl_type = "adv"
 
 [node name="ScreenFlash" type="ColorRect" parent="CanvasLayer" index="5"]
@@ -926,30 +926,38 @@ door_connect = NodePath("../Elevator")
 
 [node name="Entries" type="Node" parent="DoorsAndSwitches" index="3"]
 
-[node name="Entry" parent="DoorsAndSwitches/Entries" index="0" instance=ExtResource("22_5m18i")]
+[node name="StartingPos" type="Node2D" parent="DoorsAndSwitches/Entries" index="0"]
+position = Vector2(2199, 244)
+
+[node name="Entry" parent="DoorsAndSwitches/Entries" index="1" instance=ExtResource("22_5m18i")]
 position = Vector2(2199, 273)
 scale = Vector2(2, 2)
-new_scene_path = "prologue_room_1"
+entry = 1
 
-[node name="Entry2" parent="DoorsAndSwitches/Entries" index="1" instance=ExtResource("22_5m18i")]
+[node name="Entry2" parent="DoorsAndSwitches/Entries" index="2" instance=ExtResource("22_5m18i")]
 position = Vector2(3030, 279)
 scale = Vector2(2, 2)
+entry = 2
 
-[node name="Entry3" parent="DoorsAndSwitches/Entries" index="2" instance=ExtResource("22_5m18i")]
+[node name="Entry3" parent="DoorsAndSwitches/Entries" index="3" instance=ExtResource("22_5m18i")]
 position = Vector2(3030, 66)
 scale = Vector2(2, 2)
+entry = 3
 
-[node name="Entry4" parent="DoorsAndSwitches/Entries" index="3" instance=ExtResource("22_5m18i")]
+[node name="Entry4" parent="DoorsAndSwitches/Entries" index="4" instance=ExtResource("22_5m18i")]
 position = Vector2(3513, 1161)
 scale = Vector2(2, 2)
+entry = 4
 
-[node name="Entry5" parent="DoorsAndSwitches/Entries" index="4" instance=ExtResource("22_5m18i")]
+[node name="Entry5" parent="DoorsAndSwitches/Entries" index="5" instance=ExtResource("22_5m18i")]
 position = Vector2(4216, 1161)
 scale = Vector2(2, 2)
+entry = 5
 
-[node name="Entry6" parent="DoorsAndSwitches/Entries" index="5" instance=ExtResource("22_5m18i")]
+[node name="Entry6" parent="DoorsAndSwitches/Entries" index="6" instance=ExtResource("22_5m18i")]
 position = Vector2(4793, 1162)
 scale = Vector2(2, 2)
+entry = 6
 
 [node name="QTEFlags" type="Node" parent="." index="23"]
 

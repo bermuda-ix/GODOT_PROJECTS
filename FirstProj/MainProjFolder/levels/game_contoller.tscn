@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://j0pkbfaqdg0d"]
+[gd_scene load_steps=4 format=3 uid="uid://j0pkbfaqdg0d"]
 
 [ext_resource type="Script" uid="uid://bh56xedc4u1vv" path="res://game_contoller.gd" id="1_xrdjs"]
-[ext_resource type="PackedScene" uid="uid://bwy4dfs27ji8h" path="res://levels/PrologueRooms/prologue_lvl.tscn" id="2_kht82"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="3_e06k0"]
 [ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="4_218mp"]
 
@@ -10,9 +9,7 @@ script = ExtResource("1_xrdjs")
 
 [node name="World2D" type="Node2D" parent="."]
 
-[node name="PrologueLvl" parent="World2D" instance=ExtResource("2_kht82")]
-
-[node name="Player" parent="World2D/PrologueLvl" instance=ExtResource("3_e06k0")]
+[node name="Player" parent="World2D" instance=ExtResource("3_e06k0")]
 position = Vector2(2397, 289)
 
 [node name="GUI" type="Control" parent="."]

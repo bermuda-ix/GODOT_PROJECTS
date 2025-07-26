@@ -40,7 +40,6 @@ stationary = true
 
 [node name="Entry" parent="." instance=ExtResource("9_burwx")]
 position = Vector2(581, 278)
-new_scene_path = "prologue"
 
 [node name="TileMapLayers" type="Node" parent="."]
 

@@ -5,10 +5,13 @@ signal enter_area(room : PackedScene)
 
 @export_enum("left", "right") var entry_dir
 @export var entry_loc : Vector2 = Vector2(0,0)
-@export var new_scene_path : String
+@export var entry : int = 0
 @export var entry_name : String
 @onready var player : PlayerEntity
-@export var exit : int
+
+@export_category("Return position Override")
+@export var return_override : bool = false
+@export var exit : int = 0
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
@@ -18,8 +21,9 @@ func _on_body_entered(body: Node2D) -> void:
 	if not body is PlayerEntity:
 		return
 	#player_entered_door.emit(self)
-	player.next_room= LevelsList.levels[new_scene_path]
+	player.next_room= entry
 	player.in_door_way=true
+	player.prev_starting_pos=entry
 #	SceneManager.load_new_scene(new_scene_path, transition_type)
 	#queue_free()
 

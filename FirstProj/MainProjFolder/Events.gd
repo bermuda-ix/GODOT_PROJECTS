@@ -6,6 +6,11 @@ signal level_completed
 signal game_over
 signal obj_complete
 
+#Level loading
+signal load_levels_by_set
+signal load_levels_indiv
+signal enter_room
+
 # Pausing
 signal pause
 signal unpause

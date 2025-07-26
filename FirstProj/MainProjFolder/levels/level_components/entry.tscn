@@ -5,6 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_646mt"]
 
 [node name="Entry" type="Area2D" groups=["entry"]]
+collision_layer = 262144
 collision_mask = 2
 script = ExtResource("1_leoei")
 entry_dir = 0
