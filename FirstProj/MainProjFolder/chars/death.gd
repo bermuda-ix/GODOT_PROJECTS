@@ -6,6 +6,8 @@ extends LimboState
 @export var animation_player : AnimationPlayer
 @export var tree_active : bool = true
 
+
+
 func _enter() -> void:
 	#actor.state="DEATH"
 	

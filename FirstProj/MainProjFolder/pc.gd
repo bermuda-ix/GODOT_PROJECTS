@@ -430,6 +430,7 @@ func _process(_delta):
 	#
 	lockon()
 	enter_door()
+	climb_stairs()
 
 func _physics_process(delta):
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
@@ -1053,6 +1054,11 @@ func enter_door() -> void:
 			Global.game_controller.change_2d_scene(next_room, false, false, entry_pos, "fade_to_black_quick", "fade_from_black_quick")
 			entry_pos=prev_starting_pos
 
+func climb_stairs() -> void:
+	if Input.is_action_pressed("up"):
+		set_collision_mask_value(20, true)
+	elif Input.is_action_just_released("up"):
+		set_collision_mask_value(20, false)
 
 func _on_hazard_detector_area_entered(area):
 	if area.is_in_group("hazard"):

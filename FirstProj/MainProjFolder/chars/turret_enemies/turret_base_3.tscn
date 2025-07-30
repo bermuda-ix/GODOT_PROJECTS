@@ -248,12 +248,13 @@ health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 actor = NodePath("..")
 
-[node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "animation_player")]
+[node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "animation_player", "health")]
 script = ExtResource("7_afqy1")
 actor = NodePath("..")
 sm = NodePath("../StateMachine")
 animation_player = NodePath("../AnimationPlayer")
 tree_active = false
+health = NodePath("../Health")
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
 
 [node name="DespawnHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]

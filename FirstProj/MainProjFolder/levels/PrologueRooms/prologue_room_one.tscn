@@ -35,7 +35,6 @@ visible = false
 
 [node name="CameraPos" parent="." instance=ExtResource("5_uf1fl")]
 position = Vector2(373, 208)
-camera_zoom = 2
 stationary = true
 
 [node name="Entry" parent="." instance=ExtResource("9_burwx")]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=25 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="4_4kfue"]
@@ -272,6 +272,10 @@ _data = {
 &"stretch": SubResource("Animation_01tlq")
 }
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_ca064"]
+a = Vector2(-14, 7)
+b = Vector2(204, -69)
+
 [node name="project_test" node_paths=PackedStringArray("player", "starting_pos") instance=ExtResource("1_07jkq")]
 lvl_type = "test"
 player = NodePath("PC")
@@ -427,6 +431,14 @@ metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
 position = Vector2(1078, 42)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="27"]
+collision_layer = 524288
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" index="0"]
+position = Vector2(1076, 108)
+shape = SubResource("SegmentShape2D_ca064")
 
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]

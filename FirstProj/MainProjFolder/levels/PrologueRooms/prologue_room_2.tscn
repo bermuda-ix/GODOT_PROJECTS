@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://bqrvktluv2fur"]
+[gd_scene load_steps=15 format=4 uid="uid://bqrvktluv2fur"]
 
 [ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://LVL_Transitions/level_completed.tscn" id="1_nigc1"]
 [ext_resource type="Script" uid="uid://hpw22p1bmgy7" path="res://levels/standard_lvl_template.gd" id="1_re5jx"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://m5ullq0dey1k" path="res://Art_Components/misc/lights_indoor.tscn" id="9_63d2y"]
 [ext_resource type="PackedScene" uid="uid://d05v7tm7kmcj7" path="res://heart.tscn" id="10_66hiq"]
 [ext_resource type="PackedScene" uid="uid://dnliwh5g1v8xb" path="res://levels/level_components/entry.tscn" id="11_uofa6"]
+[ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="13_xqc3u"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_5m8to"]
 polygon = PackedVector2Array(38, 89, 274, 88, 273, 99, 262, 100, 262, 106, 358, 106, 358, 100, 349, 100, 349, 86, 650, 87, 673, 87, 673, 61, 11, 64, 11, 349, 664, 344, 675, 87, 649, 88, 649, 99, 642, 98, 627, 109, 635, 112, 647, 102, 651, 315, 425, 315, 425, 246, 372, 246, 372.024, 315, 345, 315, 345, 245, 291, 245, 291.409, 315.927, 263, 316, 263, 247, 211, 247, 200, 248, 200, 317, 176, 317, 176, 246, 123, 246, 125, 284, 46, 284, 49, 290, 49, 318, 36, 318)
@@ -34,9 +35,12 @@ visible = false
 visible = false
 
 [node name="CameraPos" parent="." instance=ExtResource("5_xqc3u")]
-position = Vector2(287, 165)
-camera_zoom = 2
+position = Vector2(346, 208)
+camera_zoom = 0.9
 stationary = true
+
+[node name="Camera2D" parent="CameraPos" index="0"]
+zoom = Vector2(0.8, 0.8)
 
 [node name="TileMapLayers" type="Node" parent="."]
 
@@ -89,3 +93,8 @@ position = Vector2(223, 292)
 [node name="Entry" parent="." instance=ExtResource("11_uofa6")]
 position = Vector2(574, 271)
 exit = 1
+
+[node name="PC" parent="." instance=ExtResource("13_xqc3u")]
+position = Vector2(509, 279)
+
+[editable path="CameraPos"]

@@ -174,7 +174,9 @@ func _ready():
 	Events.allied_enemy_hit.connect(adjust_counter)
 	
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
-
+	if health.health<=0:
+		queue_free()
+	
 # initialize state
 func _init_state_machine():
 	state_machine.initial_state=idle

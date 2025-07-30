@@ -147,7 +147,7 @@ func _ready():
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 	_init_group_link()
 	if health.health<=0:
-		state_machine.change_active_state(death)
+		queue_free()
 	
 	
 func _init_state_machine():
@@ -207,7 +207,10 @@ func _process(_delta):
 		return
 	elif state_machine.get_active_state()==idle:
 		hb_collision.disabled=true
-
+	elif (state_machine.get_active_state()!=death or state_machine.get_active_state()==dying) and health.health<=0:
+		state_machine.dispatch(&"die")
+		
+		
 	handle_vision()
 	if not attack_range.has_overlapping_bodies():
 		bt_player.blackboard.set_var("within_range", false)

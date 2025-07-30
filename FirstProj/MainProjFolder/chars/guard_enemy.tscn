@@ -1346,11 +1346,12 @@ actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
 metadata/_custom_type_script = "uid://dgyx4da7oymh2"
 
-[node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "animation_player")]
+[node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "animation_player", "health")]
 script = ExtResource("16_78yqy")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 animation_player = NodePath("../AnimationPlayer")
+health = NodePath("../Health")
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
 
 [node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]

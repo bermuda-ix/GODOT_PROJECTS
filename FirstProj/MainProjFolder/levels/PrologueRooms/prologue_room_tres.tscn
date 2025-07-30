@@ -34,7 +34,7 @@ visible = false
 
 [node name="CameraPos" parent="." instance=ExtResource("5_bvrok")]
 position = Vector2(287, 165)
-camera_zoom = 2
+camera_zoom = 0.9
 stationary = true
 
 [node name="TileMapLayers" type="Node" parent="."]

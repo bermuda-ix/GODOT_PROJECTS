@@ -164,8 +164,7 @@ func _ready():
 	_init_shooting_states()
 	hurt_box.set_damage_mulitplyer(1)
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
-	if health.health<=0:
-		queue_free()
+	
 	_init_group_link()
 
 func _process(delta: float) -> void:

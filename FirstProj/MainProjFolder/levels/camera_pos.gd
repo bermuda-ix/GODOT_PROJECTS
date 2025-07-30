@@ -6,7 +6,7 @@ extends Node2D
 @export var shake_fade : float = 20
 @onready var camera_2d: Camera2D = $Camera2D
 
-@export var camera_zoom : int
+@export var camera_zoom : float = 1.0
 @export var stationary : bool = false
 
 
@@ -16,7 +16,8 @@ var shake_strength : float = 0
 
 func _ready() -> void:
 	Events.camera_shake.connect(camera_shake)
-
+	camera_2d.zoom*=camera_zoom
+	
 func _process(delta: float) -> void:
 	
 	
