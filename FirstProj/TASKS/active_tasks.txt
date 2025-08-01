@@ -1,0 +1,13 @@
+TASKS:
+Inventory
+	for key cards, bullets, etc
+Save state of locked/unlocked doors/entrys into a global dictionary:
+	Can be used to unlock doors from adjacent levels
+	Find way to carpenmentalize dicts to specific levels only
+		i.e. switchs in prologue level should affect doors in level 1
+	
+Continue work on demon enemy
+
+Continue work on Prologue Level
+	Add small cutscenes showing demon in lower levels
+	Add QTE after open first door in lower level
