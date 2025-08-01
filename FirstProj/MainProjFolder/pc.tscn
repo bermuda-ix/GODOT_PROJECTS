@@ -1,4 +1,4 @@
-[gd_scene load_steps=476 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=477 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -2805,6 +2805,9 @@ anim_speed_max = 0.7
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
 size = Vector2(15.989, 41.2086)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mdoa6"]
+height = 46.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_52hex"]
 size = Vector2(7, 12)
@@ -5880,6 +5883,15 @@ metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 wait_time = 0.1
 one_shot = true
 
+[node name="StarsDetector" type="Area2D" parent="."]
+position = Vector2(-1, 1)
+collision_layer = 1048576
+collision_mask = 524288
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StarsDetector"]
+position = Vector2(3, -9)
+shape = SubResource("CapsuleShape2D_mdoa6")
+
 [node name="HazardDetector" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 278532
@@ -6143,6 +6155,8 @@ pc = NodePath("../..")
 [connection signal="parried_success" from="AnimatedSprite2D/ParryBox" to="." method="_on_parry_box_parried_success"]
 [connection signal="timeout" from="ClashPower/ClashTimer" to="." method="_on_clash_timer_timeout"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
+[connection signal="body_entered" from="StarsDetector" to="." method="_on_stars_detector_body_entered"]
+[connection signal="body_exited" from="StarsDetector" to="." method="_on_stars_detector_body_exited"]
 [connection signal="area_entered" from="HazardDetector" to="." method="_on_hazard_detector_area_entered"]
 [connection signal="body_entered" from="HazardDetector" to="." method="_on_hazard_detector_body_entered"]
 [connection signal="body_exited" from="HazardDetector" to="." method="_on_hazard_detector_body_exited"]

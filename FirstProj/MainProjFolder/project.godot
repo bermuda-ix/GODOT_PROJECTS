@@ -193,6 +193,7 @@ DEBUG_KEY={
 2d_physics/layer_18="SpawnPoint"
 2d_physics/layer_19="Entry"
 2d_physics/layer_20="Stairs"
+2d_physics/layer_21="StarsDetector"
 
 [rendering]
 

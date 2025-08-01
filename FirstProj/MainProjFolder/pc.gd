@@ -27,6 +27,8 @@ signal jump_out_signal
 @export var TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
 @onready var clash_power: ClashPower = $ClashPower
 @onready var clash_timer: Timer = $ClashPower/ClashTimer
+@onready var stairs_detected : bool = false
+@onready var stairs_release : bool = true
 
 
 #Base FSM
@@ -388,7 +390,7 @@ func _process(_delta):
 		clash_visual.self_modulate.a = (1/clash_power.clash_power) +0.1
 	else:
 		clash_visual.self_modulate.a = 0
-	label.text=str(velocity.x)
+	label.text=str(staggered)
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	if not cutscene_handler.actor_control_active:
 		
@@ -1055,10 +1057,14 @@ func enter_door() -> void:
 			entry_pos=prev_starting_pos
 
 func climb_stairs() -> void:
-	if Input.is_action_pressed("up"):
+	if Input.is_action_pressed("up") and stairs_detected==false:
 		set_collision_mask_value(20, true)
+		stairs_release=false
 	elif Input.is_action_just_released("up"):
-		set_collision_mask_value(20, false)
+		if stairs_detected:
+			stairs_release=true
+		else:
+			set_collision_mask_value(20, false)
 
 func _on_hazard_detector_area_entered(area):
 	if area.is_in_group("hazard"):
@@ -1820,3 +1826,13 @@ func _on_clash_timer_timeout() -> void:
 	clash_power.reset_clash()
 	clash_visual.emitting=false
 	
+
+
+func _on_stars_detector_body_entered(body: Node2D) -> void:
+	stairs_detected=true
+
+func _on_stars_detector_body_exited(body: Node2D) -> void:
+	stairs_detected=false
+	if stairs_release:
+		set_collision_mask_value(20, false)
+		
