@@ -61,3 +61,6 @@ signal end_cutsene
 signal start_qte
 signal qte_choice
 signal qte_end
+
+#Doors and switches
+signal unlock_door

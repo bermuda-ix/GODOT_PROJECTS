@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://y6x600dn2kkk"]
+[gd_scene load_steps=15 format=4 uid="uid://y6x600dn2kkk"]
 
 [ext_resource type="Script" uid="uid://hpw22p1bmgy7" path="res://levels/standard_lvl_template.gd" id="1_2afyh"]
 [ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://LVL_Transitions/level_completed.tscn" id="1_e0r0l"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://d2i1l2qqhpag0" path="res://Art_Components/tile_maps/tile_layers/lab_props_2.tscn" id="8_ow5uo"]
 [ext_resource type="PackedScene" uid="uid://m5ullq0dey1k" path="res://Art_Components/misc/lights_indoor.tscn" id="9_55yil"]
 [ext_resource type="PackedScene" uid="uid://dnliwh5g1v8xb" path="res://levels/level_components/entry.tscn" id="11_ycymn"]
+[ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="12_ycymn"]
+[ext_resource type="PackedScene" uid="uid://qshtua1q23h4" path="res://Component/interactables/external_door_switch.tscn" id="13_bvrok"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_kgng6"]
 polygon = PackedVector2Array(38, 89, 274, 88, 273, 99, 262, 100, 262, 106, 358, 106, 358, 100, 349, 100, 349, 86, 650, 87, 673, 87, 673, 61, 11, 64, 11, 349, 664, 344, 675, 87, 649, 88, 649, 99, 642, 98, 627, 109, 635, 112, 647, 102, 651, 315, 392, 315, 390, 289, 384, 267, 387, 290, 333, 291, 322, 267, 321, 314, 315, 314, 310, 287, 266, 287, 266, 306, 263, 306, 210, 310, 201, 169, 187, 148, 190, 163, 198, 167, 202, 190, 194, 195, 198, 250, 195, 282, 184.417, 317.276, 36, 318)
@@ -85,3 +87,11 @@ shadow_enabled = true
 
 [node name="Entry" parent="." instance=ExtResource("11_ycymn")]
 position = Vector2(572, 270)
+
+[node name="PersistentDataHandler" type="Node" parent="."]
+script = ExtResource("12_ycymn")
+metadata/_custom_type_script = "uid://bv1k14bnql5dy"
+
+[node name="ExternalDoorSwitch" parent="." instance=ExtResource("13_bvrok")]
+position = Vector2(113, 300)
+connected_door = "Door3"

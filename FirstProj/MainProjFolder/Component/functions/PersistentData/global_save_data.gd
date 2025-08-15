@@ -24,8 +24,9 @@ var current_save : Dictionary = {
 var level_state : Dictionary = {
 	scene_path="",
 	items=[],
-	persistence = []
-	
+	persistence = {
+		"" : ""
+		}
 	}
 	
 func save_game() -> void:
@@ -52,14 +53,18 @@ func save_level() -> void:
 func load_level() -> void:
 	pass
 	
-func add_persistent_value(value : String) -> void:
-	if check_persistent_value(value)==false:
-		level_state.persistence.append(value)
+func add_persistent_value(value : String, state : String) -> void:
+	level_state.persistence[value] = state
 	pass
 	
 func check_persistent_value(value : String) -> bool:
 	return level_state.has(value)
-	
+
+func get_object_state(value : String) -> String:
+	return level_state.persistence.get(value)
+
+func set_object_state(obj_name : String, value : String):
+	level_state.persistence[obj_name]=value
 
 func reset_level() -> void:
 	clear_persistent_values()

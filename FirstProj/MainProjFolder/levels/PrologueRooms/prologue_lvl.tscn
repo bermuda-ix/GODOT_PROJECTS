@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=44 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_w82j5"]
 [ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_mb6gy"]
@@ -21,7 +21,9 @@
 [ext_resource type="Script" uid="uid://7cyh5ujpo4sp" path="res://levels/Boundery.gd" id="20_e156f"]
 [ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="21_7qfih"]
 [ext_resource type="PackedScene" uid="uid://dnliwh5g1v8xb" path="res://levels/level_components/entry.tscn" id="22_5m18i"]
+[ext_resource type="PackedScene" uid="uid://fuwvq85f8wwh" path="res://Component/interactables/heat_spawn_flag.tscn" id="22_22var"]
 [ext_resource type="PackedScene" uid="uid://d3jixkbstt3qn" path="res://Component/qte_start.tscn" id="24_4koma"]
+[ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="24_w82j5"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_p4nhw"]
 polygon = PackedVector2Array(699, 393, 758, 393, 1049, 389, 1081, 367, 1081, 358, 1070, 358, 1070, 290, 1426, 290, 1479, 254, 1893, 243, 1894, 202, 1501, 212, 1500, 147, 1382, 76, 766, 78, 761, -20, 728, -21, 729, -120, 725, -22, 698, -21)
@@ -549,6 +551,15 @@ color = Color(1, 1, 1, 0)
 [node name="CameraPos" parent="." index="1" instance=ExtResource("4_7klgn")]
 position = Vector2(221, 396)
 
+[node name="SpawnPoint" parent="CameraPos" index="1" instance=ExtResource("10_j2fky")]
+position = Vector2(-438, -4)
+enemy_single = ExtResource("11_52g4u")
+
+[node name="SpawnPoint2" parent="CameraPos" index="2" instance=ExtResource("10_j2fky")]
+position = Vector2(418, -10)
+enemy_single = ExtResource("11_52g4u")
+max_enemy = 1
+
 [node name="Moonlight" type="DirectionalLight2D" parent="." index="2"]
 position = Vector2(257, 26)
 rotation = -0.523599
@@ -642,34 +653,7 @@ polygon = PackedVector2Array(233, -128.852, -271, 124.183, -285, 126.984, -279, 
 [node name="Desert_Background" parent="." index="6" instance=ExtResource("7_veiog")]
 position = Vector2(5, 14)
 
-[node name="lab_door_switch" parent="." index="7" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
-z_index = -1
-position = Vector2(680, 480)
-door_connect = NodePath("../Door")
-
-[node name="Door" parent="." index="8" instance=ExtResource("9_kuq7b")]
-position = Vector2(736, 448)
-scale = Vector2(1.03607, 1.19587)
-
-[node name="lab_door_switch2" parent="." index="9" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
-position = Vector2(1040, 344)
-door_connect = NodePath("../Door2")
-
-[node name="Door2" parent="." index="10" instance=ExtResource("9_kuq7b")]
-z_index = -1
-position = Vector2(1984, 264)
-scale = Vector2(1, 1.18132)
-
-[node name="SpawnPoint" parent="." index="11" instance=ExtResource("10_j2fky")]
-position = Vector2(1360, 424)
-enemy_single = ExtResource("11_52g4u")
-
-[node name="SpawnPoint2" parent="." index="12" instance=ExtResource("10_j2fky")]
-position = Vector2(2264, 272)
-enemy_single = ExtResource("11_52g4u")
-max_enemy = 1
-
-[node name="Enemy" type="Node" parent="." index="13"]
+[node name="Enemy" type="Node" parent="." index="7"]
 
 [node name="soldiers" type="Node" parent="Enemy" index="0"]
 
@@ -813,7 +797,7 @@ scale = Vector2(-0.15, -0.15)
 position = Vector2(2453, 1049)
 turrets = [NodePath("../turret_base_3"), NodePath("../turret_base_4"), NodePath("../turret_base_5")]
 
-[node name="AirNavs" type="Node2D" parent="." index="14"]
+[node name="AirNavs" type="Node2D" parent="." index="8"]
 
 [node name="AirNav1_Inside" type="NavigationRegion2D" parent="AirNavs" index="0"]
 navigation_polygon = SubResource("NavigationPolygon_htxyq")
@@ -821,7 +805,7 @@ navigation_polygon = SubResource("NavigationPolygon_htxyq")
 [node name="AirNav1_Above" type="NavigationRegion2D" parent="AirNavs" index="1"]
 navigation_polygon = SubResource("NavigationPolygon_nlf3e")
 
-[node name="GroundNavs" type="Node2D" parent="." index="15"]
+[node name="GroundNavs" type="Node2D" parent="." index="9"]
 
 [node name="GroundNav1_Inside" type="NavigationRegion2D" parent="GroundNavs" index="0"]
 navigation_polygon = SubResource("NavigationPolygon_pxxff")
@@ -849,7 +833,7 @@ end_position = Vector2(1944, 304)
 [node name="Underground1" type="NavigationRegion2D" parent="GroundNavs" index="5"]
 navigation_polygon = SubResource("NavigationPolygon_dxt6w")
 
-[node name="TutorialText" type="RichTextLabel" parent="." index="16"]
+[node name="TutorialText" type="RichTextLabel" parent="." index="10"]
 offset_left = 467.0
 offset_top = 377.0
 offset_right = 590.0
@@ -857,7 +841,7 @@ offset_bottom = 432.0
 text = "LMB:ATTACK
 ALT: LOCKON"
 
-[node name="TutorialText2" type="RichTextLabel" parent="." index="17"]
+[node name="TutorialText2" type="RichTextLabel" parent="." index="11"]
 offset_left = 978.0
 offset_top = 396.0
 offset_right = 1101.0
@@ -865,7 +849,7 @@ offset_bottom = 451.0
 text = "CTRL: Dodge
 SHIFT: Sprint"
 
-[node name="TutorialText3" type="RichTextLabel" parent="." index="18"]
+[node name="TutorialText3" type="RichTextLabel" parent="." index="12"]
 offset_left = 1599.0
 offset_top = 255.0
 offset_right = 1929.0
@@ -874,14 +858,14 @@ text = "RMB: Shoot (High Stagger Low Damage)
 Hold Shift: Wall Stick
 Space on wall: Wall Jump"
 
-[node name="TutorialText4" type="RichTextLabel" parent="." index="19"]
+[node name="TutorialText4" type="RichTextLabel" parent="." index="13"]
 offset_left = 2105.0
 offset_top = 242.0
 offset_right = 2435.0
 offset_bottom = 319.0
 text = "Shift + Space while locked on: Flip over"
 
-[node name="Bounderies3" type="Node" parent="." index="20"]
+[node name="Bounderies3" type="Node" parent="." index="14"]
 
 [node name="Bounderies" type="StaticBody2D" parent="Bounderies3" index="0"]
 position = Vector2(-1, 0)
@@ -901,12 +885,12 @@ objective = NodePath("../../Enemy/MiniBosses/MechRanged")
 position = Vector2(24, 278.5)
 shape = SubResource("RectangleShape2D_jyauw")
 
-[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="21"]
+[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="15"]
 libraries = {
 &"": SubResource("AnimationLibrary_tnflb")
 }
 
-[node name="DoorsAndSwitches" type="Node" parent="." index="22"]
+[node name="DoorsAndSwitches" type="Node" parent="." index="16"]
 
 [node name="Elevator" parent="DoorsAndSwitches" index="0" instance=ExtResource("21_7qfih")]
 position = Vector2(3627, 525)
@@ -959,13 +943,58 @@ position = Vector2(4793, 1162)
 scale = Vector2(2, 2)
 entry = 6
 
-[node name="QTEFlags" type="Node" parent="." index="23"]
+[node name="lab_door_switch2" parent="DoorsAndSwitches" index="4" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
+z_index = -1
+position = Vector2(680, 480)
+door_connect = NodePath("../Door")
+
+[node name="Door" parent="DoorsAndSwitches" index="5" instance=ExtResource("9_kuq7b")]
+position = Vector2(736, 448)
+scale = Vector2(1.03607, 1.19587)
+
+[node name="lab_door_switch3" parent="DoorsAndSwitches" index="6" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
+position = Vector2(1040, 344)
+door_connect = NodePath("../Door2")
+
+[node name="Door2" parent="DoorsAndSwitches" index="7" instance=ExtResource("9_kuq7b")]
+z_index = -1
+position = Vector2(1984, 264)
+scale = Vector2(1, 1.18132)
+
+[node name="Door3" parent="DoorsAndSwitches" index="8" instance=ExtResource("9_kuq7b")]
+z_index = -1
+position = Vector2(5096, 1160)
+scale = Vector2(1, 1.18132)
+connected_switch = "Door3"
+
+[node name="Door4" parent="DoorsAndSwitches" index="9" instance=ExtResource("9_kuq7b")]
+z_index = -1
+position = Vector2(5833, 856)
+scale = Vector2(1, 1.18132)
+connected_switch = "Door4"
+
+[node name="Spawning" type="Node" parent="." index="17"]
+
+[node name="SpawnPoints" type="Node" parent="Spawning" index="0"]
+
+[node name="SpawnFlags" type="Node" parent="Spawning" index="1"]
+
+[node name="HeatSpawnFlag" parent="Spawning/SpawnFlags" index="0" instance=ExtResource("22_22var")]
+position = Vector2(714, 387)
+
+[node name="HeatSpawnFlag2" parent="Spawning/SpawnFlags" index="1" instance=ExtResource("22_22var")]
+position = Vector2(3520, 419)
+
+[node name="HeatSpawnFlag3" parent="Spawning/SpawnFlags" index="2" instance=ExtResource("22_22var")]
+position = Vector2(2129, 1101)
+
+[node name="QTEFlags" type="Node" parent="." index="18"]
 
 [node name="QTE_Start" parent="QTEFlags" index="0" node_paths=PackedStringArray("cutscene_player") instance=ExtResource("24_4koma")]
 position = Vector2(1916, 713)
 cutscene_player = NodePath("../../CutscenePlayer")
 
-[node name="Paths" type="Node" parent="." index="24"]
+[node name="Paths" type="Node" parent="." index="19"]
 
 [node name="Path2D" type="Path2D" parent="Paths" index="0"]
 curve = SubResource("Curve2D_e3spa")
@@ -979,10 +1008,14 @@ rotates = false
 update_rotation = false
 update_scale = false
 
-[node name="StartingPos" type="Node" parent="." index="25"]
+[node name="StartingPos" type="Node" parent="." index="20"]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
-position = Vector2(3732, 1141)
+position = Vector2(3955, 1141)
+
+[node name="PersistentDataHandler" type="Node" parent="." index="21"]
+script = ExtResource("24_w82j5")
+metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 
 [editable path="Enemy/MiniBosses/MechRanged"]
 [editable path="DoorsAndSwitches/Elevator2"]

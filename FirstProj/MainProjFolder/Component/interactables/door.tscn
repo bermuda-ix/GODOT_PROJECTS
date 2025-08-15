@@ -22,6 +22,7 @@ polygon = PackedVector2Array(-5.99983, 47, -5.99983, 47, 5.00017, 47, 4.99983, -
 
 [node name="Door" type="Node2D"]
 script = ExtResource("1_flptw")
+connected_switch = "Door1"
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_2h5dv")
@@ -51,3 +52,5 @@ occluder = SubResource("OccluderPolygon2D_80ptt")
 [node name="IsOpen" type="Node" parent="."]
 script = ExtResource("3_flptw")
 metadata/_custom_type_script = "uid://bv1k14bnql5dy"
+
+[connection signal="data_loaded" from="IsOpen" to="." method="_on_is_open_data_loaded"]

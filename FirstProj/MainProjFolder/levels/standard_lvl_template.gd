@@ -6,7 +6,8 @@ extends Node2D
 
 var player : PlayerEntity
 @onready var cutscene_active : bool = false
-@onready var init_starting_pos: Node2D = $DoorsAndSwitches/Entries/StartingPos
+#@onready var init_starting_pos: Node2D = $DoorsAndSwitches/Entries/StartingPos
+@onready var init_starting_pos: Node2D = $StartingPos/Default
 @onready var camera_pos: camera_position = $CameraPos
 @onready var camera_2d: Camera2D = $CameraPos/Camera2D	
 @export var camera_offset_y : int = 0
@@ -22,6 +23,7 @@ var player : PlayerEntity
 @onready var pause_menu = $CanvasLayer/PauseMenu
 @onready var score : int = 0
 @export var starting_pos: Array[Node2D]
+@onready var persistent_data_handler: PersistentDataHandler = $PersistentDataHandler
 
 
 @onready var cutscene_player: AnimationPlayer = $CutscenePlayer
@@ -180,3 +182,7 @@ func _pc_special_atk_qte() -> void:
 
 func _pc_no_input_qte() -> void:
 	cutscene_player.queue(qte_options[4])
+
+
+func _on_external_door_switch_unlock_door() -> void:
+	pass # Replace with function body.

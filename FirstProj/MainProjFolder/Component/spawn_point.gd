@@ -107,6 +107,10 @@ func deactivate(spawn):
 		spawn_timer.paused=true
 		active=false
 
+func toggle_active(spawn):
+	if spawn==spawn_type:
+		active = !active
+
 func spawn_update(enemy_spawn, add : bool):
 	if add:
 		if enemy_spawn is Dictionary:
