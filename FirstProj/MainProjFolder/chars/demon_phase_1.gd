@@ -11,6 +11,7 @@ const JUMP_VELOCITY = -400.0
 
 #Animation Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+
 #Target lock
 @onready var target_lock_node: TargetLock = $TargetLock
 #Visible on screen
@@ -74,6 +75,8 @@ var dir
 @onready var get_player_info_handler: GetPlayerInfoHandler = $GetPlayerInfoHandler
 @onready var player_tracker_pivot: Node2D = $PlayerTrackerPivot
 @onready var player_tracking: RayCast2D = $PlayerTrackerPivot/PlayerTracking
+@onready var chase_handler: ChaseHandler = $ChaseHandler
+@onready var chase_distance : bool = true
 var player_found : bool = false
 var player : PlayerEntity = null
 var distance
@@ -109,7 +112,7 @@ var state
 @onready var attack_range: AttackRange = $AttackRange
 @onready var ar_box: CollisionShape2D = $AttackRange/CollisionShape2D
 @onready var hit_box: HitBox = $HitBox
-@onready var hb_collision: CollisionShape2D = $HitBox/hb_collision
+@onready var hb_collision: CollisionShape2D = $HitBox/CollisionShape2D
 @onready var atk_chain : String = "_1"
 @export var hitbox: HitBox
 var parried : bool = false 
@@ -137,7 +140,10 @@ var combat_state : String = "RANGED"
 @onready var debuging: Label = $DEBUGING
 
 func _ready() -> void:
+	player = get_tree().get_first_node_in_group("player")
 	_init_state_machine()
+	animation_player.play("idle")
+	
 
 
 
@@ -168,21 +174,26 @@ func _init_state_machine():
 	state_machine.add_transition(charge, teleport, &"teleport_counter")
 	state_machine.add_transition(teleport, slam, &"slam_attack")
 
-	
-	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
-	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
-	state_machine.add_transition(dying, death, dying.success_event)
-	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
-
+	#
+	#state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
+	#state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
+	#state_machine.add_transition(dying, death, dying.success_event)
+	#state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
+#
 
 
 
 func _process(delta: float) -> void:
 	if not cutscene_handler.actor_control_active: 
-		vision_handler.handle_vision()
 		return
+	
+	vision_handler.handle_vision()
 		
-
+	if state_machine.get_active_state()==idle and not animation_player.is_playing():
+		animation_player.play("idle")
+		
+	start_chase()
+	
 func _physics_process(delta: float) -> void:
 	if not cutscene_handler.actor_control_active:
 		apply_gravity(delta)
@@ -190,9 +201,32 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 		
+	knockback = lerp(knockback, Vector2.ZERO, 0.1)
+	
+	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
+		#hb_collison.disabled=true
+		velocity.y += gravity * delta
+		velocity.x=0
+		move_and_slide()
+		return
+	elif state_machine.get_active_state()==dying:
+		death_handler.dying()
+	elif state_machine.get_active_state()==death :
+		hb_collision.disabled=true
+		return
+		
+	apply_gravity(delta)
+	if state_machine.get_active_state()==chasing:
+		velocity.x = current_speed + knockback.x
+	else:
+		velocity.x= knockback.x
+	move_and_slide()
+	
 func apply_gravity(delta : float) -> void:
 	if not is_on_floor():
 		velocity.y += gravity * delta
+	else:
+		dying.blackboard.set_var("hit_the_floor", true)
 
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
@@ -213,6 +247,12 @@ func get_height() -> int:
 func teleport_to() -> void:
 	global_position=player.global_position 
 
+func start_chase() -> void:
+	if chase_distance:
+		chase()
+		
+
+
 func _on_navigation_timer_timeout() -> void:
 	makepath()
 
@@ -220,14 +260,19 @@ func _on_navigation_timer_timeout() -> void:
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
-		pass # Replace with function body.
+		chase_distance=false
+		state_machine.dispatch(&"start_attack")
 
+func _on_attack_range_body_exited(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		chase_distance=true
 
 
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
-	pass # Replace with function body.
+	print(current, " , ", previous)
 
-
+func _on_attack_entered() -> void:
+	animation_player.play("attack")
 
 func _on_health_health_depleted() -> void:
 	pass # Replace with function body.
@@ -244,8 +289,19 @@ func _on_parry_timer_timeout() -> void:
 
 
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
-	pass # Replace with function body.
+	if anim_name=="idle":
+		if not animation_player.is_playing():
+			print("animation broke")
 
 
 func _on_stagger_staggered() -> void:
 	pass # Replace with function body.
+
+
+func _on_animation_player_animation_changed(old_name: StringName, new_name: StringName) -> void:
+	if old_name=="idle":
+		print("did not exit right")
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	print("did not exit right")
