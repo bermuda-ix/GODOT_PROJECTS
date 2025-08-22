@@ -1612,7 +1612,7 @@ autostart = true
 one_shot = true
 
 [node name="Health" parent="." index="13"]
-max_health = 5
+max_health = 3
 immortality = false
 
 [node name="DodgeTimer" type="Timer" parent="." index="14"]

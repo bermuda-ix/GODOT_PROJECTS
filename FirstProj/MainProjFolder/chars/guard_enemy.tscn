@@ -1256,6 +1256,7 @@ collide_with_areas = true
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("8_kbb6k")
+max_health = 1
 metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="."]

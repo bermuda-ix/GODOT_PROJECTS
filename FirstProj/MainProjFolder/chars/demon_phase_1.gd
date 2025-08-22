@@ -49,6 +49,8 @@ signal death_cutscene
 @onready var dodge_timer: Timer = $DodgeTimer
 @onready var attack_timer: Timer = $AttackTimer
 @onready var stagger_timer: Timer = $StaggerTimer
+@onready var tele_delay_timer: Timer = $TeleDelayTimer
+@onready var tele_delay : float = 1.0
 
 #movement
 @onready var movement_handler: MovementHandler = $MovementHandler
@@ -91,8 +93,10 @@ var player_state : LimboState
 @onready var dying: BTState = $LimboHSM/DYING
 @onready var attack: LimboState = $LimboHSM/ATTACK
 @onready var charge: BTState = $LimboHSM/CHARGE
-@onready var teleport: BTState = $LimboHSM/TELEPORT
-@onready var slam: BTState = $LimboHSM/SLAM
+@onready var teleport: LimboState = $LimboHSM/TELEPORT
+@onready var mid_teleport: LimboState = $LimboHSM/MidTeleport
+@onready var slam: Slam = $LimboHSM/Slam
+
 
 @onready var dodge: LimboState = $LimboHSM/DODGE
 @onready var hit: LimboState = $LimboHSM/HIT
@@ -117,7 +121,7 @@ var state
 @export var hitbox: HitBox
 var parried : bool = false 
 var attacking : bool = false
-var slam_vel : float = 0.0
+var slam_vel : float = 100.0
 
 #Shooting
 @onready var shoot_attack_manager: ShootAttackManager = $ShootAttackManager
@@ -172,13 +176,17 @@ func _init_state_machine():
 	state_machine.add_transition(chasing, teleport, &"teleport")
 	state_machine.add_transition(charge, attack, &"heavy_attack")
 	state_machine.add_transition(charge, teleport, &"teleport_counter")
-	state_machine.add_transition(teleport, slam, &"slam_attack")
-
-	#
-	#state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
-	#state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
-	#state_machine.add_transition(dying, death, dying.success_event)
-	#state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
+	state_machine.add_transition(teleport, mid_teleport, &"prepare_slam")
+	state_machine.add_transition(mid_teleport, slam, &"slam_attack")
+	state_machine.add_transition(slam, attack, slam.success_event)
+	
+	
+	state_machine.add_transition(attack, teleport, &"teleport_combo")
+		
+	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
+	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
+	state_machine.add_transition(dying, death, dying.success_event)
+	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
 #
 
 
@@ -209,6 +217,9 @@ func _physics_process(delta: float) -> void:
 		velocity.x=0
 		move_and_slide()
 		return
+	elif state_machine.get_active_state()==mid_teleport:
+		velocity=Vector2.ZERO
+		move_and_slide()
 	elif state_machine.get_active_state()==dying:
 		death_handler.dying()
 	elif state_machine.get_active_state()==death :
@@ -244,8 +255,9 @@ func get_width() -> int:
 func get_height() -> int:
 	return abs(collision_shape_2d.get_shape().height * scale.y)
 
-func teleport_to() -> void:
-	global_position=player.global_position 
+func teleport_to(value : float) -> void:
+	global_position=Vector2(player.global_position.x, player.global_position.y-60)
+	tele_delay_timer.start(value)
 
 func start_chase() -> void:
 	if chase_distance:
@@ -261,7 +273,10 @@ func _on_navigation_timer_timeout() -> void:
 func _on_attack_range_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
 		chase_distance=false
-		state_machine.dispatch(&"start_attack")
+		
+		#state_machine.dispatch(&"start_attack")
+		state_machine.dispatch(&"teleport")
+		tele_delay=2.0
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -304,4 +319,18 @@ func _on_animation_player_animation_changed(old_name: StringName, new_name: Stri
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	print("did not exit right")
+	match anim_name:
+		"teleport":
+			teleport_to(tele_delay)
+			state_machine.dispatch(&"prepare_slam")
+		"mid_teleport":
+			state_machine.dispatch(&"slam_attack")
+	
+
+
+func _on_teleport_updated(delta: float) -> void:
+	pass # Replace with function body.
+
+
+func _on_teleport_entered() -> void:
+	movement_handler.active=false

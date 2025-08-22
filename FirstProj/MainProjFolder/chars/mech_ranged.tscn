@@ -52,6 +52,7 @@
 [ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="39_8j4gk"]
 [ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="40_d6wri"]
 [ext_resource type="PackedScene" uid="uid://bro4najrj7577" path="res://Component/UI_Rec/npc_stats.tscn" id="44_ujgd3"]
+[ext_resource type="Script" uid="uid://b1s3qiewybfsp" path="res://chars/slam.gd" id="47_ha1m0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dsgs3"]
 size = Vector2(62, 67)
@@ -1866,31 +1867,6 @@ size = Vector2(142, 96)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_k650x"]
 
-[sub_resource type="GDScript" id="GDScript_84h27"]
-script/source = "extends BTState
-
-@export var actor : Node2D
-@onready var slam: BTState = $\".\"
-
-
-func _enter() -> void:
-	print(\"BANANA SLAMMA\")
-	slam.blackboard.set_var(\"landed\",false)
-	actor.velocity.y=0
-
-func _update(delta: float) -> void:
-	actor.velocity.y+=actor.slam_vel * delta
-	if actor.is_on_floor():
-		slam.blackboard.set_var(\"landed\",true)
-
-func _exit() -> void:
-	if actor.is_on_floor():
-		print(\"landed correctly\")
-		Events.camera_shake.emit(3,15)
-	else:
-		print(\"exiting too soon\")
-"
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_83ysn"]
 
 [node name="MechRanged" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy"]]
@@ -2273,12 +2249,11 @@ script = ExtResource("37_4jbc4")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="SLAM" type="BTState" parent="LimboHSM" node_paths=PackedStringArray("actor")]
+[node name="SLAM" type="BTState" parent="LimboHSM"]
 behavior_tree = ExtResource("28_ecxaq")
 monitor_performance = true
 blackboard_plan = SubResource("BlackboardPlan_k650x")
-script = SubResource("GDScript_84h27")
-actor = NodePath("../..")
+script = ExtResource("47_ha1m0")
 
 [node name="HIT" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("24_qm0db")

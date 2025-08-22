@@ -5874,6 +5874,7 @@ stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://byay512l00w0p"
 
 [node name="ClashTimer" type="Timer" parent="ClashPower"]
+wait_time = 5.0
 
 [node name="Stagger" type="Node" parent="."]
 script = ExtResource("53_7ax8a")

@@ -1,0 +1,39 @@
+[gd_resource type="BehaviorTree" load_steps=9 format=3 uid="uid://d03xclggng177"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_jbs2g"]
+var/tele_delay/name = &"tele_delay"
+var/tele_delay/type = 3
+var/tele_delay/value = 0.0
+var/tele_delay/hint = 0
+var/tele_delay/hint_string = ""
+
+[sub_resource type="BBNode" id="BBNode_8tpc2"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_rmjn5"]
+animation_player = SubResource("BBNode_8tpc2")
+animation_name = &"teleport"
+
+[sub_resource type="BBNode" id="BBNode_0o4qo"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_le45m"]
+animation_player = SubResource("BBNode_0o4qo")
+animation_name = &"teleport"
+
+[sub_resource type="BBNode" id="BBNode_jbs2g"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_8tpc2"]
+node = SubResource("BBNode_jbs2g")
+method = &"teleport_to"
+
+[sub_resource type="BTSequence" id="BTSequence_ilgb4"]
+children = [SubResource("BTPlayAnimation_rmjn5"), SubResource("BTAwaitAnimation_le45m"), SubResource("BTCallMethod_8tpc2")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_jbs2g")
+root_task = SubResource("BTSequence_ilgb4")

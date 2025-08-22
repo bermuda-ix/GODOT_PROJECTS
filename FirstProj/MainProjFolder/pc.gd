@@ -1254,7 +1254,7 @@ func _on_hurt_box_got_hit(_hitbox):
 		health.set_temporary_immortality(0.2)
 	else:
 		set_collision_mask_value(16384, false)
-		knockback.x = -350
+		knockback.x = -35
 		kb_dir=global_position.direction_to(_hitbox.global_position)
 		#"knockback")
 		kb_dir=round(kb_dir)
@@ -1609,10 +1609,12 @@ func _on_counter_box_area_entered(area):
 	if area.is_in_group("bullet"):
 		counter_flag = true
 		counter_timer.start()
+		clash_power.clash_power += 1
 		
 	elif area.is_in_group("regular_enemy_hb"):
 		print("enemy dodge")
 		state_machine.dispatch(&"dodge_successful")
+		clash_power.clash_power += 1
 		
 		
 	clash_power.increase_clash()
