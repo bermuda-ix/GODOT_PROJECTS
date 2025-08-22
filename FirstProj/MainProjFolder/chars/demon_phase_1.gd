@@ -220,6 +220,7 @@ func _physics_process(delta: float) -> void:
 	elif state_machine.get_active_state()==mid_teleport:
 		velocity=Vector2.ZERO
 		move_and_slide()
+		return
 	elif state_machine.get_active_state()==dying:
 		death_handler.dying()
 	elif state_machine.get_active_state()==death :
@@ -334,3 +335,13 @@ func _on_teleport_updated(delta: float) -> void:
 
 func _on_teleport_entered() -> void:
 	movement_handler.active=false
+
+
+
+
+
+func _on_hit_box_area_entered(area: Area2D) -> void:
+	if player_right:
+		player.knockback.x=40
+	else:
+		player.knockback.x=-40
