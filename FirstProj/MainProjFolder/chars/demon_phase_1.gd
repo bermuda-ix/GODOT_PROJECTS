@@ -92,7 +92,7 @@ var player_state : LimboState
 @onready var death: LimboState = $LimboHSM/DEATH
 @onready var dying: BTState = $LimboHSM/DYING
 @onready var attack: LimboState = $LimboHSM/ATTACK
-@onready var charge: BTState = $LimboHSM/CHARGE
+@onready var charge: LimboState = $LimboHSM/CHARGE
 @onready var teleport: LimboState = $LimboHSM/TELEPORT
 @onready var mid_teleport: LimboState = $LimboHSM/MidTeleport
 @onready var slam: Slam = $LimboHSM/Slam
@@ -114,6 +114,7 @@ var state
 @onready var melee_attack_manager: MeleeAttackManager = $MeleeAttackManager
 @onready var dodge_manager: DodgeManager = $DodgeManager
 @onready var attack_range: AttackRange = $AttackRange
+@onready var attack_range_long: AttackRange = $AttackRangeLong
 @onready var ar_box: CollisionShape2D = $AttackRange/CollisionShape2D
 @onready var hit_box: HitBox = $HitBox
 @onready var hb_collision: CollisionShape2D = $HitBox/CollisionShape2D
@@ -122,6 +123,7 @@ var state
 var parried : bool = false 
 var attacking : bool = false
 var slam_vel : float = 100.0
+var attack_chance : int = 50
 
 #Shooting
 @onready var shoot_attack_manager: ShootAttackManager = $ShootAttackManager
@@ -275,9 +277,28 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
 		chase_distance=false
 		
-		#state_machine.dispatch(&"start_attack")
+		#if randi_range(0, 100) > attack_chance:
+			#state_machine.dispatch(&"start_attack")
+		#else:
+			#state_machine.dispatch(&"charge")
+			#
+	state_machine.dispatch(&"charge_attack")
+
+func _on_attack_range_long_body_entered(body: Node2D) -> void:
+	
+	#if randi_range(0, 100) > attack_chance:
+			#
+	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
 		state_machine.dispatch(&"teleport")
 		tele_delay=2.0
+		
+	else:
+		pass
+			
+
+
+
+
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -287,8 +308,15 @@ func _on_attack_range_body_exited(body: Node2D) -> void:
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	print(current, " , ", previous)
 
+#Attack State Functions
 func _on_attack_entered() -> void:
-	animation_player.play("attack")
+	if state_machine.get_previous_active_state()==charge:
+		animation_player.play("heavy_attack")
+	else:
+		animation_player.play("attack")
+func _on_attack_exited() -> void:
+	hitbox.set_damage(1)
+
 
 func _on_health_health_depleted() -> void:
 	pass # Replace with function body.
@@ -345,3 +373,8 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 		player.knockback.x=40
 	else:
 		player.knockback.x=-40
+
+
+func _on_charge_timer_timeout() -> void:
+	hitbox.set_damage(3)
+	state_machine.dispatch(&"heavy_attack")
