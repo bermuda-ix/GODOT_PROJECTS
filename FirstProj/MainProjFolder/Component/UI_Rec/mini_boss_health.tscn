@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://d3fvog1jfqalg"]
+
+[ext_resource type="Texture2D" uid="uid://c800m2au07hfq" path="res://Art_Components/UI/04.png" id="1_is7v7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6jgd"]
+atlas = ExtResource("1_is7v7")
+region = Rect2(291.024, 66.8998, 39.6058, 13.3188)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_08wlm"]
+atlas = ExtResource("1_is7v7")
+region = Rect2(2.91827, 98.7948, 42.4098, 12.9683)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86c3i"]
+atlas = ExtResource("1_is7v7")
+region = Rect2(51.2864, 66.8998, 39.9563, 11.2158)
+
+[node name="MiniBossHealth" type="TextureProgressBar"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(5, 2)
+value = 100.0
+texture_under = SubResource("AtlasTexture_g6jgd")
+texture_over = SubResource("AtlasTexture_08wlm")
+texture_progress = SubResource("AtlasTexture_86c3i")

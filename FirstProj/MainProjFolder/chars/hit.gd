@@ -9,13 +9,13 @@ extends LimboState
 
 func _enter() -> void:
 	actor.state="Hit"
-	actor.bt_player.blackboard.set_var("attack_mode", false)
-	animation_player.stop()
+	#actor.bt_player.blackboard.set_var("attack_mode", false)
+	#animation_player.stop()
 	animation_player.play("hit")
 	actor.hurt_box_collision.disabled=true
 	
 	
 func _exit() -> void:
-	print("hit recovered")
+	#print("hit recovered")
 	actor.hurt_box_collision.disabled=false
 	animation_player.play("RESET")

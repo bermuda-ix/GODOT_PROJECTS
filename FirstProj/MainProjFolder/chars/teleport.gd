@@ -10,4 +10,5 @@ func _enter() -> void:
 	animation_player.play("teleport")
 
 func _exit() -> void:
-	print("teleport exit")
+	pass
+	#print("teleport exit")

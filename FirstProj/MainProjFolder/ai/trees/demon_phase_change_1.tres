@@ -1,0 +1,32 @@
+[gd_resource type="BehaviorTree" load_steps=10 format=3 uid="uid://b6fdnvwl2riuw"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_moi6w"]
+
+[sub_resource type="BTComment" id="BTComment_158hn"]
+custom_name = "random pick 5 times"
+
+[sub_resource type="BTComment" id="BTComment_luac4"]
+custom_name = "teleport"
+
+[sub_resource type="BTComment" id="BTComment_7cqwr"]
+custom_name = "dash attack"
+
+[sub_resource type="BTComment" id="BTComment_7y117"]
+custom_name = "shoot atack"
+
+[sub_resource type="BTRandomSelector" id="BTRandomSelector_kcaqy"]
+children = [SubResource("BTComment_luac4"), SubResource("BTComment_7cqwr"), SubResource("BTComment_7y117")]
+
+[sub_resource type="BTRepeat" id="BTRepeat_t78ol"]
+times = 5
+children = [SubResource("BTComment_158hn"), SubResource("BTRandomSelector_kcaqy")]
+
+[sub_resource type="BTComment" id="BTComment_rf204"]
+custom_name = "telerport to side of player"
+
+[sub_resource type="BTSequence" id="BTSequence_1r0we"]
+children = [SubResource("BTRepeat_t78ol"), SubResource("BTComment_rf204")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_moi6w")
+root_task = SubResource("BTSequence_1r0we")

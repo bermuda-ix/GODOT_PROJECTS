@@ -35,6 +35,7 @@ signal camera_shake
 signal activate
 signal deactivate
 signal spawn_update
+signal boss_spawn
 #spawn_update(Enemy type, true=add false=remove)\
 
 signal parried

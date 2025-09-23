@@ -22,7 +22,7 @@ resource_name = "AnimationPlayer"
 [sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_2nf5j"]
 animation_player = SubResource("BBNode_jeokm")
 animation_name = &"death"
-max_time = 1.5
+max_time = 3.0
 
 [sub_resource type="BTCheckTrigger" id="BTCheckTrigger_jeokm"]
 variable = &"hit_the_floor"

@@ -1,0 +1,48 @@
+[gd_resource type="BehaviorTree" load_steps=13 format=3 uid="uid://cg71mprmoucxg"]
+
+[ext_resource type="BlackboardPlan" uid="uid://clapfjty1ttn3" path="res://Component/blackboard_plans/slam_var.tres" id="1_yaypo"]
+[ext_resource type="BehaviorTree" uid="uid://cinvckuhyxewk" path="res://ai/trees/slam_shockwave.tres" id="2_y08e5"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_55t2l"]
+
+[sub_resource type="BBNode" id="BBNode_55t2l"]
+saved_value = NodePath("AnimationPlayer/AnimationPlayerSub")
+resource_name = "AnimationPlayer/AnimationPlayerSub"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_2sw8s"]
+animation_player = SubResource("BBNode_55t2l")
+animation_name = &"phase_transitions/phase_1_to_2"
+
+[sub_resource type="BBNode" id="BBNode_yaypo"]
+saved_value = NodePath("AnimationPlayer/AnimationPlayerSub")
+resource_name = "AnimationPlayer/AnimationPlayerSub"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_y08e5"]
+animation_player = SubResource("BBNode_yaypo")
+animation_name = &"phase_transitions/phase_1_to_2"
+max_time = 10.0
+
+[sub_resource type="BBVariant" id="BBVariant_yaypo"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BBNode" id="BBNode_y08e5"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_85rh6"]
+node = SubResource("BBNode_y08e5")
+method = &"set_bt_slam_on_floor_flag"
+args = Array[BBVariant]([SubResource("BBVariant_yaypo")])
+
+[sub_resource type="BTSubtree" id="BTSubtree_yaypo"]
+subtree = ExtResource("2_y08e5")
+blackboard_plan = ExtResource("1_yaypo")
+
+[sub_resource type="BTSequence" id="BTSequence_85rh6"]
+children = [SubResource("BTPlayAnimation_2sw8s"), SubResource("BTAwaitAnimation_y08e5"), SubResource("BTCallMethod_85rh6"), SubResource("BTSubtree_yaypo")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_55t2l")
+root_task = SubResource("BTSequence_85rh6")

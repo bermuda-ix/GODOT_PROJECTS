@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://tui6wmeo2fax"]
+
+[ext_resource type="Script" uid="uid://c14brhmymlgfx" path="res://Component/UI_Rec/boss_ui.gd" id="1_wo2os"]
+[ext_resource type="PackedScene" uid="uid://d3fvog1jfqalg" path="res://Component/UI_Rec/mini_boss_health.tscn" id="2_kn3bd"]
+[ext_resource type="PackedScene" uid="uid://cb1sfjiadamc3" path="res://Component/UI_Rec/boss_stamina.tscn" id="3_qeia0"]
+
+[node name="MiniBossUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wo2os")
+
+[node name="MiniBossHealth" parent="." instance=ExtResource("2_kn3bd")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -110.0
+offset_top = 10.0
+offset_right = -68.0
+offset_bottom = 23.0
+grow_vertical = 1
+
+[node name="BossStamina" parent="." instance=ExtResource("3_qeia0")]
+layout_mode = 1
+offset_left = 168.0
+offset_top = 40.0
+offset_right = 168.0
+offset_bottom = 40.0

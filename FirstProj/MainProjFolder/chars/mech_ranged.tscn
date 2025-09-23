@@ -2306,7 +2306,6 @@ ammo_count_vis = false
 [connection signal="received_damage" from="AnimatedSprite2D/HurtBox_WeakPoint" to="." method="_on_hurt_box_weak_point_received_damage"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
-[connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]

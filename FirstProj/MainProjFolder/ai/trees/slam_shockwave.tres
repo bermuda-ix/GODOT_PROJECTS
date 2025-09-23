@@ -1,0 +1,74 @@
+[gd_resource type="BehaviorTree" load_steps=19 format=3 uid="uid://cinvckuhyxewk"]
+
+[ext_resource type="BlackboardPlan" uid="uid://clapfjty1ttn3" path="res://Component/blackboard_plans/slam_var.tres" id="1_pohw2"]
+
+[sub_resource type="BBNode" id="BBNode_pohw2"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_2vcd3"]
+animation_player = SubResource("BBNode_pohw2")
+animation_name = &"slam"
+
+[sub_resource type="BBNode" id="BBNode_k6h81"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_62s36"]
+animation_player = SubResource("BBNode_k6h81")
+animation_name = &"slam"
+max_time = 0.5
+
+[sub_resource type="BBNode" id="BBNode_qsiay"]
+saved_value = NodePath("MeleeAttackManager")
+resource_name = "MeleeAttackManager"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_g60rr"]
+node = SubResource("BBNode_qsiay")
+method = &"slam"
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_pt6aw"]
+variable = &"landed"
+
+[sub_resource type="BBNode" id="BBNode_5xyi6"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_kgwtk"]
+animation_player = SubResource("BBNode_5xyi6")
+animation_name = &"landed_shockwave"
+
+[sub_resource type="BBNode" id="BBNode_w1i63"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_fylg5"]
+animation_player = SubResource("BBNode_w1i63")
+animation_name = &"landed_shockwave"
+
+[sub_resource type="BBVariant" id="BBVariant_h1qhy"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BBNode" id="BBNode_ggosm"]
+saved_value = NodePath("MovementHandler")
+resource_name = "MovementHandler"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_jj2hb"]
+node = SubResource("BBNode_ggosm")
+method = &"set_active"
+args = Array[BBVariant]([SubResource("BBVariant_h1qhy")])
+
+[sub_resource type="BTSequence" id="BTSequence_vk878"]
+children = [SubResource("BTCheckTrigger_pt6aw"), SubResource("BTPlayAnimation_kgwtk"), SubResource("BTAwaitAnimation_fylg5"), SubResource("BTCallMethod_jj2hb")]
+
+[sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_ckia3"]
+children = [SubResource("BTSequence_vk878")]
+
+[sub_resource type="BTSequence" id="BTSequence_ldc6y"]
+children = [SubResource("BTPlayAnimation_2vcd3"), SubResource("BTAwaitAnimation_62s36"), SubResource("BTCallMethod_g60rr"), SubResource("BTRepeatUntilSuccess_ckia3")]
+
+[resource]
+blackboard_plan = ExtResource("1_pohw2")
+root_task = SubResource("BTSequence_ldc6y")

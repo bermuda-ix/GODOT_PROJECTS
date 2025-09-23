@@ -204,6 +204,8 @@ var sp_atk_type = sp_atk_cone
 var sp_atk_dmg :int = 1
 var thrust : bool = false
 
+var attacking : bool = false
+
 var counter_flag : bool = false
 @onready var counter_timer = $CounterTimer
 

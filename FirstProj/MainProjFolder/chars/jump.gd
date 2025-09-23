@@ -22,5 +22,6 @@ func _update(delta: float) -> void:
 		state_machine.dispatch(&"land")
 
 func _exit() -> void:
-	print("exiting jump")
+	pass
+	#print("exiting jump")
 	

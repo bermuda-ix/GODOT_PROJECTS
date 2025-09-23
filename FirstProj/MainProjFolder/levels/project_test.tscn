@@ -1,6 +1,7 @@
-[gd_scene load_steps=26 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=27 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
+[ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="2_t1ldw"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="4_4kfue"]
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="4_ec6ti"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
@@ -287,6 +288,10 @@ offset_left = -26.0
 offset_top = -31.0
 offset_right = -26.0
 offset_bottom = -31.0
+
+[node name="PauseMenu" parent="CanvasLayer" index="4" instance=ExtResource("2_t1ldw")]
+process_mode = 3
+visible = false
 
 [node name="LevelTileMap" parent="." index="1"]
 position = Vector2(1, 0)

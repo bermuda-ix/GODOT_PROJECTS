@@ -7,9 +7,10 @@ extends LimboState
 
 func _enter() -> void:
 	#actor.state="GUARD"
-	actor.bt_player.blackboard.set_var("attack_mode", false)
+	#actor.bt_player.blackboard.set_var("attack_mode", false)
 	actor.animation_player.speed_scale = 1
 	actor.animation_player.play("idle")
 
 func _exit() -> void:
-	print("exit idle")
+	pass
+	#print("exit idle")

@@ -11,4 +11,5 @@ func _enter() -> void:
 
 
 func _exit() -> void:
-	print("exiting idle")
+	pass
+	#print("exiting idle")

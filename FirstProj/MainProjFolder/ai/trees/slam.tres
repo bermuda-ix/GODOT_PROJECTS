@@ -50,6 +50,7 @@ resource_name = "AnimationPlayer"
 [sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_c0vtd"]
 animation_player = SubResource("BBNode_5wqhu")
 animation_name = &"landed"
+max_time = 0.55
 
 [sub_resource type="BBVariant" id="BBVariant_2iwtk"]
 type = 1
