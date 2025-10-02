@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=45 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_w82j5"]
 [ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_mb6gy"]
@@ -534,6 +534,10 @@ _data = {
 &"mini_boss_kill": SubResource("Animation_cxkws")
 }
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_w82j5"]
+a = Vector2(-17, -3)
+b = Vector2(567, -310)
+
 [node name="PrologueLvl" node_paths=PackedStringArray("starting_pos") instance=ExtResource("1_w82j5")]
 next_level = ExtResource("2_mb6gy")
 starting_pos = [NodePath("DoorsAndSwitches/Entries/Entry"), NodePath("DoorsAndSwitches/Entries/Entry2"), NodePath("DoorsAndSwitches/Entries/Entry3"), NodePath("DoorsAndSwitches/Entries/Entry4"), NodePath("DoorsAndSwitches/Entries/Entry5"), NodePath("DoorsAndSwitches/Entries/Entry6")]
@@ -973,7 +977,18 @@ position = Vector2(5833, 856)
 scale = Vector2(1, 1.18132)
 connected_switch = "Door4"
 
-[node name="Spawning" type="Node" parent="." index="17"]
+[node name="Stairs" type="Node" parent="." index="17"]
+
+[node name="StairsUnderground1" type="StaticBody2D" parent="Stairs" index="0"]
+position = Vector2(5215, 1214)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stairs/StairsUnderground1" index="0"]
+shape = SubResource("SegmentShape2D_w82j5")
+one_way_collision = true
+
+[node name="FallthroughPlatform" type="Node" parent="." index="18"]
+
+[node name="Spawning" type="Node" parent="." index="19"]
 
 [node name="SpawnPoints" type="Node" parent="Spawning" index="0"]
 
@@ -988,13 +1003,13 @@ position = Vector2(3520, 419)
 [node name="HeatSpawnFlag3" parent="Spawning/SpawnFlags" index="2" instance=ExtResource("22_22var")]
 position = Vector2(2129, 1101)
 
-[node name="QTEFlags" type="Node" parent="." index="18"]
+[node name="QTEFlags" type="Node" parent="." index="20"]
 
 [node name="QTE_Start" parent="QTEFlags" index="0" node_paths=PackedStringArray("cutscene_player") instance=ExtResource("24_4koma")]
 position = Vector2(1916, 713)
 cutscene_player = NodePath("../../CutscenePlayer")
 
-[node name="Paths" type="Node" parent="." index="19"]
+[node name="Paths" type="Node" parent="." index="21"]
 
 [node name="Path2D" type="Path2D" parent="Paths" index="0"]
 curve = SubResource("Curve2D_e3spa")
@@ -1008,12 +1023,12 @@ rotates = false
 update_rotation = false
 update_scale = false
 
-[node name="StartingPos" type="Node" parent="." index="20"]
+[node name="StartingPos" type="Node" parent="." index="22"]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
 position = Vector2(3955, 1141)
 
-[node name="PersistentDataHandler" type="Node" parent="." index="21"]
+[node name="PersistentDataHandler" type="Node" parent="." index="23"]
 script = ExtResource("24_w82j5")
 metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 

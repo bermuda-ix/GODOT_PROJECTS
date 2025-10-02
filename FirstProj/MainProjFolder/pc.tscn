@@ -4798,7 +4798,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_on8rs"]
 resource_name = "shotgun_attack"
-length = 0.9
+length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -4818,7 +4818,7 @@ tracks/1/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.366667, 0.7),
+"times": PackedFloat32Array(0, 0.166667, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -4830,7 +4830,7 @@ tracks/2/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast3:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.7),
+"times": PackedFloat32Array(0, 0.2, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -4842,7 +4842,7 @@ tracks/3/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast4:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.433333, 0.7),
+"times": PackedFloat32Array(0, 0.233333, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -4854,7 +4854,7 @@ tracks/4/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast2:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.466667, 0.7),
+"times": PackedFloat32Array(0, 0.266667, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -4866,7 +4866,7 @@ tracks/5/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast5:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.466667, 0.7),
+"times": PackedFloat32Array(0, 0.266667, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -4878,7 +4878,7 @@ tracks/6/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:disabled
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.366667, 0.833333),
+"times": PackedFloat32Array(0, 0.166667, 0.633333),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -4890,7 +4890,7 @@ tracks/7/path = NodePath("AnimatedSprite2D/Shotty/GPUParticles2D:emitting")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.4),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -4911,7 +4911,7 @@ tracks/8/keys = {
 "start_offset": 0.0,
 "stream": ExtResource("83_dlcc0")
 }],
-"times": PackedFloat32Array(0.333333, 0.4)
+"times": PackedFloat32Array(0.1, 0.2)
 }
 tracks/8/use_blend = true
 

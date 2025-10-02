@@ -84,7 +84,6 @@ value = SubResource("BBVariant_ex4gl")
 [sub_resource type="BTAction" id="BTAction_2i8b5"]
 script = ExtResource("1_7px3v")
 group = &"player"
-target_var = &"target"
 
 [sub_resource type="BTCheckTrigger" id="BTCheckTrigger_vjri2"]
 variable = &"counter_attack"
@@ -272,7 +271,6 @@ children = [SubResource("BTCheckVar_gi26e"), SubResource("BTAction_2i8b5"), SubR
 [sub_resource type="BTAction" id="BTAction_kugyc"]
 script = ExtResource("1_7px3v")
 group = &"player"
-target_var = &"target"
 
 [sub_resource type="BBNode" id="BBNode_hd7qm"]
 saved_value = NodePath(".")

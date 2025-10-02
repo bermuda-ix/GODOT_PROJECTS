@@ -1743,6 +1743,7 @@ func _on_hit_stop_hit_stop_finished() -> void:
 
 func _on_idle_entered() -> void:
 	anim_player.play("idle")
+	attack_timer.paused=false
 
 
 func _on_state_machine_active_state_changed(current: LimboState, _previous: LimboState) -> void:

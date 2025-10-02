@@ -67,10 +67,13 @@ signal death_cutscene
 @export var jump_speed : float = 120.0
 @export var chase_speed : float = 80.0
 @export var keep_dis_speed : float = 40.0
-var gravity_active : bool = true
+@onready var gravity_active : bool = true : set = set_grav_active
 @onready var dash_start : Vector2 = Vector2.ZERO
-@onready var dash_end : Vector2 = Vector2.ZERO
+@onready var dash_stop : Vector2 = Vector2.ZERO
+@onready var dash_dist : int = 200 : set = set_dash_dist
+@export var dash_finished : bool = true
 @onready var rotate_to_player : bool : set=set_rotate_to_player
+@onready var tele_dest : String = "above"
 
 var current_speed : float = 40.0
 var prev_speed : float = 40.0
@@ -113,6 +116,8 @@ var player_top_left : Vector2
 @onready var mid_teleport: LimboState = $LimboHSM/MidTeleport
 @onready var dash: LimboState = $LimboHSM/DASH
 @onready var slam: Slam = $LimboHSM/Slam
+@onready var slam_heavy: Slam = $LimboHSM/SlamHeavy
+
 @onready var phase_transition: BTState = $LimboHSM/PhaseTransition
 
 #TO BE REMOVED
@@ -175,6 +180,7 @@ var combat_state : String = "RANGED"
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	_init_state_machine()
+	_init_phase_state_machine()
 	animation_player.play("idle")
 	boss_ui.activate_boss_ui()
 	boss_ui.set_max_boss_health(health.max_health)
@@ -214,7 +220,9 @@ func _init_state_machine():
 	state_machine.add_transition(teleport, mid_teleport, &"prepare_slam")
 	state_machine.add_transition(charge, mid_teleport, &"counter_attack")
 	state_machine.add_transition(mid_teleport, slam, &"slam_attack")
+	state_machine.add_transition(mid_teleport, slam_heavy, &"slam_attack_heavy")
 	state_machine.add_transition(slam, attack, slam.success_event)
+	state_machine.add_transition(slam_heavy, attack, slam_heavy.success_event)
 	
 	state_machine.add_transition(hit, chasing, &"hit_recover")
 	
@@ -299,6 +307,9 @@ func apply_gravity(delta : float) -> void:
 		velocity.y += gravity * delta
 	else:
 		dying.blackboard.set_var("hit_the_floor", true)
+
+func set_grav_active(value:bool) -> void:
+	gravity_active=value
 
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
@@ -454,7 +465,10 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			teleport_to(tele_delay, "above")
 			state_machine.dispatch(&"prepare_slam")
 		"mid_teleport":
-			state_machine.dispatch(&"slam_attack")
+			if phases.get_active_state()==phase_1:
+				state_machine.dispatch(&"slam_attack")
+			else:
+				state_machine.dispatch(&"slam_heavy_attack")
 		"hit":
 			state_machine.dispatch(&"hit_recover")
 		"dead":
@@ -473,7 +487,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 ######################
 # Teleport functions #
 ######################
-func teleport_to(delay : float, pos : String = "default") -> void:
+func teleport_to(delay : float, pos : String = tele_dest) -> void:
 	match pos:
 		"left":
 			global_position=Vector2(player.global_position.x-30, player.global_position.y-15)
@@ -484,10 +498,13 @@ func teleport_to(delay : float, pos : String = "default") -> void:
 		"upright":
 			global_position=Vector2(player.global_position.x+30, player.global_position.y-60)
 		"above":
-			global_position=Vector2(player.global_position.x, player.global_position.y-100)
+			global_position=Vector2(player.global_position.x, player.global_position.y-80)
 		"defualt":
 			global_position=Vector2(player.global_position.x, player.global_position.y-60)
 	tele_delay_timer.start(delay)
+
+func set_tele_dest(value : String) -> void:
+	tele_dest=value
 
 func _on_teleport_updated(delta: float) -> void:
 	pass # Replace with function body.
@@ -499,35 +516,50 @@ func _on_teleport_entered() -> void:
 # Dash functions #
 ##################
 
-func _on_dash_entered() -> void:
+func dash_begin() -> void:
 	dash_start=global_position
 	movement_handler.active=false
 	gravity_active=false
 	ground_hazard_spawn_handler.player_trigger=true
 	collision_shape_2d.disabled=true
 	#hazard_spawn_timer.start(.2)
+	dash_finished=false
 	if player_right:
-		dash_end=Vector2(global_position.x+200, global_position.y)
+		dash_stop=Vector2(global_position.x+dash_dist, global_position.y)
 	else:
-		dash_end=Vector2(global_position.x-200, global_position.y)
-		
-		
+		dash_stop=Vector2(global_position.x-dash_dist, global_position.y)
 
-func _on_dash_updated(delta: float) -> void:
-	global_position=dash_torwards(dash_end, 5, delta)
+func dash_to(delta: float) -> void:
+	global_position=dash_torwards(dash_stop, 5, delta)
 	collision_shape_2d.disabled=true
-	if global_position.x==dash_end.x:
+	if global_position.x==dash_stop.x:
+		dash_finished=true
 		animation_player.play("dash_end")
 
-func _on_dash_exited() -> void:
+func dash_torwards(end_pos : Vector2, speed : float, delta : float)->Vector2:
+	return global_position.move_toward(dash_stop, delta*(SPEED*speed))
+
+func dash_end() -> void:
 	gravity_active=true
 	movement_handler.active=true
 	collision_shape_2d.disabled=false
 	hazard_spawn_timer.stop()
 	ground_hazard_spawn_handler.player_trigger=false
+	dash_finished=true
 
-func dash_torwards(end_pos : Vector2, speed : float, delta : float)->Vector2:
-	return global_position.move_toward(dash_end, delta*(SPEED*speed))
+func set_dash_dist(value:int) -> void:
+	dash_dist=value
+
+func _on_dash_entered() -> void:
+	dash_begin()
+
+func _on_dash_updated(delta: float) -> void:
+	dash_to(delta)
+
+func _on_dash_exited() -> void:
+	dash_end()
+
+
 
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
@@ -577,6 +609,7 @@ func _on_dying_updated(delta: float) -> void:
 
 
 func _on_dying_entered() -> void:
+	hit_stop.hit_stop(0.3, 3)
 	print("dying")
 
 

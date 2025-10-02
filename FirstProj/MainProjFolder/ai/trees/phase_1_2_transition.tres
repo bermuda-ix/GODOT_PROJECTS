@@ -1,9 +1,29 @@
-[gd_resource type="BehaviorTree" load_steps=13 format=3 uid="uid://cg71mprmoucxg"]
+[gd_resource type="BehaviorTree" load_steps=83 format=3 uid="uid://cg71mprmoucxg"]
 
 [ext_resource type="BlackboardPlan" uid="uid://clapfjty1ttn3" path="res://Component/blackboard_plans/slam_var.tres" id="1_yaypo"]
 [ext_resource type="BehaviorTree" uid="uid://cinvckuhyxewk" path="res://ai/trees/slam_shockwave.tres" id="2_y08e5"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_55t2l"]
+var/dash_ended/name = &"dash_ended"
+var/dash_ended/type = 1
+var/dash_ended/value = false
+var/dash_ended/hint = 0
+var/dash_ended/hint_string = ""
+binding/dash_ended = NodePath(".:dash_finished")
+
+[sub_resource type="BBVariant" id="BBVariant_2c3il"]
+type = 1
+saved_value = false
+resource_name = "<null>"
+
+[sub_resource type="BBNode" id="BBNode_24stw"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_iq5ah"]
+node = SubResource("BBNode_24stw")
+method = &"set_grav_active"
+args = Array[BBVariant]([SubResource("BBVariant_2c3il")])
 
 [sub_resource type="BBNode" id="BBNode_55t2l"]
 saved_value = NodePath("AnimationPlayer/AnimationPlayerSub")
@@ -21,6 +41,20 @@ resource_name = "AnimationPlayer/AnimationPlayerSub"
 animation_player = SubResource("BBNode_yaypo")
 animation_name = &"phase_transitions/phase_1_to_2"
 max_time = 10.0
+
+[sub_resource type="BBVariant" id="BBVariant_ukqlo"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BBNode" id="BBNode_ufboa"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_mh7i3"]
+node = SubResource("BBNode_ufboa")
+method = &"set_grav_active"
+args = Array[BBVariant]([SubResource("BBVariant_ukqlo")])
 
 [sub_resource type="BBVariant" id="BBVariant_yaypo"]
 type = 1
@@ -40,8 +74,274 @@ args = Array[BBVariant]([SubResource("BBVariant_yaypo")])
 subtree = ExtResource("2_y08e5")
 blackboard_plan = ExtResource("1_yaypo")
 
+[sub_resource type="BBVariant" id="BBVariant_y08e5"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTSetVar" id="BTSetVar_85rh6"]
+variable = &"dash_ended"
+value = SubResource("BBVariant_y08e5")
+
+[sub_resource type="BBVariant" id="BBVariant_f44f2"]
+type = 2
+saved_value = 100
+resource_name = "100"
+
+[sub_resource type="BBNode" id="BBNode_lq2av"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_24stw"]
+node = SubResource("BBNode_lq2av")
+method = &"set_dash_dist"
+args = Array[BBVariant]([SubResource("BBVariant_f44f2")])
+
+[sub_resource type="BBNode" id="BBNode_85rh6"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_g0kea"]
+node = SubResource("BBNode_85rh6")
+method = &"dash_begin"
+
+[sub_resource type="BBNode" id="BBNode_63b1m"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_gfkt1"]
+node = SubResource("BBNode_63b1m")
+method = &"dash_to"
+args_include_delta = true
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_g0kea"]
+variable = &"dash_ended"
+
+[sub_resource type="BTSequence" id="BTSequence_yaypo"]
+children = [SubResource("BTCallMethod_gfkt1"), SubResource("BTCheckTrigger_g0kea")]
+
+[sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_f44f2"]
+children = [SubResource("BTSequence_yaypo")]
+
+[sub_resource type="BBNode" id="BBNode_2c3il"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_mhtfp"]
+node = SubResource("BBNode_2c3il")
+method = &"dash_end"
+
+[sub_resource type="BBNode" id="BBNode_g0kea"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_63b1m"]
+animation_player = SubResource("BBNode_g0kea")
+animation_name = &"dash_end"
+max_time = 0.2
+
+[sub_resource type="BBVariant" id="BBVariant_85rh6"]
+type = 4
+saved_value = "upright"
+resource_name = "upright"
+
+[sub_resource type="BBNode" id="BBNode_f44f2"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_2c3il"]
+node = SubResource("BBNode_f44f2")
+method = &"set_tele_dest"
+args = Array[BBVariant]([SubResource("BBVariant_85rh6")])
+
+[sub_resource type="BBNode" id="BBNode_mhtfp"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_qwm02"]
+animation_player = SubResource("BBNode_mhtfp")
+animation_name = &"teleport_quick"
+
+[sub_resource type="BBNode" id="BBNode_gfkt1"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_f44f2"]
+animation_player = SubResource("BBNode_gfkt1")
+animation_name = &"teleport_quick"
+
+[sub_resource type="BBVariant" id="BBVariant_63b1m"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BBNode" id="BBNode_mrxke"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_vprbe"]
+node = SubResource("BBNode_mrxke")
+method = &"set_bt_slam_on_floor_flag"
+args = Array[BBVariant]([SubResource("BBVariant_63b1m")])
+
+[sub_resource type="BTSubtree" id="BTSubtree_08f66"]
+subtree = ExtResource("2_y08e5")
+blackboard_plan = ExtResource("1_yaypo")
+
+[sub_resource type="BBVariant" id="BBVariant_gfkt1"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTSetVar" id="BTSetVar_f44f2"]
+variable = &"dash_ended"
+value = SubResource("BBVariant_gfkt1")
+
+[sub_resource type="BBNode" id="BBNode_08f66"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_tpkuf"]
+node = SubResource("BBNode_08f66")
+method = &"dash_begin"
+
+[sub_resource type="BBNode" id="BBNode_6b7wn"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_lq2av"]
+node = SubResource("BBNode_6b7wn")
+method = &"dash_to"
+args_include_delta = true
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_24stw"]
+variable = &"dash_ended"
+
+[sub_resource type="BTSequence" id="BTSequence_iq5ah"]
+children = [SubResource("BTCallMethod_lq2av"), SubResource("BTCheckTrigger_24stw")]
+
+[sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_ukqlo"]
+children = [SubResource("BTSequence_iq5ah")]
+
+[sub_resource type="BBNode" id="BBNode_2sj2u"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_0kae5"]
+node = SubResource("BBNode_2sj2u")
+method = &"dash_end"
+
+[sub_resource type="BBNode" id="BBNode_4mpr2"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_cu1i2"]
+animation_player = SubResource("BBNode_4mpr2")
+animation_name = &"dash_end"
+max_time = 0.2
+
+[sub_resource type="BBVariant" id="BBVariant_g0kea"]
+type = 4
+saved_value = "upleft"
+resource_name = "upleft"
+
+[sub_resource type="BBNode" id="BBNode_qwm02"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_mrxke"]
+node = SubResource("BBNode_qwm02")
+method = &"set_tele_dest"
+args = Array[BBVariant]([SubResource("BBVariant_g0kea")])
+
+[sub_resource type="BBNode" id="BBNode_vprbe"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_08f66"]
+animation_player = SubResource("BBNode_vprbe")
+animation_name = &"teleport_quick"
+
+[sub_resource type="BBNode" id="BBNode_tpkuf"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_flcmm"]
+animation_player = SubResource("BBNode_tpkuf")
+animation_name = &"teleport_quick"
+
+[sub_resource type="BBVariant" id="BBVariant_tpkuf"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BBNode" id="BBNode_flcmm"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_6b7wn"]
+node = SubResource("BBNode_flcmm")
+method = &"set_bt_slam_on_floor_flag"
+args = Array[BBVariant]([SubResource("BBVariant_tpkuf")])
+
+[sub_resource type="BTSubtree" id="BTSubtree_lq2av"]
+subtree = ExtResource("2_y08e5")
+blackboard_plan = ExtResource("1_yaypo")
+
+[sub_resource type="BBVariant" id="BBVariant_u3px5"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTSetVar" id="BTSetVar_ouspb"]
+variable = &"dash_ended"
+value = SubResource("BBVariant_u3px5")
+
+[sub_resource type="BBNode" id="BBNode_qpmgg"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_wcsbo"]
+node = SubResource("BBNode_qpmgg")
+method = &"dash_begin"
+
+[sub_resource type="BBNode" id="BBNode_vj5s3"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_kjwlh"]
+node = SubResource("BBNode_vj5s3")
+method = &"dash_to"
+args_include_delta = true
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_a3k6f"]
+variable = &"dash_ended"
+
+[sub_resource type="BTSequence" id="BTSequence_64y12"]
+children = [SubResource("BTCallMethod_kjwlh"), SubResource("BTCheckTrigger_a3k6f")]
+
+[sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_4m7dr"]
+children = [SubResource("BTSequence_64y12")]
+
+[sub_resource type="BBNode" id="BBNode_yyaoi"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_a0tsr"]
+node = SubResource("BBNode_yyaoi")
+method = &"dash_end"
+
+[sub_resource type="BBNode" id="BBNode_7cn1k"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_160ok"]
+animation_player = SubResource("BBNode_7cn1k")
+animation_name = &"dash_end"
+max_time = 0.2
+
 [sub_resource type="BTSequence" id="BTSequence_85rh6"]
-children = [SubResource("BTPlayAnimation_2sw8s"), SubResource("BTAwaitAnimation_y08e5"), SubResource("BTCallMethod_85rh6"), SubResource("BTSubtree_yaypo")]
+children = [SubResource("BTCallMethod_iq5ah"), SubResource("BTPlayAnimation_2sw8s"), SubResource("BTAwaitAnimation_y08e5"), SubResource("BTCallMethod_mh7i3"), SubResource("BTCallMethod_85rh6"), SubResource("BTSubtree_yaypo"), SubResource("BTSetVar_85rh6"), SubResource("BTCallMethod_24stw"), SubResource("BTCallMethod_g0kea"), SubResource("BTRepeatUntilSuccess_f44f2"), SubResource("BTCallMethod_mhtfp"), SubResource("BTAwaitAnimation_63b1m"), SubResource("BTCallMethod_2c3il"), SubResource("BTPlayAnimation_qwm02"), SubResource("BTAwaitAnimation_f44f2"), SubResource("BTCallMethod_vprbe"), SubResource("BTSubtree_08f66"), SubResource("BTSetVar_f44f2"), SubResource("BTCallMethod_tpkuf"), SubResource("BTRepeatUntilSuccess_ukqlo"), SubResource("BTCallMethod_0kae5"), SubResource("BTAwaitAnimation_cu1i2"), SubResource("BTCallMethod_mrxke"), SubResource("BTPlayAnimation_08f66"), SubResource("BTAwaitAnimation_flcmm"), SubResource("BTCallMethod_6b7wn"), SubResource("BTSubtree_lq2av"), SubResource("BTSetVar_ouspb"), SubResource("BTCallMethod_wcsbo"), SubResource("BTRepeatUntilSuccess_4m7dr"), SubResource("BTCallMethod_a0tsr"), SubResource("BTAwaitAnimation_160ok")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_55t2l")

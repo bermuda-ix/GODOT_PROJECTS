@@ -49,7 +49,6 @@ value = SubResource("BBVariant_fh6a1")
 [sub_resource type="BTAction" id="BTAction_exfju"]
 script = ExtResource("1_dk6q0")
 group = &"player"
-target_var = &"target"
 
 [sub_resource type="BBVariant" id="BBVariant_i45wg"]
 type = 1
@@ -88,7 +87,6 @@ children = [SubResource("BTCheckVar_bob2m"), SubResource("BTAction_exfju"), SubR
 [sub_resource type="BTAction" id="BTAction_2k4od"]
 script = ExtResource("1_dk6q0")
 group = &"player"
-target_var = &"target"
 
 [sub_resource type="BBNode" id="BBNode_uiybs"]
 saved_value = NodePath(".")
