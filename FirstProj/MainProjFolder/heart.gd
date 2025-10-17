@@ -22,4 +22,3 @@ func _on_body_entered(body):
 	#if hearts.size() <=1:
 		#Events.level_completed.emit()
 		#print("level complete")
-

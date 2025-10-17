@@ -173,9 +173,12 @@ signal no_input_qte
 @onready var hit_stop: HitStop = $HitStop
 
 #Moving rooms
-@onready var next_room : int = 0
-@onready var cur_room : int = 0
-@onready var prev_room : int = 0
+@onready var next_room_old : int = 0
+@onready var next_room : String = ""
+@onready var cur_room_old : int = 0
+@onready var cur_room : String = ""
+@onready var prev_room_old : int = 0
+@onready var prev_room : String = ""
 @onready var entry_pos : int = 0
 @onready var prev_starting_pos : int = 0
 @onready var in_door_way : bool = false
@@ -1053,8 +1056,13 @@ func locked_combat():
 func enter_door() -> void:
 	if in_door_way:
 		if Input.is_action_just_pressed("up"):
-			prev_room=cur_room
-			cur_room=next_room
+			if next_room=="RETURN":
+				var temp : String = cur_room
+				cur_room=prev_room
+				prev_room=temp
+			else:
+				prev_room=cur_room
+				cur_room=next_room
 			Global.game_controller.change_2d_scene(next_room, false, false, entry_pos, "fade_to_black_quick", "fade_from_black_quick")
 			entry_pos=prev_starting_pos
 

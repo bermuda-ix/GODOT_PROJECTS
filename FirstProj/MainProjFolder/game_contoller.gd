@@ -9,8 +9,9 @@ class_name GameController extends Node
 @onready var levels: Levels = $Levels
 @onready var queued_rooms : Array[String] = []
 @onready var loaded_rooms : Array[Node] = []
+@onready var loaded_rooms_map : Dictionary
 @onready var current_room : int = 0
-
+@onready var return_room : String = ""
 
 var current_2d_scene
 var prev_2d_scene
@@ -21,7 +22,10 @@ var current_gui_scene
 func _ready() -> void:	
 	Global.game_controller = self
 	#current_2d_scene=$World2D/PrologueLvl
-	load_levels(LevelsList.prologue_levels)
+	load_levels(LevelsList.prologue_unique_levels)
+	for room_loaded in loaded_rooms_map:
+		print(room_loaded)
+		print(loaded_rooms_map[room_loaded])
 	load_first_room()
 	prev_2d_scene=current_2d_scene
 	#var test_scene="res://levels/prologue_lvl.tscn"
@@ -29,6 +33,16 @@ func _ready() -> void:
 	current_2d_scene.player=player
 	Events.pause.connect(show_pause)
 	Events.unpause.connect(unpause)
+	
+	#print(LevelsList.proloque_level_maps)
+	#for room in LevelsList.proloque_level_maps:
+		#
+		#print(room)
+		#print(LevelsList.proloque_level_maps[room])
+	load_levels(LevelsList.proloque_level_maps)
+	for room_loaded in loaded_rooms_map:
+		print(room_loaded)
+		print(loaded_rooms_map[room_loaded])
 		
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Pause"):
@@ -42,9 +56,29 @@ func unpause():
 	pause_menu.hide()
 	get_tree().paused = false
 	
+	
+#refactor to use global array/map of full levels
 func load_levels(dict : Dictionary) -> void:
+	for room in dict:
+		
+		print(room)
+		print(dict[room])
+		loaded_rooms_map[room]=load(dict[room]).instantiate()
+		
+		#loaded_rooms.append(load(dict[room]).instantiate())
+		#i+=1
+
+func load_levels_old(dict : Dictionary) -> void:
 	for key in dict.keys():
 		queued_rooms.append(dict[key])
+		
+	for room in LevelsList.proloque_level_maps:
+		
+		print(room)
+		print(LevelsList.proloque_level_maps[room])
+		#loaded_rooms.append(load(queued_rooms[LevelsList.proloque_level_maps[i]]).instantiate())
+		#i+=1
+		
 	loaded_rooms.append(load(queued_rooms[0]).instantiate())
 	
 	loaded_rooms.append(load(queued_rooms[1]).instantiate())
@@ -54,18 +88,21 @@ func load_levels(dict : Dictionary) -> void:
 	loaded_rooms.append(load(queued_rooms[2]).instantiate())
 	loaded_rooms.append(load(queued_rooms[1]).instantiate())
 	loaded_rooms.append(load(queued_rooms[3]).instantiate())
+	loaded_rooms.append(load(queued_rooms[1]).instantiate())
+	
+	loaded_rooms.append(load(queued_rooms[4]).instantiate())
 
 func load_first_room (_transition_in : String="fade_to_black", \
 	_transition_out : String="fade_from_black") -> void:
 		
-	world_2d.add_child(loaded_rooms[0])
-	player.reparent(loaded_rooms[0])
-	loaded_rooms[0].player.global_position=loaded_rooms[0].init_starting_pos.global_position
+	world_2d.add_child(loaded_rooms_map["prologue"])
+	player.reparent(loaded_rooms_map["prologue"])
+	loaded_rooms_map["prologue"].player.global_position=loaded_rooms_map["prologue"].init_starting_pos.global_position
 	LevelTransition.transition_out(_transition_out)
-	current_2d_scene=loaded_rooms[0]
+	current_2d_scene=loaded_rooms_map["prologue"]
 
 
-func change_2d_scene (new_scene: int, \
+func change_2d_scene (new_scene: String, \
 	delete: bool = true, \
 	keep_running: bool = false, \
 	_starting_pos: int = 0, \
@@ -83,20 +120,27 @@ func change_2d_scene (new_scene: int, \
 		else:
 			world_2d.remove_child(current_2d_scene) #Keep in mem, not running
 	
+	if new_scene=="RETURN":
+		new_scene=return_room
 	
-	world_2d.add_child(loaded_rooms[new_scene])
-	player.reparent(loaded_rooms[new_scene])
-	loaded_rooms[new_scene].player.global_position=loaded_rooms[new_scene].starting_pos[_starting_pos-1].global_position
+	world_2d.add_child(loaded_rooms_map[new_scene])
+	player.reparent(loaded_rooms_map[new_scene])
+	loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].starting_pos[_starting_pos-1].global_position
 	LevelTransition.transition_out(_transition_out)
 	prev_2d_scene=current_2d_scene
-	current_2d_scene=loaded_rooms[new_scene]
+	current_2d_scene=loaded_rooms_map[new_scene]
+	return_room=prev_2d_scene.nameWS
 
-#func change_2d_scene_old(new_scene: String, \
+
+
+
+#func change_2d_scene_old(new_scene: int, \
 	#delete: bool = true, \
 	#keep_running: bool = false, \
-	#starting_pos: int = 0, \
+	#_starting_pos: int = 0, \
 	#_transition_in : String="fade_to_black", \
 	#_transition_out : String="fade_from_black") -> void:
+	#
 	#
 	#player.reparent(world_2d)
 	#await LevelTransition.transition_in(_transition_in)
@@ -109,24 +153,10 @@ func change_2d_scene (new_scene: int, \
 			#world_2d.remove_child(current_2d_scene) #Keep in mem, not running
 	#
 	#
+	#world_2d.add_child(loaded_rooms[new_scene])
+	#player.reparent(loaded_rooms[new_scene])
+	#loaded_rooms[new_scene].player.global_position=loaded_rooms[new_scene].starting_pos[_starting_pos-1].global_position
+	#LevelTransition.transition_out(_transition_out)
+	#prev_2d_scene=current_2d_scene
+	#current_2d_scene=loaded_rooms[new_scene]
 	#
-	#
-	#
-	#if new_scene==prev_2d_scene.get_scene_file_path():
-		#world_2d.add_child(prev_2d_scene)
-		#player.reparent(prev_2d_scene)
-		#prev_2d_scene.player.global_position=prev_2d_scene.starting_pos[starting_pos].global_position
-		#LevelTransition.transition_out(_transition_out)
-		#var temp = prev_2d_scene
-		#prev_2d_scene=current_2d_scene
-		#current_2d_scene=temp
-	#else:
-		#var new = load(new_scene).instantiate()
-		#world_2d.add_child(new)
-		#player.reparent(new)
-		#new.player.global_position=new.starting_pos[starting_pos].global_position
-		#LevelTransition.transition_out(_transition_out)
-		#prev_2d_scene=current_2d_scene
-		#current_2d_scene=new
-	
-	

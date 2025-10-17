@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://doeltmms2ss7a"]
+
+[ext_resource type="Texture2D" uid="uid://cm36bhcpc0hsc" path="res://Art_Components/tile_maps/_PNG/1. main platforms.png" id="1_jw7h3"]
+[ext_resource type="Texture2D" uid="uid://cncridg2b6hq1" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryTiles.png" id="2_v8ehl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cabkt"]
+resource_local_to_scene = true
+atlas = ExtResource("1_jw7h3")
+region = Rect2(544.4038, 321.29544, 31.991455, 94.66867)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jf5w6"]
+atlas = ExtResource("1_jw7h3")
+region = Rect2(0.79067993, 321.08362, 31.225815, 94.63333)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84qgc"]
+atlas = ExtResource("2_v8ehl")
+region = Rect2(98.256805, 1501.7233, 403.66104, 198.07397)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvuqu"]
+atlas = ExtResource("2_v8ehl")
+region = Rect2(600.6385, 1627.8171, 98.71307, 142.7273)
+
+[node name="DoorSprite" type="Node2D"]
+
+[node name="LeftDoor" type="Sprite2D" parent="."]
+position = Vector2(17, 48)
+texture = SubResource("AtlasTexture_cabkt")
+
+[node name="RightDoor" type="Sprite2D" parent="."]
+position = Vector2(48, 48)
+texture = SubResource("AtlasTexture_jf5w6")
+
+[node name="ArchDoor" type="Sprite2D" parent="."]
+position = Vector2(33, 2)
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_84qgc")
+
+[node name="LeftPillar" type="Sprite2D" parent="."]
+position = Vector2(-12, 53)
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_yvuqu")
+
+[node name="LeftPillar2" type="Sprite2D" parent="."]
+position = Vector2(-12, 74)
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_yvuqu")
+
+[node name="RightPillar" type="Sprite2D" parent="."]
+position = Vector2(78, 53)
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_yvuqu")
+
+[node name="RightPillar2" type="Sprite2D" parent="."]
+position = Vector2(78, 74)
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_yvuqu")

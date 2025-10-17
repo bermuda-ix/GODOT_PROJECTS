@@ -30,6 +30,7 @@ var player : PlayerEntity
 var qte_options : Array[String]  = ["1", "2", "3", "4", "0"]
 
 @export var lvl_type = "goal"
+@export var main_room : bool = false
 @onready var boss_dead : bool = false
 
 var cur_state = "IDLE"
@@ -43,6 +44,10 @@ var spawn_type : Array[String] = ["enemy", "boss"]
 var obj : int
 
 func _ready():
+	
+	if main_room:
+		LevelsList.proloque_level_maps[self.name] = self.scene_file_path
+	
 	if not next_level is PackedScene:
 		next_level = load("res://LVL_Transitions/victory_screen.tscn")
 		

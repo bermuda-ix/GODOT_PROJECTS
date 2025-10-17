@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjxcsn1n5q6ua"]
+
+[ext_resource type="Script" uid="uid://w6x8ss1mes6y" path="res://levels/level_components/Levels.gd" id="1_ojr1b"]
+
+[node name="LevelMapsEditor" type="Node"]
+script = ExtResource("1_ojr1b")

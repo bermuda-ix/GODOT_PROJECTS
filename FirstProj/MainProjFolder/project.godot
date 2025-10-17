@@ -26,6 +26,7 @@ Cutscenes="*res://Component/resources/cutscenes.gd"
 GlobalSaveData="*res://Component/functions/PersistentData/global_save_data.gd"
 Global="*res://Component/functions/PersistentData/global.gd"
 LevelsList="*res://levels/level_components/Levels.gd"
+InventoryDict="*res://Component/functions/PersistentData/inventory_dict.gd"
 
 [debug]
 

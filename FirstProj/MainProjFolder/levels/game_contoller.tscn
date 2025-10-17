@@ -4,8 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="3_e06k0"]
 [ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="4_218mp"]
 
-[node name="GameContoller" type="Node"]
+[node name="GameContoller" type="Node" node_paths=PackedStringArray("gui")]
 script = ExtResource("1_xrdjs")
+gui = NodePath("GUI")
 
 [node name="World2D" type="Node2D" parent="."]
 

@@ -195,7 +195,6 @@ func _on_turret_shoot_bullet():
 	bullet_inst.spawnPos = Vector2(position.x, position.y)
 	bullet_inst.spawnRot = player_tracker_pivot.rotation_degrees
 	audio_stream_player_2d.play()
-	print(bullet_inst.dir)
 	
 	get_tree().current_scene.add_child(bullet_inst)
 
@@ -229,7 +228,6 @@ func target_lock():
 	const TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
 	target_lock_inst=TARGET_LOCK.instantiate()
 	add_child(target_lock_inst)
-	print(str(position)," ",str(target_lock_inst.global_position))
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:

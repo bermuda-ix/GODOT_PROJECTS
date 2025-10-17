@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://hudrx8p1hnu6"]
+
+[ext_resource type="Texture2D" uid="uid://d4n0fn84cn1mj" path="res://Art_Components/misc/light_monitor_texture.tres" id="1_6pieb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y1rja"]
+size = Vector2(19, 19)
+
+[node name="PointLight2D" type="PointLight2D"]
+color = Color(0.785777, 1, 1, 1)
+energy = 5.0
+texture = ExtResource("1_6pieb")
+
+[node name="lights_indoors" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="lights_indoors"]
+shape = SubResource("RectangleShape2D_y1rja")

@@ -382,7 +382,6 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("sp_atk_default"):
 		if player.state_machine.get_active_state()==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 			Events.allied_enemy_hit.emit()
-		print("spc_hit")
 		if animated_sprite_2d.flip_h:
 			knockback.x=50
 		else:
@@ -450,7 +449,6 @@ func rapid_shoot(value : bool)->void:
 func _on_hurt_box_received_damage(damage: int) -> void:
 	if clash_mult>1:
 		stagger.stagger-=(clash_mult-1)
-		print("BIG DAMAGE")
 	if player.state_machine.get_active_state()==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 		Events.allied_enemy_hit.emit()
 	
