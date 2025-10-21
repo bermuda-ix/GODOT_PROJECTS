@@ -51,7 +51,6 @@ signal lockon_to
 signal unlock_from
 
 #Enemy Reactions
-
 signal parry_failed
 signal parry_success
 
@@ -65,3 +64,8 @@ signal qte_end
 
 #Doors and switches
 signal unlock_door
+
+#Inventory update
+signal add_inventory
+signal remove_inventory
+signal update_inventory

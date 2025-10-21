@@ -129,7 +129,7 @@ func change_2d_scene (new_scene: String, \
 	LevelTransition.transition_out(_transition_out)
 	prev_2d_scene=current_2d_scene
 	current_2d_scene=loaded_rooms_map[new_scene]
-	return_room=prev_2d_scene.nameWS
+	return_room=prev_2d_scene.name
 
 
 

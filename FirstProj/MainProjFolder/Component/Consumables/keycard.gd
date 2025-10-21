@@ -2,7 +2,8 @@ extends Area2D
 
 var player : PlayerEntity = null
 
-@export var unique_id : String 
+@export var unique_id : String
+@onready var sprite_2d: Sprite2D = $Sprite2D
 var inv_name : String
 
 func _ready():

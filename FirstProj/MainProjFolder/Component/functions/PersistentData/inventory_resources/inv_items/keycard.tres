@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="inventory_item" load_steps=3 format=3 uid="uid://cxmhkxq8osltb"]
+
+[ext_resource type="Script" uid="uid://dm5u0w8cyur7f" path="res://Component/functions/PersistentData/inventory_resources/inventory_item.gd" id="1_e2b2e"]
+[ext_resource type="Texture2D" uid="uid://bguwg5p6ys2wb" path="res://Art_Components/Pickups/keycard.png" id="2_uvh4l"]
+
+[resource]
+script = ExtResource("1_e2b2e")
+name = "keycard"
+texture = ExtResource("2_uvh4l")
+metadata/_custom_type_script = "uid://dm5u0w8cyur7f"

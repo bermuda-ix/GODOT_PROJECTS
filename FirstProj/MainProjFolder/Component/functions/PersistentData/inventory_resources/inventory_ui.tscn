@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://b4xxc06iushww"]
+
+[ext_resource type="PackedScene" uid="uid://c6a31gx7v6ajc" path="res://Component/functions/PersistentData/inventory_resources/inv_items/inv_item.tscn" id="1_ao3i6"]
+[ext_resource type="Script" uid="uid://b5fq86p30n160" path="res://Component/functions/PersistentData/inventory_resources/inventory_ui.gd" id="1_mpaw8"]
+[ext_resource type="Script" uid="uid://dm5u0w8cyur7f" path="res://Component/functions/PersistentData/inventory_resources/inventory_item.gd" id="2_m8ypp"]
+[ext_resource type="Resource" uid="uid://cxmhkxq8osltb" path="res://Component/functions/PersistentData/inventory_resources/inv_items/keycard.tres" id="3_r737q"]
+[ext_resource type="Texture2D" uid="uid://dv3l2s77h7bq8" path="res://Art_Components/Shotgun/BalaEscopeta.png" id="5_r737q"]
+
+[node name="InventoryUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mpaw8")
+items_resources = Array[ExtResource("2_m8ypp")]([ExtResource("3_r737q")])
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+offset_right = 78.0
+offset_bottom = 75.0
+
+[node name="InvItem" parent="GridContainer" instance=ExtResource("1_ao3i6")]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="TextureRect" parent="GridContainer/InvItem/InvItemTexture" index="0"]
+texture = ExtResource("5_r737q")
+
+[editable path="GridContainer/InvItem"]
