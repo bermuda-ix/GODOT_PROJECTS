@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cxqapy0tyeigc"]
+[gd_scene load_steps=6 format=3 uid="uid://cxqapy0tyeigc"]
 
 [ext_resource type="Script" uid="uid://ckx532s1uq66q" path="res://ui_level.gd" id="1_48cca"]
 [ext_resource type="Script" uid="uid://c7shdgk633bns" path="res://Health_bar.gd" id="2_hgfpc"]
 [ext_resource type="PackedScene" uid="uid://bjcwyc4ncipm" path="res://Component/UI_Rec/health_bar.tscn" id="3_rqpu2"]
 [ext_resource type="PackedScene" uid="uid://fvrl0oqgar1f" path="res://Component/UI_Rec/heat_fill_gauge.tscn" id="4_rl24j"]
 [ext_resource type="PackedScene" uid="uid://c1r2gnplhmhoc" path="res://Component/UI_Rec/heat_lvl_gauge.tscn" id="5_6s1hp"]
-[ext_resource type="PackedScene" uid="uid://b4xxc06iushww" path="res://Component/functions/PersistentData/inventory_resources/inventory_ui.tscn" id="6_kdbrr"]
 
 [node name="UI_Level" type="Control"]
 layout_mode = 3
@@ -26,6 +25,7 @@ text = "Health"
 script = ExtResource("2_hgfpc")
 
 [node name="State" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_top = 21.0
 offset_right = 40.0
@@ -55,9 +55,3 @@ offset_top = 26.0
 offset_right = 471.0
 offset_bottom = 26.0
 scale = Vector2(2, 2.5)
-
-[node name="InventoryUI" parent="." instance=ExtResource("6_kdbrr")]
-layout_mode = 1
-offset_top = 44.0
-offset_right = -473.0
-offset_bottom = 44.0

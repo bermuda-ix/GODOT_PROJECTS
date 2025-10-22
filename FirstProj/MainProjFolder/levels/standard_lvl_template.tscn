@@ -15,11 +15,13 @@ script = ExtResource("1_xbjfv")
 visible = false
 
 [node name="UI_Level" parent="CanvasLayer" instance=ExtResource("3_pd0wq")]
+visible = false
 
 [node name="GameOver" parent="CanvasLayer" instance=ExtResource("4_5utq2")]
 visible = false
 
 [node name="Label" type="Label" parent="CanvasLayer"]
+visible = false
 offset_left = 120.0
 offset_right = 160.0
 offset_bottom = 23.0

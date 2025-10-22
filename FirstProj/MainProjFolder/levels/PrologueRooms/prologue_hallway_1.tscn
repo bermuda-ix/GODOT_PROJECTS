@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://cty2do01q2lg5"]
+[gd_scene load_steps=18 format=4 uid="uid://cty2do01q2lg5"]
 
 [ext_resource type="Script" uid="uid://hpw22p1bmgy7" path="res://levels/standard_lvl_template.gd" id="1_8kup7"]
 [ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://LVL_Transitions/level_completed.tscn" id="1_v01ax"]
@@ -13,8 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://dnliwh5g1v8xb" path="res://levels/level_components/entry.tscn" id="10_egu0m"]
 [ext_resource type="PackedScene" uid="uid://doeltmms2ss7a" path="res://Art_Components/LevelProps/door_sprite.tscn" id="11_8kup7"]
 [ext_resource type="PackedScene" uid="uid://bngaepo4ygpkl" path="res://Art_Components/LevelProps/door_sprite2.tscn" id="11_8uswf"]
-[ext_resource type="PackedScene" uid="uid://b2ll7yf0xbexn" path="res://levels/PrologueRooms/prologue_room_one.tscn" id="14_tshqc"]
-[ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="14_x4s28"]
 [ext_resource type="PackedScene" uid="uid://bqrvktluv2fur" path="res://levels/PrologueRooms/prologue_room_2.tscn" id="16_g5ibn"]
 [ext_resource type="PackedScene" uid="uid://y6x600dn2kkk" path="res://levels/PrologueRooms/prologue_room_tres.tscn" id="17_n0r6o"]
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="19_tshqc"]
@@ -191,8 +189,9 @@ position = Vector2(-32, -62)
 
 [node name="Entry" parent="Entries" instance=ExtResource("10_egu0m")]
 position = Vector2(-2986, 262)
-entry = 4
-room = ExtResource("14_tshqc")
+entry = 3
+location_override = true
+enter_to = "PrologueTestlab1"
 
 [node name="DoorSprite2" parent="Entries/Entry" instance=ExtResource("11_8uswf")]
 z_index = -1
@@ -218,13 +217,11 @@ position = Vector2(-32, -66)
 
 [node name="Entry4" parent="Entries" instance=ExtResource("10_egu0m")]
 position = Vector2(-3901, 267)
+entry = 4
 room = ExtResource("17_n0r6o")
 
 [node name="DoorSprite4" parent="Entries/Entry4" instance=ExtResource("11_8uswf")]
 z_index = -1
 position = Vector2(-33, -66)
-
-[node name="PC" parent="." instance=ExtResource("14_x4s28")]
-position = Vector2(362, 240)
 
 [node name="CameraPos" parent="." instance=ExtResource("19_tshqc")]

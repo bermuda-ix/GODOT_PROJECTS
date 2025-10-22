@@ -1,6 +1,8 @@
 extends ColorRect
 
-
+func _process(delta: float) -> void:
+	pass
+	
 
 func _on_quit_pressed():
 	get_tree().quit()

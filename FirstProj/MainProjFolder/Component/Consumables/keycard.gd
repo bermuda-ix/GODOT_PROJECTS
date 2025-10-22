@@ -3,6 +3,7 @@ extends Area2D
 var player : PlayerEntity = null
 
 @export var unique_id : String
+@export var unique_item : bool = false
 @onready var sprite_2d: Sprite2D = $Sprite2D
 var inv_name : String
 
@@ -11,7 +12,7 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.is_in_group("player"):
-		if unique_id != null:
+		if unique_item:
 			inv_name=name+"."+unique_id
 		else:
 			inv_name=name

@@ -19,6 +19,11 @@ const COUNTER_CLOCKWISE=-PI/2
 signal flip
 signal jump_out_signal
 
+signal update_health(value : int)
+signal update_max_health(value : int)
+signal update_stagger
+signal update_max_stagger
+
 #Player Stats
 @export var movement_data : PlayerMovementData
 @export var health: Health
@@ -122,6 +127,8 @@ var atk_state="ATK_1"
 
 
 @onready var speech: Label = $Speech
+@onready var speech_timer: Timer = $Speech/SpeechTimer
+
 #Cutscenes
 @onready var anim_count : int = 0
 @onready var cutscene_handler: CutsceneHandler = $CutsceneHandler
@@ -259,6 +266,8 @@ func _ready():
 	_init_combat_state_machine()
 	_init_parry_success_state_machine()
 	_init_attack_states()
+	#Events.add_inventory.emit()
+	Events.update_inventory.emit("AmmoAmount",ammo)
 
 func _init_state_machine():
 	state_machine.initial_state=idle
@@ -661,6 +670,14 @@ func handle_acceleration(input_axis, delta):
 		velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.acceleration * delta)
 		if state_machine.get_active_state()==idle:
 			state_machine.dispatch(&"start_walking")
+
+func talk(speech_text : String):
+	speech.text=speech_text
+	speech.visible=true
+	speech_timer.start(3)
+
+func _on_speech_timer_timeout() -> void:
+	speech.visible=false
 
 # Movement for cutscenes		
 func cutscene_acceleration(dir, delta):
@@ -1210,6 +1227,16 @@ func get_health() -> int:
 func get_max_health() -> int:
 	return health.max_health
 
+func set_health() -> void:
+	update_health.emit(health.health)
+func set_max_health() -> void:
+	update_max_health.emit(health.max_health)
+
+func set_stagger() -> void:
+	update_stagger.emit(stagger.stagger)
+func set_max_stagger() -> void:
+	update_max_stagger.emit(stagger.max_stagger)
+
 func _on_health_health_depleted():
 	Events.game_over.emit()
 
@@ -1251,7 +1278,8 @@ func _on_hurt_box_got_hit(_hitbox):
 				else:
 					knockback.x=15
 			state_machine.dispatch(&"got_hit")
-			
+		set_stagger()
+		
 	elif hitbox.is_in_group("heavy_hitbox"):
 		knockback.x = -400
 		kb_dir=global_position.direction_to(_hitbox.global_position)
@@ -1307,9 +1335,11 @@ func _on_hurt_box_area_entered(area):
 			clash_timer.stop()
 			if clash_power.clash_power==clash_power.clash_max:
 				hit_stop.hit_stop(.3,.5)
-		
+		set_health()
+		set_stagger()
 	if area.is_in_group("Hearts"):
 		health.health+=1
+		set_health()
 		
 	elif area.is_in_group("Enemy"):
 		pass
@@ -1401,6 +1431,7 @@ func _on_animation_player_animation_finished(anim_name):
 	elif anim_name=="staggered":
 		state_machine.dispatch(&"return_to_idle")
 		stagger.stagger=stagger.get_max_stagger()
+		set_stagger()
 	#
 	elif anim_name=="dodge_roll":
 		
@@ -1525,6 +1556,7 @@ func _on_hit_box_body_entered(body):
 			clash_timer.stop()
 			if clash_power.clash_power==clash_power.clash_max:
 				hit_stop.hit_stop(.3,.5)
+			set_stagger()
 	
 	
 func flip_over():
@@ -1687,6 +1719,8 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		state_machine.dispatch(&"got_hit")
 		stagger.stagger-=3
 		
+	set_stagger()
+	set_health()
 
 func _on_stagger_staggered() -> void:
 	knockback.x=0

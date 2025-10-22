@@ -18,16 +18,15 @@ items_resources = Array[ExtResource("2_m8ypp")]([ExtResource("3_r737q")])
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
-offset_right = 78.0
+offset_right = 68.0
 offset_bottom = 75.0
 
-[node name="InvItem" parent="GridContainer" instance=ExtResource("1_ao3i6")]
-clip_contents = true
+[node name="AmmoAmount" parent="GridContainer" instance=ExtResource("1_ao3i6")]
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
-[node name="TextureRect" parent="GridContainer/InvItem/InvItemTexture" index="0"]
+[node name="TextureRect" parent="GridContainer/AmmoAmount/InvItemTexture" index="0"]
 texture = ExtResource("5_r737q")
 
-[editable path="GridContainer/InvItem"]
+[editable path="GridContainer/AmmoAmount"]

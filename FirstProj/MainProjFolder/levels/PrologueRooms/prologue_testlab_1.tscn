@@ -19,7 +19,7 @@
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_uf1fl"]
 polygon = PackedVector2Array(38, 89, 274, 88, 273, 99, 262, 100, 262, 106, 358, 106, 358, 100, 349, 100, 349, 86, 650, 87, 673, 87, 673, 61, 11, 64, 11, 349, 664, 344, 675, 87, 649, 88, 649, 99, 642, 98, 627, 109, 635, 112, 647, 102, 651, 315, 367, 316, 370, 289, 370, 284, 335, 284, 332, 276, 324, 276, 322, 284, 289, 284, 288, 268, 265, 268, 265, 284, 261, 284, 259, 276, 248, 275, 244, 286, 244, 315, 229, 314, 199, 208, 160, 199, 157, 250, 157, 313, 144, 289, 115, 288, 101, 314, 77, 184, 36, 318)
 
-[node name="PrologueRoomOne" type="Node2D" node_paths=PackedStringArray("starting_pos")]
+[node name="PrologueTestlab1" type="Node2D" node_paths=PackedStringArray("starting_pos")]
 script = ExtResource("1_xnekh")
 starting_pos = [NodePath("Entry")]
 
@@ -44,6 +44,7 @@ stationary = true
 position = Vector2(581, 278)
 location_override = true
 enter_to = "PrologueHallway1"
+exit = 4
 
 [node name="TileMapLayers" type="Node" parent="."]
 
@@ -105,7 +106,6 @@ metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 position = Vector2(300, 267)
 scale = Vector2(0.1, 0.1)
 collision_layer = 1
-unique_id = "first"
 
 [node name="PC" parent="." instance=ExtResource("15_hyxn6")]
-position = Vector2(536, 284)
+position = Vector2(508, 289)

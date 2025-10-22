@@ -1004,7 +1004,11 @@ connected_switch = "Door3"
 z_index = -1
 position = Vector2(5833, 856)
 scale = Vector2(1, 1.18132)
-connected_switch = "Door4"
+
+[node name="lab_door_switch4" parent="DoorsAndSwitches" index="9" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
+position = Vector2(5806, 889)
+door_connect = NodePath("../Door4")
+key_required = true
 
 [node name="Stairs" type="Node" parent="." index="18"]
 
@@ -1055,7 +1059,7 @@ update_scale = false
 [node name="StartingPos" type="Node" parent="." index="23"]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
-position = Vector2(3955, 1141)
+position = Vector2(4091, 835)
 
 [node name="PersistentDataHandler" type="Node" parent="." index="24"]
 script = ExtResource("24_w82j5")

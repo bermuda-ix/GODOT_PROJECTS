@@ -1,6 +1,6 @@
 class_name inventory_ui extends Control
 
-const inv_items: PackedScene = preload("res://Component/functions/PersistentData/inventory_resources/inv_items/inv_item.tscn")
+@onready var inv_items: PackedScene = preload("res://Component/functions/PersistentData/inventory_resources/inv_items/inv_item.tscn")
 @onready var grid_container: GridContainer = $GridContainer
 @export var items_resources : Array[inventory_item]
 
@@ -20,16 +20,19 @@ func add_inv_item(name : String) -> void:
 		else:
 			push_error("ITEM RESOURCE MISSING: Please check if item resource is in items_resources array in inventory_ui.gd")
 	new_inv_item.name=name
+	grid_container.add_child(new_inv_item)
 	new_inv_item.set_amount(1)
 	new_inv_item.set_item_texture(items_resources[item_res].texture)
-	grid_container.add_child(new_inv_item)
 	print("adding new inv item: ", new_inv_item.name)
 	new_inv_item.update_ui()
 	
-func remove_inv_item(name : inv_item) -> void:
+func remove_inv_item(name : String) -> void:
 	print("remove new inv item: ", name)
-	grid_container.remove_child(name)
-	name.queue_free()
+	var inv_remove : inv_item = grid_container.find_child(name)
+	grid_container.remove_child(inv_remove)
+	inv_remove.queue_free()
 	
-func update_inv_amount(name : inv_item, value : int) -> void:
-	name.amount=value
+func update_inv_amount(name : String, value : int) -> void:
+	var inv_update : inv_item = grid_container.find_child(name)
+	print(inv_update.name, " is updating")
+	inv_update.amount_text.text=str(value)
