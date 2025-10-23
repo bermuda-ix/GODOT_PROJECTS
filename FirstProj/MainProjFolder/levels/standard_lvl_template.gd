@@ -84,6 +84,7 @@ func _process(_delta):
 	
 	get_state()
 	set_state()
+	#For testing individual levels
 	get_health()
 	set_health()
 	

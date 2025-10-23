@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://cty2do01q2lg5"]
+[gd_scene load_steps=17 format=4 uid="uid://cty2do01q2lg5"]
 
 [ext_resource type="Script" uid="uid://hpw22p1bmgy7" path="res://levels/standard_lvl_template.gd" id="1_8kup7"]
 [ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://LVL_Transitions/level_completed.tscn" id="1_v01ax"]
@@ -8,8 +8,7 @@
 [ext_resource type="TileSet" uid="uid://5vc1chccqln4" path="res://levels/level_components/factory_tile_set_main_platform.tres" id="5_xip4b"]
 [ext_resource type="TileSet" uid="uid://d3ogb8uexylqk" path="res://Art_Components/tile_maps/tile_layers/lab_props.tres" id="6_5egue"]
 [ext_resource type="TileSet" uid="uid://vhrg3ian7oco" path="res://Art_Components/tile_maps/lab_architect.tres" id="7_xip4b"]
-[ext_resource type="Texture2D" uid="uid://cjfwyxh8x06qg" path="res://Art_Components/OGs/light_tube.png" id="8_kei5k"]
-[ext_resource type="Script" uid="uid://d26o67071a0du" path="res://levels/PrologueRooms/LightFlickerHandler.gd" id="9_xip4b"]
+[ext_resource type="PackedScene" uid="uid://ho0i4h5ycmin" path="res://Component/interactables/ceiling_lights.tscn" id="9_j8gjg"]
 [ext_resource type="PackedScene" uid="uid://dnliwh5g1v8xb" path="res://levels/level_components/entry.tscn" id="10_egu0m"]
 [ext_resource type="PackedScene" uid="uid://doeltmms2ss7a" path="res://Art_Components/LevelProps/door_sprite.tscn" id="11_8kup7"]
 [ext_resource type="PackedScene" uid="uid://bngaepo4ygpkl" path="res://Art_Components/LevelProps/door_sprite2.tscn" id="11_8uswf"]
@@ -72,100 +71,36 @@ sdf_collision = false
 
 [node name="Lights" type="Node" parent="."]
 
-[node name="PointLight2D" type="PointLight2D" parent="Lights"]
+[node name="CeilingLight" parent="Lights" instance=ExtResource("9_j8gjg")]
 position = Vector2(231, 141)
-energy = 3.0
-blend_mode = 2
-shadow_enabled = true
-shadow_filter = 1
-shadow_filter_smooth = 21.6
-texture = ExtResource("8_kei5k")
-script = ExtResource("9_xip4b")
-flicker_active = false
-relight_delay = 0.3
 
-[node name="PointLight2D2" type="PointLight2D" parent="Lights"]
-position = Vector2(-379, 141)
-energy = 3.0
-blend_mode = 2
-shadow_enabled = true
-shadow_filter = 1
-shadow_filter_smooth = 21.6
-texture = ExtResource("8_kei5k")
+[node name="CeilingLight2" parent="Lights" instance=ExtResource("9_j8gjg")]
+position = Vector2(-377, 143)
 
-[node name="PointLight2D3" type="PointLight2D" parent="Lights"]
-position = Vector2(-978, 141)
-energy = 3.0
-blend_mode = 2
-shadow_enabled = true
-shadow_filter = 1
-shadow_filter_smooth = 21.6
-texture = ExtResource("8_kei5k")
+[node name="CeilingLight3" parent="Lights" instance=ExtResource("9_j8gjg")]
+position = Vector2(-968, 141)
 
-[node name="PointLight2D4" type="PointLight2D" parent="Lights"]
-position = Vector2(-1527, 141)
-energy = 3.0
-blend_mode = 2
-shadow_enabled = true
-shadow_filter = 1
-shadow_filter_smooth = 21.6
-texture = ExtResource("8_kei5k")
+[node name="CeilingLight4" parent="Lights" instance=ExtResource("9_j8gjg")]
+position = Vector2(-1533, 141)
 
-[node name="PointLight2D5" type="PointLight2D" parent="Lights"]
-position = Vector2(-2041, 141)
-energy = 3.0
-blend_mode = 2
-shadow_enabled = true
-shadow_filter = 1
-shadow_filter_smooth = 21.6
-texture = ExtResource("8_kei5k")
+[node name="CeilingLight5" parent="Lights" instance=ExtResource("9_j8gjg")]
+position = Vector2(-2039, 141)
 
-[node name="PointLight2D6" type="PointLight2D" parent="Lights"]
-position = Vector2(-2509, 141)
-energy = 3.0
-blend_mode = 2
-shadow_enabled = true
-shadow_filter = 1
-shadow_filter_smooth = 21.6
-texture = ExtResource("8_kei5k")
+[node name="CeilingLight6" parent="Lights" instance=ExtResource("9_j8gjg")]
+position = Vector2(-2505, 141)
 
-[node name="PointLight2D7" type="PointLight2D" parent="Lights"]
+[node name="CeilingLight7" parent="Lights" instance=ExtResource("9_j8gjg")]
 position = Vector2(-2985, 141)
-energy = 3.0
-blend_mode = 2
-shadow_enabled = true
-shadow_filter = 1
-shadow_filter_smooth = 21.6
-texture = ExtResource("8_kei5k")
-script = ExtResource("9_xip4b")
-relight_delay = 0.7
+flicker_active = true
 
-[node name="PointLight2D8" type="PointLight2D" parent="Lights"]
-position = Vector2(-3402, 141)
-energy = 3.0
-blend_mode = 2
-shadow_enabled = true
-shadow_filter = 1
-shadow_filter_smooth = 21.6
-texture = ExtResource("8_kei5k")
+[node name="CeilingLight8" parent="Lights" instance=ExtResource("9_j8gjg")]
+position = Vector2(-3398, 141)
 
-[node name="PointLight2D9" type="PointLight2D" parent="Lights"]
-position = Vector2(-3894, 141)
-energy = 3.0
-blend_mode = 2
-shadow_enabled = true
-shadow_filter = 1
-shadow_filter_smooth = 21.6
-texture = ExtResource("8_kei5k")
+[node name="CeilingLight9" parent="Lights" instance=ExtResource("9_j8gjg")]
+position = Vector2(-3905, 141)
 
-[node name="PointLight2D10" type="PointLight2D" parent="Lights"]
-position = Vector2(-4413, 141)
-energy = 3.0
-blend_mode = 2
-shadow_enabled = true
-shadow_filter = 1
-shadow_filter_smooth = 21.6
-texture = ExtResource("8_kei5k")
+[node name="CeilingLight10" parent="Lights" instance=ExtResource("9_j8gjg")]
+position = Vector2(-4412, 141)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="Lights"]
 position = Vector2(-5168, -1592)

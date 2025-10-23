@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dc36k2t4gy6xb"]
+[gd_scene load_steps=5 format=3 uid="uid://dc36k2t4gy6xb"]
 
 [ext_resource type="Script" uid="uid://d1v0g683tnwv2" path="res://Component/Consumables/keycard.gd" id="1_tjdx3"]
 [ext_resource type="Texture2D" uid="uid://bguwg5p6ys2wb" path="res://Art_Components/Pickups/keycard.png" id="2_tjdx3"]
+[ext_resource type="Script" uid="uid://dg1m7uqm44pm3" path="res://Component/functions/GlobalFlags/GlobalFlagHandler.gd" id="3_t8hkp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t8hkp"]
 size = Vector2(172, 239)
@@ -10,6 +11,7 @@ size = Vector2(172, 239)
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_tjdx3")
+flag_name = "ShutOff"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_tjdx3")
@@ -17,5 +19,9 @@ texture = ExtResource("2_tjdx3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_t8hkp")
+
+[node name="GlobalFlagHandler" type="Node" parent="."]
+script = ExtResource("3_t8hkp")
+metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

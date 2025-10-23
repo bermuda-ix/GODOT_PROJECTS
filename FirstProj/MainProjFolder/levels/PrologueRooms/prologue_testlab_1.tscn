@@ -10,7 +10,7 @@
 [ext_resource type="TileSet" uid="uid://duvitr2o4lrsy" path="res://levels/level_components/factory_tile_set_building_platform.tres" id="8_lgu5s"]
 [ext_resource type="TileSet" uid="uid://vhrg3ian7oco" path="res://Art_Components/tile_maps/lab_architect.tres" id="9_oau4o"]
 [ext_resource type="PackedScene" uid="uid://d2i1l2qqhpag0" path="res://Art_Components/tile_maps/tile_layers/lab_props_2.tscn" id="10_axyyo"]
-[ext_resource type="PackedScene" uid="uid://m5ullq0dey1k" path="res://Art_Components/misc/lights_indoor.tscn" id="11_1p75j"]
+[ext_resource type="PackedScene" uid="uid://ho0i4h5ycmin" path="res://Component/interactables/ceiling_lights.tscn" id="12_0rkmb"]
 [ext_resource type="PackedScene" uid="uid://hudrx8p1hnu6" path="res://Art_Components/misc/light_monitor.tscn" id="12_xnekh"]
 [ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="13_uue3g"]
 [ext_resource type="PackedScene" uid="uid://dc36k2t4gy6xb" path="res://Component/Consumables/keycard.tscn" id="14_0rkmb"]
@@ -84,17 +84,18 @@ occluder = SubResource("OccluderPolygon2D_uf1fl")
 
 [node name="Lights" type="Node" parent="."]
 
-[node name="PointLight2D" parent="Lights" instance=ExtResource("11_1p75j")]
-position = Vector2(310, 111)
-shadow_enabled = true
-shadow_filter = 1
-
 [node name="PointLight2D2" parent="Lights" instance=ExtResource("12_xnekh")]
 position = Vector2(330, 260)
 scale = Vector2(0.5, 0.5)
 energy = 4.6
 shadow_enabled = true
 shadow_filter = 1
+
+[node name="CeilingLight" parent="Lights" instance=ExtResource("12_0rkmb")]
+position = Vector2(310, 110)
+
+[node name="Area2D" parent="Lights/CeilingLight" index="2"]
+visible = false
 
 [node name="CutscenePlayer" type="AnimationPlayer" parent="."]
 
@@ -109,3 +110,5 @@ collision_layer = 1
 
 [node name="PC" parent="." instance=ExtResource("15_hyxn6")]
 position = Vector2(508, 289)
+
+[editable path="Lights/CeilingLight"]

@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://ho0i4h5ycmin"]
+
+[ext_resource type="Texture2D" uid="uid://cjfwyxh8x06qg" path="res://Art_Components/OGs/light_tube.png" id="1_11ykr"]
+[ext_resource type="Script" uid="uid://d1uxgs46rqppy" path="res://levels/PrologueRooms/CeilingLights.gd" id="2_hj4ck"]
+[ext_resource type="Script" uid="uid://dg1m7uqm44pm3" path="res://Component/functions/GlobalFlags/GlobalFlagHandler.gd" id="3_18c7c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hj4ck"]
+size = Vector2(116, 206)
+
+[node name="CeilingLight" type="PointLight2D"]
+energy = 3.0
+blend_mode = 2
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 21.6
+texture = ExtResource("1_11ykr")
+script = ExtResource("2_hj4ck")
+flicker_active = false
+relight_delay = 0.3
+
+[node name="ShutOffFlag" type="Node" parent="."]
+script = ExtResource("3_18c7c")
+flag_name = "ShutOff"
+flag_active = true
+metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
+
+[node name="FlickerOnPlayerFlag" type="Node" parent="."]
+script = ExtResource("3_18c7c")
+flag_name = "FlickerOnPlayer"
+metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 93)
+shape = SubResource("RectangleShape2D_hj4ck")
+
+[connection signal="flag_activate" from="ShutOffFlag" to="." method="_on_shut_off_flag_flag_activate"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

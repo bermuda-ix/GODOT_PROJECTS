@@ -69,3 +69,6 @@ signal unlock_door
 signal add_inventory
 signal remove_inventory
 signal update_inventory
+
+#Global Generic Flag
+signal global_flag_trigger
