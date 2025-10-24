@@ -1,4 +1,4 @@
-[gd_scene load_steps=477 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=479 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -2739,6 +2739,18 @@ scale_max = 0.1
 scale_curve = SubResource("CurveTexture_13tdc")
 anim_speed_min = 1.0
 anim_speed_max = 1.0
+
+[sub_resource type="Gradient" id="Gradient_mdoa6"]
+offsets = PackedFloat32Array(0, 0.3653846, 0.5884615, 0.88076925, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.84390247, 0.84390247, 0.84390247, 1, 0.6, 0.6, 0.6, 1, 0.37226278, 0.37226278, 0.37226278, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kd7ms"]
+gradient = SubResource("Gradient_mdoa6")
+use_hdr = true
+fill = 1
+fill_from = Vector2(1, 0.5)
+fill_to = Vector2(0, 0.5)
+metadata/_snap_enabled = true
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v22jq"]
 animations = [{
@@ -5789,6 +5801,16 @@ lifetime = 2.0
 one_shot = true
 speed_scale = 10.0
 process_material = SubResource("ParticleProcessMaterial_yif7d")
+
+[node name="Flashlight" type="PointLight2D" parent="AnimatedSprite2D/Shotty"]
+light_mask = 3
+position = Vector2(798.6222, -5.2722354)
+scale = Vector2(20.344742, 8.595338)
+energy = 3.13
+shadow_enabled = true
+shadow_filter = 1
+shadow_item_cull_mask = 3
+texture = SubResource("GradientTexture2D_kd7ms")
 
 [node name="Shell" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
 visible = false

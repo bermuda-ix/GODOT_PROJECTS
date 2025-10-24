@@ -164,6 +164,7 @@ signal no_input_qte
 @onready var parry_box: ParryBox = $AnimatedSprite2D/ParryBox
 @onready var counter_box_collision = $CounterBox/CounterBoxCollision
 @onready var stagger: Stagger = $Stagger
+@onready var flashlight: PointLight2D = $AnimatedSprite2D/Shotty/Flashlight
 
 
 @onready var sprite_fx: AnimatedSprite2D = $AnimatedSprite2D/sprite_fx
@@ -422,6 +423,7 @@ func _process(_delta):
 	atk_state_debug()
 #
 	dodge(input_axis)
+	
 	#if Input.is_action_just_pressed("walk_right"):
 		#face_right = true
 		#move_axis = 1
@@ -519,7 +521,7 @@ func _physics_process(delta):
 		#else:
 			#side = "Left"
 		
-		
+		toggle_light()
 		knockback = lerp(knockback, Vector2.ZERO, 0.1)
 		forward_thrust = lerp(forward_thrust, Vector2.ZERO, 0.6)
 		#wall hold check
@@ -926,6 +928,9 @@ func parry():
 		velocity.x=0
 		velocity.y=0
 
+func toggle_light():
+	if Input.is_action_just_pressed("toggle_light"):
+		flashlight.enabled = not flashlight.enabled
 		
 			
 ## DODGE NEEDS WORK!!!
