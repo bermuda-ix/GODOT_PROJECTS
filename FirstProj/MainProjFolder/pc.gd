@@ -1086,7 +1086,7 @@ func enter_door() -> void:
 				prev_room=cur_room
 				cur_room=next_room
 			Global.game_controller.change_2d_scene(next_room, false, false, entry_pos, "fade_to_black_quick", "fade_from_black_quick")
-			entry_pos=prev_starting_pos
+			#entry_pos=prev_starting_pos
 
 func climb_stairs() -> void:
 	if Input.is_action_pressed("up") and stairs_detected==false:

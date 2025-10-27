@@ -908,42 +908,41 @@ position = Vector2(2199, 244)
 [node name="Entry" parent="Entries" index="1" instance=ExtResource("22_5m18i")]
 position = Vector2(2199, 273)
 scale = Vector2(2, 2)
-entry = 1
 room = ExtResource("21_7klgn")
 
 [node name="Entry2" parent="Entries" index="2" instance=ExtResource("22_5m18i")]
 position = Vector2(3030, 279)
 scale = Vector2(2, 2)
-entry = 2
+entry = 1
 room = ExtResource("22_drpgx")
 
 [node name="Entry3" parent="Entries" index="3" instance=ExtResource("22_5m18i")]
 position = Vector2(3030, 66)
 scale = Vector2(2, 2)
-entry = 3
+entry = 2
 room = ExtResource("23_veiog")
 
 [node name="Entry4" parent="Entries" index="4" instance=ExtResource("22_5m18i")]
 position = Vector2(3513, 1161)
 scale = Vector2(2, 2)
-entry = 4
+entry = 3
 room = ExtResource("22_drpgx")
 
 [node name="Entry5" parent="Entries" index="5" instance=ExtResource("22_5m18i")]
 position = Vector2(4216, 1161)
 scale = Vector2(2, 2)
-entry = 5
+entry = 4
 room = ExtResource("23_veiog")
 
 [node name="Entry6" parent="Entries" index="6" instance=ExtResource("22_5m18i")]
 position = Vector2(4793, 1162)
 scale = Vector2(2, 2)
-entry = 6
+entry = 5
 room = ExtResource("21_7klgn")
 
 [node name="HallwayEntry1" parent="Entries" index="7" instance=ExtResource("22_5m18i")]
 position = Vector2(3915, 879)
-entry = 7
+entry = 6
 location_override = true
 enter_to = "PrologueHallway1"
 
@@ -952,7 +951,7 @@ position = Vector2(-32, -72)
 
 [node name="Entry8" parent="Entries" index="8" instance=ExtResource("22_5m18i")]
 position = Vector2(4512, 866)
-entry = 8
+entry = 7
 room = ExtResource("22_drpgx")
 
 [node name="DoorSprite2" parent="Entries/Entry8" index="1" instance=ExtResource("22_relum")]

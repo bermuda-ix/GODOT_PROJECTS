@@ -117,7 +117,7 @@ color = Color(0, 0, 0, 1)
 position = Vector2(234, 262)
 location_override = true
 enter_to = "PrologueLvl"
-exit = 7
+exit = 6
 
 [node name="DoorSprite" parent="Entries/Entrance" instance=ExtResource("11_8kup7")]
 z_index = -1

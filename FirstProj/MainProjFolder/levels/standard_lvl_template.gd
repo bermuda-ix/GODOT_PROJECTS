@@ -23,6 +23,7 @@ var player : PlayerEntity
 @onready var pause_menu = $CanvasLayer/PauseMenu
 @onready var score : int = 0
 @export var starting_pos: Array[Node2D]
+@onready var starting_positions : Dictionary = {}
 @onready var persistent_data_handler: PersistentDataHandler = $PersistentDataHandler
 
 
@@ -72,6 +73,10 @@ func _ready():
 	player.scale = Vector2(pc_scale, pc_scale)
 	#Events.start_cutscene.emit()
 	#cutscene_player.play("INTRO")
+	var entries=get_tree().get_nodes_in_group("entry")
+	for entry in entries:
+		starting_positions[entry.entry]=entry.global_position
+	
 	if not cutscene_active and not camera_pos.stationary:
 		camera_pos.global_position=player.global_position
 		camera_pos.set_cam_smooth(true)

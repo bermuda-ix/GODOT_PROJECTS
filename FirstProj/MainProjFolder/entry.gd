@@ -34,6 +34,7 @@ func _on_body_entered(body: Node2D) -> void:
 		
 	player.in_door_way=true
 	player.prev_starting_pos=exit
+	player.entry_pos=exit
 #	SceneManager.load_new_scene(new_scene_path, transition_type)
 	#queue_free()
 

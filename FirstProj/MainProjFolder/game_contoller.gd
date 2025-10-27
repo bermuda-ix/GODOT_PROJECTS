@@ -134,7 +134,7 @@ func change_2d_scene (new_scene: String, \
 	world_2d.add_child(loaded_rooms_map[new_scene])
 	player.reparent(loaded_rooms_map[new_scene])
 	print(loaded_rooms_map[new_scene].starting_pos.size(), " ",_starting_pos)
-	loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].starting_pos[_starting_pos-1].global_position
+	loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].starting_positions[_starting_pos]
 	LevelTransition.transition_out(_transition_out)
 	prev_2d_scene=current_2d_scene
 	current_2d_scene=loaded_rooms_map[new_scene]
