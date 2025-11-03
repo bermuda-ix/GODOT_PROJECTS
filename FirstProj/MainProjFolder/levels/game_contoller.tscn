@@ -15,6 +15,7 @@ gui = NodePath("GUI")
 [node name="World2D" type="Node2D" parent="."]
 
 [node name="Player" parent="World2D" instance=ExtResource("3_e06k0")]
+z_index = 1
 position = Vector2(2397, 289)
 
 [node name="GUI" type="Control" parent="."]

@@ -20,7 +20,6 @@ func _physics_process(delta: float) -> void:
 		flicker()
 
 func flicker() -> void:
-	pass
 	var _flicker : int = randi_range(0, 100)
 	var _relight : float = randf_range(0.1,relight_delay)
 	if energy>0:

@@ -22,8 +22,8 @@ var player : PlayerEntity
 @onready var label = $CanvasLayer/Label
 @onready var pause_menu = $CanvasLayer/PauseMenu
 @onready var score : int = 0
-@export var starting_pos: Array[Node2D]
-@onready var starting_positions : Dictionary = {}
+@onready var starting_pos: Array[Vector2]
+#@onready var starting_positions : Dictionary = {}
 @onready var persistent_data_handler: PersistentDataHandler = $PersistentDataHandler
 
 
@@ -74,8 +74,10 @@ func _ready():
 	#Events.start_cutscene.emit()
 	#cutscene_player.play("INTRO")
 	var entries=get_tree().get_nodes_in_group("entry")
+	starting_pos.resize(entries.size())
 	for entry in entries:
-		starting_positions[entry.entry]=entry.global_position
+		#starting_positions[entry.entry]=entry.global_position
+		starting_pos[entry.entry]=entry.global_position
 	
 	if not cutscene_active and not camera_pos.stationary:
 		camera_pos.global_position=player.global_position

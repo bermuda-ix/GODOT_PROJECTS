@@ -190,6 +190,8 @@ signal no_input_qte
 @onready var entry_pos : int = 0
 @onready var prev_starting_pos : int = 0
 @onready var in_door_way : bool = false
+@onready var animated_door : bool = false
+
 @onready var game_controller : GameController
 
 @onready var enemies : Array =[]
@@ -1085,7 +1087,13 @@ func enter_door() -> void:
 			else:
 				prev_room=cur_room
 				cur_room=next_room
-			Global.game_controller.change_2d_scene(next_room, false, false, entry_pos, "fade_to_black_quick", "fade_from_black_quick")
+			if animated_door:
+				Events.open_door.emit()
+				await Events.door_opened
+				Global.game_controller.change_2d_scene(next_room, false, false, entry_pos, "fade_to_black_quick", "fade_from_black_quick")
+			else:
+				
+				Global.game_controller.change_2d_scene(next_room, false, false, entry_pos, "fade_to_black_quick", "fade_from_black_quick")
 			#entry_pos=prev_starting_pos
 
 func climb_stairs() -> void:
@@ -1107,7 +1115,17 @@ func _on_hazard_detector_area_entered(area):
 	elif area.is_in_group("Enemy"):
 		hit_stop.hit_stop(0.05, 0.1)
 		knockback.x = input_dir.x * knockback.x *0.25
+	
 
+func _on_interactable_detector_area_entered(area: Area2D) -> void:
+	if area.is_in_group("AnimatedDoor"):
+		in_door_way=true
+		animated_door=true
+		
+func _on_interactable_detector_area_exited(area: Area2D) -> void:
+	if area.is_in_group("AnimatedDoor"):
+		in_door_way=false
+		animated_door=true
 	
 	
 ##State machine for animations currently

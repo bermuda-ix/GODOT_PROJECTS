@@ -64,6 +64,8 @@ signal qte_end
 
 #Doors and switches
 signal unlock_door
+signal open_door
+signal door_opened
 
 #Inventory update
 signal add_inventory

@@ -452,6 +452,10 @@ position = Vector2(1076, 108)
 shape = SubResource("SegmentShape2D_ca064")
 one_way_collision = true
 
+[node name="CanvasModulate" type="CanvasModulate" parent="." index="28"]
+light_mask = 3
+color = Color(0, 0, 0, 1)
+
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]
 [connection signal="dodge_qte" from="PC" to="." method="_on_pc_dodge_qte"]

@@ -22,4 +22,5 @@ func _on_body_entered(body):
 			inv_name=name
 		InventoryDict.add_inv(inv_name)
 		Events.global_flag_trigger.emit(flag_name)
+		Events.global_flag_trigger.emit("ready_to_start")
 		queue_free()

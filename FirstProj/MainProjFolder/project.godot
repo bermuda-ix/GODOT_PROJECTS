@@ -61,6 +61,7 @@ SpawnPoint="spawn points for enemies"
 start_pos=""
 player=""
 entry=""
+AnimatedDoor=""
 
 [input]
 
@@ -200,6 +201,8 @@ toggle_light={
 2d_physics/layer_19="Entry"
 2d_physics/layer_20="Stairs"
 2d_physics/layer_21="StarsDetector"
+2d_physics/layer_22="Doorways"
+2d_physics/layer_23="InteractableDetector"
 
 [rendering]
 

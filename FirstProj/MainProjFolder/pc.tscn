@@ -1,4 +1,4 @@
-[gd_scene load_steps=479 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=480 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -2741,16 +2741,17 @@ anim_speed_min = 1.0
 anim_speed_max = 1.0
 
 [sub_resource type="Gradient" id="Gradient_mdoa6"]
-offsets = PackedFloat32Array(0, 0.3653846, 0.5884615, 0.88076925, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.84390247, 0.84390247, 0.84390247, 1, 0.6, 0.6, 0.6, 1, 0.37226278, 0.37226278, 0.37226278, 1, 0, 0, 0, 1)
+offsets = PackedFloat32Array(0, 0.18461539, 0.36923078, 0.51153845, 0.7307692, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.9884981, 0.9884981, 0.9884981, 1, 0.37226278, 0.37226278, 0.37226278, 1, 0.1455643, 0.1455643, 0.1455643, 1, 0.07575284, 0.07575284, 0.07575284, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_kd7ms"]
 gradient = SubResource("Gradient_mdoa6")
 use_hdr = true
 fill = 1
-fill_from = Vector2(1, 0.5)
-fill_to = Vector2(0, 0.5)
+fill_from = Vector2(0, 0.5)
+fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
+metadata/_snap_count = 2
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v22jq"]
 animations = [{
@@ -2824,6 +2825,8 @@ height = 46.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_52hex"]
 size = Vector2(7, 12)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mdoa6"]
+
 [sub_resource type="Animation" id="Animation_1ru25"]
 resource_name = "Attack"
 length = 0.55
@@ -2836,7 +2839,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.266667, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
+"update": 0,
 "values": [true, false, true]
 }
 tracks/1/type = "audio"
@@ -2865,50 +2868,50 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D:animation")
+tracks/3/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"SwordCombo01"]
+"update": 0,
+"values": [Vector2(22.7369, -8.15534)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
+tracks/4/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0.0]
+"update": 0,
+"values": [Vector2(37.8948, 53.5486)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
+tracks/5/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(37.8948, 53.5486)]
+"values": [0.0]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
+tracks/6/path = NodePath("AnimatedSprite2D:animation")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(22.7369, -8.15534)]
+"update": 1,
+"values": [&"SwordCombo01"]
 }
 
 [sub_resource type="Animation" id="Animation_vtlvl"]
@@ -2923,7 +2926,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
+"update": 0,
 "values": [true, false, true]
 }
 tracks/1/type = "value"
@@ -2941,50 +2944,50 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:animation")
+tracks/2/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"SwordCombo02"]
+"update": 0,
+"values": [Vector2(37.8948, 36.699)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
+tracks/3/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2(25.2632, -24.466)]
+"update": 0,
+"values": [0.0]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
+tracks/4/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0.0]
+"update": 0,
+"values": [Vector2(25.2632, -24.466)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
+tracks/5/path = NodePath("AnimatedSprite2D:animation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(37.8948, 36.699)]
+"values": [&"SwordCombo02"]
 }
 
 [sub_resource type="Animation" id="Animation_222nm"]
@@ -2999,7 +3002,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
+"update": 0,
 "values": [true, false, true]
 }
 tracks/1/type = "value"
@@ -3017,14 +3020,14 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:animation")
+tracks/2/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"SwordCombo04"]
+"update": 0,
+"values": [0.0]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -3035,20 +3038,20 @@ tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [Vector2(17.6842, -2.03884)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
+tracks/4/path = NodePath("AnimatedSprite2D:animation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0.0]
+"values": [&"SwordCombo04"]
 }
 
 [sub_resource type="Animation" id="Animation_euoq7"]
@@ -3063,7 +3066,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
+"update": 0,
 "values": [true, false, true]
 }
 tracks/1/type = "value"
@@ -3103,7 +3106,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
+"update": 0,
 "values": [true, false, true]
 }
 tracks/1/type = "audio"
@@ -3154,7 +3157,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
+"update": 0,
 "values": [true, false, true]
 }
 tracks/1/type = "audio"
@@ -3269,7 +3272,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
-"update": 1,
+"update": 0,
 "values": [false, true]
 }
 tracks/1/type = "audio"
@@ -3310,14 +3313,14 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D:rotation")
+tracks/4/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0.0]
+"update": 0,
+"values": [Vector2(52.8167, 44.9321)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -3334,14 +3337,14 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
+tracks/6/path = NodePath("AnimatedSprite2D:rotation")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(52.8167, 44.9321)]
+"update": 1,
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_0gauh"]
@@ -3666,7 +3669,7 @@ tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [false]
 }
 tracks/4/type = "value"
@@ -3792,50 +3795,50 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("AnimatedSprite2D/HitBox/CollisionShape2D:disabled")
+tracks/14/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"update": 0,
+"values": [Vector2(37.8948, 53.5486)]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
+tracks/15/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(9, -5)]
+"values": [0.0]
 }
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
+tracks/16/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [Vector2(9, -5)]
 }
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
+tracks/17/path = NodePath("AnimatedSprite2D/HitBox/CollisionShape2D:disabled")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(37.8948, 53.5486)]
+"update": 1,
+"values": [true]
 }
 tracks/18/type = "value"
 tracks/18/imported = false
@@ -4066,7 +4069,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.266667, 0.393049, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
+"update": 0,
 "values": [true, false, false, true]
 }
 tracks/1/type = "audio"
@@ -4107,50 +4110,50 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D:animation")
+tracks/3/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.160152, 0.333333),
-"transitions": PackedFloat32Array(0.965936, 1, 1),
-"update": 1,
-"values": [&"SwordCombo03", &"SwordCombo02", &"SwordCombo04"]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(22.7369, -8.15534)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
+tracks/4/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0.0]
+"update": 0,
+"values": [Vector2(45, 55)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
+tracks/5/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(45, 55)]
+"values": [0.0]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
+tracks/6/path = NodePath("AnimatedSprite2D:animation")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(22.7369, -8.15534)]
+"times": PackedFloat32Array(0, 0.160152, 0.333333),
+"transitions": PackedFloat32Array(0.965936, 1, 1),
+"update": 1,
+"values": [&"SwordCombo03", &"SwordCombo02", &"SwordCombo04"]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -4543,7 +4546,7 @@ tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [true]
 }
 
@@ -5669,7 +5672,7 @@ size = Vector2(21, 41)
 
 [node name="PC" type="CharacterBody2D" node_paths=PackedStringArray("health", "hitbox") groups=["player"]]
 collision_layer = 2
-collision_mask = 314377
+collision_mask = 2411529
 floor_stop_on_slope = false
 floor_max_angle = 0.872665
 floor_snap_length = 2.0
@@ -5804,12 +5807,15 @@ process_material = SubResource("ParticleProcessMaterial_yif7d")
 
 [node name="Flashlight" type="PointLight2D" parent="AnimatedSprite2D/Shotty"]
 light_mask = 3
-position = Vector2(798.6222, -5.2722354)
-scale = Vector2(20.344742, 8.595338)
-energy = 3.13
+position = Vector2(766.86816, -5.2722363)
+scale = Vector2(19.352423, 8.595338)
+enabled = false
+energy = 3.0
+range_layer_max = 2
+range_item_cull_mask = 3
 shadow_enabled = true
-shadow_filter = 1
-shadow_item_cull_mask = 3
+shadow_filter = 2
+shadow_item_cull_mask = 2
 texture = SubResource("GradientTexture2D_kd7ms")
 
 [node name="Shell" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
@@ -5922,6 +5928,14 @@ collision_mask = 278532
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HazardDetector"]
 position = Vector2(0.249986, 4)
 shape = SubResource("RectangleShape2D_52hex")
+
+[node name="InteractableDetector" type="Area2D" parent="."]
+collision_layer = 4194304
+collision_mask = 2097152
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableDetector"]
+position = Vector2(2, -10)
+shape = SubResource("RectangleShape2D_mdoa6")
 
 [node name="HitStop" type="Node" parent="."]
 script = ExtResource("53_jef5t")
@@ -6187,6 +6201,8 @@ pc = NodePath("../..")
 [connection signal="area_entered" from="HazardDetector" to="." method="_on_hazard_detector_area_entered"]
 [connection signal="body_entered" from="HazardDetector" to="." method="_on_hazard_detector_body_entered"]
 [connection signal="body_exited" from="HazardDetector" to="." method="_on_hazard_detector_body_exited"]
+[connection signal="area_entered" from="InteractableDetector" to="." method="_on_interactable_detector_area_entered"]
+[connection signal="area_exited" from="InteractableDetector" to="." method="_on_interactable_detector_area_exited"]
 [connection signal="hit_stop_finished" from="HitStop" to="." method="_on_hit_stop_hit_stop_finished"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]

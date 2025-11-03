@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=51 format=3 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_w82j5"]
 [ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_mb6gy"]
@@ -28,6 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://bngaepo4ygpkl" path="res://Art_Components/LevelProps/door_sprite2.tscn" id="22_relum"]
 [ext_resource type="PackedScene" uid="uid://y6x600dn2kkk" path="res://levels/PrologueRooms/prologue_room_tres.tscn" id="23_veiog"]
 [ext_resource type="PackedScene" uid="uid://d3jixkbstt3qn" path="res://Component/qte_start.tscn" id="24_4koma"]
+[ext_resource type="PackedScene" uid="uid://d3gnpvd8ye3rt" path="res://Art_Components/LevelProps/large_door_sprite.tscn" id="24_veiog"]
 [ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="24_w82j5"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_p4nhw"]
@@ -543,9 +544,8 @@ _data = {
 a = Vector2(-17, -3)
 b = Vector2(567, -310)
 
-[node name="PrologueLvl" node_paths=PackedStringArray("starting_pos") instance=ExtResource("1_w82j5")]
+[node name="PrologueLvl" instance=ExtResource("1_w82j5")]
 next_level = ExtResource("2_mb6gy")
-starting_pos = [NodePath("Entries/Entry"), NodePath("Entries/Entry2"), NodePath("Entries/Entry3"), NodePath("Entries/Entry4"), NodePath("Entries/Entry5"), NodePath("Entries/Entry6"), NodePath("Entries/HallwayEntry1"), NodePath("Entries/Entry8")]
 lvl_type = "adv"
 main_room = true
 
@@ -947,15 +947,24 @@ location_override = true
 enter_to = "PrologueHallway1"
 
 [node name="DoorSprite" parent="Entries/HallwayEntry1" index="1" instance=ExtResource("21_mb6gy")]
+z_index = -1
 position = Vector2(-32, -72)
 
-[node name="Entry8" parent="Entries" index="8" instance=ExtResource("22_5m18i")]
+[node name="Entry7" parent="Entries" index="8" instance=ExtResource("22_5m18i")]
 position = Vector2(4512, 866)
 entry = 7
 room = ExtResource("22_drpgx")
 
-[node name="DoorSprite2" parent="Entries/Entry8" index="1" instance=ExtResource("22_relum")]
+[node name="DoorSprite2" parent="Entries/Entry7" index="1" instance=ExtResource("22_relum")]
 position = Vector2(-32, -58)
+
+[node name="Entry8" parent="Entries" index="9" instance=ExtResource("22_5m18i")]
+position = Vector2(6043, 1187)
+entry = 8
+room = ExtResource("21_7klgn")
+
+[node name="LargeDoorSprite" parent="Entries/Entry8" index="1" instance=ExtResource("24_veiog")]
+position = Vector2(0, -69)
 
 [node name="DoorsAndSwitches" type="Node" parent="." index="17"]
 
@@ -1008,6 +1017,19 @@ scale = Vector2(1, 1.18132)
 position = Vector2(5806, 889)
 door_connect = NodePath("../Door4")
 key_required = true
+key_type = "KeyCard"
+
+[node name="Doors" type="Node" parent="DoorsAndSwitches" index="10"]
+
+[node name="Door5" parent="DoorsAndSwitches/Doors" index="0" instance=ExtResource("9_kuq7b")]
+z_index = 1
+position = Vector2(5833, 1166)
+
+[node name="Switches" type="Node" parent="DoorsAndSwitches" index="11"]
+
+[node name="lab_door_switch" parent="DoorsAndSwitches/Switches" index="0" instance=ExtResource("8_2mqv2")]
+z_index = 1
+position = Vector2(5803, 1198)
 
 [node name="Stairs" type="Node" parent="." index="18"]
 
@@ -1058,7 +1080,7 @@ update_scale = false
 [node name="StartingPos" type="Node" parent="." index="23"]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
-position = Vector2(4091, 835)
+position = Vector2(6307, 1144)
 
 [node name="PersistentDataHandler" type="Node" parent="." index="24"]
 script = ExtResource("24_w82j5")

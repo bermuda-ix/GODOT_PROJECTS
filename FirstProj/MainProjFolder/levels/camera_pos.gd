@@ -2,12 +2,15 @@ class_name camera_position
 
 extends Node2D
 
+@export_category("Camera Shake")
 @export var rand_strength :  float = 2 : set=set_rand_strength, get=get_rand_strength
 @export var shake_fade : float = 20
 @onready var camera_2d: Camera2D = $Camera2D
 
+@export_category("Camera Positions/Zoom")
 @export var camera_zoom : float = 1.0
 @export var stationary : bool = false
+@export var offset : Vector2 = Vector2.ZERO
 
 
 var rng = RandomNumberGenerator.new()
@@ -20,7 +23,7 @@ func _ready() -> void:
 	
 func _process(delta: float) -> void:
 	
-	
+	camera_2d.offset=offset
 	
 	if shake_strength>0:
 		shake_strength = lerpf(shake_strength, 0, shake_fade*delta)
