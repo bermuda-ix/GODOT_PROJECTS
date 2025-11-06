@@ -5,7 +5,7 @@ class_name GameController extends Node
 @export var gui : Control
 
 @onready var player: PlayerEntity = $World2D/Player
-@onready var pause_menu: ColorRect = $GUI/CanvasLayer/PauseMenu
+@onready var pause_menu: Control = $GUI/CanvasLayer/PauseMenuv2
 @onready var gameui: Control = $GUI/CanvasLayer/GAMEUI
 @onready var ui_level: Control = $GUI/CanvasLayer/GAMEUI/UI_Level
 

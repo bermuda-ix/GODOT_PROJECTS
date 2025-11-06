@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://bh56xedc4u1vv" path="res://game_contoller.gd" id="1_xrdjs"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="3_e06k0"]
-[ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="4_218mp"]
 [ext_resource type="PackedScene" uid="uid://b4xxc06iushww" path="res://Component/functions/PersistentData/inventory_resources/inventory_ui.tscn" id="4_oqxtr"]
 [ext_resource type="PackedScene" uid="uid://cxqapy0tyeigc" path="res://ui_level.tscn" id="5_oqxtr"]
 [ext_resource type="PackedScene" uid="uid://dva6hjing4p6o" path="res://LVL_Transitions/game_over.tscn" id="6_jeeai"]
 [ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://LVL_Transitions/level_completed.tscn" id="7_30r1i"]
+[ext_resource type="PackedScene" uid="uid://b8gxxblyllmpd" path="res://Component/UI_Rec/pause_menuv_2.tscn" id="7_tdslp"]
 
 [node name="GameContoller" type="Node" node_paths=PackedStringArray("gui")]
 script = ExtResource("1_xrdjs")
@@ -26,10 +26,6 @@ offset_bottom = 40.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="GUI"]
 
-[node name="PauseMenu" parent="GUI/CanvasLayer" instance=ExtResource("4_218mp")]
-process_mode = 3
-visible = false
-
 [node name="GAMEUI" type="Control" parent="GUI/CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
@@ -48,6 +44,9 @@ layout_mode = 1
 visible = false
 
 [node name="LevelCompleted" parent="GUI/CanvasLayer" instance=ExtResource("7_30r1i")]
+visible = false
+
+[node name="PauseMenuv2" parent="GUI/CanvasLayer" instance=ExtResource("7_tdslp")]
 visible = false
 
 [connection signal="update_health" from="World2D/Player" to="." method="_on_player_update_health"]
