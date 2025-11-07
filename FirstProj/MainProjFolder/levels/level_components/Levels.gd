@@ -6,7 +6,10 @@ class_name Levels extends Node
 		"prologue_room_2" : "res://levels/PrologueRooms/prologue_room_2.tscn",
 		"prologue_room_3" : "res://levels/PrologueRooms/prologue_room_tres.tscn",
 		"PrologueHallway1" : "res://levels/PrologueRooms/prologue_hallway_1.tscn",
-		"PrologueTestlab1" : "res://levels/PrologueRooms/prologue_testlab_1.tscn"
+		"PrologueTestlab1" : "res://levels/PrologueRooms/prologue_testlab_1.tscn",
+		"PrologueGarage1" : "res://levels/PrologueRooms/prologue_garage_1.tscn",
+		"PrologueGarage2" : "res://levels/PrologueRooms/prologue_garage_2.tscn",
+		"PrologueGarage3" : "res://levels/PrologueRooms/prologue_garage_3.tscn"
 		
 	}
 
@@ -14,7 +17,10 @@ class_name Levels extends Node
 @onready var prologue_unique_levels : Dictionary = {
 		"prologue" : "res://levels/PrologueRooms/prologue_lvl.tscn",
 		"PrologueHallway1" : "res://levels/PrologueRooms/prologue_hallway_1.tscn",
-		"PrologueTestlab1" : "res://levels/PrologueRooms/prologue_testlab_1.tscn"
+		"PrologueTestlab1" : "res://levels/PrologueRooms/prologue_testlab_1.tscn",
+		"PrologueGarage1" : "res://levels/PrologueRooms/prologue_garage_1.tscn",
+		"PrologueGarage2" : "res://levels/PrologueRooms/prologue_garage_2.tscn",
+		"PrologueGarage3" : "res://levels/PrologueRooms/prologue_garage_3.tscn"
 	}
 
 #Connected duplicated rooms

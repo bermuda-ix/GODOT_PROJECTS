@@ -961,9 +961,28 @@ position = Vector2(-32, -58)
 [node name="Entry8" parent="Entries" index="9" instance=ExtResource("22_5m18i")]
 position = Vector2(6043, 1187)
 entry = 8
-room = ExtResource("21_7klgn")
+location_override = true
+enter_to = "PrologueGarage1"
 
 [node name="LargeDoorSprite" parent="Entries/Entry8" index="1" instance=ExtResource("24_veiog")]
+position = Vector2(0, -69)
+
+[node name="Entry9" parent="Entries" index="10" instance=ExtResource("22_5m18i")]
+position = Vector2(6612, 1187)
+entry = 8
+location_override = true
+enter_to = "PrologueGarage1"
+
+[node name="LargeDoorSprite" parent="Entries/Entry9" index="1" instance=ExtResource("24_veiog")]
+position = Vector2(0, -69)
+
+[node name="Entry10" parent="Entries" index="11" instance=ExtResource("22_5m18i")]
+position = Vector2(7125, 1187)
+entry = 8
+location_override = true
+enter_to = "PrologueGarage1"
+
+[node name="LargeDoorSprite" parent="Entries/Entry10" index="1" instance=ExtResource("24_veiog")]
 position = Vector2(0, -69)
 
 [node name="DoorsAndSwitches" type="Node" parent="." index="17"]
