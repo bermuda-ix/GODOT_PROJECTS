@@ -9,7 +9,7 @@ func _enter() -> void:
 	#print("entering attack")
 	counter_dist = pc.global_position.x-10*pc.face_dir
 	pc.attacking=true
-
+	
 func _update(delta: float) -> void:
 	
 	

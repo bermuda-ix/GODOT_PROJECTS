@@ -25,3 +25,4 @@ func _enter() -> void:
 func _exit() -> void:
 	print("done flipping")
 	pc.flipped_over=false
+	pc.set_shotgun_free_rotate(true)

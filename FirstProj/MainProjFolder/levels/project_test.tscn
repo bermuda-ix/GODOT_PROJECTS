@@ -453,6 +453,7 @@ shape = SubResource("SegmentShape2D_ca064")
 one_way_collision = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." index="28"]
+visible = false
 light_mask = 3
 color = Color(0, 0, 0, 1)
 
