@@ -3,6 +3,7 @@ extends Area2D
 
 
 signal received_damage(damage: int)
+signal received_stagger_damage(damage: int)
 signal got_hit(hitbox: HitBox)
 signal knockback(hitbox: HitBox)
 signal parried()
@@ -20,10 +21,16 @@ func _ready():
 
 func _on_area_entered(hitbox: HitBox) -> void:
 	if hitbox != null:
-		health.health -= (hitbox.damage * dmg_mult)
-		#print(hitbox.damage, " ",dmg_mult)
-		received_damage.emit(hitbox.damage)
-		got_hit.emit(hitbox)
+		if hitbox.stagger_damage:
+			stagger.stagger -= (hitbox.damage * dmg_mult)
+			#print(hitbox.damage, " ",dmg_mult)
+			#received_damage.emit(hitbox.damage)
+			got_hit.emit(hitbox)
+		else:
+			health.health -= (hitbox.damage * dmg_mult)
+			#print(hitbox.damage, " ",dmg_mult)
+			received_damage.emit(hitbox.damage)
+			got_hit.emit(hitbox)
 		
 			
 		

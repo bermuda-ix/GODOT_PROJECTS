@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://bpfhslfhbjfti"]
+
+[ext_resource type="Script" uid="uid://b1r55vp67dt2r" path="res://chars/TEST_CHARS/training_dummy.gd" id="1_jxvu2"]
+[ext_resource type="Texture2D" uid="uid://cltutcxjx8jnl" path="res://demo/assets/dummy.png" id="1_nwwdl"]
+[ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="2_jxvu2"]
+[ext_resource type="Script" uid="uid://cnxm24jqclb68" path="res://Component/health.gd" id="3_clner"]
+[ext_resource type="Script" uid="uid://ba6pwl0vfuyp" path="res://Component/stagger.gd" id="4_2e1p1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u3h84"]
+size = Vector2(99, 134)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hfrbe"]
+size = Vector2(110.5, 143.5)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_jxvu2")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+position = Vector2(64, 72)
+texture = ExtResource("1_nwwdl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(53.5, 72)
+shape = SubResource("RectangleShape2D_u3h84")
+
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
+collision_layer = 16
+collision_mask = 8256
+script = ExtResource("2_jxvu2")
+health = NodePath("../Health")
+stagger = NodePath("../Stagger")
+metadata/_custom_type_script = "uid://bet3nodk2voxv"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(52.75, 70.25)
+shape = SubResource("RectangleShape2D_hfrbe")
+
+[node name="Stagger" type="Node" parent="."]
+script = ExtResource("4_2e1p1")
+max_stagger = 40
+metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("3_clner")
+max_health = 40
+metadata/_custom_type_script = "uid://cnxm24jqclb68"
+
+[node name="Label" type="Label" parent="."]
+offset_left = -11.0
+offset_top = -38.0
+offset_right = 115.0
+text = "H: 1 S: 1"
+
+[connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
+[connection signal="received_stagger_damage" from="HurtBox" to="." method="_on_hurt_box_received_stagger_damage"]

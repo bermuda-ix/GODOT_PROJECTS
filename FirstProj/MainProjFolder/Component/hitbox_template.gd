@@ -5,6 +5,7 @@ signal parried()
 
 @export var damage: int = 1 : set = set_damage, get = get_damage
 @export var stagger: Stagger
+@export var stagger_damage : bool = false
 
 func _ready():
 	connect("area_entered", _on_parried)

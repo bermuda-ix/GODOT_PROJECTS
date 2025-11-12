@@ -161,6 +161,8 @@ signal no_input_qte
 @onready var starting_position : set = set_start_pos, get = get_start_pos
 @onready var label = $STATE
 @onready var heavy_attack_buffer_timer: Timer = $HeavyAttackBufferTimer
+@onready var special_attack_buffer_timer: Timer = $SpecialAttackBufferTimer
+
 
 @export var attack_timer_len : float = 0.3
 
@@ -782,18 +784,10 @@ func attack_animate():
 
 	elif Input.is_action_just_pressed("attack") and (attack_state.get_active_state()!=special_combo_2):
 		heavy_attack_buffer_timer.start()
-	elif Input.is_action_just_pressed("special_attack") and not heavy_attack_buffer_timer.is_stopped():
-		heavy_attack_buffer_timer.stop()
-		if state_machine.get_active_state()!=attack_state:
-			attack_timer.paused=true
-		hit_box.set_damage(1)
-		if not attack_timer.is_stopped():
-			if atk_chain == 0:
-				#attack_combo = "Attack"
-				#hit_sound = hit1
-				AudioStreamManager.play(swing1)
-		attack_state.initial_state=heavy_attack_1
-		state_machine.dispatch(&"start_attack")
+		
+		
+	if Input.is_action_just_pressed("special_attack") and not heavy_attack_buffer_timer.is_stopped():
+		heavy_attack()
 	
 #Buffer Timeout, Regular Attack
 func _on_heavy_attack_buffer_timer_timeout() -> void:
@@ -854,6 +848,19 @@ func _on_heavy_attack_buffer_timer_timeout() -> void:
 	#await anim_player.animation_finished
 	#attack_timer.paused=false
 	
+func heavy_attack():
+	heavy_attack_buffer_timer.stop()
+	if state_machine.get_active_state()!=attack_state:
+		attack_timer.paused=true
+	hit_box.set_damage(1)
+	if not attack_timer.is_stopped():
+		if atk_chain == 0:
+			#attack_combo = "Attack"
+			#hit_sound = hit1
+			AudioStreamManager.play(swing1)
+	attack_state.initial_state=heavy_attack_1
+	state_machine.dispatch(&"start_attack")
+
 func _on_special_combo_2_exited() -> void:
 	anim_player.play("shotgun_reset")
 
@@ -881,23 +888,31 @@ func sp_atk():
 		shotty.look_at(target.global_position)
 	#else:
 		#set_shotgun_free_rotate(true)
-	if (Input.is_action_just_pressed("special_attack") and not Input.is_action_pressed("attack")) and state_machine.get_active_state()!=parry_success_state and state_machine.get_active_state()!=special_attack:
+	if (Input.is_action_just_pressed("special_attack")) and state_machine.get_active_state()!=parry_success_state \
+	 and state_machine.get_active_state()!=special_attack and heavy_attack_buffer_timer.is_stopped():
+		special_attack_buffer_timer.start()
+	if Input.is_action_just_pressed("attack") and not special_attack_buffer_timer.is_stopped():
+		special_attack_buffer_timer.stop()
+		heavy_attack()
 		
-		if state_machine.get_active_state()==attack_state:
-			if attack_timer.is_stopped():
-				attack_timer.start(0.3)
-				attack_timer.paused=false
+
+func _on_special_attack_buffer_timer_timeout() -> void:
+	if state_machine.get_active_state()==attack_state:
+		if attack_timer.is_stopped():
+			attack_timer.start(0.3)
+			attack_timer.paused=false
+		
+		attack_state.dispatch(&"special_combo")
+	else:
+		
+		if attack_timer.is_stopped():
+			attack_timer.start(0.3)
+			attack_timer.paused=false
+		
+		state_machine.dispatch(&"special_attack")
 			
-			attack_state.dispatch(&"special_combo")
-		else:
-			
-			if attack_timer.is_stopped():
-				attack_timer.start(0.3)
-				attack_timer.paused=false
-			
-			state_machine.dispatch(&"special_attack")
-				
-		attack_timer.paused = false
+	attack_timer.paused = false
+
 
 func shotgun_free_rotate():
 	if shotgun_lookat_mouse:
@@ -1343,8 +1358,8 @@ func _on_attack_timer_timeout():
 	else:
 		state_machine.dispatch(&"return_to_idle")
 	#attack_state.dispatch(&"reset_combo")
+	attack_state.initial_state=attack_1
 	sp_atk_chn = 0
-	combo_state=ComboStates.ATK_1
 	atk_1_resume=false
 	atk_2_resume=false
 
@@ -1740,11 +1755,11 @@ func _on_attack_state_active_state_changed(current: LimboState, previous: LimboS
 	if previous==special_combo:
 		atk_1_resume=false
 		atk_2_resume=false
-	#if current==attack_1:
-		#atk_1_resume=true
-	#elif current==attack_2:
-		#atk_1_resume=true
-
+	
+	if current in [attack_1, attack_2, attack_3]:
+		hitbox.stagger_damage=false
+	elif current in [heavy_attack_1, heavy_attack_2]:
+		hitbox.stagger_damage=true
 
 func _on_combat_states_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	pass
