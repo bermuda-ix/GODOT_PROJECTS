@@ -786,7 +786,7 @@ func attack_animate():
 		heavy_attack_buffer_timer.start()
 		
 		
-	if Input.is_action_just_pressed("special_attack") and not heavy_attack_buffer_timer.is_stopped():
+	if Input.is_action_pressed("special_attack") and not heavy_attack_buffer_timer.is_stopped():
 		heavy_attack()
 	
 #Buffer Timeout, Regular Attack
@@ -891,7 +891,7 @@ func sp_atk():
 	if (Input.is_action_just_pressed("special_attack")) and state_machine.get_active_state()!=parry_success_state \
 	 and state_machine.get_active_state()!=special_attack and heavy_attack_buffer_timer.is_stopped():
 		special_attack_buffer_timer.start()
-	if Input.is_action_just_pressed("attack") and not special_attack_buffer_timer.is_stopped():
+	if Input.is_action_pressed("attack") and not special_attack_buffer_timer.is_stopped():
 		special_attack_buffer_timer.stop()
 		heavy_attack()
 		
@@ -1722,29 +1722,7 @@ func _on_state_machine_active_state_changed(current: LimboState, _previous: Limb
 				recovery.recover_anim="hit_recover"
 			elif _previous==staggered:
 				recovery.recover_anim="stagger_recover"
-	#match _previous:
-		#attack_state:
-			#cur_state="ATTACK"
-		#special_attack:
-			#cur_state="SPECIAL_ATTACK"
-		#idle:
-			#cur_state="IDLE"
-		#walking:
-			#cur_state="WALKING"
-		#jumping:
-			#cur_state="JUMP"
-		#dodge_state:
-			#cur_state="DODGE"
-		#wall_stick:
-			#cur_state="WALL STICK"
-		#sprint:
-			#cur_state = "SPRINTING"
-		#parry_state:
-			#cur_state = "PARRY"
-		#flip_state:
-			#cur_state = "FLIP"
-		#parry_success_state:
-			#cur_state= "PARRY SUCCESS"
+
 
 func _on_attack_state_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if current==special_combo:
