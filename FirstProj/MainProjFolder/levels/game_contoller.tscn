@@ -51,3 +51,5 @@ visible = false
 
 [connection signal="update_health" from="World2D/Player" to="." method="_on_player_update_health"]
 [connection signal="update_max_health" from="World2D/Player" to="." method="_on_player_update_max_health"]
+
+[editable path="GUI/CanvasLayer/PauseMenuv2"]

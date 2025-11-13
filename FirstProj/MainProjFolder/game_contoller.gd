@@ -8,6 +8,7 @@ class_name GameController extends Node
 @onready var pause_menu: Control = $GUI/CanvasLayer/PauseMenuv2
 @onready var gameui: Control = $GUI/CanvasLayer/GAMEUI
 @onready var ui_level: Control = $GUI/CanvasLayer/GAMEUI/UI_Level
+@onready var objectives_ui: objective_ui = $GUI/CanvasLayer/PauseMenuv2/TextureRect/MainPause/ObjectivesUI
 
 
 @onready var levels: Levels = $Levels
@@ -47,7 +48,9 @@ func _ready() -> void:
 	for room_loaded in loaded_rooms_map:
 		print(room_loaded)
 		print(loaded_rooms_map[room_loaded])
-		
+	
+	_init_objectives()
+	
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Pause"):
 		show_pause()
@@ -141,7 +144,9 @@ func change_2d_scene (new_scene: String, \
 	return_room=prev_2d_scene.name
 	load_levels(LevelsList.proloque_level_maps)
 
-
+func _init_objectives():
+	var obj_level=objectives_by_level.new()
+	objectives_ui._init_objectives_list(obj_level.prologue_init_objectives)
 
 
 #func change_2d_scene_old(new_scene: int, \

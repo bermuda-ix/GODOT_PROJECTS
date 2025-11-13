@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="objective_item" load_steps=4 format=3 uid="uid://cb5r6ux66jxok"]
+
+[ext_resource type="Script" uid="uid://b4w5g1sk6dg37" path="res://Component/functions/PersistentData/objective_item.gd" id="1_x43jg"]
+[ext_resource type="Texture2D" uid="uid://bubuod5upm42p" path="res://Art_Components/Enemies/battle-mecha-sprites-pixel-art-pack/2/Hurt.png" id="2_4611r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ht2bb"]
+atlas = ExtResource("2_4611r")
+region = Rect2(0, 17.26448, 79.85565, 78.73552)
+
+[resource]
+script = ExtResource("1_x43jg")
+name = "redmech"
+texture = SubResource("AtlasTexture_ht2bb")
+metadata/_custom_type_script = "uid://b4w5g1sk6dg37"

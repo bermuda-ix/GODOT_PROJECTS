@@ -1,18 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://boutsrwc1xfnc"]
+[gd_scene load_steps=6 format=3 uid="uid://boutsrwc1xfnc"]
 
 [ext_resource type="Script" uid="uid://b3k3vjmo8cdci" path="res://objectives_ui.gd" id="1_hvrq0"]
+[ext_resource type="Script" uid="uid://b4w5g1sk6dg37" path="res://Component/functions/PersistentData/objective_item.gd" id="2_uxhq1"]
+[ext_resource type="Resource" uid="uid://cb5r6ux66jxok" path="res://Component/functions/PersistentData/Objectives/PrologueLevel/redmech.tres" id="3_scur1"]
+[ext_resource type="Resource" uid="uid://cecvoeuuahxcj" path="res://Component/functions/PersistentData/Objectives/PrologueLevel/bluemech.tres" id="4_arvwk"]
+[ext_resource type="Resource" uid="uid://7rv0nmyl47s8" path="res://Component/functions/PersistentData/Objectives/PrologueLevel/greenmech.tres" id="5_scur1"]
 
-[node name="ObjectivesUI" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="GridContainer" type="GridContainer"]
+offset_right = 66.0
+offset_bottom = 67.0
 script = ExtResource("1_hvrq0")
-
-[node name="GridContainer" type="GridContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-columns = 2
+objective_resources = Array[ExtResource("2_uxhq1")]([ExtResource("4_arvwk"), ExtResource("3_scur1"), ExtResource("5_scur1")])

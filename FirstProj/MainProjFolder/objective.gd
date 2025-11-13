@@ -8,10 +8,10 @@ class_name Objective extends Control
 
 
 func set_objective_texture(texture : Texture2D) -> void:
-	pass
+	objective_texture=texture
 	
 func set_amount(_amount : int) -> void:
-	pass
+	objective_amount=_amount
 	
 func update_objective_ui() -> void:
 	objective_amount_text.text=str(objective_amount)
