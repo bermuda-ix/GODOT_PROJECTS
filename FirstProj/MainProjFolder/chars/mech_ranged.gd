@@ -10,6 +10,7 @@ const JUMP_VELOCITY = -400.0
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var npc_stats: Control = $NPCStats
 
+@onready var objective_handler: ObjectiveHandler = $ObjectiveHandler
 #Animation Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 #Target lock
@@ -417,10 +418,13 @@ func _on_health_health_depleted() -> void:
 		bt_player.active=false
 	else:
 		death_handler.death()
+	
+	objective_handler.update_objective()
 
 func cutscnene_death():
 	death_handler.death()
 
+	
 func _on_hurt_box_received_damage(damage: int) -> void:
 	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 		Events.allied_enemy_hit.emit()

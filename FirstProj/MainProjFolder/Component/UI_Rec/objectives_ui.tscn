@@ -7,7 +7,7 @@
 [ext_resource type="Resource" uid="uid://7rv0nmyl47s8" path="res://Component/functions/PersistentData/Objectives/PrologueLevel/greenmech.tres" id="5_scur1"]
 
 [node name="GridContainer" type="GridContainer"]
-offset_right = 66.0
-offset_bottom = 67.0
+offset_right = 471.0
+offset_bottom = 323.0
 script = ExtResource("1_hvrq0")
 objective_resources = Array[ExtResource("2_uxhq1")]([ExtResource("4_arvwk"), ExtResource("3_scur1"), ExtResource("5_scur1")])

@@ -1,4 +1,4 @@
-[gd_scene load_steps=129 format=3 uid="uid://bvvdaxqcb1uvh"]
+[gd_scene load_steps=130 format=3 uid="uid://bvvdaxqcb1uvh"]
 
 [ext_resource type="Script" uid="uid://coxn6onpxcpm0" path="res://chars/mech_ranged.gd" id="1_k650x"]
 [ext_resource type="Texture2D" uid="uid://eu5suk6k1xrx" path="res://Art_Components/Enemies/battle-mecha-sprites-pixel-art-pack/1/Idle.png" id="1_mgo1l"]
@@ -49,6 +49,7 @@
 [ext_resource type="Script" uid="uid://d04qf1jqrfg1h" path="res://Component/functions/CounterAttackHandler.gd" id="29_vmriw"]
 [ext_resource type="Script" uid="uid://fi6gye6mlsb6" path="res://Component/functions/CutsceneHandler.gd" id="36_ptalq"]
 [ext_resource type="Script" uid="uid://ckhujnpjai7n" path="res://chars/shoot_run.gd" id="37_4jbc4"]
+[ext_resource type="Script" uid="uid://dkmqmmiy1y7o5" path="res://Component/functions/ObjectiveHandler.gd" id="38_wrah3"]
 [ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="39_8j4gk"]
 [ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="40_d6wri"]
 [ext_resource type="PackedScene" uid="uid://bro4najrj7577" path="res://Component/UI_Rec/npc_stats.tscn" id="44_ujgd3"]
@@ -2205,6 +2206,12 @@ actor = NodePath("..")
 despawn_effect = ExtResource("18_14qye")
 metadata/_custom_type_script = "uid://cbt5pqmf6i7rj"
 
+[node name="ObjectiveHandler" type="Node" parent="."]
+script = ExtResource("38_wrah3")
+objective_name = "bluemech"
+objective_lvl = "Prologue"
+metadata/_custom_type_script = "uid://dkmqmmiy1y7o5"
+
 [node name="CutsceneHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "anim_player", "speech")]
 script = ExtResource("36_ptalq")
 actor = NodePath("..")
@@ -2306,6 +2313,7 @@ ammo_count_vis = false
 [connection signal="received_damage" from="AnimatedSprite2D/HurtBox_WeakPoint" to="." method="_on_hurt_box_weak_point_received_damage"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
+[connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]

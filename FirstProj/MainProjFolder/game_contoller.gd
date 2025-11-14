@@ -145,8 +145,7 @@ func change_2d_scene (new_scene: String, \
 	load_levels(LevelsList.proloque_level_maps)
 
 func _init_objectives():
-	var obj_level=objectives_by_level.new()
-	objectives_ui._init_objectives_list(obj_level.prologue_init_objectives)
+	objectives_ui._init_objectives_list(ObjectivesByLevel.prologue_init_objectives)
 
 
 #func change_2d_scene_old(new_scene: int, \

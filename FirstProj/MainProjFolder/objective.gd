@@ -14,5 +14,5 @@ func set_amount(_amount : int) -> void:
 	objective_amount=_amount
 	
 func update_objective_ui() -> void:
-	objective_amount_text.text=str(objective_amount)
+	objective_amount_text.text="x"+str(objective_amount)
 	objective_texture_rect.texture=objective_texture
