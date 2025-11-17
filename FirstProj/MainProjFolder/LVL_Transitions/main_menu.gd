@@ -9,7 +9,9 @@ func _ready():
 
 func _on_start_game_button_pressed():
 	await LevelTransition.fade_to_black()
-	get_tree().change_scene_to_file("res://LVL_Transitions/lvlselect.tscn")
+	
+
+	Global.game_controller.change_gui_scene(LevelsList.LEVEL_SELECT)
 	LevelTransition.fade_from_black()
 
 func _on_quit_button_pressed():

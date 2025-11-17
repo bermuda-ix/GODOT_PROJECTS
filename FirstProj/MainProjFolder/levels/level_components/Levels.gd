@@ -1,5 +1,8 @@
 class_name Levels extends Node
 
+const MAIN_MENU = "res://LVL_Transitions/main_menu.tscn"
+const LEVEL_SELECT = "res://LVL_Transitions/lvlselect.tscn"
+
 @onready var levels : Dictionary = {
 		"prologue" : "res://levels/PrologueRooms/prologue_lvl.tscn",
 		"prologue_room_1" : "res://levels/PrologueRooms/prologue_room_one.tscn",
@@ -24,6 +27,6 @@ class_name Levels extends Node
 	}
 
 #Connected duplicated rooms
-@onready var proloque_level_maps : Dictionary = {
+@onready var prologue_level_maps : Dictionary = {
 	
 	}

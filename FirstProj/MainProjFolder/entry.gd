@@ -19,9 +19,9 @@ signal enter_area(room : PackedScene)
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
-	if not LevelsList.proloque_level_maps.has(name) and not location_override:
+	if not LevelsList.prologue_level_maps.has(name) and not location_override:
 		entry_name =self.get_parent().get_parent().name+"/"+self.name
-		LevelsList.proloque_level_maps[entry_name] = room.resource_path
+		LevelsList.prologue_level_maps[entry_name] = room.resource_path
 
 func _on_body_entered(body: Node2D) -> void:
 	if not body is PlayerEntity:

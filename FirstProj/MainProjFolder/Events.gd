@@ -5,11 +5,18 @@ extends Node
 signal level_completed
 signal game_over
 signal obj_complete
+signal toggle_game_ui
+signal toggle_level_processing
 
 #Level loading
 signal load_levels_by_set
 signal load_levels_indiv
 signal enter_room
+signal load_level_map
+signal load_first_level
+signal load_objectives
+signal load_menu_scene
+
 
 # Pausing
 signal pause

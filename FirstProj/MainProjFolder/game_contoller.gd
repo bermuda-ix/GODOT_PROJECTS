@@ -9,6 +9,8 @@ class_name GameController extends Node
 @onready var gameui: Control = $GUI/CanvasLayer/GAMEUI
 @onready var ui_level: Control = $GUI/CanvasLayer/GAMEUI/UI_Level
 @onready var objectives_ui: objective_ui = $GUI/CanvasLayer/PauseMenuv2/TextureRect/MainPause/ObjectivesUI
+@onready var level_UI: CanvasLayer = $GUI/CanvasLayer
+
 
 
 @onready var levels: Levels = $Levels
@@ -21,40 +23,43 @@ class_name GameController extends Node
 var current_2d_scene
 var prev_2d_scene
 var current_gui_scene
+@onready var prev_gui_scene = "NONE"
 
 #@onready var prologue_lvl: adv_level = $World2D/PrologueLvl
 
 func _ready() -> void:	
 	Global.game_controller = self
-	#current_2d_scene=$World2D/PrologueLvl
-	load_levels(LevelsList.prologue_unique_levels)
-	for room_loaded in loaded_rooms_map:
-		print(room_loaded)
-		print(loaded_rooms_map[room_loaded])
-	load_first_room()
-	prev_2d_scene=current_2d_scene
-	#var test_scene="res://levels/prologue_lvl.tscn"
-	#change_2d_scene(test_scene, true, false, 0)
-	current_2d_scene.player=player
+	Events.load_level_map.connect(load_levels)
+	Events.load_first_level.connect(load_first_room)
+	Events.toggle_game_ui.connect(toggle_game_ui)
+	Events.load_objectives.connect(_init_objectives)
+	Events.toggle_level_processing.connect(toggle_world2d_process)
+	Events.load_menu_scene.connect(change_gui_scene)
+	
 	Events.pause.connect(show_pause)
 	Events.unpause.connect(unpause)
 	
-	#print(LevelsList.proloque_level_maps)
-	#for room in LevelsList.proloque_level_maps:
-		#
-		#print(room)
-		#print(LevelsList.proloque_level_maps[room])
-	load_levels(LevelsList.proloque_level_maps)
-	for room_loaded in loaded_rooms_map:
-		print(room_loaded)
-		print(loaded_rooms_map[room_loaded])
+	#Disables game UI and level process when first starting
+	toggle_game_ui(false)
+	toggle_world2d_process(false)
 	
-	_init_objectives()
+	#test_start()
+	change_gui_scene(LevelList.MAIN_MENU)
+	
 	
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Pause"):
 		show_pause()
-	
+
+#For force starting levels to test
+func test_start() -> void:
+	load_levels(LevelsList.prologue_unique_levels)
+	load_first_room("prologue")
+	prev_2d_scene=current_2d_scene
+	current_2d_scene.player=player
+	load_levels(LevelsList.prologue_level_maps)
+	_init_objectives(ObjectivesByLevel.prologue_init_objectives)
+
 func show_pause():
 	pause_menu.show()
 	gameui.visible=false
@@ -79,40 +84,25 @@ func load_levels(dict : Dictionary) -> void:
 		#loaded_rooms.append(load(dict[room]).instantiate())
 		#i+=1
 
-func load_levels_old(dict : Dictionary) -> void:
-	for key in dict.keys():
-		queued_rooms.append(dict[key])
-		
-	for room in LevelsList.proloque_level_maps:
-		
-		print(room)
-		print(LevelsList.proloque_level_maps[room])
-		#loaded_rooms.append(load(queued_rooms[LevelsList.proloque_level_maps[i]]).instantiate())
-		#i+=1
-		
-	loaded_rooms.append(load(queued_rooms[0]).instantiate())
-	
-	loaded_rooms.append(load(queued_rooms[1]).instantiate())
-	loaded_rooms.append(load(queued_rooms[2]).instantiate())
-	loaded_rooms.append(load(queued_rooms[2]).instantiate())
-	loaded_rooms.append(load(queued_rooms[3]).instantiate())
-	loaded_rooms.append(load(queued_rooms[2]).instantiate())
-	loaded_rooms.append(load(queued_rooms[1]).instantiate())
-	loaded_rooms.append(load(queued_rooms[3]).instantiate())
-	loaded_rooms.append(load(queued_rooms[1]).instantiate())
-	
-	loaded_rooms.append(load(queued_rooms[4]).instantiate())
-
-func load_first_room (_transition_in : String="fade_to_black", \
+#Load first scene on game start
+func load_first_room (_first_room : String, \
+	_transition_in : String="fade_to_black", \
 	_transition_out : String="fade_from_black") -> void:
 		
-	world_2d.add_child(loaded_rooms_map["prologue"])
-	player.reparent(loaded_rooms_map["prologue"])
-	loaded_rooms_map["prologue"].player.global_position=loaded_rooms_map["prologue"].init_starting_pos.global_position
+	world_2d.add_child(loaded_rooms_map[_first_room])
+	player.reparent(loaded_rooms_map[_first_room])
+	loaded_rooms_map[_first_room].player.global_position=loaded_rooms_map[_first_room].init_starting_pos.global_position
 	LevelTransition.transition_out(_transition_out)
-	current_2d_scene=loaded_rooms_map["prologue"]
+	current_2d_scene=loaded_rooms_map[_first_room]
 
+#Toggle UI vissibility
+func toggle_game_ui(value : bool) -> void:
+	level_UI.visible = value
+#Toggle world2D, the main level processing tree, processing
+func toggle_world2d_process(value : bool) -> void:
+	world_2d.set_process(value)
 
+#Change scenes
 func change_2d_scene (new_scene: String, \
 	delete: bool = true, \
 	keep_running: bool = false, \
@@ -136,18 +126,44 @@ func change_2d_scene (new_scene: String, \
 	
 	world_2d.add_child(loaded_rooms_map[new_scene])
 	player.reparent(loaded_rooms_map[new_scene])
-	print(loaded_rooms_map[new_scene].starting_pos.size(), " ",_starting_pos)
-	loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].starting_pos[_starting_pos]
+	
+	#Starting position is -1 if scene has no starting position
+	if _starting_pos==-1:
+		pass
+	else:
+		print(loaded_rooms_map[new_scene].starting_pos.size(), " ",_starting_pos)
+		loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].starting_pos[_starting_pos]
 	LevelTransition.transition_out(_transition_out)
-	prev_2d_scene=current_2d_scene
+	if current_2d_scene != null:
+		prev_2d_scene=current_2d_scene
+		return_room=prev_2d_scene.name
 	current_2d_scene=loaded_rooms_map[new_scene]
-	return_room=prev_2d_scene.name
-	load_levels(LevelsList.proloque_level_maps)
+	load_levels(LevelsList.prologue_level_maps)
 
-func _init_objectives():
-	objectives_ui._init_objectives_list(ObjectivesByLevel.prologue_init_objectives)
+func _init_objectives(dict : Dictionary):
+	objectives_ui._init_objectives_list(dict)
 
-
+#Change GUI Scene
+func change_gui_scene (new_scene: String, \
+	delete: bool = true, \
+	keep_running: bool = false, \
+	_transition_in : String="fade_to_black", \
+	_transition_out : String="fade_from_black") -> void:
+	LevelTransition.transition_in(_transition_in)
+	if current_gui_scene != null:
+		prev_gui_scene=current_gui_scene
+		gui.remove_child(current_gui_scene)
+	current_gui_scene=load(new_scene).instantiate()
+	gui.add_child(current_gui_scene)
+	LevelTransition.transition_out(_transition_out)
+	
+func remove_gui_scene (delete: bool = true, \
+	keep_running: bool = false, \
+	_transition_in : String="fade_to_black", \
+	_transition_out : String="fade_from_black") -> void:
+	await LevelTransition.transition_in(_transition_in)
+	gui.remove_child(current_gui_scene)
+	
 #func change_2d_scene_old(new_scene: int, \
 	#delete: bool = true, \
 	#keep_running: bool = false, \

@@ -47,7 +47,7 @@ var obj : int
 func _ready():
 	
 	if main_room:
-		LevelsList.proloque_level_maps[self.name] = self.scene_file_path
+		LevelsList.prologue_level_maps[self.name] = self.scene_file_path
 	
 	if not next_level is PackedScene:
 		next_level = load("res://LVL_Transitions/victory_screen.tscn")
