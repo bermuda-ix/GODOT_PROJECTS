@@ -18,9 +18,11 @@ layout_mode = 2
 text = "  SELECT LEVEL:"
 
 [node name="tutorials" type="Button" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 action_mode = 0
-text = "Practice"
+text = "Practice
+(not working)"
 
 [node name="guanlet" type="Button" parent="VBoxContainer"]
 visible = false

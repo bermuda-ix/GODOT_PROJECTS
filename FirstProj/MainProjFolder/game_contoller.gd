@@ -42,6 +42,7 @@ func _ready() -> void:
 	#Disables game UI and level process when first starting
 	toggle_game_ui(false)
 	toggle_world2d_process(false)
+	toggle_player(false)
 	
 	#test_start()
 	change_gui_scene(LevelList.MAIN_MENU)
@@ -190,7 +191,18 @@ func remove_gui_scene (delete: bool = true, \
 	#prev_2d_scene=current_2d_scene
 	#current_2d_scene=loaded_rooms[new_scene]
 	#
-
+func toggle_player(activate : bool) -> void:
+	if activate:
+		if world_2d.has_node(player.get_path()):
+			pass
+		else:
+			world_2d.add_child(player)
+	else:
+		if world_2d.has_node(player.get_path()):
+			world_2d.remove_child(player)
+		else:
+			pass
+		
 
 func _on_player_update_health(value : int) -> void:
 	ui_level.set_health(value)

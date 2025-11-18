@@ -19,6 +19,7 @@ func _on_boss_pressed():
 	Global.game_controller.change_2d_scene("prologue", true, false, 0, "fade_to_black_quick", "fade_from_black_quick")
 	Global.game_controller.toggle_game_ui(true)
 	Global.game_controller.toggle_world2d_process(true)
+	Global.game_controller.toggle_player(true)
 	Global.game_controller.remove_gui_scene()
 	
 	LevelTransition.fade_from_black()
