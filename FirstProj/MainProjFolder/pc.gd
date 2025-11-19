@@ -126,7 +126,11 @@ var atk_state="ATK_1"
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var clash_visual: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
+@onready var hit_fx: AnimatedSprite2D = $AnimatedSprite2D/hit_fx
+@onready var hit_fx_2: AnimatedSprite2D = $AnimatedSprite2D/hit_fx/hit_fx2
+@onready var hit_fx_player: AnimationPlayer = $HitFXPlayer
 
+@onready var hit_animation : String = "hit_landed"
 
 @onready var speech: Label = $Speech
 @onready var speech_timer: Timer = $Speech/SpeechTimer
@@ -810,6 +814,7 @@ func _on_heavy_attack_buffer_timer_timeout() -> void:
 		velocity.y=movement_data.jump_velocity/2
 	else:
 		hit_box.set_damage(1)
+		
 		if not attack_timer.is_stopped():
 			if atk_chain == 0:
 				#attack_combo = "Attack"
@@ -849,6 +854,7 @@ func _on_heavy_attack_buffer_timer_timeout() -> void:
 	#attack_timer.paused=false
 	
 func heavy_attack():
+	hit_animation="heavy_attack_landed"
 	heavy_attack_buffer_timer.stop()
 	if state_machine.get_active_state()!=attack_state:
 		attack_timer.paused=true
@@ -1437,6 +1443,8 @@ func _on_hit_box_area_entered(_area):
 	hit_sound=hit1
 	AudioStreamManager.play(hit_sound)
 	hb_collision.disabled
+	hit_fx.visible=true
+	hit_fx_player.play(hit_animation)
 
 
 func _on_hit_box_body_entered(body):

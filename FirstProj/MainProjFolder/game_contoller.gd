@@ -107,7 +107,7 @@ func toggle_world2d_process(value : bool) -> void:
 func change_2d_scene (new_scene: String, \
 	delete: bool = true, \
 	keep_running: bool = false, \
-	_starting_pos: int = 1, \
+	_starting_pos: int = -1, \
 	_transition_in : String="fade_to_black", \
 	_transition_out : String="fade_from_black") -> void:
 	
@@ -130,7 +130,7 @@ func change_2d_scene (new_scene: String, \
 	
 	#Starting position is -1 if scene has no starting position
 	if _starting_pos==-1:
-		pass
+		loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].init_starting_pos.global_position
 	else:
 		print(loaded_rooms_map[new_scene].starting_pos.size(), " ",_starting_pos)
 		loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].starting_pos[_starting_pos]
