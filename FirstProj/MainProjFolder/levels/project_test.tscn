@@ -304,7 +304,7 @@ scale = Vector2(0.5, 0.5)
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" index="0"]
 shape = SubResource("RectangleShape2D_82t0r")
 
-[node name="GPUParticles2D" parent="PC/AnimatedSprite2D" index="9"]
+[node name="GPUParticles2D" parent="PC/AnimatedSprite2D" index="10"]
 material = SubResource("CanvasItemMaterial_82t0r")
 process_material = SubResource("ParticleProcessMaterial_82t0r")
 

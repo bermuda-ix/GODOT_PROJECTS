@@ -78,7 +78,6 @@ func rotate_missile(delta : float) -> void:
 	#animated_sprite_2d.rotation_degrees=move_toward(animated_sprite_2d.rotation_degrees, tracking_rot, delta*50)
 	#var current_rot=animated_sprite_2d.rotation_degrees
 	animated_sprite_2d.global_rotation=rotate_toward(animated_sprite_2d.global_rotation,tracking_rot, deg_to_rad(rotation_speed))
-	print(animated_sprite_2d.global_rotation_degrees," , ",tracking_rot)
 	#var new_rot=animated_sprite_2d.rotation_degrees
 	#if abs(animated_sprite_2d.global_rotation_degrees-tracking_rot)<=rotation_speed:
 		#pass

@@ -71,8 +71,8 @@ func _ready():
 	player.no_input_qte.connect(_pc_no_input_qte)
 	
 	player.scale = Vector2(pc_scale, pc_scale)
-	#Events.start_cutscene.emit()
-	#cutscene_player.play("INTRO")
+	Events.start_cutscene.emit()
+	cutscene_player.play("INTRO")
 	var entries=get_tree().get_nodes_in_group("entry")
 	starting_pos.resize(entries.size())
 	for entry in entries:

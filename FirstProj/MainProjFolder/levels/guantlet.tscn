@@ -5491,7 +5491,6 @@ player = NodePath("PC")
 
 [node name="UI_Level" parent="CanvasLayer" index="1"]
 z_index = 9
-metadata/_edit_use_anchors_ = true
 
 [node name="Label" parent="CanvasLayer" index="3"]
 offset_left = 3498.0
@@ -5693,6 +5692,7 @@ navigation_polygon = SubResource("NavigationPolygon_dp3go")
 [node name="NavigationRegion2D2" type="NavigationRegion2D" parent="Navigation/NavReg" index="1"]
 position = Vector2(811, 187)
 navigation_polygon = SubResource("NavigationPolygon_riclf")
+navigation_layers = 3
 
 [node name="NavLink" type="Node" parent="Navigation" index="1"]
 

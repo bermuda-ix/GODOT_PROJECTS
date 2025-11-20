@@ -129,6 +129,9 @@ var atk_state="ATK_1"
 @onready var hit_fx: AnimatedSprite2D = $AnimatedSprite2D/hit_fx
 @onready var hit_fx_2: AnimatedSprite2D = $AnimatedSprite2D/hit_fx/hit_fx2
 @onready var hit_fx_player: AnimationPlayer = $HitFXPlayer
+@onready var clash_aura_player: AnimationPlayer = $ClashAuraPlayer
+@onready var clash_aura_fx: AnimatedSprite2D = $AnimatedSprite2D/heat_fx
+
 
 @onready var hit_animation : String = "hit_landed"
 
@@ -458,6 +461,9 @@ func _process(_delta):
 	lockon()
 	enter_door()
 	climb_stairs()
+	#Input for testing various things
+	if Input.is_action_just_pressed("DEBUG_KEY"):
+		clash_power.increase_clash()
 
 func _physics_process(delta):
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
@@ -854,7 +860,7 @@ func _on_heavy_attack_buffer_timer_timeout() -> void:
 	#attack_timer.paused=false
 	
 func heavy_attack():
-	hit_animation="heavy_attack_landed"
+	
 	heavy_attack_buffer_timer.stop()
 	if state_machine.get_active_state()!=attack_state:
 		attack_timer.paused=true
@@ -1444,6 +1450,7 @@ func _on_hit_box_area_entered(_area):
 	AudioStreamManager.play(hit_sound)
 	hb_collision.disabled
 	hit_fx.visible=true
+	hit_fx_player.stop()
 	hit_fx_player.play(hit_animation)
 
 
@@ -1643,40 +1650,7 @@ func _on_hit_box_parried() -> void:
 	
 	#velocity.x = movement_data.speed + knockback.x
 
-#####################
-##Cutscene Functions#
-#####################
-#
-#
-func set_path_speed(speed : int) -> void:
-	path_speed=speed
-	#print(path_speed)
-func start_path(speed : int):
-	set_path_start(true)
-	set_path_speed(speed)
-	#print(speed)
-func set_path_start(value) -> void:
-	path_start=value
-#
-################
-##QTE Functions#
-################
 
-func qte_input():
-	if Input.is_action_just_pressed("attack"):
-		attack_qte.emit()
-		hit_stop.end_hit_stop()
-	elif Input.is_action_just_pressed("Dodge"):
-		dodge_qte.emit()
-		hit_stop.end_hit_stop()
-	elif Input.is_action_just_pressed("parry"):
-		block_qte.emit()
-		hit_stop.end_hit_stop()
-	elif Input.is_action_just_pressed("special_attack"):
-		special_atk_qte.emit()
-		hit_stop.end_hit_stop()
-	else:
-		pass
 		
 		
 func _on_hit_stop_hit_stop_finished() -> void:
@@ -1755,7 +1729,33 @@ func _on_clash_timer_timeout() -> void:
 	clash_power.reset_clash()
 	clash_visual.emitting=false
 	
-
+	
+func _on_clash_power_increase_aura(value : int) -> void:
+	clash_aura_fx.visible=true
+	clash_aura_player.play("clash_aura")
+	clash_timer.start()
+	match value:
+		2:
+			clash_aura_player.speed_scale=0.5
+			clash_aura_fx.self_modulate.a=0.4
+		3:
+			clash_aura_player.speed_scale=1
+			clash_aura_fx.self_modulate.a=0.6
+		4:
+			clash_aura_player.speed_scale=1.5
+			clash_aura_fx.self_modulate.a=0.8
+		5:
+			clash_aura_player.speed_scale=2
+			clash_aura_fx.self_modulate.a=1
+		_:
+			pass
+	
+#################
+#Clash Functions#
+#################
+func _on_clash_power_aura_reset() -> void:
+	clash_aura_player.stop()
+	clash_aura_fx.visible=false
 
 func _on_stars_detector_body_entered(body: Node2D) -> void:
 	stairs_detected=true
@@ -1765,3 +1765,37 @@ func _on_stars_detector_body_exited(body: Node2D) -> void:
 	if stairs_release:
 		set_collision_mask_value(20, false)
 		
+####################
+#Cutscene Functions#
+####################
+#
+#
+func set_path_speed(speed : int) -> void:
+	path_speed=speed
+	#print(path_speed)
+func start_path(speed : int):
+	set_path_start(true)
+	set_path_speed(speed)
+	#print(speed)
+func set_path_start(value) -> void:
+	path_start=value
+#
+###############
+#QTE Functions#
+###############
+
+func qte_input():
+	if Input.is_action_just_pressed("attack"):
+		attack_qte.emit()
+		hit_stop.end_hit_stop()
+	elif Input.is_action_just_pressed("Dodge"):
+		dodge_qte.emit()
+		hit_stop.end_hit_stop()
+	elif Input.is_action_just_pressed("parry"):
+		block_qte.emit()
+		hit_stop.end_hit_stop()
+	elif Input.is_action_just_pressed("special_attack"):
+		special_atk_qte.emit()
+		hit_stop.end_hit_stop()
+	else:
+		pass

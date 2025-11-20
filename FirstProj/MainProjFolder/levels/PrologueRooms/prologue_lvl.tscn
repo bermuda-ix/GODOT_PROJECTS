@@ -1099,7 +1099,7 @@ update_scale = false
 [node name="StartingPos" type="Node" parent="." index="23"]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
-position = Vector2(6307, 1144)
+position = Vector2(154, 452)
 
 [node name="PersistentDataHandler" type="Node" parent="." index="24"]
 script = ExtResource("24_w82j5")

@@ -13,7 +13,7 @@ const MISSILE_TRACKER = preload("res://Component/missiles/missile_tracker.tscn")
 @onready var chase_timer = $ChaseTimer
 @onready var turret = $Turret
 @onready var animation_player = $AnimationPlayer
-@onready var bullet = BALL_PROCETILE
+@onready var bullet = MISSILE_TRACKER
 @onready var bullet_dir = Vector2.RIGHT
 @onready var audio_stream_player_2d = $AudioStreamPlayer2D
 @onready var stagger = $Stagger
@@ -23,6 +23,7 @@ const MISSILE_TRACKER = preload("res://Component/missiles/missile_tracker.tscn")
 @onready var shoot_timer: Timer = $ShootTimer
 @onready var missile_shoot_handler: MissileShootHandler = $MissileShootHandler
 
+@onready var health: Health = $Health
 
 @onready var stg_laber = $stg_laber
 
@@ -248,3 +249,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 func _on_shoot_timer_timeout() -> void:
 	missile_shoot_handler.shoot_missile()
+
+
+func _on_hurt_box_received_damage(damage: int) -> void:
+	print(health.health)
