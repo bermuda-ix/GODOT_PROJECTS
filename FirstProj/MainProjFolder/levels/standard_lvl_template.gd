@@ -29,6 +29,9 @@ var player : PlayerEntity
 
 @onready var cutscene_player: AnimationPlayer = $CutscenePlayer
 var qte_options : Array[String]  = ["1", "2", "3", "4", "0"]
+@onready var player_transform: RemoteTransform2D = $Paths/Path2D/PathFollow2D/PlayerTransform
+@onready var hit_stop: HitStop = $HitStop
+
 
 @export var lvl_type = "goal"
 @export var main_room : bool = false
@@ -158,6 +161,9 @@ func inc_score():
 func handle_spawn():
 	pass
 
+func play_cutscene_segment(_cutscene_segment : String):
+	Events.play_cutscene_segment.emit(_cutscene_segment)
+
 func end_cutscene():
 	Events.end_cutsene.emit()
 	cutscene_active=false
@@ -170,7 +176,6 @@ func boss_died(cutscene: String):
 func end_level():
 	Events.level_completed.emit()
 
-
 func load_qte_animations(atk_opt : String, dodge_opt : String, block_opt : String, spc_atk_opt : String, no_input : String):
 	qte_options[0]=atk_opt
 	qte_options[1]=dodge_opt
@@ -178,6 +183,15 @@ func load_qte_animations(atk_opt : String, dodge_opt : String, block_opt : Strin
 	qte_options[3]=spc_atk_opt
 	qte_options[4]=no_input
 	
+func attach_path():
+	if has_node(player_transform.get_path()):
+		var _player = get_tree().get_first_node_in_group("player")
+		player_transform.remote_path = _player.get_path()
+	else:
+		return
+
+func remove_path():
+	player_transform.remote_path = ""
 
 
 func _pc_attack_qte() -> void:

@@ -182,6 +182,9 @@ func end_cutscene():
 func start_qte(qte_time : int):
 	Events.start_qte.emit(qte_time)
 
+func play_cutscene(_cutscene : String):
+	Events.play_cutscene_segment.emit(_cutscene)
+
 func load_qte_animations(atk_opt : String, dodge_opt : String, block_opt : String, spc_atk_opt : String, no_input : String):
 	qte_options[0]=atk_opt
 	qte_options[1]=dodge_opt

@@ -63,11 +63,13 @@ signal parry_success
 
 #Cutscenes and QTEs
 signal start_cutscene
+signal play_cutscene_segment
 signal queue_cutscene
 signal end_cutsene
 signal start_qte
 signal qte_choice
 signal qte_end
+
 
 #Doors and switches
 signal unlock_door

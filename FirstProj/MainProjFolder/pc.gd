@@ -141,6 +141,8 @@ var atk_state="ATK_1"
 #Cutscenes
 @onready var anim_count : int = 0
 @onready var cutscene_handler: CutsceneHandler = $CutsceneHandler
+@onready var cutscene_sub_player: AnimationPlayer = $CutsceneSubPlayer
+
 
 
 
@@ -278,6 +280,7 @@ func _ready():
 	load_player_data()
 	Events.set_player_data.connect(save_player_data)
 	Events.parried.connect(parry_success)
+	Events.play_cutscene_segment.connect(play_cutscene)
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
 	_init_state_machine()
@@ -1779,7 +1782,15 @@ func start_path(speed : int):
 	#print(speed)
 func set_path_start(value) -> void:
 	path_start=value
-#
+
+
+func play_cutscene(_cutscene : String):
+	anim_player.stop()
+	cutscene_sub_player.play(_cutscene)
+
+
+
+
 ###############
 #QTE Functions#
 ###############
