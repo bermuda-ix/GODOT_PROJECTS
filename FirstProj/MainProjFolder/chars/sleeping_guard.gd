@@ -44,6 +44,7 @@ func _init_state_machine():
 
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
 	state_machine.add_transition(dying, death, dying.success_event)
+	state_machine.add_transition(dying, death, &"deadsies")
 
 func target_lock():
 	Events.unlock_from.emit()
@@ -66,3 +67,9 @@ func _on_health_health_depleted() -> void:
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	if state_machine.get_active_state()==death:
 		queue_free()
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name=="death":
+		state_machine.dispatch(&"deadsies")
+		
