@@ -83,6 +83,7 @@ func _on_turret_shoot_bullet() -> void:
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if current==attack:
 		print("activate turret")
+		bt_player.blackboard.set_var("attack_mode", true)
 		if previous==idle:
 			vision_handler.always_on=true
 			if not base.linked_turrets.is_empty():
@@ -167,3 +168,7 @@ func _on_shoot_attack_manager_reloading_done() -> void:
 		pass
 	else:
 		bt_player.blackboard.set_var("shoot_active", true)
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	player_tracking.target_position.x=player.global_position.x

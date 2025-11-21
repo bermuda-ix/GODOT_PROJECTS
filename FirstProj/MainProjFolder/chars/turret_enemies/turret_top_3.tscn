@@ -390,7 +390,7 @@ rotation = 3.14159
 
 [node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot"]
 target_position = Vector2(1832, 0.0046463)
-collision_mask = 3
+collision_mask = 2
 collide_with_areas = true
 
 [node name="DeathTimer" type="Timer" parent="."]
@@ -434,6 +434,7 @@ script = ExtResource("3_3ligv")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 combat_state_active = false
+vision_range = 500
 player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
@@ -486,9 +487,12 @@ offset_right = 112.0
 offset_bottom = -17.0
 theme_override_font_sizes/font_size = 128
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
 [connection signal="shoot_bullet" from="Sprite2D/Turret" to="." method="_on_turret_shoot_bullet"]
 [connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="reloading" from="ShootAttackManager" to="." method="_on_shoot_attack_manager_reloading"]
 [connection signal="reloading_done" from="ShootAttackManager" to="." method="_on_shoot_attack_manager_reloading_done"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]

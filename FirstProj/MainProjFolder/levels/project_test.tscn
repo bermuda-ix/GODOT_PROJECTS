@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=28 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
 [ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="2_t1ldw"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="6_82t0r"]
 [ext_resource type="PackedScene" uid="uid://bpfhslfhbjfti" path="res://chars/TEST_CHARS/training_dummy.tscn" id="7_t1ldw"]
+[ext_resource type="PackedScene" uid="uid://mve6miefg0i0" path="res://chars/turret_enemies/turret_base_3.tscn" id="8_01tlq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_82t0r"]
 resource_local_to_scene = true
@@ -461,6 +462,10 @@ color = Color(0, 0, 0, 1)
 [node name="Node2D" parent="." index="29" instance=ExtResource("7_t1ldw")]
 position = Vector2(835, 77.99999)
 scale = Vector2(0.2, 0.2)
+
+[node name="turret_base_3" parent="." index="30" instance=ExtResource("8_01tlq")]
+position = Vector2(1110, 68.00001)
+scale = Vector2(0.1, 0.1)
 
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]

@@ -10,9 +10,9 @@ func _on_body_entered(body):
 		player.health.health +=1
 		queue_free()
 		var hearts = get_tree().get_nodes_in_group("Hearts")
-		if hearts.size() <=1:
-			Events.level_completed.emit()
-			print("level complete")
+		#if hearts.size() <=1:
+			#Events.level_completed.emit()
+			#print("level complete")
 
 
 #func _on_health_health_depleted():

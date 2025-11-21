@@ -18,7 +18,7 @@ extends Node
 signal player_sighted
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
-	#actor.player_tracking.target_position = Vector2(vision_range, 0)
+	player_tracking.target_position = Vector2(vision_range, 0)
 
 
 func handle_vision():
