@@ -75,10 +75,10 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 
 func _on_health_health_depleted() -> void:
+	#turret_top.death_handler.death()
+	turret_top.bt_player.active=false
 	state_machine.dispatch(&"death")
 	death_handler.death()
-	turret_top.death_handler.death()
-	turret_top.bt_player.restart()
 	linked_turrets.remove_at(turret_link_order)
 	print("despawning")
 	despawn_handler.despawn()

@@ -33,6 +33,8 @@ func _ready():
 	_init_state_machine()
 
 func _process(delta: float) -> void:
+	if state_machine.get_active_state()==death:
+		return
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	move_and_slide()
@@ -79,3 +81,4 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if current==death:
 		animation_player.play("dead")
+		collision_shape_2d.disabled=true

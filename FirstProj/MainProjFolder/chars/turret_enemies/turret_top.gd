@@ -132,7 +132,7 @@ func _on_stagger_staggered() -> void:
 	parry_timer.start(3)
 	rotation_manager.active=false
 	state_machine.dispatch(&"staggered")
-
+	
 
 func _on_parry_timer_timeout() -> void:
 	rotation_manager.active=true
