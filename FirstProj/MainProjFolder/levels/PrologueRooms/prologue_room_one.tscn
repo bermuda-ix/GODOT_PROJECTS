@@ -38,7 +38,7 @@ position = Vector2(373, 208)
 stationary = true
 
 [node name="Entry" parent="." instance=ExtResource("9_burwx")]
-position = Vector2(576, 258)
+position = Vector2(576, 273)
 location_override = true
 enter_to = "RETURN"
 

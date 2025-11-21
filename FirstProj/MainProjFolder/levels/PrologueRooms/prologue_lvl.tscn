@@ -619,6 +619,7 @@ b = Vector2(567, -310)
 [node name="PrologueLvl" instance=ExtResource("1_w82j5")]
 next_level = ExtResource("2_mb6gy")
 camera_offset_y = 60
+intro_cutscene_active = true
 lvl_type = "adv"
 main_room = true
 

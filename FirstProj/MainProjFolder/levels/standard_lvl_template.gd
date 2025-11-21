@@ -29,6 +29,7 @@ var player : PlayerEntity
 
 
 @onready var cutscene_player: AnimationPlayer = $CutscenePlayer
+@export var intro_cutscene_active : bool = false
 var qte_options : Array[String]  = ["1", "2", "3", "4", "0"]
 @onready var player_transform: RemoteTransform2D = $Paths/Path2D/PathFollow2D/PlayerTransform
 @onready var hit_stop: HitStop = $HitStop
@@ -75,8 +76,9 @@ func _ready():
 	player.no_input_qte.connect(_pc_no_input_qte)
 	
 	player.scale = Vector2(pc_scale, pc_scale)
-	Events.start_cutscene.emit()
-	cutscene_player.play("INTRO")
+	if intro_cutscene_active:
+		Events.start_cutscene.emit()
+		cutscene_player.play("INTRO")
 	var entries=get_tree().get_nodes_in_group("entry")
 	starting_pos.resize(entries.size())
 	for entry in entries:

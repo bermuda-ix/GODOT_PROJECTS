@@ -17,9 +17,8 @@
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_5m8to"]
 polygon = PackedVector2Array(38, 89, 274, 88, 273, 99, 262, 100, 262, 106, 358, 106, 358, 100, 349, 100, 349, 86, 650, 87, 673, 87, 673, 61, 11, 64, 11, 349, 664, 344, 675, 87, 649, 88, 649, 99, 642, 98, 627, 109, 635, 112, 647, 102, 651, 315, 425, 315, 425, 246, 372, 246, 372.024, 315, 345, 315, 345, 245, 291, 245, 291.409, 315.927, 263, 316, 263, 247, 211, 247, 200, 248, 200, 317, 176, 317, 176, 246, 123, 246, 125, 284, 46, 284, 49, 290, 49, 318, 36, 318)
 
-[node name="PrologueRoom2" type="Node2D" node_paths=PackedStringArray("starting_pos")]
+[node name="PrologueRoom2" type="Node2D"]
 script = ExtResource("1_re5jx")
-starting_pos = [NodePath("Entry")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -91,7 +90,7 @@ shadow_enabled = true
 position = Vector2(223, 292)
 
 [node name="Entry" parent="." instance=ExtResource("11_uofa6")]
-position = Vector2(574, 271)
+position = Vector2(575, 261)
 location_override = true
 enter_to = "RETURN"
 exit = 1
