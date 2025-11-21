@@ -59,7 +59,7 @@ func _ready():
 		Events.level_completed.connect(show_level_complete)
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	#polygon_2d.polygon = collision_polygon_2d.polygon
-	#Events.level_completed.connect(show_level_complete)
+	Events.level_completed.connect(show_level_complete)
 	Events.game_over.connect(show_game_over)
 	Events.boss_died.connect(boss_died)
 	#Events.pause.connect(show_pause)
@@ -98,15 +98,15 @@ func _process(_delta):
 	get_health()
 	set_health()
 	
-	if lvl_type=="goal":
-	
-		if obj<=1:
-			Events.level_completed.connect(show_level_complete)
-			#print("leven complete")
-		#label.text=str("Obj: ",obj)
-	else:
-		#label.text = str("Score: ", score)
-		handle_spawn()
+	#if lvl_type=="goal":
+	#
+		#if obj<=1:
+			#Events.level_completed.connect(show_level_complete)
+			##print("leven complete")
+		##label.text=str("Obj: ",obj)
+	#else:
+		##label.text = str("Score: ", score)
+		#handle_spawn()
 		#if Input.is_action_just_pressed("Pause"):
 			#show_pause()
 

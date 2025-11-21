@@ -482,3 +482,7 @@ func _on_stagger_staggered() -> void:
 	hb_collision.disabled=true
 	print("staggered")
 	state_machine.dispatch(&"staggered")
+
+
+func _on_death_entered() -> void:
+	Events.level_completed.emit()
