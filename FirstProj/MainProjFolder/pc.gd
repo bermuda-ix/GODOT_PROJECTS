@@ -537,14 +537,7 @@ func _physics_process(delta):
 		knockback = lerp(knockback, Vector2.ZERO, 0.1)
 		forward_thrust = lerp(forward_thrust, Vector2.ZERO, 0.6)
 		#wall hold check
-		if not is_on_wall() or not Input.is_action_pressed("sprint"):
-			wall_hold=false
-			gravity = 980
-		else:
-			state_machine.dispatch(&"stick_to_wall")
-			velocity.x =0
-			velocity.y = 0
-			gravity = 0
+		wall_sticking(wall_hold)
 	
 
 # Add the gravity.
@@ -588,6 +581,19 @@ func jump(input_axis, delta):
 			#state = States.JUMP
 			state_machine.dispatch(&"start_jumping")
 
+func wall_sticking(_wall_hold : bool):
+	if not is_on_wall() or not Input.is_action_pressed("sprint"):
+			_wall_hold=false
+			gravity = 980
+	else:
+		state_machine.dispatch(&"stick_to_wall")
+		velocity.x =0
+		velocity.y = 0
+		gravity = 0
+		
+	if state_machine.get_active_state()==wall_stick:
+		if Input.is_action_just_released("sprint"):
+			state_machine.dispatch(&"fall_off_wall")
 #breaking out of a flip. Test without timer later
 func break_out():
 	
