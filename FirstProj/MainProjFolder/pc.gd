@@ -353,10 +353,12 @@ func _init_state_machine():
 	#Attack Combos
 	#state_machine.add_transition(attack_state, special_attack, &"attack_to_special")
 	#state_machine.add_transition(special_attack, attack_state, &"special_to_attack")
-	state_machine.add_transition(jump_state, attack_state, &"jump_attack")
-	state_machine.add_transition(jump_state, special_attack, &"jump_spc_attack")
+	state_machine.add_transition(jump_state, attack_state, &"start_attack")
+	state_machine.add_transition(jump_state, special_attack, &"special_attack")
 	state_machine.add_transition(dodge_state, attack_state, &"dash_attack")
 	state_machine.add_transition(dodge_state, attack_state, &"combo_resume")
+	state_machine.add_transition(falling_state, attack_state, &"start_attack")
+	state_machine.add_transition(falling_state, special_attack, &"special_attack")
 	
 	state_machine.add_transition(idle, special_attack, &"special_attack")
 	state_machine.add_transition(walking, special_attack, &"special_attack")
