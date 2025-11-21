@@ -327,7 +327,7 @@ offset = Vector2(-56, -23)
 
 [node name="turret_top" type="AnimatableBody2D" parent="Sprite2D"]
 position = Vector2(-56, -23)
-collision_layer = 4
+collision_layer = 16388
 collision_mask = 66
 
 [node name="turret_top_collision" type="CollisionShape2D" parent="Sprite2D/turret_top"]

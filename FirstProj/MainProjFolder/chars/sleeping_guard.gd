@@ -73,3 +73,9 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="death":
 		state_machine.dispatch(&"deadsies")
 		
+
+
+
+func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
+	if current==death:
+		animation_player.play("dead")

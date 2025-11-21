@@ -95,6 +95,8 @@ func _on_stagger_staggered() -> void:
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("sp_atk_default"):
 		stagger.stagger -= 1
+		if turret_top.state_machine.get_active_state()==turret_top.stagger:
+			health.health-=1
 
 func stagger_recover()->void:
 	stagger.stagger=stagger.max_stagger
