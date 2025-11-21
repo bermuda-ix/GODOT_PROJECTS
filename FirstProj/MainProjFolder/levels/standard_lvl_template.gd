@@ -13,6 +13,7 @@ var player : PlayerEntity
 @export var camera_offset_y : int = 0
 @export var pc_scale : float = 1
 
+
 #@onready var collision_polygon_2d = $StaticBody2D/CollisionPolygon2D
 #@onready var polygon_2d = $StaticBody2D/CollisionPolygon2D/Polygon2D
 @onready var level_completed = $CanvasLayer/LevelCompleted
@@ -83,7 +84,7 @@ func _ready():
 		starting_pos[entry.entry]=entry.global_position
 	
 	if not cutscene_active and not camera_pos.stationary:
-		camera_pos.global_position=player.global_position
+		camera_pos.global_position=Vector2(player.global_position.x, player.global_position.y-40)
 		camera_pos.set_cam_smooth(true)
 	
 	
@@ -112,7 +113,7 @@ func _process(_delta):
 
 func _physics_process(delta: float) -> void:
 	if not cutscene_active and not camera_pos.stationary:
-		camera_pos.global_position=player.global_position
+		camera_pos.global_position=Vector2(player.global_position.x, player.global_position.y-camera_offset_y)
 
 func show_level_complete():
 
