@@ -2323,6 +2323,5 @@ ammo_count_vis = false
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
 [connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]
-[connection signal="entered" from="LimboHSM/DEATH" to="." method="_on_death_entered"]
 [connection signal="exited" from="LimboHSM/SLAM" to="." method="_on_slam_exited"]
 [connection signal="active_state_changed" from="CombatStateMachine" to="." method="_on_combat_state_machine_active_state_changed"]

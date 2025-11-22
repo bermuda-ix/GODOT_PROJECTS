@@ -573,11 +573,14 @@ tracks/17/path = NodePath(".")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": ["mini_boss_kill"],
 "method": &"play_cutscene_segment"
+}, {
+"args": [],
+"method": &"show_level_complete"
 }]
 }
 tracks/18/type = "method"
