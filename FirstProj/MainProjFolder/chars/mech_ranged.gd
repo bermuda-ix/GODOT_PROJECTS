@@ -112,6 +112,7 @@ var state
 @onready var ar_box: CollisionShape2D = $AttackRange/CollisionShape2D
 @onready var hit_box: HitBox = $HitBox
 @onready var hb_collision: CollisionShape2D = $HitBox/hb_collision
+@onready var hb_collision_spc: CollisionShape2D = $HitBox/hb_collision_spc
 @onready var atk_chain : String = "_1"
 @export var hitbox: HitBox
 var parried : bool = false 
@@ -482,6 +483,7 @@ func _on_stagger_staggered() -> void:
 	hb_collision.disabled=true
 	print("staggered")
 	state_machine.dispatch(&"staggered")
+	hb_collision_spc.disabled=true
 
 
 func _on_death_entered() -> void:
