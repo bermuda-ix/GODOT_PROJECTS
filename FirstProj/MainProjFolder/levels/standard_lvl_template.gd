@@ -196,6 +196,8 @@ func attach_path():
 func remove_path():
 	player_transform.remote_path = ""
 
+func toggle_intro_cutscene(_value : bool):
+	intro_cutscene_active=_value
 
 func _pc_attack_qte() -> void:
 	cutscene_player.queue(qte_options[0])

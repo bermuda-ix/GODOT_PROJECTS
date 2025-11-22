@@ -108,9 +108,12 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(11.2),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(10.066667, 11.2),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
+"args": [false],
+"method": &"toggle_intro_cutscene"
+}, {
 "args": [],
 "method": &"end_cutscene"
 }]
@@ -1177,7 +1180,7 @@ update_scale = false
 [node name="StartingPos" type="Node" parent="." index="24"]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
-position = Vector2(124, 443)
+position = Vector2(141, 426)
 
 [node name="PersistentDataHandler" type="Node" parent="." index="25"]
 script = ExtResource("24_w82j5")
