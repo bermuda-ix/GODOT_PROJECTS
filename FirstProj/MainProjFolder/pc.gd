@@ -73,6 +73,8 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var dash_attack: LimboState = $StateMachine/AttackState/DashAttack
 @onready var heavy_attack_1: LimboState = $StateMachine/AttackState/HeavyAttack1
 @onready var heavy_attack_2: LimboState = $StateMachine/AttackState/HeavyAttack2
+@onready var heavy_attack_3: LimboState = $StateMachine/AttackState/HeavyAttack3
+@onready var heavy_dash_attack: LimboState = $StateMachine/AttackState/HeavyDashAttack
 
 
 @onready var atk_1_resume : bool = false
@@ -125,7 +127,7 @@ var atk_state="ATK_1"
 #Animation var
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
-@onready var clash_visual: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
+#@onready var clash_visual: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
 @onready var hit_fx: AnimatedSprite2D = $AnimatedSprite2D/hit_fx
 @onready var hit_fx_2: AnimatedSprite2D = $AnimatedSprite2D/hit_fx/hit_fx2
 @onready var hit_fx_player: AnimationPlayer = $HitFXPlayer
@@ -171,6 +173,8 @@ signal no_input_qte
 @onready var label = $STATE
 @onready var heavy_attack_buffer_timer: Timer = $HeavyAttackBufferTimer
 @onready var special_attack_buffer_timer: Timer = $SpecialAttackBufferTimer
+@onready var reset_combo_flag : bool = false
+@onready var heavy_attack_flag : bool = false
 
 
 @export var attack_timer_len : float = 0.3
@@ -407,15 +411,16 @@ func _init_attack_states():
 	attack_state.add_transition(attack_1, attack_2, &"next_attack")
 	attack_state.add_transition(attack_2, attack_3, &"next_attack")
 	attack_state.add_transition(attack_3, attack_1, &"next_attack")
-	attack_state.add_transition(attack_1, special_combo, &"special_combo")
-	attack_state.add_transition(attack_2, special_combo, &"special_combo")
-	attack_state.add_transition(attack_3, special_combo_2, &"special_combo")
+	#attack_state.add_transition(attack_1, special_combo, &"special_combo")
+	#attack_state.add_transition(attack_2, special_combo, &"special_combo")
 	attack_state.add_transition(attack_state.ANYSTATE, dash_attack, &"dash_attack")
 	
 	#Heavy attack Combos
-	attack_state.add_transition(heavy_attack_1, heavy_attack_2, &"next_attack")
-	attack_state.add_transition(heavy_attack_1, special_combo, &"special_combo")
-	attack_state.add_transition(heavy_attack_2, special_combo_2, &"next_attack")
+	attack_state.add_transition(attack_1, heavy_attack_1, &"heavy_combo")
+	attack_state.add_transition(attack_2, heavy_attack_2, &"heavy_combo")
+	attack_state.add_transition(attack_3, special_combo_2, &"special_combo")
+
+	#attack_state.add_transition(heavy_attack_2, special_combo_2, &"next_attack")
 
 	
 	#Resume Combos
@@ -430,10 +435,10 @@ func _process(_delta):
 	#else:
 		#print("no play")
 
-	if clash_power.clash_power>0:
-		clash_visual.self_modulate.a = (1/clash_power.clash_power) +0.1
-	else:
-		clash_visual.self_modulate.a = 0
+	#if clash_power.clash_power>0:
+		#clash_visual.self_modulate.a = (1/clash_power.clash_power) +0.1
+	#else:
+		#clash_visual.self_modulate.a = 0
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	if not cutscene_handler.actor_control_active:
 		
@@ -466,9 +471,11 @@ func _process(_delta):
 	lockon()
 	enter_door()
 	climb_stairs()
+	
+	
 	#Input for testing various things
-	if Input.is_action_just_pressed("DEBUG_KEY"):
-		anim_player.play("Heavy_Combo_1")
+	#if Input.is_action_just_pressed("DEBUG_KEY"):
+		#anim_player.play("Heavy_Combo_1")
 
 func _physics_process(delta):
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
@@ -518,7 +525,8 @@ func _physics_process(delta):
 			handle_wall_jump(wall_hold, delta)
 			jump(input_axis, delta)
 			handle_acceleration(input_axis, delta)
-			handle_air_acceleration(input_axis, delta)
+			if heavy_attack_flag:
+				handle_air_acceleration(input_axis, delta)
 			apply_friction(input_axis, delta)
 			apply_air_resistance(input_axis, delta)
 			shotgun_free_rotate()
@@ -803,13 +811,14 @@ func attack_animate():
 	if attack_timer.paused==true:
 		return
 
-	elif Input.is_action_just_pressed("attack") and (attack_state.get_active_state()!=special_combo_2):
+	elif Input.is_action_just_pressed("attack"):
 		regular_attack()
 		heavy_attack_buffer_timer.start()
 		#
 		#
-	#if Input.is_action_pressed("special_attack") and not heavy_attack_buffer_timer.is_stopped():
-		#heavy_attack()
+	if Input.is_action_pressed("special_attack") and not heavy_attack_buffer_timer.is_stopped():
+		heavy_attack()
+		
 		
 		
 func regular_attack() -> void:
@@ -833,26 +842,45 @@ func regular_attack() -> void:
 	else:
 		hit_box.set_damage(1)
 		
-		if not attack_timer.is_stopped():
-			if atk_chain == 0:
-				#attack_combo = "Attack"
-				#hit_sound = hit1
-				AudioStreamManager.play(swing1)
-
-			elif atk_chain == 1 and sp_atk_chn<1:
-				#attack_combo = "Attack_2"
-				#hit_sound = hit2
-				AudioStreamManager.play(swing2)
+		attack_sfx()
+		
+		if state_machine.get_active_state()==attack_state:
+			if atk_1_resume:
+				attack_state.dispatch(&"combo_resume")
+			elif atk_2_resume:
+				attack_state.dispatch(&"combo_resume_2")
+			else:
+				if reset_combo_flag:
+					attack_state.dispatch(&"reset_combo")
+					reset_combo_flag=false
+				else:
+					attack_state.dispatch(&"next_attack")
+		else:
+			attack_state.initial_state=attack_1
+			state_machine.dispatch(&"start_attack")
+		await anim_player.animation_finished
+		attack_timer.paused=false
 			
-			elif atk_chain == 2:
-				#attack_combo = "Attack_3"
-				#hit_sound = hit3
-				AudioStreamManager.play(swing3)
-			elif sp_atk_chn>=1:
-				attack_combo = "Attack_Chain"
-				hit_sound = hit2
-				AudioStreamManager.play(swing2)
-				
+func attack_sfx() -> void:
+	if not attack_timer.is_stopped():
+		if atk_chain == 0:
+			#attack_combo = "Attack"
+			#hit_sound = hit1
+			AudioStreamManager.play(swing1)
+
+		elif atk_chain == 1 and sp_atk_chn<1:
+			#attack_combo = "Attack_2"
+			#hit_sound = hit2
+			AudioStreamManager.play(swing2)
+		
+		elif atk_chain == 2:
+			#attack_combo = "Attack_3"
+			#hit_sound = hit3
+			AudioStreamManager.play(swing3)
+		elif sp_atk_chn>=1:
+			attack_combo = "Attack_Chain"
+			hit_sound = hit2
+			AudioStreamManager.play(swing2)
 #Buffer Timeout, Regular Attack
 func _on_heavy_attack_buffer_timer_timeout() -> void:
 	pass
@@ -860,19 +888,19 @@ func _on_heavy_attack_buffer_timer_timeout() -> void:
 	
 	
 	#set_state(state, States.ATTACK)
-	if state_machine.get_active_state()==attack_state:
-		if atk_1_resume:
-			attack_state.dispatch(&"combo_resume")
-		elif atk_2_resume:
-			attack_state.dispatch(&"combo_resume_2")
-		else:
-			if attack_state.get_active_state()==attack_3 or attack_state.get_active_state()==special_combo_2:
-				attack_state.dispatch(&"reset_combo")
-			else:
-				attack_state.dispatch(&"next_attack")
-	else:
-		attack_state.initial_state=attack_1
-		state_machine.dispatch(&"start_attack")
+	#if state_machine.get_active_state()==attack_state:
+		#if atk_1_resume:
+			#attack_state.dispatch(&"combo_resume")
+		#elif atk_2_resume:
+			#attack_state.dispatch(&"combo_resume_2")
+		#else:
+			#if attack_state.get_active_state()==attack_3 or attack_state.get_active_state()==special_combo_2:
+				#attack_state.dispatch(&"reset_combo")
+			#else:
+				#attack_state.dispatch(&"next_attack")
+	#else:
+		#attack_state.initial_state=attack_1
+		#state_machine.dispatch(&"start_attack")
 	#await anim_player.animation_finished
 	#attack_timer.paused=false
 	
@@ -882,13 +910,14 @@ func heavy_attack():
 	if state_machine.get_active_state()!=attack_state:
 		attack_timer.paused=true
 	hit_box.set_damage(1)
-	if not attack_timer.is_stopped():
-		if atk_chain == 0:
-			#attack_combo = "Attack"
-			#hit_sound = hit1
-			AudioStreamManager.play(swing1)
-	attack_state.initial_state=heavy_attack_1
-	state_machine.dispatch(&"start_attack")
+	state_machine.dispatch(&"heavy_combo")
+	#if not attack_timer.is_stopped():
+		#if atk_chain == 0:
+			##attack_combo = "Attack"
+			##hit_sound = hit1
+			#AudioStreamManager.play(swing1)
+	#attack_state.initial_state=heavy_attack_1
+	#state_machine.dispatch(&"start_attack")
 
 func _on_special_combo_2_exited() -> void:
 	anim_player.play("shotgun_reset")
@@ -1274,7 +1303,7 @@ func _on_hit_timer_timeout() -> void:
 func _on_parry_box_parried_success() -> void:
 	state_machine.dispatch(&"parry_successful")
 	clash_power.increase_clash()
-	clash_visual.emitting=true
+	#clash_visual.emitting=true
 	
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("bullet"):
@@ -1347,6 +1376,7 @@ func _on_animation_player_animation_finished(anim_name):
 			_:
 				attack_timer.start(1)
 				attack_timer.paused=false
+				heavy_attack_flag=true
 				if input_axis!=0:
 					anim_player.play(walk_anim)
 				else:
@@ -1595,7 +1625,7 @@ func _on_counter_box_area_entered(area):
 		
 		
 	clash_power.increase_clash()
-	clash_visual.emitting=true
+	#clash_visual.emitting=true
 	clash_timer.start()
 		
 
@@ -1751,7 +1781,7 @@ func _on_combat_states_active_state_changed(current: LimboState, previous: Limbo
 
 func _on_clash_timer_timeout() -> void:
 	clash_power.reset_clash()
-	clash_visual.emitting=false
+	#clash_visual.emitting=false
 	
 	
 func _on_clash_power_increase_aura(value : int) -> void:
