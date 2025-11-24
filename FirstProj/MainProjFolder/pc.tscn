@@ -1,4 +1,4 @@
-[gd_scene load_steps=633 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=638 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -258,6 +258,8 @@
 [ext_resource type="Texture2D" uid="uid://b1kmk1mg3mxhb" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_057.png" id="136_wp57p"]
 [ext_resource type="Texture2D" uid="uid://bil0bhstmn4ya" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_058.png" id="137_47q3x"]
 [ext_resource type="Texture2D" uid="uid://gd5ym8b16mrp" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_059.png" id="138_77ty3"]
+[ext_resource type="Script" uid="uid://dc4c4jxhc2ky" path="res://heavy_dash_attack.gd" id="243_4jq81"]
+[ext_resource type="Script" uid="uid://dm8ejawcmedfr" path="res://heavy_attack_3.gd" id="244_m743w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pqdiw"]
 atlas = ExtResource("3_81nyk")
@@ -3306,13 +3308,24 @@ particles_anim_h_frames = 5
 particles_anim_v_frames = 8
 particles_anim_loop = true
 
+[sub_resource type="Curve" id="Curve_p73v2"]
+_limits = [0.0, 63.065323, 0.0, 1.0]
+_data = [Vector2(0, 63.065323), 0.0, -368.92032, 0, 0, Vector2(0.4715447, 0), -36.676193, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_mesnb"]
+curve = SubResource("Curve_p73v2")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g1hon"]
 particle_flag_disable_z = true
 spread = 5.0
 flatness = 1.0
 initial_velocity_min = 303.38
 initial_velocity_max = 403.38
+velocity_limit_curve = SubResource("CurveTexture_mesnb")
 gravity = Vector3(0, -5, 0)
+scale_min = 0.5
+scale_max = 0.5
 anim_speed_min = 1.0
 anim_speed_max = 1.0
 
@@ -5060,6 +5073,18 @@ tracks/41/keys = {
 "update": 0,
 "values": [Vector2(39, -28)]
 }
+tracks/42/type = "value"
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/path = NodePath("AnimatedSprite2D/Shotty:offset")
+tracks/42/interp = 1
+tracks/42/loop_wrap = true
+tracks/42/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10.6825, 104.176)]
+}
 
 [sub_resource type="Animation" id="Animation_oktus"]
 resource_name = "Riposte"
@@ -6478,6 +6503,132 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1]
 }
 
+[sub_resource type="Animation" id="Animation_i0kkw"]
+resource_name = "Heavy_Combo_1"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"SwordCrouch", &"Idle"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/Shotty:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10.6825, 104.176)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/Shotty:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1.0757e-09, -16.3107)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D/Shotty:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.1032424]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(8.282121, 0.17075524, 1),
+"update": 0,
+"values": [Vector2(0, 8), Vector2(0, 0), Vector2(0, 8)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AnimatedSprite2D/Shotty/GPUParticles2D:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.15),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AnimatedSprite2D/Shotty/GPUParticles2D2:emitting")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.15),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedSprite2D/Shotty/ShotgunSmoke:emitting")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.15),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/9/type = "method"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.14166667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["shotgun_fire"],
+"method": &"call_audioplayer"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qyq63"]
 _data = {
 &"Attack": SubResource("Animation_1ru25"),
@@ -6490,6 +6641,7 @@ _data = {
 &"Flip_Attack": SubResource("Animation_l6eg2"),
 &"Heavy_Attack": SubResource("Animation_kd7ms"),
 &"Heavy_Attack_2": SubResource("Animation_cdmbu"),
+&"Heavy_Combo_1": SubResource("Animation_i0kkw"),
 &"Heavy_Riposte": SubResource("Animation_0gauh"),
 &"Parry": SubResource("Animation_x1wk2"),
 &"Parry_Success": SubResource("Animation_irs7o"),
@@ -7253,9 +7405,8 @@ speed_scale = 15.0
 process_material = SubResource("ParticleProcessMaterial_yif7d")
 
 [node name="ShotgunSmoke" type="GPUParticles2D" parent="AnimatedSprite2D/Shotty"]
-visible = false
 material = SubResource("CanvasItemMaterial_cdmbu")
-position = Vector2(514.7134, -233.01894)
+position = Vector2(263.8395, -197.32704)
 scale = Vector2(0.9028059, 0.9392636)
 emitting = false
 amount = 1
@@ -7407,7 +7558,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="HeavyAttackBufferTimer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.5
 one_shot = true
 
 [node name="SpecialAttackBufferTimer" type="Timer" parent="."]
@@ -7604,6 +7755,16 @@ pc = NodePath("../../..")
 
 [node name="HeavyAttack2" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("111_jfcm0")
+anim_player = NodePath("../../../AnimationPlayer")
+pc = NodePath("../../..")
+
+[node name="HeavyAttack3" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
+script = ExtResource("244_m743w")
+anim_player = NodePath("../../../AnimationPlayer")
+pc = NodePath("../../..")
+
+[node name="HeavyDashAttack" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
+script = ExtResource("243_4jq81")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 

@@ -1,5 +1,18 @@
 extends Node
 
+@onready var sounds : Dictionary = {
+	"hit1" = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - Swordsmall_1.wav",
+	"hit2" = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - Swordsmall_2.wav",
+	"hit3" = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - Swordsmall_3.wav",
+
+	"swing1" = "res://Art_Components/Effects/sound/swishes/swishes/swish-1.wav",
+	"swing2" = "res://Art_Components/Effects/sound/swishes/swishes/swish-3.wav",
+	"swing3" = "res://Art_Components/Effects/sound/swishes/swishes/swish-5.wav",
+	"parry_sfx" = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - big punch.wav",
+	"shotgun_fire" = "res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/10 Guage Shotgun-SoundBible.com-74120584.wav",
+	"reload" = "res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/Chambering A Round-SoundBible.com-854171848.wav"
+	}
+
 #Shotgun SFX
 const _10_GUAGE_SHOTGUN_SOUND = "res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/10 Guage Shotgun-SoundBible.com-74120584.wav"
 const CHAMBERING_A_ROUND_SOUND = "res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/Chambering A Round-SoundBible.com-854171848.wav"

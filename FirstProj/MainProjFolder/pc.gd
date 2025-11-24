@@ -468,7 +468,7 @@ func _process(_delta):
 	climb_stairs()
 	#Input for testing various things
 	if Input.is_action_just_pressed("DEBUG_KEY"):
-		clash_power.increase_clash()
+		anim_player.play("Heavy_Combo_1")
 
 func _physics_process(delta):
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
@@ -804,14 +804,15 @@ func attack_animate():
 		return
 
 	elif Input.is_action_just_pressed("attack") and (attack_state.get_active_state()!=special_combo_2):
+		regular_attack()
 		heavy_attack_buffer_timer.start()
+		#
+		#
+	#if Input.is_action_pressed("special_attack") and not heavy_attack_buffer_timer.is_stopped():
+		#heavy_attack()
 		
 		
-	if Input.is_action_pressed("special_attack") and not heavy_attack_buffer_timer.is_stopped():
-		heavy_attack()
-	
-#Buffer Timeout, Regular Attack
-func _on_heavy_attack_buffer_timer_timeout() -> void:
+func regular_attack() -> void:
 	if state_machine.get_active_state()==parry_success_state:
 		return
 	attack_timer.start()
@@ -851,6 +852,11 @@ func _on_heavy_attack_buffer_timer_timeout() -> void:
 				attack_combo = "Attack_Chain"
 				hit_sound = hit2
 				AudioStreamManager.play(swing2)
+				
+#Buffer Timeout, Regular Attack
+func _on_heavy_attack_buffer_timer_timeout() -> void:
+	pass
+	#regular_attack()
 	
 	
 	#set_state(state, States.ATTACK)
@@ -971,6 +977,13 @@ func toggle_light():
 		flashlight.enabled = not flashlight.enabled
 		
 			
+			
+func call_audioplayer(sound : String) -> void:
+	if SoundFx.sounds.has(sound):
+		AudioStreamManager.play(SoundFx.sounds[sound])
+	else:
+		push_error("SOUND FILE MISSING")
+
 ## DODGE NEEDS WORK!!!
 func dodge(input_axis):
 
