@@ -808,15 +808,17 @@ func update_animation(input_axis):
 		
 func attack_animate():
 
-	if attack_timer.paused==true:
+	if attacking==true:
 		return
 
 	elif Input.is_action_just_pressed("attack"):
 		regular_attack()
 		heavy_attack_buffer_timer.start()
+		attacking=true
 		#
 		#
 	if Input.is_action_pressed("special_attack") and not heavy_attack_buffer_timer.is_stopped():
+		attacking=true
 		heavy_attack()
 		
 		
@@ -856,10 +858,10 @@ func regular_attack() -> void:
 				else:
 					attack_state.dispatch(&"next_attack")
 		else:
-			attack_state.initial_state=attack_1
+			#attack_state.initial_state=attack_1
 			state_machine.dispatch(&"start_attack")
-		await anim_player.animation_finished
-		attack_timer.paused=false
+		#await anim_player.animation_finished
+		#attack_timer.paused=false
 			
 func attack_sfx() -> void:
 	if not attack_timer.is_stopped():
@@ -1351,9 +1353,15 @@ func _on_animation_player_animation_finished(anim_name):
 	if state_machine.get_active_state()==attack_state:
 		#"attack finished")
 		hit_success=false
+		attacking=false
+		if input_axis!=0:
+			anim_player.play(walk_anim)
+		else:
+			anim_player.play("idle")
 		match anim_name:
 			"Attack_Counter":
 				counter_flag=false
+				
 				return
 			"Attack_Chain":
 				state_machine.dispatch(&"return_to_idle")
@@ -1377,14 +1385,14 @@ func _on_animation_player_animation_finished(anim_name):
 				reset_combo_flag=true
 			"Heavy_Combo_2":
 				reset_combo_flag=true
+			"Attack_3":
+				reset_combo_flag=true
 			_:
 				attack_timer.start(1)
 				attack_timer.paused=false
 				heavy_attack_flag=true
-				if input_axis!=0:
-					anim_player.play(walk_anim)
-				else:
-					anim_player.play("idle")
+				
+				
 				
 				if state_machine.get_previous_active_state()==flip_state:
 					state_machine.dispatch(&"jump_out")
