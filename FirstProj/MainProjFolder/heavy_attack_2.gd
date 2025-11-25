@@ -6,7 +6,7 @@ extends LimboState
 func _enter() -> void:
 	pc.set_shotgun_free_rotate(false)
 	anim_player.speed_scale=1.5
-	anim_player.play("Heavy_Attack_2")
+	anim_player.play("Heavy_Combo_2")
 	pc.hit_fx_player.speed_scale=1.5
 	pc.hit_animation="heavy_attack_landed"
 

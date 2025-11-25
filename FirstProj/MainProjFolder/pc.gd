@@ -1373,6 +1373,10 @@ func _on_animation_player_animation_finished(anim_name):
 				anim_player.play("landed")
 			"shotgun_finish":
 				attack_timer.start(1.5)
+			"Heavy_Combo_1":
+				reset_combo_flag=true
+			"Heavy_Combo_2":
+				reset_combo_flag=true
 			_:
 				attack_timer.start(1)
 				attack_timer.paused=false
