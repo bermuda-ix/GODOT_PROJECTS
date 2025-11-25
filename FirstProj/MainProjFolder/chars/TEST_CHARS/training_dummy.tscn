@@ -53,5 +53,6 @@ offset_top = -38.0
 offset_right = 115.0
 text = "H: 1 S: 1"
 
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="received_stagger_damage" from="HurtBox" to="." method="_on_hurt_box_received_stagger_damage"]

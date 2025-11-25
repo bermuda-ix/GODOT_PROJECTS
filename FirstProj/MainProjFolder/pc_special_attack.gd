@@ -8,7 +8,8 @@ func _enter() -> void:
 	pc.s_atk=true
 	pc.velocity=Vector2.ZERO
 
-
+func _exit() -> void:
+	anim_player.play("shotgun_aim_reset")
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="shotgun_attack":

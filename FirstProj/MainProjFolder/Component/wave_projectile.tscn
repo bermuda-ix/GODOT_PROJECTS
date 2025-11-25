@@ -30,7 +30,7 @@ scale = Vector2(1.6875, 1.79934)
 polygon = PackedVector2Array(-5.66667, -8.19762, -2.11111, -5.97459, 0.259259, -2.64004, -0.333333, 2.91755, -3, 6, -5.07407, 7.91938, -2.7037, 6.80786, -0.333333, 5.14059, 1.44444, 2.91755, 2.62963, -0.97276, 1.44444, -3.75155, -0.333333, -5.97459, -2.7037, -7.08611)
 
 [node name="VisibleOnScreenEnabler2D" parent="." index="2"]
-position = Vector2(24, -5)
+position = Vector2(6, 12)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

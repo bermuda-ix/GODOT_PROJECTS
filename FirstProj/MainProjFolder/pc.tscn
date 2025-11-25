@@ -1,4 +1,4 @@
-[gd_scene load_steps=638 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=645 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -258,8 +258,13 @@
 [ext_resource type="Texture2D" uid="uid://b1kmk1mg3mxhb" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_057.png" id="136_wp57p"]
 [ext_resource type="Texture2D" uid="uid://bil0bhstmn4ya" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_058.png" id="137_47q3x"]
 [ext_resource type="Texture2D" uid="uid://gd5ym8b16mrp" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_059.png" id="138_77ty3"]
+[ext_resource type="Script" uid="uid://dntc3c582m5w8" path="res://demo/agents/scripts/hitbox.gd" id="208_mesnb"]
+[ext_resource type="Script" uid="uid://tifgdq27rt6g" path="res://chars/turret.gd" id="211_i0kkw"]
+[ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="230_pbr83"]
+[ext_resource type="PackedScene" uid="uid://dsj0t0v1bq42w" path="res://Component/projectiles/shotgun_bullet.tscn" id="231_ymji2"]
 [ext_resource type="Script" uid="uid://dc4c4jxhc2ky" path="res://heavy_dash_attack.gd" id="243_4jq81"]
 [ext_resource type="Script" uid="uid://dm8ejawcmedfr" path="res://heavy_attack_3.gd" id="244_m743w"]
+[ext_resource type="Script" uid="uid://dmttp4slbll7c" path="res://aim.gd" id="246_p73v2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pqdiw"]
 atlas = ExtResource("3_81nyk")
@@ -5199,6 +5204,18 @@ tracks/42/keys = {
 "update": 0,
 "values": [Vector2(10.6825, 104.176)]
 }
+tracks/43/type = "value"
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:polygon")
+tracks/43/interp = 1
+tracks/43/loop_wrap = true
+tracks/43/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 36, 11, 36, -11)]
+}
 
 [sub_resource type="Animation" id="Animation_oktus"]
 resource_name = "Riposte"
@@ -6617,6 +6634,37 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1]
 }
 
+[sub_resource type="Animation" id="Animation_m743w"]
+resource_name = "shotgun_aim"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:polygon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 36, 11, 36, -11), PackedVector2Array(0, 0, 327.46124, 3.0979438, 327.44983, -4.2806306)]
+}
+
+[sub_resource type="Animation" id="Animation_p73v2"]
+resource_name = "shotgun_aim_reset"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:polygon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 36, 11, 36, -11)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qyq63"]
 _data = {
 &"Attack": SubResource("Animation_1ru25"),
@@ -6652,6 +6700,8 @@ _data = {
 &"landed": SubResource("Animation_7k7vw"),
 &"roll": SubResource("Animation_tj0ec"),
 &"run": SubResource("Animation_i1mvx"),
+&"shotgun_aim": SubResource("Animation_m743w"),
+&"shotgun_aim_reset": SubResource("Animation_p73v2"),
 &"shotgun_attack": SubResource("Animation_on8rs"),
 &"shotgun_attack_fast": SubResource("Animation_okwur"),
 &"shotgun_finish": SubResource("Animation_dr66y"),
@@ -7351,8 +7401,9 @@ position = Vector2(-7.62939e-06, 1.46776e-06)
 rotation = -0.00477064
 scale = Vector2(24.5547, 24.8954)
 skew = -9.54866e-05
-collision_layer = 8192
+collision_layer = 8256
 collision_mask = 16
+script = ExtResource("208_mesnb")
 
 [node name="SpAtkCone" type="CollisionPolygon2D" parent="AnimatedSprite2D/Shotty/SpAtkHitBox"]
 polygon = PackedVector2Array(0, 0, 36, 11, 36, -11)
@@ -7417,6 +7468,12 @@ shadow_enabled = true
 shadow_filter = 2
 shadow_item_cull_mask = 2
 texture = SubResource("GradientTexture2D_kd7ms")
+
+[node name="Turret" type="Node2D" parent="AnimatedSprite2D/Shotty"]
+script = ExtResource("211_i0kkw")
+multi_shot = true
+infinite_ammo = true
+metadata/_custom_type_script = "uid://tifgdq27rt6g"
 
 [node name="Shell" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
 visible = false
@@ -7662,6 +7719,13 @@ speech = NodePath("../Speech")
 qte_pause = NodePath("../HitStop")
 metadata/_custom_type_script = "uid://wai5i0eghoou"
 
+[node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]
+script = ExtResource("230_pbr83")
+actor = NodePath("..")
+projectile = ExtResource("231_ymji2")
+turret = NodePath("../AnimatedSprite2D/Shotty/Turret")
+metadata/_custom_type_script = "uid://5gt6g8063rb4"
+
 [node name="StateMachine" type="LimboHSM" parent="."]
 
 [node name="Idle" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc")]
@@ -7756,6 +7820,11 @@ pc = NodePath("../../..")
 script = ExtResource("243_4jq81")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
+
+[node name="Aim" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("pc", "anim_player")]
+script = ExtResource("246_p73v2")
+pc = NodePath("../..")
+anim_player = NodePath("../../AnimationPlayer")
 
 [node name="SpecialAttack" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("104_ctchq")

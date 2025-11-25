@@ -47,6 +47,7 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var falling_state: LimboState = $StateMachine/FallingState
 @onready var landed: LimboState = $StateMachine/Landed
 @onready var wall_stick: LimboState = $StateMachine/WallStick
+@onready var aim: LimboState = $StateMachine/Aim
 @onready var special_attack: LimboState = $StateMachine/SpecialAttack
 @onready var parry_state: LimboState = $StateMachine/ParryState
 @onready var dodge_state: LimboState = $StateMachine/DodgeState
@@ -368,6 +369,13 @@ func _init_state_machine():
 	state_machine.add_transition(walking, special_attack, &"special_attack")
 	state_machine.add_transition(sprint, special_attack, &"special_attack")
 	state_machine.add_transition(jump_state, special_attack, &"special_attack")
+	
+	state_machine.add_transition(idle, aim, &"aim")
+	state_machine.add_transition(walking, aim, &"aim")
+	state_machine.add_transition(sprint, aim, &"aim")
+	state_machine.add_transition(jump_state, aim, &"aim")
+	state_machine.add_transition(aim, special_attack, &"shoot")
+	
 	state_machine.add_transition(special_attack, jump_state, &"return_from_special")
 	#state_machine.add_transition(idle, special_attack, &"special_attack")
 	state_machine.add_transition(attack_state, dodge_state, &"start_dodge")
@@ -948,12 +956,16 @@ func sp_atk():
 		shotty.look_at(target.global_position)
 	#else:
 		#set_shotgun_free_rotate(true)
-	if (Input.is_action_just_pressed("special_attack")) and state_machine.get_active_state()!=parry_success_state \
+	if (Input.is_action_pressed("special_attack")) and state_machine.get_active_state()!=parry_success_state \
 	 and state_machine.get_active_state()!=special_attack and heavy_attack_buffer_timer.is_stopped():
-		special_attack_buffer_timer.start()
-	if Input.is_action_pressed("attack") and not special_attack_buffer_timer.is_stopped():
-		special_attack_buffer_timer.stop()
-		heavy_attack()
+		state_machine.dispatch(&"aim")
+	elif Input.is_action_just_released("special_attack"):
+		state_machine.dispatch(&"shoot")
+		
+	
+	#if Input.is_action_pressed("attack") and not special_attack_buffer_timer.is_stopped():
+		#special_attack_buffer_timer.stop()
+		#heavy_attack()
 		
 
 func _on_special_attack_buffer_timer_timeout() -> void:
