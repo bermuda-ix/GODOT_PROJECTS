@@ -15,3 +15,8 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 
 func _on_hurt_box_received_stagger_damage(damage: int) -> void:
 	pass # Replace with function body.
+
+
+func _on_hurt_box_area_entered(area: Area2D) -> void:
+	if area.is_in_group("PlayerBullet"):
+		stagger.stagger-=1

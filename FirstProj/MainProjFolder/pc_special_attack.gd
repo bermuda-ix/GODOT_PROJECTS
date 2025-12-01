@@ -1,6 +1,7 @@
 extends LimboState
 
 @export var anim_player : AnimationPlayer
+@export var shotty_anim_player : AnimationPlayer
 @export var pc : PlayerEntity
 
 func _enter() -> void:
@@ -9,7 +10,7 @@ func _enter() -> void:
 	pc.velocity=Vector2.ZERO
 
 func _exit() -> void:
-	anim_player.play("shotgun_aim_reset")
+	shotty_anim_player.play("shotgun_reset")
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="shotgun_attack":

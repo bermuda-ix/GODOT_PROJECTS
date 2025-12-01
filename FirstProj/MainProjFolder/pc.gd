@@ -128,6 +128,7 @@ var atk_state="ATK_1"
 #Animation var
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var shotty_animation_player: AnimationPlayer = $AnimatedSprite2D/Shotty/ShottyAnimationPlayer
 #@onready var clash_visual: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
 @onready var hit_fx: AnimatedSprite2D = $AnimatedSprite2D/hit_fx
 @onready var hit_fx_2: AnimatedSprite2D = $AnimatedSprite2D/hit_fx/hit_fx2
@@ -187,7 +188,13 @@ signal no_input_qte
 @onready var counter_box_collision = $CounterBox/CounterBoxCollision
 @onready var stagger: Stagger = $Stagger
 @onready var flashlight: PointLight2D = $AnimatedSprite2D/Shotty/Flashlight
+
+@onready var spread_boundary_1: RayCast2D = $AnimatedSprite2D/Shotty/SpreadBoundary1
+@onready var spread_boundary_2: RayCast2D = $AnimatedSprite2D/Shotty/SpreadBoundary2
+@onready var spread : int = 5
 @onready var shotgun_lookat_mouse : bool = true
+@onready var shoot_handler: ShootHandler = $ShootHandler
+@onready var bullet_dir: Vector2 = Vector2.ZERO
 
 @onready var sprite_fx: AnimatedSprite2D = $AnimatedSprite2D/sprite_fx
 @onready var hurt_box_detect = $HurtBox/CollisionShape2D
@@ -398,7 +405,6 @@ func _init_state_machine():
 
 func _init_combat_state_machine():
 	combat_states.initial_state=unlocked
-	#label.text=str(unlocked.name)
 	combat_states.initialize(self)
 	combat_states.set_active(true)
 	
@@ -464,7 +470,7 @@ func _process(_delta):
 	atk_state_debug()
 #
 	dodge(input_axis)
-#
+	label.text=str(round(spread_boundary_2.rotation_degrees - spread_boundary_1.rotation_degrees))
 	#
 	if(state_machine.get_active_state()!=dodge_state and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=flip_state):
 		parry()
@@ -479,7 +485,6 @@ func _process(_delta):
 	lockon()
 	enter_door()
 	climb_stairs()
-	
 	
 	#Input for testing various things
 	#if Input.is_action_just_pressed("DEBUG_KEY"):
@@ -930,10 +935,10 @@ func heavy_attack():
 	#state_machine.dispatch(&"start_attack")
 
 func _on_special_combo_2_exited() -> void:
-	anim_player.play("shotgun_reset")
+	shotty_animation_player.play("shotgun_reset")
 
 func _on_special_combo_exited() -> void:
-	anim_player.play("shotgun_reset")
+	shotty_animation_player.play("shotgun_reset")
 
 	
 	
@@ -947,6 +952,8 @@ func dash_attack_enter():
 	#hit_sound = hit1
 	#AudioStreamManager.play(swing1)
 	##set_state(state, States.ATTACK)
+
+
 
 func sp_atk():
 	if s_atk:
@@ -985,6 +992,31 @@ func _on_special_attack_buffer_timer_timeout() -> void:
 			
 	attack_timer.paused = false
 
+func gun_cone(spread : int) -> Array[int]:
+	var _cone_angle :int = round(spread_boundary_2.rotation_degrees - spread_boundary_1.rotation_degrees)
+	var _spread_angle : int = round(_cone_angle/spread)
+	var _bullet_spawn_angle : int =shotty.global_rotation_degrees - _spread_angle
+	var _bullet_spawn_angles : Array[int]
+	for i in spread:
+		_bullet_spawn_angles.push_front(_bullet_spawn_angle)
+		_bullet_spawn_angle+=_spread_angle
+	return _bullet_spawn_angles
+	label.text=str(_bullet_spawn_angles)
+
+func _on_special_attack_entered() -> void:
+	var _bullet_dirs : Array[int] = gun_cone(spread)
+	for i in spread:
+		bullet_dir = rotation_to_direction(_bullet_dirs[i])
+		shoot_handler.shoot_bullet()
+
+func rotation_to_direction(_rotation_degrees : int) -> Vector2:
+	 # Convert rotation from degrees to radians (skip if already in radians)
+	var _rotation_radians = deg_to_rad(_rotation_degrees)
+	# Calculate direction vector
+	var direction = Vector2(cos(_rotation_radians), sin(_rotation_radians))
+	# Normalize the vector (optional, but ensures length = 1)
+	direction = direction.normalized()
+	return direction
 
 func shotgun_free_rotate():
 	if shotgun_lookat_mouse:
@@ -1745,7 +1777,6 @@ func _on_idle_entered() -> void:
 
 
 func _on_state_machine_active_state_changed(current: LimboState, _previous: LimboState) -> void:
-	#label.text=str(current.name)
 
 	if current==dodge_state:
 		

@@ -30,7 +30,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	track_player()
+	if player_tracker!=null:
+		track_player()
 	#rotate_bullet()
 	#shoot(2)
 	pos=position
@@ -38,9 +39,10 @@ func _process(delta):
 	
 func setup(time : float):
 	player = get_tree().get_first_node_in_group("player")
-	shoot_timer.start(time)
+	if shoot_timer!=null:
+		shoot_timer.start(time)
 	#turret_body.visible=false
-	shoot_timer.paused=false
+		shoot_timer.paused=false
 
 
 func track_player():

@@ -27,7 +27,7 @@ shape = SubResource("RectangleShape2D_u3h84")
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
 collision_layer = 16
-collision_mask = 8256
+collision_mask = 8396864
 script = ExtResource("2_jxvu2")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")

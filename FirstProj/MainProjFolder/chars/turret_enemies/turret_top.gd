@@ -171,4 +171,5 @@ func _on_shoot_attack_manager_reloading_done() -> void:
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
-	player_tracking.target_position.x=player.global_position.x
+	if player_tracking!=null:
+		player_tracking.target_position.x=player.global_position.x

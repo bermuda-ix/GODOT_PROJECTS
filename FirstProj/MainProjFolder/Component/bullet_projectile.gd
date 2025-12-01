@@ -2,6 +2,8 @@ extends Area2D
 
 @export var SPEED : float = 100 : set = set_speed, get = get_speed
 
+@onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
+
 var dir : Vector2 = Vector2.RIGHT
 var spawnPos : Vector2
 var spawnRot : float
@@ -11,8 +13,8 @@ var spawnRot : float
 func _ready():
 	set_as_top_level(true)
 	connect("area_entered", _char_hit)
-
-	
+	#shoot_range()
+	gpu_particles_2d.emitting=true
 	global_position = spawnPos
 	global_rotation = spawnRot
 
@@ -20,9 +22,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	
 	position += dir * SPEED * delta
 	rotation = spawnRot
+
 	
 	
 func set_speed(value: float):
@@ -41,4 +43,13 @@ func _char_hit(hurtbox : HurtBox):
 
 func _on_area_entered(area):
 	if area.get_collision_layer() == 128:
+		queue_free()
+
+func shoot_range():
+	var _area2ds = get_overlapping_areas()
+	var _area_name : Array[String]
+	_area_name.resize(_area2ds.size())
+	for i in range(_area2ds.size()):
+		_area_name[i]=_area2ds[i].name
+	if not _area_name.has("SpAtkHitBox"):
 		queue_free()
