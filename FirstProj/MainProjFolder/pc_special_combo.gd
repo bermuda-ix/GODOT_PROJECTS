@@ -6,3 +6,6 @@ extends LimboState
 func _enter() -> void:
 	anim_player.speed_scale=1.5
 	anim_player.play("shotgun_attack_fast")
+	
+func _exit() -> void:
+	pc.attacking=false

@@ -8,4 +8,5 @@ func _enter() -> void:
 	anim_player.play("Attack_3")
 
 func _exit() -> void:
-	pc.reset_combo_flag=true
+	pass
+	#pc.reset_combo_flag=true

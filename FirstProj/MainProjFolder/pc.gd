@@ -832,7 +832,7 @@ func attack_animate():
 		#
 	if Input.is_action_pressed("special_attack") and not heavy_attack_buffer_timer.is_stopped():
 		attacking=true
-		heavy_attack()
+		
 		
 		
 		
@@ -865,11 +865,12 @@ func regular_attack() -> void:
 			elif atk_2_resume:
 				attack_state.dispatch(&"combo_resume_2")
 			else:
-				if reset_combo_flag:
-					attack_state.dispatch(&"reset_combo")
-					reset_combo_flag=false
-				else:
-					attack_state.dispatch(&"next_attack")
+				#if reset_combo_flag:
+					#attack_state.dispatch(&"reset_combo")
+					#reset_combo_flag=false
+					#state_machine.dispatch(&"start_attack")
+				#else:
+				attack_state.dispatch(&"next_attack")
 		else:
 			#attack_state.initial_state=attack_1
 			state_machine.dispatch(&"start_attack")
@@ -963,17 +964,33 @@ func sp_atk():
 		shotty.look_at(target.global_position)
 	#else:
 		#set_shotgun_free_rotate(true)
-	if (Input.is_action_pressed("special_attack")) and state_machine.get_active_state()!=parry_success_state \
-	 and state_machine.get_active_state()!=special_attack and heavy_attack_buffer_timer.is_stopped():
-		state_machine.dispatch(&"aim")
-	elif Input.is_action_just_released("special_attack"):
-		state_machine.dispatch(&"shoot")
+	
+	if state_machine.get_active_state()!=parry_success_state \
+	 and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=attack_state:
+		aim_and_shoot()
+	else:
+		heavy_combos()
 		
 	
 	#if Input.is_action_pressed("attack") and not special_attack_buffer_timer.is_stopped():
 		#special_attack_buffer_timer.stop()
 		#heavy_attack()
 		
+func aim_and_shoot():
+	if (Input.is_action_pressed("special_attack"))	and heavy_attack_buffer_timer.is_stopped():
+		state_machine.dispatch(&"aim")
+	elif Input.is_action_just_released("special_attack"):
+		state_machine.dispatch(&"shoot")
+
+func heavy_combos():
+	if Input.is_action_just_pressed("special_attack"):
+		match attack_state.get_active_state():
+			attack_1:
+				heavy_attack()
+			attack_2:
+				heavy_attack()
+			attack_3:
+				pass
 
 func _on_special_attack_buffer_timer_timeout() -> void:
 	if state_machine.get_active_state()==attack_state:
@@ -1426,15 +1443,20 @@ func _on_animation_player_animation_finished(anim_name):
 			"shotgun_finish":
 				attack_timer.start(1.5)
 			"Heavy_Combo_1":
-				reset_combo_flag=true
+				#reset_combo_flag=true
+				attacking=false
+				state_machine.dispatch(&"return_to_idle")
 			"Heavy_Combo_2":
 				reset_combo_flag=true
+				attacking=false
+				state_machine.dispatch(&"return_to_idle")
 			"Attack_3":
-				reset_combo_flag=true
+				#reset_combo_flag=true
+				attacking=false
 			_:
-				attack_timer.start(1)
+				attack_timer.start(0.5)
 				attack_timer.paused=false
-				heavy_attack_flag=true
+				heavy_attack_flag=false
 				
 				
 				
@@ -1818,9 +1840,12 @@ func _on_state_machine_active_state_changed(current: LimboState, _previous: Limb
 func _on_attack_state_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if current==special_combo:
 		if previous==attack_1:
+			atk_2_resume=false
 			atk_1_resume=true
 		elif previous==attack_2:
 			atk_2_resume=true
+			atk_1_resume=false
+		
 	if previous==special_combo:
 		atk_1_resume=false
 		atk_2_resume=false

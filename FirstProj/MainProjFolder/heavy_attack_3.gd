@@ -13,3 +13,4 @@ func _enter() -> void:
 func _exit() -> void:
 	pc.reset_combo_flag=true
 	pc.set_shotgun_free_rotate(true)
+	pc.attacking=false

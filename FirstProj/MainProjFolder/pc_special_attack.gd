@@ -11,6 +11,8 @@ func _enter() -> void:
 
 func _exit() -> void:
 	shotty_anim_player.play("shotgun_reset")
+	pc.attacking=false
+	pc.heavy_attack_flag=false
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="shotgun_attack":
