@@ -18,6 +18,7 @@ func _ready():
 	connect("area_entered", _on_area_entered)
 	connect("area_entered", _on_parried)
 	connect("area_entered", _on_weakpoint_hit)
+	connect("area_entered", _bullet_hit)
 
 func _on_area_entered(hitbox: HitBox) -> void:
 	if hitbox != null:
@@ -31,7 +32,13 @@ func _on_area_entered(hitbox: HitBox) -> void:
 			#print(hitbox.damage, " ",dmg_mult)
 			received_damage.emit(hitbox.damage)
 			got_hit.emit(hitbox)
-		
+
+func _bullet_hit(_area: Area2D) -> void:
+	if _area.is_in_group("PlayerBullet"):
+		if stagger.stagger>0:
+			stagger.stagger-=1
+		else:
+			health.health-=1
 			
 		
 

@@ -1298,7 +1298,7 @@ disabled = true
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
 position = Vector2(0, -22)
 collision_layer = 16
-collision_mask = 64
+collision_mask = 8388672
 script = ExtResource("11_q7gmp")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")

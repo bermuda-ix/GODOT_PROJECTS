@@ -213,11 +213,12 @@ libraries = {
 &"": SubResource("AnimationLibrary_wstjc")
 }
 
-[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
 collision_layer = 16
 collision_mask = 8768
 script = ExtResource("3_sh051")
 health = NodePath("../Health")
+stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
 [node name="HurtBoxCollision" type="CollisionPolygon2D" parent="HurtBox"]

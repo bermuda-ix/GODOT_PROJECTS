@@ -18,5 +18,10 @@ func _on_hurt_box_received_stagger_damage(damage: int) -> void:
 
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
-	if area.is_in_group("PlayerBullet"):
-		stagger.stagger-=1
+	pass
+	#if area.is_in_group("PlayerBullet"):
+		#stagger.stagger-=1
+
+
+func _on_bullet_detection_bullet_detected() -> void:
+	print("bullet detected")

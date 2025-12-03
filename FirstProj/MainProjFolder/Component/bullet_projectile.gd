@@ -1,6 +1,8 @@
 extends Area2D
 
+const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 @export var SPEED : float = 100 : set = set_speed, get = get_speed
+
 
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 
@@ -39,11 +41,14 @@ func _on_visible_on_screen_enabler_2d_screen_exited():
 
 func _char_hit(hurtbox : HurtBox):
 	if hurtbox != null:
-		queue_free()
+		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
+		impact()
+		
 
 func _on_area_entered(area):
-	if area.get_collision_layer() == 128:
-		queue_free()
+	if area.is_in_group("shield"):
+		impact()
+		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
 
 func shoot_range():
 	var _area2ds = get_overlapping_areas()
@@ -53,3 +58,9 @@ func shoot_range():
 		_area_name[i]=_area2ds[i].name
 	if not _area_name.has("SpAtkHitBox"):
 		queue_free()
+
+func impact() -> void:
+	var impact_fx=BULLET_IMPACT.instantiate()
+	impact_fx.global_position=Vector2(position.x, position.y)
+	get_tree().current_scene.add_child(impact_fx)
+	queue_free()

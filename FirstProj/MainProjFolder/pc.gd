@@ -1021,6 +1021,13 @@ func gun_cone(spread : int) -> Array[int]:
 	label.text=str(_bullet_spawn_angles)
 
 func _on_special_attack_entered() -> void:
+	pass
+	#var _bullet_dirs : Array[int] = gun_cone(spread)
+	#for i in spread:
+		#bullet_dir = rotation_to_direction(_bullet_dirs[i])
+		#shoot_handler.shoot_bullet()
+
+func shotgun_shoot() -> void:
 	var _bullet_dirs : Array[int] = gun_cone(spread)
 	for i in spread:
 		bullet_dir = rotation_to_direction(_bullet_dirs[i])

@@ -625,6 +625,7 @@ b = Vector2(567, -310)
 [node name="PrologueLvl" instance=ExtResource("1_w82j5")]
 next_level = ExtResource("2_mb6gy")
 camera_offset_y = 60
+intro_cutscene_active = true
 lvl_type = "adv"
 main_room = true
 
@@ -1182,7 +1183,7 @@ update_scale = false
 [node name="StartingPos" type="Node" parent="." index="24"]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
-position = Vector2(2538, 642)
+position = Vector2(104, 426)
 
 [node name="PersistentDataHandler" type="Node" parent="." index="25"]
 script = ExtResource("24_w82j5")

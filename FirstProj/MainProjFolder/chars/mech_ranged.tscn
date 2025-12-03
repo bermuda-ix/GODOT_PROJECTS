@@ -1872,6 +1872,7 @@ size = Vector2(142, 96)
 
 [node name="MechRanged" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy"]]
 collision_layer = 16384
+collision_mask = 8388609
 script = ExtResource("1_k650x")
 chase_speed = 30.0
 hitbox = NodePath("HitBox")

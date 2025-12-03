@@ -51,3 +51,6 @@ const ALIENSHOOT_1 = "res://Art_Components/Effects/sound/alienshoot1.ogg"
 const QUBODUP_BANG_LONG = "res://Art_Components/Effects/sound/qubodup-Bangs/qubodup-Bangs/ogg_vorbis/qubodup-BangLong.ogg"
 const QUBODUP_BANG_MID = "res://Art_Components/Effects/sound/qubodup-Bangs/qubodup-Bangs/ogg_vorbis/qubodup-BangMid.ogg"
 const QUBODUP_BANG_SHORT = "res://Art_Components/Effects/sound/qubodup-Bangs/qubodup-Bangs/ogg_vorbis/qubodup-BangShort.ogg"
+
+#Impact SFX
+const SOCAPE_SMALL_KNOCK = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - small knock.wav"

@@ -572,3 +572,7 @@ func _on_counter_updated(delta: float) -> void:
 func _on_staggered_exited() -> void:
 	bt_player.blackboard.set_var("staggered", false)
 	bt_player.active=true
+
+
+func _on_bullet_detection_bullet_detected() -> void:
+	pass # Replace with function body.
