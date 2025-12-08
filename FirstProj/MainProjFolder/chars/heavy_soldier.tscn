@@ -654,7 +654,7 @@ tracks/5/keys = {
 }
 tracks/6/type = "value"
 tracks/6/imported = false
-tracks/6/enabled = true
+tracks/6/enabled = false
 tracks/6/path = NodePath("ParryBox/CollisionShape2D:disabled")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
@@ -879,7 +879,7 @@ tracks/2/keys = {
 }
 tracks/3/type = "value"
 tracks/3/imported = false
-tracks/3/enabled = true
+tracks/3/enabled = false
 tracks/3/path = NodePath("ParryBox/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
@@ -1201,15 +1201,15 @@ _data = {
 &"staggered": SubResource("Animation_jdney")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ct51r"]
-height = 50.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_86qvh"]
+size = Vector2(20, 81)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pk3h2"]
 radius = 6.0
 height = 48.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2fe2"]
-size = Vector2(44, 77)
+size = Vector2(30, 77)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ao47q"]
 size = Vector2(9, 51)
@@ -1300,7 +1300,9 @@ position = Vector2(-3, 9)
 script = ExtResource("30_a5flw")
 metadata/_custom_type_script = "uid://b0uasmutdnguo"
 
-[node name="ParryBox" type="Area2D" parent="."]
+[node name="Shield" type="Area2D" parent="."]
+
+[node name="ParryBox" type="Area2D" parent="." groups=["shield"]]
 position = Vector2(-25, 2)
 collision_layer = 256
 collision_mask = 8388674
@@ -1309,9 +1311,9 @@ knockback = Vector2(150, -15)
 metadata/_custom_type_script = "uid://dj5amth02vbhe"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ParryBox" groups=["shield"]]
-position = Vector2(12, 24)
-shape = SubResource("CapsuleShape2D_ct51r")
-disabled = true
+position = Vector2(12, 25.5)
+shape = SubResource("RectangleShape2D_86qvh")
+one_way_collision_margin = 0.0
 
 [node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("stagger")]
 collision_layer = 8
@@ -1334,7 +1336,7 @@ stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
 [node name="hurt_box_collision" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(-3, 27.5)
+position = Vector2(4, 27.5)
 shape = SubResource("RectangleShape2D_o2fe2")
 
 [node name="HurtBox_Weakpoint" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
@@ -1582,6 +1584,7 @@ offset_bottom = -18.0
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
+[connection signal="bullet_stopped" from="ParryBox" to="." method="_on_parry_box_bullet_stopped"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="area_entered" from="HurtBox_Weakpoint" to="." method="_on_hurt_box_weakpoint_area_entered"]

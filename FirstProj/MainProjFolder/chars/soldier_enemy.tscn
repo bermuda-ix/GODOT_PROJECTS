@@ -119,7 +119,6 @@
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="89_81rlk"]
 [ext_resource type="Script" uid="uid://d04qf1jqrfg1h" path="res://Component/functions/CounterAttackHandler.gd" id="89_j0qvy"]
 [ext_resource type="Script" uid="uid://dgja48rcyj78n" path="res://chars/chasing.gd" id="90_4frhw"]
-[ext_resource type="Script" uid="uid://cj1osg3q3sibd" path="res://Component/functions/bullet_detection.gd" id="90_jrc5d"]
 [ext_resource type="Script" uid="uid://co05jfawt7xsm" path="res://Component/functions/GetPlayerInfoHandler.gd" id="90_r7ycw"]
 [ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="90_tmwt0"]
 [ext_resource type="Script" uid="uid://cp2j3xnu5vd7q" path="res://Component/functions/DodgeManager.gd" id="92_233jl"]
@@ -128,6 +127,7 @@
 [ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="95_ivw15"]
 [ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="96_0nqgj"]
 [ext_resource type="Script" uid="uid://doi7s32f3duwj" path="res://chars/dodge.gd" id="98_ovyjq"]
+[ext_resource type="PackedScene" uid="uid://303jj447mrmm" path="res://Component/functions/bullet_detection.tscn" id="102_bmgxt"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="105_yvx0r"]
 [ext_resource type="Script" uid="uid://f087f5u1rlb7" path="res://chars/counter_sm.gd" id="112_qew73"]
 [ext_resource type="Script" uid="uid://btr3yv1fexwec" path="res://chars/begin_counter.gd" id="113_1hapo"]
@@ -1013,6 +1013,97 @@ tracks/5/keys = {
 "values": [Color(0.939691, 0.183948, 0, 1), Color(0.939691, 0.183948, 0, 1), Color(0.521141, 0.521141, 0.521141, 1), Color(0.939691, 0.183948, 0, 1), Color(0.521141, 0.521141, 0.521141, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_51rru"]
+resource_name = "bullet_dodge"
+length = 0.8
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.275, 0.35, 0.425, 0.5, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 1, 2, 3, 4, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [&"Jump", &"roll", &"Jump"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:sprite_frames")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("SpriteFrames_p1s76")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HurtBox/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.77824396, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.375, 0.8),
+"transitions": PackedFloat32Array(3.4822013, 1, 0.2332583),
+"update": 0,
+"values": [Vector2(0, -24), Vector2(0, -50), Vector2(0, -24)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(5.4641585, 1, 0.07179376),
+"update": 0,
+"values": [Color(0.521141, 0.521141, 0.521141, 1), Color(0.5210043, 0.5210043, 0.5210043, 0), Color(0.521141, 0.521141, 0.521141, 1)]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("HitStop")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.5, 0.3],
+"method": &"hit_stop"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_b3shf"]
 resource_name = "dead"
 loop_mode = 1
@@ -1587,71 +1678,6 @@ tracks/3/keys = {
 "values": [Color(0.521141, 0.521141, 0.521141, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_51rru"]
-resource_name = "bullet_dodge"
-length = 0.8
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.275, 0.35, 0.425, 0.5, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 1, 2, 3, 4, 1, 2]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:animation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [&"Jump", &"roll", &"Jump"]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:sprite_frames")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("SpriteFrames_p1s76")]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("HurtBox/CollisionShape2D:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.375, 0.8),
-"transitions": PackedFloat32Array(3.4822013, 1, 0.2332583),
-"update": 0,
-"values": [Vector2(0, -24), Vector2(0, -50), Vector2(0, -24)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c6g3t"]
 _data = {
 &"RESET": SubResource("Animation_rh5v8"),
@@ -1687,8 +1713,8 @@ size = Vector2(16, 12)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0c6of"]
 size = Vector2(38, 59)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_m26yb"]
-radius = 24.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_4yjj7"]
+radius = 23.086792
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_x6bu2"]
 
@@ -1699,6 +1725,7 @@ radius = 24.0
 [node name="soldier_enemy" node_paths=PackedStringArray("hitbox", "state_machine") instance=ExtResource("1_ojqla")]
 collision_layer = 16384
 script = ExtResource("2_ibi2a")
+chase_speed = 120.0
 hitbox = NodePath("HitBox")
 state_machine = NodePath("LimboHSM")
 
@@ -1808,13 +1835,11 @@ collision_mask = 2
 position = Vector2(0, -13.5)
 shape = SubResource("RectangleShape2D_0c6of")
 
-[node name="BulletDetection" type="Area2D" parent="." index="24"]
-script = ExtResource("90_jrc5d")
-metadata/_custom_type_script = "uid://cj1osg3q3sibd"
+[node name="BulletDetection" parent="." index="24" instance=ExtResource("102_bmgxt")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection" index="0"]
 position = Vector2(-6, 0)
-shape = SubResource("CircleShape2D_m26yb")
+shape = SubResource("CircleShape2D_4yjj7")
 
 [node name="Turret" parent="." index="26" instance=ExtResource("57_lhivr")]
 position = Vector2(-8, -7)

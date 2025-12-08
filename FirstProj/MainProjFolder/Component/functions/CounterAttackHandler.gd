@@ -40,8 +40,7 @@ func shoot_counter():
 				
 				if state_machine.get_active_state()==actor.attack:
 					state_machine.dispatch(&"jump")
-				elif state_machine.get_active_state()==actor.chasing:
-					state_machine.dispatch(&"jump")
+
 
 func parry_counter(value: String) -> void:
 	if actor.parried:

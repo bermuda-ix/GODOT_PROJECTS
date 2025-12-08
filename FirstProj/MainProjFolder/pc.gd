@@ -136,8 +136,9 @@ var atk_state="ATK_1"
 @onready var clash_aura_player: AnimationPlayer = $ClashAuraPlayer
 @onready var clash_aura_fx: AnimatedSprite2D = $AnimatedSprite2D/heat_fx
 
-
 @onready var hit_animation : String = "hit_landed"
+
+@onready var interact_prompt_player: AnimationPlayer = $InteractPromptPlayer
 
 @onready var speech: Label = $Speech
 @onready var speech_timer: Timer = $Speech/SpeechTimer
@@ -1266,14 +1267,18 @@ func _on_hazard_detector_area_entered(area):
 	
 
 func _on_interactable_detector_area_entered(area: Area2D) -> void:
-	if area.is_in_group("AnimatedDoor"):
-		in_door_way=true
-		animated_door=true
+	if area.is_in_group("door"):
+		interact_prompt_player.play("Enter")
+		if area.is_in_group("AnimatedDoor"):
+			in_door_way=true
+			animated_door=true
 		
 func _on_interactable_detector_area_exited(area: Area2D) -> void:
-	if area.is_in_group("AnimatedDoor"):
-		in_door_way=false
-		animated_door=true
+	if area.is_in_group("door"):
+		interact_prompt_player.play("RESET")
+		if area.is_in_group("AnimatedDoor"):
+			in_door_way=false
+			animated_door=true
 	
 	
 

@@ -63,6 +63,7 @@ start_pos=""
 player=""
 entry=""
 AnimatedDoor=""
+WorldStatic=""
 
 [input]
 

@@ -1,7 +1,7 @@
 class_name SoldierEnemy
 extends CharacterBody2D
 
-const SPEED = 300.0
+const SPEED = 400.0
 const JUMP_VELOCITY = -400.0
 const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -123,6 +123,7 @@ var distance
 @onready var attack: LimboState = $LimboHSM/ATTACK
 @onready var shooting: LimboState = $LimboHSM/SHOOTING
 @onready var dodge: LimboState = $LimboHSM/DODGE
+@onready var bulletdodge: BulletDodge = $LimboHSM/BULLETDODGE
 @onready var hit: LimboState = $LimboHSM/HIT
 @onready var staggered: LimboState = $LimboHSM/STAGGERED
 
@@ -198,6 +199,9 @@ func _init_state_machine():
 	state_machine.add_transition(dodge, attack, &"dodge_end")
 	state_machine.add_transition(attack, counter_sm, &"counter")
 	state_machine.add_transition(counter_sm, attack, &"counter_end")
+	state_machine.add_transition(shooting, bulletdodge, &"bullet_dodge")
+	state_machine.add_transition(chasing, bulletdodge, &"bullet_dodge")
+	state_machine.add_transition(bulletdodge, chasing, &"finish_bullet_dodge")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -575,4 +579,5 @@ func _on_staggered_exited() -> void:
 
 
 func _on_bullet_detection_bullet_detected() -> void:
-	pass # Replace with function body.
+	print(state_machine.get_active_state())
+	state_machine.dispatch(&"bullet_dodge")

@@ -955,7 +955,15 @@ offset_right = 2435.0
 offset_bottom = 319.0
 text = "Shift + Space while locked on: Flip over"
 
-[node name="Bounderies3" type="Node" parent="." index="14"]
+[node name="TutorialText5" type="RichTextLabel" parent="." index="14"]
+offset_left = 1522.0
+offset_top = 77.0
+offset_right = 1852.0
+offset_bottom = 154.0
+text = "Hold RMB: Aim
+Release: Shoot (Higher damage)"
+
+[node name="Bounderies3" type="Node" parent="." index="15"]
 
 [node name="Bounderies" type="StaticBody2D" parent="Bounderies3" index="0"]
 position = Vector2(-1, 0)
@@ -975,16 +983,16 @@ objective = NodePath("../../Enemy/MiniBosses/MechRanged")
 position = Vector2(24, 278.5)
 shape = SubResource("RectangleShape2D_jyauw")
 
-[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="15"]
+[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="16"]
 libraries = {
 &"": SubResource("AnimationLibrary_tnflb")
 }
 
-[node name="HitStop" type="Node" parent="." index="16"]
+[node name="HitStop" type="Node" parent="." index="17"]
 script = ExtResource("31_2mqv2")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
-[node name="Entries" type="Node" parent="." index="17"]
+[node name="Entries" type="Node" parent="." index="18"]
 
 [node name="StartingPos" type="Node2D" parent="Entries" index="0"]
 position = Vector2(2199, 244)
@@ -1069,19 +1077,23 @@ enter_to = "PrologueGarage1"
 [node name="LargeDoorSprite" parent="Entries/Entry10" index="1" instance=ExtResource("24_veiog")]
 position = Vector2(0, -69)
 
-[node name="DoorsAndSwitches" type="Node" parent="." index="18"]
+[node name="DoorsAndSwitches" type="Node" parent="." index="19"]
 
 [node name="Elevator" parent="DoorsAndSwitches" index="0" instance=ExtResource("21_7qfih")]
 position = Vector2(3627, 525)
-stops_ratio = Array[float]([0.0, 0.5, 0.0])
+stops_ratio = Array[float]([0.0, 0.5, 1.0])
+
+[node name="Path2D" parent="DoorsAndSwitches/Elevator" index="0"]
+position = Vector2(-24, -2.8665426)
+scale = Vector2(1, 0.95550346)
+
+[node name="PathFollow2D" parent="DoorsAndSwitches/Elevator/Path2D" index="0"]
+position = Vector2(23, -424)
+progress = 427.00067
 
 [node name="Elevator2" parent="DoorsAndSwitches" index="1" instance=ExtResource("21_7qfih")]
 position = Vector2(1893, 1203)
 scale = Vector2(-1, 1)
-
-[node name="PathFollow2D" parent="DoorsAndSwitches/Elevator2/Path2D" index="0"]
-position = Vector2(24, -400)
-progress = 403.0
 
 [node name="lab_door_switch" parent="DoorsAndSwitches" index="2" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
 position = Vector2(2072, 65)
@@ -1134,7 +1146,7 @@ position = Vector2(5833, 1166)
 z_index = 1
 position = Vector2(5803, 1198)
 
-[node name="Stairs" type="Node" parent="." index="19"]
+[node name="Stairs" type="Node" parent="." index="20"]
 
 [node name="StairsUnderground1" type="StaticBody2D" parent="Stairs" index="0"]
 position = Vector2(5215, 1214)
@@ -1143,9 +1155,9 @@ position = Vector2(5215, 1214)
 shape = SubResource("SegmentShape2D_w82j5")
 one_way_collision = true
 
-[node name="FallthroughPlatform" type="Node" parent="." index="20"]
+[node name="FallthroughPlatform" type="Node" parent="." index="21"]
 
-[node name="Spawning" type="Node" parent="." index="21"]
+[node name="Spawning" type="Node" parent="." index="22"]
 
 [node name="SpawnPoints" type="Node" parent="Spawning" index="0"]
 
@@ -1160,13 +1172,13 @@ position = Vector2(3520, 419)
 [node name="HeatSpawnFlag3" parent="Spawning/SpawnFlags" index="2" instance=ExtResource("22_22var")]
 position = Vector2(2129, 1101)
 
-[node name="QTEFlags" type="Node" parent="." index="22"]
+[node name="QTEFlags" type="Node" parent="." index="23"]
 
 [node name="QTE_Start" parent="QTEFlags" index="0" node_paths=PackedStringArray("cutscene_player") instance=ExtResource("24_4koma")]
 position = Vector2(1916, 713)
 cutscene_player = NodePath("../../CutscenePlayer")
 
-[node name="Paths" type="Node" parent="." index="23"]
+[node name="Paths" type="Node" parent="." index="24"]
 
 [node name="Path2D" type="Path2D" parent="Paths" index="0"]
 curve = SubResource("Curve2D_e3spa")
@@ -1180,14 +1192,14 @@ rotates = false
 update_rotation = false
 update_scale = false
 
-[node name="StartingPos" type="Node" parent="." index="24"]
+[node name="StartingPos" type="Node" parent="." index="25"]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
 position = Vector2(104, 426)
 
-[node name="PersistentDataHandler" type="Node" parent="." index="25"]
+[node name="PersistentDataHandler" type="Node" parent="." index="26"]
 script = ExtResource("24_w82j5")
 metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 
 [editable path="Enemy/MiniBosses/MechRanged"]
-[editable path="DoorsAndSwitches/Elevator2"]
+[editable path="DoorsAndSwitches/Elevator"]

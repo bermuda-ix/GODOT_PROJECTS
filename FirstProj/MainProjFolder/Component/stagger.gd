@@ -33,6 +33,7 @@ func set_stagger(value: int):
 		
 		if stagger == 0:
 			staggered.emit()
+			Events.camera_shake.emit(2,20)
 	
 func get_stagger() -> int:
 	return stagger

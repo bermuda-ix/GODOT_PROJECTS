@@ -212,6 +212,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_mgwb3"]
 resource_name = "death"
+length = 0.7
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -219,10 +221,10 @@ tracks/0/path = NodePath("Sprite2D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [2.44346]
+"values": [2.6179938779914944, 2.44346, 2.792526803190927, 2.2689280275926285, 2.6179938779914944, 2.0943951023931953, 2.44346, 2.2689280275926285, 2.792526803190927, 2.0943951023931953, 2.44346]
 }
 
 [sub_resource type="Animation" id="Animation_j0ghf"]

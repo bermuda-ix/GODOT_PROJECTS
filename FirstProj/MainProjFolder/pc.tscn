@@ -1,4 +1,4 @@
-[gd_scene load_steps=651 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=662 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -260,6 +260,8 @@
 [ext_resource type="Texture2D" uid="uid://gd5ym8b16mrp" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_059.png" id="138_77ty3"]
 [ext_resource type="Script" uid="uid://dntc3c582m5w8" path="res://demo/agents/scripts/hitbox.gd" id="208_mesnb"]
 [ext_resource type="Script" uid="uid://tifgdq27rt6g" path="res://chars/turret.gd" id="211_i0kkw"]
+[ext_resource type="Texture2D" uid="uid://ctiea6xsh0wgr" path="res://Art_Components/misc/AimingBoundary.png" id="212_1o5op"]
+[ext_resource type="Texture2D" uid="uid://52ipqcs560aq" path="res://Art_Components/UI/ButtonPrompts/Audune Prompts Dark.png" id="218_f2824"]
 [ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="230_pbr83"]
 [ext_resource type="PackedScene" uid="uid://dsj0t0v1bq42w" path="res://Component/projectiles/shotgun_bullet.tscn" id="231_ymji2"]
 [ext_resource type="Script" uid="uid://dc4c4jxhc2ky" path="res://heavy_dash_attack.gd" id="243_4jq81"]
@@ -3347,11 +3349,86 @@ fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
 metadata/_snap_count = 2
 
+[sub_resource type="Animation" id="Animation_xxtsl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpreadBoundary1/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(458.81232, -140.80151)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpreadBoundary2/Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(458.81232, -140.80151)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpreadBoundary1/Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1.3186259)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SpreadBoundary2/Sprite2D:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1.3018667)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SpreadBoundary1/Sprite2D:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SpreadBoundary2/Sprite2D:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_f2824"]
 resource_name = "shotgun_aim"
 tracks/0/type = "value"
 tracks/0/imported = false
-tracks/0/enabled = true
+tracks/0/enabled = false
 tracks/0/path = NodePath("SpAtkHitBox/SpAtkCone:polygon")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
@@ -3384,6 +3461,78 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(0.3, 1),
 "update": 0,
 "values": [0.5934119, 0.3141592653589793]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SpreadBoundary1/Sprite2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.29730183, 1),
+"update": 0,
+"values": [Vector2(142.01239, -46.55339), Vector2(145.869, -47.707973)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SpreadBoundary2/Sprite2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.22531268, 1),
+"update": 0,
+"values": [Vector2(150.59106, -48.531025), Vector2(161.35368, -51.75311)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SpreadBoundary1/Sprite2D:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.51763237, 1),
+"update": 0,
+"values": [Vector2(1, 1.3186259), Vector2(1, 3.762803)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("SpreadBoundary2/Sprite2D:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.5176325, 1),
+"update": 0,
+"values": [Vector2(1, 1.3018667), Vector2(1, 3.7381775)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("SpreadBoundary1/Sprite2D:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("SpreadBoundary2/Sprite2D:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_0dirf"]
@@ -3424,9 +3573,34 @@ tracks/2/keys = {
 "update": 0,
 "values": [0.5934119]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SpreadBoundary2/Sprite2D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SpreadBoundary1/Sprite2D:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xxtsl"]
 _data = {
+&"RESET": SubResource("Animation_xxtsl"),
 &"shotgun_aim": SubResource("Animation_f2824"),
 &"shotgun_reset": SubResource("Animation_0dirf")
 }
@@ -3493,6 +3667,33 @@ scale_min = 1.2
 scale_max = 1.2
 anim_speed_min = 0.7
 anim_speed_max = 0.7
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dirf"]
+atlas = ExtResource("218_f2824")
+region = Rect2(128, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2824"]
+atlas = ExtResource("218_f2824")
+region = Rect2(131, 512, 90, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xxtsl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0dirf")
+}],
+"loop": true,
+"name": &"Enter",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2824")
+}],
+"loop": true,
+"name": &"Interact",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
 size = Vector2(15.989, 41.2086)
@@ -7389,6 +7590,21 @@ _data = {
 &"hit_landed": SubResource("Animation_e0a0t")
 }
 
+[sub_resource type="Animation" id="Animation_fixwo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_4jq81"]
 resource_name = "intro_cutscene"
 length = 11.1
@@ -7480,11 +7696,150 @@ tracks/0/keys = {
 "clips": PackedStringArray("idle", "roll", "flip", "Cutscene/shoot_down", "flip_backwards"),
 "times": PackedFloat32Array(0, 0.2, 1.4666667, 2.4666667, 3.7)
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8p2jh"]
 _data = {
+&"RESET": SubResource("Animation_fixwo"),
 &"intro_cutscene": SubResource("Animation_4jq81"),
 &"mini_boss_kill": SubResource("Animation_8p2jh")
+}
+
+[sub_resource type="Animation" id="Animation_oxl1f"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/InteractPromptSprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D/InteractPromptSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, -40)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/InteractPromptSprite:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Interact"]
+}
+
+[sub_resource type="Animation" id="Animation_22pp6"]
+resource_name = "Enter"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/InteractPromptSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3535535, 1),
+"update": 0,
+"values": [Vector2(2, -40), Vector2(2, -44)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D/InteractPromptSprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.63728076, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/InteractPromptSprite:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Enter"]
+}
+
+[sub_resource type="Animation" id="Animation_rml44"]
+resource_name = "Interact"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/InteractPromptSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3535535, 1),
+"update": 0,
+"values": [Vector2(2, -40), Vector2(2, -44)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D/InteractPromptSprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.63728076, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/InteractPromptSprite:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Interact"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rml44"]
+_data = {
+&"Enter": SubResource("Animation_22pp6"),
+&"Interact": SubResource("Animation_rml44"),
+&"RESET": SubResource("Animation_oxl1f")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oupih"]
@@ -7695,9 +8050,25 @@ metadata/_custom_type_script = "uid://tifgdq27rt6g"
 [node name="SpreadBoundary1" type="RayCast2D" parent="AnimatedSprite2D/Shotty"]
 target_position = Vector2(887.2419, -281.40244)
 
+[node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D/Shotty/SpreadBoundary1"]
+visible = false
+position = Vector2(458.81232, -140.80151)
+rotation = 1.2799108
+scale = Vector2(1, 1.3186259)
+texture = ExtResource("212_1o5op")
+offset = Vector2(-0.057750702, -299.40823)
+
 [node name="SpreadBoundary2" type="RayCast2D" parent="AnimatedSprite2D/Shotty"]
 rotation = 0.5934119
 target_position = Vector2(887.2419, -281.40244)
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D/Shotty/SpreadBoundary2"]
+visible = false
+position = Vector2(458.81232, -140.80151)
+rotation = 1.2799108
+scale = Vector2(1, 1.3018667)
+texture = ExtResource("212_1o5op")
+offset = Vector2(0.87626266, -298.35223)
 
 [node name="ShottyAnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D/Shotty"]
 libraries = {
@@ -7771,6 +8142,21 @@ texture = ExtResource("81_mdoa6")
 speed_scale = 2.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_cdmbu")
+
+[node name="InteractPromptSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
+self_modulate = Color(1, 1, 1, 0)
+position = Vector2(2, -40)
+scale = Vector2(0.1875, 0.1796875)
+sprite_frames = SubResource("SpriteFrames_xxtsl")
+animation = &"Interact"
+
+[node name="InteractUI" type="Control" parent="AnimatedSprite2D"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+offset_left = -48.0
+offset_top = -40.0
+offset_right = -8.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.5, -9.5)
@@ -7874,6 +8260,11 @@ libraries = {
 &"": SubResource("AnimationLibrary_8p2jh")
 }
 
+[node name="InteractPromptPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_rml44")
+}
+
 [node name="HitTimer" type="Timer" parent="."]
 wait_time = 0.25
 one_shot = true
@@ -7955,7 +8346,7 @@ actor = NodePath("..")
 projectile = ExtResource("231_ymji2")
 turret = NodePath("../AnimatedSprite2D/Shotty/Turret")
 player_tracking_active = false
-bullet_speed = 700.0
+bullet_speed = 800.0
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
 [node name="StateMachine" type="LimboHSM" parent="."]

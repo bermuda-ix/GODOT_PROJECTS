@@ -462,7 +462,10 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 
 
 func _on_stagger_timer_timeout() -> void:
-	state_machine.dispatch(&"stagger_recover")
+	if health.health>0:
+		state_machine.dispatch(&"stagger_recover")
+	else:
+		state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
 
 
 func _on_parry_timer_timeout() -> void:
@@ -520,3 +523,7 @@ func alerted() -> void :
 	print("alerted!")
 	vision_handler.always_on=true
 	state_machine.dispatch(&"attack_mode")
+
+
+func _on_parry_box_bullet_stopped() -> void:
+	print("shieled")

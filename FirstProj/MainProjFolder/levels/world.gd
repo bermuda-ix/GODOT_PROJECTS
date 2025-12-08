@@ -216,7 +216,7 @@ func _on_pc_no_input_qte() -> void:
 	cutscene_player.queue(qte_options[4])
 
 
-func _on_ui_level_heat_lvl_raise() -> void:
+func _on_ui_level_aaeat_lvl_raise() -> void:
 	print("HEAT RISING")
 	ui_level.heat_fill+=1
 	heat_handler.heat_lvl_spawn()

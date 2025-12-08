@@ -16,6 +16,11 @@ extends StaticBody2D
 @onready var death: LimboState = $StateMachine/Death
 @onready var alive: LimboState = $StateMachine/Alive
 
+@onready var death_sparks1: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
+@onready var death_sparks2: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D2
+@onready var death_sparks3: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D3
+
+
 @onready var npc_stats: Control = $NPCStats
 @onready var health: Health = $Health
 @onready var stagger: Stagger = $Stagger
@@ -77,8 +82,12 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 func _on_health_health_depleted() -> void:
 	#turret_top.death_handler.death()
 	turret_top.bt_player.active=false
-	state_machine.dispatch(&"death")
+	turret_top.animation_player.play("death")
+	state_machine.dispatch(&"die")
 	death_handler.death()
+	death_sparks1.emitting=true
+	death_sparks2.emitting=true
+	death_sparks3.emitting=true
 	linked_turrets.remove_at(turret_link_order)
 	print("despawning")
 	despawn_handler.despawn()
