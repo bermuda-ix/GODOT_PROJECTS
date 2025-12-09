@@ -171,8 +171,9 @@ func _process(delta: float) -> void:
 	if state_machine.get_active_state()==death:
 		hb_collision.disabled=true
 		return
-	if health.health<=0 and (state_machine.get_active_state()!=death or state_machine.get_active_state()!=dying):
-		state_machine.dispatch(&"die")
+	#if health.health<=0 and (state_machine.get_active_state()!=death and state_machine.get_active_state()!=dying):
+		#print(state_machine.get_active_state())
+		#state_machine.dispatch(&"die")
 	#even_order(group_link_order)
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
@@ -319,6 +320,7 @@ func get_height() -> int:
 
 
 func _on_state_machine_active_state_changed(current: LimboState, previous: LimboState) -> void:
+	print(current)
 	if current!=idle:
 		movement_handler.active=true
 		shooting_states.dispatch(&"begin_shooting")
@@ -439,7 +441,8 @@ func _on_stagger_staggered() -> void:
 	hb_collision.disabled=true
 	current_speed=0
 	velocity.x=0
-	state_machine.dispatch(&"staggered")
+	if (state_machine.get_active_state()!= dying and state_machine.get_active_state()!=death):
+		state_machine.dispatch(&"staggered")
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:
@@ -452,7 +455,8 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	health.set_temporary_immortality(0.2)
 	if damage<=health.health:
 		parry_timer.start(0.5)
-		state_machine.dispatch(&"hit")
+		if (state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death):
+			state_machine.dispatch(&"hit")
 		hit_stop.hit_stop(0.05,0.25)
 		#set_state(current_state, States.HIT)
 		gpu_particles_2d.emitting=true
