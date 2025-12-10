@@ -10,7 +10,6 @@ func _ready() -> void:
 
 
 func _on_pressed() -> void:
-	print("Going to floor " + button_text)
 	var regex = RegEx.new()
 	regex.compile("\\d+")
 	var _floor_number_tmp = regex.search_all(button_text)

@@ -166,6 +166,8 @@ signal block_qte
 signal special_atk_qte
 signal no_input_qte
 
+@onready var interact_ready : bool = false
+
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var attack_timer = $AttackTimer
 
@@ -1272,17 +1274,22 @@ func _on_interactable_detector_area_entered(area: Area2D) -> void:
 		if area.is_in_group("AnimatedDoor"):
 			in_door_way=true
 			animated_door=true
+	else:
+		interact_prompt_player.play("Interact")
+		interact_ready=true
 		
 func _on_interactable_detector_area_exited(area: Area2D) -> void:
+	interact_prompt_player.play("RESET")
 	if area.is_in_group("door"):
-		interact_prompt_player.play("RESET")
 		if area.is_in_group("AnimatedDoor"):
 			in_door_way=false
 			animated_door=true
+	else:
+		interact_ready=false
 	
-	
-
-	
+func interact() -> void:
+	if interact_ready and Input.is_action_just_pressed("Interact"):
+		Events.open_interact_menu.emit()
 #
 func get_state() -> String:
 	return cur_state

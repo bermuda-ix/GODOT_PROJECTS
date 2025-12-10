@@ -76,6 +76,9 @@ signal unlock_door
 signal open_door
 signal door_opened
 
+#Interactables
+signal open_interact_menu
+
 #Inventory update
 signal add_inventory
 signal remove_inventory

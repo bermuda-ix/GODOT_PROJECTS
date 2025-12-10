@@ -7716,45 +7716,6 @@ _data = {
 &"mini_boss_kill": SubResource("Animation_8p2jh")
 }
 
-[sub_resource type="Animation" id="Animation_oxl1f"]
-resource_name = "RESET"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/InteractPromptSprite:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D/InteractPromptSprite:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2, -40)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D/InteractPromptSprite:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"Interact"]
-}
-
 [sub_resource type="Animation" id="Animation_22pp6"]
 resource_name = "Enter"
 length = 0.5
@@ -7835,6 +7796,45 @@ tracks/2/keys = {
 "values": [&"Interact"]
 }
 
+[sub_resource type="Animation" id="Animation_oxl1f"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/InteractPromptSprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D/InteractPromptSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, -40)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/InteractPromptSprite:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Interact"]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rml44"]
 _data = {
 &"Enter": SubResource("Animation_22pp6"),
@@ -7850,7 +7850,7 @@ size = Vector2(21, 41)
 
 [node name="PC" type="CharacterBody2D" node_paths=PackedStringArray("health", "hitbox") groups=["player"]]
 collision_layer = 2
-collision_mask = 2411529
+collision_mask = 35965961
 floor_stop_on_slope = false
 floor_max_angle = 0.872665
 floor_snap_length = 2.0
@@ -8204,7 +8204,7 @@ shape = SubResource("RectangleShape2D_52hex")
 
 [node name="InteractableDetector" type="Area2D" parent="."]
 collision_layer = 4194304
-collision_mask = 2097152
+collision_mask = 35651584
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableDetector"]
 position = Vector2(2, -10)
