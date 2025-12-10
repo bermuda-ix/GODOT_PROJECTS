@@ -26,7 +26,9 @@ atlas = ExtResource("1_4nnvn")
 region = Rect2(831.92, 223.808, 64.3857, 64.0002)
 
 [node name="Elevator" type="Node2D"]
+position = Vector2(153, 158)
 script = ExtResource("1_ophm4")
+floors = Array[float]([0.2, 0.5, 0.8, 0.9])
 
 [node name="Path2D" type="Path2D" parent="."]
 position = Vector2(-24, -3)
@@ -81,5 +83,32 @@ one_shot = true
 
 [node name="Resume" type="Timer" parent="."]
 one_shot = true
+
+[node name="ElevatorUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -78.0
+offset_top = -78.0
+offset_right = 7.0
+offset_bottom = -20.0
+
+[node name="PanelContainer" type="PanelContainer" parent="ElevatorUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 27.0
+offset_top = 15.0
+offset_right = -7.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ElevatorUI/PanelContainer"]
+custom_minimum_size = Vector2(70, 80)
+layout_mode = 2
+
+[node name="ElevatorButtons" type="VBoxContainer" parent="ElevatorUI/PanelContainer/ScrollContainer"]
+layout_mode = 2
 
 [connection signal="timeout" from="PauseMove" to="." method="_on_pause_move_timeout"]

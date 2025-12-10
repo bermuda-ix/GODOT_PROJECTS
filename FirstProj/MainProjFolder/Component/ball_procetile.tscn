@@ -30,7 +30,6 @@ sprite_frames = SubResource("SpriteFrames_r3xgv")
 
 [node name="CollisionShape2D" parent="." index="1"]
 polygon = PackedVector2Array(-43, -34, -51, 1, -26, 43, 17, 46, 49, 18, 47, -28, 18, -53, -19, -50)
-disabled = true
 
 [node name="VisibleOnScreenEnabler2D" parent="." index="2"]
 position = Vector2(0, -1.90735e-06)
