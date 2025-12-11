@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=29 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
 [ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="2_t1ldw"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="6_82t0r"]
 [ext_resource type="PackedScene" uid="uid://bpfhslfhbjfti" path="res://chars/TEST_CHARS/training_dummy.tscn" id="7_t1ldw"]
 [ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="8_01tlq"]
+[ext_resource type="PackedScene" uid="uid://bqufbaasjdchb" path="res://Component/Consumables/elevator_key_card.tscn" id="9_be4ge"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_82t0r"]
 resource_local_to_scene = true
@@ -289,7 +290,6 @@ offset_left = -26.0
 offset_top = -31.0
 offset_right = -26.0
 offset_bottom = -31.0
-mouse_filter = 2
 
 [node name="PauseMenu" parent="CanvasLayer" index="4" instance=ExtResource("2_t1ldw")]
 process_mode = 3
@@ -465,6 +465,11 @@ scale = Vector2(0.2, 0.2)
 
 [node name="Elevator" parent="." index="30" instance=ExtResource("8_01tlq")]
 position = Vector2(931, 112)
+locked_floors = Array[int]([0])
+
+[node name="ElevatorKeyCard" parent="." index="31" instance=ExtResource("9_be4ge")]
+position = Vector2(690.99994, 97.99999)
+scale = Vector2(0.05, 0.05)
 
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]

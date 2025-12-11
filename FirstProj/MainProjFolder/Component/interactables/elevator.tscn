@@ -195,11 +195,9 @@ _data = {
 }
 
 [node name="Elevator" type="Node2D"]
-position = Vector2(234, 312)
 script = ExtResource("1_ophm4")
 floors = Array[float]([0.5])
 init_floor = 1
-locked_floors = Array[int]([0, 4])
 
 [node name="Path2D" type="Path2D" parent="."]
 position = Vector2(-24, -3)

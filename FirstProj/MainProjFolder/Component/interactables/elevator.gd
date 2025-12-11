@@ -131,7 +131,7 @@ func pause():
 func _on_resume_timeout() -> void:
 	pass
 	#print("opening menu")
-	animation_player.play("open_elevator_menu")
+	#animation_player.play("open_elevator_menu")
 
 
 func _on_button_panel_body_entered(body: Node2D) -> void:

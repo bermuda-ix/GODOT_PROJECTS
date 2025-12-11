@@ -2,6 +2,7 @@ class_name ElevatorButton extends TextureButton
 
 var button_text : String = "TEST"
 var floor_locked : bool = false
+@onready var key_type : String = "ElevatorKeyCard"
 @onready var rich_text_label: RichTextLabel = $PanelContainer/RichTextLabel
 signal floor
 
@@ -12,8 +13,12 @@ func _ready() -> void:
 
 func _on_pressed() -> void:
 	if floor_locked:
-		print("Floor locked")
-		return
+		if InventoryDict.player_inventory.has(key_type):
+			toggle_floor_lock(true)
+			print("Floor unlocked")
+		else:
+			print("Floor locked")
+			return
 	var regex = RegEx.new()
 	regex.compile("\\d+")
 	var _floor_number_tmp = regex.search_all(button_text)

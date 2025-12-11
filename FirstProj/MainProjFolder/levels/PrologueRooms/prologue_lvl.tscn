@@ -1,10 +1,11 @@
-[gd_scene load_steps=52 format=3 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=57 format=4 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_w82j5"]
 [ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_mb6gy"]
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="4_7klgn"]
 [ext_resource type="PackedScene" uid="uid://m5ullq0dey1k" path="res://Art_Components/misc/lights_indoor.tscn" id="5_8qkpr"]
 [ext_resource type="PackedScene" uid="uid://2t2be0q7lqvs" path="res://Art_Components/tile_maps/lab_architect.tscn" id="6_drpgx"]
+[ext_resource type="TileSet" uid="uid://d3ogb8uexylqk" path="res://Art_Components/tile_maps/tile_layers/lab_props.tres" id="7_kuq7b"]
 [ext_resource type="PackedScene" uid="uid://blsmgy883jm3a" path="res://levels/level_backgrounds/desert_background.tscn" id="7_veiog"]
 [ext_resource type="PackedScene" uid="uid://bt6url6xt1nqm" path="res://Component/interactables/lab_door_switch.tscn" id="8_2mqv2"]
 [ext_resource type="PackedScene" uid="uid://b8htmq8u3ykss" path="res://Component/interactables/door.tscn" id="9_kuq7b"]
@@ -31,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://d3gnpvd8ye3rt" path="res://Art_Components/LevelProps/large_door_sprite.tscn" id="24_veiog"]
 [ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="24_w82j5"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="31_2mqv2"]
+[ext_resource type="PackedScene" uid="uid://bqufbaasjdchb" path="res://Component/Consumables/elevator_key_card.tscn" id="33_j2fky"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_p4nhw"]
 polygon = PackedVector2Array(699, 393, 758, 393, 1049, 389, 1081, 367, 1081, 358, 1070, 358, 1070, 290, 1426, 290, 1479, 254, 1893, 243, 1894, 202, 1501, 212, 1500, 147, 1382, 76, 766, 78, 761, -20, 728, -21, 729, -120, 725, -22, 698, -21)
@@ -43,6 +45,15 @@ polygon = PackedVector2Array(2039, -21, 3477, -22, 3483, -2, 3524, 14, 3669, 17,
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_kcvht"]
 polygon = PackedVector2Array(-2, 559, 1944, 561, 2610, 562, 2910, 402, 3577, 404, 3580, 357, 1978, 325, 1640, 502, 55, 496, 10, 525)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_j2fky"]
+polygon = PackedVector2Array(52, 6, 70, 6, 70, 19, 52, 19)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_52g4u"]
+polygon = PackedVector2Array(79, 18, 97, 18, 97, 31, 101, 32, 101, 36, 97, 36, 97, 60, 0, 60, 0, 32, 79, 32, 79, 32)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_kuq7b"]
+polygon = PackedVector2Array(13, 33, 16, 36, 12, 54, 9, 56, 9, 60, 13, 64, -1, 65, -1, 61, 6, 59, 6, 55, -3, 55, -2, 49, 6, 51, 7.718628, 46.580666, 6, 46, 5, 35, 7, 32)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_htxyq"]
 vertices = PackedVector2Array(1645.83, 430, 1122, 430, 1122, 322, 1882.08, 322)
@@ -705,7 +716,34 @@ occluder = SubResource("OccluderPolygon2D_hjny2")
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Shadows" index="3"]
 occluder = SubResource("OccluderPolygon2D_kcvht")
 
-[node name="LabArchitect" parent="." index="5" instance=ExtResource("6_drpgx")]
+[node name="ElevatorControlRoom" type="Node" parent="Shadows" index="4"]
+
+[node name="Shadows" type="LightOccluder2D" parent="Shadows/ElevatorControlRoom" index="0"]
+position = Vector2(2040, 23)
+occluder = SubResource("OccluderPolygon2D_j2fky")
+
+[node name="Shadows2" type="LightOccluder2D" parent="Shadows/ElevatorControlRoom" index="1"]
+position = Vector2(2040, 23)
+occluder = SubResource("OccluderPolygon2D_52g4u")
+
+[node name="Shadows3" type="LightOccluder2D" parent="Shadows/ElevatorControlRoom" index="2"]
+position = Vector2(2147, 15)
+occluder = SubResource("OccluderPolygon2D_kuq7b")
+
+[node name="Tilesets" type="Node" parent="." index="5"]
+
+[node name="Props" type="TileMapLayer" parent="Tilesets" index="0"]
+z_index = 1
+scale = Vector2(0.4, 0.4)
+tile_map_data = PackedByteArray("AAA+AQgAAAAEABcAAAA+AQkAAAAEABgAAAA/AQgAAAAFABcAAAA/AQkAAAAFABgAAAA/AQoAAAAFABkAAAA/AQsAAAAFABoAAAA/AQwAAAAFABsAAABAAQgAAAAGABcAAABAAQkAAAAGABgAAABAAQoAAAAGABkAAABAAQsAAAAGABoAAABAAQwAAAAGABsAAABBAQgAAAAHABcAAABBAQkAAAAHABgAAABBAQoAAAAHABkAAABBAQsAAAAHABoAAABBAQwAAAAHABsAAABCAQgAAAAIABcAAABCAQkAAAAIABgAAABDAQgAAAAJABcAAABDAQkAAAAJABgAAABEAQgAAAAKABcAAABEAQkAAAAKABgAAABFAQgAAAALABcAAABFAQkAAAALABgAAABGAQgAAAAMABcAAABGAQkAAAAMABgAAABHAQgAAAANABcAAABHAQkAAAANABgAAABIAQgAAAAOABcAAABIAQkAAAAOABgAAABJAQgAAAAPABcAAABJAQkAAAAPABgAAABKAQgAAAAQABcAAABKAQkAAAAQABgAAABLAQgAAAARABcAAABLAQkAAAARABgAAABLAQoAAAARABkAAABLAQsAAAARABoAAABLAQwAAAARABsAAABMAQgAAAASABcAAABMAQkAAAASABgAAABMAQoAAAASABkAAABMAQsAAAASABoAAABMAQwAAAASABsAAABNAQgAAAATABcAAABNAQkAAAATABgAAABNAQoAAAATABkAAABNAQsAAAATABoAAABNAQwAAAATABsAAABOAQgAAAAUABcAAABOAQkAAAAUABgAAABPAQoAAAARABMAAABPAQsAAAARABQAAABPAQwAAAARABUAAABQAQcAAAASABAAAABQAQgAAAASABEAAABQAQkAAAASABIAAABQAQoAAAASABMAAABQAQsAAAASABQAAABQAQwAAAASABUAAABRAQcAAAATABAAAABRAQgAAAATABEAAABRAQkAAAATABIAAABRAQoAAAATABMAAABRAQsAAAATABQAAABRAQwAAAATABUAAAA=")
+tile_set = ExtResource("7_kuq7b")
+
+[node name="PropsLayer2" type="TileMapLayer" parent="Tilesets" index="1"]
+scale = Vector2(0.4, 0.4)
+tile_map_data = PackedByteArray("AAA+AQgAAAAEABcAAAA+AQkAAAAEABgAAAA/AQgAAAAFABcAAAA/AQkAAAAFABgAAAA/AQoAAAAFABkAAAA/AQsAAAAFABoAAAA/AQwAAAAFABsAAABAAQgAAAAGABcAAABAAQkAAAAGABgAAABAAQoAAAAGABkAAABAAQsAAAAGABoAAABAAQwAAAAGABsAAABBAQgAAAAIABUAAABBAQkAAAAHABgAAABBAQoAAAAHABkAAABBAQsAAAAHABoAAABBAQwAAAAHABsAAABCAQgAAAAJABUAAABCAQkAAAAIABgAAABDAQgAAAAKABUAAABDAQkAAAAJABgAAABEAQgAAAALABUAAABEAQkAAAAKABgAAABFAQgAAAAMABUAAABFAQkAAAALABgAAABGAQgAAAAMABcAAABGAQkAAAAMABgAAABHAQgAAAANABcAAABHAQkAAAANABgAAABIAQgAAAAOABcAAABIAQkAAAAOABgAAABJAQgAAAAPABcAAABJAQkAAAAPABgAAABKAQgAAAAQABcAAABKAQkAAAAQABgAAABLAQgAAAAVABQAAABLAQkAAAAVABUAAABLAQoAAAARABkAAABLAQsAAAARABoAAABLAQwAAAARABsAAABMAQgAAAAWABQAAABMAQkAAAAWABUAAABMAQoAAAASABkAAABMAQsAAAASABoAAABMAQwAAAASABsAAABNAQgAAAAXABQAAABNAQkAAAAXABUAAABNAQoAAAATABkAAABNAQsAAAATABoAAABNAQwAAAATABsAAABOAQgAAAAUABcAAABOAQkAAAAUABgAAABPAQoAAAARABMAAABPAQsAAAARABQAAABPAQwAAAARABUAAABQAQcAAAASABAAAABQAQgAAAASABEAAABQAQkAAAASABIAAABQAQoAAAASABMAAABQAQsAAAASABQAAABQAQwAAAASABUAAABRAQcAAAATABAAAABRAQgAAAATABEAAABRAQkAAAATABIAAABRAQoAAAATABMAAABRAQsAAAATABQAAABRAQwAAAATABUAAABLAQYAAAAVABIAAABLAQcAAAAVABMAAABMAQYAAAAWABIAAABMAQcAAAAWABMAAABNAQYAAAAXABIAAABNAQcAAAAXABMAAABFAQoAAAAEABMAAABFAQsAAAAEABQAAABFAQwAAAAEABUAAABGAQoAAAAFABMAAABGAQsAAAAFABQAAABGAQwAAAAFABUAAABHAQoAAAAGABMAAABHAQsAAAAGABQAAABHAQwAAAAGABUAAABIAQoAAAAHABMAAABIAQsAAAAHABQAAABBAQYAAAAIABMAAABBAQcAAAAIABQAAABCAQYAAAAJABMAAABCAQcAAAAJABQAAABDAQYAAAAKABMAAABDAQcAAAAKABQAAABEAQYAAAALABMAAABEAQcAAAALABQAAABFAQYAAAAMABMAAABFAQcAAAAMABQAAABGAQQAAAAcABAAAABGAQUAAAAcABEAAABGAQYAAAAcABIAAABHAQQAAAAdABAAAABHAQUAAAAdABEAAABHAQYAAAAdABIAAABIAQQAAAAeABAAAABIAQUAAAAeABEAAABIAQYAAAAeABIAAABJAQQAAAAfABAAAABJAQUAAAAfABEAAABJAQYAAAAfABIAAAA=")
+tile_set = ExtResource("7_kuq7b")
+
+[node name="LabArchitect" parent="." index="6" instance=ExtResource("6_drpgx")]
 position = Vector2(-8, 392)
 scale = Vector2(1, 1.071)
 collision_visibility_mode = 1
@@ -740,10 +778,10 @@ position = Vector2(2755, 260.504)
 position = Vector2(10, -5.60224)
 polygon = PackedVector2Array(233, -128.852, -271, 124.183, -285, 126.984, -279, 142.857, 244, -101.774, 247, -128.852)
 
-[node name="Desert_Background" parent="." index="6" instance=ExtResource("7_veiog")]
+[node name="Desert_Background" parent="." index="7" instance=ExtResource("7_veiog")]
 position = Vector2(5, 14)
 
-[node name="Enemy" type="Node" parent="." index="7"]
+[node name="Enemy" type="Node" parent="." index="8"]
 
 [node name="soldiers" type="Node" parent="Enemy" index="0"]
 
@@ -887,7 +925,7 @@ scale = Vector2(-0.15, -0.15)
 position = Vector2(2453, 1049)
 turrets = [NodePath("../turret_base_3"), NodePath("../turret_base_4"), NodePath("../turret_base_5")]
 
-[node name="AirNavs" type="Node2D" parent="." index="8"]
+[node name="AirNavs" type="Node2D" parent="." index="9"]
 
 [node name="AirNav1_Inside" type="NavigationRegion2D" parent="AirNavs" index="0"]
 navigation_polygon = SubResource("NavigationPolygon_htxyq")
@@ -895,7 +933,7 @@ navigation_polygon = SubResource("NavigationPolygon_htxyq")
 [node name="AirNav1_Above" type="NavigationRegion2D" parent="AirNavs" index="1"]
 navigation_polygon = SubResource("NavigationPolygon_nlf3e")
 
-[node name="GroundNavs" type="Node2D" parent="." index="9"]
+[node name="GroundNavs" type="Node2D" parent="." index="10"]
 
 [node name="GroundNav1_Inside" type="NavigationRegion2D" parent="GroundNavs" index="0"]
 navigation_polygon = SubResource("NavigationPolygon_pxxff")
@@ -923,7 +961,7 @@ end_position = Vector2(1944, 304)
 [node name="Underground1" type="NavigationRegion2D" parent="GroundNavs" index="5"]
 navigation_polygon = SubResource("NavigationPolygon_dxt6w")
 
-[node name="TutorialText" type="RichTextLabel" parent="." index="10"]
+[node name="TutorialText" type="RichTextLabel" parent="." index="11"]
 offset_left = 467.0
 offset_top = 377.0
 offset_right = 590.0
@@ -931,7 +969,7 @@ offset_bottom = 432.0
 text = "LMB:ATTACK
 ALT: LOCKON"
 
-[node name="TutorialText2" type="RichTextLabel" parent="." index="11"]
+[node name="TutorialText2" type="RichTextLabel" parent="." index="12"]
 offset_left = 978.0
 offset_top = 396.0
 offset_right = 1101.0
@@ -939,7 +977,7 @@ offset_bottom = 451.0
 text = "CTRL: Dodge
 SHIFT: Sprint"
 
-[node name="TutorialText3" type="RichTextLabel" parent="." index="12"]
+[node name="TutorialText3" type="RichTextLabel" parent="." index="13"]
 offset_left = 1599.0
 offset_top = 255.0
 offset_right = 1929.0
@@ -948,14 +986,14 @@ text = "RMB: Shoot (High Stagger Low Damage)
 Hold Shift: Wall Stick
 Space on wall: Wall Jump"
 
-[node name="TutorialText4" type="RichTextLabel" parent="." index="13"]
+[node name="TutorialText4" type="RichTextLabel" parent="." index="14"]
 offset_left = 2105.0
 offset_top = 242.0
 offset_right = 2435.0
 offset_bottom = 319.0
 text = "Shift + Space while locked on: Flip over"
 
-[node name="TutorialText5" type="RichTextLabel" parent="." index="14"]
+[node name="TutorialText5" type="RichTextLabel" parent="." index="15"]
 offset_left = 1522.0
 offset_top = 77.0
 offset_right = 1852.0
@@ -963,7 +1001,7 @@ offset_bottom = 154.0
 text = "Hold RMB: Aim
 Release: Shoot (Higher damage)"
 
-[node name="Bounderies3" type="Node" parent="." index="15"]
+[node name="Bounderies3" type="Node" parent="." index="16"]
 
 [node name="Bounderies" type="StaticBody2D" parent="Bounderies3" index="0"]
 position = Vector2(-1, 0)
@@ -983,16 +1021,16 @@ objective = NodePath("../../Enemy/MiniBosses/MechRanged")
 position = Vector2(24, 278.5)
 shape = SubResource("RectangleShape2D_jyauw")
 
-[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="16"]
+[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="17"]
 libraries = {
 &"": SubResource("AnimationLibrary_tnflb")
 }
 
-[node name="HitStop" type="Node" parent="." index="17"]
+[node name="HitStop" type="Node" parent="." index="18"]
 script = ExtResource("31_2mqv2")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
-[node name="Entries" type="Node" parent="." index="18"]
+[node name="Entries" type="Node" parent="." index="19"]
 
 [node name="StartingPos" type="Node2D" parent="Entries" index="0"]
 position = Vector2(2199, 244)
@@ -1077,7 +1115,7 @@ enter_to = "PrologueGarage1"
 [node name="LargeDoorSprite" parent="Entries/Entry10" index="1" instance=ExtResource("24_veiog")]
 position = Vector2(0, -69)
 
-[node name="DoorsAndSwitches" type="Node" parent="." index="19"]
+[node name="DoorsAndSwitches" type="Node" parent="." index="20"]
 
 [node name="Elevator" parent="DoorsAndSwitches" index="0" instance=ExtResource("21_7qfih")]
 position = Vector2(3627, 525)
@@ -1095,58 +1133,57 @@ h_offset = 0.485
 position = Vector2(1893, 1203)
 scale = Vector2(-1, 1)
 
-[node name="lab_door_switch" parent="DoorsAndSwitches" index="2" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
-position = Vector2(2072, 65)
-door_connect = NodePath("../Elevator")
-
-[node name="lab_door_switch2" parent="DoorsAndSwitches" index="3" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
+[node name="lab_door_switch2" parent="DoorsAndSwitches" index="2" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
 z_index = -1
 position = Vector2(680, 480)
 door_connect = NodePath("../Door")
 
-[node name="Door" parent="DoorsAndSwitches" index="4" instance=ExtResource("9_kuq7b")]
+[node name="Door" parent="DoorsAndSwitches" index="3" instance=ExtResource("9_kuq7b")]
 position = Vector2(736, 448)
 scale = Vector2(1.03607, 1.19587)
 
-[node name="lab_door_switch3" parent="DoorsAndSwitches" index="5" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
+[node name="lab_door_switch3" parent="DoorsAndSwitches" index="4" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
 position = Vector2(1040, 344)
 door_connect = NodePath("../Door2")
 
-[node name="Door2" parent="DoorsAndSwitches" index="6" instance=ExtResource("9_kuq7b")]
+[node name="Door2" parent="DoorsAndSwitches" index="5" instance=ExtResource("9_kuq7b")]
 z_index = -1
 position = Vector2(1984, 264)
 scale = Vector2(1, 1.18132)
 
-[node name="Door3" parent="DoorsAndSwitches" index="7" instance=ExtResource("9_kuq7b")]
+[node name="Door3" parent="DoorsAndSwitches" index="6" instance=ExtResource("9_kuq7b")]
 z_index = -1
 position = Vector2(5096, 1160)
 scale = Vector2(1, 1.18132)
 connected_switch = "Door3"
 
-[node name="Door4" parent="DoorsAndSwitches" index="8" instance=ExtResource("9_kuq7b")]
+[node name="Door4" parent="DoorsAndSwitches" index="7" instance=ExtResource("9_kuq7b")]
 z_index = -1
 position = Vector2(5833, 856)
 scale = Vector2(1, 1.18132)
 
-[node name="lab_door_switch4" parent="DoorsAndSwitches" index="9" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
+[node name="lab_door_switch4" parent="DoorsAndSwitches" index="8" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
 position = Vector2(5806, 889)
 door_connect = NodePath("../Door4")
 key_required = true
 key_type = "KeyCard"
 
-[node name="Doors" type="Node" parent="DoorsAndSwitches" index="10"]
+[node name="Doors" type="Node" parent="DoorsAndSwitches" index="9"]
 
 [node name="Door5" parent="DoorsAndSwitches/Doors" index="0" instance=ExtResource("9_kuq7b")]
 z_index = 1
 position = Vector2(5833, 1166)
 
-[node name="Switches" type="Node" parent="DoorsAndSwitches" index="11"]
+[node name="Switches" type="Node" parent="DoorsAndSwitches" index="10"]
 
-[node name="lab_door_switch" parent="DoorsAndSwitches/Switches" index="0" instance=ExtResource("8_2mqv2")]
+[node name="lab_door_switch" parent="DoorsAndSwitches/Switches" index="0" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
 z_index = 1
 position = Vector2(5803, 1198)
+door_connect = NodePath("../../Doors/Door5")
+key_required = true
+key_type = "KeyCard"
 
-[node name="Stairs" type="Node" parent="." index="20"]
+[node name="Stairs" type="Node" parent="." index="21"]
 
 [node name="StairsUnderground1" type="StaticBody2D" parent="Stairs" index="0"]
 position = Vector2(5215, 1214)
@@ -1155,9 +1192,9 @@ position = Vector2(5215, 1214)
 shape = SubResource("SegmentShape2D_w82j5")
 one_way_collision = true
 
-[node name="FallthroughPlatform" type="Node" parent="." index="21"]
+[node name="FallthroughPlatform" type="Node" parent="." index="22"]
 
-[node name="Spawning" type="Node" parent="." index="22"]
+[node name="Spawning" type="Node" parent="." index="23"]
 
 [node name="SpawnPoints" type="Node" parent="Spawning" index="0"]
 
@@ -1172,13 +1209,13 @@ position = Vector2(3520, 419)
 [node name="HeatSpawnFlag3" parent="Spawning/SpawnFlags" index="2" instance=ExtResource("22_22var")]
 position = Vector2(2129, 1101)
 
-[node name="QTEFlags" type="Node" parent="." index="23"]
+[node name="QTEFlags" type="Node" parent="." index="24"]
 
 [node name="QTE_Start" parent="QTEFlags" index="0" node_paths=PackedStringArray("cutscene_player") instance=ExtResource("24_4koma")]
 position = Vector2(1916, 713)
 cutscene_player = NodePath("../../CutscenePlayer")
 
-[node name="Paths" type="Node" parent="." index="24"]
+[node name="Paths" type="Node" parent="." index="25"]
 
 [node name="Path2D" type="Path2D" parent="Paths" index="0"]
 curve = SubResource("Curve2D_e3spa")
@@ -1192,14 +1229,22 @@ rotates = false
 update_rotation = false
 update_scale = false
 
-[node name="StartingPos" type="Node" parent="." index="25"]
+[node name="StartingPos" type="Node" parent="." index="26"]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
 position = Vector2(104, 426)
 
-[node name="PersistentDataHandler" type="Node" parent="." index="26"]
+[node name="PersistentDataHandler" type="Node" parent="." index="27"]
 script = ExtResource("24_w82j5")
 metadata/_custom_type_script = "uid://bv1k14bnql5dy"
+
+[node name="Pickups" type="Node" parent="." index="28"]
+
+[node name="Keys" type="Node" parent="Pickups" index="0"]
+
+[node name="ElevatorKeyCard" parent="Pickups/Keys" index="0" instance=ExtResource("33_j2fky")]
+position = Vector2(2112, 49)
+scale = Vector2(0.05, 0.05)
 
 [editable path="Enemy/MiniBosses/MechRanged"]
 [editable path="DoorsAndSwitches/Elevator"]
