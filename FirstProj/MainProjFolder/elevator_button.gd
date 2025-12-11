@@ -1,6 +1,7 @@
 class_name ElevatorButton extends TextureButton
 
 var button_text : String = "TEST"
+var floor_locked : bool = false
 @onready var rich_text_label: RichTextLabel = $PanelContainer/RichTextLabel
 signal floor
 
@@ -10,6 +11,9 @@ func _ready() -> void:
 
 
 func _on_pressed() -> void:
+	if floor_locked:
+		print("Floor locked")
+		return
 	var regex = RegEx.new()
 	regex.compile("\\d+")
 	var _floor_number_tmp = regex.search_all(button_text)
@@ -17,3 +21,7 @@ func _on_pressed() -> void:
 	for number in _floor_number_tmp:
 		_floor_number=int(number.get_string())
 	floor.emit(_floor_number)
+
+func toggle_floor_lock(value : bool) -> void:
+	floor_locked = value
+	print(floor_locked)

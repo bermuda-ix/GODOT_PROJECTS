@@ -1081,15 +1081,15 @@ position = Vector2(0, -69)
 
 [node name="Elevator" parent="DoorsAndSwitches" index="0" instance=ExtResource("21_7qfih")]
 position = Vector2(3627, 525)
-stops_ratio = Array[float]([0.0, 0.5, 1.0])
 
 [node name="Path2D" parent="DoorsAndSwitches/Elevator" index="0"]
 position = Vector2(-24, -2.8665426)
 scale = Vector2(1, 0.95550346)
 
 [node name="PathFollow2D" parent="DoorsAndSwitches/Elevator/Path2D" index="0"]
-position = Vector2(23, -424)
+position = Vector2(23.485, -424)
 progress = 427.00067
+h_offset = 0.485
 
 [node name="Elevator2" parent="DoorsAndSwitches" index="1" instance=ExtResource("21_7qfih")]
 position = Vector2(1893, 1203)

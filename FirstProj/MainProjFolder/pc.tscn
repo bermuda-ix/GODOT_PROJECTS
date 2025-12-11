@@ -1,4 +1,4 @@
-[gd_scene load_steps=662 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=667 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -262,11 +262,42 @@
 [ext_resource type="Script" uid="uid://tifgdq27rt6g" path="res://chars/turret.gd" id="211_i0kkw"]
 [ext_resource type="Texture2D" uid="uid://ctiea6xsh0wgr" path="res://Art_Components/misc/AimingBoundary.png" id="212_1o5op"]
 [ext_resource type="Texture2D" uid="uid://52ipqcs560aq" path="res://Art_Components/UI/ButtonPrompts/Audune Prompts Dark.png" id="218_f2824"]
+[ext_resource type="Texture2D" uid="uid://dc06lykcbclda" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Red/Button01.png" id="219_xxtsl"]
+[ext_resource type="FontFile" uid="uid://dl1kk08ojyafw" path="res://Art_Components/UI/Fonts/Pixica Fonts/Pixica Fonts/Pixica-Bold.ttf" id="220_fixwo"]
+[ext_resource type="Texture2D" uid="uid://h4mv56rlunfw" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Red/Button03.png" id="220_oxl1f"]
+[ext_resource type="Texture2D" uid="uid://dt53s3nhst2tc" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Red/Button02.png" id="221_22pp6"]
 [ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="230_pbr83"]
 [ext_resource type="PackedScene" uid="uid://dsj0t0v1bq42w" path="res://Component/projectiles/shotgun_bullet.tscn" id="231_ymji2"]
 [ext_resource type="Script" uid="uid://dc4c4jxhc2ky" path="res://heavy_dash_attack.gd" id="243_4jq81"]
 [ext_resource type="Script" uid="uid://dm8ejawcmedfr" path="res://heavy_attack_3.gd" id="244_m743w"]
 [ext_resource type="Script" uid="uid://dmttp4slbll7c" path="res://aim.gd" id="246_p73v2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dirf"]
+atlas = ExtResource("218_f2824")
+region = Rect2(128, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2824"]
+atlas = ExtResource("218_f2824")
+region = Rect2(131, 512, 90, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xxtsl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0dirf")
+}],
+"loop": true,
+"name": &"Enter",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2824")
+}],
+"loop": true,
+"name": &"Interact",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pqdiw"]
 atlas = ExtResource("3_81nyk")
@@ -3667,33 +3698,6 @@ scale_min = 1.2
 scale_max = 1.2
 anim_speed_min = 0.7
 anim_speed_max = 0.7
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0dirf"]
-atlas = ExtResource("218_f2824")
-region = Rect2(128, 256, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f2824"]
-atlas = ExtResource("218_f2824")
-region = Rect2(131, 512, 90, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_xxtsl"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0dirf")
-}],
-"loop": true,
-"name": &"Enter",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f2824")
-}],
-"loop": true,
-"name": &"Interact",
-"speed": 5.0
-}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
 size = Vector2(15.989, 41.2086)
@@ -7722,7 +7726,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/InteractPromptSprite:position")
+tracks/0/path = NodePath("InteractPromptSprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -7734,7 +7738,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D/InteractPromptSprite:self_modulate")
+tracks/1/path = NodePath("InteractPromptSprite:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -7746,7 +7750,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D/InteractPromptSprite:animation")
+tracks/2/path = NodePath("InteractPromptSprite:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -7762,7 +7766,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/InteractPromptSprite:position")
+tracks/0/path = NodePath("InteractPromptSprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -7774,7 +7778,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D/InteractPromptSprite:self_modulate")
+tracks/1/path = NodePath("InteractPromptSprite:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -7786,7 +7790,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D/InteractPromptSprite:animation")
+tracks/2/path = NodePath("InteractPromptSprite:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -7801,7 +7805,7 @@ resource_name = "RESET"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/InteractPromptSprite:self_modulate")
+tracks/0/path = NodePath("InteractPromptSprite:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -7813,7 +7817,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D/InteractPromptSprite:position")
+tracks/1/path = NodePath("InteractPromptSprite:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -7825,7 +7829,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D/InteractPromptSprite:animation")
+tracks/2/path = NodePath("InteractPromptSprite:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -7834,12 +7838,65 @@ tracks/2/keys = {
 "update": 1,
 "values": [&"Interact"]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/InteractUI/PanelContainer:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D/InteractUI/PanelContainer:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_g2ube"]
+resource_name = "exit_popup"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/InteractUI/PanelContainer:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D/InteractUI/PanelContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rml44"]
 _data = {
 &"Enter": SubResource("Animation_22pp6"),
 &"Interact": SubResource("Animation_rml44"),
-&"RESET": SubResource("Animation_oxl1f")
+&"RESET": SubResource("Animation_oxl1f"),
+&"exit_popup": SubResource("Animation_g2ube")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oupih"]
@@ -7858,6 +7915,13 @@ script = ExtResource("1_x210m")
 movement_data = ExtResource("2_4grev")
 health = NodePath("Health")
 hitbox = NodePath("AnimatedSprite2D/HitBox")
+
+[node name="InteractPromptSprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+position = Vector2(2, -40)
+scale = Vector2(0.1875, 0.1796875)
+sprite_frames = SubResource("SpriteFrames_xxtsl")
+animation = &"Interact"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -8143,20 +8207,52 @@ speed_scale = 2.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_cdmbu")
 
-[node name="InteractPromptSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
-self_modulate = Color(1, 1, 1, 0)
-position = Vector2(2, -40)
-scale = Vector2(0.1875, 0.1796875)
-sprite_frames = SubResource("SpriteFrames_xxtsl")
-animation = &"Interact"
-
 [node name="InteractUI" type="Control" parent="AnimatedSprite2D"]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 0
-offset_left = -48.0
-offset_top = -40.0
-offset_right = -8.0
+offset_left = -19.0
+offset_top = -79.0
+offset_right = 21.0
+offset_bottom = -39.0
+
+[node name="PanelContainer" type="PanelContainer" parent="AnimatedSprite2D/InteractUI"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(20, 5)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = 28.0
+offset_right = -9.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureButton" type="TextureButton" parent="AnimatedSprite2D/InteractUI/PanelContainer"]
+custom_minimum_size = Vector2(20, 5)
+layout_mode = 2
+texture_normal = ExtResource("219_xxtsl")
+texture_pressed = ExtResource("220_oxl1f")
+texture_hover = ExtResource("221_22pp6")
+texture_focused = ExtResource("221_22pp6")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="CenterContainer" type="CenterContainer" parent="AnimatedSprite2D/InteractUI/PanelContainer/TextureButton"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 0.99999994
+offset_right = 29.0
+offset_bottom = 14.0
+scale = Vector2(0.4754526, 0.38959828)
+
+[node name="Label" type="Label" parent="AnimatedSprite2D/InteractUI/PanelContainer/TextureButton/CenterContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("220_fixwo")
+text = "EXIT"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.5, -9.5)
@@ -8532,6 +8628,7 @@ pc = NodePath("../..")
 [connection signal="body_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_body_entered"]
 [connection signal="parried" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="parried_success" from="AnimatedSprite2D/ParryBox" to="." method="_on_parry_box_parried_success"]
+[connection signal="pressed" from="AnimatedSprite2D/InteractUI/PanelContainer/TextureButton" to="." method="_on_texture_button_pressed"]
 [connection signal="aura_reset" from="ClashPower" to="." method="_on_clash_power_aura_reset"]
 [connection signal="increase_aura" from="ClashPower" to="." method="_on_clash_power_increase_aura"]
 [connection signal="timeout" from="ClashPower/ClashTimer" to="." method="_on_clash_timer_timeout"]

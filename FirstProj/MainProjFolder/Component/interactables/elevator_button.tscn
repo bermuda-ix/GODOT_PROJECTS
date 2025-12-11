@@ -7,6 +7,8 @@
 [ext_resource type="FontFile" uid="uid://dl1kk08ojyafw" path="res://Art_Components/UI/Fonts/Pixica Fonts/Pixica Fonts/Pixica-Bold.ttf" id="3_jkxs5"]
 
 [node name="ElevatorButton" type="TextureButton"]
+process_mode = 1
+z_index = 3
 custom_minimum_size = Vector2(60, 25)
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,6 +20,7 @@ grow_vertical = 2
 rotation = -8.329104e-05
 size_flags_horizontal = 6
 size_flags_vertical = 6
+mouse_filter = 1
 texture_normal = ExtResource("1_bi1pi")
 texture_pressed = ExtResource("2_jamce")
 texture_hover = ExtResource("3_1j1wh")

@@ -78,6 +78,7 @@ signal door_opened
 
 #Interactables
 signal open_interact_menu
+signal close_interact_menu
 
 #Inventory update
 signal add_inventory

@@ -167,6 +167,7 @@ signal special_atk_qte
 signal no_input_qte
 
 @onready var interact_ready : bool = false
+@onready var interact_menu_open : bool = false
 
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var attack_timer = $AttackTimer
@@ -488,6 +489,7 @@ func _process(_delta):
 	lockon()
 	enter_door()
 	climb_stairs()
+	interact()
 	
 	#Input for testing various things
 	#if Input.is_action_just_pressed("DEBUG_KEY"):
@@ -538,14 +540,15 @@ func _physics_process(delta):
 
 		var wall_hold = false
 		if(state_machine.get_active_state()!=dodge_state and parry_stance==false and state_machine.get_active_state()!=flip_state):
-			handle_wall_jump(wall_hold, delta)
-			jump(input_axis, delta)
-			handle_acceleration(input_axis, delta)
-			if heavy_attack_flag:
-				handle_air_acceleration(input_axis, delta)
-			apply_friction(input_axis, delta)
-			apply_air_resistance(input_axis, delta)
-			shotgun_free_rotate()
+			if not interact_menu_open:
+				handle_wall_jump(wall_hold, delta)
+				jump(input_axis, delta)
+				handle_acceleration(input_axis, delta)
+				if heavy_attack_flag:
+					handle_air_acceleration(input_axis, delta)
+				apply_friction(input_axis, delta)
+				apply_air_resistance(input_axis, delta)
+				shotgun_free_rotate()
 			sp_atk()
 		
 		
@@ -1290,7 +1293,15 @@ func _on_interactable_detector_area_exited(area: Area2D) -> void:
 func interact() -> void:
 	if interact_ready and Input.is_action_just_pressed("Interact"):
 		Events.open_interact_menu.emit()
-#
+
+func open_interact_menu():
+	interact_menu_open=true
+	interact_prompt_player.play("RESET")
+	interact_prompt_player.play("exit_popup")
+	
+func close_interact_menu():
+	interact_menu_open=false
+
 func get_state() -> String:
 	return cur_state
 func get_state_enum() -> LimboState:
@@ -1960,3 +1971,7 @@ func qte_input():
 		hit_stop.end_hit_stop()
 	else:
 		pass
+
+
+func _on_texture_button_pressed() -> void:
+	Events.close_interact_menu.emit()

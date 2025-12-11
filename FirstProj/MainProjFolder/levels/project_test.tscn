@@ -289,6 +289,7 @@ offset_left = -26.0
 offset_top = -31.0
 offset_right = -26.0
 offset_bottom = -31.0
+mouse_filter = 2
 
 [node name="PauseMenu" parent="CanvasLayer" index="4" instance=ExtResource("2_t1ldw")]
 process_mode = 3
@@ -463,7 +464,7 @@ position = Vector2(476, 73)
 scale = Vector2(0.2, 0.2)
 
 [node name="Elevator" parent="." index="30" instance=ExtResource("8_01tlq")]
-position = Vector2(927, 109)
+position = Vector2(931, 112)
 
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]
