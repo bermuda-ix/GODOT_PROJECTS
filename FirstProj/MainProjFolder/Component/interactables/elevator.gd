@@ -15,8 +15,9 @@ extends Node2D
 
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-
+@export_category("Elevator Variables")
 @export var automatic : bool = false
+@export var speed : int = 1
 
 #floors
 @export_category("Floor Variables")
@@ -99,9 +100,9 @@ func choose_floor(_floor : int) -> void:
 func move_to_floor():
 	if open_flag and not stopped:
 		if going_up:
-				path_follow_2d.progress +=2
+				path_follow_2d.progress +=speed
 		else:
-			path_follow_2d.progress -=2
+			path_follow_2d.progress -=speed
 		pause()
 	if automatic:
 		up_or_down()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dpxyvs3nt3yix"]
+[gd_scene load_steps=20 format=3 uid="uid://dpxyvs3nt3yix"]
 
 [ext_resource type="Texture2D" uid="uid://cm36bhcpc0hsc" path="res://Art_Components/tile_maps/_PNG/1. main platforms.png" id="1_4nnvn"]
 [ext_resource type="Script" uid="uid://ce10ghjlr801m" path="res://Component/interactables/elevator.gd" id="1_ophm4"]
@@ -13,6 +13,17 @@ point_count = 2
 [sub_resource type="AtlasTexture" id="AtlasTexture_p7nof"]
 atlas = ExtResource("1_4nnvn")
 region = Rect2(905.675, 1.37667, 12.4556, 32.7833)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jbx0s"]
+atlas = ExtResource("1_4nnvn")
+region = Rect2(905.675, 1.37667, 12.4556, 32.7833)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c7n2o"]
+atlas = ExtResource("1_4nnvn")
+region = Rect2(905.675, 1.37667, 12.4556, 32.7833)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rkleh"]
+size = Vector2(11, 62)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rkleh"]
 atlas = ExtResource("1_4nnvn")
@@ -82,6 +93,54 @@ tracks/3/keys = {
 "update": 0,
 "values": [Vector2(17.5, 6)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSpriteLower:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSprite:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorCollision:disabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Path2D/PathFollow2D/StaticBody2D/ButtonPanelSprite/ButtonPanel/CollisionShape2D:disabled")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_4h0vo"]
 resource_name = "arrived_down"
@@ -98,6 +157,54 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(-46, -57), Vector2(-46, -55), Vector2(-46, -57)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSpriteLower:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.43333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 61), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.13333334, 0.43333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 32), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorCollision:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.46666667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Path2D/PathFollow2D/StaticBody2D/ButtonPanelSprite/ButtonPanel/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.46666667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_rkleh"]
 resource_name = "arrived_up"
@@ -113,6 +220,54 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(-46, -57), Vector2(-46, -60), Vector2(-46, -57)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSpriteLower:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.43333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 61), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.13333334, 0.43333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 32), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorCollision:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.46666667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Path2D/PathFollow2D/StaticBody2D/ButtonPanelSprite/ButtonPanel/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.46666667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_0hm8f"]
@@ -184,6 +339,54 @@ tracks/1/keys = {
 "method": &"begin_moving"
 }]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSpriteLower:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 61)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 32)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorCollision:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Path2D/PathFollow2D/StaticBody2D/ButtonPanelSprite/ButtonPanel/CollisionShape2D:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rkleh"]
 _data = {
@@ -215,6 +418,22 @@ position = Vector2(-46, -57)
 position = Vector2(44, 5)
 texture = SubResource("AtlasTexture_p7nof")
 offset = Vector2(-43.0768, -24.3987)
+
+[node name="Door" type="StaticBody2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+position = Vector2(44, 5)
+
+[node name="DoorSprite" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D/Door"]
+texture = SubResource("AtlasTexture_jbx0s")
+offset = Vector2(-43.0768, -24.3987)
+
+[node name="DoorSpriteLower" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D/Door"]
+texture = SubResource("AtlasTexture_c7n2o")
+offset = Vector2(-43.0768, -24.3987)
+
+[node name="DoorCollision" type="CollisionShape2D" parent="Path2D/PathFollow2D/StaticBody2D/Door"]
+position = Vector2(-42.5, 23)
+shape = SubResource("RectangleShape2D_rkleh")
+disabled = true
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Path2D/PathFollow2D/StaticBody2D"]
 position = Vector2(9, 6)

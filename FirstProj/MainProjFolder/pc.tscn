@@ -7909,6 +7909,7 @@ size = Vector2(21, 41)
 collision_layer = 2
 collision_mask = 35965961
 floor_stop_on_slope = false
+floor_constant_speed = true
 floor_max_angle = 0.872665
 floor_snap_length = 2.0
 script = ExtResource("1_x210m")
