@@ -15,7 +15,7 @@ emission_sphere_radius = 0.5
 gravity = Vector3(0, 0, 0)
 
 [node name="ShotgunBullet" type="RigidBody2D" groups=["PlayerBullet"]]
-collision_layer = 4160
+collision_layer = 8392768
 collision_mask = 16777489
 mass = 0.001
 gravity_scale = 0.0

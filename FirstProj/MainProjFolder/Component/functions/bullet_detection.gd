@@ -8,3 +8,7 @@ func _ready() -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	bullet_detected.emit()
+
+
+func _on_body_entered(body: Node2D) -> void:
+	bullet_detected.emit()

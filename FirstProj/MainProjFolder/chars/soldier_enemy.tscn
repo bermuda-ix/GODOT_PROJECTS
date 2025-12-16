@@ -1099,7 +1099,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0.3),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [0.5, 0.3],
+"args": [0.2, 0.3],
 "method": &"hit_stop"
 }]
 }
@@ -1714,7 +1714,7 @@ size = Vector2(16, 12)
 size = Vector2(38, 59)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4yjj7"]
-radius = 23.086792
+radius = 34.0
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_x6bu2"]
 
@@ -1836,6 +1836,7 @@ position = Vector2(0, -13.5)
 shape = SubResource("RectangleShape2D_0c6of")
 
 [node name="BulletDetection" parent="." index="24" instance=ExtResource("102_bmgxt")]
+position = Vector2(-11, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection" index="0"]
 position = Vector2(-6, 0)
@@ -1900,7 +1901,8 @@ script = ExtResource("84_b31jy")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 csm = NodePath("../CombatStateMachine")
-vision_range = 300
+active = false
+vision_range = 400
 player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 stay_on = true
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
@@ -2077,12 +2079,17 @@ metadata/_custom_type_script = "uid://fi6gye6mlsb6"
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
 [connection signal="body_exited" from="AttackRange" to="." method="_on_attack_range_body_exited"]
+[connection signal="body_entered" from="BulletDetection" to="." method="_on_bullet_detection_body_entered"]
 [connection signal="bullet_detected" from="BulletDetection" to="." method="_on_bullet_detection_bullet_detected"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]
+[connection signal="entered" from="LimboHSM/ATTACK" to="." method="_on_attack_entered"]
 [connection signal="exited" from="LimboHSM/COUNTER" to="." method="_on_counter_exited"]
 [connection signal="updated" from="LimboHSM/COUNTER" to="." method="_on_counter_updated"]
 [connection signal="exited" from="LimboHSM/COUNTER/KickCounter" to="." method="_on_kick_counter_exited"]
+[connection signal="entered" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_entered"]
+[connection signal="exited" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_exited"]
 [connection signal="exited" from="LimboHSM/STAGGERED" to="." method="_on_staggered_exited"]

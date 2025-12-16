@@ -5,6 +5,7 @@ extends Node
 @export var sm : LimboHSM
 @export var csm : LimboHSM
 @export var always_on : bool = false
+@export var active : bool = true
 @export var combat_state_active : bool = true
 @export var vision_range : int = 200
 @export var player_tracking : RayCast2D
@@ -22,6 +23,8 @@ func _ready() -> void:
 
 
 func handle_vision():
+	if not active:
+		return
 	if always_on:
 		player_found=true
 	else:

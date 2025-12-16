@@ -201,7 +201,9 @@ func _init_state_machine():
 	state_machine.add_transition(counter_sm, attack, &"counter_end")
 	state_machine.add_transition(shooting, bulletdodge, &"bullet_dodge")
 	state_machine.add_transition(chasing, bulletdodge, &"bullet_dodge")
+	state_machine.add_transition(attack, bulletdodge, &"bullet_dodge")
 	state_machine.add_transition(bulletdodge, chasing, &"finish_bullet_dodge")
+	state_machine.add_transition(bulletdodge, attack, &"resume_attack")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -301,6 +303,8 @@ func _physics_process(delta):
 		velocity.x = current_speed + knockback.x
 	else:
 		velocity.x= knockback.x
+	if state_machine.get_active_state()==death:
+		velocity.y=0
 	move_and_slide()
 	
 func apply_gravity(delta : float) -> void:
@@ -520,6 +524,8 @@ func _on_turret_shoot_bullet() -> void:
 	shoot_handler.shoot_bullet()
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	if not player_found:
+		vision_handler.active=false
 	if state_machine.get_active_state()==death:
 		queue_free()
 
@@ -537,11 +543,13 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	h_bar.text=str(current.name)
+	print(current.name)
 	if current==jump:
 		if previous==attack:
 			print("down attack")
 
-
+func _on_attack_entered() -> void:
+	bt_player.blackboard.set_var("attack_mode", true)
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	hit_stop.hit_stop(0.05,0.1)
@@ -581,3 +589,20 @@ func _on_staggered_exited() -> void:
 func _on_bullet_detection_bullet_detected() -> void:
 	print(state_machine.get_active_state())
 	state_machine.dispatch(&"bullet_dodge")
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	vision_handler.active=true
+
+
+func _on_bullet_detection_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.
+
+
+func _on_bulletdodge_entered() -> void:
+	bt_player.active=false
+
+
+func _on_bulletdodge_exited() -> void:
+	bt_player.active=true
+	

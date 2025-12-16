@@ -13,7 +13,10 @@ func _enter() -> void:
 func _update(delta: float) -> void:
 	await animation_player.animation_finished
 	animation_player.speed_scale=1
-	state_machine.dispatch(&"finish_bullet_dodge")
+	if state_machine.get_active_state()==actor.attack:
+		state_machine.dispatch(&"resume_attack")
+	else:
+		state_machine.dispatch(&"finish_bullet_dodge")
 
 func _exit() -> void:
 	pass
