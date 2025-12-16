@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://cg3hpqv70xol4"]
+[gd_scene load_steps=22 format=4 uid="uid://cg3hpqv70xol4"]
 
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="1_q6ikt"]
 [ext_resource type="TileSet" uid="uid://duvitr2o4lrsy" path="res://levels/level_components/factory_tile_set_building_platform.tres" id="2_6kxig"]
@@ -8,6 +8,16 @@
 [ext_resource type="PackedScene" uid="uid://d3gnpvd8ye3rt" path="res://Art_Components/LevelProps/large_door_sprite.tscn" id="4_vx67w"]
 [ext_resource type="Texture2D" uid="uid://cp27q8n7gwf8r" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factory.png" id="5_j4lln"]
 [ext_resource type="PackedScene" uid="uid://byekm646ropyj" path="res://Component/interactables/shutdown_mech.tscn" id="6_0sxt8"]
+[ext_resource type="PackedScene" uid="uid://bngaepo4ygpkl" path="res://Art_Components/LevelProps/door_sprite2.tscn" id="8_2v7ky"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_j4lln"]
+b = Vector2(540, -1)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_2v7ky"]
+b = Vector2(174, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_f1vse"]
+b = Vector2(131, -65)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2v7ky"]
 texture = ExtResource("5_j4lln")
@@ -10946,10 +10956,40 @@ tile_set = ExtResource("4_bm3wk")
 tile_map_data = PackedByteArray("AAAAAAcAAAAHAA8AAAABAAcAAAAIAA8AAAACAAcAAAAJAA8AAAADAAcAAAAHAA8AAAAEAAcAAAAIAA8AAAAFAAcAAAAJAA8AAAAGAAcAAAAHAA8AAAAHAAcAAAAIAA8AAAAIAAcAAAAJAA8AAAAJAAcAAAAHAA8AAAAKAAcAAAAIAA8AAAALAAcAAAAJAA8AAAAMAAcAAAAHAA8AAAANAAcAAAAHAA8AAAAOAAcAAAAIAA8AAAAPAAcAAAAJAA8AAAA=")
 tile_set = ExtResource("3_6kxig")
 
-[node name="Props4" type="TileMapLayer" parent="TileMapLayers"]
+[node name="SecondLevelPlatform" type="TileMapLayer" parent="TileMapLayers"]
 z_index = -1
-tile_map_data = PackedByteArray("AAAAAAcAAAAHAA8AAAABAAcAAAAIAA8AAAACAAcAAAAJAA8AAAADAAcAAAAHAA8AAAAEAAcAAAAIAA8AAAAFAAcAAAAVAAYAAAAGAAcAAAAHAA8AAAAHAAcAAAAIAA8AAAAIAAcAAAAJAA8AAAAJAAcAAAAHAA8AAAAKAAcAAAAIAA8AAAALAAcAAAAJAA8AAAAMAAcAAAAHAA8AAAANAAcAAAAHAA8AAAAOAAcAAAAIAA8AAAAPAAcAAAAJAA8AAAAQAAcAAAAFAA8AAAD//wcAAAALAA8AAAAFAAgAAAAYAAcAAAAFAAkAAAAYAAgAAAAFAAoAAAAWAAoAAAA=")
+tile_map_data = PackedByteArray("AAAAAAcAAAAHAA8AAAABAAcAAAAIAA8AAAACAAcAAAAJAA8AAAADAAcAAAAHAA8AAAAEAAcAAAAIAA8AAAAFAAcAAAAVAAYAAAAGAAcAAAAHAA8AAAAHAAcAAAAIAA8AAAAIAAcAAAAJAA8AAAAJAAcAAAAHAA8AAAAKAAcAAAAIAA8AAAALAAcAAAAJAA8AAAAMAAcAAAAHAA8AAAANAAcAAAAHAA8AAAAOAAcAAAAIAA8AAAAPAAcAAAAJAA8AAAAQAAcAAAAFAA8AAAD//wcAAAALAA8AAAAFAAgAAAAYAAcAAAAFAAkAAAAYAAgAAAAFAAoAAAAWAAoAAAAIAAUAAAADAA4AAAAJAAUAAAAEAA4AAAAKAAUAAAANAA4AAAALAAUAAAALAA8AAAAHAAUAAAAFAA8AAAAGAAUAAAABAAgAAAAEAAYAAAABAAgAAAADAAYAAAAAAAgAAAAFAAUAAAAAAAgAAAAFAAYAAAARAAMAAAA=")
 tile_set = ExtResource("3_6kxig")
+collision_enabled = false
+
+[node name="AbovePlatform" type="StaticBody2D" parent="TileMapLayers/SecondLevelPlatform"]
+collision_layer = 524288
+collision_mask = 1048578
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayers/SecondLevelPlatform/AbovePlatform"]
+position = Vector2(-22, 226)
+shape = SubResource("SegmentShape2D_j4lln")
+one_way_collision = true
+
+[node name="AbovePlatform2" type="StaticBody2D" parent="TileMapLayers/SecondLevelPlatform"]
+position = Vector2(232, -65)
+collision_layer = 524288
+collision_mask = 1048578
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayers/SecondLevelPlatform/AbovePlatform2"]
+position = Vector2(-22, 226)
+shape = SubResource("SegmentShape2D_2v7ky")
+one_way_collision = true
+
+[node name="AbovePlatform3" type="StaticBody2D" parent="TileMapLayers/SecondLevelPlatform"]
+position = Vector2(79, 212)
+collision_layer = 524288
+collision_mask = 1048578
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayers/SecondLevelPlatform/AbovePlatform3"]
+position = Vector2(-4, 14)
+shape = SubResource("SegmentShape2D_f1vse")
+one_way_collision = true
 
 [node name="Props5" type="TileMapLayer" parent="TileMapLayers"]
 z_index = -2
@@ -10982,9 +11022,21 @@ tile_set = SubResource("TileSet_1d63f")
 [node name="Entry" parent="." instance=ExtResource("3_0sxt8")]
 position = Vector2(407, 232)
 location_override = true
-enter_to = "RETURN"
+enter_to = "PrologueLvl"
+exit = 8
 
 [node name="LargeDoorSprite" parent="Entry" instance=ExtResource("4_vx67w")]
+
+[node name="EntryAbove" parent="." instance=ExtResource("3_0sxt8")]
+position = Vector2(304, 136)
+entry = 1
+location_override = true
+enter_to = "PrologueLvl"
+exit = 11
+
+[node name="DoorSprite2" parent="EntryAbove" instance=ExtResource("8_2v7ky")]
+z_index = -1
+position = Vector2(-33, -69)
 
 [node name="ShutdownMech" parent="." instance=ExtResource("6_0sxt8")]
 position = Vector2(105, 270)

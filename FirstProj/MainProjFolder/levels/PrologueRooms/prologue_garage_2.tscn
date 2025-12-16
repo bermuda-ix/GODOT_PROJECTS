@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://c8il70paf1pfv"]
+[gd_scene load_steps=26 format=4 uid="uid://c8il70paf1pfv"]
 
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="1_gyxjk"]
 [ext_resource type="TileSet" uid="uid://duvitr2o4lrsy" path="res://levels/level_components/factory_tile_set_building_platform.tres" id="2_4vf8j"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cp27q8n7gwf8r" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factory.png" id="5_gyxjk"]
 [ext_resource type="PackedScene" uid="uid://d3gnpvd8ye3rt" path="res://Art_Components/LevelProps/large_door_sprite.tscn" id="6_26xit"]
 [ext_resource type="PackedScene" uid="uid://byekm646ropyj" path="res://Component/interactables/shutdown_mech.tscn" id="7_pm3xw"]
+[ext_resource type="PackedScene" uid="uid://bngaepo4ygpkl" path="res://Art_Components/LevelProps/door_sprite2.tscn" id="8_4vf8j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4vf8j"]
 texture = ExtResource("5_gyxjk")
@@ -21765,6 +21766,15 @@ texture = ExtResource("5_gyxjk")
 [sub_resource type="TileSet" id="TileSet_pxdtf"]
 sources/0 = SubResource("TileSetAtlasSource_kg8vh")
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_gyxjk"]
+b = Vector2(540, -1)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_4vf8j"]
+b = Vector2(174, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_2mp31"]
+b = Vector2(131, -65)
+
 [sub_resource type="Gradient" id="Gradient_bm3wk"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
@@ -21857,12 +21867,58 @@ scale = Vector2(0.3, 0.3)
 tile_map_data = PackedByteArray("AAArAD8AAAAEABcAAAArAEAAAAAEABgAAAAsAD8AAAAFABcAAAAsAEAAAAAFABgAAAAsAEEAAAAFABkAAAAsAEIAAAAFABoAAAAsAEMAAAAFABsAAAAtAD8AAAAGABcAAAAtAEAAAAAGABgAAAAtAEEAAAAGABkAAAAtAEIAAAAGABoAAAAtAEMAAAAGABsAAAAuAD8AAAAkABoAAAAuAEAAAAAHABgAAAAuAEEAAAAHABkAAAAuAEIAAAAHABoAAAAuAEMAAAAHABsAAAAvAD8AAAAlABoAAAAvAEAAAAAIABgAAAAwAD8AAAAmABoAAAAwAEAAAAAJABgAAAAxAD8AAAAnABoAAAAxAEAAAAAKABgAAAAyAD8AAAAoABoAAAAyAEAAAAALABgAAAAzAD8AAAApABoAAAAzAEAAAAAMABgAAAA0AD8AAAANABcAAAA0AEAAAAANABgAAAA1AD8AAAAOABcAAAA1AEAAAAAOABgAAAA2AD8AAAAOABEAAAA2AEAAAAAOABIAAAA3AD8AAAAPABEAAAA3AEAAAAAPABIAAAA4AD8AAAAQABEAAAA4AEAAAAAQABIAAAA4AEEAAAAQABMAAAA4AEIAAAARABoAAAA4AEMAAAARABsAAAA5AD8AAAASABcAAAA5AEAAAAASABgAAAA5AEEAAAASABkAAAA5AEIAAAASABoAAAA5AEMAAAASABsAAAA6AD8AAAATABcAAAA6AEAAAAATABgAAAA6AEEAAAATABkAAAA6AEIAAAATABoAAAA6AEMAAAATABsAAAA7AD8AAAAUABcAAAA7AEAAAAAUABgAAAA1AEEAAAANABMAAAA1AEIAAAANABQAAAA1AEMAAAANABUAAAA2AD4AAAAOABAAAAA2AEEAAAAOABMAAAA2AEIAAAAOABQAAAA2AEMAAAAOABUAAAA3AD4AAAAPABAAAAA3AEEAAAAPABMAAAA3AEIAAAAPABQAAAA3AEMAAAAPABUAAAA4AD4AAAAQABAAAAAuADoAAAAkABUAAAAuADsAAAAkABYAAAAuADwAAAAkABcAAAAuAD0AAAAkABgAAAAuAD4AAAAkABkAAAAvADoAAAAlABUAAAAvADsAAAAlABYAAAAvADwAAAAlABcAAAAvAD0AAAAlABgAAAAvAD4AAAAlABkAAAAwADoAAAAmABUAAAAwADsAAAAmABYAAAAwADwAAAAmABcAAAAwAD0AAAAmABgAAAAwAD4AAAAmABkAAAAxADoAAAAnABUAAAAxADsAAAAnABYAAAAxADwAAAAnABcAAAAxAD0AAAAnABgAAAAxAD4AAAAnABkAAAAyADoAAAAoABUAAAAyADsAAAAoABYAAAAyADwAAAAoABcAAAAyAD0AAAAoABgAAAAyAD4AAAAoABkAAAAzADoAAAApABUAAAAzADsAAAApABYAAAAzADwAAAApABcAAAAzAD0AAAApABgAAAAzAD4AAAApABkAAAA=")
 tile_set = SubResource("TileSet_pxdtf")
 
+[node name="SecondLevelPlatform" type="TileMapLayer" parent="TileMapLayers"]
+z_index = -1
+tile_map_data = PackedByteArray("AAAAAAcAAAAHAA8AAAABAAcAAAAIAA8AAAACAAcAAAAJAA8AAAADAAcAAAAHAA8AAAAEAAcAAAAIAA8AAAAFAAcAAAAVAAYAAAAGAAcAAAAHAA8AAAAHAAcAAAAIAA8AAAAIAAcAAAAJAA8AAAAJAAcAAAAHAA8AAAAKAAcAAAAIAA8AAAALAAcAAAAJAA8AAAAMAAcAAAAHAA8AAAANAAcAAAAHAA8AAAAOAAcAAAAIAA8AAAAPAAcAAAAJAA8AAAAQAAcAAAAFAA8AAAD//wcAAAALAA8AAAAFAAgAAAAYAAcAAAAFAAkAAAAYAAgAAAAFAAoAAAAWAAoAAAAIAAUAAAADAA4AAAAJAAUAAAAEAA4AAAAKAAUAAAANAA4AAAALAAUAAAALAA8AAAAHAAUAAAAFAA8AAAAGAAUAAAABAAgAAAAEAAYAAAABAAgAAAADAAYAAAAAAAgAAAAFAAUAAAAAAAgAAAAFAAYAAAARAAMAAAA=")
+tile_set = ExtResource("3_2mp31")
+collision_enabled = false
+
+[node name="AbovePlatform" type="StaticBody2D" parent="TileMapLayers/SecondLevelPlatform"]
+collision_layer = 524288
+collision_mask = 1048578
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayers/SecondLevelPlatform/AbovePlatform"]
+position = Vector2(-22, 226)
+shape = SubResource("SegmentShape2D_gyxjk")
+one_way_collision = true
+
+[node name="AbovePlatform2" type="StaticBody2D" parent="TileMapLayers/SecondLevelPlatform"]
+position = Vector2(232, -65)
+collision_layer = 524288
+collision_mask = 1048578
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayers/SecondLevelPlatform/AbovePlatform2"]
+position = Vector2(-22, 226)
+shape = SubResource("SegmentShape2D_4vf8j")
+one_way_collision = true
+
+[node name="AbovePlatform3" type="StaticBody2D" parent="TileMapLayers/SecondLevelPlatform"]
+position = Vector2(79, 212)
+collision_layer = 524288
+collision_mask = 1048578
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayers/SecondLevelPlatform/AbovePlatform3"]
+position = Vector2(-4, 14)
+shape = SubResource("SegmentShape2D_2mp31")
+one_way_collision = true
+
 [node name="Entry" parent="." instance=ExtResource("5_bhjd8")]
-position = Vector2(407, 232)
+position = Vector2(409, 232)
 location_override = true
-enter_to = "RETURN"
+enter_to = "PrologueLvl"
+exit = 9
 
 [node name="LargeDoorSprite" parent="Entry" instance=ExtResource("6_26xit")]
+
+[node name="Entry2" parent="." instance=ExtResource("5_bhjd8")]
+position = Vector2(295, 126)
+location_override = true
+enter_to = "PrologueLvl"
+exit = 11
+
+[node name="DoorSprite2" parent="Entry2" instance=ExtResource("8_4vf8j")]
+z_index = -1
+position = Vector2(-33, -61)
 
 [node name="ShutdownMech" parent="." instance=ExtResource("7_pm3xw")]
 position = Vector2(105, 270)

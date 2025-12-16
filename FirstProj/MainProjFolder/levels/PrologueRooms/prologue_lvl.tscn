@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=4 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=59 format=4 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_w82j5"]
 [ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_mb6gy"]
@@ -8,8 +8,10 @@
 [ext_resource type="TileSet" uid="uid://d3ogb8uexylqk" path="res://Art_Components/tile_maps/tile_layers/lab_props.tres" id="7_kuq7b"]
 [ext_resource type="PackedScene" uid="uid://blsmgy883jm3a" path="res://levels/level_backgrounds/desert_background.tscn" id="7_veiog"]
 [ext_resource type="PackedScene" uid="uid://bt6url6xt1nqm" path="res://Component/interactables/lab_door_switch.tscn" id="8_2mqv2"]
+[ext_resource type="Texture2D" uid="uid://clyivendy3q3w" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding.png" id="9_f1jjf"]
 [ext_resource type="PackedScene" uid="uid://b8htmq8u3ykss" path="res://Component/interactables/door.tscn" id="9_kuq7b"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="10_j2fky"]
+[ext_resource type="Texture2D" uid="uid://d4ixead72khtg" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding2.png" id="10_rfxm3"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="11_52g4u"]
 [ext_resource type="PackedScene" uid="uid://b5d2nkkrrcixy" path="res://chars/soldier_enemy.tscn" id="12_f1jjf"]
 [ext_resource type="PackedScene" uid="uid://dn0fhusgltn4m" path="res://chars/heavy_soldier.tscn" id="13_rfxm3"]
@@ -778,6 +780,20 @@ position = Vector2(2755, 260.504)
 position = Vector2(10, -5.60224)
 polygon = PackedVector2Array(233, -128.852, -271, 124.183, -285, 126.984, -279, 142.857, 244, -101.774, 247, -128.852)
 
+[node name="Backgrounds" type="Node" parent="LabArchitect" index="8"]
+
+[node name="Sprite2D" type="Sprite2D" parent="LabArchitect/Backgrounds" index="0"]
+z_index = -1
+position = Vector2(5110, 103)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("9_f1jjf")
+
+[node name="Sprite2D2" type="Sprite2D" parent="LabArchitect/Backgrounds" index="1"]
+z_index = -2
+position = Vector2(3912, 202)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("10_rfxm3")
+
 [node name="Desert_Background" parent="." index="7" instance=ExtResource("7_veiog")]
 position = Vector2(5, 14)
 
@@ -884,7 +900,6 @@ position = Vector2(656, 457)
 
 [node name="MechRanged" parent="Enemy/MiniBosses" index="0" instance=ExtResource("18_lt1cf")]
 position = Vector2(2098, 761)
-lvl_boss = true
 
 [node name="Underground" type="Node" parent="Enemy" index="6"]
 
@@ -1040,11 +1055,21 @@ position = Vector2(2199, 273)
 scale = Vector2(2, 2)
 room = ExtResource("21_7klgn")
 
+[node name="DoorSprite2" parent="Entries/Entry" index="1" instance=ExtResource("22_relum")]
+z_index = -1
+position = Vector2(-17, -24)
+scale = Vector2(0.5, 0.5)
+
 [node name="Entry2" parent="Entries" index="2" instance=ExtResource("22_5m18i")]
 position = Vector2(3030, 279)
 scale = Vector2(2, 2)
 entry = 1
 room = ExtResource("22_drpgx")
+
+[node name="DoorSprite3" parent="Entries/Entry2" index="1" instance=ExtResource("22_relum")]
+z_index = -1
+position = Vector2(-15.5, -26.5)
+scale = Vector2(0.5, 0.5)
 
 [node name="Entry3" parent="Entries" index="3" instance=ExtResource("22_5m18i")]
 position = Vector2(3030, 66)
@@ -1052,11 +1077,21 @@ scale = Vector2(2, 2)
 entry = 2
 room = ExtResource("23_veiog")
 
+[node name="DoorSprite4" parent="Entries/Entry3" index="1" instance=ExtResource("22_relum")]
+z_index = -1
+position = Vector2(-15.5, -22.5)
+scale = Vector2(0.5, 0.5)
+
 [node name="Entry4" parent="Entries" index="4" instance=ExtResource("22_5m18i")]
 position = Vector2(3513, 1161)
 scale = Vector2(2, 2)
 entry = 3
 room = ExtResource("22_drpgx")
+
+[node name="DoorSprite5" parent="Entries/Entry4" index="1" instance=ExtResource("22_relum")]
+z_index = -1
+position = Vector2(-16, -22)
+scale = Vector2(0.5, 0.5)
 
 [node name="Entry5" parent="Entries" index="5" instance=ExtResource("22_5m18i")]
 position = Vector2(4216, 1161)
@@ -1064,11 +1099,21 @@ scale = Vector2(2, 2)
 entry = 4
 room = ExtResource("23_veiog")
 
+[node name="DoorSprite6" parent="Entries/Entry5" index="1" instance=ExtResource("22_relum")]
+z_index = -1
+position = Vector2(-16.5, -22)
+scale = Vector2(0.5, 0.5)
+
 [node name="Entry6" parent="Entries" index="6" instance=ExtResource("22_5m18i")]
 position = Vector2(4793, 1162)
 scale = Vector2(2, 2)
 entry = 5
 room = ExtResource("21_7klgn")
+
+[node name="DoorSprite7" parent="Entries/Entry6" index="1" instance=ExtResource("22_relum")]
+z_index = -1
+position = Vector2(-16, -22.5)
+scale = Vector2(0.5, 0.5)
 
 [node name="HallwayEntry1" parent="Entries" index="7" instance=ExtResource("22_5m18i")]
 position = Vector2(3915, 879)
@@ -1099,21 +1144,51 @@ position = Vector2(0, -69)
 
 [node name="Entry9" parent="Entries" index="10" instance=ExtResource("22_5m18i")]
 position = Vector2(6612, 1187)
-entry = 8
+entry = 9
 location_override = true
-enter_to = "PrologueGarage1"
+enter_to = "PrologueGarage2"
 
 [node name="LargeDoorSprite" parent="Entries/Entry9" index="1" instance=ExtResource("24_veiog")]
 position = Vector2(0, -69)
 
 [node name="Entry10" parent="Entries" index="11" instance=ExtResource("22_5m18i")]
 position = Vector2(7125, 1187)
-entry = 8
+entry = 10
 location_override = true
-enter_to = "PrologueGarage1"
+enter_to = "PrologueGarage3"
 
 [node name="LargeDoorSprite" parent="Entries/Entry10" index="1" instance=ExtResource("24_veiog")]
 position = Vector2(0, -69)
+
+[node name="Entry11" parent="Entries" index="12" instance=ExtResource("22_5m18i")]
+position = Vector2(6043, 879)
+entry = 11
+location_override = true
+enter_to = "PrologueGarage1"
+exit = 1
+
+[node name="DoorSprite2" parent="Entries/Entry11" index="1" instance=ExtResource("22_relum")]
+position = Vector2(-34, -68)
+
+[node name="Entry12" parent="Entries" index="13" instance=ExtResource("22_5m18i")]
+position = Vector2(6617, 879)
+entry = 12
+location_override = true
+enter_to = "PrologueGarage2"
+exit = 1
+
+[node name="DoorSprite2" parent="Entries/Entry12" index="1" instance=ExtResource("22_relum")]
+position = Vector2(-34, -68)
+
+[node name="Entry13" parent="Entries" index="14" instance=ExtResource("22_5m18i")]
+position = Vector2(7131, 878)
+entry = 13
+location_override = true
+enter_to = "PrologueGarage3"
+exit = 1
+
+[node name="DoorSprite2" parent="Entries/Entry13" index="1" instance=ExtResource("22_relum")]
+position = Vector2(-34, -68)
 
 [node name="DoorsAndSwitches" type="Node" parent="." index="20"]
 
