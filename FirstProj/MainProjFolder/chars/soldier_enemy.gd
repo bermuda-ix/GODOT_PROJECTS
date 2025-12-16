@@ -228,8 +228,8 @@ func _process(_delta):
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		return
 	ammo_count=turret.ammo_count
-	if health.health<=0 and (state_machine.get_active_state()!=death or state_machine.get_active_state()!=dying):
-		state_machine.dispatch(&"die")
+	#if health.health<=0 and (state_machine.get_active_state()!=death or state_machine.get_active_state()!=dying):
+		#state_machine.dispatch(&"die")
 	##FOR TESTING REMOVE LATER
 	##current_state=States.GUARD
 	##if current_state==States.GUARD:
@@ -291,7 +291,10 @@ func _physics_process(delta):
 	#counter_attack()
 	# Add the gravity.
 	if not is_on_floor():
-		velocity.y += gravity * delta
+		if state_machine.get_active_state()==death:
+			velocity.y=0
+		else:
+			velocity.y += gravity * delta
 	else:
 		dying.blackboard.set_var("hit_the_floor", true)
 		
@@ -303,8 +306,7 @@ func _physics_process(delta):
 		velocity.x = current_speed + knockback.x
 	else:
 		velocity.x= knockback.x
-	if state_machine.get_active_state()==death:
-		velocity.y=0
+	
 	move_and_slide()
 	
 func apply_gravity(delta : float) -> void:

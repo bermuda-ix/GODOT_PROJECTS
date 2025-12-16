@@ -10,7 +10,7 @@ extends LimboState
 
 func _enter() -> void:
 	#actor.state="DEATH"
-	
+	actor.velocity.y=0
 	if tree_active:
 		actor.bt_player.blackboard.set_var("attack_mode", false)
 	
