@@ -95,12 +95,12 @@ func _process(_delta):
 	
 	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size())
 	
-	get_state()
-	set_state()
-	#For testing individual levels
-	get_health()
-	set_health()
-	
+	#get_state()
+	#set_state()
+	##For testing individual levels
+	#get_health()
+	#set_health()
+	#
 	#if lvl_type=="goal":
 	#
 		#if obj<=1:

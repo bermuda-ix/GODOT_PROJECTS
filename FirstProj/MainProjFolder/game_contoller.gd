@@ -40,12 +40,12 @@ func _ready() -> void:
 	Events.unpause.connect(unpause)
 	
 	#Disables game UI and level process when first starting
-	toggle_game_ui(false)
-	toggle_world2d_process(false)
-	toggle_player(false)
+	#toggle_game_ui(false)
+	#toggle_world2d_process(false)
+	#toggle_player(false)
 	
-	#test_start()
-	change_gui_scene(LevelList.MAIN_MENU)
+	test_start()
+	#change_gui_scene(LevelList.MAIN_MENU)
 	
 	
 func _process(delta: float) -> void:
@@ -55,7 +55,7 @@ func _process(delta: float) -> void:
 #For force starting levels to test
 func test_start() -> void:
 	load_levels(LevelsList.prologue_unique_levels)
-	load_first_room("prologue")
+	load_first_room("PrologueLvl")
 	prev_2d_scene=current_2d_scene
 	current_2d_scene.player=player
 	load_levels(LevelsList.prologue_level_maps)

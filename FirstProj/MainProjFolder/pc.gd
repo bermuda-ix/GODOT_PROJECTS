@@ -34,6 +34,7 @@ signal update_max_stagger
 @onready var clash_timer: Timer = $ClashPower/ClashTimer
 @onready var stairs_detected : bool = false
 @onready var stairs_release : bool = true
+@onready var drop_down_platform_detected : bool = false
 
 
 #Base FSM
@@ -489,6 +490,7 @@ func _process(_delta):
 	lockon()
 	enter_door()
 	climb_stairs()
+	drop_down()
 	interact()
 	
 	#Input for testing various things
@@ -1251,14 +1253,20 @@ func enter_door() -> void:
 			#entry_pos=prev_starting_pos
 
 func climb_stairs() -> void:
-	if Input.is_action_pressed("up") and stairs_detected==false:
-		set_collision_mask_value(20, true)
-		stairs_release=false
-	elif Input.is_action_just_released("up"):
+	if Input.is_action_pressed("down") and stairs_detected==false:
+		set_collision_mask_value(20, false)
+		#stairs_release=
+	elif Input.is_action_just_released("down"):
 		if stairs_detected:
 			stairs_release=true
 		else:
-			set_collision_mask_value(20, false)
+			set_collision_mask_value(20, true)
+
+func drop_down():
+	if Input.is_action_just_pressed("down") and not drop_down_platform_detected:
+		set_collision_mask_value(27, false)
+	elif Input.is_action_just_released("down"):
+		set_collision_mask_value(27, true)
 
 func _on_hazard_detector_area_entered(area):
 	if area.is_in_group("hazard"):
@@ -1286,7 +1294,7 @@ func _on_interactable_detector_area_exited(area: Area2D) -> void:
 	if area.is_in_group("door"):
 		if area.is_in_group("AnimatedDoor"):
 			in_door_way=false
-			animated_door=true
+			animated_door=false
 	else:
 		interact_ready=false
 	
@@ -1922,12 +1930,18 @@ func _on_clash_power_aura_reset() -> void:
 	clash_aura_fx.visible=false
 
 func _on_stars_detector_body_entered(body: Node2D) -> void:
-	stairs_detected=true
+	if body.is_in_group("dropdownplatform"):
+		drop_down_platform_detected=true
+	else:
+		stairs_detected=true
 
 func _on_stars_detector_body_exited(body: Node2D) -> void:
-	stairs_detected=false
-	if stairs_release:
-		set_collision_mask_value(20, false)
+	if body.is_in_group("dropdownplatform"):
+		drop_down_platform_detected=false
+	else:
+		stairs_detected=false
+		set_collision_mask_value(20, true)
+		
 		
 ####################
 #Cutscene Functions#

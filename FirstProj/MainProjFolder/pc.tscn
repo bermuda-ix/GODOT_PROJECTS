@@ -7907,7 +7907,7 @@ size = Vector2(21, 41)
 
 [node name="PC" type="CharacterBody2D" node_paths=PackedStringArray("health", "hitbox") groups=["player"]]
 collision_layer = 2
-collision_mask = 35965961
+collision_mask = 103599113
 floor_stop_on_slope = false
 floor_constant_speed = true
 floor_max_angle = 0.872665
@@ -8285,7 +8285,7 @@ one_shot = true
 [node name="StarsDetector" type="Area2D" parent="."]
 position = Vector2(-1, 1)
 collision_layer = 1048576
-collision_mask = 524288
+collision_mask = 67633152
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StarsDetector"]
 position = Vector2(3, -9)

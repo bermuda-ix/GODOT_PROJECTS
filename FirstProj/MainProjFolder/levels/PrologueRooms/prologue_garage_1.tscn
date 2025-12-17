@@ -1,5 +1,6 @@
-[gd_scene load_steps=22 format=4 uid="uid://cg3hpqv70xol4"]
+[gd_scene load_steps=23 format=4 uid="uid://cg3hpqv70xol4"]
 
+[ext_resource type="Script" uid="uid://hpw22p1bmgy7" path="res://levels/standard_lvl_template.gd" id="1_f1vse"]
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="1_q6ikt"]
 [ext_resource type="TileSet" uid="uid://duvitr2o4lrsy" path="res://levels/level_components/factory_tile_set_building_platform.tres" id="2_6kxig"]
 [ext_resource type="PackedScene" uid="uid://dnliwh5g1v8xb" path="res://levels/level_components/entry.tscn" id="3_0sxt8"]
@@ -10917,6 +10918,7 @@ polygon = PackedVector2Array(0, 5, 2, 292, 548, 289, 548, -3, 600, -3, 604, 336,
 polygon = PackedVector2Array(306, 229, 408, 180, 509, 230)
 
 [node name="PrologueGarage1" type="Node2D"]
+script = ExtResource("1_f1vse")
 
 [node name="CameraPos" parent="." instance=ExtResource("1_q6ikt")]
 position = Vector2(247, 178)
@@ -10962,8 +10964,8 @@ tile_map_data = PackedByteArray("AAAAAAcAAAAHAA8AAAABAAcAAAAIAA8AAAACAAcAAAAJAA8
 tile_set = ExtResource("3_6kxig")
 collision_enabled = false
 
-[node name="AbovePlatform" type="StaticBody2D" parent="TileMapLayers/SecondLevelPlatform"]
-collision_layer = 524288
+[node name="AbovePlatform" type="StaticBody2D" parent="TileMapLayers/SecondLevelPlatform" groups=["dropdownplatform"]]
+collision_layer = 67633152
 collision_mask = 1048578
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayers/SecondLevelPlatform/AbovePlatform"]
@@ -10971,9 +10973,9 @@ position = Vector2(-22, 226)
 shape = SubResource("SegmentShape2D_j4lln")
 one_way_collision = true
 
-[node name="AbovePlatform2" type="StaticBody2D" parent="TileMapLayers/SecondLevelPlatform"]
+[node name="AbovePlatform2" type="StaticBody2D" parent="TileMapLayers/SecondLevelPlatform" groups=["dropdownplatform"]]
 position = Vector2(232, -65)
-collision_layer = 524288
+collision_layer = 67633152
 collision_mask = 1048578
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayers/SecondLevelPlatform/AbovePlatform2"]
