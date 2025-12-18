@@ -7919,6 +7919,7 @@ hitbox = NodePath("AnimatedSprite2D/HitBox")
 
 [node name="InteractPromptSprite" type="AnimatedSprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0)
+z_index = 2
 position = Vector2(2, -40)
 scale = Vector2(0.1875, 0.1796875)
 sprite_frames = SubResource("SpriteFrames_xxtsl")
@@ -7955,7 +7956,7 @@ metadata/_aseprite_wizard_source_file_hash_ = "e40bf6776b8b2a4268a34f1cf42c192c"
 visible = false
 position = Vector2(3, -39)
 sprite_frames = SubResource("SpriteFrames_3ciys")
-animation = &""
+animation = &"landed"
 
 [node name="heat_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
 visible = false
