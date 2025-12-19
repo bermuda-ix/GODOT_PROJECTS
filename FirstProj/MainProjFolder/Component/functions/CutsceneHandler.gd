@@ -6,6 +6,7 @@ extends Node
 @export var speech : Label
 @onready var anim_count : int = 0
 @onready var cutscene_dir : int = clampi(0, -1, 1) : set=set_cutscene_dir
+@onready var cutscene_speed : String = "slow"
 @export var actor_control_active : bool = true : set=set_actor_control
 
 
@@ -41,7 +42,12 @@ func anim_count_up() -> void:
 		pass
 
 func set_cutscene_dir(value : int) -> void:
+
 	cutscene_dir=value
+	print(cutscene_dir)
+
+func set_cutscene_speed(value : String) -> void:
+	cutscene_speed=value
 
 func set_actor_control(value : bool)->void:
 	actor_control_active=value

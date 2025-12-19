@@ -174,6 +174,7 @@ func end_cutscene():
 func boss_died(cutscene: String):
 	Events.start_cutscene.emit()
 	cutscene_player.play(cutscene)
+	hit_stop.hit_stop(0.5,0.5)
 	cutscene_active=true
 
 func end_level():

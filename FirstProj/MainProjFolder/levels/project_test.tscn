@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=29 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
 [ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="2_t1ldw"]
@@ -279,6 +279,9 @@ _data = {
 a = Vector2(-14, 7)
 b = Vector2(204, -69)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_01tlq"]
+size = Vector2(20, 87)
+
 [node name="project_test" node_paths=PackedStringArray("player", "starting_pos") instance=ExtResource("1_07jkq")]
 lvl_type = "test"
 player = NodePath("PC")
@@ -462,8 +465,15 @@ color = Color(0, 0, 0, 1)
 position = Vector2(476, 73)
 scale = Vector2(0.2, 0.2)
 
-[node name="soldier_enemy" parent="." index="30" instance=ExtResource("8_01tlq")]
-position = Vector2(1328, 84)
+[node name="WallTest" type="StaticBody2D" parent="." index="30"]
+position = Vector2(1281, 54)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallTest" index="0"]
+position = Vector2(0, 33.5)
+shape = SubResource("RectangleShape2D_01tlq")
+
+[node name="soldier_enemy" parent="." index="31" instance=ExtResource("8_01tlq")]
+position = Vector2(1413, 88)
 
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]

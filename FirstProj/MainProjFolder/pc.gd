@@ -498,9 +498,12 @@ func _process(_delta):
 		#anim_player.play("Heavy_Combo_1")
 
 func _physics_process(delta):
+	label.text=str(velocity.x)
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		apply_gravity(delta)
-		cutscene_acceleration(cutscene_handler.cutscene_dir, delta)
+		cutscene_acceleration(cutscene_handler.cutscene_dir, delta, cutscene_handler.cutscene_speed)
+		if (cutscene_handler.cutscene_dir<0 and velocity.x>0) or (cutscene_handler.cutscene_dir>0 and velocity.x<0):
+			push_error("something wrong")
 		move_and_slide()
 
 		return
@@ -730,9 +733,20 @@ func _on_speech_timer_timeout() -> void:
 	speech.visible=false
 
 # Movement for cutscenes		
-func cutscene_acceleration(dir, delta):
-	if dir!=0:
-		velocity.x = move_toward(velocity.x, (movement_data.speed/3) * dir, movement_data.acceleration * delta)
+func cutscene_acceleration(_dir, delta, _speed : String):
+	
+	var _cutscene_speed : int = 0
+	match _speed:
+		"slow":
+			_cutscene_speed=movement_data.speed/3
+		"fast":
+			_cutscene_speed=movement_data.speed
+		"medium":
+			_cutscene_speed=movement_data.speed/2
+			#print (_cutscene_speed)
+	if _dir!=0:
+		velocity.x = (_cutscene_speed) * _dir
+		print(velocity.x, " ", _cutscene_speed, " ", _dir)
 	else:
 		velocity.x=0
 		

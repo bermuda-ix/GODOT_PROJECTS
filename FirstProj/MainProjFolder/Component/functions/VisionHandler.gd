@@ -29,7 +29,6 @@ func handle_vision():
 		player_found=true
 	else:
 		if player_tracking.is_colliding():
-			
 			var collision_result = player_tracking.get_collider()
 			if collision_result != player or sm.get_active_state()==actor.death:
 				#set_state(current_state, States.GUARD)

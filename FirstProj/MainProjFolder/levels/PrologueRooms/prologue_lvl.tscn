@@ -110,6 +110,30 @@ tracks/0/keys = {
 "update": 0,
 "values": [1.0, 1.0, 0.0]
 }
+tracks/1/type = "animation"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DoorsAndSwitches/Elevator2/AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": PackedStringArray("start_moving"),
+"times": PackedFloat32Array(1.3333334)
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["ElevatorToBasement"],
+"method": &"play_cutscene_segment"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_h7re7"]
 resource_name = "INTRO"
@@ -374,7 +398,7 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "clips": PackedStringArray("shoot_left", "shoot_right"),
-"times": PackedFloat32Array(0.166667, 1.2)
+"times": PackedFloat32Array(0.6333333, 1.2666667)
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -457,7 +481,7 @@ tracks/7/path = NodePath("Paths/Path2D:curve")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(1.17, 2.94, 3.86667),
+"times": PackedFloat32Array(1.1, 2.94, 3.86667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [SubResource("Curve2D_e3spa"), SubResource("Curve2D_kcvht"), null]
@@ -569,7 +593,7 @@ tracks/16/path = NodePath(".")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(1.1666666, 5),
+"times": PackedFloat32Array(0, 5),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -586,14 +610,11 @@ tracks/17/path = NodePath(".")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
-"times": PackedFloat32Array(0, 5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "values": [{
 "args": ["mini_boss_kill"],
 "method": &"play_cutscene_segment"
-}, {
-"args": [],
-"method": &"show_level_complete"
 }]
 }
 tracks/18/type = "method"
@@ -603,7 +624,7 @@ tracks/18/path = NodePath("HitStop")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
-"times": PackedFloat32Array(0, 0.3, 1.5333333, 3.0333333, 4.0333333),
+"times": PackedFloat32Array(0, 0.7, 1.3, 3.0333333, 4.0333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "values": [{
 "args": [],
@@ -899,6 +920,7 @@ position = Vector2(656, 457)
 
 [node name="MechRanged" parent="Enemy/MiniBosses" index="0" instance=ExtResource("18_lt1cf")]
 position = Vector2(2098, 761)
+lvl_boss = true
 
 [node name="Underground" type="Node" parent="Enemy" index="6"]
 
@@ -1204,8 +1226,12 @@ progress = 427.00067
 h_offset = 0.485
 
 [node name="Elevator2" parent="DoorsAndSwitches" index="1" instance=ExtResource("21_7qfih")]
-position = Vector2(1893, 1203)
+position = Vector2(1893, 1227)
 scale = Vector2(-1, 1)
+
+[node name="PathFollow2D" parent="DoorsAndSwitches/Elevator2/Path2D" index="0"]
+position = Vector2(23, -424)
+progress = 427.00067
 
 [node name="lab_door_switch2" parent="DoorsAndSwitches" index="2" node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
 z_index = -1
@@ -1286,7 +1312,8 @@ position = Vector2(2129, 1101)
 [node name="QTEFlags" type="Node" parent="." index="24"]
 
 [node name="QTE_Start" parent="QTEFlags" index="0" node_paths=PackedStringArray("cutscene_player") instance=ExtResource("24_4koma")]
-position = Vector2(1916, 713)
+position = Vector2(1974, 619)
+first_qte_anim = "ElevatorToBasement"
 cutscene_player = NodePath("../../CutscenePlayer")
 
 [node name="Paths" type="Node" parent="." index="25"]
@@ -1306,7 +1333,7 @@ update_scale = false
 [node name="StartingPos" type="Node" parent="." index="26"]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
-position = Vector2(6260, 1144)
+position = Vector2(3438, 459)
 
 [node name="PersistentDataHandler" type="Node" parent="." index="27"]
 script = ExtResource("24_w82j5")
@@ -1322,3 +1349,4 @@ scale = Vector2(0.05, 0.05)
 
 [editable path="Enemy/MiniBosses/MechRanged"]
 [editable path="DoorsAndSwitches/Elevator"]
+[editable path="DoorsAndSwitches/Elevator2"]
