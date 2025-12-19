@@ -1056,6 +1056,7 @@ objective = NodePath("../../Enemy/MiniBosses/MechRanged")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bounderies3/MiniBossCutscene" index="0"]
 position = Vector2(24, 278.5)
 shape = SubResource("RectangleShape2D_jyauw")
+disabled = true
 
 [node name="CutscenePlayer" type="AnimationPlayer" parent="." index="17"]
 libraries = {
@@ -1211,7 +1212,9 @@ exit = 1
 [node name="DoorSprite2" parent="Entries/Entry13" index="1" instance=ExtResource("22_relum")]
 position = Vector2(-34, -68)
 
-[node name="DoorsAndSwitches" type="Node" parent="." index="20"]
+[node name="ObjFlags" type="Node" parent="." index="20"]
+
+[node name="DoorsAndSwitches" type="Node" parent="." index="21"]
 
 [node name="Elevator" parent="DoorsAndSwitches" index="0" instance=ExtResource("21_7qfih")]
 position = Vector2(3627, 525)
@@ -1228,6 +1231,9 @@ h_offset = 0.485
 [node name="Elevator2" parent="DoorsAndSwitches" index="1" instance=ExtResource("21_7qfih")]
 position = Vector2(1893, 1227)
 scale = Vector2(-1, 1)
+global_flag = "MiniBoss1Killed"
+flag_active = true
+active = false
 
 [node name="PathFollow2D" parent="DoorsAndSwitches/Elevator2/Path2D" index="0"]
 position = Vector2(23, -424)
@@ -1283,7 +1289,7 @@ door_connect = NodePath("../../Doors/Door5")
 key_required = true
 key_type = "KeyCard"
 
-[node name="Stairs" type="Node" parent="." index="21"]
+[node name="Stairs" type="Node" parent="." index="22"]
 
 [node name="StairsUnderground1" type="StaticBody2D" parent="Stairs" index="0"]
 position = Vector2(5215, 1214)
@@ -1292,9 +1298,9 @@ position = Vector2(5215, 1214)
 shape = SubResource("SegmentShape2D_w82j5")
 one_way_collision = true
 
-[node name="FallthroughPlatform" type="Node" parent="." index="22"]
+[node name="FallthroughPlatform" type="Node" parent="." index="23"]
 
-[node name="Spawning" type="Node" parent="." index="23"]
+[node name="Spawning" type="Node" parent="." index="24"]
 
 [node name="SpawnPoints" type="Node" parent="Spawning" index="0"]
 
@@ -1309,14 +1315,14 @@ position = Vector2(3520, 419)
 [node name="HeatSpawnFlag3" parent="Spawning/SpawnFlags" index="2" instance=ExtResource("22_22var")]
 position = Vector2(2129, 1101)
 
-[node name="QTEFlags" type="Node" parent="." index="24"]
+[node name="QTEFlags" type="Node" parent="." index="25"]
 
 [node name="QTE_Start" parent="QTEFlags" index="0" node_paths=PackedStringArray("cutscene_player") instance=ExtResource("24_4koma")]
 position = Vector2(1974, 619)
 first_qte_anim = "ElevatorToBasement"
 cutscene_player = NodePath("../../CutscenePlayer")
 
-[node name="Paths" type="Node" parent="." index="25"]
+[node name="Paths" type="Node" parent="." index="26"]
 
 [node name="Path2D" type="Path2D" parent="Paths" index="0"]
 curve = SubResource("Curve2D_e3spa")
@@ -1330,16 +1336,16 @@ rotates = false
 update_rotation = false
 update_scale = false
 
-[node name="StartingPos" type="Node" parent="." index="26"]
+[node name="StartingPos" type="Node" parent="." index="27"]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" groups=["start_pos"]]
 position = Vector2(3438, 459)
 
-[node name="PersistentDataHandler" type="Node" parent="." index="27"]
+[node name="PersistentDataHandler" type="Node" parent="." index="28"]
 script = ExtResource("24_w82j5")
 metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 
-[node name="Pickups" type="Node" parent="." index="28"]
+[node name="Pickups" type="Node" parent="." index="29"]
 
 [node name="Keys" type="Node" parent="Pickups" index="0"]
 

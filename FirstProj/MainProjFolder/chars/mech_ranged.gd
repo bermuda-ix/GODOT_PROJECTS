@@ -416,6 +416,7 @@ func _on_health_health_depleted() -> void:
 	
 	if lvl_boss:
 		Events.boss_died.emit("mini_boss_kill")
+		Events.global_flag_trigger.emit("MiniBoss1Killed")
 		bt_player.active=false
 	else:
 		death_handler.death()

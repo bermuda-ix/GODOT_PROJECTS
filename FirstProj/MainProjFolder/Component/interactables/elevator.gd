@@ -11,11 +11,15 @@ extends Node2D
 @onready var elevator_ui: Control = $Path2D/PathFollow2D/StaticBody2D/ElevatorUI
 @onready var scroll_container: ScrollContainer = $Path2D/PathFollow2D/StaticBody2D/ElevatorUI/PanelContainer/ScrollContainer
 @onready var elevator_buttons: VBoxContainer = $Path2D/PathFollow2D/StaticBody2D/ElevatorUI/PanelContainer/ScrollContainer/ElevatorButtons
+@onready var global_flag_handler: GlobalFlagHandler = $GlobalFlagHandler
 
 
-
+@export_category("Global Flag Variable")
+@export var global_flag : String
+@export var flag_active : bool = false
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @export_category("Elevator Variables")
+@export var active : bool = true
 @export var automatic : bool = false
 @export var speed : int = 1
 
@@ -45,6 +49,8 @@ func _ready() -> void:
 	add_floor_buttons()
 	current_floor=floors[init_floor]
 	resume.start(3)
+	global_flag_handler.flag_name=global_flag
+	global_flag_handler.flag_active=flag_active
 	Events.open_interact_menu.connect(open_elevator_menu)
 	
 func _physics_process(delta: float) -> void:
@@ -152,3 +158,23 @@ func open_elevator_menu() -> void:
 
 func close_elevator_menu() -> void:
 	animation_player.play("RESET")
+
+
+func _on_player_detect_body_entered(body: Node2D) -> void:
+	if not active:
+		return
+	else:
+		if body.is_in_group("player"):
+			animation_player.play("open")
+
+
+func _on_player_detect_body_exited(body: Node2D) -> void:
+	if not active:
+		return
+	else:
+		if body.is_in_group("player"):
+			animation_player.play("close")
+
+
+func _on_global_flag_handler_flag_activate() -> void:
+	active=true

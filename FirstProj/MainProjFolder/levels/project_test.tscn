@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="6_82t0r"]
 [ext_resource type="PackedScene" uid="uid://bpfhslfhbjfti" path="res://chars/TEST_CHARS/training_dummy.tscn" id="7_t1ldw"]
-[ext_resource type="PackedScene" uid="uid://b5d2nkkrrcixy" path="res://chars/soldier_enemy.tscn" id="8_01tlq"]
+[ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="8_01tlq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_82t0r"]
 resource_local_to_scene = true
@@ -472,8 +472,8 @@ position = Vector2(1281, 54)
 position = Vector2(0, 33.5)
 shape = SubResource("RectangleShape2D_01tlq")
 
-[node name="soldier_enemy" parent="." index="31" instance=ExtResource("8_01tlq")]
-position = Vector2(1413, 88)
+[node name="Elevator" parent="." index="31" instance=ExtResource("8_01tlq")]
+position = Vector2(992, 111)
 
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]

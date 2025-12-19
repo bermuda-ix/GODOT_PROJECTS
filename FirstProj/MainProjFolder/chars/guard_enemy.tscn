@@ -1368,7 +1368,6 @@ script = ExtResource("17_i7oh3")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 csm = NodePath("../CombatStateMachine")
-always_on = true
 vision_range = 250
 player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 stay_on = true
