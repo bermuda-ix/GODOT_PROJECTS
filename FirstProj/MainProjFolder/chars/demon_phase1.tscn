@@ -2441,7 +2441,7 @@ radius = 147.0
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_lu2dd"]
 binding/dash_ended = NodePath("../..:dash_finished")
 
-[node name="DemonPhase1" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy"]]
+[node name="DemonPhase1" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant"]]
 script = ExtResource("1_502d8")
 hitbox = NodePath("HitBox")
 

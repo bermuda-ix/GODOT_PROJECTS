@@ -1722,7 +1722,7 @@ radius = 34.0
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_jjike"]
 
-[node name="soldier_enemy" node_paths=PackedStringArray("hitbox", "state_machine") instance=ExtResource("1_ojqla")]
+[node name="soldier_enemy" node_paths=PackedStringArray("hitbox", "state_machine") groups=["Persistant"] instance=ExtResource("1_ojqla")]
 collision_layer = 16384
 script = ExtResource("2_ibi2a")
 chase_speed = 120.0

@@ -1208,7 +1208,7 @@ size = Vector2(48, 68.5)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_ri8gu"]
 
-[node name="GuardEnemy" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy"]]
+[node name="GuardEnemy" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant"]]
 collision_layer = 16384
 script = ExtResource("1_4q725")
 hitbox = NodePath("HitBox")

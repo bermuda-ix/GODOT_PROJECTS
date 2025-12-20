@@ -29,7 +29,7 @@ texture = ExtResource("1_nwwdl")
 position = Vector2(53.5, 72)
 shape = SubResource("RectangleShape2D_u3h84")
 
-[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger") groups=["Enemy"]]
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
 collision_layer = 16
 collision_mask = 8396864
 script = ExtResource("2_jxvu2")

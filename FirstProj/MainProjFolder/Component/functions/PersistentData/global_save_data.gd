@@ -30,10 +30,14 @@ var level_state : Dictionary = {
 	}
 	
 func save_game() -> void:
-	var file := FileAccess.open( SAVE_PATH + "player_data//stats//player_stats_json.sav", FileAccess.WRITE)
+	var file := FileAccess.open( SAVE_PATH + "player_data//stats//player_stats_json.sav", FileAccess.WRITE_READ)
 	var save_json = JSON.stringify(current_save)
 	file.store_line(save_json)
-	pass
+	file.close()
+	file = FileAccess.open( SAVE_PATH + "level_states//persistant_objects_states_json.sav", FileAccess.WRITE_READ)
+	save_json = JSON.stringify(level_state)
+	file.store_line(save_json)
+	file.close()
 	
 func load_game() -> void:
 	var file := FileAccess.open( SAVE_PATH + "player_data//stats//player_stats_json.sav", FileAccess.READ)

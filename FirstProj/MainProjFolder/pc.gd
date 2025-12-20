@@ -298,6 +298,7 @@ func _ready():
 	Events.set_player_data.connect(save_player_data)
 	Events.parried.connect(parry_success)
 	Events.play_cutscene_segment.connect(play_cutscene)
+	Events.checkpoint_reached.connect(save_player_data)
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
 	_init_state_machine()
@@ -1608,7 +1609,7 @@ func save_player_data():
 	GlobalSaveData.current_save.player.health=health.health
 	GlobalSaveData.current_save.player.max_health=health.max_health
 	GlobalSaveData.current_save.player.stagger=stagger.stagger
-	GlobalSaveData.current_save.player.max_stagger=stagger.max_tagger
+	GlobalSaveData.current_save.player.max_stagger=stagger.max_stagger
 	GlobalSaveData.save_game()
 
 func _on_parry_timer_timeout():

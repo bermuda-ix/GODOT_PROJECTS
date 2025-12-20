@@ -308,7 +308,7 @@ size = Vector2(26, 43)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_06ane"]
 
-[node name="SleepingGuard" type="CharacterBody2D" groups=["Enemy"]]
+[node name="SleepingGuard" type="CharacterBody2D" groups=["Enemy", "Persistant"]]
 script = ExtResource("1_m3d4o")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

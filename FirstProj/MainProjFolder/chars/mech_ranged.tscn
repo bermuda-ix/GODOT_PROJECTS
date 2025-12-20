@@ -1870,7 +1870,7 @@ size = Vector2(142, 96)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_83ysn"]
 
-[node name="MechRanged" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy"]]
+[node name="MechRanged" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant"]]
 collision_layer = 16384
 collision_mask = 8388609
 script = ExtResource("1_k650x")

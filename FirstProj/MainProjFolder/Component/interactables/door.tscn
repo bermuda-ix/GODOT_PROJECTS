@@ -20,7 +20,7 @@ region = Rect2(906.885, -0.0078454, 10.4645, 95.9792)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_80ptt"]
 polygon = PackedVector2Array(-5.99983, 47, -5.99983, 47, 5.00017, 47, 4.99983, -48, -6.00017, -48)
 
-[node name="Door" type="Node2D"]
+[node name="Door" type="Node2D" groups=["Persistant"]]
 script = ExtResource("1_flptw")
 connected_switch = "Door1"
 
@@ -28,7 +28,7 @@ connected_switch = "Door1"
 curve = SubResource("Curve2D_2h5dv")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D" groups=["door"]]
-rotation = -1.5708
+rotation = -1.5707964
 loop = false
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Path2D/PathFollow2D"]

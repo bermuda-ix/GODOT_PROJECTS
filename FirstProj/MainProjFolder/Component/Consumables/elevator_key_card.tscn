@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t8hkp"]
 size = Vector2(172, 239)
 
-[node name="ElevatorKeyCard" type="Area2D"]
+[node name="ElevatorKeyCard" type="Area2D" groups=["Persistant"]]
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_oyfrq")

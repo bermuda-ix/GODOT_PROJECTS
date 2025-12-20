@@ -64,6 +64,7 @@ player=""
 entry=""
 AnimatedDoor=""
 WorldStatic=""
+Persistant="Objects that can persist on scene reloading"
 
 [input]
 

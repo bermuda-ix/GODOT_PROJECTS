@@ -52,6 +52,7 @@ func _ready() -> void:
 	global_flag_handler.flag_name=global_flag
 	global_flag_handler.flag_active=flag_active
 	Events.open_interact_menu.connect(open_elevator_menu)
+	#Events.checkpoint_reached.connect(save_state)
 	
 func _physics_process(delta: float) -> void:
 	#print(snapped(path_follow_2d.progress_ratio, 0.1), " , ", going_up)
@@ -123,7 +124,6 @@ func up_or_down():
 	elif snapped(path_follow_2d.progress_ratio,0.1)==1.0:
 		going_up=false
 		
-#Needs refactor########
 func pause():
 	if next_floor==snappedf(path_follow_2d.progress_ratio, 0.1):
 		print("your floor sir")
@@ -134,6 +134,9 @@ func pause():
 		stopped=true
 		#pause_move.start(5)
 
+func save_state():
+	var _name=self.get_path()
+	GlobalSaveData.add_persistent_value(_name, str(active))
 
 func _on_resume_timeout() -> void:
 	pass

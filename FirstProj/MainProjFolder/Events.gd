@@ -53,6 +53,14 @@ signal enemy_parried
 signal set_player_data
 signal get_player_data
 
+#Checkpoints
+signal checkpoint_reached
+signal load_checkpoint
+
+#Saving game
+signal save_game
+signal load_game
+
 #Lockon
 signal lockon_to
 signal unlock_from

@@ -42,6 +42,8 @@ var spawn_points
 
 var obj : int
 
+var init_active_enemies_list : Array[Node]
+
 ## Called when the node enters the scene tree for the first time.
 func _ready():
 	if not next_level is PackedScene:
@@ -55,7 +57,7 @@ func _ready():
 	Events.pause.connect(show_pause)
 	Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
-	GlobalSaveData.save_game()
+	#GlobalSaveData.save_game()
 	
 	spawn_points = get_tree().get_nodes_in_group("SpawnPoint")
 	heat_handler.heat_lvl_spawn()
@@ -65,6 +67,7 @@ func _ready():
 	#Events.end_cutsene.connect(end_cutscene)
 	#Events.queue_cutscene.emit(Cutscenes.intro_cutscene)
 	#score=45
+	init_active_enemies_list = get_tree().get_nodes_in_group("Enemy")
 	if lvl_type=="adv":
 		cutscene_player.play("TEST")
 	else:
@@ -75,10 +78,11 @@ func _process(_delta):
 	
 	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size())
 	
-	get_state()
 	set_state()
 	get_health()
 	set_health()
+	
+	save_level_state()
 	
 	if lvl_type=="goal":
 	
@@ -98,9 +102,30 @@ func _physics_process(delta: float) -> void:
 	if not cutscene_active and not camera_pos.stationary:
 		camera_pos.global_position=Vector2(player.global_position.x, player.global_position.y-50)
 	
+func save_level_state():
+	if Input.is_action_just_pressed("DEBUG_KEY"):
+		var _save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
+		var persistant_nodes : Array[Node] =get_tree().get_nodes_in_group("Persistant")
+		for node in persistant_nodes:
+			if node.scene_file_path.is_empty():
+				print("persistent node '%s' is not an instanced scene, skipped" % node.name)
+				continue
+			if !node.has_method("save_state"):
+				print("persistent node '%s' is missing a save() function, skipped" % node.name)
+				continue
+			node.call("save_state")
+		var _active_enemies_list : Array[Node] = get_tree().get_nodes_in_group("Enemy")
+		var _active_enemy_names : Array[StringName]
+		for _node in _active_enemies_list:
+			_active_enemy_names.push_back(_node.name)
+		var _active_enemies_json=JSON.stringify(_active_enemy_names)
+		print(_active_enemies_json)
+		_save_file.store_line(_active_enemies_json)
+		Events.checkpoint_reached.emit()
 
-	
-	
+func load_level_state():
+	pass
+
 func show_level_complete():
 
 	
@@ -126,9 +151,9 @@ func unpause():
 	get_tree().paused = false
 	
 	
-func get_state():
-	cur_state = PC.get_state()
-	
+#func get_state():
+	#cur_state = PC.get_state()
+	#
 	
 func set_state():
 	ui_level.set_cur_state(cur_state)
