@@ -381,7 +381,6 @@ func _init_state_machine():
 	state_machine.add_transition(idle, special_attack, &"special_attack")
 	state_machine.add_transition(walking, special_attack, &"special_attack")
 	state_machine.add_transition(sprint, special_attack, &"special_attack")
-	state_machine.add_transition(jump_state, special_attack, &"special_attack")
 	
 	state_machine.add_transition(idle, aim, &"aim")
 	state_machine.add_transition(walking, aim, &"aim")

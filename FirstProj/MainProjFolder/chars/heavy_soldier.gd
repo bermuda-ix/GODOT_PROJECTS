@@ -266,7 +266,7 @@ func _init_shooting_states():
 	#shooting_states.initialize(self)
 	#shooting_states.set_active(false)
 	
-	shooting_states.add_transition(shoot_idle, shooting_defense, &"begin_shooting")
+	shooting_states.add_transition(shoot_idle, shooting_defense, &"defensive_shoot")
 	shooting_states.add_transition(shoot_idle, shooting, &"begin_shooting")
 	
 	shooting_states.add_transition(shooting, shooting_defense, &"defensive_shoot")

@@ -29,23 +29,58 @@ var level_state : Dictionary = {
 		}
 	}
 	
-func save_game() -> void:
-	var file := FileAccess.open( SAVE_PATH + "player_data//stats//player_stats_json.sav", FileAccess.WRITE_READ)
-	var save_json = JSON.stringify(current_save)
-	file.store_line(save_json)
-	file.close()
-	file = FileAccess.open( SAVE_PATH + "level_states//persistant_objects_states_json.sav", FileAccess.WRITE_READ)
-	save_json = JSON.stringify(level_state)
-	file.store_line(save_json)
-	file.close()
 	
+#Save game functions
+func save_game() -> void:
+	save_player_data()
+	save_persistant_data()
+
+#	save player data
+func save_player_data() -> void:
+	var _file := FileAccess.open( SAVE_PATH + "player_data//stats//player_stats_json.sav", FileAccess.WRITE_READ)
+	var _save_json = JSON.stringify(current_save)
+	_file.store_line(_save_json)
+	_file.close()
+
+#	Save persistant data
+func save_persistant_data() -> void:
+	var _file = FileAccess.open( SAVE_PATH + "level_states//persistant_objects_states_json.sav", FileAccess.WRITE_READ)
+	if _file==null:
+		var error_str: String = error_string(FileAccess.get_open_error())
+		push_warning("Couldn't open file because: %s" % error_str)
+	var _save_json = JSON.stringify(level_state)
+	_file.store_line(_save_json)
+	_file.close()
+
+
+
+#Load data functions
 func load_game() -> void:
-	var file := FileAccess.open( SAVE_PATH + "player_data//stats//player_stats_json.sav", FileAccess.READ)
-	var load_json = JSON.new()
-	load_json.parse(file.get_line())
-	var save_dict_temp : Dictionary = load_json.get_data() as Dictionary
-	current_save=save_dict_temp
-	pass
+	load_player_data()
+	load_persistant_data()
+	
+
+# Load player data
+func load_player_data() -> void:
+	var _file := FileAccess.open( SAVE_PATH + "player_data//stats//player_stats_json.sav", FileAccess.READ)
+	var _load_json = JSON.new()
+	var _parse_result = _load_json.parse(_file.get_line())
+	if not  _parse_result == OK:
+		print("JSON Parse Error: ", _load_json.get_error_message(), " in ", _file, " as line ", _load_json.get_error_line())
+		return
+	var _save_dict_temp : Dictionary = _load_json.get_data() as Dictionary
+	current_save=_save_dict_temp
+# Load persistant data
+func load_persistant_data() -> void:
+	var _file = FileAccess.open( SAVE_PATH + "level_states//persistant_objects_states_json.sav", FileAccess.READ)
+	var _load_json = JSON.new()
+	var _parse_result = _load_json.parse(_file.get_line())
+	if not  _parse_result == OK:
+		print("JSON Parse Error: ", _load_json.get_error_message(), " in ", _file, " as line ", _load_json.get_error_line())
+		return
+	var _save_dict_temp : Dictionary = _load_json.get_data() as Dictionary
+	level_state=_save_dict_temp
+	print(level_state["persistence"])
 
 func load_player_stats() -> void:
 	game_load.emit()
