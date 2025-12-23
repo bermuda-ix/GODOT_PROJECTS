@@ -60,6 +60,8 @@ signal load_checkpoint
 #Saving game
 signal save_game
 signal load_game
+signal save_states
+signal load_states
 
 #Lockon
 signal lockon_to

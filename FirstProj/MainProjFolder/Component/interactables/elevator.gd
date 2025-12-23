@@ -134,9 +134,15 @@ func pause():
 		stopped=true
 		#pause_move.start(5)
 
-func save_state():
-	var _name=self.get_path()
-	GlobalSaveData.add_persistent_value(_name, str(active))
+#func save_state():
+	#var _name=self.get_path()
+	#GlobalSaveData.add_persistent_value(_name, str(active))
+	#
+#func load_state(value : String):
+	#if value=="true":
+		#active=true
+	#else:
+		#active=false
 
 func _on_resume_timeout() -> void:
 	pass
@@ -181,3 +187,13 @@ func _on_player_detect_body_exited(body: Node2D) -> void:
 
 func _on_global_flag_handler_flag_activate() -> void:
 	active=true
+
+#Persistant Helper Functions
+func get_state() -> String:
+	return str(active)
+
+func _on_persistant_state_handler_update_state(value: String) -> void:
+	if value == "true":
+		active=true
+	else:
+		active=false

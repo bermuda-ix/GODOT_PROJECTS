@@ -111,10 +111,11 @@ func save_level_state():
 		if node.scene_file_path.is_empty():
 			print("persistent node '%s' is not an instanced scene, skipped" % node.name)
 			continue
-		if !node.has_method("save_state"):
-			print("persistent node '%s' is missing a save() function, skipped" % node.name)
-			continue
-		node.call("save_state")
+		#if !node.has_method("save_state"):
+			#print("persistent node '%s' is missing a save() function, skipped" % node.name)
+			#continue
+		#node.call("save_state")
+		Events.save_states.emit()
 	var _active_enemies_list : Array[Node] = get_tree().get_nodes_in_group("Enemy")
 	var _active_enemy_names : Array[StringName]
 	for _node in _active_enemies_list:
@@ -148,7 +149,21 @@ func load_level_state():
 				
 #	Update persistant objects sates based on what was saved
 	GlobalSaveData.load_game()
-	Events.load_checkpoint.emit()
+	var _persistant_nodes : Array[Node] =get_tree().get_nodes_in_group("Persistant")
+	for _node in _persistant_nodes:
+		var _name=_node.get_path()
+		if _node.scene_file_path.is_empty():
+			print("persistent node '%s' is not an instanced scene, skipped" % _node.name)
+			continue
+		if not GlobalSaveData.level_state["persistence"].has(str(_name)):
+			print("persistent node '%s' is not in persistence dictionary, skipped" % _node.name)
+			continue
+		
+		#print(GlobalSaveData.level_state["persistence"][str(_name)])
+		var _state=GlobalSaveData.level_state["persistence"][str(_name)]
+		Events.load_states.emit(_state)
+		#_node.load_state(_state)
+	#Events.load_checkpoint.emit()
 		
 
 func show_level_complete():
