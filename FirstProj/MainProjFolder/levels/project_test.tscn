@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dkouym7pf4wi"]
+[gd_scene load_steps=33 format=3 uid="uid://dkouym7pf4wi"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_07jkq"]
 [ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="2_t1ldw"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="8_01tlq"]
 [ext_resource type="PackedScene" uid="uid://dn0fhusgltn4m" path="res://chars/heavy_soldier.tscn" id="9_be4ge"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="10_gem31"]
+[ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="11_fof0c"]
+[ext_resource type="Script" uid="uid://klqpph3n6xut" path="res://Component/functions/PersistentData/LevelStateHandler.gd" id="12_v15hm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_82t0r"]
 resource_local_to_scene = true
@@ -490,6 +492,15 @@ position = Vector2(1120, 4)
 
 [node name="Checkpoint" parent="." index="33" instance=ExtResource("10_gem31")]
 position = Vector2(1260, 1)
+
+[node name="HitStop" type="Node" parent="." index="34"]
+script = ExtResource("11_fof0c")
+metadata/_custom_type_script = "uid://4wnsld0u1lhl"
+
+[node name="LevelStateHandler" type="Node" parent="." index="35" node_paths=PackedStringArray("level")]
+script = ExtResource("12_v15hm")
+level = NodePath("..")
+metadata/_custom_type_script = "uid://klqpph3n6xut"
 
 [connection signal="attack_qte" from="PC" to="." method="_on_pc_attack_qte"]
 [connection signal="block_qte" from="PC" to="." method="_on_pc_block_qte"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=4 uid="uid://bwy4dfs27ji8h"]
+[gd_scene load_steps=60 format=4 uid="uid://bwy4dfs27ji8h"]
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_w82j5"]
 [ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_mb6gy"]
@@ -35,6 +35,7 @@
 [ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="24_w82j5"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="31_2mqv2"]
 [ext_resource type="PackedScene" uid="uid://bqufbaasjdchb" path="res://Component/Consumables/elevator_key_card.tscn" id="33_j2fky"]
+[ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="36_rfxm3"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_p4nhw"]
 polygon = PackedVector2Array(699, 393, 758, 393, 1049, 389, 1081, 367, 1081, 358, 1070, 358, 1070, 290, 1426, 290, 1479, 254, 1893, 243, 1894, 202, 1501, 212, 1500, 147, 1382, 76, 766, 78, 761, -20, 728, -21, 729, -120, 725, -22, 698, -21)
@@ -1352,6 +1353,11 @@ metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 [node name="ElevatorKeyCard" parent="Pickups/Keys" index="0" instance=ExtResource("33_j2fky")]
 position = Vector2(2112, 49)
 scale = Vector2(0.05, 0.05)
+
+[node name="Checkpoints" type="Node" parent="." index="30"]
+
+[node name="Checkpoint" parent="Checkpoints" index="0" instance=ExtResource("36_rfxm3")]
+position = Vector2(1982, 1173)
 
 [editable path="Enemy/MiniBosses/MechRanged"]
 [editable path="DoorsAndSwitches/Elevator"]
