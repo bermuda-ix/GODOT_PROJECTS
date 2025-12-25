@@ -480,13 +480,13 @@ position = Vector2(992, 95)
 [node name="Enemies" type="Node" parent="." index="32"]
 
 [node name="HeavySoldier" parent="Enemies" index="0" instance=ExtResource("9_be4ge")]
-position = Vector2(589, -281)
+position = Vector2(679, 21)
 
 [node name="HeavySoldier2" parent="Enemies" index="1" instance=ExtResource("9_be4ge")]
-position = Vector2(80, -138)
+position = Vector2(1420, 43)
 
 [node name="HeavySoldier3" parent="Enemies" index="2" instance=ExtResource("9_be4ge")]
-position = Vector2(254, -45)
+position = Vector2(1120, 4)
 
 [node name="Checkpoint" parent="." index="33" instance=ExtResource("10_gem31")]
 position = Vector2(1260, 1)

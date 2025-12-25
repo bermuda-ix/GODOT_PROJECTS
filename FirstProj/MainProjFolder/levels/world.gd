@@ -58,7 +58,7 @@ func _ready():
 	Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
 	Events.checkpoint_reached.connect(save_level_state)
-	Events.load_checkpoint.connect(load_level_state)
+	Events.load_checkpoint.connect(reload_scene)
 	#GlobalSaveData.save_game()
 	
 	spawn_points = get_tree().get_nodes_in_group("SpawnPoint")
@@ -76,6 +76,8 @@ func _ready():
 		Events.spawn_update.emit(enemy_list.REG_ENEMIES, true)
 		end_cutscene()
 	
+	load_level_state()
+	
 func _process(_delta):
 	
 	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size())
@@ -86,7 +88,8 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("DEBUG_KEY"):
 		#save_level_state()
-		load_level_state()
+		#load_level_state()
+		reload_scene()
 	
 	if lvl_type=="goal":
 	
@@ -167,6 +170,8 @@ func load_level_state():
 		#_node.load_state(_state)
 	#Events.load_checkpoint.emit()
 		
+func reload_scene():
+	get_tree().reload_current_scene()
 
 func show_level_complete():
 
