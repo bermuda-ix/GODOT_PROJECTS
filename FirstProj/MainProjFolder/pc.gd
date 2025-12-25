@@ -295,10 +295,13 @@ func _ready():
 	set_start_pos(global_position)
 	sp_atk_type = sp_atk_cone
 	load_player_data()
-	Events.set_player_data.connect(save_player_data)
+	#Events.set_player_data.connect(save_player_data)
 	Events.parried.connect(parry_success)
 	Events.play_cutscene_segment.connect(play_cutscene)
 	Events.checkpoint_reached.connect(save_player_data)
+	Events.load_checkpoint.connect(load_player_data)
+	Events.open_interact_menu.connect(open_interact_menu)
+	Events.close_interact_menu.connect(close_interact_menu)
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
 	_init_state_machine()
@@ -479,7 +482,8 @@ func _process(_delta):
 	#
 	if(state_machine.get_active_state()!=dodge_state and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=flip_state):
 		parry()
-		attack_animate()
+		if not interact_menu_open:
+			attack_animate()
 		update_animation(input_axis)
 	elif state_machine.get_active_state()==flip_state:
 		break_out()
@@ -2002,4 +2006,5 @@ func qte_input():
 
 
 func _on_texture_button_pressed() -> void:
+	interact_menu_open=false
 	Events.close_interact_menu.emit()

@@ -12,12 +12,15 @@ extends Node2D
 @onready var scroll_container: ScrollContainer = $Path2D/PathFollow2D/StaticBody2D/ElevatorUI/PanelContainer/ScrollContainer
 @onready var elevator_buttons: VBoxContainer = $Path2D/PathFollow2D/StaticBody2D/ElevatorUI/PanelContainer/ScrollContainer/ElevatorButtons
 @onready var global_flag_handler: GlobalFlagHandler = $GlobalFlagHandler
+@onready var door_collision: CollisionShape2D = $Path2D/PathFollow2D/StaticBody2D/Door/DoorCollision
+
 
 
 @export_category("Global Flag Variable")
 @export var global_flag : String
 @export var flag_active : bool = false
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var animation_player_door: AnimationPlayer = $AnimationPlayerDoor
 @export_category("Elevator Variables")
 @export var active : bool = true
 @export var automatic : bool = false
@@ -38,7 +41,7 @@ extends Node2D
 #@export var stops_ratio : Array[float]
 
 var open_flag : bool = true
-var stopped : bool = false
+var stopped : bool = true
 var going_up : bool = true
 
 func _ready() -> void:
@@ -92,10 +95,12 @@ func choose_floor(_floor : int) -> void:
 			print("Moving up to floor ", _floor)
 			going_up=true
 			animation_player.play("start_moving")
+			animation_player_door.play("close")
 		elif current_floor>next_floor:
 			print("Going down to floor ", _floor)
 			going_up=false
 			animation_player.play("start_moving")
+			animation_player_door.play("close")
 		else:
 			print("Already there")
 	else:
@@ -129,8 +134,10 @@ func pause():
 		print("your floor sir")
 		if going_up:
 			animation_player.play("arrived_up")
+			animation_player_door.play("open")
 		else:
 			animation_player.play("arrived_down")
+			animation_player_door.play("open")
 		stopped=true
 		#pause_move.start(5)
 
@@ -157,7 +164,8 @@ func _on_button_panel_body_entered(body: Node2D) -> void:
 func _on_button_panel_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		panel_active=false
-		close_elevator_menu()
+		elevator_ui.visible=false
+		Events.close_interact_menu.emit()
 
 func open_elevator_menu() -> void:
 	if panel_active:
@@ -165,8 +173,8 @@ func open_elevator_menu() -> void:
 		elevator_ui.grab_focus()
 		
 
-func close_elevator_menu() -> void:
-	animation_player.play("RESET")
+#func close_elevator_menu() -> void:
+	#animation_player.play("RESET")
 
 
 func _on_player_detect_body_entered(body: Node2D) -> void:
@@ -174,7 +182,7 @@ func _on_player_detect_body_entered(body: Node2D) -> void:
 		return
 	else:
 		if body.is_in_group("player"):
-			animation_player.play("open")
+			animation_player_door.play("open")
 
 
 func _on_player_detect_body_exited(body: Node2D) -> void:
@@ -182,7 +190,7 @@ func _on_player_detect_body_exited(body: Node2D) -> void:
 		return
 	else:
 		if body.is_in_group("player"):
-			animation_player.play("close")
+			animation_player_door.play("close")
 
 
 func _on_global_flag_handler_flag_activate() -> void:

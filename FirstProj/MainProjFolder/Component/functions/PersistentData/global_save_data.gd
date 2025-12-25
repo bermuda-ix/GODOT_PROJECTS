@@ -26,7 +26,8 @@ var level_state : Dictionary = {
 	items=[],
 	persistence = {
 		"" : ""
-		}
+		},
+	checkpoint_reached=""
 	}
 	
 	

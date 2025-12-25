@@ -57,6 +57,8 @@ func _ready():
 	Events.pause.connect(show_pause)
 	Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
+	Events.checkpoint_reached.connect(save_level_state)
+	Events.load_checkpoint.connect(load_level_state)
 	#GlobalSaveData.save_game()
 	
 	spawn_points = get_tree().get_nodes_in_group("SpawnPoint")
@@ -123,7 +125,7 @@ func save_level_state():
 	var _active_enemies_json=JSON.stringify(_active_enemy_names)
 	print(_active_enemies_json)
 	_save_file.store_line(_active_enemies_json)
-	Events.checkpoint_reached.emit()
+
 
 
 func load_level_state():
