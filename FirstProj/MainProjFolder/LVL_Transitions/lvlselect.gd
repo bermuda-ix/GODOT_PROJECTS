@@ -14,6 +14,7 @@ func _on_guanlet_pressed():
 	Global.game_controller.toggle_game_ui(true)
 	Global.game_controller.toggle_world2d_process(true)
 	Global.game_controller.remove_gui_scene()
+	Global.game_controller.add_gui_to_existing("res://Component/UI_Rec/score_ui.tscn")
 	
 	LevelTransition.fade_from_black()
 

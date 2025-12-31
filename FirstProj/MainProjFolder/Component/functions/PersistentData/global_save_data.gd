@@ -31,6 +31,9 @@ var level_state : Dictionary = {
 	}
 	
 	
+var score : int = 0
+var score_name : String = "TEST"
+
 #Save game functions
 func save_game() -> void:
 	save_player_data()

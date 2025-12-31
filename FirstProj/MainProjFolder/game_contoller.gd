@@ -173,6 +173,14 @@ func remove_gui_scene (delete: bool = true, \
 	await LevelTransition.transition_in(_transition_in)
 	gui.remove_child(current_gui_scene)
 	
+func add_gui_to_existing(new_gui: String) -> void:
+	var _new_gui_scene=load(new_gui).instantiate()
+	gameui.add_child(_new_gui_scene)
+	
+func remove_gui_from_existing(gui_name : String) -> void:
+	pass
+	
+
 #func change_2d_scene_old(new_scene: int, \
 	#delete: bool = true, \
 	#keep_running: bool = false, \
