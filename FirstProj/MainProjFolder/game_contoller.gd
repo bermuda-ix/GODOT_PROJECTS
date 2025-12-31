@@ -20,6 +20,9 @@ class_name GameController extends Node
 @onready var current_room : int = 0
 @onready var return_room : String = ""
 
+#Region of levels to load into memory
+@onready var region : Dictionary
+
 var current_2d_scene
 var prev_2d_scene
 var current_gui_scene
@@ -44,8 +47,9 @@ func _ready() -> void:
 	#toggle_world2d_process(false)
 	#toggle_player(false)
 	
-	test_start()
-	#change_gui_scene(LevelList.MAIN_MENU)
+	#test_start()
+	change_gui_scene(LevelList.MAIN_MENU)
+	level_UI.visible=false
 	
 	
 func _process(delta: float) -> void:
@@ -73,6 +77,10 @@ func unpause():
 	
 	
 	
+
+func set_region (dict : Dictionary) -> void:
+	region=dict
+
 #refactor to use global array/map of full levels
 func load_levels(dict : Dictionary) -> void:
 	for room in dict:
@@ -139,7 +147,7 @@ func change_2d_scene (new_scene: String, \
 		prev_2d_scene=current_2d_scene
 		return_room=prev_2d_scene.name
 	current_2d_scene=loaded_rooms_map[new_scene]
-	load_levels(LevelsList.prologue_level_maps)
+	load_levels(LevelsList.level_maps)
 
 func _init_objectives(dict : Dictionary):
 	objectives_ui._init_objectives_list(dict)

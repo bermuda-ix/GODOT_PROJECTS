@@ -16,6 +16,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "  SELECT LEVEL:"
+horizontal_alignment = 1
 
 [node name="tutorials" type="Button" parent="VBoxContainer"]
 visible = false
@@ -27,12 +28,12 @@ text = "Practice
 [node name="guanlet" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 action_mode = 0
-text = "Gauntlet"
+text = "Survival mode"
 
 [node name="boss" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 action_mode = 0
-text = "PROLOGUE"
+text = "ADVENTURE MODE"
 
 [connection signal="pressed" from="VBoxContainer/tutorials" to="." method="_on_tutorials_pressed"]
 [connection signal="pressed" from="VBoxContainer/guanlet" to="." method="_on_guanlet_pressed"]

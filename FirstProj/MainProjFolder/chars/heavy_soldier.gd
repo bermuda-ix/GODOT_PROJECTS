@@ -26,6 +26,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var gpu_particles_2d_2: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D2
 #On Screen
 
+var always_active : bool
 #Defense
 @onready var health: Health = $Health
 @onready var stagger: Stagger = $Stagger
@@ -138,6 +139,9 @@ var attacking : bool = false
 @onready var is_even_order : bool = false
 @onready var group_enemy_manager: GroupEnemyManager = $GroupEnemyManager
 
+#Scoring variables
+@export var score : int = 3
+
 #Debug var
 var combat_state : String = "RANGED"
 @onready var label: Label = $Label
@@ -166,6 +170,8 @@ func _ready():
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 	
 	_init_group_link()
+	if always_active:
+		alerted()
 
 func _process(delta: float) -> void:
 	if state_machine.get_active_state()==death:
@@ -488,6 +494,7 @@ func _on_health_health_depleted() -> void:
 	if linked_enemies!=null:
 		linked_enemies.remove_at(group_link_order)
 	death_handler.death()
+	Events.inc_score.emit(score)
 
 
 func _on_dying_entered() -> void:

@@ -27,6 +27,7 @@ func handle_vision():
 		return
 	if always_on:
 		player_found=true
+		#sm.dispatch(&"start_chase")
 	else:
 		if player_tracking.is_colliding():
 			var collision_result = player_tracking.get_collider()

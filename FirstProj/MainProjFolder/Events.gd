@@ -43,7 +43,12 @@ signal activate
 signal deactivate
 signal spawn_update
 signal boss_spawn
-#spawn_update(Enemy type, true=add false=remove)\
+#signal spawn_update(enemy_type, add : bool)
+
+#Heat Signals
+signal increase_heat_gauge
+signal increase_heat_lvl
+signal reset_heat
 
 signal parried
 signal staggered

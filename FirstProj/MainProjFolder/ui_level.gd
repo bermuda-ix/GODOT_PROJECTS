@@ -18,14 +18,15 @@ var heat_fill : int = 0:
 func _ready():
 	health=3
 	cur_state="IDLE"
+	Events.increase_heat_gauge.connect(increase_heat_gauge)
+	Events.increase_heat_lvl.connect(increase_heat_lvl)
+	
 	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	health_bar.text=str("Health: ", health)
-	state.text=str("State: ", cur_state)
 	set_heat_fill(heat_fill)
 	set_heat_lvl(heat_lvl)
 
@@ -48,3 +49,15 @@ func set_heat_lvl(value : int) -> void:
 	
 	if heat_lvl_gauge.value>=6:
 		heat_lvl_raise.emit()
+
+
+func increase_heat_gauge(value : int) -> void:
+	heat_fill+=value
+	if heat_fill>=100:
+		Events.increase_heat_lvl.emit(1)
+	else:
+		heat_fill_gauge.value=heat_fill
+	
+func increase_heat_lvl(value : int) -> void:
+	heat_lvl+=value
+	heat_lvl_gauge.value=heat_lvl

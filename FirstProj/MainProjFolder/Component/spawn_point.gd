@@ -7,6 +7,7 @@ class_name SpawnPoint
 @onready var spawn_size : int = 1
 @onready var boss_spawn_size : int = 1
 @onready var boss_rand : bool = false
+var level_node
 
 @export var active : bool = true
 @export var single_spawn : bool = true
@@ -14,8 +15,9 @@ class_name SpawnPoint
 @export var enemy : Array[PackedScene] = []
 @export var enemy_single : PackedScene
 @export var boss_enemy : PackedScene
-@export var max_enemy : int = 5
+@export var max_enemy : int = 2
 @export var spawn_type : String = "enemy"
+@onready var current_heat : int = 0
 
 #Limits
 @export var limit_spawn : bool = false
@@ -23,15 +25,22 @@ class_name SpawnPoint
 @export var spawn_pos_limit_upper : Vector2 = Vector2.ZERO
 @export var spawn_pos_limit_lower : Vector2 = Vector2.ZERO
 
+#initial spawn behavior
+@export var spawn_active : bool = true
+
 func _ready():
 	spawn_timer.start()
 	spawn_size = enemy.size()
 	boss_spawn_size = enemies.BOSSES.size()
+	level_node=get_tree().get_first_node_in_group("world").get_path()
+	print(level_node)
 	
 	if not single_spawn:
 		Events.activate.connect(activate)
 		Events.deactivate.connect(deactivate)
 		Events.spawn_update.connect(spawn_update)
+		Events.increase_heat_lvl.connect(heat_increased)
+		Events.reset_heat.connect(reset_heat)
 
 #func load_enemies():
 	#match
@@ -57,14 +66,17 @@ func _on_spawn_timer_timeout():
 			else:
 				enemy_inst = boss_enemy
 			enemy_inst.global_position = Vector2(position.x, position.y)
-			get_tree().current_scene.add_child(enemy_inst)
+			get_tree().get_root().get_node(level_node).add_child(enemy_inst)
 			spawn_timer.paused=true
 		
 		elif single_spawn:
 			enemy_inst = enemy_single.instantiate()
 			enemy_inst.global_position = Vector2(position.x, position.y)
-			get_tree().current_scene.add_child(enemy_inst)
+			if spawn_active:
+				enemy_inst.always_active=true
+			get_tree().get_root().get_node(level_node).add_child(enemy_inst)
 			active=false
+			
 		
 		else:
 			if enemy.is_empty():
@@ -81,7 +93,9 @@ func _on_spawn_timer_timeout():
 			
 				enemy_inst.global_position = Vector2(global_position.x, global_position.y)
 				#enemy_inst.scale*=0.5
-				get_tree().current_scene.add_child(enemy_inst)
+				if spawn_active:
+					enemy_inst.always_active=true
+				get_tree().get_root().get_node(level_node).add_child(enemy_inst)
 				
 			else:
 				print("max spawned")
@@ -112,6 +126,17 @@ func toggle_active(spawn):
 		active = !active
 
 func spawn_update(enemy_spawn, add : bool):
+	
+	#if enemy_spawn is Dictionary:
+		#for enemy_type in enemy_spawn.keys():
+			#if not enemy_type.is_in_group("Enemy"):
+				#push_error("ERROR Adding non enemy "+enemy_type.name+" to enemy spawn")
+				#return
+	#elif enemy_spawn is PackedScene:
+		#if not enemy_spawn.is_in_group("Enemy"):
+			#push_error("ERROR Adding non enemy "+enemy_spawn.name+" to enemy spawn")
+			#return
+	
 	if add:
 		if enemy_spawn is Dictionary:
 			for enemy_type in enemy_spawn.keys():
@@ -133,6 +158,16 @@ func spawn_update(enemy_spawn, add : bool):
 
 func spawn_timer_update(value : float) -> void:
 	spawn_timer.wait_time=value
+
+func heat_increased(value : int) -> void:
+	max_enemy+=1
+	spawn_timer-=0.5
+	
+	
+func reset_heat() -> void:
+	max_enemy=2
+	spawn_timer=5
+
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	no_spawn_entered=true

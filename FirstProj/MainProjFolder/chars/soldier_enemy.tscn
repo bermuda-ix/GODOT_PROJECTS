@@ -1725,9 +1725,14 @@ radius = 34.0
 [node name="soldier_enemy" node_paths=PackedStringArray("hitbox", "state_machine") groups=["Persistant"] instance=ExtResource("1_ojqla")]
 collision_layer = 16384
 script = ExtResource("2_ibi2a")
+drop = null
+explode = null
+jump_speed = null
 chase_speed = 120.0
 hitbox = NodePath("HitBox")
+counter_kick_chance = null
 state_machine = NodePath("LimboHSM")
+score = null
 
 [node name="NavigationAgent2D" parent="." index="0"]
 navigation_layers = 2

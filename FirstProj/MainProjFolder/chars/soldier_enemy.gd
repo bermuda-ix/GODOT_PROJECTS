@@ -14,6 +14,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var player_tracking = $PlayerTrackerPivot/PlayerTracking as RayCast2D
 @onready var player_tracker_pivot = $PlayerTrackerPivot as Node2D
 @onready var vision_handler: VisionHandler = $VisionHandler
+var always_active : bool
 
 @onready var chase_timer = $ChaseTimer as Timer
 @onready var animated_sprite_2d = $AnimatedSprite2D as AnimatedSprite2D
@@ -139,6 +140,8 @@ var distance
 
 @onready var ammo_count
 
+#Scoring variables
+@export var score : int = 5
 
 enum CombatStates{
 	RANGED,
@@ -177,6 +180,8 @@ func _ready():
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 	if health.health<=0:
 		queue_free()
+	if always_active:
+		alerted()
 	
 # initialize state
 func _init_state_machine():
@@ -456,6 +461,11 @@ func counter_select()->void:
 func rapid_shoot(value : bool)->void:
 	turret.multi_shot=value
 
+func alerted() -> void :
+	print("alerted!")
+	vision_handler.always_on=true
+	state_machine.dispatch(&"attack_mode")
+
 func _on_hurt_box_received_damage(damage: int) -> void:
 	if clash_mult>1:
 		stagger.stagger-=(clash_mult-1)
@@ -499,6 +509,8 @@ func _on_health_health_depleted() -> void:
 		knockback.x=250
 	jump_handler.handle_jump(0.2)
 	death_handler.death()
+	Events.inc_score.emit(score)
+
 
 func _on_attack_timer_timeout() -> void:
 	#"begin move")

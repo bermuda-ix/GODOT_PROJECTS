@@ -135,6 +135,9 @@ var slam_vel : float = 0.0
 #LVL Boss flag
 @export var lvl_boss : bool = false
 
+#Scoring variables
+@export var score : int = 1
+
 #Debug var
 var combat_state : String = "RANGED"
 @onready var debuging: Label = $DEBUGING
@@ -411,6 +414,7 @@ func _on_health_health_depleted() -> void:
 	movement_handler.active=false
 	knockback.x=250
 	death_timer.start()
+	Events.inc_score.emit(score)
 		
 	
 	

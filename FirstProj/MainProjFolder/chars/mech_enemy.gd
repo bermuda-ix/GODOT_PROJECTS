@@ -84,6 +84,7 @@ var current_state = States.WANDER
 var prev_state = States.WANDER
 
 
+
 func _ready():
 	chase_timer.timeout.connect(on_timer_timeout)
 	player = get_tree().get_first_node_in_group("player")

@@ -6,7 +6,6 @@ extends Node2D
 #@onready var polygon_2d = $StaticBody2D/CollisionPolygon2D/Polygon2D
 @onready var level_completed = $CanvasLayer/LevelCompleted
 @onready var game_over = $CanvasLayer/GameOver
-@onready var PC = $PC
 @onready var ui_level = $CanvasLayer/UI_Level
 @onready var label = $CanvasLayer/Label
 @onready var pause_menu = $CanvasLayer/PauseMenu
@@ -24,11 +23,14 @@ var qte_options : Array[String] = ["1","1","1","1","1"]
 @export var lvl_type = "goal"
 @export var elite_spawn : int = 20
 @export var boss_spawn : int = 40
+@export var no_load : bool = false
 
-@export var player : PlayerEntity
+@onready var current_heat : int = 0
+
+var player : PlayerEntity
 @onready var camera_pos: camera_position = $CameraPos
 @export var starting_pos: Array[Node2D]
-@onready var default: Node2D = $StartingPos/Default
+@onready var init_starting_pos: Node2D = $StartingPos/Default
 signal get_entry_position
 
 @onready var cutscene_active : bool = false
@@ -57,7 +59,7 @@ func _ready():
 	#Events.level_completed.connect(show_level_complete)
 	Events.game_over.connect(show_game_over)
 	Events.pause.connect(show_pause)
-	Events.unpause.connect(unpause)
+	#Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
 	Events.load_checkpoint.connect(reload_scene)
 	#GlobalSaveData.save_game()
@@ -65,11 +67,12 @@ func _ready():
 	heat_handler.heat_lvl_spawn()
 	for i in spawn_points.size():
 		print(spawn_points[i].name)
+	Events.increase_heat_lvl.connect(increase_heat)
 	#Events.start_cutscene.emit()
 	#Events.end_cutsene.connect(end_cutscene)
 	#Events.queue_cutscene.emit(Cutscenes.intro_cutscene)
 	#score=45
-	
+	player=get_tree().get_first_node_in_group("player")
 	init_active_enemies_list = get_tree().get_nodes_in_group("Enemy")
 	if lvl_type=="adv":
 		cutscene_player.play("TEST")
@@ -77,17 +80,18 @@ func _ready():
 		Events.spawn_update.emit(enemy_list.REG_ENEMIES, true)
 		end_cutscene()
 	
-	level_state_handler.load_level_state()
-	PC.global_position=default.global_position
+	if not no_load:
+		level_state_handler.load_level_state()
+	#player.global_position=default.global_position
 	hit_stop.end_hit_stop()
 	
 func _process(_delta):
 	
 	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size())
 	
-	set_state()
-	get_health()
-	set_health()
+	#set_state()
+	#get_health()
+	#set_health()
 	
 	if Input.is_action_just_pressed("DEBUG_KEY"):
 		#save_level_state()
@@ -137,10 +141,10 @@ func show_pause():
 	pause_menu.show()
 	get_tree().paused = true
 	
-func unpause():
-	pause_menu.hide()
-	get_tree().paused = false
-	
+#func unpause():
+	#pause_menu.hide()
+	#get_tree().paused = false
+	#
 	
 #func get_state():
 	#cur_state = PC.get_state()
@@ -149,43 +153,45 @@ func unpause():
 func set_state():
 	ui_level.set_cur_state(cur_state)
 	
-func get_health():
-	cur_health = PC.get_health()
-	max_health = PC.get_max_health()
+#func get_health():
+	#cur_health = PC.get_health()
+	#max_health = PC.get_max_health()
 	
 func set_health():
 	ui_level.set_health(cur_health)
 	ui_level.set_max_health(max_health)
 	
-func inc_score():
-	score += 1
-	if ui_level.heat_lvl<6:
-		ui_level.heat_lvl+=1
-	else:
-		ui_level.heat_lvl=0
-		ui_level.heat_fill+=1
+func inc_score(value : int):
+	score += value
+	
 
 func handle_spawn():
-	
-	if score>=20 and score<40:
-		if elite_spawn_flag == false:
-			print("adding mech")
-			#Events.spawn_update.emit(enemy_list.BOSSES, true)
-			elite_spawn_flag = true
-			
-	elif score>=40:
-		if boss_spawn_flag == false:
-			#print("boss spawn")
-			Events.deactivate.emit(spawn_type[0])
-			#Events.deactivate.emit(spawn_type[1])
-			var enemy_cnt = get_tree().get_nodes_in_group("Enemy").size()
-			if enemy_cnt==0:
-				print("boss activate")
-				boss_spawn_flag=true
-				Events.activate.emit(spawn_type[1])
+	pass
+	#if score>=20 and score<40:
+		#if elite_spawn_flag == false:
+			##print("adding mech")
+			##Events.spawn_update.emit(enemy_list.BOSSES, true)
+			#elite_spawn_flag = true
+			#
+	#elif score>=40:
+		#if boss_spawn_flag == false:
+			##print("boss spawn")
+			##Events.deactivate.emit(spawn_type[0])
+			##Events.deactivate.emit(spawn_type[1])
+			#var enemy_cnt = get_tree().get_nodes_in_group("Enemy").size()
+			#if enemy_cnt==0:
+				#print("boss activate")
+				#boss_spawn_flag=true
+				#Events.activate.emit(spawn_type[1])
 
 
-
+func increase_heat(value : int) -> void:
+	current_heat+=value
+	match current_heat:
+		3:
+			Events.spawn_update.emit(enemy_list.ELITE_ENEMIES["HEAVY_SOLDIER"])
+		5:
+			Events.spawn_update.emit(enemy_list.ELITE_ENEMIES["SOLDIER_ENEMY"])
 		
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -230,9 +236,3 @@ func _on_pc_special_atk_qte() -> void:
 
 func _on_pc_no_input_qte() -> void:
 	cutscene_player.queue(qte_options[4])
-
-
-func _on_ui_level_aaeat_lvl_raise() -> void:
-	print("HEAT RISING")
-	ui_level.heat_fill+=1
-	heat_handler.heat_lvl_spawn()

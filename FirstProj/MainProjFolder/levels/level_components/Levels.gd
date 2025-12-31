@@ -4,6 +4,7 @@ const MAIN_MENU = "res://LVL_Transitions/main_menu.tscn"
 const LEVEL_SELECT = "res://LVL_Transitions/lvlselect.tscn"
 
 @onready var levels : Dictionary = {
+		"GuantletLvl" : "res://levels/guantlet.tscn",
 		"PrologueLvl" : "res://levels/PrologueRooms/prologue_lvl.tscn",
 		"prologue_room_1" : "res://levels/PrologueRooms/prologue_room_one.tscn",
 		"prologue_room_2" : "res://levels/PrologueRooms/prologue_room_2.tscn",
@@ -26,7 +27,11 @@ const LEVEL_SELECT = "res://LVL_Transitions/lvlselect.tscn"
 		"PrologueGarage3" : "res://levels/PrologueRooms/prologue_garage_3.tscn"
 	}
 
+@onready var guantlet_lvls : Dictionary = {
+		"GuantletLvl" : "res://levels/guantlet.tscn",
+	}
+
 #Connected duplicated rooms
-@onready var prologue_level_maps : Dictionary = {
+@onready var level_maps : Dictionary = {
 	
 	}

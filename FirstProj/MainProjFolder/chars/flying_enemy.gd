@@ -29,14 +29,19 @@ const MISSILE_TRACKER = preload("res://Component/missiles/missile_tracker.tscn")
 
 @onready var death_timer = $DeathTimer
 
+var always_active : bool
+
 @export var drop = preload("res://heart.tscn")
 @export var explode = preload("res://Component/explosion.tscn")
 
 
+#Scoring variables
+@export var score : int = 1
+
 var player_found : bool = false
 var distance_to_player : float = 0.0
 var distance_above_player : float = 0.0
-var found : bool = false
+var found : bool
 var knockback : Vector2 = Vector2.ZERO
 
 @onready var state_machine: LimboHSM = $LimboHSM
@@ -61,6 +66,9 @@ func _ready():
 	player_found=true
 	found=true
 	hb_detect.disabled=true
+	if always_active:
+		set_state(States.WANDER, States.CHASE)
+	
 	
 func _process(delta):
 	track_player()
@@ -173,7 +181,8 @@ func _on_health_health_depleted():
 	knockback.x=(randi_range(500,900))
 	#print(knockback)
 	death_timer.start()
-	
+	Events.inc_score.emit(score)
+
 
 func _on_death_timer_timeout():
 	var drop_inst=drop.instantiate()
