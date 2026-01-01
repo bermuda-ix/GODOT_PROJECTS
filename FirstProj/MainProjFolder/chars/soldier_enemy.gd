@@ -140,8 +140,6 @@ var distance
 
 @onready var ammo_count
 
-#Scoring variables
-@export var score : int = 5
 
 enum CombatStates{
 	RANGED,
@@ -509,7 +507,8 @@ func _on_health_health_depleted() -> void:
 		knockback.x=250
 	jump_handler.handle_jump(0.2)
 	death_handler.death()
-	Events.inc_score.emit(score)
+	
+	
 
 
 func _on_attack_timer_timeout() -> void:

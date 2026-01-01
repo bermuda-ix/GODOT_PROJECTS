@@ -5488,6 +5488,7 @@ lvl_type = "guantlet"
 no_load = true
 
 [node name="UI_Level" parent="CanvasLayer" index="1"]
+process_mode = 4
 visible = false
 z_index = 9
 

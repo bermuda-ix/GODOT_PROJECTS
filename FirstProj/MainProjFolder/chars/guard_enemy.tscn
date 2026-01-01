@@ -1353,6 +1353,7 @@ actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 animation_player = NodePath("../AnimationPlayer")
 health = NodePath("../Health")
+score = 2
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
 
 [node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]

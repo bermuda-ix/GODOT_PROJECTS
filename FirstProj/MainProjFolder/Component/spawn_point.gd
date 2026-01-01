@@ -161,12 +161,12 @@ func spawn_timer_update(value : float) -> void:
 
 func heat_increased(value : int) -> void:
 	max_enemy+=1
-	spawn_timer-=0.5
+	spawn_timer.wait_time-=0.5
 	
 	
 func reset_heat() -> void:
 	max_enemy=2
-	spawn_timer=5
+	spawn_timer.wait_time=5
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:

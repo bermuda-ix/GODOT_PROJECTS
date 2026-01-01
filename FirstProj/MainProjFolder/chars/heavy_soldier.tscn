@@ -1386,6 +1386,7 @@ sm = NodePath("../StateMachine")
 animation_player = NodePath("../AnimationPlayer")
 tree_active = false
 health = NodePath("../Health")
+heat_value_inc = 2
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
 
 [node name="PlayerTrackingHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]

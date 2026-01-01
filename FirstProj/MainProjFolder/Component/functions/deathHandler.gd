@@ -7,6 +7,10 @@ extends Node
 @export var tree_active : bool = true
 @export var health : Health
 
+#Scoring variables
+@export var score : int = 3
+@export var heat_value_inc : int = 1
+
 func _ready() -> void:
 	if health.health<=0:
 		queue_free()
@@ -15,7 +19,8 @@ func death():
 	#print("dying")
 	Events.unlock_from.emit()
 	#actor.parry_timer.stop()
-	Events.inc_score.emit()
+	Events.inc_score.emit(score)
+	Events.increase_heat_gauge.emit(heat_value_inc)
 	if tree_active:
 		actor.bt_player.blackboard.set_var("attack_mode", false)
 		actor.bt_player.restart()

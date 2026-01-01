@@ -139,8 +139,7 @@ var attacking : bool = false
 @onready var is_even_order : bool = false
 @onready var group_enemy_manager: GroupEnemyManager = $GroupEnemyManager
 
-#Scoring variables
-@export var score : int = 3
+
 
 #Debug var
 var combat_state : String = "RANGED"
@@ -494,7 +493,6 @@ func _on_health_health_depleted() -> void:
 	if linked_enemies!=null:
 		linked_enemies.remove_at(group_link_order)
 	death_handler.death()
-	Events.inc_score.emit(score)
 
 
 func _on_dying_entered() -> void:

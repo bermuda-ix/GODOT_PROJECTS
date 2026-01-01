@@ -20,7 +20,7 @@ func _ready():
 	cur_state="IDLE"
 	Events.increase_heat_gauge.connect(increase_heat_gauge)
 	Events.increase_heat_lvl.connect(increase_heat_lvl)
-	
+	Events.reset_heat.connect(reset_heat)
 	
 
 
@@ -61,3 +61,7 @@ func increase_heat_gauge(value : int) -> void:
 func increase_heat_lvl(value : int) -> void:
 	heat_lvl+=value
 	heat_lvl_gauge.value=heat_lvl
+
+func reset_heat() -> void:
+	heat_fill_gauge.value=0
+	heat_lvl_gauge.value=0

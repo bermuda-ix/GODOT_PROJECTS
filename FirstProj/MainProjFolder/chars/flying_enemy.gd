@@ -37,6 +37,8 @@ var always_active : bool
 
 #Scoring variables
 @export var score : int = 1
+@export var heat_value_inc : int = 1
+
 
 var player_found : bool = false
 var distance_to_player : float = 0.0
@@ -174,14 +176,14 @@ func _on_nav_timer_timeout():
 
 
 func _on_health_health_depleted():
-	Events.inc_score.emit()
+	Events.inc_score.emit(score)
+	Events.increase_heat_gauge.emit(heat_value_inc)
 	parry_timer.stop()
 	set_state(current_state, States.DEATH)
 	knockback.y=(randi_range(100,400)*-1)
 	knockback.x=(randi_range(500,900))
 	#print(knockback)
 	death_timer.start()
-	Events.inc_score.emit(score)
 
 
 func _on_death_timer_timeout():

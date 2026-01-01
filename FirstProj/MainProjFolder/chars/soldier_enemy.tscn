@@ -1725,14 +1725,9 @@ radius = 34.0
 [node name="soldier_enemy" node_paths=PackedStringArray("hitbox", "state_machine") groups=["Persistant"] instance=ExtResource("1_ojqla")]
 collision_layer = 16384
 script = ExtResource("2_ibi2a")
-drop = null
-explode = null
-jump_speed = null
 chase_speed = 120.0
 hitbox = NodePath("HitBox")
-counter_kick_chance = null
 state_machine = NodePath("LimboHSM")
-score = null
 
 [node name="NavigationAgent2D" parent="." index="0"]
 navigation_layers = 2
@@ -1890,6 +1885,8 @@ actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 animation_player = NodePath("../AnimationPlayer")
 health = NodePath("../Health")
+score = 5
+heat_value_inc = 3
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
 
 [node name="ShootHandler" type="Node" parent="." index="34" node_paths=PackedStringArray("actor", "turret")]

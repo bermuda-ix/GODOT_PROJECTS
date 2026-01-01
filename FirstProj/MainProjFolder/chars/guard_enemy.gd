@@ -9,7 +9,7 @@ const JUMP_VELOCITY = -400.0
 #Basic
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
-@onready var always_active : bool = false
+@onready var always_active : bool
 #Animation Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 #Target lock
@@ -125,8 +125,7 @@ var attacking : bool = false
 @onready var is_even_order : bool = false
 @onready var group_enemy_manager: GroupEnemyManager = $GroupEnemyManager
 
-#Scoring variables
-@export var score : int = 5
+
 
 #Debug var
 var combat_state : String = "RANGED"
@@ -388,7 +387,6 @@ func _on_health_health_depleted() -> void:
 	if linked_enemies!=null:
 		linked_enemies.remove_at(group_link_order)
 	death_handler.death()
-	Events.inc_score.emit(score)
 
 func _on_attack_timer_timeout() -> void:
 	if state_machine.get_active_state()==staggered:

@@ -59,6 +59,7 @@ func _ready():
 	#Events.level_completed.connect(show_level_complete)
 	Events.game_over.connect(show_game_over)
 	Events.pause.connect(show_pause)
+	Events.reset_heat.emit()
 	#Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
 	Events.load_checkpoint.connect(reload_scene)
