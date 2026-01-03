@@ -59,7 +59,10 @@ func handle_vision():
 	if combat_state_active:
 		if csm.get_active_state()==actor.ranged_mode and player_found:
 			#actor.set_state(actor.current_state, actor.States.ATTACK)
-			sm.dispatch(&"attack_mode")
+			if actor.is_on_screen:
+				sm.dispatch(&"attack_mode")
+			else:
+				sm.dispatch(&"start_chase")
 		elif csm.get_active_state()==actor.melee_mode and player_found:
 			if bt_active:
 				if actor.bt_player.blackboard.get_var("within_range"):

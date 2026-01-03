@@ -531,8 +531,19 @@ func _on_vision_handler_player_sighted() -> void:
 func alerted() -> void :
 	print("alerted!")
 	vision_handler.always_on=true
-	state_machine.dispatch(&"attack_mode")
+	if on_screen.is_on_screen():
+		state_machine.dispatch(&"attack_mode")
+		bt_player.blackboard.set_var("attack_mode", true)
+	else:
+		bt_player.blackboard.set_var("attack_mode", false)
+		state_machine.dispatch(&"start_chase")
 
 
 func _on_parry_box_bullet_stopped() -> void:
 	print("shieled")
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	if vision_handler.player_found or vision_handler.always_on:
+		state_machine.dispatch(&"attack_mode")
+		bt_player.blackboard.set_var("attack_mode", true)

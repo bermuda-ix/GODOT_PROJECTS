@@ -19,7 +19,7 @@ func _physics_process(delta: float) -> void:
 		#print(actor.distance)
 #		RANGED ATTACK
 
-		if actor.distance>ranged_dist:
+		if actor.distance>ranged_dist and actor.is_on_screen:
 			#print("ranged")
 			actor.turret.shoot_timer.paused=false
 			combat_state_machine.dispatch(&"ranged_mode")

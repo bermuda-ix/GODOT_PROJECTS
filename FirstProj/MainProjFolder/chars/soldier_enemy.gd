@@ -462,7 +462,12 @@ func rapid_shoot(value : bool)->void:
 func alerted() -> void :
 	print("alerted!")
 	vision_handler.always_on=true
-	state_machine.dispatch(&"attack_mode")
+	if on_screen.is_on_screen():
+		state_machine.dispatch(&"attack_mode")
+		bt_player.blackboard.set_var("attack_mode", true)
+	else:
+		bt_player.blackboard.set_var("attack_mode", false)
+		state_machine.dispatch(&"start_chase")
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	if clash_mult>1:
@@ -606,6 +611,9 @@ func _on_bullet_detection_bullet_detected() -> void:
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	vision_handler.active=true
+	if vision_handler.player_found or vision_handler.always_on:
+		state_machine.dispatch(&"attack_mode")
+		bt_player.blackboard.set_var("attack_mode", true)
 
 
 func _on_bullet_detection_body_entered(body: Node2D) -> void:

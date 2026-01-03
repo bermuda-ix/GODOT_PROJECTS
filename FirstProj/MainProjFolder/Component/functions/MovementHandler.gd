@@ -30,6 +30,7 @@ func _physics_process(delta: float) -> void:
 				move_away(distance_from)
 			else:
 				move_closer()
+				#print(actor.global_position.x)
 		
 
 func set_active(value : bool) -> void:
@@ -79,9 +80,11 @@ func move_away(value : int) -> void:
 
 func move_closer() -> void:
 	var dir = actor.to_local(actor.nav_agent.get_next_path_position())
+	print(dir.x)
 		#actor.h_bar.text=str(actor.health.health, " : ", actor.stagger.stagger, " : vel_x:", actor.velocity.x)
 	if dir.x < 0 and actor.is_on_floor():
 		actor.current_speed = -actor.chase_speed
+		assert(actor.current_speed<0)
 		#if state_machine.get_active_state()!=actor.attack:
 			#actor.animated_sprite_2d.scale.x = -1
 		#actor.hit_box.scale.x = -1

@@ -10,6 +10,9 @@ const JUMP_VELOCITY = -400.0
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var always_active : bool
+@onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var is_on_screen : bool = false
+
 #Animation Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 #Target lock
@@ -152,7 +155,9 @@ func _ready():
 	if health.health<=0:
 		queue_free()
 	if always_active:
+		state_machine.remove_transition(attack, &"idle_mode")
 		alerted()
+		chase()
 	
 	
 func _init_state_machine():
@@ -201,11 +206,23 @@ func _init_group_link():
 	group_enemy_manager.set_even_order(group_link_order)
 
 func _process(_delta):
+	is_on_screen=visible_on_screen_notifier_2d.is_on_screen()
 	ammo_count=turret.ammo_count
 	bt_player.blackboard.set_var("ammo",ammo_count)
 	dir = to_local(next)
 	norm_delta=_delta
+	#if state_machine.get_active_state()==chasing and is_on_floor() and current_speed!=0:
+		#var dir_test = to_local(nav_agent.get_next_path_position())
+		#if dir_test.x>0:
+			#assert(current_speed>0)
+		#else:
+			#assert(current_speed<0)
+	#elif state_machine.get_active_state()==chasing and is_on_floor():
+		#assert(current_speed!=0)
+	print(current_speed)
 	
+	if is_on_screen and vision_handler.always_on==true:
+		state_machine.change_active_state(chasing)
 	
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collision.disabled=true
@@ -400,13 +417,22 @@ func _on_turret_shoot_bullet() -> void:
 	shoot_handler.shoot_bullet()
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	if state_machine.get_active_state()==death:
+	if state_machine.get_active_state()==death or state_machine.get_active_state()==dying:
 		queue_free()
+	else:
+		if vision_handler.player_found or vision_handler.always_on:
+			state_machine.dispatch(&"start_chase")
+			bt_player.blackboard.set_var("attack_mode", false)
+			chase()
 
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if current==jump:
 		if previous==attack:
 			print("down attack")
+	if not visible_on_screen_notifier_2d.is_on_screen():
+		if current==attack:
+			push_error("ERROR: State changed")
+	
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	
@@ -422,4 +448,16 @@ func _on_vision_handler_player_sighted() -> void:
 func alerted() -> void :
 	print("alerted!")
 	vision_handler.always_on=true
-	state_machine.dispatch(&"attack_mode")
+	if visible_on_screen_notifier_2d.is_on_screen():
+		state_machine.dispatch(&"attack_mode")
+		bt_player.blackboard.set_var("attack_mode", true)
+	else:
+		bt_player.blackboard.set_var("attack_mode", false)
+		state_machine.dispatch(&"start_chase")
+	
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	if vision_handler.player_found or vision_handler.always_on:
+		state_machine.dispatch(&"attack_mode")
+		bt_player.blackboard.set_var("attack_mode", true)
