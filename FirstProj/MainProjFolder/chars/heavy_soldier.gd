@@ -186,6 +186,7 @@ func _process(delta: float) -> void:
 	dir = to_local(next)
 	vision_handler.handle_vision()
 	distance = abs(global_position.x-player.global_position.x)
+	force_chase()
 	#if ammo_count<0:
 		#print("RELOAD")
 		#animation_player.stop()
@@ -538,6 +539,10 @@ func alerted() -> void :
 		bt_player.blackboard.set_var("attack_mode", false)
 		state_machine.dispatch(&"start_chase")
 
+func force_chase():
+	var is_on_screen=on_screen.is_on_screen()
+	if not is_on_screen and vision_handler.always_on==true and state_machine.get_active_state()!=chasing:
+		state_machine.change_active_state(chasing)
 
 func _on_parry_box_bullet_stopped() -> void:
 	print("shieled")

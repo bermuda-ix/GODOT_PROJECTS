@@ -5780,12 +5780,12 @@ polygon = PackedVector2Array(-695, 357, -697.5, 692.5, -610, 694, -579, 533, -69
 position = Vector2(3378, 0)
 
 [node name="SpawnPoint" parent="CameraPos" index="1" instance=ExtResource("8_ylpkt")]
-position = Vector2(-1044, -2)
+position = Vector2(-328, -2)
 active = true
 single_spawn = false
 
 [node name="SpawnPoint2" parent="CameraPos" index="2" instance=ExtResource("8_ylpkt")]
-position = Vector2(723, 0)
+position = Vector2(323, 0)
 active = true
 single_spawn = false
 

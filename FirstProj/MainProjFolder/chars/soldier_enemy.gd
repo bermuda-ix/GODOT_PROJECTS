@@ -242,7 +242,7 @@ func _process(_delta):
 ##	END OF TEST
 	#movement_handler.dir)
 	dir = to_local(next)
-	
+	force_chase()
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collision.disabled=true
 		return
@@ -331,6 +331,10 @@ func chase():
 	state_machine.dispatch(&"start_chase")
 	#state_machine.change_active_state(chasing)
 	
+func force_chase():
+	var is_on_screen=on_screen.is_on_screen()
+	if not is_on_screen and vision_handler.always_on==true and state_machine.get_active_state()!=chasing:
+		state_machine.change_active_state(chasing)
 
 func health_bar():
 	h_bar.text=str(health.health, " : ammo:",turret.ammo_count , " : STG: ", stagger.stagger)

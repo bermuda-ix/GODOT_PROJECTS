@@ -221,7 +221,7 @@ func _process(_delta):
 		#assert(current_speed!=0)
 	print(current_speed)
 	
-	if is_on_screen and vision_handler.always_on==true:
+	if not is_on_screen and vision_handler.always_on==true and state_machine.get_active_state()!=chasing:
 		state_machine.change_active_state(chasing)
 	
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:

@@ -24,6 +24,7 @@ signal unpause
 
 #Score
 signal inc_score
+signal score_entry
 
 #Enemy signals
 signal activate_elite

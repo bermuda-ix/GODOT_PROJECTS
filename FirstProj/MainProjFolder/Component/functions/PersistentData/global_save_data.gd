@@ -34,6 +34,77 @@ var level_state : Dictionary = {
 var score : int = 0
 var score_name : String = "TEST"
 
+
+
+var highscores : Array[HighscoreEntryClass]
+
+
+#Enter highscore
+func store_score(highscore : HighscoreEntryClass) -> void:
+
+	if highscores.size()>1:
+		for i in range(highscores.size()-1, -1, -1):
+			if highscores[i].name==highscore.name:
+				print("duplicate_name")
+				highscores.remove_at(i)
+				break
+		highscores.append(highscore)
+		highscores.sort_custom(sort_descending)
+	else:
+		highscores.append(highscore)
+	print_scores()
+	var _highscores_array = highscores_array(highscores)
+	print(_highscores_array)
+	save_highscores(_highscores_array)
+	
+#Print all highscores
+func print_scores() -> void:
+	for _score in highscores:
+		print(_score.name, " ", _score.score) 
+
+#Helper functions for sorting highscores
+static func sort_descending(a, b):
+	if a.score>b.score:
+		return true
+	else:
+		return false
+static func sort_ascending(a, b):
+	if a.score<b.score:
+		return true
+	else:
+		return false
+
+func find_highscore_name(_highscore,name):
+	if _highscore.name==name:
+		return true
+
+#JSONify highscore list
+func highscores_array(_highscores: Array) -> Array:
+	#Key:Value pair -> Score:Name
+	var _highscore_table : Array[Array]
+	for _score in _highscores:
+		var _highscore : Array = [_score.name, _score.score]
+		_highscore_table.append(_highscore)
+		#if _highscore_table.has(_score.name):
+			#if _highscore_table[_score.name]<_score.score:
+				#_highscore_table[_score.name] = _score.score
+		#else:
+			#_highscore_table[_score.name] = _score.score
+	
+	return _highscore_table
+
+#Save highscores to file
+func save_highscores(_highscores : Array) -> void:
+	var _file = FileAccess.open( SAVE_PATH + "highscores//highscores_list.sav", FileAccess.WRITE_READ)
+	if _file==null:
+		var error_str: String = error_string(FileAccess.get_open_error())
+		push_warning("Couldn't open file because: %s" % error_str)
+	var _save_json = JSON.stringify(_highscores)
+	_file.store_line(_save_json)
+	_file.close()
+
+	
+
 #Save game functions
 func save_game() -> void:
 	save_player_data()
