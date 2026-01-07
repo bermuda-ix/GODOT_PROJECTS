@@ -1,8 +1,15 @@
-[gd_scene load_steps=111 format=4 uid="uid://pupc1gren7la"]
+[gd_scene load_steps=118 format=4 uid="uid://pupc1gren7la"]
 
 [ext_resource type="Theme" uid="uid://boqtjf88xcpu4" path="res://demo/assets/ui.theme" id="1_4cwpw"]
 [ext_resource type="Script" uid="uid://t6r3bjqf5jtg" path="res://LVL_Transitions/highscore_entry.gd" id="1_slsgr"]
 [ext_resource type="FontFile" uid="uid://6gqb063p0aaa" path="res://Art_Components/UI/Fonts/Pixica Fonts/Pixica Fonts/Pixica-Regular.ttf" id="2_slsgr"]
+[ext_resource type="Texture2D" uid="uid://dsdj5ohafxq0k" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Panel04.png" id="4_vidvo"]
+[ext_resource type="Texture2D" uid="uid://b4xlugr5hs5uk" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Panel06.png" id="5_imec1"]
+[ext_resource type="Texture2D" uid="uid://cu63xecyubohj" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Button01.png" id="6_5dhju"]
+[ext_resource type="Texture2D" uid="uid://es8ukh45ffw7" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Button02.png" id="7_xfubi"]
+[ext_resource type="Texture2D" uid="uid://trivk6x3hslt" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Button03.png" id="8_4fopv"]
+
+[sub_resource type="Theme" id="Theme_fcqj1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5gpqs"]
 content_margin_left = 6.0
@@ -4626,6 +4633,9 @@ Tree/styles/title_button_hover = SubResource("StyleBoxFlat_hd5kv")
 Tree/styles/title_button_normal = SubResource("StyleBoxFlat_hd5kv")
 Tree/styles/title_button_pressed = SubResource("StyleBoxFlat_hd5kv")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5dhju"]
+texture = ExtResource("4_vidvo")
+
 [sub_resource type="Theme" id="Theme_tp6ml"]
 default_font = ExtResource("2_slsgr")
 default_font_size = 48
@@ -4798,16 +4808,17 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 64.0
-offset_bottom = -68.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_fcqj1")
 script = ExtResource("1_slsgr")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
+offset_top = 48.0
 offset_right = 576.0
-offset_bottom = 40.0
+offset_bottom = 88.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer"]
 layout_mode = 2
@@ -4817,11 +4828,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PanelContainer2" type="PanelContainer" parent="."]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 128.0
-offset_top = 40.0
+offset_top = 88.0
 offset_right = 448.0
-offset_bottom = 96.0
+offset_bottom = 144.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer2"]
 layout_mode = 2
@@ -4833,12 +4845,46 @@ vertical_alignment = 1
 [node name="PanelContainer3" type="PanelContainer" parent="."]
 layout_mode = 0
 offset_left = 128.0
-offset_top = 112.0
+offset_top = 160.0
 offset_right = 448.0
-offset_bottom = 152.0
+offset_bottom = 206.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_5dhju")
 
 [node name="LineEdit" type="LineEdit" parent="PanelContainer3"]
+z_index = 1
 layout_mode = 2
 theme = SubResource("Theme_tp6ml")
 placeholder_text = "NAME"
 alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 0
+offset_right = 576.0
+offset_bottom = 320.0
+mouse_filter = 2
+texture = ExtResource("5_imec1")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 232.0
+offset_top = 224.0
+offset_right = 444.0
+offset_bottom = 298.0
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("6_5dhju")
+texture_pressed = ExtResource("7_xfubi")
+texture_hover = ExtResource("8_4fopv")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TextureButton"]
+layout_mode = 0
+offset_right = 208.0
+offset_bottom = 80.0
+mouse_filter = 2
+theme = SubResource("Theme_m128e")
+text = "ENTER SCORE
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

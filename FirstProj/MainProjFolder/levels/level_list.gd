@@ -7,3 +7,6 @@ const LEVEL_SELECT = "res://LVL_Transitions/lvlselect.tscn"
 const CONTROL_TEST = "res://levels/control_test.tscn"
 const PLATFORM_TEST = "res://levels/platform_test.tscn"
 const PROLOGUE_LVL = "res://levels/prologue_lvl.tscn"
+
+const HIGHSCORE_ENTRY = "res://LVL_Transitions/highscore_entry.tscn"
+const HIGHSCORE_LIST = "res://LVL_Transitions/highscore_list.tscn"

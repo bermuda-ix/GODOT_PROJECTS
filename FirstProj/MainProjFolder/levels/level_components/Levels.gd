@@ -2,6 +2,8 @@ class_name Levels extends Node
 
 const MAIN_MENU = "res://LVL_Transitions/main_menu.tscn"
 const LEVEL_SELECT = "res://LVL_Transitions/lvlselect.tscn"
+const HIGHSCORE_ENTRY = "res://LVL_Transitions/highscore_entry.tscn"
+const HIGHSCORE_LIST = "res://LVL_Transitions/highscore_list.tscn"
 
 @onready var levels : Dictionary = {
 		"GuantletLvl" : "res://levels/guantlet.tscn",

@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_PATH = "user://"
+const SAVE_PATH := "user://"
 
 signal game_save
 signal game_load
