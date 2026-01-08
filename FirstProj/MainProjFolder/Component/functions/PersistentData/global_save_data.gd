@@ -36,15 +36,19 @@ var score_name : String = "TEST"
 
 
 
-var highscores : Array[HighscoreEntryClass]
+var highscores
+
+#Load initial persistant data
+func _ready() -> void:
+	load_highscores()
 
 
 #Enter highscore
-func store_score(highscore : HighscoreEntryClass) -> void:
-
-	if highscores.size()>1:
+func store_score(highscore : Array) -> void:
+	print(highscores)
+	if highscores.size()>=1:
 		for i in range(highscores.size()-1, -1, -1):
-			if highscores[i].name==highscore.name:
+			if highscores[i][0]==highscore[0]:
 				print("duplicate_name")
 				highscores.remove_at(i)
 				break
@@ -53,30 +57,29 @@ func store_score(highscore : HighscoreEntryClass) -> void:
 	else:
 		highscores.append(highscore)
 	print_scores()
-	var _highscores_array = highscores_array(highscores)
-	print(_highscores_array)
-	save_highscores(_highscores_array)
+	print(highscores)
+	save_highscores(highscores)
 	
 #Print all highscores
 func print_scores() -> void:
 	for _score in highscores:
-		print(_score.name, " ", _score.score) 
+		print(_score[0], " ", _score[0]) 
 
 #Helper functions for sorting highscores
 static func sort_descending(a, b):
-	if a.score>b.score:
+	if a[1]>b[1]:
 		return true
 	else:
 		return false
 static func sort_ascending(a, b):
-	if a.score<b.score:
+	if a[1]<b[1]:
 		return true
 	else:
 		return false
 
-func find_highscore_name(_highscore,name):
-	if _highscore.name==name:
-		return true
+#func find_highscore_name(_highscore,name):
+	#if _highscore.name==name:
+		#return true
 
 #JSONify highscore list
 func highscores_array(_highscores: Array) -> Array:
@@ -103,7 +106,18 @@ func save_highscores(_highscores : Array) -> void:
 	_file.store_line(_save_json)
 	_file.close()
 
-	
+func load_highscores() -> void:
+	var _file = FileAccess.open( GlobalSaveData.SAVE_PATH + "highscores//highscores_list.sav", FileAccess.READ)
+	var _load_json = JSON.new()
+	var _parse_result = _load_json.parse(_file.get_line())
+	if not  _parse_result == OK:
+		print("JSON Parse Error: ", _load_json.get_error_message(), " in ", _file, " as line ", _load_json.get_error_line())
+		return
+	highscores = _load_json.get_data() as Array[Array]
+	print(highscores)
+	#highscores_sorted
+	#for i in range(_loaded_scores.size()-1 , -1 , -1):
+		#print(_loaded_scores[i].name, _loaded_scores[i].score)
 
 #Save game functions
 func save_game() -> void:
