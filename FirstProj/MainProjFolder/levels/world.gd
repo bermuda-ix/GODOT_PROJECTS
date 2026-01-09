@@ -69,6 +69,7 @@ func _ready():
 	for i in spawn_points.size():
 		print(spawn_points[i].name)
 	Events.increase_heat_lvl.connect(increase_heat)
+	Events.player_death.connect(preload_next_scene)
 	#Events.start_cutscene.emit()
 	#Events.end_cutsene.connect(end_cutscene)
 	#Events.queue_cutscene.emit(Cutscenes.intro_cutscene)
@@ -94,10 +95,10 @@ func _process(_delta):
 	#get_health()
 	#set_health()
 	
-	if Input.is_action_just_pressed("DEBUG_KEY"):
-		#save_level_state()
-		#load_level_state()
-		reload_scene()
+	#if Input.is_action_just_pressed("DEBUG_KEY"):
+		##save_level_state()
+		##load_level_state()
+		#reload_scene()
 	
 	if lvl_type=="goal":
 	
@@ -134,15 +135,23 @@ func show_level_complete():
 	get_tree().change_scene_to_packed(next_level)
 	LevelTransition.fade_from_black()
 	
+func preload_next_scene():
+	Global.game_controller.preload_scene(LevelsList.HIGHSCORE_ENTRY)
+	
 func show_game_over():
 	if lvl_type=="guantlet":
 		assert(score!=null)
-		Global.game_controller.toggle_world2d_process(false)
-		Global.game_controller.remove_gui_from_existing("Score_UI")
-		Global.game_controller.toggle_game_ui(false)
-		Global.game_controller.remove_world2d_scene()
+		
 		hit_stop.end_hit_stop()
 		Global.game_controller.change_gui_scene(LevelsList.HIGHSCORE_ENTRY)
+		Global.game_controller.call_thread_safe("toggle_world2d_process", false)
+		#Global.game_controller.toggle_world2d_process(false)
+		#Global.game_controller.remove_gui_from_existing("Score_UI")
+		Global.game_controller.call_thread_safe("remove_gui_from_existing", "Score_UI")
+		#Global.game_controller.toggle_game_ui(false)
+		Global.game_controller.call_thread_safe("toggle_game_ui", false)
+		#Global.game_controller.remove_world2d_scene()
+		Global.game_controller.call_thread_safe("remove_world2d_scene")
 	else:
 		game_over.show()
 		get_tree().paused = true

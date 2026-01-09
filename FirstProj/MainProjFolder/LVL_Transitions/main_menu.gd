@@ -6,6 +6,7 @@ extends CenterContainer
 
 func _ready():
 	start_game_button.grab_focus()
+	Global.game_controller.preload_scene(LevelsList.LEVEL_SELECT)
 
 func _on_start_game_button_pressed():
 	await LevelTransition.fade_to_black()

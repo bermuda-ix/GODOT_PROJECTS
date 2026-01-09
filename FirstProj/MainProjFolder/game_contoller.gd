@@ -26,6 +26,7 @@ class_name GameController extends Node
 var current_2d_scene
 var prev_2d_scene
 var current_gui_scene
+@onready var new_gui_level := preload(LevelList.MAIN_MENU).instantiate()
 @onready var prev_gui_scene = "NONE"
 
 #@onready var prologue_lvl: adv_level = $World2D/PrologueLvl
@@ -156,7 +157,7 @@ func change_2d_scene (new_scene: String, \
 
 func _init_objectives(dict : Dictionary):
 	objectives_ui._init_objectives_list(dict)
-
+	
 #Change GUI Scene
 func change_gui_scene (new_scene: String, \
 	delete: bool = true, \
@@ -167,9 +168,13 @@ func change_gui_scene (new_scene: String, \
 	if current_gui_scene != null:
 		prev_gui_scene=current_gui_scene
 		gui.remove_child(current_gui_scene)
-	current_gui_scene=load(new_scene).instantiate()
+	current_gui_scene=new_gui_level
 	gui.add_child(current_gui_scene)
 	LevelTransition.transition_out(_transition_out)
+	
+# preload next scene, if not already loaded
+func preload_scene(_new_scene: String):
+	new_gui_level=load(_new_scene).instantiate()
 	
 #remove world2d, for moving to menu only scene
 func remove_world2d_scene() -> void:

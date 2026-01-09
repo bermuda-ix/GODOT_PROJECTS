@@ -59,6 +59,7 @@ signal enemy_parried
 signal set_player_data
 signal get_player_data
 signal reset_player_data
+signal player_death
 
 #Checkpoints
 signal checkpoint_reached

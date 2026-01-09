@@ -11,6 +11,10 @@ func _ready() -> void:
 	dur.autostart=false
 	dur.one_shot=true
 	dur.ignore_time_scale=true
+	
+#func _process(delta: float) -> void:
+	#if not dur.is_stopped():
+		#print(dur.time_left)
 
 func hit_stop(time_scale : float, duration : float):
 	Engine.time_scale = time_scale

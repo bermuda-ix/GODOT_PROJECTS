@@ -5,6 +5,9 @@ extends Node
 @export var actor : Node2D
 var distance
 
+func _ready() -> void:
+	Events.player_death.connect(player_died)
+
 func _process(delta: float) -> void:
 	get_player_distance()
 	#print(distance)
@@ -25,3 +28,7 @@ func get_player_relative_loc():
 func get_player_distance()->float:
 	distance = abs(actor.global_position.x-actor.player.global_position.x)
 	return distance
+
+func player_died() -> void:
+	#actor.state_machine
+	actor.set_process(false)

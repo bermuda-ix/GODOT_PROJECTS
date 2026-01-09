@@ -56,6 +56,9 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var staggered: LimboState = $StateMachine/Staggered
 @onready var hit: LimboState = $StateMachine/Hit
 @onready var recovery: LimboState = $StateMachine/Recovery
+@onready var death: LimboState = $StateMachine/Death
+@onready var dead: LimboState = $StateMachine/Dead
+
 
 #Parry Success State
 @onready var parry_success_state: LimboHSM = $StateMachine/ParrySuccessState
@@ -409,6 +412,10 @@ func _init_state_machine():
 	state_machine.add_transition(jump_state, wall_stick, &"stick_to_wall")
 	state_machine.add_transition(wall_stick, jump_state, &"jump_off_wall")
 	state_machine.add_transition(wall_stick, falling_state, &"fall_off_wall")
+	
+	#Player death
+	state_machine.add_transition(state_machine.ANYSTATE, death, &"die")
+	state_machine.add_transition(death, dead, &"dead")
 
 
 
@@ -499,8 +506,8 @@ func _process(_delta):
 	interact()
 	
 	#Input for testing various things
-	#if Input.is_action_just_pressed("DEBUG_KEY"):
-		#anim_player.play("Heavy_Combo_1")
+	if Input.is_action_just_pressed("DEBUG_KEY"):
+		health.health-=1
 
 func _physics_process(delta):
 	label.text=str(velocity.x)
@@ -1350,8 +1357,9 @@ func set_max_stagger() -> void:
 	update_max_stagger.emit(stagger.max_stagger)
 
 func _on_health_health_depleted():
-	hit_stop.end_hit_stop()
-	Events.game_over.emit()
+	state_machine.dispatch(&"die")
+
+
 
 	
 #knockbacks
@@ -1362,6 +1370,8 @@ func _on_health_health_depleted():
 	##kb_dir.x, " ", knockback)
 
 func _on_hurt_box_got_hit(_hitbox):
+	if health.health<=0:
+		return
 	var hb_dir_right
 	if not hit_timer.is_stopped():
 		return
@@ -1429,6 +1439,8 @@ func _on_parry_box_parried_success() -> void:
 	#clash_visual.emitting=true
 	
 func _on_hurt_box_area_entered(area):
+	if health.health<=0:
+		return
 	if area.is_in_group("bullet"):
 		hit_stop.hit_stop(0.05, 0.1)
 		knockback.x = -10
@@ -1808,6 +1820,8 @@ func _on_animation_player_animation_started(anim_name):
 		#s_atk=true
 
 func _on_hurt_box_received_damage(damage: int) -> void:
+	if health.health<=0:
+		return
 	hit_stop.hit_stop(0.05, 0.1)
 	Events.camera_shake.emit(2,20)
 	if state_machine.get_active_state()==flip_state:
@@ -2016,3 +2030,19 @@ func _on_texture_button_pressed() -> void:
 
 func _on_health_health_changed(diff: int) -> void:
 	pass # Replace with function body.
+
+
+func _on_death_entered() -> void:
+	anim_player.play("death")
+	hit_stop.hit_stop(0.3, 3)
+	Events.player_death.emit()
+
+
+func _on_death_updated(delta: float) -> void:
+	#hit_stop.end_hit_stop()
+	await anim_player.animation_finished
+	state_machine.dispatch(&"dead")
+
+
+func _on_dead_entered() -> void:
+	Events.game_over.emit()
