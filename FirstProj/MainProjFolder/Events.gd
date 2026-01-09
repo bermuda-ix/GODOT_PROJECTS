@@ -58,6 +58,7 @@ signal enemy_parried
 #Handle Player Data
 signal set_player_data
 signal get_player_data
+signal reset_player_data
 
 #Checkpoints
 signal checkpoint_reached

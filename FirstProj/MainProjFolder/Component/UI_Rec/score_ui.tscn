@@ -1068,7 +1068,7 @@ cache/0/64/0/glyphs/73/texture_idx = 0
 default_font = ExtResource("2_iw0nb")
 default_font_size = 48
 
-[node name="ScoreUI" type="VBoxContainer"]
+[node name="ScoreUI" type="VBoxContainer" groups=["Score_UI"]]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5

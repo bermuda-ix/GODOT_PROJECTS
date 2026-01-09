@@ -302,6 +302,7 @@ func _ready():
 	Events.load_checkpoint.connect(load_player_data)
 	Events.open_interact_menu.connect(open_interact_menu)
 	Events.close_interact_menu.connect(close_interact_menu)
+	Events.reset_player_data.connect(load_player_data)
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
 	_init_state_machine()
@@ -1349,6 +1350,7 @@ func set_max_stagger() -> void:
 	update_max_stagger.emit(stagger.max_stagger)
 
 func _on_health_health_depleted():
+	hit_stop.end_hit_stop()
 	Events.game_over.emit()
 
 	
@@ -1369,7 +1371,9 @@ func _on_hurt_box_got_hit(_hitbox):
 		hb_dir_right=false
 	if state_machine.get_active_state()==parry_state:
 		return
-	if _hitbox.is_in_group("regular_enemy_hb"):
+	elif health.health<=0:
+		return
+	elif _hitbox.is_in_group("regular_enemy_hb"):
 		if hit_timer.is_stopped():
 			AudioStreamManager.play(SoundFx.PUNCH_DESIGNED_HEAVY_12)
 		player_hit.emitting=true
@@ -2008,3 +2012,7 @@ func qte_input():
 func _on_texture_button_pressed() -> void:
 	interact_menu_open=false
 	Events.close_interact_menu.emit()
+
+
+func _on_health_health_changed(diff: int) -> void:
+	pass # Replace with function body.

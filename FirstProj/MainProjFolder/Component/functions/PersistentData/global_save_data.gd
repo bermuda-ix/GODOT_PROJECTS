@@ -12,8 +12,8 @@ signal clean_start
 var current_save : Dictionary = {
 	scene_path = "",
 	player = {
-		health = 100,
-		max_health=100,
+		health = 10,
+		max_health=10,
 		stagger=3,
 		max_stagger=3,
 		pos_x = 0,

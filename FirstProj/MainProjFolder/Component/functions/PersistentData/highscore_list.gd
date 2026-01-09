@@ -52,9 +52,23 @@ func load_scores() -> void:
 	_loaded_scores = _load_json.get_data() as Array[Array]
 	if _list_size>_loaded_scores.size():
 		_list_size=_loaded_scores.size()
+	else:
+		_list_size=5
 	display_scores(_list_size, _loaded_scores)
 	
 func display_scores(_size : int, _list : Array) -> void:
+	assert(_size<=5)
 	for i in range(_size-1, -1, -1):
-		_name_list[i].text=str(_list[i][0])
-		_score_list[i].text=str(_list[i][1])
+		var _name=str(_list[i][0])
+		var _score=str(_list[i][1])
+		_name_list[i].text=_name
+		_score_list[i].text=_score
+
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()
+
+func _on_return_pressed() -> void:
+	GlobalSaveData.score=0
+	Global.game_controller.change_gui_scene(LevelsList.MAIN_MENU)
+	Global.game_controller.reload_game()

@@ -8,7 +8,7 @@ extends Node2D
 @onready var game_over = $CanvasLayer/GameOver
 @onready var ui_level = $CanvasLayer/UI_Level
 @onready var label = $CanvasLayer/Label
-@onready var pause_menu = $CanvasLayer/PauseMenu
+#@onready var pause_menu = $CanvasLayer/PauseMenu
 @onready var score : int = 0
 @onready var heat_handler: HeatHandler = $HeatHandler
 @onready var hit_stop: HitStop = $HitStop
@@ -135,11 +135,20 @@ func show_level_complete():
 	LevelTransition.fade_from_black()
 	
 func show_game_over():
-	game_over.show()
-	get_tree().paused = true
+	if lvl_type=="guantlet":
+		assert(score!=null)
+		Global.game_controller.toggle_world2d_process(false)
+		Global.game_controller.remove_gui_from_existing("Score_UI")
+		Global.game_controller.toggle_game_ui(false)
+		Global.game_controller.remove_world2d_scene()
+		hit_stop.end_hit_stop()
+		Global.game_controller.change_gui_scene(LevelsList.HIGHSCORE_ENTRY)
+	else:
+		game_over.show()
+		get_tree().paused = true
 
 func show_pause():
-	pause_menu.show()
+	#pause_menu.show()
 	get_tree().paused = true
 	
 #func unpause():

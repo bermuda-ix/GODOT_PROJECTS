@@ -7,5 +7,5 @@ func _ready() -> void:
 	Events.inc_score.connect(score_increase)
 
 func score_increase(value : int) -> void:
-	score += value
-	score_counter_text.text=str(score)
+	GlobalSaveData.score += value
+	score_counter_text.text=str(GlobalSaveData.score)

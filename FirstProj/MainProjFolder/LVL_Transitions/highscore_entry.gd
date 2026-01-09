@@ -12,11 +12,11 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Interact"):
-		enter_score_test()
-	if Input.is_action_just_pressed("DEBUG_KEY"):
-		score +=100
-	if Input.is_action_just_pressed("MAnualLoad"):
-		GlobalSaveData.load_highscores()
+		enter_score()
+	#if Input.is_action_just_pressed("DEBUG_KEY"):
+		#score +=100
+	#if Input.is_action_just_pressed("MAnualLoad"):
+		#GlobalSaveData.load_highscores()
 
 func enter_name(_name : String) -> void:
 	if _name==null or _name=="":
@@ -24,16 +24,16 @@ func enter_name(_name : String) -> void:
 	else:
 		#print(_name + " Your score is " + str(score))
 		var _new_highscore : Array
-		_new_highscore = [_name, score]
+		_new_highscore = [_name, GlobalSaveData.score]
 		GlobalSaveData.store_score(_new_highscore)
 
 
 func _on_texture_button_pressed() -> void:
-	enter_score_test()
+	enter_score()
 
 func enter_score() -> void:
 	enter_name(name_entry.text)
-	Global.game_controller.change_gui_scene(LevelsList.HIGHSCORE_ENTRY)
+	Global.game_controller.change_gui_scene(LevelsList.HIGHSCORE_LIST)
 
 func enter_score_test() -> void:
 	enter_name(name_entry.text)

@@ -4804,6 +4804,7 @@ Tree/styles/title_button_normal = SubResource("StyleBoxFlat_hd5kv")
 Tree/styles/title_button_pressed = SubResource("StyleBoxFlat_hd5kv")
 
 [node name="HighscoreEntry" type="Control"]
+z_index = 5
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

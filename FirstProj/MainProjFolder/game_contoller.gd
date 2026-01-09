@@ -53,6 +53,7 @@ func _ready() -> void:
 	
 	
 func _process(delta: float) -> void:
+	assert(player != null)
 	if Input.is_action_just_pressed("Pause"):
 		show_pause()
 
@@ -92,6 +93,9 @@ func load_levels(dict : Dictionary) -> void:
 		
 		#loaded_rooms.append(load(dict[room]).instantiate())
 		#i+=1
+func reload_game() -> void:
+	get_tree().reload_current_scene()
+		
 
 #Load first scene on game start
 func load_first_room (_first_room : String, \
@@ -110,6 +114,7 @@ func toggle_game_ui(value : bool) -> void:
 #Toggle world2D, the main level processing tree, processing
 func toggle_world2d_process(value : bool) -> void:
 	world_2d.set_process(value)
+	world_2d.visible=value
 
 #Change scenes
 func change_2d_scene (new_scene: String, \
@@ -166,6 +171,15 @@ func change_gui_scene (new_scene: String, \
 	gui.add_child(current_gui_scene)
 	LevelTransition.transition_out(_transition_out)
 	
+#remove world2d, for moving to menu only scene
+func remove_world2d_scene() -> void:
+	#player.reparent(world_2d)
+	player.call_deferred("reparent", world_2d)
+	#world_2d.remove_child(current_2d_scene)
+	world_2d.call_deferred("remove_child", current_2d_scene)
+	#player.set_process(false)
+	player.call_deferred("set_process", false)
+
 func remove_gui_scene (delete: bool = true, \
 	keep_running: bool = false, \
 	_transition_in : String="fade_to_black", \
@@ -178,7 +192,8 @@ func add_gui_to_existing(new_gui: String) -> void:
 	gameui.add_child(_new_gui_scene)
 	
 func remove_gui_from_existing(gui_name : String) -> void:
-	pass
+	var _node=get_tree().get_first_node_in_group(gui_name)
+	gameui.remove_child(_node)
 	
 
 #func change_2d_scene_old(new_scene: int, \
