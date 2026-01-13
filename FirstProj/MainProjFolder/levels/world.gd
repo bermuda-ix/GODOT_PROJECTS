@@ -47,6 +47,7 @@ var spawn_points
 var obj : int
 
 var init_active_enemies_list : Array[Node]
+@onready var thread := Thread.new()
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
@@ -137,18 +138,20 @@ func show_level_complete():
 	LevelTransition.fade_from_black()
 	
 func preload_next_scene():
-	Global.game_controller.preload_scene(LevelsList.HIGHSCORE_ENTRY)
+	thread.start(Global.game_controller.preload_scene.bind(LevelsList.HIGHSCORE_ENTRY))
 	
 func show_game_over():
 	if lvl_type=="guantlet":
 		assert(score!=null)
 		
 		hit_stop.end_hit_stop()
-		Global.game_controller.change_gui_scene(LevelsList.HIGHSCORE_ENTRY)
+		Global.game_controller.call_deferred("remove_gui_from_existing", "Score_UI")
 		Global.game_controller.call_deferred("toggle_world2d_process", false)
+		Global.game_controller.change_gui_scene(LevelsList.HIGHSCORE_ENTRY)
+		
 		#Global.game_controller.toggle_world2d_process(false)
 		#Global.game_controller.remove_gui_from_existing("Score_UI")
-		Global.game_controller.call_deferred("remove_gui_from_existing", "Score_UI")
+		
 		#Global.game_controller.toggle_game_ui(false)
 		Global.game_controller.call_deferred("toggle_game_ui", false)
 		#Global.game_controller.remove_world2d_scene()

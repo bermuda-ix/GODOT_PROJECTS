@@ -64,8 +64,8 @@ func _initialize() -> void:
 
 func _attach_camera(agent: CharacterBody2D) -> void:
 	await get_tree().process_frame
-	camera.get_parent().remove_child(camera)
-	agent.add_child(camera)
+	camera.get_parent().call_deferred("remove_child", camera)
+	agent.call_deferred("add_child", camera)
 	camera.position = Vector2(400.0, 0.0)
 
 

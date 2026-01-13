@@ -479,6 +479,7 @@ func _process(_delta):
 		#return
 	elif state_machine.get_active_state()==death or state_machine.get_active_state()==dead:
 		move_and_slide()
+		velocity=Vector2.ZERO
 		apply_gravity(_delta)
 		return
 #
@@ -664,8 +665,8 @@ func break_out():
 #jump out of flip
 func jump_out(jumpout_vel : float):
 	knockback.x=jumpout_vel
-	print(knockback.x)
-	print(vector_away.x)
+	#print(knockback.x)
+	#Kprint(vector_away.x)
 	var jump_left
 	if global_position.x - target.global_position.x > 0:
 		jump_left=true
@@ -766,7 +767,7 @@ func cutscene_acceleration(_dir, delta, _speed : String):
 			#print (_cutscene_speed)
 	if _dir!=0:
 		velocity.x = (_cutscene_speed) * _dir
-		print(velocity.x, " ", _cutscene_speed, " ", _dir)
+		#Kprint(velocity.x, " ", _cutscene_speed, " ", _dir)
 	else:
 		velocity.x=0
 		
@@ -1332,6 +1333,8 @@ func _on_hazard_detector_area_entered(area):
 				hit_stop.hit_stop(.3,.5)
 		set_health()
 		set_stagger()
+		if area.has_method("impact"):
+			area.impact()
 	
 	elif area.is_in_group("Enemy"):
 		hit_stop.hit_stop(0.05, 0.1)

@@ -27,7 +27,7 @@ func add_objective(name : String, value : int) -> void:
 func remove_objective(name : String) -> void:
 	print("remove new inv item: ", name)
 	var objective_remove : inv_item = grid_container.find_child(name)
-	grid_container.remove_child(objective_remove)
+	grid_container.call_deferred("remove_child", objective_remove)
 	objective_remove.queue_free()
 	
 func update_objective(name : String, value : int) -> void:

@@ -4,7 +4,7 @@ extends Control
 @export var stagger: Stagger
 @export var actor : Node2D
 
-@onready var boss_health: TextureProgressBar = $MiniBossHealth
+@onready var mini_boss_health: TextureProgressBar = $MiniBossHealth
 @onready var boss_stamina: TextureProgressBar = $BossStamina
 
 

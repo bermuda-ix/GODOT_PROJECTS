@@ -38,9 +38,11 @@ func _on_visible_on_screen_enabler_2d_screen_exited():
 func _on_area_entered(area):
 	if area.get_collision_layer() == 128:
 		queue_free()
-	elif area.is_in_group("player"):
-		queue_free()
+	#elif area.is_in_group("player"):
+		#queue_free()
 
+func impact():
+	queue_free()
 
 func _on_body_entered(body):
 	if body.is_in_group("world"):

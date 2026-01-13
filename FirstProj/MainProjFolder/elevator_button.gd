@@ -29,4 +29,4 @@ func _on_pressed() -> void:
 
 func toggle_floor_lock(value : bool) -> void:
 	floor_locked = value
-	print(floor_locked)
+	#print(floor_locked)

@@ -29,7 +29,7 @@ func add_inv_item(name : String) -> void:
 func remove_inv_item(name : String) -> void:
 	print("remove new inv item: ", name)
 	var inv_remove : inv_item = grid_container.find_child(name)
-	grid_container.remove_child(inv_remove)
+	grid_container.call_deferred("remove_child", inv_remove)
 	inv_remove.queue_free()
 	
 func update_inv_amount(name : String, value : int) -> void:

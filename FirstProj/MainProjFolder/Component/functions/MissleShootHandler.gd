@@ -32,7 +32,7 @@ func shoot_missile():
 		bullet_inst.spawnRot = turret.rotation_degrees
 		bullet_inst.dir=Vector2.RIGHT.rotated(turret.rotation_degrees)
 	#audio_stream_player_2d.play()
-	print(bullet_inst.dir)
+	#print(bullet_inst.dir)
 	
 	get_tree().current_scene.add_child(bullet_inst)
 

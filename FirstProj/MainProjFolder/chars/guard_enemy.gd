@@ -219,7 +219,7 @@ func _process(_delta):
 			#assert(current_speed<0)
 	#elif state_machine.get_active_state()==chasing and is_on_floor():
 		#assert(current_speed!=0)
-	print(current_speed)
+	#print(current_speed)
 	
 	if not is_on_screen and vision_handler.always_on==true and state_machine.get_active_state()!=chasing:
 		state_machine.change_active_state(chasing)

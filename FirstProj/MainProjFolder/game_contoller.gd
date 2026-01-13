@@ -29,11 +29,15 @@ var current_gui_scene
 @onready var new_gui_level := preload(LevelList.MAIN_MENU).instantiate()
 @onready var prev_gui_scene = "NONE"
 var thread: Thread
+var mutex: Mutex
 
 #@onready var prologue_lvl: adv_level = $World2D/PrologueLvl
 
 func _ready() -> void:	
 	print(OS.get_processor_count())
+	mutex = Mutex.new()
+	thread = Thread.new()
+	thread.start(preload_scene.bind(LevelsList.LEVEL_SELECT))
 	Global.game_controller = self
 	Events.load_level_map.connect(load_levels)
 	Events.load_first_level.connect(load_first_room)
@@ -89,8 +93,8 @@ func set_region (dict : Dictionary) -> void:
 func load_levels(dict : Dictionary) -> void:
 	for room in dict:
 		
-		print(room)
-		print(dict[room])
+		#print(room)
+		#print(dict[room])
 		if loaded_rooms_map.has(room) == false:
 			loaded_rooms_map[room]=load(dict[room]).instantiate()
 		
@@ -136,7 +140,7 @@ func change_2d_scene (new_scene: String, \
 		elif keep_running:
 			current_2d_scene.visible = false #Keep in mem and running
 		else:
-			world_2d.remove_child(current_2d_scene) #Keep in mem, not running
+			world_2d.call_deferred("remove_child", current_2d_scene)
 	
 	if new_scene=="RETURN":
 		new_scene=return_room
@@ -148,7 +152,7 @@ func change_2d_scene (new_scene: String, \
 	if _starting_pos==-1:
 		loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].init_starting_pos.global_position
 	else:
-		print(loaded_rooms_map[new_scene].starting_pos.size(), " ",_starting_pos)
+		#print(loaded_rooms_map[new_scene].starting_pos.size(), " ",_starting_pos)
 		loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].starting_pos[_starting_pos]
 	LevelTransition.transition_out(_transition_out)
 	if current_2d_scene != null:
@@ -176,15 +180,14 @@ func change_gui_scene (new_scene: String, \
 	
 # preload next scene, if not already loaded
 func preload_scene(_new_scene: String):
+	mutex.lock()
 	new_gui_level=load(_new_scene).instantiate()
+	mutex.unlock()
 	
 #remove world2d, for moving to menu only scene
 func remove_world2d_scene() -> void:
-	#player.reparent(world_2d)
 	player.call_deferred("reparent", world_2d)
-	#world_2d.remove_child(current_2d_scene)
 	world_2d.call_deferred("remove_child", current_2d_scene)
-	#player.set_process(false)
 	player.call_deferred("set_process", false)
 
 func remove_gui_scene (delete: bool = true, \
@@ -193,7 +196,7 @@ func remove_gui_scene (delete: bool = true, \
 	_transition_out : String="fade_from_black") -> void:
 	await LevelTransition.transition_in(_transition_in)
 	if current_gui_scene!=null:
-		gui.remove_child(current_gui_scene)
+		gui.call_deferred("remove_child", current_gui_scene)
 	
 func add_gui_to_existing(new_gui: String) -> void:
 	var _new_gui_scene=load(new_gui).instantiate()
@@ -202,35 +205,10 @@ func add_gui_to_existing(new_gui: String) -> void:
 func remove_gui_from_existing(gui_name : String) -> void:
 	var _node=get_tree().get_first_node_in_group(gui_name)
 	if _node!=null:
-		gameui.remove_child(_node)
+		gameui.call_deferred("remove_child", _node)
 	
 
-#func change_2d_scene_old(new_scene: int, \
-	#delete: bool = true, \
-	#keep_running: bool = false, \
-	#_starting_pos: int = 0, \
-	#_transition_in : String="fade_to_black", \
-	#_transition_out : String="fade_from_black") -> void:
-	#
-	#
-	#player.reparent(world_2d)
-	#await LevelTransition.transition_in(_transition_in)
-	#if current_2d_scene != null:
-		#if delete:
-			#current_2d_scene.queue_free() #Deletes node entirely
-		#elif keep_running:
-			#current_2d_scene.visible = false #Keep in mem and running
-		#else:
-			#world_2d.remove_child(current_2d_scene) #Keep in mem, not running
-	#
-	#
-	#world_2d.add_child(loaded_rooms[new_scene])
-	#player.reparent(loaded_rooms[new_scene])
-	#loaded_rooms[new_scene].player.global_position=loaded_rooms[new_scene].starting_pos[_starting_pos-1].global_position
-	#LevelTransition.transition_out(_transition_out)
-	#prev_2d_scene=current_2d_scene
-	#current_2d_scene=loaded_rooms[new_scene]
-	#
+
 func toggle_player(activate : bool) -> void:
 	if activate:
 		if world_2d.has_node(player.get_path()):
@@ -239,7 +217,7 @@ func toggle_player(activate : bool) -> void:
 			world_2d.add_child(player)
 	else:
 		if world_2d.has_node(player.get_path()):
-			world_2d.remove_child(player)
+			world_2d.call_deferred("remove_child", player)
 		else:
 			pass
 		

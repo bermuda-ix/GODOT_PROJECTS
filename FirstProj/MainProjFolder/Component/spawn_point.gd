@@ -33,7 +33,7 @@ func _ready():
 	spawn_size = enemy.size()
 	boss_spawn_size = enemies.BOSSES.size()
 	level_node=get_tree().get_first_node_in_group("world").get_path()
-	print(level_node)
+	#print(level_node)
 	
 	if not single_spawn:
 		Events.activate.connect(activate)
@@ -102,7 +102,7 @@ func _on_spawn_timer_timeout():
 				
 			var timer : float = randf_range(3,10)
 			enemy_cnt = get_tree().get_nodes_in_group("Enemy").size()
-			print("enemy spawn :", enemy_cnt)
+			#print("enemy spawn :", enemy_cnt)
 			spawn_timer.start(timer)
 		
 	else:
@@ -154,7 +154,7 @@ func spawn_update(enemy_spawn, add : bool):
 		
 		spawn_size = enemy.size()
 		
-	print(enemy.size())
+	#print(enemy.size())
 
 func spawn_timer_update(value : float) -> void:
 	spawn_timer.wait_time=value
