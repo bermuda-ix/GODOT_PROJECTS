@@ -70,6 +70,7 @@ func _ready():
 		print(spawn_points[i].name)
 	Events.increase_heat_lvl.connect(increase_heat)
 	Events.player_death.connect(preload_next_scene)
+	
 	#Events.start_cutscene.emit()
 	#Events.end_cutsene.connect(end_cutscene)
 	#Events.queue_cutscene.emit(Cutscenes.intro_cutscene)
@@ -144,14 +145,14 @@ func show_game_over():
 		
 		hit_stop.end_hit_stop()
 		Global.game_controller.change_gui_scene(LevelsList.HIGHSCORE_ENTRY)
-		Global.game_controller.call_thread_safe("toggle_world2d_process", false)
+		Global.game_controller.call_deferred("toggle_world2d_process", false)
 		#Global.game_controller.toggle_world2d_process(false)
 		#Global.game_controller.remove_gui_from_existing("Score_UI")
-		Global.game_controller.call_thread_safe("remove_gui_from_existing", "Score_UI")
+		Global.game_controller.call_deferred("remove_gui_from_existing", "Score_UI")
 		#Global.game_controller.toggle_game_ui(false)
-		Global.game_controller.call_thread_safe("toggle_game_ui", false)
+		Global.game_controller.call_deferred("toggle_game_ui", false)
 		#Global.game_controller.remove_world2d_scene()
-		Global.game_controller.call_thread_safe("remove_world2d_scene")
+		Global.game_controller.call_deferred("remove_world2d_scene")
 	else:
 		game_over.show()
 		get_tree().paused = true

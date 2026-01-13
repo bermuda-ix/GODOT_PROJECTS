@@ -477,6 +477,10 @@ func _process(_delta):
 		return
 	#elif state==States.STAGGERED:
 		#return
+	elif state_machine.get_active_state()==death or state_machine.get_active_state()==dead:
+		move_and_slide()
+		apply_gravity(_delta)
+		return
 #
 	input_axis = Input.get_axis("walk_left", "walk_right")
 	vel_x=velocity.x
@@ -534,6 +538,10 @@ func _physics_process(delta):
 		move_and_slide()
 		apply_gravity(delta)
 		velocity.x=0
+	elif state_machine.get_active_state()==death or state_machine.get_active_state()==dead:
+		move_and_slide()
+		apply_gravity(delta)
+		return
 	else:
 		if combat_states.get_active_state()==locked:
 			locked_combat()	
@@ -1295,15 +1303,40 @@ func drop_down():
 		set_collision_mask_value(27, true)
 
 func _on_hazard_detector_area_entered(area):
-	if area.is_in_group("hazard"):
+	if health.health<=0:
+		return
+	elif area.is_in_group("hazard"):
 		global_position=starting_position
 		
 		health.health -= 1
-		
+	elif area.is_in_group("bullet"):
+		hit_stop.hit_stop(0.05, 0.1)
+		knockback.x = -10
+		kb_dir=global_position.direction_to(area.global_position)
+		#"knockback")
+		kb_dir=round(kb_dir)
+		#kb_dir.x, " ", knockback)
+		knockback.x = kb_dir.x * knockback.x
+		knockback.y=-5
+		#velocity.x = movement_data.speed + knockback.x
+		health.health -= 1
+		health.set_temporary_immortality(0.2)
+		if state_machine.get_previous_active_state()==flip_state:
+			state_machine.dispatch(&"return_to_idle")
+		if clash_power.clash_power>1:
+			health.health-=clash_power.clash_power
+			stagger.stagger-=clash_power.clash_power
+			clash_power.reset_clash()
+			clash_timer.stop()
+			if clash_power.clash_power==clash_power.clash_max:
+				hit_stop.hit_stop(.3,.5)
+		set_health()
+		set_stagger()
+	
 	elif area.is_in_group("Enemy"):
 		hit_stop.hit_stop(0.05, 0.1)
 		knockback.x = input_dir.x * knockback.x *0.25
-	
+		
 
 func _on_interactable_detector_area_entered(area: Area2D) -> void:
 	if area.is_in_group("door"):
@@ -1372,60 +1405,61 @@ func _on_health_health_depleted():
 func _on_hurt_box_got_hit(_hitbox):
 	if health.health<=0:
 		return
-	var hb_dir_right
-	if not hit_timer.is_stopped():
-		return
-	if _hitbox.global_position.x-global_position.x>0 :
-		hb_dir_right=true
 	else:
-		hb_dir_right=false
-	if state_machine.get_active_state()==parry_state:
-		return
-	elif health.health<=0:
-		return
-	elif _hitbox.is_in_group("regular_enemy_hb"):
-		if hit_timer.is_stopped():
-			AudioStreamManager.play(SoundFx.PUNCH_DESIGNED_HEAVY_12)
-		player_hit.emitting=true
-		player_hit.restart()
-		hurt_box_detect.disabled=true
-		hit_timer.start(0.2)
-		stagger.stagger-=1
-		if state_machine.get_previous_active_state()!=flip_state:
-			if parry_success_state.get_previous_active_state()==heavy_riposte:
-				if target_right:
-					knockback.x=400
+		var hb_dir_right
+		if not hit_timer.is_stopped():
+			return
+		if _hitbox.global_position.x-global_position.x>0 :
+			hb_dir_right=true
+		else:
+			hb_dir_right=false
+		if state_machine.get_active_state()==parry_state:
+			return
+		elif health.health<=0:
+			return
+		elif _hitbox.is_in_group("regular_enemy_hb"):
+			if hit_timer.is_stopped():
+				AudioStreamManager.play(SoundFx.PUNCH_DESIGNED_HEAVY_12)
+			player_hit.emitting=true
+			player_hit.restart()
+			hurt_box_detect.disabled=true
+			hit_timer.start(0.2)
+			stagger.stagger-=1
+			if state_machine.get_previous_active_state()!=flip_state:
+				if parry_success_state.get_previous_active_state()==heavy_riposte:
+					if target_right:
+						knockback.x=400
+					else:
+						knockback.x=-400
 				else:
-					knockback.x=-400
-			else:
-				if hb_dir_right:
-					knockback.x=-15
-				else:
-					knockback.x=15
-			state_machine.dispatch(&"got_hit")
-		set_stagger()
-		
-	elif hitbox.is_in_group("heavy_hitbox"):
-		knockback.x = -400
-		kb_dir=global_position.direction_to(_hitbox.global_position)
-		#"knockback")
-		kb_dir=round(kb_dir)
-		#kb_dir.x, " ", knockback)
-		knockback.x = kb_dir.x * knockback.x
-		velocity.y=movement_data.jump_velocity/2
-		#velocity.x = movement_data.speed + knockback.x
-		health.set_temporary_immortality(0.2)
-	else:
-		set_collision_mask_value(16384, false)
-		knockback.x = -35
-		kb_dir=global_position.direction_to(_hitbox.global_position)
-		#"knockback")
-		kb_dir=round(kb_dir)
-		#kb_dir.x, " ", knockback)
-		knockback.x = kb_dir.x * knockback.x
-		velocity.y=movement_data.jump_velocity/2
-		#velocity.x = movement_data.speed + knockback.x
-		health.set_temporary_immortality(0.2)
+					if hb_dir_right:
+						knockback.x=-15
+					else:
+						knockback.x=15
+				state_machine.dispatch(&"got_hit")
+			set_stagger()
+			
+		elif hitbox.is_in_group("heavy_hitbox"):
+			knockback.x = -400
+			kb_dir=global_position.direction_to(_hitbox.global_position)
+			#"knockback")
+			kb_dir=round(kb_dir)
+			#kb_dir.x, " ", knockback)
+			knockback.x = kb_dir.x * knockback.x
+			velocity.y=movement_data.jump_velocity/2
+			#velocity.x = movement_data.speed + knockback.x
+			health.set_temporary_immortality(0.2)
+		else:
+			set_collision_mask_value(16384, false)
+			knockback.x = -35
+			kb_dir=global_position.direction_to(_hitbox.global_position)
+			#"knockback")
+			kb_dir=round(kb_dir)
+			#kb_dir.x, " ", knockback)
+			knockback.x = kb_dir.x * knockback.x
+			velocity.y=movement_data.jump_velocity/2
+			#velocity.x = movement_data.speed + knockback.x
+			health.set_temporary_immortality(0.2)
 
 func _on_hit_timer_timeout() -> void:
 	hurt_box_detect.disabled=false
@@ -1438,40 +1472,42 @@ func _on_parry_box_parried_success() -> void:
 	clash_power.increase_clash()
 	#clash_visual.emitting=true
 	
-func _on_hurt_box_area_entered(area):
-	if health.health<=0:
-		return
-	if area.is_in_group("bullet"):
-		hit_stop.hit_stop(0.05, 0.1)
-		knockback.x = -10
-		kb_dir=global_position.direction_to(area.global_position)
-		#"knockback")
-		kb_dir=round(kb_dir)
-		#kb_dir.x, " ", knockback)
-		knockback.x = kb_dir.x * knockback.x
-		knockback.y=-5
-		#velocity.x = movement_data.speed + knockback.x
-		health.health -= 1
-		health.set_temporary_immortality(0.2)
-		if state_machine.get_previous_active_state()==flip_state:
-			state_machine.dispatch(&"return_to_idle")
-		if clash_power.clash_power>1:
-			health.health-=clash_power.clash_power
-			stagger.stagger-=clash_power.clash_power
-			clash_power.reset_clash()
-			clash_timer.stop()
-			if clash_power.clash_power==clash_power.clash_max:
-				hit_stop.hit_stop(.3,.5)
-		set_health()
-		set_stagger()
+#func _on_hurt_box_area_entered(area):
+	#if health.health<=0:
+		#return
+	##if area.is_in_group("bullet"):
+		##hit_stop.hit_stop(0.05, 0.1)
+		##knockback.x = -10
+		##kb_dir=global_position.direction_to(area.global_position)
+		###"knockback")
+		##kb_dir=round(kb_dir)
+		###kb_dir.x, " ", knockback)
+		##knockback.x = kb_dir.x * knockback.x
+		##knockback.y=-5
+		###velocity.x = movement_data.speed + knockback.x
+		##health.health -= 1
+		##health.set_temporary_immortality(0.2)
+		##if state_machine.get_previous_active_state()==flip_state:
+			##state_machine.dispatch(&"return_to_idle")
+		##if clash_power.clash_power>1:
+			##health.health-=clash_power.clash_power
+			##stagger.stagger-=clash_power.clash_power
+			##clash_power.reset_clash()
+			##clash_timer.stop()
+			##if clash_power.clash_power==clash_power.clash_max:
+				##hit_stop.hit_stop(.3,.5)
+		##set_health()
+		##set_stagger()
+	#
+		#
+	#elif area.is_in_group("Enemy"):
+		#pass
+	
+func _on_collectible_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Hearts"):
 		health.health+=1
 		set_health()
 		
-	elif area.is_in_group("Enemy"):
-		pass
-	
-
 #Setting starting positions for level starts and checkpoints
 func get_start_pos():
 	return starting_position

@@ -16,12 +16,15 @@ signal weakpoint_hit()
 
 func _ready():
 	connect("area_entered", _on_area_entered)
-	connect("area_entered", _on_parried)
-	connect("area_entered", _on_weakpoint_hit)
+	#connect("area_entered", _on_parried)
 	connect("body_entered", _bullet_hit)
 
 func _on_area_entered(hitbox: HitBox) -> void:
+	if health.health<=0:
+		return
 	if hitbox != null:
+		if hitbox.is_in_group("spc_atk"):
+			weakpoint_hit.emit()
 		if hitbox.stagger_damage:
 			stagger.stagger -= (hitbox.damage * dmg_mult)
 			#print(hitbox.damage, " ",dmg_mult)
@@ -34,6 +37,8 @@ func _on_area_entered(hitbox: HitBox) -> void:
 			got_hit.emit(hitbox)
 
 func _bullet_hit(_rigid_body : RigidBody2D) -> void:
+	if health.health<=0:
+		return
 	if _rigid_body.is_in_group("PlayerBullet"):
 		_rigid_body.hard_impact()
 		if stagger.stagger>0:
@@ -43,13 +48,13 @@ func _bullet_hit(_rigid_body : RigidBody2D) -> void:
 			
 		
 
-func _on_parried(parrybox: ParryBox) -> void:
-	if parrybox!= null:
-		parried.emit()
+#func _on_parried(parrybox: ParryBox) -> void:
+	#if parrybox!= null:
+		#parried.emit()
 
-func _on_weakpoint_hit(area: Area2D) -> void:
-	if area.is_in_group("spc_atk"):
-		weakpoint_hit.emit()
+#func _on_weakpoint_hit(area: Area2D) -> void:
+	#if area.is_in_group("spc_atk"):
+		#weakpoint_hit.emit()
 		
 
 func set_damage_mulitplyer(value:int):

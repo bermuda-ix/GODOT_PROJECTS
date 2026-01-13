@@ -227,6 +227,10 @@ MAnualLoad={
 2d_physics/layer_26="Interactable"
 2d_physics/layer_27="DropBelowPlatform"
 
+[network]
+
+limits/debugger/max_errors_per_second=7000
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

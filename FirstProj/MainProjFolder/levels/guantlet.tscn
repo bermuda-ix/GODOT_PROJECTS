@@ -5815,4 +5815,6 @@ position = Vector2(3758, 109)
 script = ExtResource("15_6bl2l")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
+[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="14"]
+
 [editable path="CameraPos"]

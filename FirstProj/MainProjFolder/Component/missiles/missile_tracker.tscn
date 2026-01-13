@@ -54,8 +54,8 @@ sprite_frames = SubResource("SpriteFrames_e7c7u")
 rotation = -1.5708
 
 [node name="Area2D" parent="AnimatedSprite2D" index="1" groups=["bullet"]]
-collision_layer = 8
-collision_mask = 129
+collision_layer = 4
+collision_mask = 3
 
 [node name="VisibleOnScreenEnabler2D" parent="AnimatedSprite2D/Area2D" index="0"]
 position = Vector2(3.17722, 0)

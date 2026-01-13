@@ -28,7 +28,7 @@ var elapsed=0.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_as_top_level(true)
-	connect("area_entered", _char_hit)
+	#connect("area_entered", _char_hit)
 	player = get_tree().get_first_node_in_group("player")
 	#dir=Vector2.UP
 	global_position = spawnPos
@@ -92,31 +92,29 @@ func rotate_missile(delta : float) -> void:
 func _on_visible_on_screen_enabler_2d_screen_exited():
 	queue_free()
 
-func _char_hit(hurtbox : HurtBox):
-	if hurtbox != null:
-		var explode_inst=explode.instantiate()
-		explode_inst.global_position=Vector2(global_position.x, global_position.y)
-		get_tree().current_scene.add_child(explode_inst)
-		await get_tree().create_timer(0.1).timeout 
-		queue_free()
+
 
 func _on_area_2d_area_entered(area):
 	if area.get_collision_layer() == 128:
-		var explode_inst=explode.instantiate()
-		explode_inst.global_position=Vector2(global_position.x, global_position.y)
-		get_tree().current_scene.add_child(explode_inst)
-		await get_tree().create_timer(0.01).timeout 
-		queue_free()
+		explode_impact()
+		
+	elif area.is_in_group("player"):
+		explode_impact()
+
 
 
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("world"):
-		var explode_inst=explode.instantiate()
-		explode_inst.global_position=Vector2(global_position.x, global_position.y)
-		get_tree().current_scene.add_child(explode_inst)
-		await get_tree().create_timer(0.01).timeout 
-		queue_free()
+		explode_impact()
 		
+		
+func explode_impact():
+	var explode_inst=explode.instantiate()
+	explode_inst.global_position=Vector2(global_position.x, global_position.y)
+	get_tree().current_scene.add_child(explode_inst)
+	await get_tree().create_timer(0.01).timeout 
+	queue_free()
+
 func track_player():
 	
 	

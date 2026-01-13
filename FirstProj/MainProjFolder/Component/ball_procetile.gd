@@ -10,7 +10,6 @@ var spawnRot : float
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_as_top_level(true)
-	connect("area_entered", _char_hit)
 
 	
 	global_position = spawnPos
@@ -35,12 +34,11 @@ func get_speed() -> float:
 func _on_visible_on_screen_enabler_2d_screen_exited():
 	queue_free()
 
-func _char_hit(hurtbox : HurtBox):
-	if hurtbox != null:
-		queue_free()
 
 func _on_area_entered(area):
 	if area.get_collision_layer() == 128:
+		queue_free()
+	elif area.is_in_group("player"):
 		queue_free()
 
 

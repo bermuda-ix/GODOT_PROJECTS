@@ -13,7 +13,7 @@ class_name GameController extends Node
 
 
 
-@onready var levels: Levels = $Levels
+#@onready var levels: Levels = $Levels
 @onready var queued_rooms : Array[String] = []
 @onready var loaded_rooms : Array[Node] = []
 @onready var loaded_rooms_map : Dictionary
@@ -28,10 +28,12 @@ var prev_2d_scene
 var current_gui_scene
 @onready var new_gui_level := preload(LevelList.MAIN_MENU).instantiate()
 @onready var prev_gui_scene = "NONE"
+var thread: Thread
 
 #@onready var prologue_lvl: adv_level = $World2D/PrologueLvl
 
 func _ready() -> void:	
+	print(OS.get_processor_count())
 	Global.game_controller = self
 	Events.load_level_map.connect(load_levels)
 	Events.load_first_level.connect(load_first_room)
@@ -167,7 +169,7 @@ func change_gui_scene (new_scene: String, \
 	LevelTransition.transition_in(_transition_in)
 	if current_gui_scene != null:
 		prev_gui_scene=current_gui_scene
-		gui.remove_child(current_gui_scene)
+		gui.call_deferred("remove_child", current_gui_scene)
 	current_gui_scene=new_gui_level
 	gui.add_child(current_gui_scene)
 	LevelTransition.transition_out(_transition_out)
@@ -190,7 +192,8 @@ func remove_gui_scene (delete: bool = true, \
 	_transition_in : String="fade_to_black", \
 	_transition_out : String="fade_from_black") -> void:
 	await LevelTransition.transition_in(_transition_in)
-	gui.remove_child(current_gui_scene)
+	if current_gui_scene!=null:
+		gui.remove_child(current_gui_scene)
 	
 func add_gui_to_existing(new_gui: String) -> void:
 	var _new_gui_scene=load(new_gui).instantiate()
@@ -198,7 +201,8 @@ func add_gui_to_existing(new_gui: String) -> void:
 	
 func remove_gui_from_existing(gui_name : String) -> void:
 	var _node=get_tree().get_first_node_in_group(gui_name)
-	gameui.remove_child(_node)
+	if _node!=null:
+		gameui.remove_child(_node)
 	
 
 #func change_2d_scene_old(new_scene: int, \

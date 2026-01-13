@@ -1,4 +1,4 @@
-[gd_scene load_steps=678 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene load_steps=677 format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -267,14 +267,13 @@
 [ext_resource type="Texture2D" uid="uid://b1kmk1mg3mxhb" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_057.png" id="136_wp57p"]
 [ext_resource type="Texture2D" uid="uid://bil0bhstmn4ya" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_058.png" id="137_47q3x"]
 [ext_resource type="Texture2D" uid="uid://gd5ym8b16mrp" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_059.png" id="138_77ty3"]
-[ext_resource type="Script" uid="uid://dntc3c582m5w8" path="res://demo/agents/scripts/hitbox.gd" id="208_mesnb"]
-[ext_resource type="Script" uid="uid://tifgdq27rt6g" path="res://chars/turret.gd" id="211_i0kkw"]
 [ext_resource type="Texture2D" uid="uid://ctiea6xsh0wgr" path="res://Art_Components/misc/AimingBoundary.png" id="212_1o5op"]
 [ext_resource type="Texture2D" uid="uid://52ipqcs560aq" path="res://Art_Components/UI/ButtonPrompts/Audune Prompts Dark.png" id="218_f2824"]
 [ext_resource type="Texture2D" uid="uid://dc06lykcbclda" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Red/Button01.png" id="219_xxtsl"]
 [ext_resource type="FontFile" uid="uid://dl1kk08ojyafw" path="res://Art_Components/UI/Fonts/Pixica Fonts/Pixica Fonts/Pixica-Bold.ttf" id="220_fixwo"]
 [ext_resource type="Texture2D" uid="uid://h4mv56rlunfw" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Red/Button03.png" id="220_oxl1f"]
 [ext_resource type="Texture2D" uid="uid://dt53s3nhst2tc" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Red/Button02.png" id="221_22pp6"]
+[ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="222_qyvno"]
 [ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="230_pbr83"]
 [ext_resource type="PackedScene" uid="uid://dsj0t0v1bq42w" path="res://Component/projectiles/shotgun_bullet.tscn" id="231_ymji2"]
 [ext_resource type="Script" uid="uid://dc4c4jxhc2ky" path="res://heavy_dash_attack.gd" id="243_4jq81"]
@@ -5085,7 +5084,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -8235,16 +8234,17 @@ scale = Vector2(0.190735, 0.158192)
 texture = ExtResource("5_pvc8c")
 
 [node name="SpAtkHitBox" type="Area2D" parent="AnimatedSprite2D/Shotty" groups=["sp_atk_default"]]
-position = Vector2(-7.62939e-06, 1.46776e-06)
-rotation = -0.00477064
-scale = Vector2(24.5547, 24.8954)
-skew = -9.54866e-05
-collision_layer = 8256
-collision_mask = 8388624
-script = ExtResource("208_mesnb")
+position = Vector2(0, 3.5762787e-07)
+script = ExtResource("6_y7jp7")
+metadata/_custom_type_script = "uid://5ijvah6jjgdb"
 
 [node name="SpAtkCone" type="CollisionPolygon2D" parent="AnimatedSprite2D/Shotty/SpAtkHitBox"]
+position = Vector2(-7.6293945e-06, 1.1324883e-06)
+rotation = -0.0047706394
+scale = Vector2(24.5547, 24.895401)
+skew = -9.548664e-05
 polygon = PackedVector2Array(0, 0, 36, 11, 36, -11)
+disabled = true
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="AnimatedSprite2D/Shotty"]
 position = Vector2(273.844, -1.83301)
@@ -8308,13 +8308,6 @@ shadow_filter = 2
 shadow_item_cull_mask = 2
 texture = SubResource("GradientTexture2D_kd7ms")
 
-[node name="Turret" type="Node2D" parent="AnimatedSprite2D/Shotty"]
-position = Vector2(267.55978, -13.247389)
-script = ExtResource("211_i0kkw")
-multi_shot = true
-infinite_ammo = true
-metadata/_custom_type_script = "uid://tifgdq27rt6g"
-
 [node name="SpreadBoundary1" type="RayCast2D" parent="AnimatedSprite2D/Shotty"]
 target_position = Vector2(887.2419, -281.40244)
 
@@ -8342,6 +8335,12 @@ offset = Vector2(0.87626266, -298.35223)
 libraries = {
 &"": SubResource("AnimationLibrary_xxtsl")
 }
+
+[node name="Turret" parent="AnimatedSprite2D/Shotty" instance=ExtResource("222_qyvno")]
+position = Vector2(-184.2724, 1.2165046)
+rotation = 1.5644034
+scale = Vector2(11.480799, 11.297886)
+skew = -0.00020873547
 
 [node name="Shell" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
 visible = false
@@ -8382,7 +8381,7 @@ disabled = true
 [node name="LightOccluder2D" type="LightOccluder2D" parent="AnimatedSprite2D"]
 occluder = SubResource("OccluderPolygon2D_6tjyr")
 
-[node name="ParryBox" type="Area2D" parent="AnimatedSprite2D"]
+[node name="ParryBox" type="Area2D" parent="AnimatedSprite2D" groups=["ParryBox"]]
 position = Vector2(6, -18)
 collision_layer = 512
 collision_mask = 24
@@ -8494,9 +8493,9 @@ collision_mask = 67633152
 position = Vector2(3, -9)
 shape = SubResource("CapsuleShape2D_mdoa6")
 
-[node name="HazardDetector" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 278532
+[node name="HazardDetector" type="Area2D" parent="." groups=["player"]]
+collision_layer = 2
+collision_mask = 278540
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HazardDetector"]
 position = Vector2(0.249986, 4)
@@ -8585,7 +8584,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
 collision_layer = 128
-collision_mask = 12
+collision_mask = 8
 script = ExtResource("9_s8nmr")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
@@ -8602,6 +8601,14 @@ collision_mask = 8
 position = Vector2(3.5, -10.5)
 shape = SubResource("RectangleShape2D_qebxi")
 disabled = true
+
+[node name="CollectibleBox" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectibleBox"]
+position = Vector2(1.5, -9.5)
+scale = Vector2(1.06323, 0.994939)
+shape = SubResource("RectangleShape2D_pmx5o")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_02w0c")
@@ -8869,10 +8876,10 @@ pc = NodePath("../..")
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
 [connection signal="timeout" from="HitTimer" to="." method="_on_hit_timer_timeout"]
 [connection signal="timeout" from="JumpOutTimer" to="." method="_on_jump_out_timer_timeout"]
-[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="got_hit" from="HurtBox" to="." method="_on_hurt_box_got_hit"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="area_entered" from="CounterBox" to="." method="_on_counter_box_area_entered"]
+[connection signal="area_entered" from="CollectibleBox" to="." method="_on_collectible_box_area_entered"]
 [connection signal="timeout" from="Speech/SpeechTimer" to="." method="_on_speech_timer_timeout"]
 [connection signal="active_state_changed" from="StateMachine" to="." method="_on_state_machine_active_state_changed"]
 [connection signal="entered" from="StateMachine/Idle" to="." method="_on_idle_entered"]
