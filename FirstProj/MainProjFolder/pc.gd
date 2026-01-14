@@ -1805,12 +1805,9 @@ func atk_state_debug():
 			
 
 func _on_counter_box_area_entered(area):
-	if area.is_in_group("bullet"):
-		counter_flag = true
-		counter_timer.start()
-		clash_power.clash_power += 1
+	
 		
-	elif area.is_in_group("regular_enemy_hb"):
+	if area.is_in_group("regular_enemy_hb"):
 		print("enemy dodge")
 		state_machine.dispatch(&"dodge_successful")
 		clash_power.clash_power += 1
@@ -1820,7 +1817,15 @@ func _on_counter_box_area_entered(area):
 	#clash_visual.emitting=true
 	clash_timer.start()
 		
-
+func _on_counter_box_body_entered(body: Node2D) -> void:
+	if body.is_in_group("bullet"):
+		body.bullet_dodged()
+		counter_flag = true
+		counter_timer.start()
+		clash_power.clash_power += 1
+	clash_power.increase_clash()
+	#clash_visual.emitting=true
+	clash_timer.start()
 
 func _on_counter_timer_timeout():
 	counter_flag = false

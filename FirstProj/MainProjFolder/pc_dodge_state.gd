@@ -2,6 +2,7 @@ extends LimboState
 
 @export var anim_player : AnimationPlayer
 @export var pc : PlayerEntity
+@export var hurtbox : CollisionShape2D
 var dodge_dist : float = 0.0
 var counter_dist : float = 0.0
 
@@ -10,6 +11,7 @@ func _enter() -> void:
 	anim_player.play(pc.dodge_anim_run)
 	pc.set_collision_mask_value(15, false)
 	pc.counter_box_collision.disabled=false
+	hurtbox.disabled=true
 	dodge_dist=pc.global_position.x+10*pc.face_dir
 	counter_dist = pc.global_position.x-10*pc.face_dir
 	
@@ -24,6 +26,7 @@ func _update(delta: float) -> void:
 func _exit() -> void:
 	pc.velocity.x=0
 	pc.counter_box_collision.disabled=true
+	hurtbox.disabled=false
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name==pc.dodge_anim_run:

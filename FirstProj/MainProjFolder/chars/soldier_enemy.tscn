@@ -123,12 +123,12 @@
 [ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="90_tmwt0"]
 [ext_resource type="Script" uid="uid://cp2j3xnu5vd7q" path="res://Component/functions/DodgeManager.gd" id="92_233jl"]
 [ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="94_kad5g"]
-[ext_resource type="PackedScene" uid="uid://e8y61qs02r7p" path="res://Component/ball_procetile.tscn" id="95_1dxn7"]
 [ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="95_ivw15"]
 [ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="96_0nqgj"]
 [ext_resource type="Script" uid="uid://doi7s32f3duwj" path="res://chars/dodge.gd" id="98_ovyjq"]
 [ext_resource type="PackedScene" uid="uid://303jj447mrmm" path="res://Component/functions/bullet_detection.tscn" id="102_bmgxt"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="105_yvx0r"]
+[ext_resource type="PackedScene" uid="uid://b74ywj4npkesd" path="res://Component/bullet_projectile.tscn" id="110_bmgxt"]
 [ext_resource type="Script" uid="uid://f087f5u1rlb7" path="res://chars/counter_sm.gd" id="112_qew73"]
 [ext_resource type="Script" uid="uid://btr3yv1fexwec" path="res://chars/begin_counter.gd" id="113_1hapo"]
 [ext_resource type="Script" uid="uid://300clt220dnt" path="res://chars/kick_counter_state.gd" id="113_dhr1a"]
@@ -1860,6 +1860,8 @@ offset_right = 20.0
 offset_bottom = -43.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="29"]
+position = Vector2(0, -19)
+rect = Rect2(14, 17, 4, 4)
 
 [node name="PlayerTrackingHandler" type="Node" parent="." index="30" node_paths=PackedStringArray("actor")]
 script = ExtResource("80_edkvm")
@@ -1892,8 +1894,8 @@ metadata/_custom_type_script = "uid://cr58jnxs33hft"
 [node name="ShootHandler" type="Node" parent="." index="34" node_paths=PackedStringArray("actor", "turret")]
 script = ExtResource("83_ue1j6")
 actor = NodePath("..")
-projectile = ExtResource("95_1dxn7")
 turret = NodePath("../Turret")
+projectile = ExtResource("110_bmgxt")
 bullet_scale = 0.5
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 

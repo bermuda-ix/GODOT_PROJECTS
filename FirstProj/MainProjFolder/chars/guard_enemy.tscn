@@ -56,7 +56,6 @@
 [ext_resource type="Texture2D" uid="uid://bww2o6jkad7nf" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback05.png" id="25_es3xv"]
 [ext_resource type="Script" uid="uid://cvo1e5meai30k" path="res://Component/functions/CombatStateChangeHandler.gd" id="25_yhec4"]
 [ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="26_luk7s"]
-[ext_resource type="PackedScene" uid="uid://e8y61qs02r7p" path="res://Component/ball_procetile.tscn" id="27_0e5u2"]
 [ext_resource type="Script" uid="uid://doi7s32f3duwj" path="res://chars/dodge.gd" id="27_yw64w"]
 [ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="28_yhec4"]
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="29_8t56l"]
@@ -99,6 +98,7 @@
 [ext_resource type="Texture2D" uid="uid://b0ve4x1jtfkm5" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run06.png" id="55_s7q1o"]
 [ext_resource type="Texture2D" uid="uid://jtbb0utqt4by" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run07.png" id="56_mg5cm"]
 [ext_resource type="Texture2D" uid="uid://bs6mlkbsi1yvh" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run08.png" id="57_1kl2o"]
+[ext_resource type="PackedScene" uid="uid://b74ywj4npkesd" path="res://Component/bullet_projectile.tscn" id="79_m3s8r"]
 [ext_resource type="Script" uid="uid://bnpx2avsix2an" path="res://Component/functions/GroupEnemyManager.gd" id="86_m3s8r"]
 [ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="97_onb8s"]
 
@@ -1324,6 +1324,8 @@ script = ExtResource("12_q7gmp")
 metadata/_custom_type_script = "uid://b0uasmutdnguo"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(5, -8)
+rect = Rect2(4, 4, 6, 6)
 
 [node name="BTPlayer" type="BTPlayer" parent="."]
 behavior_tree = ExtResource("15_j02m3")
@@ -1359,9 +1361,9 @@ metadata/_custom_type_script = "uid://cr58jnxs33hft"
 [node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]
 script = ExtResource("24_yw64w")
 actor = NodePath("..")
-projectile = ExtResource("27_0e5u2")
 turret = NodePath("../Turret")
-bullet_scale = 0.3
+projectile = ExtResource("79_m3s8r")
+bullet_scale = 0.1
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
 [node name="VisionHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking")]

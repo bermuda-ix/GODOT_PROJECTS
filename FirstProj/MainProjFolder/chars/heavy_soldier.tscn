@@ -23,7 +23,6 @@
 [ext_resource type="Script" uid="uid://cf3jqneer6g2o" path="res://Component/attack_range.gd" id="18_n5mdn"]
 [ext_resource type="Script" uid="uid://dgyx4da7oymh2" path="res://Component/functions/JumpHandler.gd" id="18_o2fe2"]
 [ext_resource type="Script" uid="uid://5h8g0n4mebtm" path="res://Component/functions/ShootAttackManager.gd" id="18_pk3h2"]
-[ext_resource type="PackedScene" uid="uid://e8y61qs02r7p" path="res://Component/ball_procetile.tscn" id="20_ao47q"]
 [ext_resource type="Script" uid="uid://cx8bi64kwoulc" path="res://Component/functions/PlayerTrackingHandler.gd" id="20_eopqg"]
 [ext_resource type="Script" uid="uid://cr58jnxs33hft" path="res://Component/functions/deathHandler.gd" id="20_jdney"]
 [ext_resource type="Script" uid="uid://co05jfawt7xsm" path="res://Component/functions/GetPlayerInfoHandler.gd" id="20_vtt0c"]
@@ -34,6 +33,7 @@
 [ext_resource type="Script" uid="uid://d2wausty5l457" path="res://chars/jump.gd" id="26_rumpe"]
 [ext_resource type="Script" uid="uid://dgja48rcyj78n" path="res://chars/chasing.gd" id="27_2a376"]
 [ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="27_okbgj"]
+[ext_resource type="PackedScene" uid="uid://b74ywj4npkesd" path="res://Component/bullet_projectile.tscn" id="28_86qvh"]
 [ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="28_xp1ci"]
 [ext_resource type="Script" uid="uid://b5an13nv6em7m" path="res://chars/attack.gd" id="29_ct51r"]
 [ext_resource type="Script" uid="uid://b0uasmutdnguo" path="res://chars/target_lock.gd" id="30_a5flw"]
@@ -1282,6 +1282,8 @@ script = ExtResource("12_6gh4x")
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(20, 30)
+rect = Rect2(2, 2, 5, 5)
 
 [node name="PlayerTrackerPivot" type="Node2D" parent="."]
 position = Vector2(0, 11)
@@ -1431,8 +1433,8 @@ metadata/_custom_type_script = "uid://dgyx4da7oymh2"
 [node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]
 script = ExtResource("17_tlhl2")
 actor = NodePath("..")
-projectile = ExtResource("20_ao47q")
 turret = NodePath("../Turret")
+projectile = ExtResource("28_86qvh")
 bullet_scale = 0.5
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 

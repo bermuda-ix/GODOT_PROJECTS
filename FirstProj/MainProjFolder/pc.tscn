@@ -3749,7 +3749,7 @@ anim_speed_min = 0.7
 anim_speed_max = 0.7
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
-size = Vector2(15.989, 41.2086)
+size = Vector2(14.107954, 41.20858)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mdoa6"]
 height = 46.0
@@ -8461,7 +8461,7 @@ theme_override_fonts/font = ExtResource("220_fixwo")
 text = "EXIT"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1.5, -9.5)
+position = Vector2(1.5000002, -9.5000105)
 scale = Vector2(1.06323, 0.994939)
 shape = SubResource("RectangleShape2D_pmx5o")
 
@@ -8495,6 +8495,7 @@ collision_mask = 67633152
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StarsDetector"]
 position = Vector2(3, -9)
 shape = SubResource("CapsuleShape2D_mdoa6")
+debug_color = Color(0, 0.5950001, 0.7, 0)
 
 [node name="HazardDetector" type="Area2D" parent="." groups=["player"]]
 collision_layer = 2
@@ -8511,6 +8512,7 @@ collision_mask = 35651584
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableDetector"]
 position = Vector2(2, -10)
 shape = SubResource("RectangleShape2D_mdoa6")
+debug_color = Color(0, 0.5950001, 0.7, 0)
 
 [node name="HitStop" type="Node" parent="."]
 script = ExtResource("53_jef5t")
@@ -8587,7 +8589,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
 collision_layer = 128
-collision_mask = 8
+collision_mask = 4104
 script = ExtResource("9_s8nmr")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
@@ -8598,7 +8600,7 @@ shape = SubResource("RectangleShape2D_oupih")
 
 [node name="CounterBox" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 8
+collision_mask = 4104
 
 [node name="CounterBoxCollision" type="CollisionShape2D" parent="CounterBox"]
 position = Vector2(3.5, -10.5)
@@ -8612,6 +8614,7 @@ collision_layer = 2
 position = Vector2(1.5, -9.5)
 scale = Vector2(1.06323, 0.994939)
 shape = SubResource("RectangleShape2D_pmx5o")
+debug_color = Color(0, 0.5950001, 0.7, 0)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_02w0c")
@@ -8653,9 +8656,9 @@ metadata/_custom_type_script = "uid://wai5i0eghoou"
 [node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]
 script = ExtResource("230_pbr83")
 actor = NodePath("..")
-projectile = ExtResource("231_ymji2")
-turret = NodePath("../AnimatedSprite2D/Shotty/Turret")
 player_tracking_active = false
+turret = NodePath("../AnimatedSprite2D/Shotty/Turret")
+projectile = ExtResource("231_ymji2")
 bullet_speed = 800.0
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
@@ -8801,10 +8804,11 @@ hit_stop = NodePath("../../../HitStop")
 [node name="Nothing" type="LimboState" parent="StateMachine/ParrySuccessState"]
 script = ExtResource("100_8mfft")
 
-[node name="DodgeState" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="DodgeState" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "hurtbox")]
 script = ExtResource("107_yif7d")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
+hurtbox = NodePath("../../HurtBox/CollisionShape2D")
 
 [node name="FlipState" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "state_machine", "hit_stop")]
 script = ExtResource("108_mj1xc")
@@ -8813,8 +8817,11 @@ pc = NodePath("../..")
 state_machine = NodePath("..")
 hit_stop = NodePath("../../HitStop")
 
-[node name="Staggered" type="LimboState" parent="StateMachine"]
+[node name="Staggered" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
 script = ExtResource("113_o2pa3")
+anim_player = NodePath("../../AnimationPlayer")
+pc = NodePath("../..")
+state_machine = NodePath("..")
 
 [node name="Hit" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
 script = ExtResource("109_egqmi")
@@ -8882,6 +8889,7 @@ pc = NodePath("../..")
 [connection signal="got_hit" from="HurtBox" to="." method="_on_hurt_box_got_hit"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="area_entered" from="CounterBox" to="." method="_on_counter_box_area_entered"]
+[connection signal="body_entered" from="CounterBox" to="." method="_on_counter_box_body_entered"]
 [connection signal="area_entered" from="CollectibleBox" to="." method="_on_collectible_box_area_entered"]
 [connection signal="timeout" from="Speech/SpeechTimer" to="." method="_on_speech_timer_timeout"]
 [connection signal="active_state_changed" from="StateMachine" to="." method="_on_state_machine_active_state_changed"]

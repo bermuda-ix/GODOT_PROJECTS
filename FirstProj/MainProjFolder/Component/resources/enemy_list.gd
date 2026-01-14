@@ -6,7 +6,7 @@ extends Resource
 
 #Regular enemies
 const REG_ENEMIES = {
-	#FLYING_ENEMY = preload("res://chars/flying_enemy.tscn"),
+	FLYING_ENEMY = preload("res://chars/flying_enemy.tscn"),
 	GUARD_ENEMY = preload("res://chars/guard_enemy.tscn"),
 	}
 #Elite Enemies

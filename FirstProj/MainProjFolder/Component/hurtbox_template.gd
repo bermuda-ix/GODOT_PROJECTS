@@ -45,7 +45,9 @@ func _bullet_hit(_rigid_body : RigidBody2D) -> void:
 			stagger.stagger-=1
 		else:
 			health.health-=1
-			
+	else:
+		health.health-=1
+	_rigid_body.impact()
 		
 
 #func _on_parried(parrybox: ParryBox) -> void:
@@ -56,6 +58,7 @@ func _bullet_hit(_rigid_body : RigidBody2D) -> void:
 	#if area.is_in_group("spc_atk"):
 		#weakpoint_hit.emit()
 		
+
 
 func set_damage_mulitplyer(value:int):
 	dmg_mult=value

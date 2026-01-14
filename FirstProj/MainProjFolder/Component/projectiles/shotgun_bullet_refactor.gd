@@ -9,6 +9,7 @@ const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 var dir : Vector2 = Vector2.RIGHT
 var spawnPos : Vector2
 var spawnRot : float
+var scale_size : float 
 
 
 # Called when the node enters the scene tree for the first time.
@@ -18,6 +19,7 @@ func _ready():
 	gpu_particles_2d.emitting=true
 	global_position = spawnPos
 	global_rotation = spawnRot
+	scale*=scale_size
 
 
 
