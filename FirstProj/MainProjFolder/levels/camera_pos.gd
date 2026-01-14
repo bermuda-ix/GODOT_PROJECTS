@@ -19,6 +19,7 @@ var shake_strength : float = 0
 
 func _ready() -> void:
 	Events.camera_shake.connect(camera_shake)
+	Events.player_death.connect(player_death)
 	camera_2d.zoom*=camera_zoom
 	
 func _process(delta: float) -> void:
@@ -50,3 +51,9 @@ func set_rand_strength(value : float):
 func set_cam_smooth(value: bool, _speed: float = 3.0) -> void:
 	camera_2d.position_smoothing_enabled=value
 	camera_2d.position_smoothing_speed=_speed
+
+func dramatic_zoom(_zoom_value : float) -> void:
+	camera_2d.zoom*=_zoom_value
+	
+func player_death() -> void:
+	dramatic_zoom(2)

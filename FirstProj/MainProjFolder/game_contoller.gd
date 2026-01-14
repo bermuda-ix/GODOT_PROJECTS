@@ -37,7 +37,7 @@ func _ready() -> void:
 	print(OS.get_processor_count())
 	mutex = Mutex.new()
 	thread = Thread.new()
-	thread.start(preload_scene.bind(LevelsList.LEVEL_SELECT))
+	call_preload_scene(LevelsList.LEVEL_SELECT)
 	Global.game_controller = self
 	Events.load_level_map.connect(load_levels)
 	Events.load_first_level.connect(load_first_room)
@@ -182,8 +182,17 @@ func change_gui_scene (new_scene: String, \
 func preload_scene(_new_scene: String):
 	mutex.lock()
 	new_gui_level=load(_new_scene).instantiate()
+	call_deferred("scene_loaded")
 	mutex.unlock()
 	
+func call_preload_scene(_new_scene: String):
+	thread.start(preload_scene.bind(_new_scene))
+	
+
+func scene_loaded()-> void:
+	thread.wait_to_finish()
+	print("scene preloaded")
+
 #remove world2d, for moving to menu only scene
 func remove_world2d_scene() -> void:
 	player.call_deferred("reparent", world_2d)

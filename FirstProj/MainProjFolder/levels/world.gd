@@ -71,6 +71,7 @@ func _ready():
 		print(spawn_points[i].name)
 	Events.increase_heat_lvl.connect(increase_heat)
 	Events.player_death.connect(preload_next_scene)
+	Events.player_death.connect(player_death)
 	
 	#Events.start_cutscene.emit()
 	#Events.end_cutsene.connect(end_cutscene)
@@ -138,7 +139,7 @@ func show_level_complete():
 	LevelTransition.fade_from_black()
 	
 func preload_next_scene():
-	thread.start(Global.game_controller.preload_scene.bind(LevelsList.HIGHSCORE_ENTRY))
+	Global.game_controller.call_preload_scene(LevelsList.HIGHSCORE_ENTRY)
 	
 func show_game_over():
 	if lvl_type=="guantlet":
@@ -259,3 +260,6 @@ func _on_pc_special_atk_qte() -> void:
 
 func _on_pc_no_input_qte() -> void:
 	cutscene_player.queue(qte_options[4])
+
+func player_death() -> void:
+	cutscene_player.play("player_death")

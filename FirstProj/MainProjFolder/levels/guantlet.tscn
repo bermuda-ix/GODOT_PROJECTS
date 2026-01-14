@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://djj0ggyoi07b2"]
+[gd_scene load_steps=29 format=4 uid="uid://djj0ggyoi07b2"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_1mh5l"]
 [ext_resource type="PackedScene" uid="uid://c3ytqa5narkcx" path="res://Component/TileLayers/factory_main_platform.tscn" id="2_v7bxa"]
@@ -5483,6 +5483,43 @@ vertices = PackedVector2Array(5611, 21.976563, 5611, 75, 11, 77.99219, 11, 14.00
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(1, 4, 1, 88, 5621, 85, 5621, 12)])
 
+[sub_resource type="Animation" id="Animation_6bl2l"]
+resource_name = "player_death"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ScreenFlash:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.2, 0.23333333, 0.3, 0.43333334, 0.46666667, 0.53333336),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_m654v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ScreenFlash:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_guebu"]
+_data = {
+&"RESET": SubResource("Animation_m654v"),
+&"player_death": SubResource("Animation_6bl2l")
+}
+
 [node name="guantlet" groups=["world"] instance=ExtResource("1_1mh5l")]
 lvl_type = "guantlet"
 no_load = true
@@ -5497,6 +5534,15 @@ visible = false
 offset_left = 3498.0
 offset_right = 3538.0
 metadata/_edit_use_anchors_ = true
+
+[node name="ScreenFlash" type="ColorRect" parent="CanvasLayer" index="4"]
+z_index = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
 
 [node name="LevelTileMap" parent="." index="1"]
 position = Vector2(3378, 0)
@@ -5816,5 +5862,8 @@ script = ExtResource("15_6bl2l")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
 [node name="CutscenePlayer" type="AnimationPlayer" parent="." index="14"]
+libraries = {
+&"": SubResource("AnimationLibrary_guebu")
+}
 
 [editable path="CameraPos"]

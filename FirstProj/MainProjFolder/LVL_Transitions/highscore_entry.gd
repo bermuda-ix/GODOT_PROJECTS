@@ -8,6 +8,7 @@ var score : int = 0
 func _ready() -> void:
 	score=GlobalSaveData.score
 	your_score.text="YOUR SCORE: " + str(score)
+	Global.game_controller.call_preload_scene(LevelsList.HIGHSCORE_LIST)
 	
 
 func _process(delta: float) -> void:

@@ -1076,6 +1076,9 @@ func shotgun_shoot() -> void:
 		bullet_dir = rotation_to_direction(_bullet_dirs[i])
 		shoot_handler.shoot_bullet()
 
+func shotgun_recoil() -> void:
+	Events.camera_shake.emit(1,20)
+
 func rotation_to_direction(_rotation_degrees : int) -> Vector2:
 	 # Convert rotation from degrees to radians (skip if already in radians)
 	var _rotation_radians = deg_to_rad(_rotation_degrees)

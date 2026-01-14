@@ -6600,11 +6600,14 @@ tracks/11/path = NodePath(".")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0.2),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.2, 0.23333333),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
 "method": &"shotgun_shoot"
+}, {
+"args": [],
+"method": &"shotgun_recoil"
 }]
 }
 
