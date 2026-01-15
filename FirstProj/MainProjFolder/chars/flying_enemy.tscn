@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cmbh5yrvkl5a6"]
+[gd_scene load_steps=20 format=3 uid="uid://cmbh5yrvkl5a6"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_4opfk"]
 [ext_resource type="Script" uid="uid://csh8rjbhyvxoc" path="res://chars/flying_enemy.gd" id="2_avqxo"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://c4yno8xy5erif" path="res://chars/death.gd" id="6_cfr2g"]
 [ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="7_k0mf2"]
 [ext_resource type="Script" uid="uid://dr8hs1ssva6sy" path="res://Component/functions/MissleShootHandler.gd" id="8_5wgfp"]
+[ext_resource type="PackedScene" uid="uid://vdjcvocboc4s" path="res://Component/missiles/missile_trackerv_2.tscn" id="9_5wgfp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kgcfl"]
 atlas = ExtResource("2_ga466")
@@ -208,6 +209,7 @@ autostart = true
 [node name="MissileShootHandler" type="Node" parent="." index="26" node_paths=PackedStringArray("turret")]
 script = ExtResource("8_5wgfp")
 turret = NodePath("../Turret")
+missile = ExtResource("9_5wgfp")
 missile_rotation = -90.0
 fixed_rot = true
 metadata/_custom_type_script = "uid://dr8hs1ssva6sy"

@@ -25,6 +25,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var gpu_particles_2d: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
 @onready var gpu_particles_2d_2: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D2
 #On Screen
+var is_on_screen
 
 var always_active : bool
 #Defense
@@ -540,7 +541,7 @@ func alerted() -> void :
 		state_machine.dispatch(&"start_chase")
 
 func force_chase():
-	var is_on_screen=on_screen.is_on_screen()
+	is_on_screen=on_screen.is_on_screen()
 	if not is_on_screen and vision_handler.always_on==true and state_machine.get_active_state()!=chasing:
 		state_machine.change_active_state(chasing)
 

@@ -74,6 +74,8 @@ func set_rot_speed(value: float):
 
 func get_speed() -> float:
 	return SPEED
+	
+	
 func rotate_missile(delta : float) -> void:
 	#animated_sprite_2d.rotation_degrees=move_toward(animated_sprite_2d.rotation_degrees, tracking_rot, delta*50)
 	#var current_rot=animated_sprite_2d.rotation_degrees
