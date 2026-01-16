@@ -13,6 +13,7 @@ extends Node
 @export var stay_on : bool = false
 
 @onready var player : PlayerEntity
+@onready var player_colliding := false
 
 @onready var player_found : bool = false
 
@@ -20,15 +21,18 @@ signal player_sighted
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	player_tracking.target_position = Vector2(vision_range, 0)
+	
 
 
 func handle_vision():
+	player_colliding=player_tracking.is_colliding()
 	if not active:
 		return
 	if always_on:
 		player_found=true
 		#sm.dispatch(&"start_chase")
 	else:
+		#actor.player_colliding=player_tracking.is_colliding()
 		if player_tracking.is_colliding():
 			var collision_result = player_tracking.get_collider()
 			if collision_result != player or sm.get_active_state()==actor.death:

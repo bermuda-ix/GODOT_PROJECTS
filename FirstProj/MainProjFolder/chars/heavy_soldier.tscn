@@ -1,4 +1,4 @@
-[gd_scene load_steps=141 format=3 uid="uid://dn0fhusgltn4m"]
+[gd_scene load_steps=144 format=3 uid="uid://dn0fhusgltn4m"]
 
 [ext_resource type="Texture2D" uid="uid://cj1e5ggio6406" path="res://Art_Components/Enemies/SWAT_2/Dead.png" id="1_4nhfo"]
 [ext_resource type="Script" uid="uid://ivyj1p60rf7r" path="res://chars/heavy_soldier.gd" id="1_ct51r"]
@@ -27,7 +27,9 @@
 [ext_resource type="Script" uid="uid://cr58jnxs33hft" path="res://Component/functions/deathHandler.gd" id="20_jdney"]
 [ext_resource type="Script" uid="uid://co05jfawt7xsm" path="res://Component/functions/GetPlayerInfoHandler.gd" id="20_vtt0c"]
 [ext_resource type="Script" uid="uid://ddhk64y60klpg" path="res://Component/functions/MeleeAttackManager.gd" id="22_rumpe"]
+[ext_resource type="Script" uid="uid://m7cps3rc3xog" path="res://Component/functions/AllyVisionHandler.gd" id="23_33dan"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="24_ni375"]
+[ext_resource type="Script" uid="uid://c7kbv7d5voapj" path="res://Component/functions/DefendEnemy.gd" id="24_o2wso"]
 [ext_resource type="Script" uid="uid://cvo1e5meai30k" path="res://Component/functions/CombatStateChangeHandler.gd" id="25_uhne8"]
 [ext_resource type="Script" uid="uid://daq7xh1e6l7u6" path="res://chars/idle.gd" id="26_i7wao"]
 [ext_resource type="Script" uid="uid://d2wausty5l457" path="res://chars/jump.gd" id="26_rumpe"]
@@ -1219,17 +1221,19 @@ size = Vector2(108, 82)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_uhne8"]
 
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_o2wso"]
+
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_ypkgb"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vtt0c"]
 
-[node name="HeavySoldier" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant"]]
+[node name="HeavySoldier" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant", "defensive_enemy"]]
 collision_layer = 16384
 script = ExtResource("1_ct51r")
 hitbox = NodePath("HitBox")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 28)
+position = Vector2(-3, -11)
 shape = SubResource("RectangleShape2D_cv57o")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
@@ -1238,17 +1242,18 @@ navigation_layers = 2
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_64nx0")
 animation = &"idle"
+offset = Vector2(0, -39)
 flip_h = true
 
 [node name="ColorRect" type="ColorRect" parent="AnimatedSprite2D"]
-offset_left = -12.0
-offset_top = 6.0
-offset_right = -6.0
-offset_bottom = 52.0
+offset_left = -14.0
+offset_top = -36.0
+offset_right = -8.0
+offset_bottom = 10.0
 color = Color(1, 1, 1, 0)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D"]
-position = Vector2(-12, 22)
+position = Vector2(-12, -24)
 rotation = 3.14159
 emitting = false
 lifetime = 0.5
@@ -1258,7 +1263,7 @@ randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_2a376")
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="AnimatedSprite2D"]
-position = Vector2(-12, 37)
+position = Vector2(-13, -3)
 rotation = 3.14159
 emitting = false
 lifetime = 0.5
@@ -1282,11 +1287,11 @@ script = ExtResource("12_6gh4x")
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(20, 30)
+position = Vector2(20, -9)
 rect = Rect2(2, 2, 5, 5)
 
 [node name="PlayerTrackerPivot" type="Node2D" parent="."]
-position = Vector2(0, 11)
+position = Vector2(0, -28)
 
 [node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot"]
 collision_mask = 3
@@ -1298,14 +1303,15 @@ max_ammo = 12
 shoot_speed = 0.1
 
 [node name="TargetLock" type="Node2D" parent="."]
-position = Vector2(-3, 9)
+position = Vector2(-3, -30)
 script = ExtResource("30_a5flw")
 metadata/_custom_type_script = "uid://b0uasmutdnguo"
 
 [node name="Shield" type="Area2D" parent="."]
+position = Vector2(0, -39)
 
 [node name="ParryBox" type="Area2D" parent="." groups=["shield"]]
-position = Vector2(-25, 2)
+position = Vector2(-25, -37)
 collision_layer = 256
 collision_mask = 8388674
 script = ExtResource("14_2a376")
@@ -1318,6 +1324,7 @@ shape = SubResource("RectangleShape2D_86qvh")
 one_way_collision_margin = 0.0
 
 [node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("stagger")]
+position = Vector2(0, -39)
 collision_layer = 8
 collision_mask = 128
 script = ExtResource("14_0rfay")
@@ -1330,6 +1337,7 @@ shape = SubResource("CapsuleShape2D_pk3h2")
 disabled = true
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
+position = Vector2(0, -39)
 collision_layer = 16
 collision_mask = 8396864
 script = ExtResource("15_8nnwq")
@@ -1342,6 +1350,7 @@ position = Vector2(4, 27.5)
 shape = SubResource("RectangleShape2D_o2fe2")
 
 [node name="HurtBox_Weakpoint" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
+position = Vector2(0, -39)
 collision_layer = 16
 collision_mask = 8256
 script = ExtResource("15_8nnwq")
@@ -1356,6 +1365,7 @@ position = Vector2(17, 32)
 shape = SubResource("RectangleShape2D_ao47q")
 
 [node name="AttackRange" type="Area2D" parent="."]
+position = Vector2(0, -39)
 collision_layer = 1024
 collision_mask = 2
 script = ExtResource("18_n5mdn")
@@ -1407,6 +1417,23 @@ bt_active = false
 stay_on = true
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
+[node name="AllyVisionHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "ally_vision")]
+script = ExtResource("23_33dan")
+actor = NodePath("..")
+ally_vision = NodePath("../AllyVisionRaycast")
+metadata/_custom_type_script = "uid://m7cps3rc3xog"
+
+[node name="AllyVisionRaycast" type="RayCast2D" parent="."]
+position = Vector2(34, -15)
+target_position = Vector2(-167, 0)
+collision_mask = 16385
+
+[node name="DefendEnemyHandler" type="Node" parent="." node_paths=PackedStringArray("ally_vision_handler", "actor")]
+script = ExtResource("24_o2wso")
+ally_vision_handler = NodePath("../AllyVisionHandler")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://c7kbv7d5voapj"
+
 [node name="MovementHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
 script = ExtResource("16_ivtdb")
 actor = NodePath("..")
@@ -1452,13 +1479,14 @@ script = ExtResource("22_rumpe")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://ddhk64y60klpg"
 
-[node name="CombatStateChangeHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player")]
+[node name="CombatStateChangeHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player", "vision_handler")]
 script = ExtResource("25_uhne8")
 actor = NodePath("..")
 sm = NodePath("../StateMachine")
 combat_state_machine = NodePath("../CombatStateMachine")
 bt_player = NodePath("../BTPlayer")
 ranged_dist = 30
+vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
 [node name="GroupEnemyManager" type="Node" parent="." node_paths=PackedStringArray("actor")]
@@ -1519,6 +1547,9 @@ turret = NodePath("../../../Turret")
 
 [node name="ShootIdle" type="LimboState" parent="StateMachine/ShootingStates"]
 
+[node name="DefendAlly" type="BTState" parent="StateMachine/ShootingStates"]
+blackboard_plan = SubResource("BlackboardPlan_o2wso")
+
 [node name="Hit" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("32_a5flw")
 actor = NodePath("../..")
@@ -1569,9 +1600,9 @@ metadata/_custom_type_script = "uid://koggvl8cxowm"
 
 [node name="NPCStats" parent="." node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("47_b8y0i")]
 offset_left = -28.0
-offset_top = -17.0
+offset_top = -56.0
 offset_right = -28.0
-offset_bottom = -17.0
+offset_bottom = -56.0
 scale = Vector2(0.3, 0.3)
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
@@ -1579,9 +1610,9 @@ actor = NodePath("..")
 
 [node name="Label" type="Label" parent="."]
 offset_left = -25.0
-offset_top = -41.0
+offset_top = -80.0
 offset_right = 15.0
-offset_bottom = -18.0
+offset_bottom = -57.0
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]

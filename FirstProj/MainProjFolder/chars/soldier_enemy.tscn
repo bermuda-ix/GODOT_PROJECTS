@@ -1722,7 +1722,7 @@ radius = 34.0
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_jjike"]
 
-[node name="soldier_enemy" node_paths=PackedStringArray("hitbox", "state_machine") groups=["Persistant"] instance=ExtResource("1_ojqla")]
+[node name="soldier_enemy" node_paths=PackedStringArray("hitbox", "state_machine") groups=["Persistant", "offensive_enemy"] instance=ExtResource("1_ojqla")]
 collision_layer = 16384
 script = ExtResource("2_ibi2a")
 chase_speed = 120.0
@@ -1868,11 +1868,12 @@ script = ExtResource("80_edkvm")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="MovementHandler" type="Node" parent="." index="31" node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
+[node name="MovementHandler" type="Node" parent="." index="31" node_paths=PackedStringArray("actor", "state_machine", "vision_handler", "nav_agent")]
 script = ExtResource("80_goy6u")
 actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
 vision_handler = NodePath("../VisionHandler")
+nav_agent = NodePath("../NavigationAgent2D")
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
 
 [node name="JumpHandler" type="Node" parent="." index="32" node_paths=PackedStringArray("actor", "state_machine")]
@@ -1935,12 +1936,13 @@ state_machine = NodePath("../LimboHSM")
 bt_player = NodePath("../BTPlayer")
 metadata/_custom_type_script = "uid://cp2j3xnu5vd7q"
 
-[node name="CombatStateChangeHandler" type="Node" parent="." index="40" node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player")]
+[node name="CombatStateChangeHandler" type="Node" parent="." index="40" node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player", "vision_handler")]
 script = ExtResource("88_ivw15")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 combat_state_machine = NodePath("../CombatStateMachine")
 bt_player = NodePath("../BTPlayer")
+vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
 [node name="CounterAttackHandler" type="Node" parent="." index="41" node_paths=PackedStringArray("actor", "jump_handler", "shoot_attack_manager", "state_machine", "bt_player")]

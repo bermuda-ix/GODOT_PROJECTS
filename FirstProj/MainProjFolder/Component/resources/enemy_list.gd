@@ -19,5 +19,6 @@ const ELITE_ENEMIES = {
 @export_category("Bosses")
 #const BOSS_ENEMY_BT = preload("res://chars/boss_enemy_bt.tscn")
 const BOSSES = {
-	MECH_RANGED = preload("res://chars/mech_ranged.tscn")
+	MECH_RANGED = preload("res://chars/mech_ranged.tscn"),
+	DEMON_1 = preload("res://chars/demon_phase1.tscn")
 }

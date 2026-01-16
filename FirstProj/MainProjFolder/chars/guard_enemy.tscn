@@ -1208,7 +1208,7 @@ size = Vector2(48, 68.5)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_ri8gu"]
 
-[node name="GuardEnemy" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant"]]
+[node name="GuardEnemy" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant", "offensive_enemy"]]
 collision_layer = 16384
 script = ExtResource("1_4q725")
 hitbox = NodePath("HitBox")
@@ -1336,11 +1336,12 @@ script = ExtResource("13_72jhu")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="MovementHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
+[node name="MovementHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine", "vision_handler", "nav_agent")]
 script = ExtResource("14_dc187")
 actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
 vision_handler = NodePath("../VisionHandler")
+nav_agent = NodePath("../NavigationAgent2D")
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
 
 [node name="JumpHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine")]
@@ -1401,13 +1402,14 @@ state_machine = NodePath("../LimboHSM")
 bt_player = NodePath("../BTPlayer")
 metadata/_custom_type_script = "uid://cp2j3xnu5vd7q"
 
-[node name="CombatStateChangeHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player")]
+[node name="CombatStateChangeHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player", "vision_handler")]
 script = ExtResource("25_yhec4")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 combat_state_machine = NodePath("../CombatStateMachine")
 bt_player = NodePath("../BTPlayer")
 ranged_dist = 70
+vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
 [node name="GroupEnemyManager" type="Node" parent="." node_paths=PackedStringArray("actor")]

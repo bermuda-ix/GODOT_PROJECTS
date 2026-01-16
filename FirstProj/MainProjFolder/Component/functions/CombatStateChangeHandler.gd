@@ -8,6 +8,7 @@ extends Node
 @export var bt_player : BTPlayer
 @export var active : bool = true
 @export var ranged_dist : int = 100
+@export var vision_handler : VisionHandler
 
 func _physics_process(delta: float) -> void:
 	if not active:
@@ -19,11 +20,14 @@ func _physics_process(delta: float) -> void:
 		#print(actor.distance)
 #		RANGED ATTACK
 
-		if actor.distance>ranged_dist and actor.is_on_screen:
+		if actor.distance>ranged_dist:
 			#print("ranged")
-			actor.turret.shoot_timer.paused=false
-			combat_state_machine.dispatch(&"ranged_mode")
-			sm.dispatch(&"start_attack")
+			if actor.is_on_screen and vision_handler.player_colliding:
+				actor.turret.shoot_timer.paused=false
+				combat_state_machine.dispatch(&"ranged_mode")
+				sm.dispatch(&"start_attack")
+			else:
+				sm.dispatch(&"start_chase")
 			
 #		MELEE ATTACK
 		else:

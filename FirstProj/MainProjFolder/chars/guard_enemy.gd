@@ -157,7 +157,7 @@ func _ready():
 	if always_active:
 		state_machine.remove_transition(attack, &"idle_mode")
 		alerted()
-		chase()
+		#chase()
 	
 	
 func _init_state_machine():

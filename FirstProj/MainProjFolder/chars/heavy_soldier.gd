@@ -74,6 +74,7 @@ var dir
 @onready var player_tracker_pivot: Node2D = $PlayerTrackerPivot
 @onready var player_tracking: RayCast2D = $PlayerTrackerPivot/PlayerTracking
 var player_found : bool = true
+#var player_colliding := false
 var player : PlayerEntity = null
 var distance
 var player_state : LimboState
@@ -89,6 +90,7 @@ var player_state : LimboState
 @onready var shooting_defense: LimboState = $StateMachine/ShootingStates/ShootingDefense
 @onready var reload: LimboState = $StateMachine/ShootingStates/Reload
 @onready var shoot_idle: LimboState = $StateMachine/ShootingStates/ShootIdle
+@onready var defend_ally: BTState = $StateMachine/ShootingStates/DefendAlly
 @onready var hit: Hit = $StateMachine/Hit
 @onready var parry: Parry = $StateMachine/Parry
 @onready var staggered: Staggered = $StateMachine/Staggered
@@ -174,6 +176,7 @@ func _ready():
 		alerted()
 
 func _process(delta: float) -> void:
+	
 	if state_machine.get_active_state()==death:
 		hb_collision.disabled=true
 		return
@@ -200,8 +203,9 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	if combat_state_machine.get_active_state()==ranged_mode or state_machine.get_active_state()==parry:
-		current_speed=0
-	
+		if state_machine.get_active_state()!=chasing:
+			current_speed=0
+	#
 	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
 		#hb_collison.disabled=true
 		velocity.y += gravity * delta
@@ -284,6 +288,7 @@ func _init_shooting_states():
 #Navigation
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
+	
 func _on_navigation_timer_timeout() -> void:
 	makepath()
 	next_y=nav_agent.get_next_path_position().y
