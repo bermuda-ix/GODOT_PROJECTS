@@ -445,13 +445,13 @@ shape = SubResource("RectangleShape2D_01tlq")
 
 [node name="Enemies" type="Node" parent="." index="29"]
 
-[node name="Node2D" parent="Enemies" index="0" instance=ExtResource("7_t1ldw")]
+[node name="HeavySoldier" parent="Enemies" index="0" instance=ExtResource("9_be4ge")]
+position = Vector2(1044, 96)
+scale = Vector2(0.5, 0.5)
+
+[node name="Node2D" parent="Enemies" index="1" instance=ExtResource("7_t1ldw")]
 position = Vector2(910, 76)
 scale = Vector2(0.2, 0.2)
-
-[node name="HeavySoldier" parent="Enemies" index="1" instance=ExtResource("9_be4ge")]
-position = Vector2(985, 96)
-scale = Vector2(0.5, 0.5)
 
 [node name="Checkpoint" parent="." index="30" instance=ExtResource("10_gem31")]
 position = Vector2(1260, 1)

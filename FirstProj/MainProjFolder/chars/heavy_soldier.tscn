@@ -1,4 +1,4 @@
-[gd_scene load_steps=144 format=3 uid="uid://dn0fhusgltn4m"]
+[gd_scene load_steps=145 format=3 uid="uid://dn0fhusgltn4m"]
 
 [ext_resource type="Texture2D" uid="uid://cj1e5ggio6406" path="res://Art_Components/Enemies/SWAT_2/Dead.png" id="1_4nhfo"]
 [ext_resource type="Script" uid="uid://ivyj1p60rf7r" path="res://chars/heavy_soldier.gd" id="1_ct51r"]
@@ -50,6 +50,7 @@
 [ext_resource type="Script" uid="uid://6lcwbcgt2hxx" path="res://chars/reload.gd" id="39_i83c4"]
 [ext_resource type="Script" uid="uid://bdhtg4sor0v57" path="res://chars/shooting_defense.gd" id="39_iqleq"]
 [ext_resource type="BehaviorTree" uid="uid://t2han52xa64j" path="res://ai/trees/parry.tres" id="40_iqleq"]
+[ext_resource type="BehaviorTree" uid="uid://bmndudr2pew41" path="res://ai/trees/defend_ally.tres" id="44_oqlwu"]
 [ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="45_jdney"]
 [ext_resource type="PackedScene" uid="uid://bro4najrj7577" path="res://Component/UI_Rec/npc_stats.tscn" id="47_b8y0i"]
 [ext_resource type="Script" uid="uid://cyc80ne8pluln" path="res://chars/dying.gd" id="47_cl2c2"]
@@ -1228,6 +1229,7 @@ size = Vector2(108, 82)
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vtt0c"]
 
 [node name="HeavySoldier" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant", "defensive_enemy"]]
+position = Vector2(-6, -6)
 collision_layer = 16384
 script = ExtResource("1_ct51r")
 hitbox = NodePath("HitBox")
@@ -1423,14 +1425,10 @@ actor = NodePath("..")
 ally_vision = NodePath("../AllyVisionRaycast")
 metadata/_custom_type_script = "uid://m7cps3rc3xog"
 
-[node name="AllyVisionRaycast" type="RayCast2D" parent="."]
-position = Vector2(34, -15)
-target_position = Vector2(-167, 0)
-collision_mask = 16385
-
-[node name="DefendEnemyHandler" type="Node" parent="." node_paths=PackedStringArray("ally_vision_handler", "actor")]
+[node name="DefendEnemyHandler" type="Node" parent="." node_paths=PackedStringArray("ally_vision_handler", "defend_state", "actor")]
 script = ExtResource("24_o2wso")
 ally_vision_handler = NodePath("../AllyVisionHandler")
+defend_state = NodePath("../StateMachine/ShootingStates/DefendAlly")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://c7kbv7d5voapj"
 
@@ -1548,6 +1546,8 @@ turret = NodePath("../../../Turret")
 [node name="ShootIdle" type="LimboState" parent="StateMachine/ShootingStates"]
 
 [node name="DefendAlly" type="BTState" parent="StateMachine/ShootingStates"]
+behavior_tree = ExtResource("44_oqlwu")
+monitor_performance = true
 blackboard_plan = SubResource("BlackboardPlan_o2wso")
 
 [node name="Hit" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("actor", "animation_player")]
@@ -1614,6 +1614,12 @@ offset_top = -80.0
 offset_right = 15.0
 offset_bottom = -57.0
 
+[node name="AllyVisionRaycast" type="RayCast2D" parent="."]
+position = Vector2(34, -15)
+target_position = Vector2(-167, 0)
+collision_mask = 16385
+hit_from_inside = true
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
@@ -1630,6 +1636,8 @@ offset_bottom = -57.0
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="StaggerTimer" to="." method="_on_stagger_timer_timeout"]
 [connection signal="player_sighted" from="VisionHandler" to="." method="_on_vision_handler_player_sighted"]
+[connection signal="ally_gone" from="AllyVisionHandler" to="." method="_on_ally_vision_handler_ally_gone"]
+[connection signal="found_ally" from="AllyVisionHandler" to="." method="_on_ally_vision_handler_found_ally"]
 [connection signal="active_state_changed" from="StateMachine" to="." method="_on_state_machine_active_state_changed"]
 [connection signal="entered" from="StateMachine/Chasing" to="." method="_on_chasing_entered"]
 [connection signal="entered" from="StateMachine/Attack" to="." method="_on_attack_entered"]

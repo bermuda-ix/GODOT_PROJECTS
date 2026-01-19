@@ -565,7 +565,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	h_bar.text=str(current.name)
-	print(current.name)
+	#print(current.name)
 	if current==jump:
 		if previous==attack:
 			print("down attack")

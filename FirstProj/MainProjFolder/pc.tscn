@@ -8468,6 +8468,7 @@ shape = SubResource("RectangleShape2D_pmx5o")
 [node name="Health" type="Node" parent="."]
 script = ExtResource("4_q0gnn")
 max_health = 10
+immortality = true
 
 [node name="ClashPower" type="Node" parent="." node_paths=PackedStringArray("health", "stagger")]
 script = ExtResource("82_h0fyw")

@@ -141,6 +141,9 @@ var attacking : bool = false
 @onready var is_leader : bool = false
 @onready var is_even_order : bool = false
 @onready var group_enemy_manager: GroupEnemyManager = $GroupEnemyManager
+@onready var ally_vision_handler: AllyVisionHandler = $AllyVisionHandler
+@onready var ally_vision_raycast: RayCast2D = $AllyVisionRaycast
+
 
 
 
@@ -198,13 +201,15 @@ func _process(delta: float) -> void:
 		defense_shoot()
 	reload_gun()
 	being_flipped()
+	flip_ally_vision()
 	
-	#print(distance)
+	#print(current_speed)
 
 func _physics_process(delta: float) -> void:
 	if combat_state_machine.get_active_state()==ranged_mode or state_machine.get_active_state()==parry:
 		if state_machine.get_active_state()!=chasing:
-			current_speed=0
+			if shooting_states.get_active_state()!=defend_ally:
+				current_speed=0
 	#
 	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
 		#hb_collison.disabled=true
@@ -219,6 +224,8 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	velocity.x = current_speed + knockback.x
+	print(current_speed)
+	print(velocity.x)
 	move_and_slide()
 	movement_handler.apply_gravity(delta)
 
@@ -284,6 +291,11 @@ func _init_shooting_states():
 	shooting_states.add_transition(shooting_defense, shooting, &"offensive_shoot")
 	shooting_states.add_transition(shooting_states.ANYSTATE, reload, &"reload")
 	shooting_states.add_transition(reload, shooting, &"return_shooting")
+	shooting_states.add_transition(shooting, defend_ally, &"begin_defend")
+	shooting_states.add_transition(shooting_defense, defend_ally, &"begin_defend")
+	shooting_states.add_transition(defend_ally, shooting_defense, defend_ally.success_event)
+	
+	
 	
 #Navigation
 func makepath() -> void:
@@ -295,6 +307,10 @@ func _on_navigation_timer_timeout() -> void:
 	next_x=nav_agent.get_next_path_position().x
 	next=nav_agent.get_next_path_position()
 	
+#flip AllyVisionRaycast to keep point front
+func flip_ally_vision():
+	ally_vision_raycast.scale.x=animated_sprite_2d.scale.x
+
 func defense_shoot() -> void:
 	#print(distance)
 	if group_link_control==null:
@@ -304,6 +320,8 @@ func defense_shoot() -> void:
 		elif distance<50:
 			shooting_states.dispatch(&"defensive_shoot")
 			#print("defensive")
+	elif ally_vision_handler.ally_found:
+		return
 	else:
 		if  group_enemy_manager.leader:
 			shooting_states.dispatch(&"offensive_shoot")
@@ -332,10 +350,12 @@ func get_height() -> int:
 
 
 func _on_state_machine_active_state_changed(current: LimboState, previous: LimboState) -> void:
-	print(current)
-	if current!=idle:
+	#print(current)
+	if current!=idle and current!=chasing:
 		movement_handler.active=true
 		shooting_states.dispatch(&"begin_shooting")
+	elif current==shooting_states:
+		assert(state_machine.get_previous_active_state()!=attack)
 	#match current:
 		#attack:
 			#if combat_state_machine.get_active_state()==ranged_mode:
@@ -356,7 +376,8 @@ func _on_combat_state_machine_active_state_changed(current: LimboState, previous
 			state_machine.dispatch(&"start_shoot")
 			
 			movement_handler.active=false
-			current_speed=0
+			if shooting_states.get_active_state()!=defend_ally:
+				current_speed=0
 		elif current==melee_mode:
 			movement_handler.active=true
 			state_machine.dispatch(&"start_chase")
@@ -377,6 +398,8 @@ func _on_shooting_defense_entered() -> void:
 
 
 func _on_attack_entered() -> void:
+	assert(state_machine.get_previous_active_state()!=shooting_states)
+	print(state_machine.get_previous_active_state())
 	if state_machine.get_active_state()!=idle:
 		if combat_state_machine.get_active_state()==ranged_mode:
 			state_machine.dispatch(&"start_shoot")
@@ -393,7 +416,8 @@ func being_flipped() -> void:
 		movement_handler.active=true
 
 func _on_shooting_states_active_state_changed(current: LimboState, previous: LimboState) -> void:
-	print(current, ",", previous)
+	pass
+	#print(current, ",", previous)
 
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
@@ -558,3 +582,16 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	if vision_handler.player_found or vision_handler.always_on:
 		state_machine.dispatch(&"attack_mode")
 		bt_player.blackboard.set_var("attack_mode", true)
+
+
+func _on_ally_vision_handler_found_ally() -> void:
+	shooting_states.dispatch(&"begin_defend")
+	defend_ally.blackboard.set_var("ally_found", true)
+
+
+func _on_ally_vision_handler_ally_gone() -> void:
+	defend_ally.blackboard.set_var("ally_found", false)
+
+func chase():
+	#set_state(current_state, States.CHASE)
+	state_machine.dispatch(&"start_chase")
