@@ -13,6 +13,7 @@ extends Node2D
 @onready var heat_handler: HeatHandler = $HeatHandler
 @onready var hit_stop: HitStop = $HitStop
 @onready var level_state_handler: LevelStateHandler = $LevelStateHandler
+@onready var boss_spawn_point: Node2D = $BossSpawnPoint
 
 
 #Cutscenes
@@ -24,6 +25,8 @@ var qte_options : Array[String] = ["1","1","1","1","1"]
 @export var elite_spawn : int = 20
 @export var boss_spawn : int = 40
 @export var no_load : bool = false
+
+var boss_preload
 
 @onready var current_heat : int = 0
 
@@ -48,6 +51,7 @@ var obj : int
 
 var init_active_enemies_list : Array[Node]
 @onready var thread := Thread.new()
+@onready var mutex := Mutex.new()
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
@@ -90,6 +94,8 @@ func _ready():
 	#player.global_position=default.global_position
 	hit_stop.end_hit_stop()
 	
+
+	
 func _process(_delta):
 	
 	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size())
@@ -116,6 +122,10 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("Pause"):
 		show_pause()
+	
+	#	DEBUGING INPUT
+	if Input.is_action_just_pressed("DEBUG_KEY"):
+		prepare_boss_spawn(enemy_list.BOSS_REF["MECH_RANGED"])
 	
 func _physics_process(delta: float) -> void:
 	if not cutscene_active and not camera_pos.stationary:
@@ -239,8 +249,36 @@ func load_qte_animations(atk_opt : String, dodge_opt : String, block_opt : Strin
 	qte_options[4]=no_input
 	
 	
+
+func prepare_boss_spawn(_boss: String):
+	thread.start(preload_boss.bind(_boss))
 	
+func preload_boss(_boss : String):
+	mutex.lock()
+	var _boss_loaded = load(_boss)
+	call_deferred("boss_loaded")
+	mutex.unlock()
+	return _boss_loaded
+
+func boss_loaded():
+	boss_preload = thread.wait_to_finish()
+	#for i in range(spawn_points-1, -1, -1):
+		#spawn_points[i].active=false
 	
+	Events.inc_score.connect(countdown_to_boss)
+	call_deferred("spawn_boss")
+
+func countdown_to_boss():
+	var _enemies_left=get_tree().get_nodes_in_group("enemies").size()
+	if _enemies_left>0 or _enemies_left!=null:
+		print(_enemies_left, " Enemies left")
+	else:
+		spawn_boss() 
+
+func spawn_boss():
+	var _boss=boss_preload.instantiate()
+	_boss.global_position=boss_spawn_point.global_position
+	add_child(_boss)
 
 func _on_pc_attack_qte() -> void:
 	cutscene_player.queue(qte_options[0])

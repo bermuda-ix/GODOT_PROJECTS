@@ -17,6 +17,7 @@ const JUMP_VELOCITY = -400.0
 @onready var target_lock_node: TargetLock = $TargetLock
 #Visible on screen
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var is_on_screen : bool = false
 
 #Behaviour Tree Player
 @onready var bt_player: BTPlayer = $BTPlayer
@@ -208,6 +209,7 @@ func _init_combat_state_machine():
 	combat_state_machine.add_transition(melee_mode, ranged_mode, &"ranged_mode")
 
 func _process(delta: float) -> void:
+	is_on_screen=on_screen.is_on_screen()
 	if not cutscene_handler.actor_control_active: 
 		vision_handler.handle_vision()
 		return

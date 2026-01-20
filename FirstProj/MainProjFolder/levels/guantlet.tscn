@@ -5866,4 +5866,7 @@ libraries = {
 &"": SubResource("AnimationLibrary_guebu")
 }
 
+[node name="BossSpawnPoint" type="Node2D" parent="." index="15"]
+position = Vector2(3760, 0)
+
 [editable path="CameraPos"]
