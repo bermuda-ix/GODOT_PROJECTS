@@ -28,6 +28,8 @@ var qte_options : Array[String] = ["1","1","1","1","1"]
 
 var boss_preload
 
+@onready var boss_spawn_level := 0
+
 @onready var current_heat : int = 0
 
 var player : PlayerEntity
@@ -76,7 +78,7 @@ func _ready():
 	Events.increase_heat_lvl.connect(increase_heat)
 	Events.player_death.connect(preload_next_scene)
 	Events.player_death.connect(player_death)
-	
+	Events.boss_died.connect(boss_death)
 	#Events.start_cutscene.emit()
 	#Events.end_cutsene.connect(end_cutscene)
 	#Events.queue_cutscene.emit(Cutscenes.intro_cutscene)
@@ -123,9 +125,9 @@ func _process(_delta):
 	if Input.is_action_just_pressed("Pause"):
 		show_pause()
 	
-	#	DEBUGING INPUT
-	if Input.is_action_just_pressed("DEBUG_KEY"):
-		prepare_boss_spawn(enemy_list.BOSS_REF["MECH_RANGED"])
+	##	DEBUGING INPUT
+	#if Input.is_action_just_pressed("DEBUG_KEY"):
+		#prepare_boss_spawn(enemy_list.BOSS_REF["MECH_RANGED"])
 	
 func _physics_process(delta: float) -> void:
 	if not cutscene_active and not camera_pos.stationary:
@@ -197,7 +199,11 @@ func set_health():
 	
 func inc_score(value : int):
 	score += value
-	
+	if score%20==0:
+		if boss_spawn_level==0:
+			prepare_boss_spawn(enemy_list.BOSS_REF["MECH_RANGED"])
+		else:
+			prepare_boss_spawn(enemy_list.BOSS_REF["DEMON_1"])
 
 func handle_spawn():
 	pass
@@ -262,11 +268,9 @@ func preload_boss(_boss : String):
 
 func boss_loaded():
 	boss_preload = thread.wait_to_finish()
-	#for i in range(spawn_points-1, -1, -1):
-		#spawn_points[i].active=false
-	
+	for i in range(spawn_points.size()-1, -1, -1):
+		spawn_points[i].active=false
 	Events.inc_score.connect(countdown_to_boss)
-	call_deferred("spawn_boss")
 
 func countdown_to_boss():
 	var _enemies_left=get_tree().get_nodes_in_group("enemies").size()
@@ -279,6 +283,12 @@ func spawn_boss():
 	var _boss=boss_preload.instantiate()
 	_boss.global_position=boss_spawn_point.global_position
 	add_child(_boss)
+
+func boss_death():
+	for i in range(spawn_points.size()-1, -1, -1):
+		spawn_points[i].active=true
+	boss_spawn_level+=1
+	Events.reset_heat.emit()
 
 func _on_pc_attack_qte() -> void:
 	cutscene_player.queue(qte_options[0])
