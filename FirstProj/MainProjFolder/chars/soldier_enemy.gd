@@ -236,16 +236,6 @@ func _process(_delta):
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		return
 	ammo_count=turret.ammo_count
-	#if health.health<=0 and (state_machine.get_active_state()!=death or state_machine.get_active_state()!=dying):
-		#state_machine.dispatch(&"die")
-	##FOR TESTING REMOVE LATER
-	##current_state=States.GUARD
-	##if current_state==States.GUARD:
-		##return
-	#if state_machine.get_active_state() == idle:
-		#return
-##	END OF TEST
-	#movement_handler.dir)
 	dir = to_local(next)
 	force_chase()
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
@@ -253,9 +243,6 @@ func _process(_delta):
 		return
 	elif state_machine.get_active_state()==idle:
 		hb_collision.disabled=true
-	#health_bar()
-	#track_player()
-	#combat_state_change()
 	vision_handler.handle_vision()
 	if not attack_range.has_overlapping_bodies():
 		bt_player.blackboard.set_var("within_range", false)
@@ -263,17 +250,11 @@ func _process(_delta):
 	attack_timer.one_shot=true
 	counter_select()
 	bt_player.blackboard.set_var("ammo",ammo_count)
-	#get_player_state(player)
-	#on_screen.is_on_screen()
-		#print(parry_timer.time_left)
+
 
 func _physics_process(delta):
 	##FOR TESTING REMOVE LATER
-	##current_state=States.GUARD
-	##if current_state==States.GUARD:
-		##return
-	#if state_machine.get_active_state() == idle:
-		#return
+
 ##	END OF TEST
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		apply_gravity(delta)
@@ -365,6 +346,12 @@ func get_width() -> int:
 func get_height() -> int:
 	return collision_shape_2d.get_shape().radius+10
 
+func teleport_away() -> void:
+	if player_right:
+		pass
+	else:
+		pass
+		
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	if anim_name=="atk_counter":
 		hit_stop_dur=0.2
@@ -498,16 +485,6 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	else:
 		print("kill shot")
 		
-	
-	#if current_state != States.DEATH:
-		#animation_player.play("RESET")
-	#
-	#if current_state==States.STAGGERED:
-		#"big damage")
-		#
-		##health.health-=2
-	#else:
-		#"not big damage")
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
@@ -538,16 +515,6 @@ func _on_attack_timer_timeout() -> void:
 
 
 func _on_turret_shoot_bullet() -> void:
-	#var bullet_inst = bullet.instantiate()
-	#bullet_inst.set_speed(400.0)
-	##bullet_inst.set_accel(50.0)
-	##bullet_inst.tracking_time=0.01
-	#bullet_inst.dir = (turret.player_tracker.target_position).normalized()
-	#bullet_inst.spawnPos = Vector2(turret.global_position.x, turret.global_position.y)
-	#bullet_inst.spawnRot = player_tracker_pivot.rotation_degrees
-	##bullet_inst.dir)
-	#
-	#get_tree().current_scene.add_child(bullet_inst)
 	shoot_handler.shoot_bullet()
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
@@ -555,17 +522,6 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 		vision_handler.active=false
 	if state_machine.get_active_state()==death:
 		queue_free()
-
-
-#func _on_stagger_timer_timeout() -> void:
-	#bt_player.blackboard.set_var("attack_mode", true)
-	#if state_machine.get_active_state()==staggered:
-		#state_machine.dispatch(&"stagger_recover")
-	#elif state_machine.get_active_state()==hit:
-		#state_machine.dispatch(&"hit_recover")
-	#movement_handler.active=true
-	#state_machine.change_active_state(state_machine.get_previous_active_state())
-	#set_state(current_state, prev_state)
 
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:

@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=52 format=3 uid="uid://cynrrfs5iidbs"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://cynrrfs5iidbs"]
 
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_dk6q0"]
 

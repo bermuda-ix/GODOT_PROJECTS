@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=11 format=3 uid="uid://dutys3rie5tyk"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://dutys3rie5tyk"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_jeokm"]
 var/hit_the_floor/name = &"hit_the_floor"

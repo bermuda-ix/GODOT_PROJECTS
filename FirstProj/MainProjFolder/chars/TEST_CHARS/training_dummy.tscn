@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bpfhslfhbjfti"]
+[gd_scene format=3 uid="uid://bpfhslfhbjfti"]
 
 [ext_resource type="Script" uid="uid://b1r55vp67dt2r" path="res://chars/TEST_CHARS/training_dummy.gd" id="1_jxvu2"]
 [ext_resource type="Texture2D" uid="uid://cltutcxjx8jnl" path="res://demo/assets/dummy.png" id="1_nwwdl"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://cnxm24jqclb68" path="res://Component/health.gd" id="3_clner"]
 [ext_resource type="Script" uid="uid://ba6pwl0vfuyp" path="res://Component/stagger.gd" id="4_2e1p1"]
 [ext_resource type="PackedScene" uid="uid://303jj447mrmm" path="res://Component/functions/bullet_detection.tscn" id="6_clner"]
+[ext_resource type="BehaviorTree" uid="uid://dpaegift36sdh" path="res://ai/trees/tele_away_and_shoot.tres" id="7_2e1p1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u3h84"]
 size = Vector2(99, 134)
@@ -16,22 +17,26 @@ size = Vector2(110.5, 143.5)
 [sub_resource type="CircleShape2D" id="CircleShape2D_clner"]
 radius = 184.39088
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_u3h84"]
+
+[node name="dummyt" type="Node2D" unique_id=1487071718]
 script = ExtResource("1_jxvu2")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["offensive_enemy"]]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=941979136 groups=["offensive_enemy"]]
 position = Vector2(1, -1)
+scale = Vector2(0.2, 0.2)
 collision_layer = 16384
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=1418909578]
 position = Vector2(64, 72)
 texture = ExtResource("1_nwwdl")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1312700338]
 position = Vector2(53.5, 72)
 shape = SubResource("RectangleShape2D_u3h84")
 
-[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=1124338411 node_paths=PackedStringArray("health", "stagger")]
+scale = Vector2(0.2, 0.2)
 collision_layer = 16
 collision_mask = 8396864
 script = ExtResource("2_jxvu2")
@@ -39,33 +44,53 @@ health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=1195109121]
 position = Vector2(52.75, 70.25)
 shape = SubResource("RectangleShape2D_hfrbe")
 
-[node name="Stagger" type="Node" parent="."]
+[node name="Stagger" type="Node" parent="." unique_id=1587357578]
 script = ExtResource("4_2e1p1")
 max_stagger = 40
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
-[node name="Health" type="Node" parent="."]
+[node name="Health" type="Node" parent="." unique_id=1070105700]
 script = ExtResource("3_clner")
 max_health = 40
 metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=224995716]
 offset_left = -11.0
 offset_top = -38.0
 offset_right = 115.0
 text = "H: 1 S: 1"
 
-[node name="BulletDetection" parent="." instance=ExtResource("6_clner")]
+[node name="BulletDetection" parent="." unique_id=2007811884 instance=ExtResource("6_clner")]
+scale = Vector2(0.2, 0.2)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection" unique_id=414962659]
 position = Vector2(53, 71)
 shape = SubResource("CircleShape2D_clner")
+
+[node name="LimboHSM" type="LimboHSM" parent="." unique_id=584867409]
+
+[node name="LimboState" type="LimboState" parent="LimboHSM" unique_id=2117511052]
+
+[node name="TreeTestState" type="BTState" parent="LimboHSM" unique_id=170236498]
+behavior_tree = ExtResource("7_2e1p1")
+blackboard_plan = SubResource("BlackboardPlan_u3h84")
+
+[node name="TeleportDirHelperRC" type="RayCast2D" parent="." unique_id=1609431788]
+position = Vector2(11, 13)
+target_position = Vector2(-125, -65)
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="TeleportTimer" type="Timer" parent="." unique_id=207488641]
+wait_time = 5.0
+one_shot = true
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="received_stagger_damage" from="HurtBox" to="." method="_on_hurt_box_received_stagger_damage"]
 [connection signal="bullet_detected" from="BulletDetection" to="." method="_on_bullet_detection_bullet_detected"]
+[connection signal="timeout" from="TeleportTimer" to="." method="_on_teleport_timer_timeout"]

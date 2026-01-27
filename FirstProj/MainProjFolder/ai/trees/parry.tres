@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=14 format=3 uid="uid://t2han52xa64j"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://t2han52xa64j"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_8nivn"]
 var/parry_success/name = &"parry_success"

@@ -1,6 +1,7 @@
-[gd_resource type="BehaviorTree" load_steps=104 format=3 uid="uid://bmgha5eqvo172"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://bmgha5eqvo172"]
 
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_3ixbu"]
+[ext_resource type="BehaviorTree" uid="uid://dpaegift36sdh" path="res://ai/trees/tele_away_and_shoot.tres" id="2_6rn7d"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_2djuw"]
 var/attack_mode/name = &"attack_mode"
@@ -104,52 +105,14 @@ value = SubResource("BBVariant_5tega")
 [sub_resource type="BTComment" id="BTComment_j4731"]
 custom_name = "TeleportAwayAndShoot"
 
-[sub_resource type="BBNode" id="BBNode_3ixbu"]
-saved_value = NodePath(".")
-resource_name = "."
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_ack5y"]
 
-[sub_resource type="BTCallMethod" id="BTCallMethod_6rn7d"]
-node = SubResource("BBNode_3ixbu")
-method = &"teleport_away"
-
-[sub_resource type="BBNode" id="BBNode_ack5y"]
-saved_value = NodePath("AnimationPlayer")
-resource_name = "AnimationPlayer"
-
-[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_eyph0"]
-animation_player = SubResource("BBNode_ack5y")
-animation_name = &"teleport"
-
-[sub_resource type="BBNode" id="BBNode_6rn7d"]
-saved_value = NodePath("ShootHandler")
-resource_name = "ShootHandler"
-
-[sub_resource type="BTCallMethod" id="BTCallMethod_ack5y"]
-node = SubResource("BBNode_6rn7d")
-method = &"shoot_bullet()"
-
-[sub_resource type="BBNode" id="BBNode_eyph0"]
-saved_value = NodePath("ShootHandler")
-resource_name = "ShootHandler"
-
-[sub_resource type="BTCallMethod" id="BTCallMethod_qbeam"]
-node = SubResource("BBNode_eyph0")
-method = &"shoot_bullet()"
-
-[sub_resource type="BTDelay" id="BTDelay_yapl0"]
-seconds = 0.2
-children = [SubResource("BTCallMethod_qbeam")]
-
-[sub_resource type="BTRepeat" id="BTRepeat_iyge6"]
-times = 3
-children = [SubResource("BTDelay_yapl0")]
-
-[sub_resource type="BTSequence" id="BTSequence_6sx6v"]
-custom_name = "Teleport_And_Shoot"
-children = [SubResource("BTCallMethod_6rn7d"), SubResource("BTAwaitAnimation_eyph0"), SubResource("BTCallMethod_ack5y"), SubResource("BTRepeat_iyge6")]
+[sub_resource type="BTSubtree" id="BTSubtree_eyph0"]
+subtree = ExtResource("2_6rn7d")
+blackboard_plan = SubResource("BlackboardPlan_ack5y")
 
 [sub_resource type="BTProbability" id="BTProbability_qbeam"]
-children = [SubResource("BTSequence_6sx6v")]
+children = [SubResource("BTSubtree_eyph0")]
 
 [sub_resource type="BTComment" id="BTComment_myvia"]
 

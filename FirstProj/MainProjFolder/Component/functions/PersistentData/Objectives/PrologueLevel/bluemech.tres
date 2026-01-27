@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="objective_item" load_steps=4 format=3 uid="uid://cecvoeuuahxcj"]
+[gd_resource type="Resource" script_class="objective_item" format=3 uid="uid://cecvoeuuahxcj"]
 
 [ext_resource type="Script" uid="uid://b4w5g1sk6dg37" path="res://Component/functions/PersistentData/objective_item.gd" id="1_x1ktq"]
 [ext_resource type="Texture2D" uid="uid://cw0sodbp8h2bb" path="res://Art_Components/Enemies/battle-mecha-sprites-pixel-art-pack/1/Hurt.png" id="2_qxbo2"]

@@ -1,0 +1,47 @@
+[gd_resource type="BehaviorTree" format=3 uid="uid://dpaegift36sdh"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_ompq3"]
+
+[sub_resource type="BBNode" id="BBNode_ompq3"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_x6v1h"]
+node = SubResource("BBNode_ompq3")
+method = &"teleport_away"
+
+[sub_resource type="BBNode" id="BBNode_6ptk1"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_etrm4"]
+animation_player = SubResource("BBNode_6ptk1")
+animation_name = &"teleport"
+
+[sub_resource type="BBNode" id="BBNode_cuskd"]
+saved_value = NodePath("ShootHandler")
+resource_name = "ShootHandler"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_t1o7r"]
+node = SubResource("BBNode_cuskd")
+method = &"shoot_bullet()"
+_enabled = false
+
+[sub_resource type="BTConsolePrint" id="BTConsolePrint_ompq3"]
+text = "shoot"
+
+[sub_resource type="BTDelay" id="BTDelay_cwndi"]
+seconds = 0.2
+children = [SubResource("BTConsolePrint_ompq3")]
+
+[sub_resource type="BTRepeat" id="BTRepeat_o18bv"]
+times = 3
+children = [SubResource("BTDelay_cwndi")]
+
+[sub_resource type="BTSequence" id="BTSequence_fr0da"]
+custom_name = "Teleport_And_Shoot"
+children = [SubResource("BTCallMethod_x6v1h"), SubResource("BTAwaitAnimation_etrm4"), SubResource("BTCallMethod_t1o7r"), SubResource("BTRepeat_o18bv")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_ompq3")
+root_task = SubResource("BTSequence_fr0da")

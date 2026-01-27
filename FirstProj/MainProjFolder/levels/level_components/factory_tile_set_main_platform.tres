@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://5vc1chccqln4"]
+[gd_resource type="TileSet" format=3 uid="uid://5vc1chccqln4"]
 
 [ext_resource type="Texture2D" uid="uid://cncridg2b6hq1" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryTiles.png" id="1_w4oke"]
 

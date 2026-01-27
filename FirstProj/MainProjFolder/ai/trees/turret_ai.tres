@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=17 format=3 uid="uid://b1t5gv0bt5din"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://b1t5gv0bt5din"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_cecvh"]
 var/attack_mode/name = &"attack_mode"

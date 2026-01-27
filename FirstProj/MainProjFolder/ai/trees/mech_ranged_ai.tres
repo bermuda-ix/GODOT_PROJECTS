@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=63 format=3 uid="uid://vca7j8b0cpkl"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://vca7j8b0cpkl"]
 
 [ext_resource type="BlackboardPlan" uid="uid://cn6i86litai7s" path="res://Component/blackboard_plans/enemy_ai.tres" id="1_57cnw"]
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="2_6mf02"]

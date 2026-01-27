@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=14 format=3 uid="uid://bmndudr2pew41"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://bmndudr2pew41"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_dmdpn"]
 var/ally_found/name = &"ally_found"

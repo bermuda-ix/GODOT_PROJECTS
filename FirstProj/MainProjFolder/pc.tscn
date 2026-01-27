@@ -1,4 +1,4 @@
-[gd_scene load_steps=677 format=3 uid="uid://b4uytwmkvsqi0"]
+[gd_scene format=3 uid="uid://b4uytwmkvsqi0"]
 
 [ext_resource type="Script" uid="uid://5seeeq0810ux" path="res://pc.gd" id="1_x210m"]
 [ext_resource type="Resource" uid="uid://d2uq12xuja7w8" path="res://DefaultMovementData.tres" id="2_4grev"]
@@ -8108,7 +8108,7 @@ size = Vector2(18, 41)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qebxi"]
 size = Vector2(21, 41)
 
-[node name="PC" type="CharacterBody2D" node_paths=PackedStringArray("health", "hitbox") groups=["player"]]
+[node name="PC" type="CharacterBody2D" unique_id=1041091659 node_paths=PackedStringArray("health", "hitbox") groups=["player"]]
 collision_layer = 2
 collision_mask = 103599113
 floor_stop_on_slope = false
@@ -8120,7 +8120,7 @@ movement_data = ExtResource("2_4grev")
 health = NodePath("Health")
 hitbox = NodePath("AnimatedSprite2D/HitBox")
 
-[node name="InteractPromptSprite" type="AnimatedSprite2D" parent="."]
+[node name="InteractPromptSprite" type="AnimatedSprite2D" parent="." unique_id=585863432]
 self_modulate = Color(1, 1, 1, 0)
 z_index = 2
 position = Vector2(2, -40)
@@ -8128,7 +8128,7 @@ scale = Vector2(0.1875, 0.1796875)
 sprite_frames = SubResource("SpriteFrames_xxtsl")
 animation = &"Interact"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1997899952]
 texture_filter = 1
 position = Vector2(0, 8)
 sprite_frames = SubResource("SpriteFrames_ieyv5")
@@ -8155,14 +8155,14 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "e40bf6776b8b2a4268a34f1cf42c192c"
 
-[node name="sprite_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
+[node name="sprite_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=5149376]
 visible = false
 position = Vector2(3, -39)
 sprite_frames = SubResource("SpriteFrames_3ciys")
 animation = &"landed"
 frame = 5
 
-[node name="heat_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
+[node name="heat_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1522867712]
 visible = false
 self_modulate = Color(1, 1, 1, 0.5)
 position = Vector2(1.9999998, -23)
@@ -8170,20 +8170,20 @@ scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_dvd57")
 animation = &"heat_aura"
 
-[node name="hit_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
+[node name="hit_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=289266714]
 z_index = 1
 position = Vector2(39, -28)
 sprite_frames = SubResource("SpriteFrames_bw7wn")
 animation = &"heavy_attack_hit"
 
-[node name="hit_fx2" type="AnimatedSprite2D" parent="AnimatedSprite2D/hit_fx"]
+[node name="hit_fx2" type="AnimatedSprite2D" parent="AnimatedSprite2D/hit_fx" unique_id=2062327994]
 visible = false
 sprite_frames = SubResource("SpriteFrames_bw7wn")
 animation = &"attack_hit"
 frame = 4
 flip_h = true
 
-[node name="attack_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
+[node name="attack_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1283370965]
 visible = false
 position = Vector2(29, -33)
 scale = Vector2(1.5, 1.5)
@@ -8191,21 +8191,21 @@ sprite_frames = SubResource("SpriteFrames_ve5vy")
 animation = &"attack1"
 flip_h = true
 
-[node name="Shotty" type="Sprite2D" parent="AnimatedSprite2D"]
+[node name="Shotty" type="Sprite2D" parent="AnimatedSprite2D" unique_id=868320843]
 position = Vector2(-1.0757e-09, -16.3107)
 rotation = -1.5643
 scale = Vector2(0.0885122, 0.0871019)
 texture = ExtResource("4_2ahp4")
 offset = Vector2(10.6825, 104.176)
 
-[node name="ShottyBlast" type="Sprite2D" parent="AnimatedSprite2D/Shotty"]
+[node name="ShottyBlast" type="Sprite2D" parent="AnimatedSprite2D/Shotty" unique_id=320046564]
 visible = false
 position = Vector2(423.221, -0.696136)
 rotation = -0.518327
 scale = Vector2(0.190735, 0.158192)
 texture = ExtResource("5_pvc8c")
 
-[node name="ShottyBlast2" type="Sprite2D" parent="AnimatedSprite2D/Shotty"]
+[node name="ShottyBlast2" type="Sprite2D" parent="AnimatedSprite2D/Shotty" unique_id=511262038]
 visible = false
 position = Vector2(623.146, 118.605)
 rotation = -0.518327
@@ -8213,7 +8213,7 @@ scale = Vector2(0.190735, 0.158192)
 texture = ExtResource("5_pvc8c")
 flip_h = true
 
-[node name="ShottyBlast3" type="Sprite2D" parent="AnimatedSprite2D/Shotty"]
+[node name="ShottyBlast3" type="Sprite2D" parent="AnimatedSprite2D/Shotty" unique_id=1712606744]
 visible = false
 position = Vector2(621.907, -77.8284)
 rotation = -0.518327
@@ -8222,26 +8222,26 @@ texture = ExtResource("5_pvc8c")
 flip_h = true
 flip_v = true
 
-[node name="ShottyBlast4" type="Sprite2D" parent="AnimatedSprite2D/Shotty"]
+[node name="ShottyBlast4" type="Sprite2D" parent="AnimatedSprite2D/Shotty" unique_id=1543248624]
 visible = false
 position = Vector2(795.862, -128.103)
 rotation = -0.518327
 scale = Vector2(0.190735, 0.158192)
 texture = ExtResource("5_pvc8c")
 
-[node name="ShottyBlast5" type="Sprite2D" parent="AnimatedSprite2D/Shotty"]
+[node name="ShottyBlast5" type="Sprite2D" parent="AnimatedSprite2D/Shotty" unique_id=777574463]
 visible = false
 position = Vector2(747.466, 93.2176)
 rotation = -2.39415
 scale = Vector2(0.190735, 0.158192)
 texture = ExtResource("5_pvc8c")
 
-[node name="SpAtkHitBox" type="Area2D" parent="AnimatedSprite2D/Shotty" groups=["sp_atk_default"]]
+[node name="SpAtkHitBox" type="Area2D" parent="AnimatedSprite2D/Shotty" unique_id=1612925221 groups=["sp_atk_default"]]
 position = Vector2(0, 3.5762787e-07)
 script = ExtResource("6_y7jp7")
 metadata/_custom_type_script = "uid://5ijvah6jjgdb"
 
-[node name="SpAtkCone" type="CollisionPolygon2D" parent="AnimatedSprite2D/Shotty/SpAtkHitBox"]
+[node name="SpAtkCone" type="CollisionPolygon2D" parent="AnimatedSprite2D/Shotty/SpAtkHitBox" unique_id=2132034108]
 position = Vector2(-7.6293945e-06, 1.1324883e-06)
 rotation = -0.0047706394
 scale = Vector2(24.5547, 24.895401)
@@ -8249,7 +8249,7 @@ skew = -9.548664e-05
 polygon = PackedVector2Array(0, 0, 36, 11, 36, -11)
 disabled = true
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="AnimatedSprite2D/Shotty"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="AnimatedSprite2D/Shotty" unique_id=1354436250]
 position = Vector2(273.844, -1.83301)
 emitting = false
 amount = 15
@@ -8261,7 +8261,7 @@ gravity = Vector2(0, 0)
 initial_velocity_min = 620.88
 initial_velocity_max = 703.3
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D/Shotty"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D/Shotty" unique_id=832830093]
 material = SubResource("CanvasItemMaterial_ugohk")
 position = Vector2(276.464, -17.027)
 emitting = false
@@ -8273,7 +8273,7 @@ speed_scale = 15.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_yif7d")
 
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="AnimatedSprite2D/Shotty"]
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="AnimatedSprite2D/Shotty" unique_id=1354666691]
 material = SubResource("CanvasItemMaterial_ugohk")
 position = Vector2(276.464, -17.027)
 emitting = false
@@ -8285,7 +8285,7 @@ speed_scale = 15.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_yif7d")
 
-[node name="ShotgunSmoke" type="GPUParticles2D" parent="AnimatedSprite2D/Shotty"]
+[node name="ShotgunSmoke" type="GPUParticles2D" parent="AnimatedSprite2D/Shotty" unique_id=1008371127]
 modulate = Color(1, 1, 1, 0)
 material = SubResource("CanvasItemMaterial_cdmbu")
 position = Vector2(273.91293, -209.92992)
@@ -8298,7 +8298,7 @@ one_shot = true
 speed_scale = 5.0
 process_material = SubResource("ParticleProcessMaterial_g1hon")
 
-[node name="Flashlight" type="PointLight2D" parent="AnimatedSprite2D/Shotty"]
+[node name="Flashlight" type="PointLight2D" parent="AnimatedSprite2D/Shotty" unique_id=1965536954]
 light_mask = 3
 position = Vector2(766.86816, -5.2722363)
 scale = Vector2(19.352423, 8.595338)
@@ -8311,10 +8311,10 @@ shadow_filter = 2
 shadow_item_cull_mask = 2
 texture = SubResource("GradientTexture2D_kd7ms")
 
-[node name="SpreadBoundary1" type="RayCast2D" parent="AnimatedSprite2D/Shotty"]
+[node name="SpreadBoundary1" type="RayCast2D" parent="AnimatedSprite2D/Shotty" unique_id=429978294]
 target_position = Vector2(887.2419, -281.40244)
 
-[node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D/Shotty/SpreadBoundary1"]
+[node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D/Shotty/SpreadBoundary1" unique_id=171134900]
 visible = false
 position = Vector2(458.81232, -140.80151)
 rotation = 1.2799108
@@ -8322,11 +8322,11 @@ scale = Vector2(1, 1.3186259)
 texture = ExtResource("212_1o5op")
 offset = Vector2(-0.057750702, -299.40823)
 
-[node name="SpreadBoundary2" type="RayCast2D" parent="AnimatedSprite2D/Shotty"]
+[node name="SpreadBoundary2" type="RayCast2D" parent="AnimatedSprite2D/Shotty" unique_id=1471020231]
 rotation = 0.5934119
 target_position = Vector2(887.2419, -281.40244)
 
-[node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D/Shotty/SpreadBoundary2"]
+[node name="Sprite2D" type="Sprite2D" parent="AnimatedSprite2D/Shotty/SpreadBoundary2" unique_id=1206477002]
 visible = false
 position = Vector2(458.81232, -140.80151)
 rotation = 1.2799108
@@ -8334,24 +8334,22 @@ scale = Vector2(1, 1.3018667)
 texture = ExtResource("212_1o5op")
 offset = Vector2(0.87626266, -298.35223)
 
-[node name="ShottyAnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D/Shotty"]
-libraries = {
-&"": SubResource("AnimationLibrary_xxtsl")
-}
+[node name="ShottyAnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D/Shotty" unique_id=850324409]
+libraries/ = SubResource("AnimationLibrary_xxtsl")
 
-[node name="Turret" parent="AnimatedSprite2D/Shotty" instance=ExtResource("222_qyvno")]
+[node name="Turret" parent="AnimatedSprite2D/Shotty" unique_id=1510107831 instance=ExtResource("222_qyvno")]
 position = Vector2(-184.2724, 1.2165046)
 rotation = 1.5644034
 scale = Vector2(11.480799, 11.297886)
 skew = -0.00020873547
 
-[node name="Shell" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
+[node name="Shell" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1452204381]
 visible = false
 position = Vector2(-2.69225, -22.5)
 scale = Vector2(0.0186319, 0.0196802)
 sprite_frames = SubResource("SpriteFrames_v22jq")
 
-[node name="PlayerHit" type="GPUParticles2D" parent="AnimatedSprite2D"]
+[node name="PlayerHit" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=1651326975]
 modulate = Color(0.827053, 0, 0.0905092, 1)
 position = Vector2(0, -18.3495)
 emitting = false
@@ -8364,44 +8362,44 @@ trail_enabled = true
 trail_lifetime = 0.1
 process_material = SubResource("ParticleProcessMaterial_34r87")
 
-[node name="HitBox" type="Area2D" parent="AnimatedSprite2D" node_paths=PackedStringArray("stagger")]
+[node name="HitBox" type="Area2D" parent="AnimatedSprite2D" unique_id=101478943 node_paths=PackedStringArray("stagger")]
 position = Vector2(0, -16.3107)
 collision_layer = 64
 collision_mask = 273
 script = ExtResource("6_y7jp7")
 stagger = NodePath("../../Stagger")
 
-[node name="HBCollision" type="CollisionShape2D" parent="AnimatedSprite2D/HitBox"]
+[node name="HBCollision" type="CollisionShape2D" parent="AnimatedSprite2D/HitBox" unique_id=1988698025]
 light_mask = 0
 position = Vector2(9, -5)
 shape = SubResource("RectangleShape2D_0g83a")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/HitBox" unique_id=840144418]
 position = Vector2(6.02321e-07, 20.7956)
 shape = SubResource("RectangleShape2D_grfiy")
 disabled = true
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="AnimatedSprite2D"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="AnimatedSprite2D" unique_id=243380165]
 occluder = SubResource("OccluderPolygon2D_6tjyr")
 
-[node name="ParryBox" type="Area2D" parent="AnimatedSprite2D" groups=["ParryBox"]]
+[node name="ParryBox" type="Area2D" parent="AnimatedSprite2D" unique_id=1697600828 groups=["ParryBox"]]
 position = Vector2(6, -18)
 collision_layer = 512
 collision_mask = 24
 script = ExtResource("8_7q1rp")
 
-[node name="PBRot" type="CollisionShape2D" parent="AnimatedSprite2D/ParryBox"]
+[node name="PBRot" type="CollisionShape2D" parent="AnimatedSprite2D/ParryBox" unique_id=1594524673]
 position = Vector2(6, -1.00005)
 shape = SubResource("RectangleShape2D_rnh6k")
 disabled = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/ParryBox/PBRot"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/ParryBox/PBRot" unique_id=1825529811]
 self_modulate = Color(1, 1, 1, 0.227451)
 position = Vector2(-9.78828e-05, -1.00003)
 scale = Vector2(0.416667, 1.23333)
 sprite_frames = SubResource("SpriteFrames_47tfd")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=314869217]
 modulate = Color(0.976471, 0.611765, 0, 0.462745)
 z_index = -1
 material = SubResource("CanvasItemMaterial_kd7ms")
@@ -8413,7 +8411,7 @@ speed_scale = 2.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_cdmbu")
 
-[node name="InteractUI" type="Control" parent="AnimatedSprite2D"]
+[node name="InteractUI" type="Control" parent="AnimatedSprite2D" unique_id=1209992314]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 0
@@ -8422,7 +8420,7 @@ offset_top = -79.0
 offset_right = 21.0
 offset_bottom = -39.0
 
-[node name="PanelContainer" type="PanelContainer" parent="AnimatedSprite2D/InteractUI"]
+[node name="PanelContainer" type="PanelContainer" parent="AnimatedSprite2D/InteractUI" unique_id=262489011]
 visible = false
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(20, 5)
@@ -8437,7 +8435,7 @@ offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureButton" type="TextureButton" parent="AnimatedSprite2D/InteractUI/PanelContainer"]
+[node name="TextureButton" type="TextureButton" parent="AnimatedSprite2D/InteractUI/PanelContainer" unique_id=1559762494]
 custom_minimum_size = Vector2(20, 5)
 layout_mode = 2
 texture_normal = ExtResource("219_xxtsl")
@@ -8447,7 +8445,7 @@ texture_focused = ExtResource("221_22pp6")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="CenterContainer" type="CenterContainer" parent="AnimatedSprite2D/InteractUI/PanelContainer/TextureButton"]
+[node name="CenterContainer" type="CenterContainer" parent="AnimatedSprite2D/InteractUI/PanelContainer/TextureButton" unique_id=739215525]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 0.99999994
@@ -8455,131 +8453,121 @@ offset_right = 29.0
 offset_bottom = 14.0
 scale = Vector2(0.4754526, 0.38959828)
 
-[node name="Label" type="Label" parent="AnimatedSprite2D/InteractUI/PanelContainer/TextureButton/CenterContainer"]
+[node name="Label" type="Label" parent="AnimatedSprite2D/InteractUI/PanelContainer/TextureButton/CenterContainer" unique_id=626013684]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("220_fixwo")
 text = "EXIT"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=771559977]
 position = Vector2(1.5000002, -9.5000105)
 scale = Vector2(1.06323, 0.994939)
 shape = SubResource("RectangleShape2D_pmx5o")
 
-[node name="Health" type="Node" parent="."]
+[node name="Health" type="Node" parent="." unique_id=994567121]
 script = ExtResource("4_q0gnn")
 max_health = 10
 immortality = true
 
-[node name="ClashPower" type="Node" parent="." node_paths=PackedStringArray("health", "stagger")]
+[node name="ClashPower" type="Node" parent="." unique_id=2128103427 node_paths=PackedStringArray("health", "stagger")]
 script = ExtResource("82_h0fyw")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://byay512l00w0p"
 
-[node name="ClashTimer" type="Timer" parent="ClashPower"]
+[node name="ClashTimer" type="Timer" parent="ClashPower" unique_id=948454578]
 wait_time = 5.0
 one_shot = true
 
-[node name="Stagger" type="Node" parent="."]
+[node name="Stagger" type="Node" parent="." unique_id=1993234788]
 script = ExtResource("53_7ax8a")
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
-[node name="CoyoteJumpTimer" type="Timer" parent="."]
+[node name="CoyoteJumpTimer" type="Timer" parent="." unique_id=1298322844]
 wait_time = 0.1
 one_shot = true
 
-[node name="StarsDetector" type="Area2D" parent="."]
+[node name="StarsDetector" type="Area2D" parent="." unique_id=843787660]
 position = Vector2(-1, 1)
 collision_layer = 1048576
 collision_mask = 67633152
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StarsDetector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StarsDetector" unique_id=97813017]
 position = Vector2(3, -9)
 shape = SubResource("CapsuleShape2D_mdoa6")
 debug_color = Color(0, 0.5950001, 0.7, 0)
 
-[node name="HazardDetector" type="Area2D" parent="." groups=["player"]]
+[node name="HazardDetector" type="Area2D" parent="." unique_id=1401140940 groups=["player"]]
 collision_layer = 2
 collision_mask = 278540
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HazardDetector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HazardDetector" unique_id=545274729]
 position = Vector2(0.249986, 4)
 shape = SubResource("RectangleShape2D_52hex")
 
-[node name="InteractableDetector" type="Area2D" parent="."]
+[node name="InteractableDetector" type="Area2D" parent="." unique_id=326123182]
 collision_layer = 4194304
 collision_mask = 35651584
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableDetector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableDetector" unique_id=1166844909]
 position = Vector2(2, -10)
 shape = SubResource("RectangleShape2D_mdoa6")
 debug_color = Color(0, 0.5950001, 0.7, 0)
 
-[node name="HitStop" type="Node" parent="."]
+[node name="HitStop" type="Node" parent="." unique_id=1177760230]
 script = ExtResource("53_jef5t")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
-[node name="AttackTimer" type="Timer" parent="."]
+[node name="AttackTimer" type="Timer" parent="." unique_id=1905929388]
 wait_time = 0.1
 one_shot = true
 
-[node name="HeavyAttackBufferTimer" type="Timer" parent="."]
+[node name="HeavyAttackBufferTimer" type="Timer" parent="." unique_id=859488619]
 wait_time = 0.5
 one_shot = true
 
-[node name="SpecialAttackBufferTimer" type="Timer" parent="."]
+[node name="SpecialAttackBufferTimer" type="Timer" parent="." unique_id=1174428104]
 wait_time = 0.1
 one_shot = true
 
-[node name="ParryTimer" type="Timer" parent="."]
+[node name="ParryTimer" type="Timer" parent="." unique_id=543517584]
 one_shot = true
 
-[node name="DodgeTimer" type="Timer" parent="."]
+[node name="DodgeTimer" type="Timer" parent="." unique_id=609511374]
 wait_time = 0.4
 one_shot = true
 
-[node name="CounterTimer" type="Timer" parent="."]
+[node name="CounterTimer" type="Timer" parent="." unique_id=1071679165]
 wait_time = 0.2
 one_shot = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_qyq63"),
-&"Cutscene": SubResource("AnimationLibrary_7nr8h"),
-&"ShotgunAnimations": SubResource("AnimationLibrary_f2824")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1853999065]
+libraries/ = SubResource("AnimationLibrary_qyq63")
+libraries/Cutscene = SubResource("AnimationLibrary_7nr8h")
+libraries/ShotgunAnimations = SubResource("AnimationLibrary_f2824")
 
-[node name="ClashAuraPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_ph521")
-}
+[node name="ClashAuraPlayer" type="AnimationPlayer" parent="." unique_id=1348885900]
+libraries/ = SubResource("AnimationLibrary_ph521")
 
-[node name="HitFXPlayer" type="AnimationPlayer" parent="."]
+[node name="HitFXPlayer" type="AnimationPlayer" parent="." unique_id=427836083]
 root_node = NodePath("../AnimatedSprite2D")
-libraries = {
-&"": SubResource("AnimationLibrary_80ao1")
-}
+libraries/ = SubResource("AnimationLibrary_80ao1")
 
-[node name="CutsceneSubPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_8p2jh")
-}
+[node name="CutsceneSubPlayer" type="AnimationPlayer" parent="." unique_id=936911294]
+libraries/ = SubResource("AnimationLibrary_8p2jh")
 
-[node name="InteractPromptPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_rml44")
-}
+[node name="InteractPromptPlayer" type="AnimationPlayer" parent="." unique_id=1168233831]
+libraries/ = SubResource("AnimationLibrary_rml44")
 
-[node name="HitTimer" type="Timer" parent="."]
+[node name="HitTimer" type="Timer" parent="." unique_id=941373129]
 wait_time = 0.25
 one_shot = true
 
-[node name="JumpOutTimer" type="Timer" parent="."]
+[node name="JumpOutTimer" type="Timer" parent="." unique_id=1968293932]
 wait_time = 0.05
 one_shot = true
 ignore_time_scale = true
 
-[node name="STATE" type="Label" parent="."]
+[node name="STATE" type="Label" parent="." unique_id=1506403178]
 offset_left = -27.0
 offset_top = -24.0
 offset_right = 13.0
@@ -8588,45 +8576,45 @@ scale = Vector2(0.463877, 0.379525)
 text = "State"
 metadata/_edit_use_anchors_ = true
 
-[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=263329233 node_paths=PackedStringArray("health", "stagger")]
 collision_layer = 128
 collision_mask = 4104
 script = ExtResource("9_s8nmr")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" groups=["player"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=635584027 groups=["player"]]
 position = Vector2(1, -10)
 shape = SubResource("RectangleShape2D_oupih")
 
-[node name="CounterBox" type="Area2D" parent="."]
+[node name="CounterBox" type="Area2D" parent="." unique_id=811846985]
 collision_layer = 0
 collision_mask = 4104
 
-[node name="CounterBoxCollision" type="CollisionShape2D" parent="CounterBox"]
+[node name="CounterBoxCollision" type="CollisionShape2D" parent="CounterBox" unique_id=1878118416]
 position = Vector2(3.5, -10.5)
 shape = SubResource("RectangleShape2D_qebxi")
 disabled = true
 
-[node name="CollectibleBox" type="Area2D" parent="."]
+[node name="CollectibleBox" type="Area2D" parent="." unique_id=327698503]
 collision_layer = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectibleBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectibleBox" unique_id=1691590735]
 position = Vector2(1.5, -9.5)
 scale = Vector2(1.06323, 0.994939)
 shape = SubResource("RectangleShape2D_pmx5o")
 debug_color = Color(0, 0.5950001, 0.7, 0)
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1347139291]
 stream = ExtResource("7_02w0c")
 max_polyphony = 12
 
-[node name="TargetLocking" type="Node2D" parent="."]
+[node name="TargetLocking" type="Node2D" parent="." unique_id=159247256]
 
-[node name="TargetTesting" type="RayCast2D" parent="TargetLocking"]
+[node name="TargetTesting" type="RayCast2D" parent="TargetLocking" unique_id=204283028]
 target_position = Vector2(20, 0)
 
-[node name="Speech" type="Label" parent="."]
+[node name="Speech" type="Label" parent="." unique_id=1278766293]
 visible = false
 offset_left = -8.0
 offset_top = -18.0
@@ -8636,17 +8624,17 @@ scale = Vector2(0.3, 0.3)
 theme_override_fonts/font = ExtResource("59_4yxaj")
 text = "..."
 
-[node name="SpeechTimer" type="Timer" parent="Speech"]
+[node name="SpeechTimer" type="Timer" parent="Speech" unique_id=860792090]
 one_shot = true
 
-[node name="CutsceneHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "anim_player", "speech")]
+[node name="CutsceneHandler" type="Node" parent="." unique_id=531181144 node_paths=PackedStringArray("actor", "anim_player", "speech")]
 script = ExtResource("67_67eo0")
 actor = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 speech = NodePath("../Speech")
 metadata/_custom_type_script = "uid://fi6gye6mlsb6"
 
-[node name="QTEHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "anim_player", "speech", "qte_pause")]
+[node name="QTEHandler" type="Node" parent="." unique_id=287183549 node_paths=PackedStringArray("actor", "anim_player", "speech", "qte_pause")]
 script = ExtResource("68_2ttag")
 actor = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
@@ -8654,7 +8642,7 @@ speech = NodePath("../Speech")
 qte_pause = NodePath("../HitStop")
 metadata/_custom_type_script = "uid://wai5i0eghoou"
 
-[node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]
+[node name="ShootHandler" type="Node" parent="." unique_id=182131914 node_paths=PackedStringArray("actor", "turret")]
 script = ExtResource("230_pbr83")
 actor = NodePath("..")
 player_tracking_active = false
@@ -8663,190 +8651,190 @@ projectile = ExtResource("231_ymji2")
 bullet_speed = 800.0
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
-[node name="StateMachine" type="LimboHSM" parent="."]
+[node name="StateMachine" type="LimboHSM" parent="." unique_id=822739335]
 
-[node name="Idle" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="Idle" type="LimboState" parent="StateMachine" unique_id=914822383 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("76_cdo2o")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 
-[node name="Walking" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="Walking" type="LimboState" parent="StateMachine" unique_id=1919384559 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("77_q58rh")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 
-[node name="Sprint" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="Sprint" type="LimboState" parent="StateMachine" unique_id=1166811606 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("78_hpd44")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 
-[node name="JumpState" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
+[node name="JumpState" type="LimboState" parent="StateMachine" unique_id=1201411731 node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
 script = ExtResource("87_qd7yk")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 state_machine = NodePath("..")
 
-[node name="FallingState" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
+[node name="FallingState" type="LimboState" parent="StateMachine" unique_id=1801693559 node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
 script = ExtResource("88_3ciys")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 state_machine = NodePath("..")
 
-[node name="Landed" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
+[node name="Landed" type="LimboState" parent="StateMachine" unique_id=220280678 node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
 script = ExtResource("79_7k7vw")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 state_machine = NodePath("..")
 
-[node name="WallStick" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="WallStick" type="LimboState" parent="StateMachine" unique_id=83584762 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("91_nab3n")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 
-[node name="AttackState" type="LimboHSM" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="AttackState" type="LimboHSM" parent="StateMachine" unique_id=1268190161 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("89_mc2sx")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 
-[node name="Attack1" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="Attack1" type="LimboState" parent="StateMachine/AttackState" unique_id=2086725559 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("90_ku1wp")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 
-[node name="Attack2" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="Attack2" type="LimboState" parent="StateMachine/AttackState" unique_id=2019114778 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("91_7s5mg")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 
-[node name="Attack3" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="Attack3" type="LimboState" parent="StateMachine/AttackState" unique_id=1191633258 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("92_7s5mg")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 
-[node name="SpecialCombo" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="SpecialCombo" type="LimboState" parent="StateMachine/AttackState" unique_id=332878213 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("104_l1qeb")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 
-[node name="SpecialCombo2" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="SpecialCombo2" type="LimboState" parent="StateMachine/AttackState" unique_id=886325446 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("105_c28o2")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 
-[node name="DashAttack" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="DashAttack" type="LimboState" parent="StateMachine/AttackState" unique_id=1481537081 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("106_dkh4i")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 
-[node name="HeavyAttack1" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="HeavyAttack1" type="LimboState" parent="StateMachine/AttackState" unique_id=1843410022 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("110_g1hon")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 
-[node name="HeavyAttack2" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="HeavyAttack2" type="LimboState" parent="StateMachine/AttackState" unique_id=714995202 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("111_jfcm0")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 
-[node name="HeavyAttack3" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="HeavyAttack3" type="LimboState" parent="StateMachine/AttackState" unique_id=1779026338 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("244_m743w")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 
-[node name="HeavyDashAttack" type="LimboState" parent="StateMachine/AttackState" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="HeavyDashAttack" type="LimboState" parent="StateMachine/AttackState" unique_id=1999095522 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("243_4jq81")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 
-[node name="Aim" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("pc", "anim_player", "shotty_anim_player")]
+[node name="Aim" type="LimboState" parent="StateMachine" unique_id=1244651801 node_paths=PackedStringArray("pc", "anim_player", "shotty_anim_player")]
 script = ExtResource("246_p73v2")
 pc = NodePath("../..")
 anim_player = NodePath("../../AnimationPlayer")
 shotty_anim_player = NodePath("../../AnimatedSprite2D/Shotty/ShottyAnimationPlayer")
 
-[node name="SpecialAttack" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "shotty_anim_player", "pc")]
+[node name="SpecialAttack" type="LimboState" parent="StateMachine" unique_id=1245630320 node_paths=PackedStringArray("anim_player", "shotty_anim_player", "pc")]
 script = ExtResource("104_ctchq")
 anim_player = NodePath("../../AnimationPlayer")
 shotty_anim_player = NodePath("../../AnimatedSprite2D/Shotty/ShottyAnimationPlayer")
 pc = NodePath("../..")
 
-[node name="ParryState" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc")]
+[node name="ParryState" type="LimboState" parent="StateMachine" unique_id=928161267 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("96_xqicc")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 
-[node name="ParrySuccessState" type="LimboHSM" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "hit_stop")]
+[node name="ParrySuccessState" type="LimboHSM" parent="StateMachine" unique_id=468265256 node_paths=PackedStringArray("anim_player", "pc", "hit_stop")]
 script = ExtResource("97_oktus")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 hit_stop = NodePath("../../HitStop")
 
-[node name="AwaitInput" type="LimboState" parent="StateMachine/ParrySuccessState"]
+[node name="AwaitInput" type="LimboState" parent="StateMachine/ParrySuccessState" unique_id=1731121438]
 script = ExtResource("98_54hn3")
 
-[node name="Riposte" type="LimboState" parent="StateMachine/ParrySuccessState" node_paths=PackedStringArray("anim_player", "pc", "hit_stop")]
+[node name="Riposte" type="LimboState" parent="StateMachine/ParrySuccessState" unique_id=678449105 node_paths=PackedStringArray("anim_player", "pc", "hit_stop")]
 script = ExtResource("98_oktus")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 hit_stop = NodePath("../../../HitStop")
 
-[node name="HeavyRiposte" type="LimboState" parent="StateMachine/ParrySuccessState" node_paths=PackedStringArray("anim_player", "pc", "hit_stop")]
+[node name="HeavyRiposte" type="LimboState" parent="StateMachine/ParrySuccessState" unique_id=1896379606 node_paths=PackedStringArray("anim_player", "pc", "hit_stop")]
 script = ExtResource("104_dlcc0")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 hit_stop = NodePath("../../../HitStop")
 
-[node name="DodgeBack" type="LimboState" parent="StateMachine/ParrySuccessState" node_paths=PackedStringArray("anim_player", "pc", "hit_stop")]
+[node name="DodgeBack" type="LimboState" parent="StateMachine/ParrySuccessState" unique_id=1749829566 node_paths=PackedStringArray("anim_player", "pc", "hit_stop")]
 script = ExtResource("105_13tdc")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 hit_stop = NodePath("../../../HitStop")
 
-[node name="Nothing" type="LimboState" parent="StateMachine/ParrySuccessState"]
+[node name="Nothing" type="LimboState" parent="StateMachine/ParrySuccessState" unique_id=637919947]
 script = ExtResource("100_8mfft")
 
-[node name="DodgeState" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "hurtbox")]
+[node name="DodgeState" type="LimboState" parent="StateMachine" unique_id=1001049042 node_paths=PackedStringArray("anim_player", "pc", "hurtbox")]
 script = ExtResource("107_yif7d")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 hurtbox = NodePath("../../HurtBox/CollisionShape2D")
 
-[node name="FlipState" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "state_machine", "hit_stop")]
+[node name="FlipState" type="LimboState" parent="StateMachine" unique_id=1796314275 node_paths=PackedStringArray("anim_player", "pc", "state_machine", "hit_stop")]
 script = ExtResource("108_mj1xc")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 state_machine = NodePath("..")
 hit_stop = NodePath("../../HitStop")
 
-[node name="Staggered" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
+[node name="Staggered" type="LimboState" parent="StateMachine" unique_id=1318642481 node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
 script = ExtResource("113_o2pa3")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 state_machine = NodePath("..")
 
-[node name="Hit" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
+[node name="Hit" type="LimboState" parent="StateMachine" unique_id=1359588615 node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
 script = ExtResource("109_egqmi")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 state_machine = NodePath("..")
 
-[node name="Recovery" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
+[node name="Recovery" type="LimboState" parent="StateMachine" unique_id=739040723 node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
 script = ExtResource("110_162b8")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 state_machine = NodePath("..")
 
-[node name="Death" type="LimboState" parent="StateMachine"]
+[node name="Death" type="LimboState" parent="StateMachine" unique_id=1306807312]
 
-[node name="Dead" type="LimboState" parent="StateMachine"]
+[node name="Dead" type="LimboState" parent="StateMachine" unique_id=572033038]
 
-[node name="CombatStates" type="LimboHSM" parent="."]
+[node name="CombatStates" type="LimboHSM" parent="." unique_id=1244755491]
 
-[node name="Locked" type="LimboState" parent="CombatStates" node_paths=PackedStringArray("pc")]
+[node name="Locked" type="LimboState" parent="CombatStates" unique_id=903332420 node_paths=PackedStringArray("pc")]
 script = ExtResource("108_i6d51")
 pc = NodePath("../..")
 
-[node name="Unlocked" type="LimboState" parent="CombatStates" node_paths=PackedStringArray("pc")]
+[node name="Unlocked" type="LimboState" parent="CombatStates" unique_id=340736159 node_paths=PackedStringArray("pc")]
 script = ExtResource("109_mj1xc")
 pc = NodePath("../..")
 

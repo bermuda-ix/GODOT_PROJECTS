@@ -7,30 +7,33 @@ const HIGHSCORE_LIST = "res://LVL_Transitions/highscore_list.tscn"
 
 @onready var levels : Dictionary = {
 		"GuantletLvl" : "uid://djj0ggyoi07b2",
-		"PrologueLvl" : "res://levels/PrologueRooms/prologue_lvl.tscn",
-		"prologue_room_1" : "res://levels/PrologueRooms/prologue_room_one.tscn",
-		"prologue_room_2" : "res://levels/PrologueRooms/prologue_room_2.tscn",
-		"prologue_room_3" : "res://levels/PrologueRooms/prologue_room_tres.tscn",
-		"PrologueHallway1" : "res://levels/PrologueRooms/prologue_hallway_1.tscn",
-		"PrologueTestlab1" : "res://levels/PrologueRooms/prologue_testlab_1.tscn",
-		"PrologueGarage1" : "res://levels/PrologueRooms/prologue_garage_1.tscn",
-		"PrologueGarage2" : "res://levels/PrologueRooms/prologue_garage_2.tscn",
-		"PrologueGarage3" : "res://levels/PrologueRooms/prologue_garage_3.tscn"
+		"PrologueLvl" : "uid://bwy4dfs27ji8h",
+		"prologue_room_1" : "uid://b2ll7yf0xbexn",
+		"prologue_room_2" : "uid://bqrvktluv2fur",
+		"prologue_room_3" : "uid://y6x600dn2kkk",
+		"PrologueHallway1" : "uid://cty2do01q2lg5",
+		"PrologueTestlab1" : "uid://dm38jv1jmwb8o",
+		"PrologueGarage1" : "uid://cg3hpqv70xol4",
+		"PrologueGarage2" : "uid://c8il70paf1pfv",
+		"PrologueGarage3" : "uid://cpax3imqk1mix"
 		
 	}
 
+
+
+
 #Unique rooms in levels
 @onready var prologue_unique_levels : Dictionary = {
-		"PrologueLvl" : "res://levels/PrologueRooms/prologue_lvl.tscn",
-		"PrologueHallway1" : "res://levels/PrologueRooms/prologue_hallway_1.tscn",
-		"PrologueTestlab1" : "res://levels/PrologueRooms/prologue_testlab_1.tscn",
-		"PrologueGarage1" : "res://levels/PrologueRooms/prologue_garage_1.tscn",
-		"PrologueGarage2" : "res://levels/PrologueRooms/prologue_garage_2.tscn",
-		"PrologueGarage3" : "res://levels/PrologueRooms/prologue_garage_3.tscn"
+		"PrologueLvl" : "uid://bwy4dfs27ji8h",
+		"PrologueHallway1" : "uid://cty2do01q2lg5",
+		"PrologueTestlab1" : "uid://dm38jv1jmwb8o",
+		"PrologueGarage1" : "uid://cg3hpqv70xol4",
+		"PrologueGarage2" : "uid://c8il70paf1pfv",
+		"PrologueGarage3" : "uid://cpax3imqk1mix"
 	}
 
 @onready var guantlet_lvls : Dictionary = {
-		"GuantletLvl" : "res://levels/guantlet.tscn",
+		"GuantletLvl" : "uid://djj0ggyoi07b2"
 	}
 
 #Connected duplicated rooms

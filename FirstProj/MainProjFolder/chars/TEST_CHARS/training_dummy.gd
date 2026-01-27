@@ -5,10 +5,37 @@ extends Node2D
 @onready var health: Health = $Health
 @onready var label: Label = $Label
 
+@onready var teleport_dir_helper_rc: RayCast2D = $TeleportDirHelperRC
+@onready var teleport_timer: Timer = $TeleportTimer
+
+@onready var teleport_end : Vector2 = global_position
+
+
 func _process(delta: float) -> void:
 	label.text="H: " + str(health.health) + " S: " + str(stagger.stagger)
+	
+	if Input.is_action_just_pressed("DEBUG_KEY"):
+		test_function()
+		
+	label.text=str(global_position, " ", (global_position+teleport_dir_helper_rc.target_position))
 
+func test_function():
+	teleport()
+	
 
+func teleport():
+	teleport_dir_helper_rc.target_position.x=(global_position.x-100)-teleport_dir_helper_rc.global_position.x
+	teleport_dir_helper_rc.target_position.y=(global_position.y-40)-teleport_dir_helper_rc.global_position.y
+	if teleport_dir_helper_rc.is_colliding():
+		print("blocked!")
+		teleport_dir_helper_rc.target_position=-(global_position- teleport_dir_helper_rc.get_collision_point())
+	print("preparing to move to: ", (global_position+ teleport_dir_helper_rc.target_position), "from: ", global_position)
+	global_position+= teleport_dir_helper_rc.target_position
+	print("teleporting to: ", global_position)
+
+func prepare_teleport():
+	
+	teleport_timer.start()
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	pass # Replace with function body.
@@ -25,3 +52,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 
 func _on_bullet_detection_bullet_detected() -> void:
 	print("bullet detected")
+
+
+func _on_teleport_timer_timeout() -> void:
+	teleport()

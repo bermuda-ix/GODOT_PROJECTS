@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=19 format=3 uid="uid://b2063wq6t8myb"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://b2063wq6t8myb"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_2iwtk"]
 var/landed/name = &"landed"

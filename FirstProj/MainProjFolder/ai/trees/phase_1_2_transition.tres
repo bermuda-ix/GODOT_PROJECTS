@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=83 format=3 uid="uid://cg71mprmoucxg"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://cg71mprmoucxg"]
 
 [ext_resource type="BlackboardPlan" uid="uid://clapfjty1ttn3" path="res://Component/blackboard_plans/slam_var.tres" id="1_yaypo"]
 [ext_resource type="BehaviorTree" uid="uid://cinvckuhyxewk" path="res://ai/trees/slam_shockwave.tres" id="2_y08e5"]
