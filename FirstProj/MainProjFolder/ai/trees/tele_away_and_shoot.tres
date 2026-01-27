@@ -25,7 +25,6 @@ resource_name = "ShootHandler"
 [sub_resource type="BTCallMethod" id="BTCallMethod_t1o7r"]
 node = SubResource("BBNode_cuskd")
 method = &"shoot_bullet()"
-_enabled = false
 
 [sub_resource type="BTConsolePrint" id="BTConsolePrint_ompq3"]
 text = "shoot"

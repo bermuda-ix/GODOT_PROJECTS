@@ -8,8 +8,14 @@ extends Node2D
 @onready var teleport_dir_helper_rc: RayCast2D = $TeleportDirHelperRC
 @onready var teleport_timer: Timer = $TeleportTimer
 
-@onready var teleport_end : Vector2 = global_position
+@onready var state_machine: LimboHSM = $StateMachine
+@onready var idle: LimboState = $StateMachine/idle
+@onready var tree_test_state: BTState = $StateMachine/TreeTestState
 
+
+func _ready() -> void:
+	pass
+	#_init_state_machine()
 
 func _process(delta: float) -> void:
 	label.text="H: " + str(health.health) + " S: " + str(stagger.stagger)
@@ -19,11 +25,21 @@ func _process(delta: float) -> void:
 		
 	label.text=str(global_position, " ", (global_position+teleport_dir_helper_rc.target_position))
 
-func test_function():
-	teleport()
+func _init_state_machine() -> void:
+	state_machine.initial_state=idle
+	state_machine.initialize(self)
+	state_machine.set_active(true)
+	
+	state_machine.add_transition(idle, tree_test_state, &"teleport_shoot")
+	state_machine.add_transition(tree_test_state, idle, tree_test_state.success_event)
+	
 	
 
-func teleport():
+func test_function():
+	state_machine.dispatch(&"teleport_shoot")
+	
+
+func teleport_away():
 	teleport_dir_helper_rc.target_position.x=(global_position.x-100)-teleport_dir_helper_rc.global_position.x
 	teleport_dir_helper_rc.target_position.y=(global_position.y-40)-teleport_dir_helper_rc.global_position.y
 	if teleport_dir_helper_rc.is_colliding():
@@ -52,7 +68,3 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 
 func _on_bullet_detection_bullet_detected() -> void:
 	print("bullet detected")
-
-
-func _on_teleport_timer_timeout() -> void:
-	teleport()

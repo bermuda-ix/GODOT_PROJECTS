@@ -71,11 +71,11 @@ scale = Vector2(0.2, 0.2)
 position = Vector2(53, 71)
 shape = SubResource("CircleShape2D_clner")
 
-[node name="LimboHSM" type="LimboHSM" parent="." unique_id=584867409]
+[node name="StateMachine" type="LimboHSM" parent="." unique_id=584867409]
 
-[node name="LimboState" type="LimboState" parent="LimboHSM" unique_id=2117511052]
+[node name="idle" type="LimboState" parent="StateMachine" unique_id=2117511052]
 
-[node name="TreeTestState" type="BTState" parent="LimboHSM" unique_id=170236498]
+[node name="TreeTestState" type="BTState" parent="StateMachine" unique_id=170236498]
 behavior_tree = ExtResource("7_2e1p1")
 blackboard_plan = SubResource("BlackboardPlan_u3h84")
 
