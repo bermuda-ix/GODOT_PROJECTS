@@ -14,4 +14,4 @@ func _physics_process(delta: float) -> void:
 
 func open():
 	open_flag=true
-	is_open.set_value()
+	#is_open.set_value()

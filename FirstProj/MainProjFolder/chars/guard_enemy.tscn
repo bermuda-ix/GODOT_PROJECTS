@@ -1,9 +1,10 @@
-[gd_scene load_steps=123 format=3 uid="uid://berbmq4u2lo3s"]
+[gd_scene load_steps=124 format=3 uid="uid://berbmq4u2lo3s"]
 
 [ext_resource type="Script" uid="uid://ds31ngno5boru" path="res://chars/guard_enemy.gd" id="1_4q725"]
 [ext_resource type="Texture2D" uid="uid://cshwi53lwaqph" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle01.png" id="1_vk1fx"]
 [ext_resource type="Texture2D" uid="uid://woaeddeaesia" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle02.png" id="2_kbb6k"]
 [ext_resource type="Texture2D" uid="uid://cfqevgd8avemg" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Punch01/Punch0101.png" id="2_ms5j4"]
+[ext_resource type="PackedScene" uid="uid://cdeu1v1a1bwmd" path="res://Component/interactables/heart_drop.tscn" id="2_tqjrv"]
 [ext_resource type="Texture2D" uid="uid://bsrw6gsqslsy1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle03.png" id="3_34xo2"]
 [ext_resource type="Texture2D" uid="uid://dv4j3mqle1vq3" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Punch01/Punch0102.png" id="3_xicrs"]
 [ext_resource type="Texture2D" uid="uid://c2eu0v2wn2wt4" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle04.png" id="4_8kxdo"]
@@ -1212,6 +1213,7 @@ size = Vector2(48, 68.5)
 collision_layer = 16384
 script = ExtResource("1_4q725")
 hitbox = NodePath("HitBox")
+drop = ExtResource("2_tqjrv")
 death_time_scale = 0.05
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -1336,12 +1338,11 @@ script = ExtResource("13_72jhu")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="MovementHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine", "vision_handler", "nav_agent")]
+[node name="MovementHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
 script = ExtResource("14_dc187")
 actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
 vision_handler = NodePath("../VisionHandler")
-nav_agent = NodePath("../NavigationAgent2D")
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
 
 [node name="JumpHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine")]

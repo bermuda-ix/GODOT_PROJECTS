@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdeu1v1a1bwmd"]
+
+[ext_resource type="Script" uid="uid://bjlf4na7uvq6e" path="res://Component/interactables/heart_drop.gd" id="1_g7jbf"]
+[ext_resource type="Texture2D" uid="uid://diw6ehhmln0jt" path="res://heart.png" id="2_dd7ve"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g7jbf"]
+
+[node name="Heart" type="RigidBody2D" groups=["Hearts"]]
+collision_layer = 0
+collision_mask = 3
+gravity_scale = 0.7
+continuous_cd = 2
+contact_monitor = true
+max_contacts_reported = 5
+linear_velocity = Vector2(0, -100)
+script = ExtResource("1_g7jbf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_dd7ve")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_g7jbf")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

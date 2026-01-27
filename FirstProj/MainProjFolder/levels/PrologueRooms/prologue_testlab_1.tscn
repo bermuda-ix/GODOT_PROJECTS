@@ -106,4 +106,12 @@ position = Vector2(300, 267)
 scale = Vector2(0.1, 0.1)
 collision_layer = 1
 
+[node name="NoSpawnZones" type="Node" parent="."]
+
+[node name="Area2D" type="Area2D" parent="NoSpawnZones"]
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="NoSpawnZones/Area2D"]
+position = Vector2(-237, -8)
+polygon = PackedVector2Array(45, 8, 45, 520, 1197, 520, 1197, 8, 941, 8, 941, 408, 229, 408, 229, 8)
+
 [editable path="Lights/CeilingLight"]

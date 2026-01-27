@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://fvrl0oqgar1f" path="res://Component/UI_Rec/heat_fill_gauge.tscn" id="4_rl24j"]
 [ext_resource type="PackedScene" uid="uid://c1r2gnplhmhoc" path="res://Component/UI_Rec/heat_lvl_gauge.tscn" id="5_6s1hp"]
 
-[node name="UI_Level" type="Control"]
+[node name="UI_Level" type="Control" groups=["GameUI"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

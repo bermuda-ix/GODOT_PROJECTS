@@ -1,9 +1,12 @@
-[gd_scene load_steps=29 format=4 uid="uid://djj0ggyoi07b2"]
+[gd_scene load_steps=36 format=4 uid="uid://djj0ggyoi07b2"]
 
 [ext_resource type="PackedScene" uid="uid://dk70wm05pq01i" path="res://levels/world.tscn" id="1_1mh5l"]
+[ext_resource type="Script" uid="uid://dy5me0ygjx8wt" path="res://levels/guantlet_template.gd" id="2_atdel"]
 [ext_resource type="PackedScene" uid="uid://c3ytqa5narkcx" path="res://Component/TileLayers/factory_main_platform.tscn" id="2_v7bxa"]
+[ext_resource type="Theme" uid="uid://boqtjf88xcpu4" path="res://demo/assets/ui.theme" id="2_vpr1u"]
 [ext_resource type="PackedScene" uid="uid://cqwec252xo1o4" path="res://Component/TileLayers/factory_background.tscn" id="3_dpadw"]
 [ext_resource type="TileSet" uid="uid://5vc1chccqln4" path="res://levels/level_components/factory_tile_set_main_platform.tres" id="3_mw1pt"]
+[ext_resource type="PackedScene" uid="uid://ddsgyi3axrp22" path="res://Component/UI_Rec/guide_arrow.tscn" id="3_revte"]
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="3_xb8eg"]
 [ext_resource type="PackedScene" uid="uid://bdasl802tlb8c" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/factory_building_main_platform.tscn" id="4_smdmf"]
 [ext_resource type="Texture2D" uid="uid://cp27q8n7gwf8r" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factory.png" id="5_8lw3s"]
@@ -15,6 +18,8 @@
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="10_riclf"]
 [ext_resource type="Script" uid="uid://klqpph3n6xut" path="res://Component/functions/PersistentData/LevelStateHandler.gd" id="14_dp3go"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="15_6bl2l"]
+[ext_resource type="Script" uid="uid://7cyh5ujpo4sp" path="res://levels/Boundery.gd" id="16_m654v"]
+[ext_resource type="PackedScene" uid="uid://bkr6h5xga8wr" path="res://Component/functions/local_flag.tscn" id="17_guebu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fhqwg"]
 texture = ExtResource("5_8lw3s")
@@ -5474,9 +5479,9 @@ polygon = PackedVector2Array(-1, -2, 451, -2, 456, 231, 503, 232, 491, -756, -40
 polygon = PackedVector2Array(1, 3, 669, 2, 669, 142, 641, 138, 642, 47, 1, 52)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_dp3go"]
-vertices = PackedVector2Array(3694, 1209.21, 2288.04, 1239.77, 2288.96, 1008, 2569, 1008, 3694, 1003, 2569, 848, 11.0391, 7, 6287.11, 7, 6295.88, 763, 5639, 763, 2289, 366, 5639, 1003, 2289, 747.742, 1497, 366, 1497, 1207, 661, 1207, 661, 1030, 107.063, 1030, 14.9688, 967.68, 2362.08, 848)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(6, 7, 8, 9, 10), PackedInt32Array(10, 9, 11, 4, 5, 12), PackedInt32Array(13, 14, 15, 16), PackedInt32Array(16, 17, 18, 6, 13), PackedInt32Array(5, 19, 12), PackedInt32Array(6, 10, 13)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(1, -3, 5, 973, 104, 1040, 651, 1040, 651, 1217, 1507, 1217, 1507, 376, 2279, 376, 2279, 751, 2357, 858, 2559, 858, 2559, 998, 2279, 998, 2278, 1250, 3704, 1219, 3704, 1013, 4772, 1013, 5649, 1013, 5649, 773, 6306, 773, 6297, -3)])
+vertices = PackedVector2Array(11.0390625, 7, 6287.047, 7, 6290.953, 764, 5627, 764, 2289, 366, 5627, 988, 3699, 988, 2569, 848, 2289, 747.7422, 3699, 1244, 2287, 1244, 2569, 1008, 2287, 1008, 1497, 366, 1497, 1207, 661, 1207, 661, 1030, 107.0625, 1030, 14.96875, 967.6797, 2362.0781, 848)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(4, 3, 5, 6, 7, 8), PackedInt32Array(6, 9, 10, 11), PackedInt32Array(10, 12, 11), PackedInt32Array(6, 11, 7), PackedInt32Array(13, 14, 15, 16), PackedInt32Array(16, 17, 18, 0, 13), PackedInt32Array(7, 19, 8), PackedInt32Array(0, 4, 13)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1, -3, 5, 973, 104, 1040, 651, 1040, 651, 1217, 1507, 1217, 1507, 376, 2279, 376, 2279, 751, 2357, 858, 2559, 858, 2559, 998, 2277, 998, 2277, 1254, 3709, 1254, 3709, 998, 5637, 998, 5637, 774, 6301, 774, 6297, -3)])
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_riclf"]
 vertices = PackedVector2Array(5611, 21.976563, 5611, 75, 11, 77.99219, 11, 14.0078125)
@@ -5520,7 +5525,14 @@ _data = {
 &"player_death": SubResource("Animation_6bl2l")
 }
 
-[node name="guantlet" groups=["world"] instance=ExtResource("1_1mh5l")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m654v"]
+size = Vector2(20, 258)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_guebu"]
+size = Vector2(1386, 138)
+
+[node name="guantlet" groups=["GameLevel", "world"] instance=ExtResource("1_1mh5l")]
+script = ExtResource("2_atdel")
 lvl_type = "guantlet"
 no_load = true
 
@@ -5543,6 +5555,41 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
+
+[node name="BossCountdown" type="RichTextLabel" parent="CanvasLayer" index="5"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_vpr1u")
+text = "10.0"
+horizontal_alignment = 1
+
+[node name="GuideArrowRight" parent="CanvasLayer" index="6" instance=ExtResource("3_revte")]
+visible = false
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -2.0
+offset_right = -72.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="GuideArrowLeft" parent="CanvasLayer" index="7" instance=ExtResource("3_revte")]
+visible = false
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_vertical = 2
+flip_arrow = true
+metadata/_edit_use_anchors_ = true
 
 [node name="LevelTileMap" parent="." index="1"]
 position = Vector2(3378, 0)
@@ -5837,14 +5884,12 @@ single_spawn = false
 
 [node name="FactoryBackgroundPara" parent="." index="9" instance=ExtResource("5_hpdw1")]
 z_index = -3
-position = Vector2(3378, 0)
+position = Vector2(3384, 0)
 
-[node name="HeatHandler" type="Node" parent="." index="10" node_paths=PackedStringArray("lvl", "ui_level")]
+[node name="HeatHandler" type="Node" parent="." index="10"]
 script = ExtResource("10_riclf")
-lvl = NodePath("..")
-ui_level = NodePath("../CanvasLayer/UI_Level")
-heat_spawn_rate = Array[float]([5.0, 4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0, 0.5])
-heat_spawn_max = Array[int]([2, 2, 4, 5, 5, 6, 7, 7, 9, 10])
+heat_spawn_rate = Array[float]([5.0, 4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5])
+heat_spawn_max = Array[int]([2, 2, 2, 3, 3, 3, 4, 4])
 metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 
 [node name="LevelStateHandler" type="Node" parent="." index="11" node_paths=PackedStringArray("level")]
@@ -5866,7 +5911,52 @@ libraries = {
 &"": SubResource("AnimationLibrary_guebu")
 }
 
-[node name="BossSpawnPoint" type="Node2D" parent="." index="15"]
+[node name="BossSpawnTimer" type="Timer" parent="." index="15"]
+wait_time = 10.0
+one_shot = true
+
+[node name="BossSpawnPoint" type="Node2D" parent="." index="16"]
 position = Vector2(3760, 0)
+
+[node name="BossBounderies" type="Node" parent="." index="17"]
+
+[node name="Boundery" type="StaticBody2D" parent="BossBounderies" index="0"]
+position = Vector2(3096, 16)
+script = ExtResource("16_m654v")
+metadata/_custom_type_script = "uid://7cyh5ujpo4sp"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBounderies/Boundery" index="0"]
+position = Vector2(0, 119)
+shape = SubResource("RectangleShape2D_m654v")
+
+[node name="Boundery2" type="StaticBody2D" parent="BossBounderies" index="1"]
+position = Vector2(4512, 16)
+script = ExtResource("16_m654v")
+metadata/_custom_type_script = "uid://7cyh5ujpo4sp"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBounderies/Boundery2" index="0"]
+position = Vector2(0, 119)
+shape = SubResource("RectangleShape2D_m654v")
+
+[node name="LocalFlag" parent="BossBounderies" index="2" instance=ExtResource("17_guebu")]
+
+[node name="LocalFlag2" parent="BossBounderies" index="3" instance=ExtResource("17_guebu")]
+
+[node name="BossArena" type="Area2D" parent="BossBounderies" index="4"]
+position = Vector2(3104, 128)
+
+[node name="BossAreaCollision" type="CollisionShape2D" parent="BossBounderies/BossArena" index="0"]
+position = Vector2(699, 67)
+shape = SubResource("RectangleShape2D_guebu")
+
+[node name="BossAreaOnScreen" type="VisibleOnScreenNotifier2D" parent="BossBounderies/BossArena" index="1"]
+position = Vector2(64, 8)
+rect = Rect2(32, -10, 1216, 138)
+
+[connection signal="timeout" from="BossSpawnTimer" to="." method="_on_boss_spawn_timer_timeout"]
+[connection signal="flag_triggered" from="BossBounderies/LocalFlag" to="." method="_on_local_flag_flag_triggered"]
+[connection signal="flag_triggered" from="BossBounderies/LocalFlag2" to="." method="_on_local_flag_2_flag_triggered"]
+[connection signal="area_entered" from="BossBounderies/BossArena" to="." method="_on_boss_arena_area_entered"]
+[connection signal="area_exited" from="BossBounderies/BossArena" to="." method="_on_boss_arena_area_exited"]
 
 [editable path="CameraPos"]

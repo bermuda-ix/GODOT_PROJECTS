@@ -15,6 +15,7 @@ extends Node2D
 @onready var level_state_handler: LevelStateHandler = $LevelStateHandler
 @onready var boss_spawn_point: Node2D = $BossSpawnPoint
 
+@onready var boss_area_collision: CollisionShape2D = $BossBounderies/BossArena/BossAreaCollision
 
 #Cutscenes
 @onready var cutscene_player: AnimationPlayer = $CutscenePlayer
@@ -25,6 +26,12 @@ var qte_options : Array[String] = ["1","1","1","1","1"]
 @export var elite_spawn : int = 20
 @export var boss_spawn : int = 40
 @export var no_load : bool = false
+
+@onready var in_boss_area := false
+
+@onready var guide_arrow: Control = $CanvasLayer/GuideArrow
+@onready var guide_arrow_2: Control = $CanvasLayer/GuideArrow2
+
 
 var boss_preload
 
@@ -54,6 +61,10 @@ var obj : int
 var init_active_enemies_list : Array[Node]
 @onready var thread := Thread.new()
 @onready var mutex := Mutex.new()
+
+
+##Proload for debugging to be romoved later
+@onready var heart_drop=preload("res://Component/interactables/heart_drop.tscn")
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
@@ -97,6 +108,7 @@ func _ready():
 	hit_stop.end_hit_stop()
 	
 
+
 	
 func _process(_delta):
 	
@@ -126,8 +138,10 @@ func _process(_delta):
 		show_pause()
 	
 	##	DEBUGING INPUT
-	#if Input.is_action_just_pressed("DEBUG_KEY"):
-		#prepare_boss_spawn(enemy_list.BOSS_REF["MECH_RANGED"])
+	if Input.is_action_just_pressed("DEBUG_KEY"):
+		var heart_inst=heart_drop.instantiate()
+		heart_inst.global_position=Vector2(player.global_position.x, player.global_position.y-50)
+		get_tree().current_scene.add_child(heart_inst)
 	
 func _physics_process(delta: float) -> void:
 	if not cutscene_active and not camera_pos.stationary:
@@ -284,9 +298,12 @@ func spawn_boss():
 	_boss.global_position=boss_spawn_point.global_position
 	add_child(_boss)
 
+
 func boss_death():
 	for i in range(spawn_points.size()-1, -1, -1):
 		spawn_points[i].active=true
+	for i in range(heat_handler.heat_spawn_max.size()-1, -1, -1):
+		heat_handler.heat_spawn_max[i]+=2
 	boss_spawn_level+=1
 	Events.reset_heat.emit()
 
@@ -311,3 +328,18 @@ func _on_pc_no_input_qte() -> void:
 
 func player_death() -> void:
 	cutscene_player.play("player_death")
+
+
+func _on_local_flag_2_flag_triggered() -> void:
+	Events.activate_arena.emit()
+
+func _on_local_flag_flag_triggered() -> void:
+	Events.activate_arena.emit()
+
+
+func _on_boss_arena_area_entered(area: Area2D) -> void:
+	in_boss_area=true
+
+
+func _on_boss_arena_area_exited(area: Area2D) -> void:
+	in_boss_area=false

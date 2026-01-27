@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=10 format=3 uid="uid://b6fdnvwl2riuw"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://b6fdnvwl2riuw"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_moi6w"]
 

@@ -9,6 +9,7 @@ extends StaticBody2D
 func _ready() -> void:
 	pass
 	Events.boss_died.connect(objective_complete)
+	Events.activate_arena.connect(activate_barrier)
 
 func set_active(value) -> void:
 	boundery_active=value
@@ -18,3 +19,16 @@ func objective_complete() -> void:
 	if boundery_active:
 		if objective==null:
 			set_active(false)
+
+func activate_barrier():
+	var bosses=get_tree().get_nodes_in_group("Boss")
+	if bosses.size()==1:
+		objective=get_tree().get_first_node_in_group("Boss")
+	else:
+		for i in range(bosses.size()-1, -1, -1):
+			if bosses[i].active==true:
+				objective=bosses[i]
+				break
+			else:
+				continue
+	set_active(true)

@@ -129,7 +129,7 @@ var attacking : bool = false
 @onready var ammo_count
 
 #DEATH
-@export var drop = preload("res://heart.tscn")
+@export var drop : PackedScene
 @onready var death_handler: DeathHandler = $DeathHandler
 @export var death_time_scale: float = 1.0
 @onready var norm_delta

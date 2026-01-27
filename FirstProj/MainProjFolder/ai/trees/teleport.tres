@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=9 format=3 uid="uid://d03xclggng177"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://d03xclggng177"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_jbs2g"]
 var/tele_delay/name = &"tele_delay"

@@ -185,3 +185,13 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	no_spawn_entered=false
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.is_in_group("WorldStatic"):
+		no_spawn_entered=true
+		
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	if body.is_in_group("WorldStatic"):
+		no_spawn_entered=false

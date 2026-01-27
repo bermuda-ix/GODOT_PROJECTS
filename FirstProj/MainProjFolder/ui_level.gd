@@ -11,7 +11,7 @@ signal heat_lvl_raise
 var health : int = 3
 var cur_state ="IDLE"
 var heat_lvl : int = 0: 
-	set(value) : heat_lvl = clampi(value, 0, 6)
+	set(value) : heat_lvl = clampi(value, 0, 7)
 var heat_fill : int = 0:
 	set(value) : heat_fill = clampi(value, 0, 9)
 # Called when the node enters the scene tree for the first time.

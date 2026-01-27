@@ -1,8 +1,9 @@
-[gd_scene load_steps=145 format=3 uid="uid://dn0fhusgltn4m"]
+[gd_scene load_steps=146 format=3 uid="uid://dn0fhusgltn4m"]
 
 [ext_resource type="Texture2D" uid="uid://cj1e5ggio6406" path="res://Art_Components/Enemies/SWAT_2/Dead.png" id="1_4nhfo"]
 [ext_resource type="Script" uid="uid://ivyj1p60rf7r" path="res://chars/heavy_soldier.gd" id="1_ct51r"]
 [ext_resource type="Texture2D" uid="uid://bixtcexaubn3g" path="res://Art_Components/Enemies/SWAT_2/Idle.png" id="1_hv0uh"]
+[ext_resource type="PackedScene" uid="uid://cdeu1v1a1bwmd" path="res://Component/interactables/heart_drop.tscn" id="2_3df1g"]
 [ext_resource type="Texture2D" uid="uid://c3dcauqm122mo" path="res://Art_Components/Enemies/SWAT_2/Hurt.png" id="2_m8rmk"]
 [ext_resource type="Texture2D" uid="uid://bjvq70xvlg4t1" path="res://Art_Components/Enemies/SWAT_2/Idle_2.png" id="2_pt8o7"]
 [ext_resource type="Texture2D" uid="uid://iiqdoj5g56tc" path="res://Art_Components/Enemies/SWAT_2/Recharge.png" id="3_xrqpt"]
@@ -1233,6 +1234,7 @@ position = Vector2(-6, -6)
 collision_layer = 16384
 script = ExtResource("1_ct51r")
 hitbox = NodePath("HitBox")
+drop = ExtResource("2_3df1g")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, -11)
@@ -1617,7 +1619,7 @@ offset_bottom = -57.0
 [node name="AllyVisionRaycast" type="RayCast2D" parent="."]
 position = Vector2(34, -15)
 target_position = Vector2(-167, 0)
-collision_mask = 16385
+collision_mask = 16387
 hit_from_inside = true
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

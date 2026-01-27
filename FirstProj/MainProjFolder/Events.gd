@@ -35,6 +35,7 @@ signal activate_regular
 signal deactivate_regular
 signal allied_enemy_hit
 signal boss_died
+signal prepare_next_boss
 
 #Camera Effects
 signal camera_shake
@@ -88,6 +89,8 @@ signal start_qte
 signal qte_choice
 signal qte_end
 
+signal prepare_arena
+signal activate_arena
 
 #Doors and switches
 signal unlock_door

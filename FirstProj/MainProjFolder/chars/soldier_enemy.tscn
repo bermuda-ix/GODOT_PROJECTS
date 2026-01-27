@@ -1782,7 +1782,7 @@ autostart = true
 one_shot = true
 
 [node name="Health" parent="." index="13"]
-max_health = 3
+max_health = 10
 immortality = false
 
 [node name="DodgeTimer" type="Timer" parent="." index="14"]
@@ -1841,6 +1841,9 @@ position = Vector2(-11, 0)
 position = Vector2(-6, 0)
 shape = SubResource("CircleShape2D_4yjj7")
 
+[node name="Stagger" parent="." index="25"]
+max_stagger = 5
+
 [node name="Turret" parent="." index="26" instance=ExtResource("57_lhivr")]
 position = Vector2(-8, -7)
 ammo_count = 6
@@ -1868,12 +1871,11 @@ script = ExtResource("80_edkvm")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="MovementHandler" type="Node" parent="." index="31" node_paths=PackedStringArray("actor", "state_machine", "vision_handler", "nav_agent")]
+[node name="MovementHandler" type="Node" parent="." index="31" node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
 script = ExtResource("80_goy6u")
 actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
 vision_handler = NodePath("../VisionHandler")
-nav_agent = NodePath("../NavigationAgent2D")
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
 
 [node name="JumpHandler" type="Node" parent="." index="32" node_paths=PackedStringArray("actor", "state_machine")]

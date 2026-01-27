@@ -46,6 +46,9 @@ var elite_spawn_flag : bool = false
 var boss_spawn_flag : bool = false
 
 var spawn_type : Array[String] = ["enemy", "boss"]
+var spawns_present : bool
+
+var spawn_points : Array
 
 var obj : int
 
@@ -88,6 +91,13 @@ func _ready():
 	if not cutscene_active and not camera_pos.stationary:
 		camera_pos.global_position=Vector2(player.global_position.x, player.global_position.y-40)
 		camera_pos.set_cam_smooth(true)
+	
+	#Ready up spawns
+	if get_tree().get_nodes_in_group("SpawnPoints").is_empty():
+		spawns_present=false
+	else:
+		spawns_present=true
+		spawn_points=get_tree().get_nodes_in_group("SpawnPoints")
 	
 	
 	#score=45
