@@ -131,6 +131,7 @@
 [ext_resource type="Script" uid="uid://300clt220dnt" path="res://chars/kick_counter_state.gd" id="128_dnwck"]
 [ext_resource type="Script" uid="uid://doi7s32f3duwj" path="res://chars/dodge.gd" id="129_7v3re"]
 [ext_resource type="Script" uid="uid://lrmt4mpkf56b" path="res://chars/bulletdodge.gd" id="130_cgspr"]
+[ext_resource type="BehaviorTree" uid="uid://dpaegift36sdh" path="res://ai/trees/tele_away_and_shoot.tres" id="131_4m1ae"]
 [ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="131_hyxc6"]
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="132_ighft"]
 [ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="133_1o8km"]
@@ -139,6 +140,8 @@
 [ext_resource type="Script" uid="uid://wai5i0eghoou" path="res://Component/functions/QTEHandler.gd" id="136_ylbh8"]
 [ext_resource type="Script" uid="uid://fi6gye6mlsb6" path="res://Component/functions/CutsceneHandler.gd" id="137_f64i6"]
 [ext_resource type="PackedScene" uid="uid://c4pfomybiepkl" path="res://Component/UI_Rec/boss_ui.tscn" id="138_ggkva"]
+[ext_resource type="Script" uid="uid://c4uno006dp70c" path="res://Component/functions/TeleportHandler.gd" id="141_7r4t8"]
+[ext_resource type="Script" uid="uid://eulrkc0hl0ww" path="res://Component/functions/PhasesHandler.gd" id="142_qstkj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p1s76"]
 animations = [{
@@ -802,6 +805,8 @@ stereo = true
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_6eofm"]
 
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_sqn71"]
+
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_jjike"]
 
 [node name="soldier_enemy_boss" unique_id=789104702 node_paths=PackedStringArray("hitbox", "state_machine") groups=["Persistant", "offensive_enemy"] instance=ExtResource("1_33sos")]
@@ -867,7 +872,7 @@ autostart = true
 one_shot = true
 
 [node name="Health" parent="." index="13"]
-max_health = 10
+max_health = 20
 immortality = false
 
 [node name="DodgeTimer" type="Timer" parent="." index="14" unique_id=70570100]
@@ -1042,11 +1047,21 @@ state_machine = NodePath("../LimboHSM")
 bt_player = NodePath("../BTPlayer")
 metadata/_custom_type_script = "uid://d04qf1jqrfg1h"
 
-[node name="HitStop" type="Node" parent="." index="42" unique_id=1189527455]
+[node name="TeleportHandler" type="Node" parent="." index="42" unique_id=1495505504 node_paths=PackedStringArray("teleport_dir_helper_rc")]
+script = ExtResource("141_7r4t8")
+teleport_dir_helper_rc = NodePath("RayCast2D")
+metadata/_custom_type_script = "uid://c4uno006dp70c"
+
+[node name="RayCast2D" type="RayCast2D" parent="TeleportHandler" index="0" unique_id=923701194]
+collision_mask = 3
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="HitStop" type="Node" parent="." index="43" unique_id=1189527455]
 script = ExtResource("119_6oyq8")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
-[node name="LimboHSM" type="LimboHSM" parent="." index="43" unique_id=1055402908]
+[node name="LimboHSM" type="LimboHSM" parent="." index="44" unique_id=1055402908]
 
 [node name="IDLE" type="LimboState" parent="LimboHSM" index="0" unique_id=260995949 node_paths=PackedStringArray("actor")]
 script = ExtResource("120_oi1be")
@@ -1090,6 +1105,10 @@ script = ExtResource("128_dnwck")
 anim_player = NodePath("../../../AnimationPlayer")
 actor = NodePath("../../..")
 
+[node name="TeleportAndShoot" type="BTState" parent="LimboHSM/COUNTER" index="2" unique_id=93229670]
+behavior_tree = ExtResource("131_4m1ae")
+blackboard_plan = SubResource("BlackboardPlan_sqn71")
+
 [node name="DODGE" type="LimboState" parent="LimboHSM" index="7" unique_id=1280229628 node_paths=PackedStringArray("actor", "bt_player", "animation_player")]
 script = ExtResource("129_7v3re")
 actor = NodePath("../..")
@@ -1118,7 +1137,7 @@ bt_player = NodePath("../../BTPlayer")
 behavior_tree = ExtResource("133_1o8km")
 blackboard_plan = SubResource("BlackboardPlan_jjike")
 
-[node name="CombatStateMachine" type="LimboHSM" parent="." index="44" unique_id=305802644]
+[node name="CombatStateMachine" type="LimboHSM" parent="." index="45" unique_id=305802644]
 
 [node name="RANGED" type="LimboState" parent="CombatStateMachine" index="0" unique_id=824960426 node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("134_lmju3")
@@ -1130,11 +1149,17 @@ script = ExtResource("135_2idfp")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="Speed" type="Label" parent="." index="45" unique_id=1922258161]
+[node name="Phases" type="LimboHSM" parent="." index="46" unique_id=2049008387]
+
+[node name="Phase1" type="LimboState" parent="Phases" index="0" unique_id=1569827271]
+
+[node name="Phase2" type="LimboState" parent="Phases" index="1" unique_id=107480339]
+
+[node name="Speed" type="Label" parent="." index="47" unique_id=1922258161]
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="QTEHandler" type="Node" parent="." index="46" unique_id=1760859820 node_paths=PackedStringArray("actor", "anim_player", "speech", "qte_pause")]
+[node name="QTEHandler" type="Node" parent="." index="48" unique_id=1760859820 node_paths=PackedStringArray("actor", "anim_player", "speech", "qte_pause")]
 script = ExtResource("136_ylbh8")
 actor = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
@@ -1142,14 +1167,14 @@ speech = NodePath("../Speed")
 qte_pause = NodePath("../HitStop")
 metadata/_custom_type_script = "uid://wai5i0eghoou"
 
-[node name="CutsceneHandler" type="Node" parent="." index="47" unique_id=1766288813 node_paths=PackedStringArray("actor", "anim_player", "speech")]
+[node name="CutsceneHandler" type="Node" parent="." index="49" unique_id=1766288813 node_paths=PackedStringArray("actor", "anim_player", "speech")]
 script = ExtResource("137_f64i6")
 actor = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 speech = NodePath("../Speed")
 metadata/_custom_type_script = "uid://fi6gye6mlsb6"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="48" unique_id=1801299136]
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="50" unique_id=1801299136]
 
 [node name="BossUI" parent="CanvasLayer" index="0" unique_id=983433779 node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("138_ggkva")]
 offset_left = -1.0
@@ -1160,6 +1185,14 @@ health = NodePath("../../Health")
 stagger = NodePath("../../Stagger")
 actor = NodePath("../..")
 metadata/_edit_use_anchors_ = true
+
+[node name="PhasesHandler" type="Node" parent="." index="51" unique_id=3289038 node_paths=PackedStringArray("health", "actor", "sm")]
+script = ExtResource("142_qstkj")
+health = NodePath("../Health")
+actor = NodePath("..")
+sm = NodePath("../Phases")
+phases = Array[int]([10])
+metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/COUNTER/KickCounter" method="_on_animation_player_animation_finished"]
@@ -1190,3 +1223,5 @@ metadata/_edit_use_anchors_ = true
 [connection signal="exited" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_exited"]
 [connection signal="exited" from="LimboHSM/STAGGERED" to="." method="_on_staggered_exited"]
 [connection signal="entered" from="LimboHSM/DYING" to="." method="_on_dying_entered"]
+[connection signal="entered" from="Phases/Phase2" to="." method="_on_phase_2_entered"]
+[connection signal="next_phase" from="PhasesHandler" to="." method="_on_phases_handler_next_phase"]

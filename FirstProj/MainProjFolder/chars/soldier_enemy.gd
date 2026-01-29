@@ -1,4 +1,4 @@
-class_name SoldierEnemy
+class_name SoldierEnemyBoss
 extends CharacterBody2D
 
 const SPEED = 400.0
@@ -39,6 +39,9 @@ var always_active : bool
 @onready var gap_check_right = $JumpChecks/GapCheckRight as RayCast2D
 @onready var leap_up_check_left = $JumpChecks/LeapUpCheckLeft
 @onready var leap_up_check_right = $JumpChecks/LeapUpCheckRight
+
+@onready var teleport_handler: TeleportHandler = $TeleportHandler
+
 
 @onready var turret = $Turret
 @onready var bullet = BALL_PROCETILE
@@ -129,6 +132,9 @@ var distance
 @onready var bulletdodge: BulletDodge = $LimboHSM/BULLETDODGE
 @onready var hit: LimboState = $LimboHSM/HIT
 @onready var staggered: LimboState = $LimboHSM/STAGGERED
+@onready var teleport_and_shoot: BTState = $LimboHSM/COUNTER/TeleportAndShoot
+
+
 
 #Counter States
 @onready var counter_sm: LimboHSM = $LimboHSM/COUNTER
@@ -139,6 +145,11 @@ var distance
 @onready var combat_state_machine: LimboHSM = $CombatStateMachine
 @onready var ranged_mode: LimboState = $CombatStateMachine/RANGED
 @onready var melee_mode: LimboState = $CombatStateMachine/MELEE
+
+@onready var phases: LimboHSM = $Phases
+@onready var phase_1: LimboState = $Phases/Phase1
+@onready var phase_2: LimboState = $Phases/Phase2
+
 
 @onready var ammo_count
 
@@ -152,6 +163,8 @@ var current_combat_state = CombatStates.RANGED
 var prev_combat_state = CombatStates.RANGED
 var combat_state : String = "RANGED"
 var player_state : LimboState
+
+var is_on_screen : bool
 	
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
@@ -177,6 +190,7 @@ func _ready():
 	_init_state_machine()
 	_init_combat_state_machine()
 	_init_counter_state_machine()
+	_init_phase_state_machine()
 	hurt_box.set_damage_mulitplyer(1)
 	Events.allied_enemy_hit.connect(adjust_counter)
 	
@@ -218,9 +232,26 @@ func _init_state_machine():
 	state_machine.add_transition(dying, death, dying.success_event)
 	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
 	
+	
+#func _init_TEST_state_machine():
+	#state_machine.initial_state=idle
+	#state_machine.initialize(self)
+	#state_machine.set_active(true)
+	#
+	#state_machine.add_transition(idle, teleport_and_shoot, &"teleport_counter")
+	#state_machine.add_transition(teleport_and_shoot, idle, teleport_and_shoot.success_event)
+
+func _init_phase_state_machine():
+	state_machine.initial_state=phase_1
+	state_machine.initialize(self)
+	state_machine.set_active(true)
+	
+	state_machine.add_transition(phase_1, phase_2, &"next_phase")
+
 func _init_counter_state_machine():
 	counter_sm.initial_state=begin_counter
 	counter_sm.add_transition(begin_counter, kick_counter, &"kick_counter")
+	counter_sm.add_transition(begin_counter, teleport_and_shoot, &"teleport_counter")
 
 
 func _init_combat_state_machine():
@@ -250,6 +281,11 @@ func _process(_delta):
 	attack_timer.one_shot=true
 	counter_select()
 	bt_player.blackboard.set_var("ammo",ammo_count)
+	
+	is_on_screen=on_screen.is_on_screen()
+	#if Input.is_action_just_pressed("DEBUG_KEY"):
+		#test_function()
+
 
 
 func _physics_process(delta):
@@ -298,6 +334,11 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	
+
+func teleport_counter():
+	state_machine.dispatch(&"teleport_counter")
+	
+	
 func apply_gravity(delta : float) -> void:
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -318,7 +359,7 @@ func chase():
 	#state_machine.change_active_state(chasing)
 	
 func force_chase():
-	var is_on_screen=on_screen.is_on_screen()
+	
 	if not is_on_screen and vision_handler.always_on==true and state_machine.get_active_state()!=chasing:
 		state_machine.change_active_state(chasing)
 
@@ -347,10 +388,14 @@ func get_height() -> int:
 	return collision_shape_2d.get_shape().radius+10
 
 func teleport_away() -> void:
+	var _tele_left := -100
+	var _tele_right := 100
+	var _tele_height := 80
+	
 	if player_right:
-		pass
+		global_position=teleport_handler.teleport(_tele_left, _tele_height, global_position)
 	else:
-		pass
+		global_position=teleport_handler.teleport(_tele_right, _tele_height, global_position)
 		
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	if anim_name=="atk_counter":
@@ -596,3 +641,12 @@ func _on_bulletdodge_exited() -> void:
 
 func _on_dying_entered() -> void:
 	boss_ui.deactivate_boss_ui()
+
+
+func _on_phase_2_entered() -> void:
+	counter_sm.add_transition(begin_counter, teleport_and_shoot, &"teleport_counter")
+	state_machine.add_transition(counter_sm, attack, teleport_and_shoot.success_event)
+
+
+func _on_phases_handler_next_phase() -> void:
+	phases.dispatch(&"next_phase")

@@ -20,8 +20,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	label.text="H: " + str(health.health) + " S: " + str(stagger.stagger)
 	
-	if Input.is_action_just_pressed("DEBUG_KEY"):
-		test_function()
+
 		
 	label.text=str(global_position, " ", (global_position+teleport_dir_helper_rc.target_position))
 

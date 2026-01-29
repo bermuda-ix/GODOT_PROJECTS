@@ -12,8 +12,8 @@ signal next_phase
 
 func phase_change(health : int):
 	if health<=phases.get(0):
-		actor.stagger_recover()
+		#actor.stagger_recover()
 		phases.pop_front()
-		cur_phase+=1
+		#cur_phase+=1
 		next_phase.emit()
 		
