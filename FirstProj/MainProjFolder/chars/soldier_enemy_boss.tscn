@@ -142,6 +142,7 @@
 [ext_resource type="Script" uid="uid://wai5i0eghoou" path="res://Component/functions/QTEHandler.gd" id="136_ylbh8"]
 [ext_resource type="Script" uid="uid://fi6gye6mlsb6" path="res://Component/functions/CutsceneHandler.gd" id="137_f64i6"]
 [ext_resource type="PackedScene" uid="uid://c4pfomybiepkl" path="res://Component/UI_Rec/boss_ui.tscn" id="138_ggkva"]
+[ext_resource type="BehaviorTree" uid="uid://cryvbc7fjtiqp" path="res://ai/trees/soldier_boss_trees/phase_transition.tres" id="139_aukkt"]
 [ext_resource type="Script" uid="uid://c4uno006dp70c" path="res://Component/functions/TeleportHandler.gd" id="141_7r4t8"]
 [ext_resource type="Script" uid="uid://eulrkc0hl0ww" path="res://Component/functions/PhasesHandler.gd" id="142_qstkj"]
 
@@ -1623,6 +1624,8 @@ stereo = true
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_jjike"]
 
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_thomt"]
+
 [node name="soldier_enemy_boss" unique_id=789104702 node_paths=PackedStringArray("hitbox", "state_machine") groups=["Persistant", "offensive_enemy"] instance=ExtResource("1_33sos")]
 collision_layer = 16384
 script = ExtResource("2_ggkva")
@@ -1951,6 +1954,10 @@ bt_player = NodePath("../../BTPlayer")
 behavior_tree = ExtResource("133_1o8km")
 blackboard_plan = SubResource("BlackboardPlan_jjike")
 
+[node name="PHASETRANSITION" type="BTState" parent="LimboHSM" index="12" unique_id=1418593360]
+behavior_tree = ExtResource("139_aukkt")
+blackboard_plan = SubResource("BlackboardPlan_thomt")
+
 [node name="CombatStateMachine" type="LimboHSM" parent="." index="45" unique_id=305802644]
 
 [node name="RANGED" type="LimboState" parent="CombatStateMachine" index="0" unique_id=824960426 node_paths=PackedStringArray("actor", "bt_player")]
@@ -2033,5 +2040,8 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="exited" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_exited"]
 [connection signal="exited" from="LimboHSM/STAGGERED" to="." method="_on_staggered_exited"]
 [connection signal="entered" from="LimboHSM/DYING" to="." method="_on_dying_entered"]
+[connection signal="entered" from="LimboHSM/PHASETRANSITION" to="." method="_on_phasetransition_entered"]
+[connection signal="exited" from="LimboHSM/PHASETRANSITION" to="." method="_on_phasetransition_exited"]
+[connection signal="updated" from="LimboHSM/PHASETRANSITION" to="." method="_on_phasetransition_updated"]
 [connection signal="entered" from="Phases/Phase2" to="." method="_on_phase_2_entered"]
 [connection signal="next_phase" from="PhasesHandler" to="." method="_on_phases_handler_next_phase"]

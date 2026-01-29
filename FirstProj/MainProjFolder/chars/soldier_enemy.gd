@@ -146,6 +146,7 @@ var distance
 @onready var ranged_mode: LimboState = $CombatStateMachine/RANGED
 @onready var melee_mode: LimboState = $CombatStateMachine/MELEE
 
+@onready var phase_transition: BTState = $LimboHSM/PHASETRANSITION
 @onready var phases: LimboHSM = $Phases
 @onready var phase_1: LimboState = $Phases/Phase1
 @onready var phase_2: LimboState = $Phases/Phase2
@@ -183,13 +184,14 @@ func _ready():
 	bt_player.blackboard.set_var("counter_attack", false)
 	bt_player.blackboard.set_var("counter_kick_flag", false)
 	bt_player.blackboard.set_var("staggered", false)
+	bt_player.blackboard.set_var("Phase2Active", false)
 	dying.blackboard.set_var("hit_the_floor", false)
 	#turret.setup(0.2)
 	boss_ui.activate_boss_ui()
 	boss_ui.set_max_boss_health(health.max_health)
 	boss_ui.set_boss_health(health.health)
 	turret.shoot_timer.paused=true
-	_init_TEST_state_machine()
+	_init_state_machine()
 	_init_combat_state_machine()
 	_init_counter_state_machine()
 	_init_phase_state_machine()
@@ -233,6 +235,11 @@ func _init_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
 	state_machine.add_transition(dying, death, dying.success_event)
 	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
+	
+	state_machine.add_transition(state_machine.ANYSTATE, phase_transition, &"begin_next_phase")
+	state_machine.add_transition(phase_transition, counter_sm, phase_transition.success_event)
+	state_machine.remove_transition(dying, &"begin_next_phase")
+	state_machine.remove_transition(death, &"begin_next_phase")
 	
 	
 func _init_TEST_state_machine():
@@ -431,7 +438,9 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 		state_machine.dispatch(&"start_attack")
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
-	if body.is_in_group("player") and not animation_player.is_playing() and state_machine.get_active_state()!=staggered:
+	if changing_phase:
+		return
+	elif body.is_in_group("player") and not animation_player.is_playing() and state_machine.get_active_state()!=staggered:
 		bt_player.blackboard.set_var("within_range", false)
 		#set_state(current_state, States.CHASE)
 		state_machine.dispatch(&"start_chase")
@@ -505,19 +514,23 @@ func rapid_shoot(value : bool)->void:
 	turret.multi_shot=value
 
 func alerted() -> void :
-	print("alerted!")
-	vision_handler.always_on=true
-	if on_screen.is_on_screen():
-		state_machine.dispatch(&"attack_mode")
-		bt_player.blackboard.set_var("attack_mode", true)
+	if changing_phase:
+		return
 	else:
-		bt_player.blackboard.set_var("attack_mode", false)
-		state_machine.dispatch(&"start_chase")
+		print("alerted!")
+		vision_handler.always_on=true
+		if on_screen.is_on_screen():
+			state_machine.dispatch(&"attack_mode")
+			bt_player.blackboard.set_var("attack_mode", true)
+		else:
+			bt_player.blackboard.set_var("attack_mode", false)
+			state_machine.dispatch(&"start_chase")
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	print(health.health)
 	phases_handler.phase_change(health.health)
 	if changing_phase:
+		
 		return
 	else:
 		if clash_mult>1:
@@ -653,13 +666,39 @@ func _on_dying_entered() -> void:
 
 
 func _on_phase_2_entered() -> void:
+	
+	pass
+	#state_machine.change_active_state(begin_counter)
+	#state_machine.change_active_state(idle)
+	#counter_sm.add_transition(begin_counter, teleport_and_shoot, &"teleport_counter")
+	#state_machine.add_transition(counter_sm, attack, teleport_and_shoot.success_event)
+	#changing_phase=false
+	#state_machine.change_active_state(begin_counter)
+	#counter_sm.dispatch(&"teleport_counter")
+
+
+func _on_phases_handler_next_phase() -> void:
+	hurt_box_collision.disabled=true
 	changing_phase=true
-	animation_player.play("phase_change")
-	await animation_player.animation_finished
-	changing_phase=false
+	bt_player.blackboard.set_var("attack_mode", false)
+	state_machine.dispatch(&"begin_next_phase")
+	
+
+
+func _on_phasetransition_entered() -> void:
+	
 	counter_sm.add_transition(begin_counter, teleport_and_shoot, &"teleport_counter")
 	state_machine.add_transition(counter_sm, attack, teleport_and_shoot.success_event)
 
 
-func _on_phases_handler_next_phase() -> void:
+
+func _on_phasetransition_exited() -> void:
+	changing_phase=false
+	bt_player.blackboard.set_var("counter_attack", false)
 	phases.dispatch(&"next_phase")
+	hurt_box_collision.disabled=false
+	bt_player.blackboard.set_var("attack_mode", true)
+
+
+func _on_phasetransition_updated(delta: float) -> void:
+	assert(bt_player.blackboard.get_var("attack_mode")==false)

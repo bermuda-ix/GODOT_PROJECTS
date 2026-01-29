@@ -1,53 +1,7 @@
 [gd_resource type="BehaviorTree" format=3 uid="uid://bmgha5eqvo172"]
 
 [ext_resource type="Script" uid="uid://w637xlbev2om" path="res://ai/tasks/find_player.gd" id="1_3ixbu"]
-
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_2djuw"]
-var/attack_mode/name = &"attack_mode"
-var/attack_mode/type = 1
-var/attack_mode/value = false
-var/attack_mode/hint = 0
-var/attack_mode/hint_string = ""
-var/ranged_mode/name = &"ranged_mode"
-var/ranged_mode/type = 1
-var/ranged_mode/value = false
-var/ranged_mode/hint = 0
-var/ranged_mode/hint_string = ""
-var/melee_mode/name = &"melee_mode"
-var/melee_mode/type = 1
-var/melee_mode/value = false
-var/melee_mode/hint = 0
-var/melee_mode/hint_string = ""
-var/within_range/name = &"within_range"
-var/within_range/type = 1
-var/within_range/value = false
-var/within_range/hint = 0
-var/within_range/hint_string = ""
-var/counter_attack/name = &"counter_attack"
-var/counter_attack/type = 1
-var/counter_attack/value = false
-var/counter_attack/hint = 0
-var/counter_attack/hint_string = ""
-var/counter_kick_flag/name = &"counter_kick_flag"
-var/counter_kick_flag/type = 1
-var/counter_kick_flag/value = false
-var/counter_kick_flag/hint = 0
-var/counter_kick_flag/hint_string = ""
-var/shoot_counter/name = &"shoot_counter"
-var/shoot_counter/type = 2
-var/shoot_counter/value = 0
-var/shoot_counter/hint = 0
-var/shoot_counter/hint_string = ""
-var/staggered/name = &"staggered"
-var/staggered/type = 1
-var/staggered/value = false
-var/staggered/hint = 0
-var/staggered/hint_string = ""
-var/Phase2Active/name = &"Phase2Active"
-var/Phase2Active/type = 1
-var/Phase2Active/value = false
-var/Phase2Active/hint = 0
-var/Phase2Active/hint_string = ""
+[ext_resource type="BlackboardPlan" uid="uid://dluo3706kkps5" path="res://Component/resources/bt_blackboards/soldier_ai_boss_plan.tres" id="1_6rn7d"]
 
 [sub_resource type="BBVariant" id="BBVariant_s1wjr"]
 type = 1
@@ -111,9 +65,10 @@ resource_name = "."
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_6rn7d"]
 node = SubResource("BBNode_3ixbu")
-method = &"teleport_away"
+method = &"teleport_counter"
 
 [sub_resource type="BTProbability" id="BTProbability_qbeam"]
+run_chance = 1.0
 children = [SubResource("BTCallMethod_6rn7d")]
 
 [sub_resource type="BTComment" id="BTComment_myvia"]
@@ -418,5 +373,5 @@ children = [SubResource("BTCheckVar_or1gh"), SubResource("BTRepeatUntilFailure_v
 children = [SubResource("BTSequence_df28b")]
 
 [resource]
-blackboard_plan = SubResource("BlackboardPlan_2djuw")
+blackboard_plan = ExtResource("1_6rn7d")
 root_task = SubResource("BTSelector_307xj")
