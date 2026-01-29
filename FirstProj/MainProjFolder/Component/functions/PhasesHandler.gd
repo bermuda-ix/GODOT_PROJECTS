@@ -10,8 +10,11 @@ class_name PhasesHandler extends Node
 
 signal next_phase
 
+
 func phase_change(health : int):
-	if health<=phases.get(0):
+	if phases.size()<=0:
+		return
+	elif health<=phases.get(0):
 		#actor.stagger_recover()
 		phases.pop_front()
 		#cur_phase+=1

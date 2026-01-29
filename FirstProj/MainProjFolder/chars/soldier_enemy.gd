@@ -149,6 +149,8 @@ var distance
 @onready var phases: LimboHSM = $Phases
 @onready var phase_1: LimboState = $Phases/Phase1
 @onready var phase_2: LimboState = $Phases/Phase2
+@onready var phases_handler: PhasesHandler = $PhasesHandler
+@onready var changing_phase := false
 
 
 @onready var ammo_count
@@ -187,7 +189,7 @@ func _ready():
 	boss_ui.set_max_boss_health(health.max_health)
 	boss_ui.set_boss_health(health.health)
 	turret.shoot_timer.paused=true
-	_init_state_machine()
+	_init_TEST_state_machine()
 	_init_combat_state_machine()
 	_init_counter_state_machine()
 	_init_phase_state_machine()
@@ -233,20 +235,22 @@ func _init_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
 	
 	
-#func _init_TEST_state_machine():
-	#state_machine.initial_state=idle
-	#state_machine.initialize(self)
-	#state_machine.set_active(true)
-	#
-	#state_machine.add_transition(idle, teleport_and_shoot, &"teleport_counter")
-	#state_machine.add_transition(teleport_and_shoot, idle, teleport_and_shoot.success_event)
-
-func _init_phase_state_machine():
-	state_machine.initial_state=phase_1
+func _init_TEST_state_machine():
+	state_machine.initial_state=idle
 	state_machine.initialize(self)
 	state_machine.set_active(true)
 	
-	state_machine.add_transition(phase_1, phase_2, &"next_phase")
+	state_machine.add_transition(idle, teleport_and_shoot, &"teleport_counter")
+	state_machine.add_transition(teleport_and_shoot, idle, teleport_and_shoot.success_event)
+	state_machine.add_transition(idle, hit, &"got_hit")
+	state_machine.add_transition(hit, idle, &"hit_recover")
+
+func _init_phase_state_machine():
+	phases.initial_state=phase_1
+	phases.initialize(self)
+	phases.set_active(true)
+	
+	phases.add_transition(phase_1, phase_2, &"next_phase")
 
 func _init_counter_state_machine():
 	counter_sm.initial_state=begin_counter
@@ -511,24 +515,29 @@ func alerted() -> void :
 		state_machine.dispatch(&"start_chase")
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	if clash_mult>1:
-		stagger.stagger-=(clash_mult-1)
-	if player.state_machine.get_active_state()==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
-		Events.allied_enemy_hit.emit()
-	
-	bt_player.restart()
-	if state_machine.get_active_state()==death:
+	print(health.health)
+	phases_handler.phase_change(health.health)
+	if changing_phase:
 		return
-	health.set_temporary_immortality(0.2)
-	if damage<=health.health:
-		parry_timer.start(0.5)
-		state_machine.dispatch(&"hit")
-		hit_stop.hit_stop(0.05,0.25)
-		#set_state(current_state, States.HIT)
-		gpu_particles_2d.emitting=true
-		
 	else:
-		print("kill shot")
+		if clash_mult>1:
+			stagger.stagger-=(clash_mult-1)
+		if player.state_machine.get_active_state()==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
+			Events.allied_enemy_hit.emit()
+		
+		bt_player.restart()
+		if state_machine.get_active_state()==death:
+			return
+		health.set_temporary_immortality(0.2)
+		if damage<=health.health:
+			parry_timer.start(0.5)
+			state_machine.dispatch(&"hit")
+			hit_stop.hit_stop(0.05,0.25)
+			#set_state(current_state, States.HIT)
+			gpu_particles_2d.emitting=true
+			
+		else:
+			print("kill shot")
 		
 
 func _on_health_health_depleted() -> void:
@@ -644,6 +653,10 @@ func _on_dying_entered() -> void:
 
 
 func _on_phase_2_entered() -> void:
+	changing_phase=true
+	animation_player.play("phase_change")
+	await animation_player.animation_finished
+	changing_phase=false
 	counter_sm.add_transition(begin_counter, teleport_and_shoot, &"teleport_counter")
 	state_machine.add_transition(counter_sm, attack, teleport_and_shoot.success_event)
 
