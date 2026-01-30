@@ -14,6 +14,7 @@ func _enter() -> void:
 	#actor.hb_collision.disabled=true
 	#actor.bt_player.blackboard.set_var("staggered", true)
 	#actor.parry_timer.start(3)
+	assert(stagger.stagger==0)
 	actor.hurt_box.set_damage_mulitplyer(3)
 	
 	if movement_able:

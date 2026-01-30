@@ -136,6 +136,7 @@ var distance
 
 
 
+
 #Counter States
 @onready var counter_sm: LimboHSM = $LimboHSM/COUNTER
 @onready var begin_counter: LimboState = $LimboHSM/COUNTER/BeginCounter
@@ -242,15 +243,15 @@ func _init_state_machine():
 	state_machine.remove_transition(death, &"begin_next_phase")
 	
 	
-func _init_TEST_state_machine():
-	state_machine.initial_state=idle
-	state_machine.initialize(self)
-	state_machine.set_active(true)
-	
-	state_machine.add_transition(idle, teleport_and_shoot, &"teleport_counter")
-	state_machine.add_transition(teleport_and_shoot, idle, teleport_and_shoot.success_event)
-	state_machine.add_transition(idle, hit, &"got_hit")
-	state_machine.add_transition(hit, idle, &"hit_recover")
+#func _init_TEST_state_machine():
+	#state_machine.initial_state=idle
+	#state_machine.initialize(self)
+	#state_machine.set_active(true)
+	#
+	#state_machine.add_transition(idle, teleport_and_shoot, &"teleport_counter")
+	#state_machine.add_transition(teleport_and_shoot, idle, teleport_and_shoot.success_event)
+	#state_machine.add_transition(idle, hit, &"got_hit")
+	#state_machine.add_transition(hit, idle, &"hit_recover")
 
 func _init_phase_state_machine():
 	phases.initial_state=phase_1
@@ -261,6 +262,7 @@ func _init_phase_state_machine():
 
 func _init_counter_state_machine():
 	counter_sm.initial_state=begin_counter
+	counter_sm.initialize(self)
 	counter_sm.add_transition(begin_counter, kick_counter, &"kick_counter")
 
 
@@ -481,7 +483,12 @@ func _on_stagger_staggered() -> void:
 
 func _on_parry_timer_timeout() -> void:
 	if state_machine.get_active_state()==staggered:
-		state_machine.dispatch(&"stagger_recover")
+		print(phases.get_active_state())
+		if phases.get_active_state()==phase_1:
+			state_machine.dispatch(&"stagger_recover")
+		elif phases.get_active_state()==phase_2:
+			state_machine.dispatch(&"teleport_recover")
+		
 	elif state_machine.get_active_state()==hit:
 		state_machine.dispatch(&"hit_recover")
 	movement_handler.active=true
@@ -599,10 +606,8 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 	if current==jump:
 		if previous==attack:
 			print("down attack")
-	elif current==counter_sm:
-		print(current.name)
-	if previous==phase_transition:
-		print(current.name)
+	if current==teleport_and_shoot:
+		print(current)
 
 func _on_attack_entered() -> void:
 	bt_player.blackboard.set_var("attack_mode", true)
@@ -640,8 +645,9 @@ func _on_counter_updated(_delta: float) -> void:
 func _on_staggered_exited() -> void:
 	bt_player.blackboard.set_var("staggered", false)
 	bt_player.active=true
-	if phases.get_active_state()==phase_2:
-		state_machine.change_active_state(teleport_and_shoot)
+
+
+
 
 
 func _on_bullet_detection_bullet_detected() -> void:
@@ -719,3 +725,7 @@ func _on_phasetransition_updated(delta: float) -> void:
 
 func _on_teleport_and_shoot_entered() -> void:
 	print("worked")
+
+
+func _on_staggered_entered() -> void:
+	pass # Replace with function body.

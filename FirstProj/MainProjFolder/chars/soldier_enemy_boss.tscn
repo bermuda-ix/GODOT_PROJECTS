@@ -1689,7 +1689,7 @@ autostart = true
 one_shot = true
 
 [node name="Health" parent="." index="13"]
-max_health = 20
+max_health = 30
 immortality = false
 
 [node name="DodgeTimer" type="Timer" parent="." index="14" unique_id=70570100]
@@ -1749,7 +1749,7 @@ position = Vector2(-6, 0)
 shape = SubResource("CircleShape2D_4yjj7")
 
 [node name="Stagger" parent="." index="25"]
-max_stagger = 15
+max_stagger = 2
 
 [node name="Turret" parent="." index="26" unique_id=1929477695 instance=ExtResource("103_jr353")]
 position = Vector2(-8, -7)
@@ -1938,9 +1938,10 @@ actor = NodePath("../..")
 state_machine = NodePath("..")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="HIT" type="LimboState" parent="LimboHSM" index="10" unique_id=1416400760 node_paths=PackedStringArray("actor", "animation_player")]
+[node name="HIT" type="LimboState" parent="LimboHSM" index="10" unique_id=1416400760 node_paths=PackedStringArray("actor", "hurtbox", "animation_player")]
 script = ExtResource("131_hyxc6")
 actor = NodePath("../..")
+hurtbox = NodePath("../../HurtBox")
 animation_player = NodePath("../../AnimationPlayer")
 
 [node name="STAGGERED" type="LimboState" parent="LimboHSM" index="11" unique_id=1474770168 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player")]
@@ -2008,7 +2009,7 @@ script = ExtResource("142_qstkj")
 health = NodePath("../Health")
 actor = NodePath("..")
 sm = NodePath("../Phases")
-phases = Array[int]([10])
+phases = Array[int]([25])
 metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
@@ -2039,6 +2040,7 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="entered" from="LimboHSM/TeleportAndShoot" to="." method="_on_teleport_and_shoot_entered"]
 [connection signal="entered" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_entered"]
 [connection signal="exited" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_exited"]
+[connection signal="entered" from="LimboHSM/STAGGERED" to="." method="_on_staggered_entered"]
 [connection signal="exited" from="LimboHSM/STAGGERED" to="." method="_on_staggered_exited"]
 [connection signal="entered" from="LimboHSM/DYING" to="." method="_on_dying_entered"]
 [connection signal="entered" from="LimboHSM/PHASETRANSITION" to="." method="_on_phasetransition_entered"]

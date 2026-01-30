@@ -1,4 +1,4 @@
-[gd_scene load_steps=208 format=3 uid="uid://c77d0eq03vp0j"]
+[gd_scene format=3 uid="uid://c77d0eq03vp0j"]
 
 [ext_resource type="Script" uid="uid://dy6ulh7sbone3" path="res://chars/demon_phase_1.gd" id="1_502d8"]
 [ext_resource type="Texture2D" uid="uid://dwgdq8nj8ak1m" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/IdleSmoke/IdleSmoke01.png" id="1_wkboy"]
@@ -2441,20 +2441,20 @@ radius = 147.0
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_lu2dd"]
 binding/dash_ended = NodePath("../..:dash_finished")
 
-[node name="DemonPhase1" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant"]]
+[node name="DemonPhase1" type="CharacterBody2D" unique_id=688778128 node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant"]]
 script = ExtResource("1_502d8")
 hitbox = NodePath("HitBox")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1787923411]
 position = Vector2(0, 20)
 shape = SubResource("CapsuleShape2D_a5vku")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=536796219]
 sprite_frames = SubResource("SpriteFrames_3e6be")
 animation = &"idle"
 flip_h = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1517985564]
 visible = false
 modulate = Color(1, 1, 1, 0.465)
 position = Vector2(1, -7)
@@ -2462,58 +2462,54 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_lu2dd")
 flip_h = true
 
-[node name="GroundHazardSpawnHandlerLeft" parent="AnimatedSprite2D" node_paths=PackedStringArray("actor") instance=ExtResource("108_05h33")]
+[node name="GroundHazardSpawnHandlerLeft" parent="AnimatedSprite2D" unique_id=750224912 node_paths=PackedStringArray("actor") instance=ExtResource("108_05h33")]
 position = Vector2(0, 43)
 hazard = ExtResource("109_6h8gq")
 actor = NodePath("../..")
 
-[node name="GroundHazardSpawnHandlerRight" parent="AnimatedSprite2D" node_paths=PackedStringArray("actor") instance=ExtResource("108_05h33")]
+[node name="GroundHazardSpawnHandlerRight" parent="AnimatedSprite2D" unique_id=577280232 node_paths=PackedStringArray("actor") instance=ExtResource("108_05h33")]
 position = Vector2(0, 43)
 hazard = ExtResource("109_6h8gq")
 actor = NodePath("../..")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_ldpld"),
-&"phase_transitions": SubResource("AnimationLibrary_4hrat")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1558830706]
+libraries/ = SubResource("AnimationLibrary_ldpld")
+libraries/phase_transitions = SubResource("AnimationLibrary_4hrat")
 
-[node name="AnimationPlayerSub" type="AnimationPlayer" parent="AnimationPlayer"]
-libraries = {
-&"": SubResource("AnimationLibrary_wgoyu"),
-&"phase_transitions": SubResource("AnimationLibrary_aw4v4")
-}
+[node name="AnimationPlayerSub" type="AnimationPlayer" parent="AnimationPlayer" unique_id=1637596045]
+libraries/ = SubResource("AnimationLibrary_wgoyu")
+libraries/phase_transitions = SubResource("AnimationLibrary_aw4v4")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=188626446]
 
-[node name="TargetLock" type="Node2D" parent="." node_paths=PackedStringArray("actor")]
+[node name="TargetLock" type="Node2D" parent="." unique_id=1010334505 node_paths=PackedStringArray("actor")]
 script = ExtResource("100_payyv")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://b0uasmutdnguo"
 
-[node name="PlayerTrackerPivot" type="Node2D" parent="."]
+[node name="PlayerTrackerPivot" type="Node2D" parent="." unique_id=481123520]
 
-[node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot"]
+[node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot" unique_id=1715396147]
 position = Vector2(-1, 0)
 target_position = Vector2(400, 0)
 collision_mask = 3
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1857223375]
 navigation_layers = 3
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1123181585]
 
-[node name="Health" type="Node" parent="."]
+[node name="Health" type="Node" parent="." unique_id=462163076]
 script = ExtResource("75_hcmiv")
 max_health = 50
 metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
-[node name="Stagger" type="Node" parent="."]
+[node name="Stagger" type="Node" parent="." unique_id=1231523383]
 script = ExtResource("76_xpvws")
 max_stagger = 5
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
-[node name="PhasesHandler" type="Node" parent="." node_paths=PackedStringArray("health", "actor", "sm")]
+[node name="PhasesHandler" type="Node" parent="." unique_id=642939727 node_paths=PackedStringArray("health", "actor", "sm")]
 script = ExtResource("110_ud5xj")
 health = NodePath("../Health")
 actor = NodePath("..")
@@ -2522,51 +2518,51 @@ phase_active = true
 phases = Array[int]([30])
 metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 
-[node name="NavigationTimer" type="Timer" parent="."]
+[node name="NavigationTimer" type="Timer" parent="." unique_id=1012153734]
 wait_time = 0.2
 autostart = true
 
-[node name="JumpTimer" type="Timer" parent="."]
+[node name="JumpTimer" type="Timer" parent="." unique_id=1412630079]
 one_shot = true
 
-[node name="ParryTimer" type="Timer" parent="."]
+[node name="ParryTimer" type="Timer" parent="." unique_id=531427992]
 one_shot = true
 
-[node name="ChaseTimer" type="Timer" parent="."]
+[node name="ChaseTimer" type="Timer" parent="." unique_id=563357027]
 
-[node name="DodgeTimer" type="Timer" parent="."]
+[node name="DodgeTimer" type="Timer" parent="." unique_id=459468441]
 one_shot = true
 
-[node name="AttackTimer" type="Timer" parent="."]
+[node name="AttackTimer" type="Timer" parent="." unique_id=1050094024]
 one_shot = true
 
-[node name="StaggerTimer" type="Timer" parent="."]
+[node name="StaggerTimer" type="Timer" parent="." unique_id=2115015205]
 one_shot = true
 
-[node name="DeathTimer" type="Timer" parent="."]
+[node name="DeathTimer" type="Timer" parent="." unique_id=1934299882]
 one_shot = true
 
-[node name="TeleDelayTimer" type="Timer" parent="."]
+[node name="TeleDelayTimer" type="Timer" parent="." unique_id=579969160]
 one_shot = true
 
-[node name="ChargeTimer" type="Timer" parent="."]
+[node name="ChargeTimer" type="Timer" parent="." unique_id=339817131]
 one_shot = true
 
-[node name="HazardSpawnTimer" type="Timer" parent="."]
+[node name="HazardSpawnTimer" type="Timer" parent="." unique_id=1083939002]
 
-[node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("stagger")]
+[node name="HitBox" type="Area2D" parent="." unique_id=867711349 node_paths=PackedStringArray("stagger")]
 collision_layer = 8
 collision_mask = 640
 script = ExtResource("77_yhvfg")
 stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://5ijvah6jjgdb"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=23644722]
 position = Vector2(-24, 17)
 shape = SubResource("RectangleShape2D_uh42p")
 disabled = true
 
-[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=71478263 node_paths=PackedStringArray("health", "stagger")]
 collision_layer = 16
 collision_mask = 8768
 script = ExtResource("78_yuwji")
@@ -2574,36 +2570,36 @@ health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=1706976427]
 position = Vector2(0, 20)
 shape = SubResource("RectangleShape2D_502d8")
 
-[node name="AttackRange" type="Area2D" parent="."]
+[node name="AttackRange" type="Area2D" parent="." unique_id=267241588]
 collision_layer = 1024
 collision_mask = 2
 script = ExtResource("79_lu2dd")
 metadata/_custom_type_script = "uid://cf3jqneer6g2o"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" unique_id=1068018991]
 position = Vector2(0, 23)
 shape = SubResource("RectangleShape2D_5s6xm")
 
-[node name="AttackRangeLong" type="Area2D" parent="."]
+[node name="AttackRangeLong" type="Area2D" parent="." unique_id=1818329330]
 collision_layer = 1024
 collision_mask = 2
 script = ExtResource("79_lu2dd")
 metadata/_custom_type_script = "uid://cf3jqneer6g2o"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeLong"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeLong" unique_id=312313754]
 position = Vector2(-1, 20)
 shape = SubResource("CircleShape2D_q4ic8")
 
-[node name="PlayerTrackingHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
+[node name="PlayerTrackingHandler" type="Node" parent="." unique_id=203978631 node_paths=PackedStringArray("actor")]
 script = ExtResource("80_vkmre")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="VisionHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "player_tracking")]
+[node name="VisionHandler" type="Node" parent="." unique_id=470887208 node_paths=PackedStringArray("actor", "sm", "player_tracking")]
 script = ExtResource("81_q1hoc")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
@@ -2611,12 +2607,12 @@ combat_state_active = false
 player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
-[node name="GetPlayerInfoHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
+[node name="GetPlayerInfoHandler" type="Node" parent="." unique_id=1779033321 node_paths=PackedStringArray("actor")]
 script = ExtResource("82_csuqs")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://co05jfawt7xsm"
 
-[node name="MovementHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
+[node name="MovementHandler" type="Node" parent="." unique_id=2143281437 node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
 script = ExtResource("83_grsb0")
 actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
@@ -2624,27 +2620,27 @@ vision_handler = NodePath("../VisionHandler")
 air_turn = false
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
 
-[node name="ChaseHandler" type="Node" parent="."]
+[node name="ChaseHandler" type="Node" parent="." unique_id=1129032748]
 script = ExtResource("90_flw4c")
 metadata/_custom_type_script = "uid://b2h35joqffn41"
 
-[node name="JumpHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine")]
+[node name="JumpHandler" type="Node" parent="." unique_id=131430455 node_paths=PackedStringArray("actor", "state_machine")]
 script = ExtResource("84_px2ah")
 actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
 metadata/_custom_type_script = "uid://dgyx4da7oymh2"
 
-[node name="MeleeAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor")]
+[node name="MeleeAttackManager" type="Node" parent="." unique_id=1212669548 node_paths=PackedStringArray("actor")]
 script = ExtResource("85_bwsg3")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://ddhk64y60klpg"
 
-[node name="GroundHazardSpawnHandler" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("108_05h33")]
+[node name="GroundHazardSpawnHandler" parent="." unique_id=1201171682 node_paths=PackedStringArray("actor") instance=ExtResource("108_05h33")]
 position = Vector2(0, 43)
 hazard = ExtResource("109_6h8gq")
 actor = NodePath("..")
 
-[node name="CounterAttackHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "jump_handler", "state_machine")]
+[node name="CounterAttackHandler" type="Node" parent="." unique_id=1224338246 node_paths=PackedStringArray("actor", "jump_handler", "state_machine")]
 script = ExtResource("86_es2g4")
 actor = NodePath("..")
 jump_handler = NodePath("../JumpHandler")
@@ -2653,11 +2649,11 @@ shoot_counter_active = false
 active = false
 metadata/_custom_type_script = "uid://d04qf1jqrfg1h"
 
-[node name="HitStop" type="Node" parent="."]
+[node name="HitStop" type="Node" parent="." unique_id=2115986311]
 script = ExtResource("87_2x38h")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
-[node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "animation_player", "health")]
+[node name="DeathHandler" type="Node" parent="." unique_id=1352192943 node_paths=PackedStringArray("actor", "sm", "animation_player", "health")]
 script = ExtResource("88_2igpb")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
@@ -2665,118 +2661,119 @@ animation_player = NodePath("../AnimationPlayer")
 health = NodePath("../Health")
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
 
-[node name="DespawnHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
+[node name="DespawnHandler" type="Node" parent="." unique_id=889712826 node_paths=PackedStringArray("actor")]
 script = ExtResource("89_payyv")
 actor = NodePath("..")
 despawn_effect = ExtResource("90_7anh8")
 metadata/_custom_type_script = "uid://cbt5pqmf6i7rj"
 
-[node name="CutsceneHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "anim_player", "speech")]
+[node name="CutsceneHandler" type="Node" parent="." unique_id=1667807663 node_paths=PackedStringArray("actor", "anim_player", "speech")]
 script = ExtResource("91_01win")
 actor = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 speech = NodePath("../speech")
 metadata/_custom_type_script = "uid://fi6gye6mlsb6"
 
-[node name="LimboHSM" type="LimboHSM" parent="."]
+[node name="LimboHSM" type="LimboHSM" parent="." unique_id=1734371199]
 
-[node name="IDLE" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor")]
+[node name="IDLE" type="LimboState" parent="LimboHSM" unique_id=1306961415 node_paths=PackedStringArray("actor")]
 script = ExtResource("92_01win")
 actor = NodePath("../..")
 
-[node name="CHASING" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor")]
+[node name="CHASING" type="LimboState" parent="LimboHSM" unique_id=211659748 node_paths=PackedStringArray("actor")]
 script = ExtResource("93_fqe3o")
 actor = NodePath("../..")
 
-[node name="JUMP" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "state_machine", "jump_handler")]
+[node name="JUMP" type="LimboState" parent="LimboHSM" unique_id=2140422616 node_paths=PackedStringArray("actor", "state_machine", "jump_handler")]
 script = ExtResource("94_e8h6k")
 actor = NodePath("../..")
 state_machine = NodePath("..")
 jump_handler = NodePath("../../JumpHandler")
 jump_vel = 1.0
 
-[node name="DEATH" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "animation_player")]
+[node name="DEATH" type="LimboState" parent="LimboHSM" unique_id=1592019593 node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("95_gwqox")
 actor = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="ATTACK" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor")]
+[node name="ATTACK" type="LimboState" parent="LimboHSM" unique_id=36271209 node_paths=PackedStringArray("actor")]
 script = ExtResource("96_8o4lm")
 actor = NodePath("../..")
 
-[node name="HIT" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "animation_player")]
+[node name="HIT" type="LimboState" parent="LimboHSM" unique_id=1635109270 node_paths=PackedStringArray("actor", "hurtbox", "animation_player")]
 script = ExtResource("100_er753")
 actor = NodePath("../..")
+hurtbox = NodePath("../../HurtBox")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="STAGGERED" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "movement_handler", "stagger")]
+[node name="STAGGERED" type="LimboState" parent="LimboHSM" unique_id=1216032808 node_paths=PackedStringArray("actor", "movement_handler", "stagger")]
 script = ExtResource("101_cfnc3")
 actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
 stagger = NodePath("../../Stagger")
 
-[node name="DYING" type="BTState" parent="LimboHSM"]
+[node name="DYING" type="BTState" parent="LimboHSM" unique_id=1744751012]
 behavior_tree = ExtResource("102_q4ic8")
 blackboard_plan = SubResource("BlackboardPlan_nnr2g")
 
-[node name="CHARGE" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "animation_player", "timer")]
+[node name="CHARGE" type="LimboState" parent="LimboHSM" unique_id=173194145 node_paths=PackedStringArray("actor", "animation_player", "timer")]
 blackboard_plan = SubResource("BlackboardPlan_payyv")
 script = ExtResource("108_jmql7")
 actor = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
 timer = NodePath("../../ChargeTimer")
 
-[node name="TELEPORT" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "animation_player")]
+[node name="TELEPORT" type="LimboState" parent="LimboHSM" unique_id=463321235 node_paths=PackedStringArray("actor", "animation_player")]
 blackboard_plan = SubResource("BlackboardPlan_7anh8")
 script = ExtResource("108_mimai")
 actor = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="MidTeleport" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "animation_player")]
+[node name="MidTeleport" type="LimboState" parent="LimboHSM" unique_id=1569864532 node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("109_er753")
 actor = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="DASH" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "animation_player")]
+[node name="DASH" type="LimboState" parent="LimboHSM" unique_id=1751700298 node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("125_bngn1")
 actor = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="Slam" type="BTState" parent="LimboHSM" node_paths=PackedStringArray("actor")]
+[node name="Slam" type="BTState" parent="LimboHSM" unique_id=1681196834 node_paths=PackedStringArray("actor")]
 behavior_tree = ExtResource("146_yhvfg")
 blackboard_plan = SubResource("BlackboardPlan_m1s5b")
 script = ExtResource("111_jmql7")
 actor = NodePath("../..")
 metadata/_custom_type_script = "uid://b1s3qiewybfsp"
 
-[node name="SlamHeavy" type="BTState" parent="LimboHSM" node_paths=PackedStringArray("actor")]
+[node name="SlamHeavy" type="BTState" parent="LimboHSM" unique_id=802726108 node_paths=PackedStringArray("actor")]
 behavior_tree = ExtResource("148_lu2dd")
 blackboard_plan = SubResource("BlackboardPlan_qksi4")
 script = ExtResource("111_jmql7")
 actor = NodePath("../..")
 metadata/_custom_type_script = "uid://b1s3qiewybfsp"
 
-[node name="PhaseTransition" type="BTState" parent="LimboHSM"]
+[node name="PhaseTransition" type="BTState" parent="LimboHSM" unique_id=1663477263]
 behavior_tree = ExtResource("148_yuwji")
 blackboard_plan = SubResource("BlackboardPlan_lu2dd")
 
-[node name="ERROR_STATE" type="LimboState" parent="LimboHSM"]
+[node name="ERROR_STATE" type="LimboState" parent="LimboHSM" unique_id=1225029574]
 
-[node name="Phases" type="LimboHSM" parent="."]
+[node name="Phases" type="LimboHSM" parent="." unique_id=947947435]
 
-[node name="Phase1" type="LimboState" parent="Phases"]
+[node name="Phase1" type="LimboState" parent="Phases" unique_id=1428949501]
 
-[node name="Phase2" type="LimboState" parent="Phases"]
+[node name="Phase2" type="LimboState" parent="Phases" unique_id=1488176640]
 
-[node name="Phase3" type="LimboState" parent="Phases"]
+[node name="Phase3" type="LimboState" parent="Phases" unique_id=1309760161]
 
-[node name="speech" type="Label" parent="."]
+[node name="speech" type="Label" parent="." unique_id=1064986872]
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1755503350]
 
-[node name="BossUI" parent="CanvasLayer" node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("114_m1s5b")]
+[node name="BossUI" parent="CanvasLayer" unique_id=143872723 node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("114_m1s5b")]
 health = NodePath("../../Health")
 stagger = NodePath("../../Stagger")
 actor = NodePath("../..")

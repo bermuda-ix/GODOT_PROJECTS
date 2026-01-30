@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=3 uid="uid://berbmq4u2lo3s"]
+[gd_scene format=3 uid="uid://berbmq4u2lo3s"]
 
 [ext_resource type="Script" uid="uid://ds31ngno5boru" path="res://chars/guard_enemy.gd" id="1_4q725"]
 [ext_resource type="Texture2D" uid="uid://cshwi53lwaqph" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle01.png" id="1_vk1fx"]
@@ -1209,19 +1209,19 @@ size = Vector2(48, 68.5)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_ri8gu"]
 
-[node name="GuardEnemy" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant", "offensive_enemy"]]
+[node name="GuardEnemy" type="CharacterBody2D" unique_id=2034909694 node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant", "offensive_enemy"]]
 collision_layer = 16384
 script = ExtResource("1_4q725")
 hitbox = NodePath("HitBox")
 drop = ExtResource("2_tqjrv")
 death_time_scale = 0.05
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1549901189]
 position = Vector2(0, -22)
 sprite_frames = SubResource("SpriteFrames_ngkqw")
 flip_h = true
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=1669374385]
 modulate = Color(1, 0.238975, 0.0150355, 1)
 position = Vector2(0, 24)
 emitting = false
@@ -1234,57 +1234,55 @@ trail_enabled = true
 trail_lifetime = 0.1
 process_material = SubResource("ParticleProcessMaterial_deb7u")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1827095271]
 position = Vector2(-1, 0)
 shape = SubResource("CapsuleShape2D_durt0")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_0e5u2")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1530206793]
+libraries/ = SubResource("AnimationLibrary_0e5u2")
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1821212342]
 navigation_layers = 2
 avoidance_enabled = true
 debug_enabled = true
 
-[node name="PlayerTrackerPivot" type="Node2D" parent="."]
+[node name="PlayerTrackerPivot" type="Node2D" parent="." unique_id=1754461318]
 position = Vector2(0, -16)
 
-[node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot"]
+[node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot" unique_id=991242832]
 target_position = Vector2(239, 0)
 collision_mask = 3
 collide_with_areas = true
 
-[node name="Health" type="Node" parent="."]
+[node name="Health" type="Node" parent="." unique_id=2114117969]
 script = ExtResource("8_kbb6k")
 max_health = 1
 metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
-[node name="Stagger" type="Node" parent="."]
+[node name="Stagger" type="Node" parent="." unique_id=1621757423]
 script = ExtResource("9_34xo2")
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
-[node name="NavigationTimer" type="Timer" parent="."]
+[node name="NavigationTimer" type="Timer" parent="." unique_id=1426565053]
 wait_time = 0.2
 autostart = true
 
-[node name="JumpTimer" type="Timer" parent="."]
+[node name="JumpTimer" type="Timer" parent="." unique_id=396787862]
 
-[node name="ParryTimer" type="Timer" parent="."]
+[node name="ParryTimer" type="Timer" parent="." unique_id=1854829511]
 
-[node name="ChaseTimer" type="Timer" parent="."]
+[node name="ChaseTimer" type="Timer" parent="." unique_id=789794445]
 
-[node name="DeathTimer" type="Timer" parent="."]
+[node name="DeathTimer" type="Timer" parent="." unique_id=1422987281]
 one_shot = true
 
-[node name="DodgeTimer" type="Timer" parent="."]
+[node name="DodgeTimer" type="Timer" parent="." unique_id=1778828943]
 
-[node name="AttackTimer" type="Timer" parent="."]
+[node name="AttackTimer" type="Timer" parent="." unique_id=2052838920]
 
-[node name="StaggerTimer" type="Timer" parent="."]
+[node name="StaggerTimer" type="Timer" parent="." unique_id=1678317936]
 
-[node name="HitBox" type="Area2D" parent="." node_paths=PackedStringArray("stagger")]
+[node name="HitBox" type="Area2D" parent="." unique_id=1236886276 node_paths=PackedStringArray("stagger")]
 position = Vector2(29, 19)
 collision_layer = 8
 collision_mask = 128
@@ -1292,12 +1290,12 @@ script = ExtResource("10_bwuha")
 stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://5ijvah6jjgdb"
 
-[node name="hb_collision" type="CollisionShape2D" parent="HitBox"]
+[node name="hb_collision" type="CollisionShape2D" parent="HitBox" unique_id=236756315]
 position = Vector2(-56, 0)
 shape = SubResource("RectangleShape2D_3nf0a")
 disabled = true
 
-[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=1540858505 node_paths=PackedStringArray("health", "stagger")]
 position = Vector2(0, -22)
 collision_layer = 16
 collision_mask = 8388672
@@ -1306,52 +1304,52 @@ health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
-[node name="hurt_box_collision" type="CollisionShape2D" parent="HurtBox"]
+[node name="hurt_box_collision" type="CollisionShape2D" parent="HurtBox" unique_id=859624262]
 position = Vector2(-1, 22.5)
 shape = SubResource("RectangleShape2D_ngkqw")
 
-[node name="AttackRange" type="Area2D" parent="."]
+[node name="AttackRange" type="Area2D" parent="." unique_id=2097856421]
 position = Vector2(0, -22)
 collision_layer = 1024
 collision_mask = 2
 script = ExtResource("13_8t56l")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" unique_id=1627573135]
 position = Vector2(0, 10)
 shape = SubResource("RectangleShape2D_54l2b")
 
-[node name="TargetLock" type="Node2D" parent="."]
+[node name="TargetLock" type="Node2D" parent="." unique_id=1921309274]
 position = Vector2(0, -17)
 script = ExtResource("12_q7gmp")
 metadata/_custom_type_script = "uid://b0uasmutdnguo"
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1288505434]
 position = Vector2(5, -8)
 rect = Rect2(4, 4, 6, 6)
 
-[node name="BTPlayer" type="BTPlayer" parent="."]
+[node name="BTPlayer" type="BTPlayer" parent="." unique_id=1126207676]
 behavior_tree = ExtResource("15_j02m3")
 blackboard_plan = SubResource("BlackboardPlan_q7gmp")
 
-[node name="PlayerTrackingHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
+[node name="PlayerTrackingHandler" type="Node" parent="." unique_id=1415402084 node_paths=PackedStringArray("actor")]
 script = ExtResource("13_72jhu")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="MovementHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
+[node name="MovementHandler" type="Node" parent="." unique_id=1089147851 node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
 script = ExtResource("14_dc187")
 actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
 vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
 
-[node name="JumpHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine")]
+[node name="JumpHandler" type="Node" parent="." unique_id=1833858291 node_paths=PackedStringArray("actor", "state_machine")]
 script = ExtResource("15_6yr1f")
 actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
 metadata/_custom_type_script = "uid://dgyx4da7oymh2"
 
-[node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "animation_player", "health")]
+[node name="DeathHandler" type="Node" parent="." unique_id=1052997813 node_paths=PackedStringArray("actor", "sm", "animation_player", "health")]
 script = ExtResource("16_78yqy")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
@@ -1360,7 +1358,7 @@ health = NodePath("../Health")
 score = 2
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
 
-[node name="ShootHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "turret")]
+[node name="ShootHandler" type="Node" parent="." unique_id=701472186 node_paths=PackedStringArray("actor", "turret")]
 script = ExtResource("24_yw64w")
 actor = NodePath("..")
 turret = NodePath("../Turret")
@@ -1368,7 +1366,7 @@ projectile = ExtResource("79_m3s8r")
 bullet_scale = 0.1
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
-[node name="VisionHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking")]
+[node name="VisionHandler" type="Node" parent="." unique_id=1565027634 node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking")]
 script = ExtResource("17_i7oh3")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
@@ -1378,12 +1376,12 @@ player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 stay_on = true
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
-[node name="MeleeAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor")]
+[node name="MeleeAttackManager" type="Node" parent="." unique_id=1832402381 node_paths=PackedStringArray("actor")]
 script = ExtResource("18_8ivtl")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://ddhk64y60klpg"
 
-[node name="ShootAttackManager" type="Node" parent="." node_paths=PackedStringArray("actor", "animation_player", "turret")]
+[node name="ShootAttackManager" type="Node" parent="." unique_id=679765758 node_paths=PackedStringArray("actor", "animation_player", "turret")]
 script = ExtResource("21_luk7s")
 actor = NodePath("..")
 animation_player = NodePath("../AnimationPlayer")
@@ -1391,19 +1389,19 @@ turret = NodePath("../Turret")
 refactored_reloading = true
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
-[node name="GetPlayerInfoHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
+[node name="GetPlayerInfoHandler" type="Node" parent="." unique_id=656089381 node_paths=PackedStringArray("actor")]
 script = ExtResource("19_vppyt")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://co05jfawt7xsm"
 
-[node name="DodgeManager" type="Node" parent="." node_paths=PackedStringArray("actor", "state_machine", "bt_player")]
+[node name="DodgeManager" type="Node" parent="." unique_id=1769838977 node_paths=PackedStringArray("actor", "state_machine", "bt_player")]
 script = ExtResource("20_f16nn")
 actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
 bt_player = NodePath("../BTPlayer")
 metadata/_custom_type_script = "uid://cp2j3xnu5vd7q"
 
-[node name="CombatStateChangeHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player", "vision_handler")]
+[node name="CombatStateChangeHandler" type="Node" parent="." unique_id=1426280814 node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player", "vision_handler")]
 script = ExtResource("25_yhec4")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
@@ -1413,86 +1411,87 @@ ranged_dist = 70
 vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
-[node name="GroupEnemyManager" type="Node" parent="." node_paths=PackedStringArray("actor")]
+[node name="GroupEnemyManager" type="Node" parent="." unique_id=2122843803 node_paths=PackedStringArray("actor")]
 script = ExtResource("86_m3s8r")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bnpx2avsix2an"
 
-[node name="HitStop" type="Node" parent="."]
+[node name="HitStop" type="Node" parent="." unique_id=1807538612]
 script = ExtResource("29_deb7u")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
-[node name="Turret" parent="." instance=ExtResource("29_dxprx")]
+[node name="Turret" parent="." unique_id=1096786705 instance=ExtResource("29_dxprx")]
 position = Vector2(-17, -8)
 ammo_count = 6
 max_ammo = 6
 
-[node name="LimboHSM" type="LimboHSM" parent="."]
+[node name="LimboHSM" type="LimboHSM" parent="." unique_id=712301231]
 
-[node name="IDLE" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor")]
+[node name="IDLE" type="LimboState" parent="LimboHSM" unique_id=1155317944 node_paths=PackedStringArray("actor")]
 script = ExtResource("21_vbc8h")
 actor = NodePath("../..")
 
-[node name="CHASING" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "bt_player")]
+[node name="CHASING" type="LimboState" parent="LimboHSM" unique_id=99496886 node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("22_4q725")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="JUMP" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "state_machine", "jump_handler")]
+[node name="JUMP" type="LimboState" parent="LimboHSM" unique_id=140721954 node_paths=PackedStringArray("actor", "state_machine", "jump_handler")]
 script = ExtResource("23_qiptk")
 actor = NodePath("../..")
 state_machine = NodePath("..")
 jump_handler = NodePath("../../JumpHandler")
 
-[node name="DEATH" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "animation_player")]
+[node name="DEATH" type="LimboState" parent="LimboHSM" unique_id=807462475 node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("24_t40re")
 actor = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="ATTACK" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "bt_player")]
+[node name="ATTACK" type="LimboState" parent="LimboHSM" unique_id=2109784191 node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("25_53axh")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="SHOOTING" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor")]
+[node name="SHOOTING" type="LimboState" parent="LimboHSM" unique_id=1652256196 node_paths=PackedStringArray("actor")]
 script = ExtResource("26_luk7s")
 actor = NodePath("../..")
 
-[node name="DODGE" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "bt_player", "animation_player")]
+[node name="DODGE" type="LimboState" parent="LimboHSM" unique_id=815268094 node_paths=PackedStringArray("actor", "bt_player", "animation_player")]
 script = ExtResource("27_yw64w")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="HIT" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "animation_player")]
+[node name="HIT" type="LimboState" parent="LimboHSM" unique_id=1101422511 node_paths=PackedStringArray("actor", "hurtbox", "animation_player")]
 script = ExtResource("28_yhec4")
 actor = NodePath("../..")
+hurtbox = NodePath("../../HurtBox")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="STAGGERED" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player")]
+[node name="STAGGERED" type="LimboState" parent="LimboHSM" unique_id=1841867997 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player")]
 script = ExtResource("29_8t56l")
 actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
 stagger = NodePath("../../Stagger")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="DYING" type="BTState" parent="LimboHSM"]
+[node name="DYING" type="BTState" parent="LimboHSM" unique_id=1625649780]
 behavior_tree = ExtResource("97_onb8s")
 blackboard_plan = SubResource("BlackboardPlan_ri8gu")
 
-[node name="CombatStateMachine" type="LimboHSM" parent="."]
+[node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=1758670167]
 
-[node name="RANGED" type="LimboState" parent="CombatStateMachine" node_paths=PackedStringArray("actor", "bt_player")]
+[node name="RANGED" type="LimboState" parent="CombatStateMachine" unique_id=1132427303 node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("35_8t56l")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="MELEE" type="LimboState" parent="CombatStateMachine" node_paths=PackedStringArray("actor", "bt_player")]
+[node name="MELEE" type="LimboState" parent="CombatStateMachine" unique_id=1808922197 node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("36_54l2b")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="NPCStats" parent="." node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("40_0e5u2")]
+[node name="NPCStats" parent="." unique_id=581152469 node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("40_0e5u2")]
 z_index = -1
 offset_left = -50.0
 offset_top = -43.0
@@ -1504,7 +1503,7 @@ stagger = NodePath("../Stagger")
 actor = NodePath("..")
 metadata/_edit_use_anchors_ = true
 
-[node name="VisibleOnScreenNotifier2D2" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D2" type="VisibleOnScreenNotifier2D" parent="." unique_id=595900798]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
