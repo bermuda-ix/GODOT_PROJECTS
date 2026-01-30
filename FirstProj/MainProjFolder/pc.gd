@@ -1340,7 +1340,7 @@ func _on_hazard_detector_area_entered(area):
 			area.impact()
 	
 	elif area.is_in_group("Enemy"):
-		hit_stop.hit_stop(0.05, 0.1)
+		hit_stop.hit_stop(0.05, 0.05)
 		knockback.x = input_dir.x * knockback.x *0.25
 		
 

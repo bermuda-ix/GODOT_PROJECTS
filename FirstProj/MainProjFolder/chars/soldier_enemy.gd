@@ -132,7 +132,7 @@ var distance
 @onready var bulletdodge: BulletDodge = $LimboHSM/BULLETDODGE
 @onready var hit: LimboState = $LimboHSM/HIT
 @onready var staggered: LimboState = $LimboHSM/STAGGERED
-@onready var teleport_and_shoot: BTState = $LimboHSM/COUNTER/TeleportAndShoot
+@onready var teleport_and_shoot: BTState = $LimboHSM/TeleportAndShoot
 
 
 
@@ -230,14 +230,14 @@ func _init_state_machine():
 	state_machine.add_transition(attack, bulletdodge, &"bullet_dodge")
 	state_machine.add_transition(bulletdodge, chasing, &"finish_bullet_dodge")
 	state_machine.add_transition(bulletdodge, attack, &"resume_attack")
-	
+		
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
 	state_machine.add_transition(dying, death, dying.success_event)
 	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, phase_transition, &"begin_next_phase")
-	state_machine.add_transition(phase_transition, counter_sm, phase_transition.success_event)
+	state_machine.add_transition(phase_transition, teleport_and_shoot, phase_transition.success_event)
 	state_machine.remove_transition(dying, &"begin_next_phase")
 	state_machine.remove_transition(death, &"begin_next_phase")
 	
@@ -262,7 +262,6 @@ func _init_phase_state_machine():
 func _init_counter_state_machine():
 	counter_sm.initial_state=begin_counter
 	counter_sm.add_transition(begin_counter, kick_counter, &"kick_counter")
-	counter_sm.add_transition(begin_counter, teleport_and_shoot, &"teleport_counter")
 
 
 func _init_combat_state_machine():
@@ -600,7 +599,8 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 	if current==jump:
 		if previous==attack:
 			print("down attack")
-			
+	elif current==counter_sm:
+		print(current.name)
 	if previous==phase_transition:
 		print(current.name)
 
@@ -640,6 +640,8 @@ func _on_counter_updated(_delta: float) -> void:
 func _on_staggered_exited() -> void:
 	bt_player.blackboard.set_var("staggered", false)
 	bt_player.active=true
+	if phases.get_active_state()==phase_2:
+		state_machine.change_active_state(teleport_and_shoot)
 
 
 func _on_bullet_detection_bullet_detected() -> void:
@@ -673,12 +675,12 @@ func _on_dying_entered() -> void:
 
 func _on_phase_2_entered() -> void:
 #	
-	#pass
-	state_machine.change_active_state(counter_sm)
-	counter_sm.change_active_state(teleport_and_shoot)
-	assert(state_machine.get_active_state()==counter_sm)
-	assert(counter_sm.get_active_state()==teleport_and_shoot)
-	bt_player.blackboard.set_var("attack_mode", true)
+	pass
+	#bt_player.blackboard.set_var("attack_mode", false)
+	#bt_player.restart()
+	#state_machine.change_active_state(teleport_and_shoot)
+	#assert(state_machine.get_active_state()==teleport_and_shoot)
+	#bt_player.blackboard.set_var("attack_mode", true)
 	#state_machine.change_active_state(idle)
 	#counter_sm.add_transition(begin_counter, teleport_and_shoot, &"teleport_counter")
 	#state_machine.add_transition(counter_sm, attack, teleport_and_shoot.success_event)
@@ -698,8 +700,9 @@ func _on_phases_handler_next_phase() -> void:
 
 func _on_phasetransition_entered() -> void:
 	
-	counter_sm.add_transition(begin_counter, teleport_and_shoot, &"teleport_counter")
-	state_machine.add_transition(counter_sm, attack, teleport_and_shoot.success_event)
+	state_machine.add_transition(attack, teleport_and_shoot, &"teleport_counter")
+	state_machine.add_transition(staggered, teleport_and_shoot, &"teleport_recover")
+	state_machine.add_transition(teleport_and_shoot, attack, teleport_and_shoot.success_event)
 
 
 
