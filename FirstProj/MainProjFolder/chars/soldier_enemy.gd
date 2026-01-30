@@ -296,6 +296,9 @@ func _process(_delta):
 	is_on_screen=on_screen.is_on_screen()
 	#if Input.is_action_just_pressed("DEBUG_KEY"):
 		#test_function()
+		
+	if health.health<10:
+		assert(phases.get_active_state()==phase_2)
 
 
 
@@ -593,10 +596,13 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	h_bar.text=str(current.name)
-	#print(current.name)
+	print(current.name)
 	if current==jump:
 		if previous==attack:
 			print("down attack")
+			
+	if previous==phase_transition:
+		print(current.name)
 
 func _on_attack_entered() -> void:
 	bt_player.blackboard.set_var("attack_mode", true)
@@ -666,9 +672,13 @@ func _on_dying_entered() -> void:
 
 
 func _on_phase_2_entered() -> void:
-	
-	pass
-	#state_machine.change_active_state(begin_counter)
+#	
+	#pass
+	state_machine.change_active_state(counter_sm)
+	counter_sm.change_active_state(teleport_and_shoot)
+	assert(state_machine.get_active_state()==counter_sm)
+	assert(counter_sm.get_active_state()==teleport_and_shoot)
+	bt_player.blackboard.set_var("attack_mode", true)
 	#state_machine.change_active_state(idle)
 	#counter_sm.add_transition(begin_counter, teleport_and_shoot, &"teleport_counter")
 	#state_machine.add_transition(counter_sm, attack, teleport_and_shoot.success_event)
@@ -681,6 +691,7 @@ func _on_phases_handler_next_phase() -> void:
 	hurt_box_collision.disabled=true
 	changing_phase=true
 	bt_player.blackboard.set_var("attack_mode", false)
+	bt_player.restart()
 	state_machine.dispatch(&"begin_next_phase")
 	
 
@@ -695,10 +706,13 @@ func _on_phasetransition_entered() -> void:
 func _on_phasetransition_exited() -> void:
 	changing_phase=false
 	bt_player.blackboard.set_var("counter_attack", false)
-	phases.dispatch(&"next_phase")
 	hurt_box_collision.disabled=false
-	bt_player.blackboard.set_var("attack_mode", true)
+	phases.dispatch(&"next_phase")
 
 
 func _on_phasetransition_updated(delta: float) -> void:
 	assert(bt_player.blackboard.get_var("attack_mode")==false)
+
+
+func _on_teleport_and_shoot_entered() -> void:
+	print("worked")

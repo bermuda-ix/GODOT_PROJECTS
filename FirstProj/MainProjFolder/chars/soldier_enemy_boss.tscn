@@ -2036,6 +2036,7 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="exited" from="LimboHSM/COUNTER" to="." method="_on_counter_exited"]
 [connection signal="updated" from="LimboHSM/COUNTER" to="." method="_on_counter_updated"]
 [connection signal="exited" from="LimboHSM/COUNTER/KickCounter" to="." method="_on_kick_counter_exited"]
+[connection signal="entered" from="LimboHSM/COUNTER/TeleportAndShoot" to="." method="_on_teleport_and_shoot_entered"]
 [connection signal="entered" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_entered"]
 [connection signal="exited" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_exited"]
 [connection signal="exited" from="LimboHSM/STAGGERED" to="." method="_on_staggered_exited"]
