@@ -133,6 +133,8 @@ var distance
 @onready var hit: LimboState = $LimboHSM/HIT
 @onready var staggered: LimboState = $LimboHSM/STAGGERED
 @onready var teleport_and_shoot: BTState = $LimboHSM/TeleportAndShoot
+@onready var teleport_and_hit: BTState = $LimboHSM/TeleportAndHit
+
 
 
 
@@ -243,15 +245,19 @@ func _init_state_machine():
 	state_machine.remove_transition(death, &"begin_next_phase")
 	
 	
-#func _init_TEST_state_machine():
-	#state_machine.initial_state=idle
-	#state_machine.initialize(self)
-	#state_machine.set_active(true)
-	#
-	#state_machine.add_transition(idle, teleport_and_shoot, &"teleport_counter")
-	#state_machine.add_transition(teleport_and_shoot, idle, teleport_and_shoot.success_event)
-	#state_machine.add_transition(idle, hit, &"got_hit")
-	#state_machine.add_transition(hit, idle, &"hit_recover")
+func _init_TEST_state_machine():
+	state_machine.initial_state=idle
+	state_machine.initialize(self)
+	state_machine.set_active(true)
+	
+	state_machine.add_transition(idle, teleport_and_hit, &"teleport_atk")
+	state_machine.add_transition(teleport_and_hit, idle, teleport_and_hit.success_event)
+	state_machine.add_transition(idle, hit, &"got_hit")
+	state_machine.add_transition(hit, idle, &"hit_recover")
+
+func test_function():
+	state_machine.dispatch(&"teleport_atk")
+
 
 func _init_phase_state_machine():
 	phases.initial_state=phase_1
@@ -295,13 +301,11 @@ func _process(_delta):
 	bt_player.blackboard.set_var("ammo",ammo_count)
 	
 	is_on_screen=on_screen.is_on_screen()
-	#if Input.is_action_just_pressed("DEBUG_KEY"):
-		#test_function()
+	if Input.is_action_just_pressed("DEBUG_KEY"):
+		test_function()
 		
 	if health.health<10:
 		assert(phases.get_active_state()==phase_2)
-
-
 
 func _physics_process(delta):
 	##FOR TESTING REMOVE LATER
@@ -412,6 +416,18 @@ func teleport_away() -> void:
 	else:
 		global_position=teleport_handler.teleport(_tele_right, _tele_height, global_position)
 		
+func teleport_to(front : bool) -> void:
+#	X-axis offset so objects ends up consistantly in front or behind of player
+	var offset:= func():
+		if front: return 10
+		else: return -10
+	
+	print(player.global_position)
+	if player_right:	
+		global_position=teleport_handler.teleport(player.global_position.x-offset.call(), -player.global_position.y, global_position)
+	else:
+		global_position=teleport_handler.teleport(player.global_position.x+offset.call(), -player.global_position.y, global_position)
+
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	if anim_name=="atk_counter":
 		hit_stop_dur=0.2
@@ -724,8 +740,13 @@ func _on_phasetransition_updated(delta: float) -> void:
 
 
 func _on_teleport_and_shoot_entered() -> void:
+	hurt_box.set_collision_layer_value(7, false)
 	print("worked")
 
 
 func _on_staggered_entered() -> void:
 	pass # Replace with function body.
+
+
+func _on_teleport_and_shoot_exited() -> void:
+	hurt_box.set_collision_layer_value(7, true)

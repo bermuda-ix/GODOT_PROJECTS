@@ -491,7 +491,7 @@ func _process(_delta):
 	atk_state_debug()
 #
 	dodge(input_axis)
-	label.text=str(round(spread_boundary_2.rotation_degrees - spread_boundary_1.rotation_degrees))
+	label.text=str(state_machine.get_active_state())
 	#
 	if(state_machine.get_active_state()!=dodge_state and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=flip_state):
 		parry()
@@ -864,7 +864,7 @@ func update_animation(input_axis):
 		
 func attack_animate():
 
-	if attacking==true:
+	if attacking==true or state_machine.get_active_state()==hit:
 		return
 
 	elif Input.is_action_just_pressed("attack"):
@@ -1620,6 +1620,7 @@ func _on_attack_timer_timeout():
 	sp_atk_chn = 0
 	atk_1_resume=false
 	atk_2_resume=false
+	attacking=false
 
 func load_player_data():
 	var file = FileAccess.open("user://player_data/stats/player_stats.txt", FileAccess.READ)

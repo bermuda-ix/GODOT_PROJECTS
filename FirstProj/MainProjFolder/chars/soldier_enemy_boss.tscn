@@ -137,6 +137,7 @@
 [ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="131_hyxc6"]
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="132_ighft"]
 [ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="133_1o8km"]
+[ext_resource type="BehaviorTree" uid="uid://5ddqc5je8yj" path="res://ai/trees/tele_to_and_hit.tres" id="134_d3xdv"]
 [ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="134_lmju3"]
 [ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="135_2idfp"]
 [ext_resource type="Script" uid="uid://wai5i0eghoou" path="res://Component/functions/QTEHandler.gd" id="136_ylbh8"]
@@ -1622,6 +1623,8 @@ stereo = true
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_sqn71"]
 
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_aukkt"]
+
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_jjike"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_thomt"]
@@ -1926,36 +1929,40 @@ actor = NodePath("../../..")
 behavior_tree = ExtResource("131_4m1ae")
 blackboard_plan = SubResource("BlackboardPlan_sqn71")
 
-[node name="DODGE" type="LimboState" parent="LimboHSM" index="8" unique_id=1280229628 node_paths=PackedStringArray("actor", "bt_player", "animation_player")]
+[node name="TeleportAndHit" type="BTState" parent="LimboHSM" index="8" unique_id=1709475080]
+behavior_tree = ExtResource("134_d3xdv")
+blackboard_plan = SubResource("BlackboardPlan_aukkt")
+
+[node name="DODGE" type="LimboState" parent="LimboHSM" index="9" unique_id=1280229628 node_paths=PackedStringArray("actor", "bt_player", "animation_player")]
 script = ExtResource("129_7v3re")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="BULLETDODGE" type="LimboState" parent="LimboHSM" index="9" unique_id=723479259 node_paths=PackedStringArray("actor", "state_machine", "animation_player")]
+[node name="BULLETDODGE" type="LimboState" parent="LimboHSM" index="10" unique_id=723479259 node_paths=PackedStringArray("actor", "state_machine", "animation_player")]
 script = ExtResource("130_cgspr")
 actor = NodePath("../..")
 state_machine = NodePath("..")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="HIT" type="LimboState" parent="LimboHSM" index="10" unique_id=1416400760 node_paths=PackedStringArray("actor", "hurtbox", "animation_player")]
+[node name="HIT" type="LimboState" parent="LimboHSM" index="11" unique_id=1416400760 node_paths=PackedStringArray("actor", "hurtbox", "animation_player")]
 script = ExtResource("131_hyxc6")
 actor = NodePath("../..")
 hurtbox = NodePath("../../HurtBox")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="STAGGERED" type="LimboState" parent="LimboHSM" index="11" unique_id=1474770168 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player")]
+[node name="STAGGERED" type="LimboState" parent="LimboHSM" index="12" unique_id=1474770168 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player")]
 script = ExtResource("132_ighft")
 actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
 stagger = NodePath("../../Stagger")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="DYING" type="BTState" parent="LimboHSM" index="12" unique_id=1313469762]
+[node name="DYING" type="BTState" parent="LimboHSM" index="13" unique_id=1313469762]
 behavior_tree = ExtResource("133_1o8km")
 blackboard_plan = SubResource("BlackboardPlan_jjike")
 
-[node name="PHASETRANSITION" type="BTState" parent="LimboHSM" index="13" unique_id=1418593360]
+[node name="PHASETRANSITION" type="BTState" parent="LimboHSM" index="14" unique_id=1418593360]
 behavior_tree = ExtResource("139_aukkt")
 blackboard_plan = SubResource("BlackboardPlan_thomt")
 
@@ -2038,6 +2045,7 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="updated" from="LimboHSM/COUNTER" to="." method="_on_counter_updated"]
 [connection signal="exited" from="LimboHSM/COUNTER/KickCounter" to="." method="_on_kick_counter_exited"]
 [connection signal="entered" from="LimboHSM/TeleportAndShoot" to="." method="_on_teleport_and_shoot_entered"]
+[connection signal="exited" from="LimboHSM/TeleportAndShoot" to="." method="_on_teleport_and_shoot_exited"]
 [connection signal="entered" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_entered"]
 [connection signal="exited" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_exited"]
 [connection signal="entered" from="LimboHSM/STAGGERED" to="." method="_on_staggered_entered"]

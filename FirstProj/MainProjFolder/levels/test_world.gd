@@ -80,7 +80,7 @@ func _ready():
 	for i in spawn_points.size():
 		print(spawn_points[i].name)
 	Events.increase_heat_lvl.connect(increase_heat)
-	Events.player_death.connect(preload_next_scene)
+	#Events.player_death.connect(preload_next_scene)
 	Events.player_death.connect(player_death)
 	Events.boss_died.connect(boss_death)
 	#Events.start_cutscene.emit()

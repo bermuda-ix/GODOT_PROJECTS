@@ -20,6 +20,7 @@ func _enter() -> void:
 	
 func _exit() -> void:
 	#print("hit recovered")
-	#actor.hurt_box_collision.disabled=false
+	actor.hurt_box_collision.disabled=false
 	hurtbox.set_collision_layer_value(7, true)
+	
 	animation_player.play("RESET")
