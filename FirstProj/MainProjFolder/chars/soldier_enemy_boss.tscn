@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_33sos"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ggkva"]
+[ext_resource type="Shader" uid="uid://bepnj65yb26ur" path="res://chars/soldier_enemy_boss.gdshader" id="3_8fc12"]
 [ext_resource type="Texture2D" uid="uid://c6kovqjcnxlly" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Jump/Jump01.png" id="3_sqn71"]
 [ext_resource type="Texture2D" uid="uid://bcow13fj0p561" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Jump/Jump02.png" id="4_4m1ae"]
 [ext_resource type="Texture2D" uid="uid://bvivyxbuv2agx" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Jump/Jump03.png" id="5_7r4t8"]
@@ -146,6 +147,9 @@
 [ext_resource type="BehaviorTree" uid="uid://cryvbc7fjtiqp" path="res://ai/trees/soldier_boss_trees/phase_transition.tres" id="139_aukkt"]
 [ext_resource type="Script" uid="uid://c4uno006dp70c" path="res://Component/functions/TeleportHandler.gd" id="141_7r4t8"]
 [ext_resource type="Script" uid="uid://eulrkc0hl0ww" path="res://Component/functions/PhasesHandler.gd" id="142_qstkj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_chkyp"]
+shader = ExtResource("3_8fc12")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p1s76"]
 animations = [{
@@ -1644,6 +1648,8 @@ debug_enabled = true
 [node name="AnimatedSprite2D" parent="." index="1"]
 modulate = Color(0.454524, 0.454524, 0.454524, 1)
 self_modulate = Color(0.521141, 0.521141, 0.521141, 1)
+texture_filter = 2
+material = SubResource("ShaderMaterial_chkyp")
 sprite_frames = SubResource("SpriteFrames_p1s76")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D" index="0" unique_id=58236787]
