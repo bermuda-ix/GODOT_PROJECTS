@@ -250,13 +250,13 @@ func _init_TEST_state_machine():
 	state_machine.initialize(self)
 	state_machine.set_active(true)
 	
-	state_machine.add_transition(idle, teleport_and_hit, &"teleport_atk")
-	state_machine.add_transition(teleport_and_hit, idle, teleport_and_hit.success_event)
+	state_machine.add_transition(idle, teleport_and_shoot, &"teleport_counter")
+	state_machine.add_transition(teleport_and_shoot, idle, teleport_and_shoot.success_event)
 	state_machine.add_transition(idle, hit, &"got_hit")
 	state_machine.add_transition(hit, idle, &"hit_recover")
 
 func test_function():
-	state_machine.dispatch(&"teleport_atk")
+	state_machine.dispatch(&"teleport_counter")
 
 
 func _init_phase_state_machine():
@@ -357,6 +357,8 @@ func _physics_process(delta):
 func teleport_counter():
 	state_machine.dispatch(&"teleport_counter")
 	
+func teleport_atk():
+	state_machine.dispatch(&"teleport_atk")
 	
 func apply_gravity(delta : float) -> void:
 	if not is_on_floor():
@@ -412,9 +414,9 @@ func teleport_away() -> void:
 	var _tele_height := 80
 	
 	if player_right:
-		global_position=teleport_handler.teleport(_tele_left, _tele_height, global_position)
+		global_position=teleport_handler.teleport((global_position.x+_tele_left), (global_position.y-_tele_height), global_position)
 	else:
-		global_position=teleport_handler.teleport(_tele_right, _tele_height, global_position)
+		global_position=teleport_handler.teleport((global_position.x+_tele_right), (global_position.y-_tele_height), global_position)
 		
 func teleport_to(front : bool) -> void:
 #	X-axis offset so objects ends up consistantly in front or behind of player
@@ -697,7 +699,7 @@ func _on_dying_entered() -> void:
 
 func _on_phase_2_entered() -> void:
 #	
-	pass
+	bt_player.blackboard.set_var("Phase2Active", true)
 	#bt_player.blackboard.set_var("attack_mode", false)
 	#bt_player.restart()
 	#state_machine.change_active_state(teleport_and_shoot)
@@ -724,7 +726,10 @@ func _on_phasetransition_entered() -> void:
 	
 	state_machine.add_transition(attack, teleport_and_shoot, &"teleport_counter")
 	state_machine.add_transition(staggered, teleport_and_shoot, &"teleport_recover")
+	state_machine.add_transition(chasing, teleport_and_hit, &"teleport_atk")
+	
 	state_machine.add_transition(teleport_and_shoot, attack, teleport_and_shoot.success_event)
+	state_machine.add_transition(teleport_and_hit, attack, teleport_and_hit.success_event)
 
 
 
