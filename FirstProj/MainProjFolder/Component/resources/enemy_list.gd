@@ -24,6 +24,7 @@ const BOSSES := {
 }
 #Nonloaded
 const BOSS_REF := {
+	"SOLDIER_BOSS" = "uid://cu7yn55uf2fn8",
 	"MECH_RANGED" = "res://chars/mech_ranged.tscn",
 	"DEMON_1" = "res://chars/demon_phase1.tscn"
 	}

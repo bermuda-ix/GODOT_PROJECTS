@@ -10,6 +10,7 @@ extends Node2D
 @onready var label = $CanvasLayer/Label
 #@onready var pause_menu = $CanvasLayer/PauseMenu
 @onready var score : int = 0
+@onready var score_spawn : int = 10
 @onready var heat_handler: HeatHandler = $HeatHandler
 @onready var hit_stop: HitStop = $HitStop
 @onready var level_state_handler: LevelStateHandler = $LevelStateHandler
@@ -33,7 +34,9 @@ var qte_options : Array[String] = ["1","1","1","1","1"]
 @onready var guide_arrow_right: Control = $CanvasLayer/GuideArrowRight
 @onready var guide_arrow_left: Control = $CanvasLayer/GuideArrowLeft
 @onready var boss_area_on_screen: VisibleOnScreenNotifier2D = $BossBounderies/BossArena/BossAreaOnScreen
+@onready var boss_active : bool = false
 
+signal spawn_boss_signal
 
 var boss_preload
 
@@ -135,11 +138,13 @@ func _process(_delta):
 		label.text = str("Score: ", score)
 		
 		handle_spawn()
-	
 	show_boss_countdown()
 	
 	if Input.is_action_just_pressed("Pause"):
 		show_pause()
+	
+	if boss_active:
+		countdown_to_boss()
 	
 	##	DEBUGING INPUT
 	if Input.is_action_just_pressed("DEBUG_KEY"):
@@ -221,11 +226,23 @@ func set_health():
 	
 func inc_score(value : int):
 	score += value
-	if score%10==0:
-		if boss_spawn_level==0:
-			prepare_boss_spawn(enemy_list.BOSS_REF["MECH_RANGED"])
-		else:
-			prepare_boss_spawn(enemy_list.BOSS_REF["DEMON_1"])
+	score_spawn -= value
+	if boss_active:
+		return
+	else:
+		if score_spawn<=0:
+			boss_active=true
+			match boss_spawn_level:
+				0:
+					prepare_boss_spawn(enemy_list.BOSS_REF["SOLDIER_BOSS"])
+				1:
+					prepare_boss_spawn(enemy_list.BOSS_REF["MECH_RANGED"])
+				2:
+					prepare_boss_spawn(enemy_list.BOSS_REF["DEMON_1"])
+			#if boss_spawn_level==0:
+				#prepare_boss_spawn(enemy_list.BOSS_REF["SOLDIER_BOSS"])
+			#else:
+				#prepare_boss_spawn(enemy_list.BOSS_REF["DEMON_1"])
 
 func handle_spawn():
 	pass
@@ -293,10 +310,11 @@ func boss_loaded():
 	for i in range(spawn_points.size()-1, -1, -1):
 		spawn_points[i].active=false
 	Events.inc_score.connect(countdown_to_boss)
+	countdown_to_boss()
 
 func countdown_to_boss():
 	var _enemies_left=get_tree().get_nodes_in_group("enemies").size()
-	if _enemies_left>0 or _enemies_left!=null:
+	if _enemies_left>0 and _enemies_left!=null:
 		print(_enemies_left, " Enemies left")
 	else:
 		if not boss_area_on_screen.is_on_screen():
@@ -306,6 +324,7 @@ func countdown_to_boss():
 				guide_arrow_right.visible=false
 		boss_countdown.visible=true
 		boss_spawn_timer.start()
+		boss_active=false
 		
 
 func spawn_boss():
@@ -320,6 +339,7 @@ func boss_death():
 	for i in range(heat_handler.heat_spawn_max.size()-1, -1, -1):
 		heat_handler.heat_spawn_max[i]+=2
 	boss_spawn_level+=1
+	score_spawn=10
 	Events.reset_heat.emit()
 
 func _on_pc_attack_qte() -> void:

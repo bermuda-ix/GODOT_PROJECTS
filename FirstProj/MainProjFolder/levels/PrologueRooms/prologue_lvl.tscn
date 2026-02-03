@@ -13,12 +13,12 @@
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="10_j2fky"]
 [ext_resource type="Texture2D" uid="uid://d4ixead72khtg" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding2.png" id="10_rfxm3"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="11_52g4u"]
-[ext_resource type="PackedScene" uid="uid://b5d2nkkrrcixy" path="res://chars/soldier_enemy.tscn" id="12_f1jjf"]
 [ext_resource type="PackedScene" uid="uid://dn0fhusgltn4m" path="res://chars/heavy_soldier.tscn" id="13_rfxm3"]
 [ext_resource type="PackedScene" uid="uid://mve6miefg0i0" path="res://chars/turret_enemies/turret_base_3.tscn" id="14_r2uf8"]
 [ext_resource type="PackedScene" uid="uid://idc8e7mjacdd" path="res://Component/turret_link.tscn" id="15_ffcw5"]
 [ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="16_vw32t"]
 [ext_resource type="PackedScene" uid="uid://dak3j323lms0s" path="res://chars/sleeping_guard.tscn" id="17_61h8j"]
+[ext_resource type="PackedScene" uid="uid://cu7yn55uf2fn8" path="res://chars/soldier_enemy_boss.tscn" id="17_rfxm3"]
 [ext_resource type="PackedScene" uid="uid://b7ppm0ysps4q6" path="res://Component/resources/enemy_group.tscn" id="19_658m8"]
 [ext_resource type="Script" uid="uid://7cyh5ujpo4sp" path="res://levels/Boundery.gd" id="20_e156f"]
 [ext_resource type="PackedScene" uid="uid://b2ll7yf0xbexn" path="res://levels/PrologueRooms/prologue_room_one.tscn" id="21_7klgn"]
@@ -774,20 +774,8 @@ position = Vector2(656, 457)
 
 [node name="MinoBossGroup1" type="Node" parent="Enemy/MiniBosses" index="0" unique_id=912337328]
 
-[node name="soldier_enemy3" parent="Enemy/MiniBosses/MinoBossGroup1" index="0" unique_id=210088080 instance=ExtResource("12_f1jjf")]
-position = Vector2(2045, 775)
-
-[node name="HeavySoldier" parent="Enemy/MiniBosses/MinoBossGroup1" index="1" unique_id=934510168 instance=ExtResource("13_rfxm3")]
-position = Vector2(2119, 776)
-scale = Vector2(0.5, 0.5)
-
-[node name="HeavySoldier2" parent="Enemy/MiniBosses/MinoBossGroup1" index="2" unique_id=1128814936 instance=ExtResource("13_rfxm3")]
-position = Vector2(2171, 778)
-scale = Vector2(0.5, 0.5)
-
-[node name="GuardEnemy" parent="Enemy/MiniBosses/MinoBossGroup1" index="3" unique_id=962918753 instance=ExtResource("16_vw32t")]
-position = Vector2(2231, 770)
-scale = Vector2(0.75, 0.75)
+[node name="soldier_enemy_boss" parent="Enemy/MiniBosses/MinoBossGroup1" index="0" unique_id=789104702 instance=ExtResource("17_rfxm3")]
+position = Vector2(2021, 774)
 
 [node name="Underground" type="Node" parent="Enemy" index="6" unique_id=598079795]
 
