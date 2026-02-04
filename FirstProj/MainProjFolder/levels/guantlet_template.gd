@@ -36,6 +36,8 @@ var qte_options : Array[String] = ["1","1","1","1","1"]
 @onready var boss_area_on_screen: VisibleOnScreenNotifier2D = $BossBounderies/BossArena/BossAreaOnScreen
 @onready var boss_active : bool = false
 
+
+
 signal spawn_boss_signal
 
 var boss_preload

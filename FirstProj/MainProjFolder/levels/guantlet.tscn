@@ -5813,7 +5813,7 @@ polygon = PackedVector2Array(-1, 3, -1, 175, 39, 175, 39, 52, 571, 52, 571, 323,
 
 [node name="Area2D4" type="StaticBody2D" parent="None-Tileset-Collision" index="3" unique_id=1930247171]
 position = Vector2(2334, -639)
-collision_mask = 131075
+collision_mask = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="None-Tileset-Collision/Area2D4" index="0" unique_id=646325241]
 polygon = PackedVector2Array(-2, -1, -1, 799, 37, 799, 37, 750, 596, 750, 596, 702, 189, 702, 187, 674, 157, 596, 128, 602, 124, 704, 37, 704, 37, 560, 116, 560, 116, 510, 39, 511, 39, 367, 664, 370, 664, 414, 723, 415, 723, 362, 670.645, 322.924, 35, 322, 35, 184, 174, 47, 549, 51, 664, 166, 664, 255, 692, 256, 693, 273, 721, 273, 722, 2)
@@ -5842,7 +5842,7 @@ collision_mask = 131072
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="NoSpawnZone/Zone1" index="0" unique_id=1697797001]
 position = Vector2(674, 706)
-polygon = PackedVector2Array(-667.5, -699.5, -671.5, 687.5, 650.5, 687.5, 655.5, 387.5, 82.5, 382.5, 48.5, 286.5, 48.5, -699.5)
+polygon = PackedVector2Array(-667.5, -699.5, -671.5, 687.5, 31.000427, 687.5, 650.5, 687.5, 655.5, 387.5, 82.5, 382.5, 48.5, 286.5, 48.5, -699.5)
 
 [node name="Zone2" type="Area2D" parent="NoSpawnZone" index="1" unique_id=1915466459]
 position = Vector2(2307, -1120)
@@ -5877,50 +5877,50 @@ camera_zoom = 0.7
 offset = Vector2(0, -30)
 
 [node name="SpawnPoint" parent="CameraPos" index="1" unique_id=1963112036 instance=ExtResource("8_ylpkt")]
-position = Vector2(-328, -2)
+position = Vector2(-466, 0)
 active = true
 single_spawn = false
 
 [node name="SpawnPoint2" parent="CameraPos" index="2" unique_id=1170379718 instance=ExtResource("8_ylpkt")]
-position = Vector2(323, 0)
+position = Vector2(446, 0)
 active = true
 single_spawn = false
 
-[node name="FactoryBackgroundPara" parent="." index="9" unique_id=335350470 instance=ExtResource("5_hpdw1")]
+[node name="FactoryBackgroundPara" parent="CameraPos" index="3" unique_id=335350470 instance=ExtResource("5_hpdw1")]
 z_index = -3
-position = Vector2(3384, 0)
+position = Vector2(-290, -160)
 
-[node name="HeatHandler" type="Node" parent="." index="10" unique_id=1054011795]
+[node name="HeatHandler" type="Node" parent="." index="9" unique_id=1054011795]
 script = ExtResource("10_riclf")
 heat_spawn_rate = Array[float]([5.0, 4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5])
 heat_spawn_max = Array[int]([2, 2, 2, 3, 3, 3, 4, 4])
 metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 
-[node name="LevelStateHandler" type="Node" parent="." index="11" unique_id=860460586 node_paths=PackedStringArray("level")]
+[node name="LevelStateHandler" type="Node" parent="." index="10" unique_id=860460586 node_paths=PackedStringArray("level")]
 script = ExtResource("14_dp3go")
 level = NodePath("..")
 metadata/_custom_type_script = "uid://klqpph3n6xut"
 
-[node name="StartingPos" type="Node" parent="." index="12" unique_id=2124936378]
+[node name="StartingPos" type="Node" parent="." index="11" unique_id=2124936378]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" unique_id=691015607 groups=["start_pos"]]
 position = Vector2(3758, 109)
 
-[node name="HitStop" type="Node" parent="." index="13" unique_id=1507146872]
+[node name="HitStop" type="Node" parent="." index="12" unique_id=1507146872]
 script = ExtResource("15_6bl2l")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
-[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="14" unique_id=645294220]
+[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="13" unique_id=645294220]
 libraries/ = SubResource("AnimationLibrary_guebu")
 
-[node name="BossSpawnTimer" type="Timer" parent="." index="15" unique_id=1994455991]
+[node name="BossSpawnTimer" type="Timer" parent="." index="14" unique_id=1994455991]
 wait_time = 10.0
 one_shot = true
 
-[node name="BossSpawnPoint" type="Node2D" parent="." index="16" unique_id=824691568]
+[node name="BossSpawnPoint" type="Node2D" parent="." index="15" unique_id=824691568]
 position = Vector2(3760, 0)
 
-[node name="BossBounderies" type="Node" parent="." index="17" unique_id=1804098223]
+[node name="BossBounderies" type="Node" parent="." index="16" unique_id=1804098223]
 
 [node name="Boundery" type="StaticBody2D" parent="BossBounderies" index="0" unique_id=1240230951]
 position = Vector2(3096, 16)
@@ -5950,6 +5950,7 @@ position = Vector2(3104, 128)
 [node name="BossAreaCollision" type="CollisionShape2D" parent="BossBounderies/BossArena" index="0" unique_id=1714636548]
 position = Vector2(699, 67)
 shape = SubResource("RectangleShape2D_guebu")
+disabled = true
 
 [node name="BossAreaOnScreen" type="VisibleOnScreenNotifier2D" parent="BossBounderies/BossArena" index="1" unique_id=129667210]
 position = Vector2(64, 8)

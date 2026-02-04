@@ -402,6 +402,10 @@ offset = Vector2(0, -10)
 
 [node name="Camera2D" parent="CameraPos" index="0" unique_id=206778168]
 zoom = Vector2(1.5, 1.5)
+limit_left = 0
+limit_top = 0
+limit_right = 576
+limit_bottom = 324
 
 [node name="SpawnPoint" parent="CameraPos" index="1" unique_id=38881744 instance=ExtResource("4_4kfue")]
 position = Vector2(233, -45)

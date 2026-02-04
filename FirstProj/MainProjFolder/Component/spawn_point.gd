@@ -24,6 +24,10 @@ var level_node
 @export var no_spawn_entered : bool = false
 @export var spawn_pos_limit_upper : Vector2 = Vector2.ZERO
 @export var spawn_pos_limit_lower : Vector2 = Vector2.ZERO
+@onready var area_2d: Area2D = $Area2D
+@onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
+@onready var area_colliding := false
+@onready var body_colliding := false
 
 #initial spawn behavior
 @export var spawn_active : bool = true
@@ -63,9 +67,12 @@ func _on_spawn_timer_timeout():
 			
 	if not active:
 		return
-	elif no_spawn_entered:
+	elif no_spawn_entered or area_colliding or body_colliding:
 		return
 	else:
+		assert(no_spawn_entered!=true)
+		assert(area_colliding!=true)
+		assert(body_colliding!=true)
 		if spawn_type=="boss":
 			if boss_rand:
 				enemy_inst = enemies.BOSSES[randi_range(1,boss_spawn_size-1)]
@@ -173,12 +180,12 @@ func reset_heat() -> void:
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	no_spawn_entered=true
+	area_colliding=true
 	print("no spawn")
 
 
 func _on_area_2d_area_exited(area: Area2D) -> void:
-	no_spawn_entered=false
+	area_colliding=false
 	print("spawn")
 
 
@@ -192,9 +199,9 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("WorldStatic"):
-		no_spawn_entered=true
+		body_colliding=true
 		
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body.is_in_group("WorldStatic"):
-		no_spawn_entered=false
+		body_colliding=false
