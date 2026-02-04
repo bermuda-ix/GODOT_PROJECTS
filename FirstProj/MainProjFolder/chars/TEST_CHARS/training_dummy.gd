@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 	
 
 		
-	label.text=str(global_position, " ", (global_position+teleport_dir_helper_rc.target_position))
+	#label.text=str(global_position, " ", (global_position+teleport_dir_helper_rc.target_position))
 
 func _init_state_machine() -> void:
 	state_machine.initial_state=idle

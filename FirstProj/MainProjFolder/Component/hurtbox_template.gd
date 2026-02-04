@@ -27,6 +27,7 @@ func _on_area_entered(hitbox: HitBox) -> void:
 			weakpoint_hit.emit()
 		if hitbox.stagger_damage:
 			stagger.stagger -= (hitbox.damage * dmg_mult)
+			### Maybe add minimum health damage to stagger attacks?  
 			#print(hitbox.damage, " ",dmg_mult)
 			#received_damage.emit(hitbox.damage)
 			got_hit.emit(hitbox)
