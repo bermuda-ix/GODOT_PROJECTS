@@ -4457,8 +4457,8 @@ tracks/5/path = NodePath("AnimatedSprite2D:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.3),
-"transitions": PackedFloat32Array(8.282121, 0.17075524, 1),
+"times": PackedFloat32Array(0, 0.16666667, 0.3),
+"transitions": PackedFloat32Array(8.282121, 0.17075524, 0.19614604),
 "update": 0,
 "values": [Vector2(0, 8), Vector2(0, 0), Vector2(0, 8)]
 }
@@ -4499,6 +4499,18 @@ tracks/8/keys = {
 "args": ["shotgun_fire"],
 "method": &"call_audioplayer"
 }]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:disabled")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.11519264, 0.16666667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, true, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_cdmbu"]
@@ -4636,6 +4648,18 @@ tracks/10/keys = {
 "update": 1,
 "values": [Vector2(47, -34)]
 }
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimatedSprite2D/HitBox:stagger_damage")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.29611284, 0.31576332),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
 
 [sub_resource type="Animation" id="Animation_kd7ms"]
 resource_name = "Heavy_Dash_Attack"
@@ -4735,6 +4759,18 @@ tracks/7/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2(47, -16)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedSprite2D/HitBox:stagger_damage")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.09960775, 0.36666667, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
 }
 
 [sub_resource type="Animation" id="Animation_0gauh"]
@@ -5577,6 +5613,18 @@ tracks/45/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+tracks/46/type = "value"
+tracks/46/imported = false
+tracks/46/enabled = true
+tracks/46/path = NodePath("AnimatedSprite2D/HitBox:stagger_damage")
+tracks/46/interp = 1
+tracks/46/loop_wrap = true
+tracks/46/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_oktus"]
@@ -8239,6 +8287,7 @@ texture = ExtResource("5_pvc8c")
 [node name="SpAtkHitBox" type="Area2D" parent="AnimatedSprite2D/Shotty" unique_id=1612925221 groups=["sp_atk_default"]]
 position = Vector2(0, 3.5762787e-07)
 script = ExtResource("6_y7jp7")
+stagger_damage = true
 metadata/_custom_type_script = "uid://5ijvah6jjgdb"
 
 [node name="SpAtkCone" type="CollisionPolygon2D" parent="AnimatedSprite2D/Shotty/SpAtkHitBox" unique_id=2132034108]
