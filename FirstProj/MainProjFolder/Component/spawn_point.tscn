@@ -1,26 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://2n8eqdqt683t"]
+[gd_scene format=3 uid="uid://2n8eqdqt683t"]
 
 [ext_resource type="Script" uid="uid://d1kpmg4xikyjc" path="res://Component/spawn_point.gd" id="1_0y5md"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ntvx"]
 
-[node name="SpawnPoint" type="Node2D" groups=["SpawnPoint"]]
+[node name="SpawnPoint" type="Node2D" unique_id=1107553782 groups=["SpawnPoint"]]
 script = ExtResource("1_0y5md")
 active = false
 
-[node name="SpawnTimer" type="Timer" parent="."]
+[node name="SpawnTimer" type="Timer" parent="." unique_id=1000195284]
 wait_time = 5.0
 one_shot = true
 autostart = true
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=683435104]
 collision_layer = 131072
 collision_mask = 131071
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=187030693]
 shape = SubResource("CircleShape2D_1ntvx")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=324164730]
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

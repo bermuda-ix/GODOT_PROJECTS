@@ -50,6 +50,8 @@ func _ready():
 #
 
 func _on_spawn_timer_timeout():
+	
+	
 	var spawn_ind
 	var enemy_inst
 	if limit_spawn:
@@ -59,7 +61,11 @@ func _on_spawn_timer_timeout():
 		else:
 			pass
 			
-	if active:
+	if not active:
+		return
+	elif no_spawn_entered:
+		return
+	else:
 		if spawn_type=="boss":
 			if boss_rand:
 				enemy_inst = enemies.BOSSES[randi_range(1,boss_spawn_size-1)]
@@ -104,9 +110,6 @@ func _on_spawn_timer_timeout():
 			enemy_cnt = get_tree().get_nodes_in_group("Enemy").size()
 			#print("enemy spawn :", enemy_cnt)
 			spawn_timer.start(timer)
-		
-	else:
-		pass
 
 func activate(spawn):
 	#print(spawn)
