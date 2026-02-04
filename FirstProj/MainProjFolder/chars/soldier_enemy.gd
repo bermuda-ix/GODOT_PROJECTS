@@ -493,7 +493,7 @@ func _on_stagger_staggered() -> void:
 	#bt_player.blackboard.set_var("staggered", true)
 	bt_player.restart()
 	parry_timer.start(3)
-	
+	hit_stop.hit_stop(0.5, 1)
 	hb_collision.disabled=true
 	state_machine.dispatch(&"staggered")
 	Events.camera_shake.emit(2,20)
