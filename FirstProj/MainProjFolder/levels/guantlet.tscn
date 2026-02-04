@@ -5557,6 +5557,7 @@ grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
 [node name="BossCountdown" type="RichTextLabel" parent="CanvasLayer" index="5" unique_id=871931569]
+visible = false
 modulate = Color(1, 1, 1, 0.56078434)
 anchors_preset = 15
 anchor_right = 1.0
@@ -5872,6 +5873,8 @@ polygon = PackedVector2Array(-695, 357, -697.5, 692.5, -610, 694, -579, 533, -69
 
 [node name="CameraPos" parent="." index="8" unique_id=1374409001 instance=ExtResource("3_xb8eg")]
 position = Vector2(3378, 0)
+camera_zoom = 0.7
+offset = Vector2(0, -30)
 
 [node name="SpawnPoint" parent="CameraPos" index="1" unique_id=1963112036 instance=ExtResource("8_ylpkt")]
 position = Vector2(-328, -2)

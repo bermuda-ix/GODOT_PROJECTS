@@ -29,7 +29,7 @@ func _process(delta: float) -> void:
 	if shake_strength>0:
 		shake_strength = lerpf(shake_strength, 0, shake_fade*delta)
 		
-		camera_2d.offset=randomOffset()
+		camera_2d.offset+=randomOffset()
 
 func camera_shake_fixed():
 	shake_strength=rand_strength

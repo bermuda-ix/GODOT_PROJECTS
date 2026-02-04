@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_33sos"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ggkva"]
-[ext_resource type="Shader" uid="uid://bepnj65yb26ur" path="res://chars/soldier_enemy_boss.gdshader" id="3_8fc12"]
+[ext_resource type="Shader" uid="uid://38ktkg87cgya" path="res://Art_Components/Effects/CustomRes/outline_effect_static.gdshader" id="3_8fc12"]
 [ext_resource type="Texture2D" uid="uid://c6kovqjcnxlly" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Jump/Jump01.png" id="3_sqn71"]
 [ext_resource type="Texture2D" uid="uid://bcow13fj0p561" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Jump/Jump02.png" id="4_4m1ae"]
 [ext_resource type="Texture2D" uid="uid://bvivyxbuv2agx" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Jump/Jump03.png" id="5_7r4t8"]

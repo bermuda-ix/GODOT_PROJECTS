@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cdeu1v1a1bwmd" path="res://Component/interactables/heart_drop.tscn" id="2_3df1g"]
 [ext_resource type="Texture2D" uid="uid://c3dcauqm122mo" path="res://Art_Components/Enemies/SWAT_2/Hurt.png" id="2_m8rmk"]
 [ext_resource type="Texture2D" uid="uid://bjvq70xvlg4t1" path="res://Art_Components/Enemies/SWAT_2/Idle_2.png" id="2_pt8o7"]
+[ext_resource type="Shader" uid="uid://38ktkg87cgya" path="res://Art_Components/Effects/CustomRes/outline_effect_static.gdshader" id="3_fw847"]
 [ext_resource type="Texture2D" uid="uid://iiqdoj5g56tc" path="res://Art_Components/Enemies/SWAT_2/Recharge.png" id="3_xrqpt"]
 [ext_resource type="Texture2D" uid="uid://bkbkryvxfkypc" path="res://Art_Components/Enemies/SWAT_2/Run.png" id="4_64nx0"]
 [ext_resource type="Texture2D" uid="uid://cqlocfol5bn1j" path="res://Art_Components/Enemies/SWAT_2/Jump.png" id="4_nvjmq"]
@@ -58,6 +59,9 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv57o"]
 size = Vector2(42, 76)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lvmp0"]
+shader = ExtResource("3_fw847")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3df1g"]
 atlas = ExtResource("1_4nhfo")
@@ -1244,6 +1248,8 @@ shape = SubResource("RectangleShape2D_cv57o")
 navigation_layers = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=902741220]
+texture_filter = 2
+material = SubResource("ShaderMaterial_lvmp0")
 sprite_frames = SubResource("SpriteFrames_64nx0")
 animation = &"idle"
 offset = Vector2(0, -39)
