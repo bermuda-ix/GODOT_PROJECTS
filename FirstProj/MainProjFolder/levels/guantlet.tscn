@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="3_xb8eg"]
 [ext_resource type="PackedScene" uid="uid://bdasl802tlb8c" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/factory_building_main_platform.tscn" id="4_smdmf"]
 [ext_resource type="Texture2D" uid="uid://cp27q8n7gwf8r" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factory.png" id="5_8lw3s"]
-[ext_resource type="PackedScene" uid="uid://cidnvxi453yo8" path="res://Art_Components/Backgrounds/factory_background_para.tscn" id="5_hpdw1"]
 [ext_resource type="PackedScene" uid="uid://m5ullq0dey1k" path="res://Art_Components/misc/lights_indoor.tscn" id="6_fhqwg"]
 [ext_resource type="TileSet" uid="uid://duvitr2o4lrsy" path="res://levels/level_components/factory_tile_set_building_platform.tres" id="6_fj8y8"]
 [ext_resource type="PackedScene" uid="uid://d2i1l2qqhpag0" path="res://Art_Components/tile_maps/tile_layers/lab_props_2.tscn" id="8_fj8y8"]
@@ -20,6 +19,10 @@
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="15_6bl2l"]
 [ext_resource type="Script" uid="uid://7cyh5ujpo4sp" path="res://levels/Boundery.gd" id="16_m654v"]
 [ext_resource type="PackedScene" uid="uid://bkr6h5xga8wr" path="res://Component/functions/local_flag.tscn" id="17_guebu"]
+[ext_resource type="Texture2D" uid="uid://bj13qy2ckri8q" path="res://Art_Components/Backgrounds/night_1/1.png" id="20_8c4kv"]
+[ext_resource type="Texture2D" uid="uid://b1p3fdvwsdnfy" path="res://Art_Components/Backgrounds/night_1/2.png" id="21_18qi5"]
+[ext_resource type="Texture2D" uid="uid://d4ixead72khtg" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding2.png" id="22_txgne"]
+[ext_resource type="Texture2D" uid="uid://clyivendy3q3w" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding.png" id="23_wmyi1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fhqwg"]
 texture = ExtResource("5_8lw3s")
@@ -5876,6 +5879,9 @@ position = Vector2(3378, 0)
 camera_zoom = 0.7
 offset = Vector2(0, -30)
 
+[node name="Camera2D" parent="CameraPos" index="0" unique_id=206778168]
+position = Vector2(6, -24)
+
 [node name="SpawnPoint" parent="CameraPos" index="1" unique_id=1963112036 instance=ExtResource("8_ylpkt")]
 position = Vector2(-466, 0)
 active = true
@@ -5885,10 +5891,6 @@ single_spawn = false
 position = Vector2(446, 0)
 active = true
 single_spawn = false
-
-[node name="FactoryBackgroundPara" parent="CameraPos" index="3" unique_id=335350470 instance=ExtResource("5_hpdw1")]
-z_index = -3
-position = Vector2(-290, -160)
 
 [node name="HeatHandler" type="Node" parent="." index="9" unique_id=1054011795]
 script = ExtResource("10_riclf")
@@ -5955,6 +5957,73 @@ disabled = true
 [node name="BossAreaOnScreen" type="VisibleOnScreenNotifier2D" parent="BossBounderies/BossArena" index="1" unique_id=129667210]
 position = Vector2(64, 8)
 rect = Rect2(32, -10, 1216, 138)
+
+[node name="Background" type="Node2D" parent="." index="17" unique_id=1212126005]
+
+[node name="NightSky" type="Parallax2D" parent="Background" index="0" unique_id=894540618]
+scroll_scale = Vector2(0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/NightSky" index="0" unique_id=997937893]
+z_index = -4
+position = Vector2(288, 160)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("20_8c4kv")
+
+[node name="Moon" type="Parallax2D" parent="Background" index="1" unique_id=1223225706]
+z_index = -2
+scroll_scale = Vector2(0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Moon" index="0" unique_id=571335475]
+position = Vector2(288, 112)
+texture = ExtResource("21_18qi5")
+
+[node name="BuildingBackgroundFar1" type="Parallax2D" parent="Background" index="2" unique_id=538677296]
+z_index = -2
+scroll_scale = Vector2(0.3, 1.01)
+repeat_size = Vector2(720, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/BuildingBackgroundFar1" index="0" unique_id=1060834390]
+z_index = -2
+position = Vector2(166.5, 240)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("22_txgne")
+
+[node name="BuildingBackgroundFar2" type="Parallax2D" parent="Background" index="3" unique_id=600541609]
+z_index = -2
+scroll_scale = Vector2(0.3, 1.01)
+repeat_size = Vector2(720, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/BuildingBackgroundFar2" index="0" unique_id=25402828]
+z_index = -2
+position = Vector2(718.5, 240)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("23_wmyi1")
+
+[node name="BuildingBackgroundClose1" type="Parallax2D" parent="Background" index="4" unique_id=782754933]
+z_index = -2
+scroll_scale = Vector2(0.5, 1.01)
+repeat_size = Vector2(720, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/BuildingBackgroundClose1" index="0" unique_id=166880240]
+z_index = -2
+position = Vector2(318.5, 208)
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("23_wmyi1")
+
+[node name="BuildingBackgroundClose2" type="Parallax2D" parent="Background" index="5" unique_id=122786025]
+z_index = -2
+scroll_scale = Vector2(0.5, 1.01)
+repeat_size = Vector2(720, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/BuildingBackgroundClose2" index="0" unique_id=2075337880]
+z_index = -2
+position = Vector2(534.5, 216)
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("22_txgne")
 
 [connection signal="spawn_boss_signal" from="." to="." method="_on_spawn_boss_signal"]
 [connection signal="timeout" from="BossSpawnTimer" to="." method="_on_boss_spawn_timer_timeout"]

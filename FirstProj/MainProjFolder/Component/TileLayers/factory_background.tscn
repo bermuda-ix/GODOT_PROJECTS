@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cqwec252xo1o4"]
+[gd_scene format=3 uid="uid://cqwec252xo1o4"]
 
 [ext_resource type="Texture2D" uid="uid://cp27q8n7gwf8r" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factory.png" id="1_a2jww"]
 [ext_resource type="Texture2D" uid="uid://d4ixead72khtg" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding2.png" id="2_igogx"]
@@ -36,5 +36,5 @@ sources/1 = SubResource("TileSetAtlasSource_2mt5v")
 sources/2 = SubResource("TileSetAtlasSource_hmt2x")
 sources/3 = SubResource("TileSetAtlasSource_20wlo")
 
-[node name="FactoryBackground" type="TileMapLayer"]
+[node name="FactoryBackground" type="TileMapLayer" unique_id=1055245706]
 tile_set = SubResource("TileSet_1uxan")
