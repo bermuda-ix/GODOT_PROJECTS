@@ -213,11 +213,11 @@ func _process(delta: float) -> void:
 	if not cutscene_handler.actor_control_active: 
 		vision_handler.handle_vision()
 		return
-	#print(turret.shoot_timer.time_left)
+	#print_debug(turret.shoot_timer.time_left)
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
 	debuging.text=str(velocity.y)
-	#print(velocity.y)
+	#print_debug(velocity.y)
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collision.disabled=true
 		return
@@ -238,7 +238,7 @@ func _physics_process(delta: float) -> void:
 		return
 	#flip_particles()
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
-	#print(state_machine.get_active_state())
+	#print_debug(state_machine.get_active_state())
 #	stop movement when hit, staggered, or dead
 	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
 		#hb_collison.disabled=true
@@ -253,7 +253,7 @@ func _physics_process(delta: float) -> void:
 			global_position.x=lerpf(global_position.x, global_position.x-400, .6*delta)
 		move_and_slide()
 	elif state_machine.get_active_state()==slam:
-		#print("slamming")
+		#print_debug("slamming")
 		velocity.y += slam_vel * delta
 		move_and_slide()
 	elif state_machine.get_active_state()==dying:
@@ -449,7 +449,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		gpu_particles_2d.emitting=true
 		
 	else:
-		print("kill shot")
+		print_debug("kill shot")
 		
 		
 	
@@ -488,6 +488,6 @@ func _on_stagger_staggered() -> void:
 	parry_timer.start(3)
 	
 	hb_collision.disabled=true
-	print("staggered")
+	print_debug("staggered")
 	state_machine.dispatch(&"staggered")
 	hb_collision_spc.disabled=true

@@ -7,8 +7,8 @@ extends LimboState
 
 func _enter() -> void:
 	actor.state="ATTACK"
-	#print("begin attack")
+	#print_debug("begin attack")
 	#bt_player.blackboard.set_var("attack_mode", true)
 
 #func _exit() -> void:
-	#print("exit")
+	#print_debug("exit")

@@ -1,16 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://dnliwh5g1v8xb"]
+[gd_scene format=3 uid="uid://dnliwh5g1v8xb"]
 
 [ext_resource type="Script" uid="uid://bh3oxakjg7syl" path="res://entry.gd" id="1_leoei"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_646mt"]
 
-[node name="Entry" type="Area2D" groups=["door", "entry"]]
+[node name="Entry" type="Area2D" unique_id=569438534 groups=["door", "entry"]]
 collision_layer = 262144
-collision_mask = 2
+collision_mask = 4194306
 script = ExtResource("1_leoei")
 entry_dir = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=75006286]
 shape = SubResource("RectangleShape2D_646mt")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

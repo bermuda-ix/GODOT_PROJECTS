@@ -89,7 +89,7 @@ func _process(delta):
 	if phase == 1:
 		if position.y<70:
 			if bt_player.blackboard.get_var("charge")==false:	
-				#print(turret.shoot_timer.time_left)
+				#print_debug(turret.shoot_timer.time_left)
 				turret.shoot()
 				turret.shoot_timer.paused=false
 			else:
@@ -141,7 +141,7 @@ func _physics_process(delta):
 	
 	#if phase==2 and final_hit==false:
 		#if (global_position.x!=176 or global_position.y>20) and bt_player.blackboard.get_var("charge")==false:
-			##print("moving to center")
+			##print_debug("moving to center")
 			#gravity=0
 			#global_position.x=lerpf(global_position.x, 176, .1)
 			#global_position.y=lerpf(global_position.y, 20, .1)
@@ -149,13 +149,13 @@ func _physics_process(delta):
 	#elif phase==2 and final_hit==true:
 		#gravity=grav
 		#
-	#print(bt_player.blackboard.get_var("multi_shot"))
+	#print_debug(bt_player.blackboard.get_var("multi_shot"))
 	
 
 func move(dir, speed):
 	
 	#velocity.y = (dir * (speed * counter_speed))
-	#print(phase)
+	#print_debug(phase)
 	if phase==0:
 		velocity.x = (dir * (speed * counter_speed)) + knockback.x
 		gravity=grav
@@ -164,7 +164,7 @@ func move(dir, speed):
 	elif phase==1:
 		velocity.x = (dir * (speed * counter_speed)) + knockback.x
 		if position.y>60 and bt_player.blackboard.get_var("charge")==false:
-			#print("floaitng")
+			#print_debug("floaitng")
 			position.y -= 1
 			velocity.y=0
 			gravity=0
@@ -176,7 +176,7 @@ func move(dir, speed):
 			velocity.y = speed
 		
 	elif phase==2:
-		#print("moving phase 2")
+		#print_debug("moving phase 2")
 		if final_hit==true:
 			velocity.x = (dir * (speed * counter_speed)) + knockback.x
 			gravity=grav
@@ -200,7 +200,7 @@ func move(dir, speed):
 
 func center_fly():
 	if (global_position.x!=272 or global_position.y>40) and final_hit==false:
-		#print("moving to center")
+		#print_debug("moving to center")
 		gravity=0
 		global_position.x=lerpf(global_position.x, center.x, .1)
 		global_position.y=lerpf(global_position.y, center.y, .1)
@@ -236,7 +236,7 @@ func light_attack():
 
 func attack_combo():
 	#var tree_status = bt_player.get_last_status()
-	#print(tree_status)
+	#print_debug(tree_status)
 	if attack_timer.is_stopped():
 		attack_timer.start()
 		atk_cmb=str("attack_",atk)
@@ -248,10 +248,10 @@ func rotate_bullet():
 	
 	var bd_angel=bullet_dir.angle()
 	if clkckws:
-		#print("clockwise: ", bullet_dir.angle())
+		#print_debug("clockwise: ", bullet_dir.angle())
 		bullet_dir = bullet_dir.slerp(Vector2.LEFT, 0.02) 
 	else :
-		#print("counterclockwise: ", bullet_dir.angle())
+		#print_debug("counterclockwise: ", bullet_dir.angle())
 		bullet_dir = bullet_dir.slerp(Vector2.RIGHT, 0.02) 
 
 	if bd_angel <= 0.3 and not clkckws:
@@ -261,14 +261,14 @@ func rotate_bullet():
 	
 
 func spread_shot(value: float):
-	print("spread shot")
+	print_debug("spread shot")
 	var shots = 180/value
 	var bd_angle=0
 	for n in shots:
 		bullet_dir=bullet_dir.rotated(deg_to_rad(bd_angle))
 		turret.shoot()
 		bd_angle+=shots
-		#print(shots)
+		#print_debug(shots)
 
 
 func _on_hit_box_parried():
@@ -340,11 +340,11 @@ func _on_animation_player_animation_finished(anim_name):
 	#var atk_chg : int = randi_range(0,5)
 	if anim_name=="light_attack":
 		full_combo=true
-		#print("light attacked ", atk_chg)
+		#print_debug("light attacked ", atk_chg)
 		#if atk_chg < 0:
 			#bt_player.blackboard.set_var("full_combo", false)
 		#else:
-			#print("full combo ready")
+			#print_debug("full combo ready")
 			#bt_player.blackboard.set_var("full_combo", true)
 			
 	#if anim_name=="attack_3":
@@ -353,7 +353,7 @@ func _on_animation_player_animation_finished(anim_name):
 
 
 func _on_turret_shoot_bullet():
-	#print("shoot")
+	#print_debug("shoot")
 	var bullet_inst = bullet.instantiate()
 	bullet_inst.set_speed(300.0)
 	if phase != 2:
@@ -377,15 +377,15 @@ func _on_bt_player_updated(status):
 		
 	#if phase==2:
 		#bt_player.active=false
-		#print("final hit")
+		#print_debug("final hit")
 
 func set_phase(cur_phase, next_phase : int):
 	
 	if cur_phase==next_phase:
 		return
 	else:
-		print("next phase")
-		print(cur_phase, " ",next_phase)
+		print_debug("next phase")
+		print_debug(cur_phase, " ",next_phase)
 		chase_timer.start(5)
 		bt_player.restart()
 		bt_player.blackboard.set_var("stunned", false)
@@ -408,7 +408,7 @@ func _on_shoot_change_timer_timeout():
 	if phase != 2:
 		return
 	else:
-		print(final_phase_hit)
+		print_debug(final_phase_hit)
 		var time=randf_range(3,5)
 		final_phase_hit += 1
 		if final_phase_hit >=10:
@@ -430,7 +430,7 @@ func _on_shoot_change_timer_timeout():
 				turret.set_multi_shot(true)
 				bullet=WAVE_PROJECTILE
 				shoot_change_timer.start(time)
-			print("MS: ",multi_shot)
+			print_debug("MS: ",multi_shot)
 
 
 func _on_health_health_depleted():
@@ -438,7 +438,7 @@ func _on_health_health_depleted():
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 	if enemies.size() <=1:
 		Events.level_completed.emit()
-		print("level complete")
+		print_debug("level complete")
 
 
 func _on_hurt_box_got_hit(hitbox):
@@ -451,4 +451,4 @@ func target_lock():
 	const TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
 	target_lock_inst=TARGET_LOCK.instantiate()
 	add_child(target_lock_inst)
-	print(str(position)," ",str(target_lock_inst.global_position))
+	print_debug(str(position)," ",str(target_lock_inst.global_position))

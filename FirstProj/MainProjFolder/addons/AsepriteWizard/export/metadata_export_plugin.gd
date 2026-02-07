@@ -38,7 +38,7 @@ func _cleanup_scene(path: String, type: String):
 	if scene_changed:
 		var filtered_scene := PackedScene.new()
 		if filtered_scene.pack(root_node) != OK:
-			print("Error updating scene")
+			print_debug("Error updating scene")
 			return
 
 		var content := _get_scene_content(path, filtered_scene)

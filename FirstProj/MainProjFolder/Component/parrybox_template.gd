@@ -18,7 +18,7 @@ func get_knockback() -> Vector2:
 
 func _on_parried(hitbox : HitBox) -> void:
 	if hitbox!= null:
-		#print("parried!")
+		#print_debug("parried!")
 		#stagger.stagger -= 1
 		parried_success.emit()
 

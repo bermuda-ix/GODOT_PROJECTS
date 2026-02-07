@@ -15,9 +15,9 @@ func _on_pressed() -> void:
 	if floor_locked:
 		if InventoryDict.player_inventory.has(key_type):
 			toggle_floor_lock(true)
-			print("Floor unlocked")
+			print_debug("Floor unlocked")
 		else:
-			print("Floor locked")
+			print_debug("Floor locked")
 			return
 	var regex = RegEx.new()
 	regex.compile("\\d+")
@@ -29,4 +29,4 @@ func _on_pressed() -> void:
 
 func toggle_floor_lock(value : bool) -> void:
 	floor_locked = value
-	#print(floor_locked)
+	#print_debug(floor_locked)

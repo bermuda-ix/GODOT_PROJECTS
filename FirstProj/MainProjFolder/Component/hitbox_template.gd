@@ -19,6 +19,6 @@ func get_damage() -> int:
 func _on_parried(_area :Area2D) -> void:
 	if _area!= null:
 		if _area.is_in_group("ParryBox"):
-			#print("parried!")
+			#print_debug("parried!")
 			stagger.stagger -= 1
 			parried.emit()

@@ -42,11 +42,11 @@ func teleport_away():
 	teleport_dir_helper_rc.target_position.x=(global_position.x-100)-teleport_dir_helper_rc.global_position.x
 	teleport_dir_helper_rc.target_position.y=(global_position.y-40)-teleport_dir_helper_rc.global_position.y
 	if teleport_dir_helper_rc.is_colliding():
-		print("blocked!")
+		print_debug("blocked!")
 		teleport_dir_helper_rc.target_position=-(global_position- teleport_dir_helper_rc.get_collision_point())
-	print("preparing to move to: ", (global_position+ teleport_dir_helper_rc.target_position), "from: ", global_position)
+	print_debug("preparing to move to: ", (global_position+ teleport_dir_helper_rc.target_position), "from: ", global_position)
 	global_position+= teleport_dir_helper_rc.target_position
-	print("teleporting to: ", global_position)
+	print_debug("teleporting to: ", global_position)
 
 func prepare_teleport():
 	
@@ -66,4 +66,4 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 
 
 func _on_bullet_detection_bullet_detected() -> void:
-	print("bullet detected")
+	print_debug("bullet detected")

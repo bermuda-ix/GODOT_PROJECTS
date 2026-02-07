@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dsj0t0v1bq42w"]
+[gd_scene format=3 uid="uid://dsj0t0v1bq42w"]
 
 [ext_resource type="Script" uid="uid://c5v52j4rejetd" path="res://Component/projectiles/shotgun_bullet_refactor.gd" id="1_fsvgn"]
 [ext_resource type="Texture2D" uid="uid://cyehj3lll483b" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Weapons/Bullet/Bullet02.png" id="1_wtcrh"]
@@ -14,7 +14,7 @@ emission_shape = 1
 emission_sphere_radius = 0.5
 gravity = Vector3(0, 0, 0)
 
-[node name="ShotgunBullet" type="RigidBody2D" groups=["PlayerBullet"]]
+[node name="ShotgunBullet" type="RigidBody2D" unique_id=1517323149 groups=["PlayerBullet"]]
 collision_layer = 8388672
 collision_mask = 16777489
 mass = 0.001
@@ -25,18 +25,18 @@ contact_monitor = true
 max_contacts_reported = 5
 script = ExtResource("1_fsvgn")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1609644407]
 position = Vector2(0, -3)
 texture = ExtResource("1_wtcrh")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=539934949]
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_nvocy")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1886619036]
 enable_node_path = NodePath("")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=477676870]
 position = Vector2(-5, 0)
 amount = 100
 lifetime = 0.1
@@ -44,7 +44,8 @@ trail_lifetime = 0.1
 trail_section_subdivisions = 2
 process_material = SubResource("ParticleProcessMaterial_nvocy")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=177731175]
 stream = ExtResource("3_pgeyf")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

@@ -40,7 +40,7 @@ func _ready():
 
 func _process(delta: float) -> void:
 	pass
-	#print(global_position)
+	#print_debug(global_position)
 
 func _physics_process(delta):
 	
@@ -65,6 +65,9 @@ func set_angular_vel(_rotation_speed : float) -> void:
 
 func rotate_missile(delta : float) -> void:
 	animated_sprite_2d.global_rotation=rotate_toward(animated_sprite_2d.global_rotation,tracking_rot, deg_to_rad(rotation_speed))
+
+func impact():
+	explode_impact()
 
 func explode_impact():
 	var explode_inst=explode.instantiate()

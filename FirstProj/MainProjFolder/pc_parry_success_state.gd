@@ -17,7 +17,7 @@ func _ready() -> void:
 	
 
 func _enter() -> void:
-	print("successful parry")
+	print_debug("successful parry")
 	anim_player.play("Parry_Success")
 	await anim_player.animation_finished
 	hit_stop.hit_stop(0.1, 1)

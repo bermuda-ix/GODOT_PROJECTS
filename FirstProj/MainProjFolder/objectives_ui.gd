@@ -21,18 +21,18 @@ func add_objective(name : String, value : int) -> void:
 	grid_container.add_child(new_level_objective)
 	new_level_objective.set_amount(value)
 	new_level_objective.set_objective_texture(objective_resources[item_res].texture)
-	print("adding new inv item: ", new_level_objective.name)
+	print_debug("adding new inv item: ", new_level_objective.name)
 	new_level_objective.update_objective_ui()
 	
 func remove_objective(name : String) -> void:
-	print("remove new inv item: ", name)
+	print_debug("remove new inv item: ", name)
 	var objective_remove : inv_item = grid_container.find_child(name)
 	grid_container.call_deferred("remove_child", objective_remove)
 	objective_remove.queue_free()
 	
 func update_objective(name : String, value : int) -> void:
 	var objective_update : Objective = grid_container.find_child(name)
-	print(objective_update.name, " is updating")
+	print_debug(objective_update.name, " is updating")
 	objective_update.amount_text.text=str(value)
 
 func _init_objectives_list(_objectives_list : Dictionary) -> void:

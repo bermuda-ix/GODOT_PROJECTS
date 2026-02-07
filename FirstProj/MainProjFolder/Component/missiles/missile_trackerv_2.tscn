@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://vdjcvocboc4s"]
+[gd_scene format=3 uid="uid://vdjcvocboc4s"]
 
 [ext_resource type="Texture2D" uid="uid://d1xsuny35cgdk" path="res://Art_Components/missile/spr_missile_half.png" id="1_518kb"]
 [ext_resource type="Script" uid="uid://bncuonjb6yvor" path="res://Component/missiles/missile_trackerv_2.gd" id="1_616uy"]
@@ -42,25 +42,24 @@ color_ramp = SubResource("GradientTexture1D_tg5ar")
 radius = 2.0091877
 height = 19.99914
 
-[node name="MissileTrackerV2" type="RigidBody2D" groups=["bullet"]]
+[node name="MissileTrackerV2" type="RigidBody2D" unique_id=67338603 groups=["bullet"]]
 collision_layer = 4096
 collision_mask = 131
 continuous_cd = 2
 contact_monitor = true
 max_contacts_reported = 5
 script = ExtResource("1_616uy")
-SPEED = 50.0
 accel = 50.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1894554972]
 position = Vector2(0, 4.7683716e-07)
 scale = Vector2(0.5833333, 0.4375)
 sprite_frames = SubResource("SpriteFrames_616uy")
 
-[node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D"]
+[node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D" unique_id=1782821705]
 rotation = -1.5708
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=2038342485]
 position = Vector2(-18, -6.51598e-05)
 rotation = 1.5708
 scale = Vector2(0.0958754, 0.0863445)
@@ -68,20 +67,20 @@ amount = 100
 lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_qimm7")
 
-[node name="TrackingTimer" type="Timer" parent="."]
+[node name="TrackingTimer" type="Timer" parent="." unique_id=1168744977]
 wait_time = 0.5
 one_shot = true
 
-[node name="InitialFireTimer" type="Timer" parent="."]
+[node name="InitialFireTimer" type="Timer" parent="." unique_id=81020483]
 wait_time = 0.05
 one_shot = true
 autostart = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1891109827]
 rotation = -1.58007
 shape = SubResource("CapsuleShape2D_4mv8y")
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1098935146]
 position = Vector2(3.17722, 0)
 scale = Vector2(2.23027, 1)
 rect = Rect2(-5.459976, -1, 8.070772, 2)

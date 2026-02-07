@@ -30,7 +30,7 @@ func _physics_process(delta: float) -> void:
 				move_away(distance_from)
 			else:
 				move_closer()
-				#print(actor.global_position.x)
+				#print_debug(actor.global_position.x)
 		
 
 func set_active(value : bool) -> void:
@@ -53,7 +53,7 @@ func face_player() -> void:
 
 	
 func move_away(value : int) -> void:
-	#print("move away")
+	#print_debug("move away")
 		
 	var dir = actor.to_local(actor.nav_agent.get_next_path_position())
 		#actor.h_bar.text=str(actor.health.health, " : ", actor.stagger.stagger, " : vel_x:", actor.velocity.x)
@@ -65,14 +65,14 @@ func move_away(value : int) -> void:
 				#actor.animated_sprite_2d.scale.x = 1
 			#actor.hit_box.scale.x = 1
 			#actor.attack_range.scale.x = 1
-			print("move away")
+			print_debug("move away")
 		else:
 			actor.current_speed = -(actor.chase_speed * move_away_speed_scale)
 			#if state_machine.get_active_state()!=actor.attack:
 				#actor.animated_sprite_2d.scale.x = -1
 			#actor.hit_box.scale.x = -1
 			#actor.attack_range.scale.x = -1
-			print("move away")
+			print_debug("move away")
 		
 	else:
 		actor.current_speed=0
@@ -80,7 +80,7 @@ func move_away(value : int) -> void:
 
 func move_closer() -> void:
 	var dir = actor.to_local(actor.nav_agent.get_next_path_position())
-	#print(dir.x)
+	#print_debug(dir.x)
 		#actor.h_bar.text=str(actor.health.health, " : ", actor.stagger.stagger, " : vel_x:", actor.velocity.x)
 	if dir.x < 0 and actor.is_on_floor():
 		actor.current_speed = -actor.chase_speed

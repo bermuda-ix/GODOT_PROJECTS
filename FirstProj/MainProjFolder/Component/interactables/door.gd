@@ -33,5 +33,5 @@ func open_from_signal(value : String = "default"):
 	if value==connected_switch:
 		open_flag=true
 
-func _on_is_open_data_loaded() -> void:
+func _on_is_open_data_loaded(value) -> void:
 	pass # Replace with function body.

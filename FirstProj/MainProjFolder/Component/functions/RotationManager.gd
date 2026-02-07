@@ -21,7 +21,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		if actor.sprite_2d.global_rotation_degrees != actor.player_tracker_pivot.global_rotation_degrees:
 			#if state_machine.get_active_state()==actor.attack:
-				#print(actor.sprite_2d.rotation_degrees, " ",abs(actor.sprite_2d.rotation_degrees-actor.player_tracker_pivot.rotation_degrees))
+				#print_debug(actor.sprite_2d.rotation_degrees, " ",abs(actor.sprite_2d.rotation_degrees-actor.player_tracker_pivot.rotation_degrees))
 			
 				#actor.sprite_2d.global_rotation_degrees = actor.player_tracker_pivot.global_rotation_degrees
 			if player_track_angle_wrap >= min_arc and player_track_angle_wrap <= max_arc:
@@ -37,14 +37,14 @@ func _physics_process(delta: float) -> void:
 					else:
 						pass
 			elif player_track_angle_wrap > max_arc:
-				#print("above max")
+				#print_debug("above max")
 				if rotation_speed == 0:
 					actor.sprite_2d.rotation_degrees = max_arc
 				else:
 					actor.sprite_2d.rotation_degrees=rad_to_deg(lerp_angle(actor.sprite_2d.rotation, deg_to_rad(max_arc), 0.01))
 					elapsed +=delta
 			elif player_track_angle_wrap < min_arc:
-				#print("below min")
+				#print_debug("below min")
 				if rotation_speed== 0:
 					actor.sprite_2d.rotation_degrees = min_arc
 				else:
@@ -54,4 +54,4 @@ func _physics_process(delta: float) -> void:
 			return
 	if actor.turret.slow_track:
 		actor.turret.direction_to_player=Vector2.RIGHT.rotated(actor.sprite_2d.global_rotation)*-1
-		#print(actor.turret.direction_to_player)
+		#print_debug(actor.turret.direction_to_player)

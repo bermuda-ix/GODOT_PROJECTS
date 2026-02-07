@@ -15,7 +15,7 @@ func add_inv(item : String, amount : int = 1) -> void:
 		player_inventory[item] = amount
 		Events.add_inventory.emit(item)
 		
-	print(player_inventory)
+	print_debug(player_inventory)
 
 func remove_inv(item: String, amount : int = 1) -> void:
 	if player_inventory.has(item):
@@ -26,7 +26,7 @@ func remove_inv(item: String, amount : int = 1) -> void:
 			player_inventory.erase(item)
 			Events.remove_inventory.emit(item)
 	else:
-		print("No item to remove")
+		print_debug("No item to remove")
 
 func save_inv_data() -> void:
 	pass

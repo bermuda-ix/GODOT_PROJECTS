@@ -82,3 +82,4 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 	if current==death:
 		animation_player.play("dead")
 		collision_shape_2d.disabled=true
+		set_process(false)

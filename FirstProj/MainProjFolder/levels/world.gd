@@ -70,7 +70,7 @@ var init_active_enemies_list : Array[Node]
 func _ready():
 	if not next_level is PackedScene:
 		next_level = load("res://LVL_Transitions/victory_screen.tscn")
-	#print(starting_pos[0].global_position)
+	#print_debug(starting_pos[0].global_position)
 	
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	#polygon_2d.polygon = collision_polygon_2d.polygon
@@ -85,7 +85,7 @@ func _ready():
 	spawn_points = get_tree().get_nodes_in_group("SpawnPoint")
 	heat_handler.heat_lvl_spawn()
 	for i in spawn_points.size():
-		print(spawn_points[i].name)
+		print_debug(spawn_points[i].name)
 	Events.increase_heat_lvl.connect(increase_heat)
 	Events.player_death.connect(preload_next_scene)
 	Events.player_death.connect(player_death)
@@ -127,7 +127,7 @@ func _process(_delta):
 	
 		if obj<=1:
 			Events.level_completed.connect(show_level_complete)
-			#print("leven complete")
+			#print_debug("leven complete")
 		label.text=str("Obj: ",obj)
 	else:
 		label.text = str("Score: ", score)
@@ -223,18 +223,18 @@ func handle_spawn():
 	pass
 	#if score>=20 and score<40:
 		#if elite_spawn_flag == false:
-			##print("adding mech")
+			##print_debug("adding mech")
 			##Events.spawn_update.emit(enemy_list.BOSSES, true)
 			#elite_spawn_flag = true
 			#
 	#elif score>=40:
 		#if boss_spawn_flag == false:
-			##print("boss spawn")
+			##print_debug("boss spawn")
 			##Events.deactivate.emit(spawn_type[0])
 			##Events.deactivate.emit(spawn_type[1])
 			#var enemy_cnt = get_tree().get_nodes_in_group("Enemy").size()
 			#if enemy_cnt==0:
-				#print("boss activate")
+				#print_debug("boss activate")
 				#boss_spawn_flag=true
 				#Events.activate.emit(spawn_type[1])
 
@@ -289,7 +289,7 @@ func boss_loaded():
 func countdown_to_boss():
 	var _enemies_left=get_tree().get_nodes_in_group("enemies").size()
 	if _enemies_left>0 or _enemies_left!=null:
-		print(_enemies_left, " Enemies left")
+		print_debug(_enemies_left, " Enemies left")
 	else:
 		spawn_boss() 
 

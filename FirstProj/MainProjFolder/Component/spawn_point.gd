@@ -37,7 +37,7 @@ func _ready():
 	spawn_size = enemy.size()
 	boss_spawn_size = enemies.BOSSES.size()
 	level_node=get_tree().get_first_node_in_group("world").get_path()
-	#print(level_node)
+	#print_debug(level_node)
 	
 	if not single_spawn:
 		Events.activate.connect(activate)
@@ -111,23 +111,23 @@ func _on_spawn_timer_timeout():
 				get_tree().get_root().get_node(level_node).add_child(enemy_inst)
 				
 			else:
-				print("max spawned")
+				print_debug("max spawned")
 				
 			var timer : float = randf_range(3,10)
 			enemy_cnt = get_tree().get_nodes_in_group("Enemy").size()
-			#print("enemy spawn :", enemy_cnt)
+			#print_debug("enemy spawn :", enemy_cnt)
 			spawn_timer.start(timer)
 
 func activate(spawn):
-	#print(spawn)
+	#print_debug(spawn)
 	if spawn==spawn_type:
-		print("activate")
+		print_debug("activate")
 		spawn_timer.paused=false
 		active=true
 		
 func deactivate(spawn):
 	if spawn==spawn_type:
-		print("deactivate")
+		print_debug("deactivate")
 		spawn_timer.paused=true
 		active=false
 
@@ -164,7 +164,7 @@ func spawn_update(enemy_spawn, add : bool):
 		
 		spawn_size = enemy.size()
 		
-	#print(enemy.size())
+	#print_debug(enemy.size())
 
 func spawn_timer_update(value : float) -> void:
 	spawn_timer.wait_time=value
@@ -181,12 +181,12 @@ func reset_heat() -> void:
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	area_colliding=true
-	print("no spawn")
+	print_debug("no spawn")
 
 
 func _on_area_2d_area_exited(area: Area2D) -> void:
 	area_colliding=false
-	print("spawn")
+	print_debug("spawn")
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:

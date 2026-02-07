@@ -148,7 +148,7 @@ func is_key_valid(k: int) -> bool:
 ## Add a point and insert it at the given index or at the end by default.
 ## Returns the key of the added point.
 func add_point(point: Vector2, idx: int = -1, use_key: int = -1) -> int:
-#	print("Add Point  ::  ", point, " | idx: ", idx, " | key: ", use_key, " |")
+#	print_debug("Add Point  ::  ", point, " | idx: ", idx, " | key: ", use_key, " |")
 	if use_key == -1 or not is_key_valid(use_key):
 		use_key = reserve_key()
 	if use_key == _next_key:
@@ -271,7 +271,7 @@ func get_all_point_keys() -> PackedInt32Array:
 
 func remove_point(key: int) -> bool:
 	if has_point(key):
-#		print("Remove Point  ::  ", get_point_position(key), " | idx: ", get_point_index(key), " | key: ", key, " |")
+#		print_debug("Remove Point  ::  ", get_point_position(key), " | idx: ", get_point_index(key), " | key: ", key, " |")
 		remove_constraints(key)
 		_unhook_point(get_point(key))
 		_point_order.remove_at(get_point_index(key))
@@ -501,12 +501,12 @@ func remove_constraint(point_index_tuple: Vector2i) -> void:
 ########
 # MISC #
 ########
-func debug_print() -> void:
+func debug_print_debug() -> void:
 	for k in get_all_point_keys():
 		var pos: Vector2 = get_point_position(k)
 		var _in: Vector2 = get_point_in(k)
 		var out: Vector2 = get_point_out(k)
-		print("%s = P:%s | I:%s | O:%s" % [k, pos, _in, out])
+		print_debug("%s = P:%s | I:%s | O:%s" % [k, pos, _in, out])
 
 
 ######################

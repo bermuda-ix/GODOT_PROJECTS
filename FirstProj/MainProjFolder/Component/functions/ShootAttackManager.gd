@@ -41,7 +41,7 @@ func shoot():
 				if reload_timer>0:
 					for i in reload_timer:
 						animation_player.play("reload")
-						#print(i)
+						#print_debug(i)
 						await animation_player.animation_finished
 						
 						

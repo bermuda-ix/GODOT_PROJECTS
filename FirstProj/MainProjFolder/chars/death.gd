@@ -10,10 +10,10 @@ extends LimboState
 
 func _enter() -> void:
 	#actor.state="DEATH"
-	actor.velocity.y=0
+	#actor.velocity.y=0
 	if tree_active:
 		actor.bt_player.blackboard.set_var("attack_mode", false)
 	
 
 #func _update(delta: float) -> void:
-	##print("oof i'm dead sadge")
+	##print_debug("oof i'm dead sadge")

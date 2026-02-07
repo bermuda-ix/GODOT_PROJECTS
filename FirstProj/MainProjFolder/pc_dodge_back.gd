@@ -7,7 +7,7 @@ extends LimboState
 
 
 func _enter() -> void:
-	print("how do you pronouce riposte")
+	print_debug("how do you pronouce riposte")
 	anim_player.play("dodge_back")
 	hit_stop.end_hit_stop()
 	pc.set_collision_mask_value(15, false)

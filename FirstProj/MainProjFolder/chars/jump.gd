@@ -9,7 +9,7 @@ extends LimboState
 
 func _enter() -> void:
 	actor.prev_speed=actor.current_speed
-	#print("jumping")
+	#print_debug("jumping")
 	jump_handler.handle_jump(jump_vel)
 	actor.state="JUMP"
 	if actor.current_speed < 0:
@@ -23,5 +23,5 @@ func _update(delta: float) -> void:
 
 func _exit() -> void:
 	pass
-	#print("exiting jump")
+	#print_debug("exiting jump")
 	

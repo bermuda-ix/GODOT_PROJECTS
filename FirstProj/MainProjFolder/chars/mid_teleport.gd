@@ -9,4 +9,4 @@ func _enter() -> void:
 	animation_player.play("mid_teleport")
 	
 func _exit() -> void:
-	print("mid tele exit")
+	print_debug("mid tele exit")

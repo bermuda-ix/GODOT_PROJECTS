@@ -19,6 +19,10 @@ run/main_scene="uid://j0pkbfaqdg0d"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://ieyig6bxo8co"
+
 [autoload]
 
 Events="*res://Events.gd"
@@ -70,6 +74,7 @@ AnimatedDoor=""
 WorldStatic=""
 Persistant="Objects that can persist on scene reloading"
 GameLevel=""
+world=""
 
 [input]
 

@@ -14,7 +14,7 @@ func _tick(_delta: float) -> Status:
 		
 		if abs(agent.global_position.x - tar_pos.x) <= range:
 			agent.move(dir.x, 0)
-			#print("Attacking")
+			#print_debug("Attacking")
 			return SUCCESS
 
 	return FAILURE

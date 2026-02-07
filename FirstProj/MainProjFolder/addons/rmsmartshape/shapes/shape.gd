@@ -1514,7 +1514,7 @@ func get_ratio_from_tessellated_point_to_vertex(t_point_idx: int) -> float:
 
 
 func debug_print_points() -> void:
-	_points.debug_print()
+	_points.debug_print_debug()
 
 
 ###################

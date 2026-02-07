@@ -187,7 +187,7 @@ func _ready() -> void:
 	boss_ui.set_boss_health(health.health)
 	dying.blackboard.set_var("hit_the_floor", false)
 	if not state_machine.has_transition(phase_transition, &"hit"):
-		print("wubbba lubba dub dub")
+		print_debug("wubbba lubba dub dub")
 
 
 
@@ -289,8 +289,8 @@ func _physics_process(delta: float) -> void:
 		return
 	#elif state_machine.get_active_state()==dash:
 		#global_position.move_toward(dash_end, delta)
-		##print(global_position.move_toward(dash_end, delta), " ", global_position.x, " ", dash_end.x)
-		#print(dash_start.move_toward(dash_end, delta*10))
+		##print_debug(global_position.move_toward(dash_end, delta), " ", global_position.x, " ", dash_end.x)
+		#print_debug(dash_start.move_toward(dash_end, delta*10))
 		#move_and_slide()
 		
 	apply_gravity(delta)
@@ -388,7 +388,7 @@ func _on_attack_range_body_exited(body: Node2D) -> void:
 
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if previous==phase_transition:
-		print(current)
+		print_debug(current)
 		push_error("CHECKING NEXT PHASE")
 
 #Attack State Functions
@@ -417,7 +417,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("sp_atk_default"):
-		#print("spc_hit")
+		#print_debug("spc_hit")
 		stagger.stagger -= player.sp_atk_dmg*player.clash_power.clash_power
 		if state_machine.get_active_state()!=staggered and health.health>0:
 			state_machine.dispatch(&"hit")
@@ -430,12 +430,12 @@ func _on_parry_timer_timeout() -> void:
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	if phases.get_active_state()==phase_transition:
 		if anim_name=="slam":
-			print("BANANA SLAMMA")
+			print_debug("BANANA SLAMMA")
 		return
 		
 	if anim_name=="idle":
 		if not animation_player.is_playing():
-			print("animation broke")
+			print_debug("animation broke")
 	
 
 
@@ -454,7 +454,7 @@ func _on_animation_player_animation_changed(old_name: StringName, new_name: Stri
 	if phases.get_active_state()==phase_transition:
 		return
 	if old_name=="idle":
-		print("did not exit right")
+		print_debug("did not exit right")
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
@@ -594,7 +594,7 @@ func _on_animation_player_sub_animation_finished(anim_name: StringName) -> void:
 			
 func _on_animation_player_sub_animation_started(anim_name: StringName) -> void:
 	if anim_name=="phase_transitions/phase_1_to_2":
-		print("starting phase transition")
+		print_debug("starting phase transition")
 	
 
 
@@ -610,7 +610,7 @@ func _on_dying_updated(delta: float) -> void:
 
 func _on_dying_entered() -> void:
 	hit_stop.hit_stop(0.3, 3)
-	print("dying")
+	print_debug("dying")
 
 
 func _on_charge_entered() -> void:
@@ -641,13 +641,13 @@ func _on_phase_transition_entered() -> void:
 	animation_player.stop()
 	stagger_recover()
 	hb_collision.disabled=true
-	print(phase_transition.is_active())
+	print_debug(phase_transition.is_active())
 	
 
 
 func _on_error_state_entered() -> void:
 	state_machine.set_active(false)
-	print("PHASE_TREE_FAILED")
+	print_debug("PHASE_TREE_FAILED")
 	push_error("PHASE_TREE_FAILED")
 
 

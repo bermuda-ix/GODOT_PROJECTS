@@ -6,7 +6,7 @@ extends LimboState
 var counter_dist
 
 func _enter() -> void:
-	#print("entering attack")
+	#print_debug("entering attack")
 	counter_dist = pc.global_position.x-10*pc.face_dir
 	pc.attacking=true
 	

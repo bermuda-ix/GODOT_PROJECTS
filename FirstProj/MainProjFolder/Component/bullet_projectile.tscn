@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b74ywj4npkesd"]
+[gd_scene format=3 uid="uid://b74ywj4npkesd"]
 
 [ext_resource type="Texture2D" uid="uid://cyvi7boaxgxo6" path="res://Art_Components/Enemies/battle-mecha-sprites-pixel-art-pack/3/Bullet.png" id="1_p6xas"]
 [ext_resource type="Script" uid="uid://ogysyo440lhh" path="res://Component/bullet_projectile.gd" id="1_vt6nh"]
@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_vt6nh"]
 radius = 3.0
 
-[node name="BulletProjectile" type="RigidBody2D" groups=["bullet"]]
+[node name="BulletProjectile" type="RigidBody2D" unique_id=1896458504 groups=["bullet"]]
 modulate = Color(18.892157, 18.892157, 18.892157, 1)
 collision_layer = 4096
 collision_mask = 131
@@ -17,15 +17,15 @@ contact_monitor = true
 max_contacts_reported = 5
 script = ExtResource("1_vt6nh")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2103923055]
 shape = SubResource("CircleShape2D_vt6nh")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=584505453]
 position = Vector2(-2.0861626e-07, -2.0861626e-07)
 scale = Vector2(0.49999997, 0.49999997)
 texture = ExtResource("1_p6xas")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1298455145]
 position = Vector2(2, 1)
 rect = Rect2(-3, -2, 2, 2)
 

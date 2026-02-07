@@ -2,7 +2,7 @@ extends LimboState
 
 
 func _enter() -> void:
-	print("defense")
+	print_debug("defense")
 #
 #func _exit() -> void:
-	#print("exit desfense shooting")
+	#print_debug("exit desfense shooting")

@@ -259,13 +259,13 @@ func _do_import(resource_path: String, metadata: Dictionary) -> int:
 	var resource_base_dir = resource_path.get_base_dir()
 
 	if resource_base_dir != metadata.fields.output_location:
-		print("Resource has moved. Changing output folder from %s to %s" % [resource_base_dir, metadata.fields.output_location])
+		print_debug("Resource has moved. Changing output folder from %s to %s" % [resource_base_dir, metadata.fields.output_location])
 		metadata.fields.output_location = resource_base_dir
 
 	var exit_code := await _import_helper.import_and_create_resources(metadata.fields.source_file, metadata.fields)
 
 	if exit_code == OK:
-		print("Import complete: %s" % resource_path)
+		print_debug("Import complete: %s" % resource_path)
 		import_success.emit(metadata.fields)
 	else:
 		printerr("Failed to import %s. Error: %s" % [resource_path, result_code.get_error_message(exit_code)])

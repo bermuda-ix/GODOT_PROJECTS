@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://oy0j33pb6x26"]
+[gd_scene format=3 uid="uid://oy0j33pb6x26"]
 
 [ext_resource type="Script" uid="uid://dqbvxyl84vkro" path="res://Component/projectiles/bullet_impact.gd" id="1_3n5m2"]
 [ext_resource type="Texture2D" uid="uid://crhdva35tj8kf" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Spritesheets/Effect_Impact_1_305x383.png" id="1_cpc3p"]
@@ -17,7 +17,7 @@ scale_max = 0.04
 anim_speed_min = 1.0
 anim_speed_max = 1.0
 
-[node name="BulletImpact" type="GPUParticles2D"]
+[node name="BulletImpact" type="GPUParticles2D" unique_id=1807428247]
 modulate = Color(1, 0.94952685, 0.74125385, 1)
 material = SubResource("CanvasItemMaterial_f12bh")
 emitting = false

@@ -17,6 +17,8 @@ signal load_first_level
 signal load_objectives
 signal load_menu_scene
 
+signal in_door_way
+
 
 # Pausing
 signal pause

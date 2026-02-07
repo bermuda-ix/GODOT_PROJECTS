@@ -12,4 +12,4 @@ func _enter() -> void:
 
 func _exit() -> void:
 	pass
-	#print("exiting idle")
+	#print_debug("exiting idle")

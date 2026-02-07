@@ -27,7 +27,7 @@ var always_active : bool
 @onready var speed: Label = $Speed
 @onready var cutscene_handler: CutsceneHandler = $CutsceneHandler
 @onready var qte_handler: QTEHandler = $QTEHandler
-
+@export var death_cutscene : bool
 
 @export var drop = preload("res://heart.tscn")
 @onready var death_timer = $DeathTimer
@@ -41,6 +41,8 @@ var always_active : bool
 @onready var leap_up_check_right = $JumpChecks/LeapUpCheckRight
 
 @onready var teleport_handler: TeleportHandler = $TeleportHandler
+
+
 
 
 @onready var turret = $Turret
@@ -171,6 +173,11 @@ var combat_state : String = "RANGED"
 var player_state : LimboState
 
 var is_on_screen : bool
+	
+	
+@export_category("Boss Variables")
+@export var lvl_boss : bool
+@export var death_flag_name : String
 	
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
@@ -424,7 +431,7 @@ func teleport_to(front : bool) -> void:
 		if front: return 10
 		else: return -10
 	
-	print(player.global_position)
+	print_debug(player.global_position)
 	if player_right:	
 		global_position=teleport_handler.teleport(player.global_position.x-offset.call(), -player.global_position.y, global_position)
 	else:
@@ -501,7 +508,7 @@ func _on_stagger_staggered() -> void:
 
 func _on_parry_timer_timeout() -> void:
 	if state_machine.get_active_state()==staggered:
-		print(phases.get_active_state())
+		print_debug(phases.get_active_state())
 		if phases.get_active_state()==phase_1:
 			state_machine.dispatch(&"stagger_recover")
 		elif phases.get_active_state()==phase_2:
@@ -544,7 +551,7 @@ func alerted() -> void :
 	if changing_phase:
 		return
 	else:
-		print("alerted!")
+		print_debug("alerted!")
 		vision_handler.always_on=true
 		if on_screen.is_on_screen():
 			state_machine.dispatch(&"attack_mode")
@@ -554,7 +561,7 @@ func alerted() -> void :
 			state_machine.dispatch(&"start_chase")
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	print(health.health)
+	print_debug(health.health)
 	phases_handler.phase_change(health.health)
 	if changing_phase:
 		
@@ -577,7 +584,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			gpu_particles_2d.emitting=true
 			
 		else:
-			print("kill shot")
+			print_debug("kill shot")
 		
 
 func _on_health_health_depleted() -> void:
@@ -591,9 +598,13 @@ func _on_health_health_depleted() -> void:
 	else:
 		knockback.x=250
 	jump_handler.handle_jump(0.2)
-	death_handler.death()
-	
-	
+	if not death_cutscene:
+		death_handler.death()
+	else:
+		Events.boss_died.emit("flashback_lvl_cutscenes/first_mini_boss_kill")
+		Events.global_flag_trigger.emit("MiniBoss1Killed")
+		bt_player.active=false
+
 
 
 func _on_attack_timer_timeout() -> void:
@@ -620,12 +631,12 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	h_bar.text=str(current.name)
-	print(current.name)
+	print_debug(current.name)
 	if current==jump:
 		if previous==attack:
-			print("down attack")
+			print_debug("down attack")
 	if current==teleport_and_shoot:
-		print(current)
+		print_debug(current)
 
 func _on_attack_entered() -> void:
 	bt_player.blackboard.set_var("attack_mode", true)
@@ -669,7 +680,7 @@ func _on_staggered_exited() -> void:
 
 
 func _on_bullet_detection_bullet_detected() -> void:
-	print(state_machine.get_active_state())
+	print_debug(state_machine.get_active_state())
 	state_machine.dispatch(&"bullet_dodge")
 
 
@@ -746,7 +757,7 @@ func _on_phasetransition_updated(delta: float) -> void:
 
 func _on_teleport_and_shoot_entered() -> void:
 	hurt_box.set_collision_layer_value(7, false)
-	print("worked")
+	print_debug("worked")
 
 
 func _on_staggered_entered() -> void:
@@ -755,3 +766,7 @@ func _on_staggered_entered() -> void:
 
 func _on_teleport_and_shoot_exited() -> void:
 	hurt_box.set_collision_layer_value(7, true)
+
+
+func _on_death_entered() -> void:
+	pass

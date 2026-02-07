@@ -5,7 +5,7 @@ class_name inventory_ui extends Control
 @export var items_resources : Array[inventory_item]
 
 func _ready() -> void:
-	print(items_resources[0].name)
+	print_debug(items_resources[0].name)
 	Events.add_inventory.connect(add_inv_item)
 	Events.remove_inventory.connect(remove_inv_item)
 	Events.update_inventory.connect(update_inv_amount)
@@ -23,16 +23,16 @@ func add_inv_item(name : String) -> void:
 	grid_container.add_child(new_inv_item)
 	new_inv_item.set_amount(1)
 	new_inv_item.set_item_texture(items_resources[item_res].texture)
-	print("adding new inv item: ", new_inv_item.name)
+	print_debug("adding new inv item: ", new_inv_item.name)
 	new_inv_item.update_ui()
 	
 func remove_inv_item(name : String) -> void:
-	print("remove new inv item: ", name)
+	print_debug("remove new inv item: ", name)
 	var inv_remove : inv_item = grid_container.find_child(name)
 	grid_container.call_deferred("remove_child", inv_remove)
 	inv_remove.queue_free()
 	
 func update_inv_amount(name : String, value : int) -> void:
 	var inv_update : inv_item = grid_container.find_child(name)
-	print(inv_update.name, " is updating")
+	print_debug(inv_update.name, " is updating")
 	inv_update.amount_text.text=str(value)

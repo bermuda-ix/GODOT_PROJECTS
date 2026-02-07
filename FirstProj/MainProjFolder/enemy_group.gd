@@ -21,4 +21,4 @@ func _ready() -> void:
 	
 	if all_grouped_enemies!=null:
 		for i in range(all_grouped_enemies.size()):
-			print(all_grouped_enemies[i].name, " linked")
+			print_debug(all_grouped_enemies[i].name, " linked")

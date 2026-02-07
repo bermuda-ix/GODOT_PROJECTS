@@ -9,6 +9,18 @@ signal save_level_state
 signal load_level_state
 signal clean_start
 
+const default_save : Dictionary = {
+	scene_path = "",
+	player = {
+		health = 10,
+		max_health=10,
+		stagger=3,
+		max_stagger=3,
+		pos_x = 0,
+		pos_y=0
+	}
+}
+
 var current_save : Dictionary = {
 	scene_path = "",
 	player = {
@@ -20,6 +32,12 @@ var current_save : Dictionary = {
 		pos_y=0
 	}
 }
+
+func reset_player_data() -> void:
+	current_save["player"]["health"]=default_save["player"]["health"]
+	current_save["player"]["max_health"]=default_save["player"]["max_health"]
+	current_save["player"]["stagger"]=default_save["player"]["stagger"]
+	current_save["player"]["max_stagger"]=default_save["player"]["max_stagger"]
 
 var level_state : Dictionary = {
 	scene_path="",
@@ -45,11 +63,11 @@ func _ready() -> void:
 
 #Enter highscore
 func store_score(highscore : Array) -> void:
-	print(highscores)
+	print_debug(highscores)
 	if highscores.size()>=1:
 		for i in range(highscores.size()-1, -1, -1):
 			if highscores[i][0]==highscore[0]:
-				print("duplicate_name")
+				print_debug("duplicate_name")
 				highscores.remove_at(i)
 				break
 		highscores.append(highscore)
@@ -57,13 +75,13 @@ func store_score(highscore : Array) -> void:
 	else:
 		highscores.append(highscore)
 	print_scores()
-	print(highscores)
+	print_debug(highscores)
 	save_highscores(highscores)
 	
 #Print all highscores
 func print_scores() -> void:
 	for _score in highscores:
-		print(_score[0], " ", _score[0]) 
+		print_debug(_score[0], " ", _score[0]) 
 
 #Helper functions for sorting highscores
 static func sort_descending(a, b):
@@ -111,13 +129,13 @@ func load_highscores() -> void:
 	var _load_json = JSON.new()
 	var _parse_result = _load_json.parse(_file.get_line())
 	if not  _parse_result == OK:
-		print("JSON Parse Error: ", _load_json.get_error_message(), " in ", _file, " as line ", _load_json.get_error_line())
+		print_debug("JSON Parse Error: ", _load_json.get_error_message(), " in ", _file, " as line ", _load_json.get_error_line())
 		return
 	highscores = _load_json.get_data() as Array[Array]
-	print(highscores)
+	print_debug(highscores)
 	#highscores_sorted
 	#for i in range(_loaded_scores.size()-1 , -1 , -1):
-		#print(_loaded_scores[i].name, _loaded_scores[i].score)
+		#print_debug(_loaded_scores[i].name, _loaded_scores[i].score)
 
 #Save game functions
 func save_game() -> void:
@@ -155,7 +173,7 @@ func load_player_data() -> void:
 	var _load_json = JSON.new()
 	var _parse_result = _load_json.parse(_file.get_line())
 	if not  _parse_result == OK:
-		print("JSON Parse Error: ", _load_json.get_error_message(), " in ", _file, " as line ", _load_json.get_error_line())
+		print_debug("JSON Parse Error: ", _load_json.get_error_message(), " in ", _file, " as line ", _load_json.get_error_line())
 		return
 	var _save_dict_temp : Dictionary = _load_json.get_data() as Dictionary
 	current_save=_save_dict_temp
@@ -165,11 +183,11 @@ func load_persistant_data() -> void:
 	var _load_json = JSON.new()
 	var _parse_result = _load_json.parse(_file.get_line())
 	if not  _parse_result == OK:
-		print("JSON Parse Error: ", _load_json.get_error_message(), " in ", _file, " as line ", _load_json.get_error_line())
+		print_debug("JSON Parse Error: ", _load_json.get_error_message(), " in ", _file, " as line ", _load_json.get_error_line())
 		return
 	var _save_dict_temp : Dictionary = _load_json.get_data() as Dictionary
 	level_state=_save_dict_temp
-	print(level_state["persistence"])
+	print_debug(level_state["persistence"])
 
 func load_player_stats() -> void:
 	game_load.emit()

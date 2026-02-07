@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cmbh5yrvkl5a6"]
+[gd_scene format=3 uid="uid://cmbh5yrvkl5a6"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_4opfk"]
 [ext_resource type="Script" uid="uid://csh8rjbhyvxoc" path="res://chars/flying_enemy.gd" id="2_avqxo"]
@@ -90,7 +90,7 @@ size = Vector2(27, 30)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0dbrs"]
 size = Vector2(25.5, 27.5)
 
-[node name="flying_enemy" groups=["Persistant"] instance=ExtResource("1_4opfk")]
+[node name="flying_enemy" unique_id=973829436 groups=["Persistant"] instance=ExtResource("1_4opfk")]
 collision_layer = 5
 collision_mask = 8388611
 motion_mode = 1
@@ -98,10 +98,10 @@ wall_min_slide_angle = 0.0
 script = ExtResource("2_avqxo")
 drop = ExtResource("3_ak2oi")
 
-[node name="NavigationAgent2D2" type="NavigationAgent2D" parent="." index="0"]
+[node name="NavigationAgent2D2" type="NavigationAgent2D" parent="." index="0" unique_id=340892484]
 debug_enabled = true
 
-[node name="NavTimer" type="Timer" parent="." index="1"]
+[node name="NavTimer" type="Timer" parent="." index="1" unique_id=2139751159]
 wait_time = 0.5
 autostart = true
 
@@ -110,9 +110,7 @@ position = Vector2(0, 0)
 sprite_frames = SubResource("SpriteFrames_l6o7e")
 
 [node name="AnimationPlayer" parent="." index="4"]
-libraries = {
-&"": SubResource("AnimationLibrary_h1g2h")
-}
+libraries/ = SubResource("AnimationLibrary_h1g2h")
 
 [node name="CollisionShape2D" parent="." index="5"]
 shape = SubResource("CircleShape2D_wnnks")
@@ -165,14 +163,14 @@ collision_mask = 8768
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0" unique_id=1590223707]
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_gt2wk")
 
-[node name="Turret" parent="." index="17" instance=ExtResource("4_g2l3k")]
+[node name="Turret" parent="." index="17" unique_id=126685244 instance=ExtResource("4_g2l3k")]
 shoot_speed = 3.0
 
-[node name="stg_laber" type="Label" parent="." index="18"]
+[node name="stg_laber" type="Label" parent="." index="18" unique_id=1034752073]
 offset_left = -46.0
 offset_top = -39.0
 offset_right = 30.0
@@ -184,36 +182,37 @@ position = Vector2(1, -1.90735e-06)
 scale = Vector2(0.96, 0.995272)
 stagger = NodePath("../Stagger")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0" unique_id=1038669831]
 shape = SubResource("RectangleShape2D_0dbrs")
 
 [node name="Stagger" parent="." index="21"]
 max_stagger = 1
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." index="22"]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." index="22" unique_id=2007388360]
 stream = ExtResource("5_o3mrs")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="23"]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="23" unique_id=1596892916]
 
-[node name="LimboHSM" type="LimboHSM" parent="." index="24"]
+[node name="LimboHSM" type="LimboHSM" parent="." index="24" unique_id=1391144524]
 
-[node name="DEATH" type="LimboState" parent="LimboHSM" index="0"]
+[node name="DEATH" type="LimboState" parent="LimboHSM" index="0" unique_id=89630483]
 script = ExtResource("6_cfr2g")
 
-[node name="Shooting" type="LimboState" parent="LimboHSM" index="1"]
+[node name="Shooting" type="LimboState" parent="LimboHSM" index="1" unique_id=1944586882]
 script = ExtResource("7_k0mf2")
 metadata/_custom_type_script = "uid://pjji1dxbp6vy"
 
-[node name="ShootTimer" type="Timer" parent="." index="25"]
+[node name="ShootTimer" type="Timer" parent="." index="25" unique_id=1865301960]
 wait_time = 5.0
 autostart = true
 
-[node name="MissileShootHandler" type="Node" parent="." index="26" node_paths=PackedStringArray("turret")]
+[node name="MissileShootHandler" type="Node" parent="." index="26" unique_id=182124002 node_paths=PackedStringArray("turret")]
 script = ExtResource("8_5wgfp")
 turret = NodePath("../Turret")
 missile = ExtResource("9_5wgfp")
 missile_rotation = -90.0
 fixed_rot = true
+active = false
 metadata/_custom_type_script = "uid://dr8hs1ssva6sy"
 
 [connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]

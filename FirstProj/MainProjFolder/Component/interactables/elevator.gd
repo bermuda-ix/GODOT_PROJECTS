@@ -58,7 +58,7 @@ func _ready() -> void:
 	#Events.checkpoint_reached.connect(save_state)
 	
 func _physics_process(delta: float) -> void:
-	#print(snapped(path_follow_2d.progress_ratio, 0.1), " , ", going_up)
+	#print_debug(snapped(path_follow_2d.progress_ratio, 0.1), " , ", going_up)
 	move_to_floor()
 
 	
@@ -70,7 +70,7 @@ func open():
 
 func add_floor_buttons():
 	
-	print("This elevator has " + str(floors.size()) + " floors at:")
+	print_debug("This elevator has " + str(floors.size()) + " floors at:")
 	for i in range(floors.size()):
 		var _new_elevator_button = elevator_button.instantiate()
 		_new_elevator_button.button_text = str(floors.size()-(i+1))
@@ -78,7 +78,7 @@ func add_floor_buttons():
 			_new_elevator_button.toggle_floor_lock(true)
 		_new_elevator_button.floor.connect(self.choose_floor)
 		_new_elevator_button.name = "Floor " + str(floors.size()-(i+1))
-		print(_new_elevator_button.button_text)
+		print_debug(_new_elevator_button.button_text)
 		elevator_buttons.add_child(_new_elevator_button)
 		
 
@@ -92,19 +92,19 @@ func choose_floor(_floor : int) -> void:
 		current_floor = path_follow_2d.progress_ratio
 		next_floor = floors[_floor]
 		if current_floor<next_floor:
-			print("Moving up to floor ", _floor)
+			print_debug("Moving up to floor ", _floor)
 			going_up=true
 			animation_player.play("start_moving")
 			animation_player_door.play("close")
 		elif current_floor>next_floor:
-			print("Going down to floor ", _floor)
+			print_debug("Going down to floor ", _floor)
 			going_up=false
 			animation_player.play("start_moving")
 			animation_player_door.play("close")
 		else:
-			print("Already there")
+			print_debug("Already there")
 	else:
-		print("currently moving")
+		print_debug("currently moving")
 	
 
 
@@ -131,7 +131,7 @@ func up_or_down():
 		
 func pause():
 	if next_floor==snappedf(path_follow_2d.progress_ratio, 0.1):
-		print("your floor sir")
+		print_debug("your floor sir")
 		if going_up:
 			animation_player.play("arrived_up")
 			animation_player_door.play("open")
@@ -153,7 +153,7 @@ func pause():
 
 func _on_resume_timeout() -> void:
 	pass
-	#print("opening menu")
+	#print_debug("opening menu")
 	#animation_player.play("open_elevator_menu")
 
 

@@ -7,13 +7,13 @@ func _ready() -> void:
 	Events.parry_failed.connect(punish)
 
 func _enter() -> void:
-	#print("begin counter")
+	#print_debug("begin counter")
 	actor.counter_timer.start()
 	actor.hurt_box_collision.disabled=true
 	actor.clash_mult+=1
 
 func counter(value : String) -> void:
-	#print(value)
+	#print_debug(value)
 	actor.counter_sm.dispatch(&"kick_counter")
 
 func punish() -> void:

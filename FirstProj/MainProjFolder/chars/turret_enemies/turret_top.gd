@@ -52,13 +52,14 @@ func _ready():
 	bt_player.blackboard.set_var("shoot_active", false)
 	_init_state_machine()
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
+	
 
 func _process(_delta):
 	vision_handler.handle_vision()
 	#shoot_attack_manager.shoot()
 	var player_track_angle_wrap=wrapf(player_tracker_pivot.rotation, 0, 2*PI)
 	debug.text=str(rad_to_deg(player_track_angle_wrap), " ",sprite_2d.rotation_degrees)
-	health.health=base.health.health
+	#
 	#if not shoot_attack_manager.shooting:
 		#stagger_shooting()
 	
@@ -75,14 +76,14 @@ func _init_state_machine():
 
 
 func _on_turret_shoot_bullet() -> void:
-	print("shoot")
+	#print_debug("shoot")
 	shoot_handler.shoot_bullet()
 
 
 
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if current==attack:
-		print("activate turret")
+		print_debug("activate turret")
 		bt_player.blackboard.set_var("attack_mode", true)
 		if previous==idle:
 			vision_handler.always_on=true
@@ -93,12 +94,12 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 						base.linked_turrets[i].turret_top.state_machine.dispatch(&"attack_mode")
 						base.linked_turrets[i].turret_top.bt_player.blackboard.set_var("shoot_active", true)
 						base.linked_turrets[i].turret_top.shoot_attack_manager.shooting=true
-						print(base.linked_turrets[i].name, " activated")
+						print_debug(base.linked_turrets[i].name, " activated")
 						
 					else:
 						base.linked_turrets[i].turret_top.state_machine.dispatch(&"attack_mode")
 						base.linked_turrets[i].turret_top.bt_player.blackboard.set_var("shoot_active", false)
-						print(base.linked_turrets[i].name, " waiting")
+						print_debug(base.linked_turrets[i].name, " waiting")
 						
 			else:
 				bt_player.blackboard.set_var("shoot_active", true)
@@ -115,11 +116,11 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 func next_turret():
 	if base.turret_link_order+1>=base.linked_turrets.size():
 		base.linked_turrets[0].turret_top.bt_player.blackboard.set_var("shoot_active", true)
-		print(base.linked_turrets[0].name, " activated")
+		print_debug(base.linked_turrets[0].name, " activated")
 			#base.linked_turrets[0].turret_top.state_machine.dispatch(&"attack_mode")
 	else:
 		base.linked_turrets[base.turret_link_order+1].turret_top.bt_player.blackboard.set_var("shoot_active", true)
-		print(base.linked_turrets[base.turret_link_order+1].name, " activated")
+		print_debug(base.linked_turrets[base.turret_link_order+1].name, " activated")
 					#base.linked_turrets[base.turret_link_order+1].turret_top.state_machine.dispatch(&"attack_mode")
 
 func staggered()->void:
@@ -149,16 +150,16 @@ func _on_shoot_attack_manager_reloading() -> void:
 				continue
 			else:
 				if base.linked_turrets[i].turret_top.shoot_attack_manager.shooting:
-					print("waiting")
-					print("next turret")
+					print_debug("waiting")
+					print_debug("next turret")
 					return
 		if base.turret_link_order+1>=base.linked_turrets.size():
 			base.linked_turrets[0].turret_top.bt_player.blackboard.set_var("shoot_active", true)
-			print(base.linked_turrets[0].name, " activated")
+			print_debug(base.linked_turrets[0].name, " activated")
 				#base.linked_turrets[0].turret_top.state_machine.dispatch(&"attack_mode")
 		else:
 			base.linked_turrets[base.turret_link_order+1].turret_top.bt_player.blackboard.set_var("shoot_active", true)
-			print(base.linked_turrets[base.turret_link_order+1].name, " activated")
+			print_debug(base.linked_turrets[base.turret_link_order+1].name, " activated")
 					#base.linked_turrets[base.turret_link_order+1].turret_top.state_machine.dispatch(&"attack_mode")
 	else:
 		pass
@@ -171,5 +172,6 @@ func _on_shoot_attack_manager_reloading_done() -> void:
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	health.health=base.health.health
 	if player_tracking!=null:
 		player_tracking.target_position.x=player.global_position.x

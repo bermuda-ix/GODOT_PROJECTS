@@ -44,10 +44,10 @@ func shoot_counter():
 
 func parry_counter(value: String) -> void:
 	if actor.parried:
-		if actor.stagger.stagger>=0:
-			print(value)
-			
-		else:
-			pass
+		#if actor.stagger.stagger>=0:
+			#print_debug(value)
+			#
+		#else:
+			#pass
 		actor.parried=false
 			

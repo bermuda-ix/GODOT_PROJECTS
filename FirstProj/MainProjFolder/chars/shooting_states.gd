@@ -9,7 +9,7 @@ func _enter() -> void:
 	actor.state="SHOOTING"
 	#
 func _update(delta: float) -> void:
-	#print(turret.ammo_count)
+	#print_debug(turret.ammo_count)
 	if turret.ammo_count<=0:
 		actor.shooting_states.dispatch(&"reload")
 #

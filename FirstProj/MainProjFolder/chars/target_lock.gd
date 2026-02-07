@@ -8,4 +8,4 @@ func target_lock():
 	const TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
 	target_lock_inst=TARGET_LOCK.instantiate()
 	add_child(target_lock_inst)
-	#print(str(position)," ",str(target_lock_inst.global_position))
+	#print_debug(str(position)," ",str(target_lock_inst.global_position))

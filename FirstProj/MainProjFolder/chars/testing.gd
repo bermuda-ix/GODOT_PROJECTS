@@ -90,26 +90,26 @@ func track_player():
 	if not rotate_around:
 		if arc_vector<Vector2.RIGHT and Vector2.UP<arc_vector:
 			#movement = target_direction.rotated(COUNTER_CLOCKWISE)
-			#print("on right")
+			#print_debug("on right")
 			target_right = true
 			
 		elif arc_vector>Vector2.LEFT and Vector2.UP>arc_vector:
-			#print("on left")
+			#print_debug("on left")
 			target_right = false
 			#movement = target_direction.rotated(CLOCKWISE)
 	else:
 		if target_right:
-			#print(str(arc_vector), " ", Vector2.DOWN)
+			#print_debug(str(arc_vector), " ", Vector2.DOWN)
 			if arc_vector.x<=-.9:
 				rotate_around = false
-				print("finished")
+				print_debug("finished")
 		else:
 			if arc_vector.x>=.9:
 				rotate_around = false
-				print("finished")
+				print_debug("finished")
 	#arc_vector = Vector2(position-Vector2(player.position)).normalized()
-	#print(direction_to_player.normalized())
-	#print(arc_vector)
+	#print_debug(direction_to_player.normalized())
+	#print_debug(arc_vector)
 
 func handle_movement():
 	distance=global_position.x-player.position.x
@@ -119,7 +119,7 @@ func handle_movement():
 	#label.text=str(abs(distance))
 	if abs(distance)<25:
 		rotate_around=true
-		#print("arcing ", str(arc_vector))
+		#print_debug("arcing ", str(arc_vector))
 func get_width() -> int:
 	return collision_shape_2d.get_shape().radius
 func get_height() -> int:
@@ -140,7 +140,7 @@ func target_lock():
 	var target_lock_inst
 	target_lock_inst=TARGET_LOCK.instantiate()
 	add_child(target_lock_inst)
-	print(str(position)," ",str(target_lock_inst.global_position))
+	print_debug(str(position)," ",str(target_lock_inst.global_position))
 	
 	
 	

@@ -21,9 +21,9 @@ func _process(delta: float) -> void:
 
 func enter_name(_name : String) -> void:
 	if _name==null or _name=="":
-		print("Enter name ya dingus")
+		print_debug("Enter name ya dingus")
 	else:
-		#print(_name + " Your score is " + str(score))
+		#print_debug(_name + " Your score is " + str(score))
 		var _new_highscore : Array
 		_new_highscore = [_name, GlobalSaveData.score]
 		GlobalSaveData.store_score(_new_highscore)

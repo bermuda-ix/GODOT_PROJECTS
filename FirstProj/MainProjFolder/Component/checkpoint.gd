@@ -9,7 +9,7 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.is_in_group("player") and check_flag.disabled==false:
-		print("checkpoint reached")
+		print_debug("checkpoint reached")
 		check_flag.disabled=true
 		$"../PC".set_start_pos(position)
 		GlobalSaveData.current_save["player"]["pos_x"]=global_position.x

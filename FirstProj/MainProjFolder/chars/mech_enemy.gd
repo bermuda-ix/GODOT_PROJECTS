@@ -145,7 +145,7 @@ func _physics_process(delta):
 			handle_jump()
 		
 	#if is_on_floor() and current_state==States.JUMP:
-		##print("landed")
+		##print_debug("landed")
 		#set_state(current_state,States.CHASE)
 	
 	#if parry_timer.is_stopped() :
@@ -153,11 +153,11 @@ func _physics_process(delta):
 		#knockback = Vector2.ZERO
 		#parried=false
 	
-	#print(state, ": ", current_state, prev_state)	
-	#print(animation_player.current_animation)
-	#print(is_on_floor())
+	#print_debug(state, ": ", current_state, prev_state)	
+	#print_debug(animation_player.current_animation)
+	#print_debug(is_on_floor())
 	#if current_state==States.JUMP:
-		#print("in air")
+		#print_debug("in air")
 	handl_animation()
 
 	velocity.x = current_speed + knockback.x
@@ -207,7 +207,7 @@ func handle_movement() -> void:
 		if player_found == true:
 			var dir = to_local(nav_agent.get_next_path_position())
 			
-			#print("moving to player")
+			#print_debug("moving to player")
 			#if next_y<position.y:
 				#if (not floor_checks_right.is_colliding()) and (floor_jump_check_right.is_colliding()) and is_on_floor(): 
 					#velocity.y = jump_velocity
@@ -220,11 +220,11 @@ func handle_movement() -> void:
 				#current_state=States.JUMP
 			
 			#if ( (leap_up_check_right.is_colliding() and current_speed>0 ) or (leap_up_check_left.is_colliding() and current_speed<0 ) ) and position.y-30>next_y:
-				##print("jump")
+				##print_debug("jump")
 				#velocity.y = jump_velocity*1.2
 			
 			#velocity.x = dir.x * chase_speed
-			#print(dir)
+			#print_debug(dir)
 			if dir.x > 0 and is_on_floor():
 				current_speed = chase_speed
 			else:
@@ -234,7 +234,7 @@ func handle_movement() -> void:
 		
 		#velocity.x = velocity.x
 		if is_on_floor() and jump_timer.is_stopped():
-			#print("landed")
+			#print_debug("landed")
 			makepath()
 			set_state(current_state, States.CHASE)
 			current_speed=prev_speed
@@ -246,11 +246,11 @@ func handle_movement() -> void:
 
 func handle_jump():
 	if (leap_up_check_left.has_overlapping_bodies() or leap_up_check_right.has_overlapping_bodies()) and is_on_floor():
-		#print("jump check")
+		#print_debug("jump check")
 		#set_state(current_state, States.JUMP)
 		if (position.y-50)>next_y:
 			jump_timer.start()
-			#print("jump start")
+			#print_debug("jump start")
 			velocity.y = jump_velocity*1.2
 			set_state(current_state, States.JUMP)
 
@@ -283,7 +283,7 @@ func shooting_range():
 	var dir = global_position.direction_to(tar_pos)
 	distance =abs(global_position.x - tar_pos.x)
 	if distance<=200 and attacking==false:
-		#print(bt_player.blackboard.get_var("in_range"), " ",distance, " ",attacking)
+		#print_debug(bt_player.blackboard.get_var("in_range"), " ",distance, " ",attacking)
 		bt_player.blackboard.set_var("in_range", true)
 		set_state(current_state,States.SHOOTING)
 	else:
@@ -327,7 +327,7 @@ func set_state(cur_state, new_state) -> void:
 	else:
 		current_state = new_state
 		prev_state = cur_state
-		#print(current_state, " : ", prev_state)
+		#print_debug(current_state, " : ", prev_state)
 		match current_state:
 			States.ATTACK:
 				state="ATTACK"
@@ -337,7 +337,7 @@ func set_state(cur_state, new_state) -> void:
 			States.WANDER:
 				state="WANDER"
 				hb_collison.disabled=false
-				#print(str(prev_speed," ",current_speed))
+				#print_debug(str(prev_speed," ",current_speed))
 				animation_player.speed_scale = 1
 				animation_player.play("walking")
 				if prev_state==States.JUMP:
@@ -352,7 +352,7 @@ func set_state(cur_state, new_state) -> void:
 					current_speed=prev_speed
 			States.JUMP:
 				prev_speed=current_speed
-				#print("jumping")
+				#print_debug("jumping")
 				state="JUMP"
 				if current_speed < 0:
 					current_speed = -jump_speed
@@ -374,7 +374,7 @@ func set_state(cur_state, new_state) -> void:
 				animation_player.play("Staggered")
 				hb_collison.disabled=false
 				
-		#print(state)
+		#print_debug(state)
 
 
 func _on_health_health_depleted():
@@ -387,7 +387,7 @@ func _on_health_health_depleted():
 	#var enemies = get_tree().get_nodes_in_group("Enemy")
 	#if enemies.size() <=1:
 		#Events.level_completed.emit()
-		#print("level complete")
+		#print_debug("level complete")
 
 func _on_death_timer_timeout():
 	var drop_inst=drop.instantiate()
@@ -405,18 +405,18 @@ func health_bar():
 
 func _on_hurt_box_got_hit(hitbox):
 	health.set_temporary_immortality(0.2)
-	print("hit")
+	print_debug("hit")
 	animation_player.play("hit")
 	await animation_player.animation_finished
 	if current_state != States.DEATH:
 		animation_player.play("RESET")
 	
 	if current_state==States.STAGGERED:
-		print("big damage")
+		print_debug("big damage")
 		
 		#health.health-=2
 	else:
-		print("not big damage")
+		print_debug("not big damage")
 		
 	#knockback.x = 350
 	#velocity.y=jump_velocity/2
@@ -431,7 +431,7 @@ func _on_hurt_box_got_hit(hitbox):
 
 #func _on_hurt_box_parried():
 	#current_state=States.PARRY
-	#print("PARRIED")
+	#print_debug("PARRIED")
 	#parry_timer.start()
 	#if animated_sprite_2d.flip_h==true:
 		#knockback.x = -450
@@ -446,7 +446,7 @@ func _on_hurt_box_got_hit(hitbox):
 
 func _on_hit_box_parried():
 	current_state=States.PARRY
-	#print("PARRIED")
+	#print_debug("PARRIED")
 	parry_timer.start()
 	if animated_sprite_2d.flip_h==true:
 		knockback.x = -450
@@ -461,7 +461,7 @@ func _on_hit_box_parried():
 func _on_attack_range_body_entered(_body):
 	if current_state==States.STAGGERED:
 		pass
-	print("attack in range")
+	print_debug("attack in range")
 	set_state(current_state, States.ATTACK)
 	animation_player.play("attack")
 	#hb_collison.disabled=true
@@ -476,12 +476,12 @@ func _on_attack_range_body_entered(_body):
 func _on_navigation_timer_timeout():
 	makepath()
 	next_y=nav_agent.get_next_path_position().y
-	#print(next_y, " : ", position.y)
+	#print_debug(next_y, " : ", position.y)
 
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name=="attack":
-		#print("attack finished")
+		#print_debug("attack finished")
 		set_state(current_state, States.CHASE)
 
 
@@ -496,7 +496,7 @@ func _on_parry_timer_timeout():
 func shoot():
 	#turret.shoot()
 	#turret.shoot_timer.paused=false
-	print("shoot")
+	print_debug("shoot")
 	var bullet_inst = bullet.instantiate()
 	bullet_inst.set_speed(300.0)
 	bullet_inst.set_accel(100.0)
@@ -516,7 +516,7 @@ func shoot():
 
 func _on_bt_player_behavior_tree_finished(status):
 	if status==3:
-		#print("shooting finished")
+		#print_debug("shooting finished")
 		bt_player.blackboard.set_var("in_range", false)
 		set_state(current_state,prev_state)
 		shooting_cooldown.start()
@@ -529,7 +529,7 @@ func _on_bt_player_tree_exited():
 	pass # Replace with function body.
 	
 	#if status==3:
-		#print("shooting finished")
+		#print_debug("shooting finished")
 		#bt_player.blackboard.set_var("in_range", false)
 		#set_state(current_state,prev_state)
 		#shooting_cooldown.start()
@@ -539,7 +539,7 @@ func _on_bt_player_tree_exited():
 
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("sp_atk_default"):
-		print("spc_hit")
+		print_debug("spc_hit")
 		stagger.stagger -= player.sp_atk_dmg
 
 
@@ -548,12 +548,12 @@ func _on_stagger_staggered():
 	set_state(current_state, States.STAGGERED)
 	parry_timer.start(5)
 	hurt_box.set_damage_mulitplyer(3)
-	print("staggered")
+	print_debug("staggered")
 
 
 func _on_hurt_box_weak_point_area_entered(area):
 	if area.is_in_group("sp_atk_default"):
-		print("spc_hit_weak")
+		print_debug("spc_hit_weak")
 		stagger.stagger = 0
 
 func get_width() -> int:
@@ -566,4 +566,4 @@ func target_lock():
 	const TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
 	target_lock_inst=TARGET_LOCK.instantiate()
 	add_child(target_lock_inst)
-	print(str(position)," ",str(target_lock_inst.global_position))
+	print_debug(str(position)," ",str(target_lock_inst.global_position))

@@ -171,7 +171,7 @@ func _trigger_import(meta: Dictionary) -> void:
 
 	await _import_helper.import_node(root_node, meta)
 
-	print("Import complete: %s (%s) node from %s" % [ meta.node_path, meta.meta.source, meta.scene_path])
+	print_debug("Import complete: %s (%s) node from %s" % [ meta.node_path, meta.meta.source, meta.scene_path])
 
 
 func _on_resource_tree_multi_selected(_item: TreeItem, _column: int, selected: bool) -> void:

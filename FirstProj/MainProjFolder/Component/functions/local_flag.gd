@@ -15,6 +15,6 @@ func flag_toggle():
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and flag_active:
-		print("local flag activate")
+		print_debug("local flag activate")
 		collision_shape_2d.disabled=true
 		flag_triggered.emit()

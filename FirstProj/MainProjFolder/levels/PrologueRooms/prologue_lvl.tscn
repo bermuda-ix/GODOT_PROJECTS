@@ -36,6 +36,7 @@
 [ext_resource type="PackedScene" uid="uid://bqufbaasjdchb" path="res://Component/Consumables/elevator_key_card.tscn" id="33_j2fky"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="36_rfxm3"]
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="37_r2uf8"]
+[ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="143_ncaf0"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_p4nhw"]
 polygon = PackedVector2Array(699, 393, 758, 393, 1049, 389, 1081, 367, 1081, 358, 1070, 358, 1070, 290, 1426, 290, 1479, 254, 1893, 243, 1894, 202, 1501, 212, 1500, 147, 1382, 76, 766, 78, 761, -20, 728, -21, 729, -120, 725, -22, 698, -21)
@@ -324,6 +325,106 @@ tracks/9/keys = {
 "values": [1.0]
 }
 
+[sub_resource type="Animation" id="Animation_lwduo"]
+resource_name = "mini_boss_1_kill"
+length = 11.0
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy/MiniBosses/MinoBossGroup1/soldier_enemy_boss/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("flashback_lvl_cutscenes/first_mini_boss_kill"),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CameraPos:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 11),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(2210, 724), Vector2(2210, 724)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(11),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/ScreenFlash:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 0.406126),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = false
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"attach_path"
+}, {
+"args": [],
+"method": &"remove_path"
+}]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["first_mini_boss_kill"],
+"method": &"play_cutscene_segment"
+}]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("HitStop")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"end_hit_stop"
+}, {
+"args": [0.5, 0.3],
+"method": &"hit_stop"
+}]
+}
+
 [sub_resource type="Curve2D" id="Curve2D_kcvht"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 2017, 738, -43.0152, 9.24029, 43.0152, -9.24029, 2079, 702, -18.4806, -16.5688, 18.4806, 16.5688, 2166, 728, 0, 0, 0, 0, 2209, 794)
@@ -470,7 +571,7 @@ tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["mini_boss_kill"],
+"args": ["first_mini_boss_kill"],
 "method": &"play_cutscene_segment"
 }]
 }
@@ -506,6 +607,7 @@ _data = {
 &"ElevatorToBasement": SubResource("Animation_hjny2"),
 &"INTRO": SubResource("Animation_h7re7"),
 &"RESET": SubResource("Animation_tnflb"),
+&"mini_boss_1_kill": SubResource("Animation_lwduo"),
 &"mini_boss_kill": SubResource("Animation_cxkws")
 }
 
@@ -513,11 +615,12 @@ _data = {
 a = Vector2(-17, -3)
 b = Vector2(567, -310)
 
-[node name="PrologueLvl" unique_id=1690552447 instance=ExtResource("1_w82j5")]
+[node name="PrologueLvl" unique_id=1690552447 groups=["world"] instance=ExtResource("1_w82j5")]
 next_level = ExtResource("2_mb6gy")
 camera_offset_y = 60
 lvl_type = "adv"
 main_room = true
+cutscene_library = "flashback_lvl_cutscenes"
 
 [node name="ScreenFlash" type="ColorRect" parent="CanvasLayer" index="5" unique_id=1598351975]
 z_index = 3
@@ -629,7 +732,7 @@ collision_visibility_mode = 1
 
 [node name="Non_TilesetCollisions" type="Node2D" parent="LabArchitect" index="7" unique_id=1688873227]
 
-[node name="stairs_1_1st_area" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="0" unique_id=1109432404]
+[node name="stairs_1_1st_area" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="0" unique_id=1109432404 groups=["WorldStatic"]]
 position = Vector2(1664, 67.2269)
 scale = Vector2(1, 0.933707)
 collision_mask = 3
@@ -639,18 +742,18 @@ position = Vector2(-1664, -72)
 scale = Vector2(1, 1.071)
 polygon = PackedVector2Array(1648, 97.1055, 1976, -67.2269, 2008, -67.2269, 2016, -59.7572, 1664, 104.575)
 
-[node name="stairs_2_1st_area" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="1" unique_id=1835214556]
+[node name="stairs_2_1st_area" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="1" unique_id=1835214556 groups=["WorldStatic"]]
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="LabArchitect/Non_TilesetCollisions/stairs_2_1st_area" index="0" unique_id=929100472]
 polygon = PackedVector2Array(1504, -224.09, 1480, -224.09, 1352, -276.377, 1352, -291.317, 1384, -291.317, 1504, -231.559)
 
-[node name="stairs_1_2nd_area" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="2" unique_id=347338039]
+[node name="stairs_1_2nd_area" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="2" unique_id=347338039 groups=["WorldStatic"]]
 position = Vector2(966, -37.3483)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="LabArchitect/Non_TilesetCollisions/stairs_1_2nd_area" index="0" unique_id=1077701239]
 polygon = PackedVector2Array(1335, -253.035, 1391, -218.487, 1410, -218.487, 1355, -251.167)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="3" unique_id=1399185036]
+[node name="StaticBody2D" type="StaticBody2D" parent="LabArchitect/Non_TilesetCollisions" index="3" unique_id=1399185036 groups=["WorldStatic"]]
 position = Vector2(2755, 260.504)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LabArchitect/Non_TilesetCollisions/StaticBody2D" index="0" unique_id=799995813]
@@ -765,6 +868,10 @@ scale = Vector2(0.75, 0.75)
 
 [node name="GuardEnemy5" parent="Enemy/Guards" index="4" unique_id=1583467490 instance=ExtResource("16_vw32t")]
 position = Vector2(3485, 302)
+scale = Vector2(0.75, 0.75)
+
+[node name="GuardEnemy6" parent="Enemy/Guards" index="5" unique_id=2034909694 instance=ExtResource("16_vw32t")]
+position = Vector2(3216.0002, 491)
 scale = Vector2(0.75, 0.75)
 
 [node name="SleepingGuard" parent="Enemy" index="4" unique_id=2088524183 instance=ExtResource("17_61h8j")]
@@ -1192,7 +1299,7 @@ update_scale = false
 [node name="StartingPos" type="Node" parent="." index="27" unique_id=275376811]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" unique_id=794793489 groups=["start_pos"]]
-position = Vector2(3438, 459)
+position = Vector2(261, 376)
 
 [node name="PersistentDataHandler" type="Node" parent="." index="28" unique_id=86022096]
 script = ExtResource("24_w82j5")
@@ -1215,5 +1322,9 @@ position = Vector2(1982, 1173)
 script = ExtResource("37_r2uf8")
 metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 
+[node name="PC" parent="." index="32" unique_id=1041091659 instance=ExtResource("143_ncaf0")]
+position = Vector2(231, 430)
+
+[editable path="Enemy/MiniBosses/MinoBossGroup1/soldier_enemy_boss"]
 [editable path="DoorsAndSwitches/Elevator"]
 [editable path="DoorsAndSwitches/Elevator2"]

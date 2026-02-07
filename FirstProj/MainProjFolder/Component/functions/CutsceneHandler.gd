@@ -44,7 +44,7 @@ func anim_count_up() -> void:
 func set_cutscene_dir(value : int) -> void:
 
 	cutscene_dir=value
-	#print(cutscene_dir)
+	#print_debug(cutscene_dir)
 
 func set_cutscene_speed(value : String) -> void:
 	cutscene_speed=value

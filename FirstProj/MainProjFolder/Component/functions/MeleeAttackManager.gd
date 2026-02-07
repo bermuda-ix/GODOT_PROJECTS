@@ -10,7 +10,7 @@ func melee_attack():
 
 func melee_counter():
 	actor.state_machine.change_active_state(actor.attack)
-	#print("counter")
+	#print_debug("counter")
 	actor.animation_player.play("atk_counter")
 
 #func slam(value: String):

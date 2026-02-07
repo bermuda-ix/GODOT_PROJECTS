@@ -14,7 +14,7 @@ func _ready() -> void:
 	
 #func _process(delta: float) -> void:
 	#if not dur.is_stopped():
-		#print(dur.time_left)
+		#print_debug(dur.time_left)
 
 func hit_stop(time_scale : float, duration : float):
 	Engine.time_scale = time_scale

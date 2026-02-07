@@ -56,8 +56,8 @@ func _physics_process(delta):
 		accel += (accel*.02)
 		#dir=dir
 	
-	#print(spawnRot)
-	#print(dir.normalized())
+	#print_debug(spawnRot)
+	#print_debug(dir.normalized())
 	#dir=player_tracker.transform.x
 	
 	#spawnRot=player_tracker.rotation_degrees
@@ -129,7 +129,7 @@ func track_player():
 	
 	tracking_vector=direction_to_player.normalized()
 	
-	#print(direction_to_player.normalized())
+	#print_debug(direction_to_player.normalized())
 	
 
 

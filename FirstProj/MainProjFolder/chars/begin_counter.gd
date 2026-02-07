@@ -1,7 +1,7 @@
 extends LimboState
 
 #func _enter() -> void:
-	#print("waiting to counter")
+	#print_debug("waiting to counter")
 	#
 #func _exit() -> void:
-	#print("starting counter")
+	#print_debug("starting counter")

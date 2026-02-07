@@ -34,7 +34,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	
-	#print(rotation, "  ", spawnRot)
+	#print_debug(rotation, "  ", spawnRot)
 	#position += dir * SPEED * delta
 	
 	animated_sprite_2d.rotation = lerp_angle(animated_sprite_2d.rotation, deg_to_rad(spawnRot), delta*5)

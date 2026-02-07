@@ -14,6 +14,8 @@ var immortality_timer: Timer = null
 
 @onready var health: int = max_health : set = set_health, get = get_health
 
+@onready var thread := Thread.new()
+@onready var mutex := Mutex.new()
 
 func set_max_health(value: int):
 	var clamped_value = 1 if value <= 0 else value
@@ -69,7 +71,7 @@ func set_health(value: int):
 			health_depleted.emit()
 			Events.camera_shake.emit(3,20)
 			
-
+	print_debug(health)
 
 func get_health():
 	return health

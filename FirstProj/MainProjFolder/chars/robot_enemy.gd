@@ -106,8 +106,8 @@ func _physics_process(delta):
 		current_state=States.JUMP
 	elif jump_timer.is_stopped() and is_on_floor() and current_state==States.JUMP:
 		set_state(current_state,prev_state)
-	#print(current_state, " , ", jump_timer.is_stopped(), " , ", is_on_floor())
-	#print(navigation_timer.time_left)
+	#print_debug(current_state, " , ", jump_timer.is_stopped(), " , ", is_on_floor())
+	#print_debug(navigation_timer.time_left)
 	## Handle jump.
 	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		#velocity.y = JUMP_VELOCITY
@@ -130,7 +130,7 @@ func _physics_process(delta):
 			handle_jump()
 		
 	#if is_on_floor() and current_state==States.JUMP:
-		##print("landed")
+		##print_debug("landed")
 		#set_state(current_state,States.CHASE)
 	
 	#if parry_timer.is_stopped() :
@@ -138,11 +138,11 @@ func _physics_process(delta):
 		#knockback = Vector2.ZERO
 		#parried=false
 	
-	#print(state, ": ", current_state, prev_state)	
-	#print(current_speed)
-	#print(is_on_floor())
+	#print_debug(state, ": ", current_state, prev_state)	
+	#print_debug(current_speed)
+	#print_debug(is_on_floor())
 	#if current_state==States.JUMP:
-		#print("in air")
+		#print_debug("in air")
 	handl_animation()
 
 	velocity.x = current_speed + knockback.x
@@ -193,7 +193,7 @@ func handle_movement() -> void:
 	elif current_state == States.CHASE:
 		if player_found == true:
 			var dir = to_local(nav_agent.get_next_path_position())
-			#print("moving to player")
+			#print_debug("moving to player")
 			#if next_y<position.y:
 				#if (not floor_checks_right.is_colliding()) and (floor_jump_check_right.is_colliding()) and is_on_floor(): 
 					#velocity.y = jump_velocity
@@ -206,12 +206,12 @@ func handle_movement() -> void:
 				#current_state=States.JUMP
 			
 			#if ( (leap_up_check_right.is_colliding() and current_speed>0 ) or (leap_up_check_left.is_colliding() and current_speed<0 ) ) and position.y-30>next_y:
-				##print("jump")
+				##print_debug("jump")
 				#velocity.y = jump_velocity*1.2
 			#velocity = dir * SPEED
 			#velocity.x = dir.x * chase_speed
-			#print(dir.x)
-			#print(is_on_floor())
+			#print_debug(dir.x)
+			#print_debug(is_on_floor())
 			if dir.x > 0 and is_on_floor():
 				current_speed = chase_speed
 			else:
@@ -221,7 +221,7 @@ func handle_movement() -> void:
 		
 		#velocity.x = velocity.x
 		if is_on_floor() and jump_timer.is_stopped():
-			#print("landed")
+			#print_debug("landed")
 			set_state(current_state, States.CHASE)
 			current_speed=prev_speed
 		#velocity.y = jump_velocity
@@ -232,11 +232,11 @@ func handle_movement() -> void:
 
 func handle_jump():
 	if (leap_up_check_left.has_overlapping_bodies() or leap_up_check_right.has_overlapping_bodies()) and is_on_floor():
-		#print("jump check")
+		#print_debug("jump check")
 		#set_state(current_state, States.JUMP)
 		if (position.y-70)>next_y:
 			jump_timer.start()
-			#print("jump start")
+			#print_debug("jump start")
 			velocity.y = jump_velocity*1.2
 			set_state(current_state, States.JUMP)
 
@@ -277,7 +277,7 @@ func handle_vision():
 
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
-	#print("make_path")
+	#print_debug("make_path")
 		
 	
 func set_state(cur_state, new_state) -> void:
@@ -300,7 +300,7 @@ func set_state(cur_state, new_state) -> void:
 			States.WANDER:
 				state="WANDER"
 				hb_collison.disabled=false
-				#print(str(prev_speed," ",current_speed))
+				#print_debug(str(prev_speed," ",current_speed))
 				animation_player.speed_scale = 1
 				animation_player.play("walking")
 				if prev_state==States.JUMP:
@@ -316,7 +316,7 @@ func set_state(cur_state, new_state) -> void:
 				if prev_state == States.WANDER:
 					
 					velocity.y = jump_velocity
-					#print(str(prev_speed," ",current_speed))
+					#print_debug(str(prev_speed," ",current_speed))
 					prev_speed=current_speed
 					if current_speed < 0:
 						current_speed = -jump_speed*2
@@ -324,7 +324,7 @@ func set_state(cur_state, new_state) -> void:
 						current_speed = jump_speed*2
 				if prev_state == States.CHASE:
 					velocity.y = jump_velocity*1.5
-					#print(str(prev_speed," ",current_speed))
+					#print_debug(str(prev_speed," ",current_speed))
 					prev_speed=current_speed
 					if current_speed < 0:
 						current_speed = -jump_speed
@@ -336,7 +336,7 @@ func set_state(cur_state, new_state) -> void:
 				hb_collison.disabled=true
 			
 		
-		#print(state)
+		#print_debug(state)
 		
 
 
@@ -358,7 +358,7 @@ func _on_health_health_depleted():
 	
 	#if enemies.size() <=1:
 		#Events.level_completed.emit()
-		#print("level complete")
+		#print_debug("level complete")
 		#
 func _on_death_timer_timeout():
 	var explode_inst=explode.instantiate()
@@ -376,16 +376,16 @@ func _on_hurt_box_got_hit():
 
 func _on_navigation_timer_timeout():
 	makepath()
-	#print("path_made")
+	#print_debug("path_made")
 	next_y=nav_agent.get_next_path_position().y
 	var next_x=nav_agent.get_next_path_position().x
-	#print(next_x)
+	#print_debug(next_x)
 
 
 func _on_hit_box_parried():
 	Events.parried.emit()
 	current_state=States.PARRY
-	print("PARRIED")
+	print_debug("PARRIED")
 	parry_timer.start()
 	if animated_sprite_2d.flip_h==true:
 		knockback.x = -450
@@ -412,7 +412,7 @@ func _on_hurt_box_area_entered(area):
 			knockback.x=(randi_range(500,1000))*-1
 		else:
 			knockback.x=(randi_range(500,1000))
-		print("spc_hit_weak")
+		print_debug("spc_hit_weak")
 		await get_tree().create_timer(0.2).timeout
 		parried=true
 		parry_timer.start(3) 
@@ -432,4 +432,4 @@ func target_lock():
 	const TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
 	target_lock_inst=TARGET_LOCK.instantiate()
 	add_child(target_lock_inst)
-	print(str(position)," ",str(target_lock_inst.global_position))
+	print_debug(str(position)," ",str(target_lock_inst.global_position))

@@ -3,6 +3,8 @@ class_name entry_way extends Area2D
 #signal player_entered_door(door : Door, transition_type : String)
 signal enter_area(room : PackedScene)
 
+@onready var test := false
+
 @export_enum("left", "right") var entry_dir
 @export var entry_loc : Vector2 = Vector2(0,0)
 @export var entry : int = 0
@@ -19,16 +21,26 @@ signal enter_area(room : PackedScene)
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
-	if not LevelsList.prologue_level_maps.has(name) and not location_override:
+	if not LevelsList.level_maps.has(name) and not location_override:
 		entry_name =self.get_parent().get_parent().name+"/"+self.name
-		LevelsList.prologue_level_maps[entry_name] = room.resource_path
+		LevelsList.level_maps[entry_name] = room.resource_path
+
+func _process(delta: float) -> void:
+	if test:
+		print_debug("testing")
+		assert(player.next_room==enter_to)
+
 
 func _on_body_entered(body: Node2D) -> void:
 	if not body is PlayerEntity:
 		return
+	
 	#player_entered_door.emit(self)
 	if location_override:
+		test=true
 		player.next_room=enter_to
+		Events.in_door_way.emit(enter_to)
+		print_debug(player.next_room)
 	else:
 		player.next_room=entry_name
 		

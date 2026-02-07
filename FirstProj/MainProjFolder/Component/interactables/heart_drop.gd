@@ -17,13 +17,13 @@ func _on_body_entered(body):
 		sleeping=true
 		#if hearts.size() <=1:
 			#Events.level_completed.emit()
-			#print("level complete")
+			#print_debug("level complete")
 
 
 #func _on_health_health_depleted():
-	#print("Health Depleted!")
+	#print_debug("Health Depleted!")
 	#queue_free()
 	#var hearts = get_tree().get_nodes_in_group("Hearts")
 	#if hearts.size() <=1:
 		#Events.level_completed.emit()
-		#print("level complete")
+		#print_debug("level complete")

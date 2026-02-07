@@ -2,7 +2,8 @@ extends Control
 
 @onready var health_bar = $Health
 @onready var state = $State
-@onready var health_bar_ui = $HealthBar
+@onready var health_bar_ui := $HealthBar
+@onready var stagger_bar: TextureProgressBar = $StaggerBar
 @onready var heat_fill_gauge: TextureProgressBar = $HeatFillGauge
 @onready var heat_lvl_gauge: TextureProgressBar = $HeatLvlGauge
 
@@ -40,6 +41,13 @@ func set_cur_state(value: String) -> void:
 
 func set_max_health(value: int) -> void:
 	health_bar_ui.max_value = value
+
+func set_stagger(value : int) -> void:
+	stagger_bar.value=value
+	
+func set_max_stagger(value : int) -> void:
+	stagger_bar.max_value=value
+
 
 func set_heat_fill(value : int) -> void:
 	heat_fill_gauge.value=value

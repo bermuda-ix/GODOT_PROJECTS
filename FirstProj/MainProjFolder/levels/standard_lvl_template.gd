@@ -28,16 +28,21 @@ var player : PlayerEntity
 @onready var persistent_data_handler: PersistentDataHandler = $PersistentDataHandler
 
 
+@export var lvl_type = "goal"
+@export var main_room : bool = false
+@onready var boss_dead : bool = false
+
+
+@export_category("Cutscene Variables")
 @onready var cutscene_player: AnimationPlayer = $CutscenePlayer
 @export var intro_cutscene_active : bool = false
 var qte_options : Array[String]  = ["1", "2", "3", "4", "0"]
 @onready var player_transform: RemoteTransform2D = $Paths/Path2D/PathFollow2D/PlayerTransform
 @onready var hit_stop: HitStop = $HitStop
+@export var cutscene_library : String
 
 
-@export var lvl_type = "goal"
-@export var main_room : bool = false
-@onready var boss_dead : bool = false
+
 
 var cur_state = "IDLE"
 var cur_health = 3
@@ -55,7 +60,7 @@ var obj : int
 func _ready():
 	
 	if main_room:
-		LevelsList.prologue_level_maps[self.name] = self.scene_file_path
+		LevelsList.level_maps[self.name] = self.scene_file_path
 	
 	if not next_level is PackedScene:
 		next_level = load("res://LVL_Transitions/victory_screen.tscn")
@@ -79,6 +84,8 @@ func _ready():
 	player.no_input_qte.connect(_pc_no_input_qte)
 	
 	player.scale = Vector2(pc_scale, pc_scale)
+	
+	
 	if intro_cutscene_active:
 		Events.start_cutscene.emit()
 		cutscene_player.play("INTRO")
@@ -99,6 +106,15 @@ func _ready():
 		spawns_present=true
 		spawn_points=get_tree().get_nodes_in_group("SpawnPoints")
 	
+	player.init_player_data()
+	
+	
+#func _init_player_data():
+	#player.set_health()
+	#player.set_max_health()
+	#player.set_stagger()
+	#player.set_max_stagger()
+	#
 	
 	#score=45
 func _process(_delta):
@@ -115,7 +131,7 @@ func _process(_delta):
 	#
 		#if obj<=1:
 			#Events.level_completed.connect(show_level_complete)
-			##print("leven complete")
+			##print_debug("leven complete")
 		##label.text=str("Obj: ",obj)
 	#else:
 		##label.text = str("Score: ", score)
@@ -168,14 +184,15 @@ func set_health():
 	ui_level.set_health(cur_health)
 	ui_level.set_max_health(max_health)
 	
-func inc_score():
+func inc_score(value : int):
 	score += 1
 
 func handle_spawn():
 	pass
 
 func play_cutscene_segment(_cutscene_segment : String):
-	Events.play_cutscene_segment.emit(_cutscene_segment)
+	var _cutscene=cutscene_library+"/"+_cutscene_segment
+	Events.play_cutscene_segment.emit(_cutscene)
 
 func end_cutscene():
 	Events.end_cutsene.emit()

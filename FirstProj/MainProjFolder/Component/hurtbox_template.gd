@@ -5,6 +5,7 @@ extends Area2D
 signal received_damage(damage: int)
 signal received_stagger_damage(damage: int)
 signal got_hit(hitbox: HitBox)
+signal bullet_hit(_damage: int)
 signal knockback(hitbox: HitBox)
 signal parried()
 signal weakpoint_hit()
@@ -28,26 +29,36 @@ func _on_area_entered(hitbox: HitBox) -> void:
 		if hitbox.stagger_damage:
 			stagger.stagger -= (hitbox.damage * dmg_mult)
 			### Maybe add minimum health damage to stagger attacks?  
-			#print(hitbox.damage, " ",dmg_mult)
+			#print_debug(hitbox.damage, " ",dmg_mult)
 			#received_damage.emit(hitbox.damage)
 			got_hit.emit(hitbox)
 		else:
 			health.health -= (hitbox.damage * dmg_mult)
-			#print(hitbox.damage, " ",dmg_mult)
+			#print_debug(hitbox.damage, " ",dmg_mult)
 			received_damage.emit(hitbox.damage)
 			got_hit.emit(hitbox)
 
 func _bullet_hit(_rigid_body : RigidBody2D) -> void:
+	var _damage=1
 	if health.health<=0:
 		return
-	if _rigid_body.is_in_group("PlayerBullet"):
-		_rigid_body.hard_impact()
-		if stagger.stagger>0:
-			stagger.stagger-=1
-		else:
-			health.health-=1
+	#if _rigid_body.is_in_group("PlayerBullet"):
+		#_rigid_body.hard_impact()
+		#if stagger.stagger>0:
+			#stagger.stagger-=1
+		#else:
+			#health.health-=1
+	#else:
+		#bullet_hit.emit(_damage)
+		#health.health-=_damage
+		#print(health.health)
+	_rigid_body.hard_impact()
+	if stagger.stagger>0:
+		stagger.stagger-=1
 	else:
-		health.health-=1
+		health.set_health(health.health-1)
+		received_damage.emit(_damage)
+		bullet_hit.emit(_damage)
 	_rigid_body.impact()
 		
 

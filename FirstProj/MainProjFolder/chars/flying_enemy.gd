@@ -2,7 +2,9 @@ extends CharacterBody2D
 
 const SPEED = 40
 const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
-const MISSILE_TRACKER = preload("res://Component/missiles/missile_tracker.tscn")
+const MISSILE_TRACKER = preload("uid://vdjcvocboc4s")
+
+@onready var active := false
 
 @onready var player : PlayerEntity = null
 @onready var nav_agent := $NavigationAgent2D2 as NavigationAgent2D
@@ -73,13 +75,18 @@ func _ready():
 	
 	
 func _process(delta):
+	if not active:
+		return
+		
 	track_player()
 	#handle_vision()
-	#print(current_state)
+	#print_debug(current_state)
 	stg_laber.text=str("Stagger: ", stagger.get_stagger(), " ", state)
 	
 	
 func _physics_process(delta):
+	if not active:
+		return
 	var dir = to_local(nav_agent.get_next_path_position()).normalized()
 	
 	var vel_y_default = velocity.y
@@ -101,14 +108,14 @@ func _physics_process(delta):
 		velocity.y = gravity * 0.3
 		velocity.x=0
 		turret.shoot_timer.paused=true
-		#print("staggered")
+		#print_debug("staggered")
 	elif current_state==States.DEATH:
 		#move_and_slide()
 		velocity.y = knockback.y
 		velocity.x = dir.x*(-1)*knockback.x
 	#if knockback != Vector2.ZERO:
 		
-	#print(player_tracker_pivot.rotation)
+	#print_debug(player_tracker_pivot.rotation)
 		
 	
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
@@ -130,7 +137,7 @@ func handle_vision():
 				##chase_timer.start(1)
 				#player_found = true
 				#found = true
-				##print("found")
+				##print_debug("found")
 	#else:
 		#player_found = false
 	player_found=true
@@ -169,7 +176,7 @@ func set_state(cur_state, new_state) -> void:
 				#animation_player.play("attack")
 				#await animation_player.animation_finished
 		
-		#print(state)
+		#print_debug(state)
 
 func _on_nav_timer_timeout():
 	makepath()
@@ -182,7 +189,7 @@ func _on_health_health_depleted():
 	set_state(current_state, States.DEATH)
 	knockback.y=(randi_range(100,400)*-1)
 	knockback.x=(randi_range(500,900))
-	#print(knockback)
+	#print_debug(knockback)
 	death_timer.start()
 
 
@@ -198,7 +205,7 @@ func _on_death_timer_timeout():
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 
 func _on_turret_shoot_bullet():
-	#print("shoot")
+	#print_debug("shoot")
 	var bullet_inst = bullet.instantiate()
 	bullet_inst.set_speed(400.0)
 	bullet_inst.set_accel(50.0)
@@ -214,7 +221,7 @@ func _on_turret_shoot_bullet():
 
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("sp_atk_default"):
-		#print("spc_hit")
+		#print_debug("spc_hit")
 		knockback.y=(randi_range(50,200)*-1)
 		knockback.x=(randi_range(200,400))
 		stagger.stagger -= 1
@@ -243,6 +250,7 @@ func target_lock():
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	active=true
 	player_found=true
 	set_state(current_state, States.CHASE)
 	missile_shoot_handler.active=true
@@ -252,6 +260,7 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	active=false
 	player_found=false
 	set_state(current_state, States.WANDER)
 	missile_shoot_handler.active=false
@@ -263,4 +272,4 @@ func _on_shoot_timer_timeout() -> void:
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	print(health.health)
+	print_debug(health.health)

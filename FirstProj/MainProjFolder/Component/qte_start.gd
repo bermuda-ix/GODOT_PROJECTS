@@ -7,7 +7,7 @@ extends Area2D
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and qte_active==true:
-		print("begint the QTE")
+		print_debug("begint the QTE")
 		qte_active=false
 		cutscene_player.play(first_qte_anim)
 		Events.start_cutscene.emit()

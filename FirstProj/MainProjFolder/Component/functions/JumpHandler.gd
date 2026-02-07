@@ -8,7 +8,7 @@ extends Node
 func handle_jump(jump_vel : float):
 	if actor.jump_timer.is_stopped():
 		actor.velocity.y = actor.jump_velocity*jump_vel
-		#print(actor.jump_velocity*jump_vel)
-		#print(actor.velocity.y)
+		#print_debug(actor.jump_velocity*jump_vel)
+		#print_debug(actor.velocity.y)
 		#actor.set_state(actor.current_state, actor.States.JUMP)
 		actor.jump_timer.start(.2)

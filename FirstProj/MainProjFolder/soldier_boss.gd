@@ -265,7 +265,7 @@ func _process(_delta):
 	bt_player.blackboard.set_var("ammo",ammo_count)
 	#get_player_state(player)
 	#on_screen.is_on_screen()
-		#print(parry_timer.time_left)
+		#print_debug(parry_timer.time_left)
 
 func _physics_process(delta):
 	##FOR TESTING REMOVE LATER
@@ -469,7 +469,7 @@ func rapid_shoot(value : bool)->void:
 	turret.multi_shot=value
 
 func alerted() -> void :
-	print("alerted!")
+	print_debug("alerted!")
 	vision_handler.always_on=true
 	if on_screen.is_on_screen():
 		state_machine.dispatch(&"attack_mode")
@@ -496,7 +496,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		gpu_particles_2d.emitting=true
 		
 	else:
-		print("kill shot")
+		print_debug("kill shot")
 		
 	
 	#if current_state != States.DEATH:
@@ -570,10 +570,10 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	h_bar.text=str(current.name)
-	#print(current.name)
+	#print_debug(current.name)
 	if current==jump:
 		if previous==attack:
-			print("down attack")
+			print_debug("down attack")
 
 func _on_attack_entered() -> void:
 	bt_player.blackboard.set_var("attack_mode", true)
@@ -614,7 +614,7 @@ func _on_staggered_exited() -> void:
 
 
 func _on_bullet_detection_bullet_detected() -> void:
-	print(state_machine.get_active_state())
+	#print_debug(state_machine.get_active_state())
 	state_machine.dispatch(&"bullet_dodge")
 
 

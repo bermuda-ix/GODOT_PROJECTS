@@ -34,18 +34,22 @@ func handle_vision():
 	else:
 		#actor.player_colliding=player_tracking.is_colliding()
 		if player_tracking.is_colliding():
+			#print_debug(player_tracking.get_collider())
 			var collision_result = player_tracking.get_collider()
-			if collision_result != player or sm.get_active_state()==actor.death:
+			if collision_result != player:
 				#set_state(current_state, States.GUARD)
 				return
 			else:
-				#actor.set_state(actor.current_state, actor.States.ATTACK)
-				sm.dispatch(&"attack_mode")
-				
-				#chase_timer.start(1)
-				if player_found==false:
-					player_sighted.emit()
-				player_found = true
+				if sm.get_active_state()==actor.death:
+					return
+				else:
+					#actor.set_state(actor.current_state, actor.States.ATTACK)
+					sm.dispatch(&"attack_mode")
+					
+					#chase_timer.start(1)
+					if player_found==false:
+						player_sighted.emit()
+					player_found = true
 				
 			
 		else:

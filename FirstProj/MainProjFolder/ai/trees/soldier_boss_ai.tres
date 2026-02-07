@@ -196,18 +196,12 @@ node = SubResource("BBNode_j4731")
 method = &"rapid_shoot"
 args = Array[BBVariant]([SubResource("BBVariant_xienf")])
 
-[sub_resource type="BTConsolePrint" id="BTConsolePrint_vjri2"]
-text = "reloading"
-
 [sub_resource type="BTWait" id="BTWait_wr2jt"]
 duration = 0.4
 
-[sub_resource type="BTConsolePrint" id="BTConsolePrint_wr2jt"]
-text = "reloading done"
-
 [sub_resource type="BTSequence" id="BTSequence_qpg7m"]
 custom_name = "CounterShoot"
-children = [SubResource("BTCallMethod_j4731"), SubResource("BTCallMethod_qkysk"), SubResource("BTAwaitAnimation_cj7pg"), SubResource("BTCallMethod_0uopn"), SubResource("BTRepeat_cj7pg"), SubResource("BTCallMethod_5tega"), SubResource("BTCallMethod_myvia"), SubResource("BTConsolePrint_vjri2"), SubResource("BTWait_wr2jt"), SubResource("BTConsolePrint_wr2jt")]
+children = [SubResource("BTCallMethod_j4731"), SubResource("BTCallMethod_qkysk"), SubResource("BTAwaitAnimation_cj7pg"), SubResource("BTCallMethod_0uopn"), SubResource("BTRepeat_cj7pg"), SubResource("BTCallMethod_5tega"), SubResource("BTCallMethod_myvia"), SubResource("BTWait_wr2jt")]
 
 [sub_resource type="BTSelector" id="BTSelector_vjri2"]
 custom_name = "CounterTypes"
@@ -327,8 +321,6 @@ variable = &"ammo"
 check_type = 2
 value = SubResource("BBVariant_0uopn")
 
-[sub_resource type="BTConsolePrint" id="BTConsolePrint_kadvv"]
-
 [sub_resource type="BBNode" id="BBNode_myvia"]
 saved_value = NodePath("AnimationPlayer")
 resource_name = "AnimationPlayer"
@@ -347,7 +339,7 @@ animation_name = &"reload"
 
 [sub_resource type="BTSequence" id="BTSequence_pb4ri"]
 custom_name = "Reload"
-children = [SubResource("BTCheckVar_5tega"), SubResource("BTConsolePrint_kadvv"), SubResource("BTPlayAnimation_k3jx5"), SubResource("BTAwaitAnimation_p7kfe")]
+children = [SubResource("BTCheckVar_5tega"), SubResource("BTPlayAnimation_k3jx5"), SubResource("BTAwaitAnimation_p7kfe")]
 
 [sub_resource type="BBVariant" id="BBVariant_cle5d"]
 type = 2
@@ -358,8 +350,6 @@ resource_name = "<null>"
 variable = &"ammo"
 check_type = 3
 value = SubResource("BBVariant_cle5d")
-
-[sub_resource type="BTConsolePrint" id="BTConsolePrint_tv5vl"]
 
 [sub_resource type="BBNode" id="BBNode_uo0gr"]
 saved_value = NodePath("AnimationPlayer")
@@ -379,7 +369,7 @@ animation_name = &"shoot"
 
 [sub_resource type="BTSequence" id="BTSequence_4yj4i"]
 custom_name = "Shoot"
-children = [SubResource("BTCheckVar_nmhtu"), SubResource("BTConsolePrint_tv5vl"), SubResource("BTPlayAnimation_1tbiw"), SubResource("BTAwaitAnimation_pnek3")]
+children = [SubResource("BTCheckVar_nmhtu"), SubResource("BTPlayAnimation_1tbiw"), SubResource("BTAwaitAnimation_pnek3")]
 
 [sub_resource type="BTSelector" id="BTSelector_sfx0f"]
 custom_name = "ShootingStance"

@@ -32,18 +32,20 @@ extends StaticBody2D
 @export var turret_link_control : TurretLink
 @onready var turret_link_order : int
 
+signal turret_death
+
 func _ready() -> void:
 	_init_state_machine()
 	ammo_count=turret_top.turret.ammo_count
 	turret_top.health.set_max_health(health.get_max_health())
 	if turret_link_control == null:
-		print("no link")
+		print_debug("no link")
 		if linked_turrets.size()<=1:
-			print("no link")
+			print_debug("no link")
 	else:
 		linked_turrets=turret_link_control.turrets
 		for i in range(linked_turrets.size()):
-			print(linked_turrets[i].name, " linked")
+			print_debug(linked_turrets[i].name, " linked")
 			turret_link_order=linked_turrets.find(self)
 
 func _process(delta: float) -> void:
@@ -89,8 +91,9 @@ func _on_health_health_depleted() -> void:
 	death_sparks2.emitting=true
 	death_sparks3.emitting=true
 	linked_turrets.remove_at(turret_link_order)
-	print("despawning")
+	print_debug("despawning")
 	despawn_handler.despawn()
+	turret_death.emit()
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05,0.1)

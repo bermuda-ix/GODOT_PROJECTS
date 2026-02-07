@@ -27,6 +27,7 @@ signal update_max_stagger
 #Player Stats
 @export var movement_data : PlayerMovementData
 @export var health: Health
+@onready var _new_health := 0
 @export var hitbox: HitBox
 @export var ammo : int = 0
 @export var TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
@@ -287,6 +288,11 @@ var high_target_jump_height
 @onready var jump_out_timer = $JumpOutTimer
 var flipped_over : bool = false
 
+#multithreading
+var thread := Thread.new()
+var mutex := Mutex.new()
+
+
 #DEBUG FLAGS TBR
 var stuck : bool = false
 
@@ -306,6 +312,7 @@ func _ready():
 	Events.open_interact_menu.connect(open_interact_menu)
 	Events.close_interact_menu.connect(close_interact_menu)
 	Events.reset_player_data.connect(load_player_data)
+	Events.in_door_way.connect(set_next_room)
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
 	_init_state_machine()
@@ -314,7 +321,9 @@ func _ready():
 	_init_attack_states()
 	#Events.add_inventory.emit()
 	Events.update_inventory.emit("AmmoAmount",ammo)
-
+	init_player_data()
+	_new_health=health.health
+	
 func _init_state_machine():
 	state_machine.initial_state=idle
 	state_machine.initialize(self)
@@ -460,10 +469,15 @@ func _init_attack_states():
 	attack_state.add_transition(attack_state.ANYSTATE, attack_1, &"reset_combo")
 
 func _process(_delta):
+	############################################################################
+	#Until I can figure out why health doesn't update on bullet htis this STAYS#
+	############################################################################
+
+	
 	#if anim_player.is_playing():
-		#print("animation playing")
+		#print_debug("animation playing")
 	#else:
-		#print("no play")
+		#print_debug("no play")
 
 	#if clash_power.clash_power>0:
 		#clash_visual.self_modulate.a = (1/clash_power.clash_power) +0.1
@@ -665,8 +679,8 @@ func break_out():
 #jump out of flip
 func jump_out(jumpout_vel : float):
 	knockback.x=jumpout_vel
-	#print(knockback.x)
-	#Kprint(vector_away.x)
+	#print_debug(knockback.x)
+	#Kprint_debug(vector_away.x)
 	var jump_left
 	if global_position.x - target.global_position.x > 0:
 		jump_left=true
@@ -767,7 +781,7 @@ func cutscene_acceleration(_dir, delta, _speed : String):
 			#print (_cutscene_speed)
 	if _dir!=0:
 		velocity.x = (_cutscene_speed) * _dir
-		#Kprint(velocity.x, " ", _cutscene_speed, " ", _dir)
+		#Kprint_debug(velocity.x, " ", _cutscene_speed, " ", _dir)
 	else:
 		velocity.x=0
 		
@@ -1271,14 +1285,19 @@ func locked_combat():
 				#set_state(state, States.FLIP)
 				flip.emit()
 
+func set_next_room(value : String):
+	next_room=value
+
 func enter_door() -> void:
 	if in_door_way:
 		if Input.is_action_just_pressed("up"):
+			store_player_data()
 			if next_room=="RETURN":
 				var temp : String = cur_room
 				cur_room=prev_room
 				prev_room=temp
 			else:
+				assert(next_room!="RETURN")
 				prev_room=cur_room
 				cur_room=next_room
 			if animated_door:
@@ -1324,6 +1343,7 @@ func _on_hazard_detector_area_entered(area):
 		knockback.y=-5
 		#velocity.x = movement_data.speed + knockback.x
 		health.health -= 1
+		
 		health.set_temporary_immortality(0.2)
 		if state_machine.get_previous_active_state()==flip_state:
 			state_machine.dispatch(&"return_to_idle")
@@ -1334,11 +1354,11 @@ func _on_hazard_detector_area_entered(area):
 			clash_timer.stop()
 			if clash_power.clash_power==clash_power.clash_max:
 				hit_stop.hit_stop(.3,.5)
-		set_health()
-		set_stagger()
+	
 		if area.has_method("impact"):
 			area.impact()
-	
+		set_health()
+		set_stagger()
 	elif area.is_in_group("Enemy"):
 		hit_stop.hit_stop(0.05, 0.05)
 		knockback.x = input_dir.x * knockback.x *0.25
@@ -1347,9 +1367,10 @@ func _on_hazard_detector_area_entered(area):
 func _on_interactable_detector_area_entered(area: Area2D) -> void:
 	if area.is_in_group("door"):
 		interact_prompt_player.play("Enter")
-		if area.is_in_group("AnimatedDoor"):
+		if area.is_in_group("AnimatedDoor") or area.is_in_group("door"):
 			in_door_way=true
-			animated_door=true
+			if area.is_in_group("AnimatedDoor"):
+				animated_door=true
 	else:
 		interact_prompt_player.play("Interact")
 		interact_ready=true
@@ -1386,14 +1407,15 @@ func get_max_health() -> int:
 	return health.max_health
 
 func set_health() -> void:
-	update_health.emit(health.health)
+	Global.game_controller.update_health(health.health)
 func set_max_health() -> void:
-	update_max_health.emit(health.max_health)
-
+	#update_max_health.emit(health.max_health)
+	Global.game_controller.update_max_health(health.max_health)
 func set_stagger() -> void:
-	update_stagger.emit(stagger.stagger)
+	Global.game_controller.update_stagger(stagger.stagger)
 func set_max_stagger() -> void:
-	update_max_stagger.emit(stagger.max_stagger)
+	Global.game_controller.update_max_stagger(stagger.max_stagger)
+
 
 func _on_health_health_depleted():
 	state_machine.dispatch(&"die")
@@ -1409,6 +1431,7 @@ func _on_health_health_depleted():
 	##kb_dir.x, " ", knockback)
 
 func _on_hurt_box_got_hit(_hitbox):
+	set_health()
 	if health.health<=0:
 		return
 	else:
@@ -1651,7 +1674,7 @@ func load_player_data():
 	
 	
 	#else:
-		#print("file not found")
+		#print_debug("file not found")
 		
 	
 
@@ -1667,7 +1690,7 @@ func save_player_data():
 		#file.store_string("\n")
 		#file.close()
 	#else:
-		#print("file not found")
+		#print_debug("file not found")
 	GlobalSaveData.current_save.player.health=health.health
 	GlobalSaveData.current_save.player.max_health=health.max_health
 	GlobalSaveData.current_save.player.stagger=stagger.stagger
@@ -1730,7 +1753,7 @@ func flipping(delta):
 	var pos_above_y=target.global_position.y-global_position.y
 	target_pos_x=(target.global_position.x)
 	var pos_above_x=target.global_position.x-global_position.x
-	#print(global_position)
+	#print_debug(global_position)
 #	Jumping before flipping over
 	if not flipped_over:
 		health.immortality=true
@@ -1809,7 +1832,7 @@ func _on_counter_box_area_entered(area):
 	
 		
 	if area.is_in_group("regular_enemy_hb"):
-		print("enemy dodge")
+		print_debug("enemy dodge")
 		state_machine.dispatch(&"dodge_successful")
 		clash_power.clash_power += 1
 		
@@ -1837,7 +1860,7 @@ func _on_hazard_detector_body_entered(body):
 		if (position.y-body.position.y)<0:
 			target_below=true
 		else:
-			print("enemy above")
+			print_debug("enemy above")
 
 
 func _on_hazard_detector_body_exited(body):
@@ -1873,7 +1896,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05, 0.1)
 	Events.camera_shake.emit(2,20)
 	if state_machine.get_active_state()==flip_state:
-		#print("countered! your moves are weak!")
+		#print_debug("countered! your moves are weak!")
 		if target_right:
 			knockback.x=400
 		else:
@@ -1886,6 +1909,18 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		
 	set_stagger()
 	set_health()
+
+func _on_hurt_box_bullet_hit(_damage: int) -> void:
+	if health.health<=0:
+		return
+	Events.camera_shake.emit(2,20)
+	#_new_health = health.health-_damage
+	#health.health=_new_health
+	#print_debug(health.health)
+	#if health.health!=_new_health:
+		#print_debug("sum ting wong")
+	#set_health()
+	
 
 func _on_stagger_staggered() -> void:
 	knockback.x=0
@@ -2034,11 +2069,11 @@ func _on_stars_detector_body_exited(body: Node2D) -> void:
 #
 func set_path_speed(speed : int) -> void:
 	path_speed=speed
-	#print(path_speed)
+	#print_debug(path_speed)
 func start_path(speed : int):
 	set_path_start(true)
 	set_path_speed(speed)
-	#print(speed)
+	#print_debug(speed)
 func set_path_start(value) -> void:
 	path_start=value
 
@@ -2071,6 +2106,23 @@ func qte_input():
 		pass
 
 
+####################################################
+#Saving and loading player data upon enter new room#
+####################################################
+
+func init_player_data():
+	health.health=GlobalSaveData.current_save["player"]["health"]
+	health.max_health=GlobalSaveData.current_save["player"]["max_health"]
+	stagger.stagger=GlobalSaveData.current_save["player"]["stagger"]
+	stagger.max_stagger=GlobalSaveData.current_save["player"]["max_stagger"]
+
+func store_player_data():
+	GlobalSaveData.current_save["player"]["health"]=health.health
+	GlobalSaveData.current_save["player"]["max_health"]=health.max_health
+	GlobalSaveData.current_save["player"]["stagger"]=stagger.stagger
+	GlobalSaveData.current_save["player"]["max_stagger"]=stagger.max_stagger
+
+
 func _on_texture_button_pressed() -> void:
 	interact_menu_open=false
 	Events.close_interact_menu.emit()
@@ -2094,3 +2146,7 @@ func _on_death_updated(delta: float) -> void:
 
 func _on_dead_entered() -> void:
 	Events.game_over.emit()
+
+
+func _on_health_max_health_changed(diff: int) -> void:
+	pass # Replace with function body.

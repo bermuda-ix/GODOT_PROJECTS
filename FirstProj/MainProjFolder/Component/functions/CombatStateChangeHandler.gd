@@ -17,11 +17,11 @@ func _physics_process(delta: float) -> void:
 		return
 	else:
 		actor.distance=abs(actor.global_position.x-actor.player.global_position.x)
-		#print(actor.distance)
+		#print_debug(actor.distance)
 #		RANGED ATTACK
 
 		if actor.distance>ranged_dist:
-			#print("ranged")
+			#print_debug("ranged")
 			if actor.is_on_screen and vision_handler.player_colliding:
 				actor.turret.shoot_timer.paused=false
 				combat_state_machine.dispatch(&"ranged_mode")
@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 			
 #		MELEE ATTACK
 		else:
-			#print("melee")
+			#print_debug("melee")
 			actor.turret.shoot_timer.paused=true
 			combat_state_machine.dispatch(&"melee_mode")
 			if not bt_player.blackboard.get_var("within_range"):

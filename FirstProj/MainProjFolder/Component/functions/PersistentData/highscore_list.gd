@@ -47,7 +47,7 @@ func load_scores() -> void:
 	var _load_json = JSON.new()
 	var _parse_result = _load_json.parse(_file.get_line())
 	if not  _parse_result == OK:
-		print("JSON Parse Error: ", _load_json.get_error_message(), " in ", _file, " as line ", _load_json.get_error_line())
+		print_debug("JSON Parse Error: ", _load_json.get_error_message(), " in ", _file, " as line ", _load_json.get_error_line())
 		return
 	_loaded_scores = _load_json.get_data() as Array[Array]
 	if _list_size>_loaded_scores.size():

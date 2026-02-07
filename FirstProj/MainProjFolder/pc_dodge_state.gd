@@ -7,7 +7,7 @@ var dodge_dist : float = 0.0
 var counter_dist : float = 0.0
 
 func _enter() -> void:
-	print("dodging")
+	print_debug("dodging")
 	anim_player.play(pc.dodge_anim_run)
 	pc.set_collision_mask_value(15, false)
 	pc.counter_box_collision.disabled=false

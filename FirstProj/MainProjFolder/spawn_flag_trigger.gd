@@ -11,6 +11,6 @@ func _ready() -> void:
 
 func _on_spawn_flag_trigger_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		print("spawn_activate")
+		print_debug("spawn_activate")
 		collision_shape_2d.disabled=true
 		spawn_connected.activate(spawn_type)

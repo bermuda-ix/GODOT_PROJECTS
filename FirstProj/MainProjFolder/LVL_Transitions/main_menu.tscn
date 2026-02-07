@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dllqel3sp6kul"]
+[gd_scene format=3 uid="uid://dllqel3sp6kul"]
 
 [ext_resource type="Script" uid="uid://1b3pnjqxddxo" path="res://LVL_Transitions/main_menu.gd" id="1_i6gjx"]
 
-[node name="Main Menu" type="CenterContainer"]
+[node name="Main Menu" type="CenterContainer" unique_id=222941858]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -10,22 +10,22 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_i6gjx")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=755940929]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=244773811]
 layout_mode = 2
 text = "BOLD AND BRASH"
 horizontal_alignment = 1
 
-[node name="StartGameButton" type="Button" parent="VBoxContainer"]
+[node name="StartGameButton" type="Button" parent="VBoxContainer" unique_id=469365555]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
 action_mode = 0
 text = "Start Gaem"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer"]
+[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=1259619955]
 unique_name_in_owner = true
 layout_mode = 2
 action_mode = 0

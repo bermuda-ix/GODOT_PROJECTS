@@ -8,6 +8,6 @@ extends LimboState
 
 
 func _enter() -> void:
-	#print("begin parry")
+	#print_debug("begin parry")
 	actor.current_speed=0
 	

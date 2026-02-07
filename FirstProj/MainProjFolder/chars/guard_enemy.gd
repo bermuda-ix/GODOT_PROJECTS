@@ -193,15 +193,15 @@ func _init_combat_state_machine():
 
 func _init_group_link():
 	if group_link_control == null:
-		print("no link")
+		print_debug("no link")
 		if linked_enemies.size()<=1:
-			print("no link")
+			print_debug("no link")
 	else:
 		linked_enemies=group_link_control.all_grouped_enemies
 		for i in range(linked_enemies.size()):
-			#print(linked_enemies[i].name, " linked")
+			#print_debug(linked_enemies[i].name, " linked")
 			group_link_order=linked_enemies.find(self)
-			print(group_link_order)
+			print_debug(group_link_order)
 	group_enemy_manager.set_leader(group_link_order)
 	group_enemy_manager.set_even_order(group_link_order)
 
@@ -219,7 +219,7 @@ func _process(_delta):
 			#assert(current_speed<0)
 	#elif state_machine.get_active_state()==chasing and is_on_floor():
 		#assert(current_speed!=0)
-	#print(current_speed)
+	#print_debug(current_speed)
 	
 	if not is_on_screen and vision_handler.always_on==true and state_machine.get_active_state()!=chasing:
 		state_machine.change_active_state(chasing)
@@ -340,7 +340,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("sp_atk_default"):
 		if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 			Events.allied_enemy_hit.emit()
-		print("spc_hit")
+		print_debug("spc_hit")
 		if animated_sprite_2d.flip_h:
 			knockback.x=50
 		else:
@@ -357,7 +357,7 @@ func _on_stagger_staggered() -> void:
 	bt_player.restart()
 	parry_timer.start(3)
 	hb_collision.disabled=true
-	print("staggered")
+	print_debug("staggered")
 	state_machine.dispatch(&"staggered")
 
 func _on_parry_timer_timeout() -> void:
@@ -388,7 +388,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		
 	else:
 		
-		print("kill shot")
+		print_debug("kill shot")
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
@@ -401,8 +401,6 @@ func _on_health_health_depleted() -> void:
 		knockback.x=250
 	jump_handler.handle_jump(0.5)
 	death_timer.start()
-	if linked_enemies!=null:
-		linked_enemies.remove_at(group_link_order)
 	death_handler.death()
 
 func _on_attack_timer_timeout() -> void:
@@ -428,7 +426,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if current==jump:
 		if previous==attack:
-			print("down attack")
+			print_debug("down attack")
 	if not visible_on_screen_notifier_2d.is_on_screen():
 		if current==attack:
 			push_error("ERROR: State changed")
@@ -446,7 +444,7 @@ func _on_vision_handler_player_sighted() -> void:
 			linked_enemies[i].alerted()
 			
 func alerted() -> void :
-	print("alerted!")
+	print_debug("alerted!")
 	vision_handler.always_on=true
 	if visible_on_screen_notifier_2d.is_on_screen():
 		state_machine.dispatch(&"attack_mode")

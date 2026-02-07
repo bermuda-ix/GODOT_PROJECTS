@@ -4,7 +4,7 @@ extends LimboState
 @export var bt_player : BTPlayer
 
 func _enter() -> void:
-	print("begin shooting")
+	print_debug("begin shooting")
 	actor.hb_collision.disabled=true
 	actor.animation_player.play_backwards("shoot_move")
 	

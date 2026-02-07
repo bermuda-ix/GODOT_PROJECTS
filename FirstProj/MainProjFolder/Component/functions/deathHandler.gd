@@ -16,7 +16,7 @@ func _ready() -> void:
 		queue_free()
 
 func death():
-	#print("dying")
+	#print_debug("dying")
 	Events.unlock_from.emit()
 	#actor.parry_timer.stop()
 	Events.inc_score.emit(score)
@@ -27,7 +27,7 @@ func death():
 	#actor.hit_stop.hit_stop(0.05,5)
 	sm.dispatch(&"die")
 	
-	#print("dead")
+	#print_debug("dead")
 func dying():
 	actor.move_and_slide()
 	if actor.is_on_floor() and not actor.jump_timer.is_stopped():

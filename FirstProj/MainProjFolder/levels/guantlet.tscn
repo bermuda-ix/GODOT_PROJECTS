@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://b1p3fdvwsdnfy" path="res://Art_Components/Backgrounds/night_1/2.png" id="21_18qi5"]
 [ext_resource type="Texture2D" uid="uid://d4ixead72khtg" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding2.png" id="22_txgne"]
 [ext_resource type="Texture2D" uid="uid://clyivendy3q3w" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding.png" id="23_wmyi1"]
+[ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="24_wmyi1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fhqwg"]
 texture = ExtResource("5_8lw3s")
@@ -6024,6 +6025,9 @@ z_index = -2
 position = Vector2(534.5, 216)
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("22_txgne")
+
+[node name="PC" parent="." index="18" unique_id=1041091659 instance=ExtResource("24_wmyi1")]
+position = Vector2(3792, 216)
 
 [connection signal="spawn_boss_signal" from="." to="." method="_on_spawn_boss_signal"]
 [connection signal="timeout" from="BossSpawnTimer" to="." method="_on_boss_spawn_timer_timeout"]

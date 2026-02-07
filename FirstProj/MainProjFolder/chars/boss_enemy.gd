@@ -105,7 +105,7 @@ func _process(_delta):
 		
 	
 	
-	#print(turret.direction_to_player)
+	#print_debug(turret.direction_to_player)
 	if current_state != States.ATTACK:
 		handle_vision()
 		track_player()
@@ -129,7 +129,7 @@ func _process(_delta):
 	#if flee_timer.is_stopped():
 		#light_attack=false
 	
-	#print(turret.shoot_timer.time_left)
+	#print_debug(turret.shoot_timer.time_left)
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -253,7 +253,7 @@ func set_state(cur_state, new_state) -> void:
 				animation_player.speed_scale = 1
 				attacking=true
 			States.CHASE:
-				print("chasing")
+				print_debug("chasing")
 				#hb_collison.disabled=false
 				#turret.shoot_timer.paused=true
 				#turret.shoot_timer.start(3)
@@ -264,7 +264,7 @@ func set_state(cur_state, new_state) -> void:
 					current_speed=prev_speed
 			States.JUMP:
 				velocity.y = jump_velocity*1.5
-				print(str(prev_speed," ",current_speed))
+				print_debug(str(prev_speed," ",current_speed))
 				prev_speed=current_speed
 				if current_speed < 0:
 					current_speed = -jump_speed
@@ -277,18 +277,18 @@ func set_state(cur_state, new_state) -> void:
 				flee_timer.start()
 				turret.shoot_timer.paused=false
 				turret.shoot_timer.start(.5)
-		#print(state)
+		#print_debug(state)
 
 
 
 
 func _on_attack_range_body_entered(body):
 	if parried != true:
-		print("attack in range")
+		print_debug("attack in range")
 		turret.shoot_timer.paused=true
 		set_state(current_state, States.ATTACK)
 		attack_type = randi() % attack_type_range
-		print(attack_type)
+		print_debug(attack_type)
 		
 		if attack_type <= 1:  
 			animation_player.play(atk_anim)
@@ -308,7 +308,7 @@ func _on_attack_range_body_entered(body):
 			#hb_collison.disabled=true
 			await animation_player.animation_finished
 		
-		print("attack finished")
+		print_debug("attack finished")
 		set_state(prev_state, States.CHASE)
 		#hb_collison.disabled=false
 		attacking=false
@@ -327,7 +327,7 @@ func _on_hit_box_parried():
 	
 	velocity.y=jump_velocity/2
 	velocity.x = current_speed + knockback.x
-	#print(knockback)
+	#print_debug(knockback)
 	
 	if light_attack == true and parried == false:
 		
@@ -349,7 +349,7 @@ func _on_stagger_staggered():
 	parried = true
 	turret.shoot_timer.paused=true
 	current_state=States.PARRY
-	print("PARRIED")
+	print_debug("PARRIED")
 	flee_timer.stop()
 	await get_tree().create_timer(0.3).timeout
 	set_state(current_state, States.PARRY)
@@ -359,13 +359,13 @@ func _on_health_health_depleted():
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 	if enemies.size() <=1:
 		Events.level_completed.emit()
-		print("level complete")
+		print_debug("level complete")
 		
 
 
 
 func _on_turret_shoot_bullet():
-	print("shoot")
+	print_debug("shoot")
 	var bullet_inst = bullet.instantiate()
 	bullet_inst.set_speed(300.0)
 	bullet_inst.dir = (turret.player_tracker.target_position).normalized()

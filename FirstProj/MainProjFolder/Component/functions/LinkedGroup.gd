@@ -6,4 +6,4 @@ extends Node
 
 func _ready() -> void:
 	for i in actor.size():
-		print(actor[i].name, "linked")
+		print_debug(actor[i].name, "linked")

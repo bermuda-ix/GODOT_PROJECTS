@@ -177,6 +177,10 @@ func _ready():
 	_init_group_link()
 	if always_active:
 		alerted()
+	
+	if health.health<=0:
+		queue_free()
+
 
 func _process(delta: float) -> void:
 	
@@ -184,7 +188,7 @@ func _process(delta: float) -> void:
 		hb_collision.disabled=true
 		return
 	#if health.health<=0 and (state_machine.get_active_state()!=death and state_machine.get_active_state()!=dying):
-		#print(state_machine.get_active_state())
+		#print_debug(state_machine.get_active_state())
 		#state_machine.dispatch(&"die")
 	#even_order(group_link_order)
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
@@ -195,7 +199,7 @@ func _process(delta: float) -> void:
 	distance = abs(global_position.x-player.global_position.x)
 	force_chase()
 	#if ammo_count<0:
-		#print("RELOAD")
+		#print_debug("RELOAD")
 		#animation_player.stop()
 	if shooting_states.get_active_state()!=reload:
 		defense_shoot()
@@ -203,7 +207,7 @@ func _process(delta: float) -> void:
 	being_flipped()
 	flip_ally_vision()
 	
-	#print(current_speed)
+	#print_debug(current_speed)
 
 func _physics_process(delta: float) -> void:
 	if combat_state_machine.get_active_state()==ranged_mode or state_machine.get_active_state()==parry:
@@ -224,22 +228,22 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	velocity.x = current_speed + knockback.x
-	print(current_speed)
-	print(velocity.x)
+	#print_debug(current_speed)
+	#print_debug(velocity.x)
 	move_and_slide()
 	movement_handler.apply_gravity(delta)
 
 func _init_group_link():
 	if group_link_control == null:
-		print("no link")
+		print_debug("no link")
 		if linked_enemies.size()<=1:
-			print("no link")
+			print_debug("no link")
 	else:
 		linked_enemies=group_link_control.all_grouped_enemies
 		for i in range(linked_enemies.size()):
-			#print(linked_enemies[i].name, " linked")
+			#print_debug(linked_enemies[i].name, " linked")
 			group_link_order=linked_enemies.find(self)
-			print(group_link_order)
+			print_debug(group_link_order)
 	group_enemy_manager.set_leader(group_link_order)
 	group_enemy_manager.set_even_order(group_link_order)
 
@@ -312,14 +316,14 @@ func flip_ally_vision():
 	ally_vision_raycast.scale.x=animated_sprite_2d.scale.x
 
 func defense_shoot() -> void:
-	#print(distance)
+	#print_debug(distance)
 	if group_link_control==null:
 		if distance>=50:
 			shooting_states.dispatch(&"offensive_shoot")
-			#print("offensive")
+			#print_debug("offensive")
 		elif distance<50:
 			shooting_states.dispatch(&"defensive_shoot")
-			#print("defensive")
+			#print_debug("defensive")
 	elif ally_vision_handler.ally_found:
 		return
 	else:
@@ -350,7 +354,7 @@ func get_height() -> int:
 
 
 func _on_state_machine_active_state_changed(current: LimboState, previous: LimboState) -> void:
-	#print(current)
+	#print_debug(current)
 	if current!=idle and current!=chasing:
 		movement_handler.active=true
 		shooting_states.dispatch(&"begin_shooting")
@@ -399,7 +403,7 @@ func _on_shooting_defense_entered() -> void:
 
 func _on_attack_entered() -> void:
 	assert(state_machine.get_previous_active_state()!=shooting_states)
-	print(state_machine.get_previous_active_state())
+	print_debug(state_machine.get_previous_active_state())
 	if state_machine.get_active_state()!=idle:
 		if combat_state_machine.get_active_state()==ranged_mode:
 			state_machine.dispatch(&"start_shoot")
@@ -417,21 +421,21 @@ func being_flipped() -> void:
 
 func _on_shooting_states_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	pass
-	#print(current, ",", previous)
+	#print_debug(current, ",", previous)
 
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
 	state_machine.dispatch(&"parry")
 
 func parry_success() -> void:
-	print("parried")
+	print_debug("parried")
 	gpu_particles_2d.emitting=true
 	gpu_particles_2d_2.emitting=true
 	parry.blackboard.set_var("parry_success" , true)
 
 
 func _on_parry_exited() -> void:
-	print("parry exit")
+	print_debug("parry exit")
 
 
 func _on_turret_shoot_bullet() -> void:
@@ -449,7 +453,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("sp_atk_default"):
 		if player_state==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 			Events.allied_enemy_hit.emit()
-		print("spc_hit")
+		print_debug("spc_hit")
 		if animated_sprite_2d.flip_h:
 			knockback.x=50
 		else:
@@ -463,7 +467,7 @@ func _on_hurt_box_weakpoint_weakpoint_hit() -> void:
 	else:
 		if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 			Events.allied_enemy_hit.emit()
-		print("spc_hit")
+		print_debug("spc_hit")
 		if animated_sprite_2d.flip_h:
 			knockback.x=50
 		else:
@@ -498,7 +502,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		gpu_particles_2d.emitting=true
 		
 	else:
-		print("kill shot")
+		print_debug("kill shot")
 
 
 func _on_stagger_timer_timeout() -> void:
@@ -550,7 +554,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 
 func _on_shooting_states_entered() -> void:
-	print("entering shooting")
+	print_debug("entering shooting")
 
 
 func _on_vision_handler_player_sighted() -> void:
@@ -560,7 +564,7 @@ func _on_vision_handler_player_sighted() -> void:
 				
 			
 func alerted() -> void :
-	print("alerted!")
+	print_debug("alerted!")
 	vision_handler.always_on=true
 	if on_screen.is_on_screen():
 		state_machine.dispatch(&"attack_mode")
@@ -575,13 +579,17 @@ func force_chase():
 		state_machine.change_active_state(chasing)
 
 func _on_parry_box_bullet_stopped() -> void:
-	print("shieled")
+	print_debug("shieled")
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	hit_stop.end_hit_stop()
 	if vision_handler.player_found or vision_handler.always_on:
 		state_machine.dispatch(&"attack_mode")
 		bt_player.blackboard.set_var("attack_mode", true)
+		
+	if health.health<=0:
+		queue_free()
 
 
 func _on_ally_vision_handler_found_ally() -> void:

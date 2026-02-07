@@ -11,10 +11,10 @@ func save_level_state():
 	var persistant_nodes : Array[Node] =get_tree().get_nodes_in_group("Persistant")
 	for node in persistant_nodes:
 		if node.scene_file_path.is_empty():
-			print("persistent node '%s' is not an instanced scene, skipped" % node.name)
+			print_debug("persistent node '%s' is not an instanced scene, skipped" % node.name)
 			continue
 		#if !node.has_method("save_state"):
-			#print("persistent node '%s' is missing a save() function, skipped" % node.name)
+			#print_debug("persistent node '%s' is missing a save() function, skipped" % node.name)
 			#continue
 		#node.call("save_state")
 		Events.save_states.emit()
@@ -23,7 +23,7 @@ func save_level_state():
 	for _node in _active_enemies_list:
 		_active_enemy_names.push_back(_node.name)
 	var _active_enemies_json=JSON.stringify(_active_enemy_names)
-	print(_active_enemies_json)
+	print_debug(_active_enemies_json)
 	_save_file.store_line(_active_enemies_json)
 
 
@@ -37,7 +37,7 @@ func load_level_state():
 		var _json = JSON.new()
 		var _parse_result = _json.parse(_json_string)
 		if not _parse_result == OK:
-			print("JSON Parse Error: ", _json.get_error_message(), " in ", _json_string, " as line ", _json.get_error_line())
+			print_debug("JSON Parse Error: ", _json.get_error_message(), " in ", _json_string, " as line ", _json.get_error_line())
 			continue
 		var _parse_data=_json.data
 		if typeof(_parse_data)==TYPE_ARRAY:
@@ -60,13 +60,13 @@ func load_level_state():
 	for _node in _persistant_nodes:
 		var _name=_node.get_path()
 		if _node.scene_file_path.is_empty():
-			print("persistent node '%s' is not an instanced scene, skipped" % _node.name)
+			print_debug("persistent node '%s' is not an instanced scene, skipped" % _node.name)
 			continue
 		if not GlobalSaveData.level_state["persistence"].has(str(_name)):
-			print("persistent node '%s' is not in persistence dictionary, skipped" % _node.name)
+			print_debug("persistent node '%s' is not in persistence dictionary, skipped" % _node.name)
 			continue
 		
-		#print(GlobalSaveData.level_state["persistence"][str(_name)])
+		#print_debug(GlobalSaveData.level_state["persistence"][str(_name)])
 		var _state=GlobalSaveData.level_state["persistence"][str(_name)]
 		Events.load_states.emit(_state)
 		#_node.load_state(_state)

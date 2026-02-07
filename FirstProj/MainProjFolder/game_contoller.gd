@@ -4,7 +4,7 @@ class_name GameController extends Node
 
 @export var gui : Control
 
-@onready var player: PlayerEntity = $World2D/Player
+#@onready var player: PlayerEntity = $World2D/Player
 @onready var pause_menu: Control = $GUI/CanvasLayer/PauseMenuv2
 @onready var gameui: Control = $GUI/CanvasLayer/GAMEUI
 @onready var ui_level: Control = $GUI/CanvasLayer/GAMEUI/UI_Level
@@ -34,7 +34,7 @@ var mutex: Mutex
 #@onready var prologue_lvl: adv_level = $World2D/PrologueLvl
 
 func _ready() -> void:	
-	print(OS.get_processor_count())
+	#print_debug(OS.get_processor_count())
 	mutex = Mutex.new()
 	thread = Thread.new()
 	call_preload_scene(LevelsList.LEVEL_SELECT)
@@ -60,7 +60,7 @@ func _ready() -> void:
 	
 	
 func _process(delta: float) -> void:
-	assert(player != null)
+	#assert(player != null)
 	if Input.is_action_just_pressed("Pause"):
 		show_pause()
 
@@ -69,7 +69,7 @@ func test_start() -> void:
 	load_levels(LevelsList.prologue_unique_levels)
 	load_first_room("PrologueLvl")
 	prev_2d_scene=current_2d_scene
-	current_2d_scene.player=player
+	#current_2d_scene.player=player
 	load_levels(LevelsList.prologue_level_maps)
 	_init_objectives(ObjectivesByLevel.prologue_init_objectives)
 
@@ -93,8 +93,8 @@ func set_region (dict : Dictionary) -> void:
 func load_levels(dict : Dictionary) -> void:
 	for room in dict:
 		
-		#print(room)
-		#print(dict[room])
+		#print_debug(room)
+		#print_debug(dict[room])
 		if loaded_rooms_map.has(room) == false:
 			loaded_rooms_map[room]=load(dict[room]).instantiate()
 		
@@ -110,7 +110,7 @@ func load_first_room (_first_room : String, \
 	_transition_out : String="fade_from_black") -> void:
 		
 	world_2d.add_child(loaded_rooms_map[_first_room])
-	player.reparent(loaded_rooms_map[_first_room])
+	#player.reparent(loaded_rooms_map[_first_room])
 	loaded_rooms_map[_first_room].player.global_position=loaded_rooms_map[_first_room].init_starting_pos.global_position
 	LevelTransition.transition_out(_transition_out)
 	current_2d_scene=loaded_rooms_map[_first_room]
@@ -132,7 +132,7 @@ func change_2d_scene (new_scene: String, \
 	_transition_out : String="fade_from_black") -> void:
 	
 	
-	player.reparent(world_2d)
+	#player.reparent(world_2d)
 	await LevelTransition.transition_in(_transition_in)
 	if current_2d_scene != null:
 		if delete:
@@ -146,19 +146,22 @@ func change_2d_scene (new_scene: String, \
 		new_scene=return_room
 	
 	world_2d.add_child(loaded_rooms_map[new_scene])
-	player.reparent(loaded_rooms_map[new_scene])
+	#player.reparent(loaded_rooms_map[new_scene])
 	
 	#Starting position is -1 if scene has no starting position
 	if _starting_pos==-1:
 		loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].init_starting_pos.global_position
 	else:
-		#print(loaded_rooms_map[new_scene].starting_pos.size(), " ",_starting_pos)
+		#print_debug(loaded_rooms_map[new_scene].starting_pos.size(), " ",_starting_pos)
 		loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].starting_pos[_starting_pos]
+		
+		
 	LevelTransition.transition_out(_transition_out)
 	if current_2d_scene != null:
 		prev_2d_scene=current_2d_scene
 		return_room=prev_2d_scene.name
 	current_2d_scene=loaded_rooms_map[new_scene]
+	retrieve_player_data()
 	load_levels(LevelsList.level_maps)
 
 func _init_objectives(dict : Dictionary):
@@ -191,13 +194,13 @@ func call_preload_scene(_new_scene: String):
 
 func scene_loaded()-> void:
 	thread.wait_to_finish()
-	print("scene preloaded")
+	print_debug("scene preloaded")
 
 #remove world2d, for moving to menu only scene
 func remove_world2d_scene() -> void:
-	player.call_deferred("reparent", world_2d)
+	#player.call_deferred("reparent", world_2d)
 	world_2d.call_deferred("remove_child", current_2d_scene)
-	player.call_deferred("set_process", false)
+	#player.call_deferred("set_process", false)
 
 func remove_gui_scene (delete: bool = true, \
 	keep_running: bool = false, \
@@ -218,22 +221,41 @@ func remove_gui_from_existing(gui_name : String) -> void:
 	
 
 
-func toggle_player(activate : bool) -> void:
-	if activate:
-		if world_2d.has_node(player.get_path()):
-			pass
-		else:
-			world_2d.add_child(player)
-	else:
-		if world_2d.has_node(player.get_path()):
-			world_2d.call_deferred("remove_child", player)
-		else:
-			pass
-		
+#func toggle_player(activate : bool) -> void:
+	#if activate:
+		#if world_2d.has_node(player.get_path()):
+			#pass
+		#else:
+			#world_2d.add_child(player)
+	#else:
+		#if world_2d.has_node(player.get_path()):
+			#world_2d.call_deferred("remove_child", player)
+		#else:
+			#pass
+		#
 
-func _on_player_update_health(value : int) -> void:
+#func _on_player_update_health(value : int) -> void:
+	#ui_level.set_health(value)
+#
+#
+#func _on_player_update_max_health(value : int) -> void:
+	#ui_level.set_max_health(value)
+
+func update_health(value : int) -> void:
 	ui_level.set_health(value)
-
-
-func _on_player_update_max_health(value : int) -> void:
+	
+func update_max_health(value : int) -> void:
 	ui_level.set_max_health(value)
+
+func update_stagger(value : int) -> void:
+	ui_level.set_stagger(value)
+
+func update_max_stagger(value : int) -> void:
+	ui_level.set_max_stagger(value)
+
+func retrieve_player_data() -> void:
+	ui_level.set_health(GlobalSaveData.current_save["player"]["health"])
+	ui_level.set_max_health(GlobalSaveData.current_save["player"]["max_health"])
+	ui_level.set_stagger(GlobalSaveData.current_save["player"]["stagger"])
+	ui_level.set_max_stagger(GlobalSaveData.current_save["player"]["max_stagger"])
+	

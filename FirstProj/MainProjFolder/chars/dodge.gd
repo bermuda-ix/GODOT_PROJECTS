@@ -9,7 +9,7 @@ extends LimboState
 
 
 func _enter() -> void:
-	#print("begin dodge")
+	#print_debug("begin dodge")
 	animation_player.play("dodge")
 	actor.dodge_timer.start()
 	actor.hurt_box_collision.disabled=true

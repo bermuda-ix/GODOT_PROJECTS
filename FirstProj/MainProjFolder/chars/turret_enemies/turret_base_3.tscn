@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://mve6miefg0i0"]
+[gd_scene format=3 uid="uid://mve6miefg0i0"]
 
 [ext_resource type="Texture2D" uid="uid://20rgocssusvw" path="res://Art_Components/2D Sci-Fi Turret Pack/2D Sci-Fi Turret Pack/3-Turrets/Turret3Base.png" id="1_8k2it"]
 [ext_resource type="Script" uid="uid://byyhaxyukojmg" path="res://chars/turret_enemies/turret_base.gd" id="1_61vfk"]
@@ -172,13 +172,13 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7atgd"]
 size = Vector2(576, 352)
 
-[node name="turret_base_3" type="StaticBody2D" groups=["Enemy", "Persistant"]]
+[node name="turret_base_3" type="StaticBody2D" unique_id=1981155838 groups=["Enemy", "Persistant"]]
 script = ExtResource("1_61vfk")
 
-[node name="AnimatedSprite2D" type="Sprite2D" parent="."]
+[node name="AnimatedSprite2D" type="Sprite2D" parent="." unique_id=446172145]
 texture = ExtResource("1_8k2it")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=1541600803]
 z_index = 1
 position = Vector2(-104, 64)
 emitting = false
@@ -188,7 +188,7 @@ explosiveness = 0.25
 randomness = 0.5
 process_material = SubResource("ParticleProcessMaterial_wstjc")
 
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="AnimatedSprite2D"]
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=1430707359]
 z_index = 1
 position = Vector2(112, 24)
 emitting = false
@@ -196,7 +196,7 @@ explosiveness = 0.25
 randomness = 0.5
 process_material = SubResource("ParticleProcessMaterial_wstjc")
 
-[node name="GPUParticles2D3" type="GPUParticles2D" parent="AnimatedSprite2D"]
+[node name="GPUParticles2D3" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=2027502472]
 z_index = 1
 position = Vector2(56, -72)
 emitting = false
@@ -204,19 +204,17 @@ explosiveness = 0.25
 randomness = 0.5
 process_material = SubResource("ParticleProcessMaterial_wstjc")
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="." unique_id=224298227]
 polygon = PackedVector2Array(-122, 95, 82, 95, 123, 57, 122, 17, 78, 17, 72, -93, 36, -93, 32, 17, -30, 18, -66, 56, -102, 56, -122, 75)
 
-[node name="turret_top" parent="." node_paths=PackedStringArray("base") instance=ExtResource("2_4s1b6")]
+[node name="turret_top" parent="." unique_id=564710164 node_paths=PackedStringArray("base") instance=ExtResource("2_4s1b6")]
 position = Vector2(56, -78)
 base = NodePath("..")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_wstjc")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=989149592]
+libraries/ = SubResource("AnimationLibrary_wstjc")
 
-[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "stagger")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=525706724 node_paths=PackedStringArray("health", "stagger")]
 collision_layer = 16
 collision_mask = 8768
 script = ExtResource("3_sh051")
@@ -224,23 +222,23 @@ health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
-[node name="HurtBoxCollision" type="CollisionPolygon2D" parent="HurtBox"]
+[node name="HurtBoxCollision" type="CollisionPolygon2D" parent="HurtBox" unique_id=639604306]
 polygon = PackedVector2Array(-122, 95, 82, 95, 123, 57, 122, 17, 78, 17, 72, -93, 36, -93, 32, 17, -30, 18, -66, 56, -102, 56, -122, 75)
 
-[node name="HitStop" type="Node" parent="."]
+[node name="HitStop" type="Node" parent="." unique_id=644311718]
 script = ExtResource("5_nis5d")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
-[node name="Health" type="Node" parent="."]
+[node name="Health" type="Node" parent="." unique_id=1983856814]
 script = ExtResource("4_61vfk")
 metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
-[node name="Stagger" type="Node" parent="."]
+[node name="Stagger" type="Node" parent="." unique_id=73715911]
 script = ExtResource("6_7atgd")
 max_stagger = 1
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
-[node name="NPCStats" parent="." node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("12_0okgv")]
+[node name="NPCStats" parent="." unique_id=1048303286 node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("12_0okgv")]
 visible = false
 z_index = -1
 offset_left = -160.0
@@ -252,7 +250,7 @@ health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 actor = NodePath("..")
 
-[node name="DeathHandler" type="Node" parent="." node_paths=PackedStringArray("actor", "sm", "animation_player", "health")]
+[node name="DeathHandler" type="Node" parent="." unique_id=1662869702 node_paths=PackedStringArray("actor", "sm", "animation_player", "health")]
 script = ExtResource("7_afqy1")
 actor = NodePath("..")
 sm = NodePath("../StateMachine")
@@ -261,36 +259,36 @@ tree_active = false
 health = NodePath("../Health")
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
 
-[node name="DespawnHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
+[node name="DespawnHandler" type="Node" parent="." unique_id=1782773104 node_paths=PackedStringArray("actor")]
 script = ExtResource("8_wstjc")
 actor = NodePath("..")
 despawn_effect = ExtResource("9_0okgv")
 timer_sec = 3.0
 metadata/_custom_type_script = "uid://cbt5pqmf6i7rj"
 
-[node name="Size" type="Area2D" parent="."]
+[node name="Size" type="Area2D" parent="." unique_id=929721218]
 collision_layer = 0
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Size"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Size" unique_id=994201900]
 position = Vector2(32, -80)
 shape = SubResource("RectangleShape2D_7atgd")
 
-[node name="TargetLock" type="Node2D" parent="."]
+[node name="TargetLock" type="Node2D" parent="." unique_id=1279819932]
 script = ExtResource("7_d0w6f")
 metadata/_custom_type_script = "uid://b0uasmutdnguo"
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=785057793]
 
-[node name="StateMachine" type="LimboHSM" parent="."]
+[node name="StateMachine" type="LimboHSM" parent="." unique_id=794193898]
 
-[node name="Death" type="LimboState" parent="StateMachine" node_paths=PackedStringArray("actor", "animation_player")]
+[node name="Death" type="LimboState" parent="StateMachine" unique_id=867244376 node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("8_eyn74")
 actor = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
 tree_active = false
 
-[node name="Alive" type="LimboState" parent="StateMachine"]
+[node name="Alive" type="LimboState" parent="StateMachine" unique_id=837795707]
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]

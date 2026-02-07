@@ -34,7 +34,7 @@ func shoot_bullet():
 		bullet_inst.spawnRot = actor.player_tracker_pivot.rotation_degrees
 	else:
 		bullet_inst.spawnRot = actor.bullet_dir.angle()
-		#print(bullet_inst.dir)
+		#print_debug(bullet_inst.dir)
 		
 	actor.get_tree().current_scene.add_child(bullet_inst)
 
