@@ -322,6 +322,7 @@ func _ready():
 	#Events.add_inventory.emit()
 	Events.update_inventory.emit("AmmoAmount",ammo)
 	init_player_data()
+	Events.get_player_data.connect(init_player_data)
 	_new_health=health.health
 	
 func _init_state_machine():
@@ -1534,9 +1535,12 @@ func _on_parry_box_parried_success() -> void:
 	
 func _on_collectible_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Hearts"):
-		health.health+=1
-		set_health()
+		increase_health()
 		
+func increase_health() -> void:
+	health.health+=1
+	set_health()
+
 #Setting starting positions for level starts and checkpoints
 func get_start_pos():
 	return starting_position
@@ -1926,6 +1930,7 @@ func _on_stagger_staggered() -> void:
 	knockback.x=0
 	velocity=Vector2.ZERO
 	state_machine.dispatch(&"got_staggered")
+	hit_stop.hit_stop(0.7, 1)
 	Events.camera_shake.emit(2,15)
 	
 func _on_hit_box_parried() -> void:

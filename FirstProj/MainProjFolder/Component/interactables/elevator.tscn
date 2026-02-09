@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dpxyvs3nt3yix"]
+[gd_scene format=3 uid="uid://dpxyvs3nt3yix"]
 
 [ext_resource type="Texture2D" uid="uid://cm36bhcpc0hsc" path="res://Art_Components/tile_maps/_PNG/1. main platforms.png" id="1_4nnvn"]
 [ext_resource type="Script" uid="uid://ce10ghjlr801m" path="res://Component/interactables/elevator.gd" id="1_ophm4"]
@@ -460,32 +460,32 @@ _data = {
 &"start_moving": SubResource("Animation_ophm4")
 }
 
-[sub_resource type="Animation" id="Animation_4qi5w"]
-resource_name = "open"
-length = 0.45
+[sub_resource type="Animation" id="Animation_4ykun"]
+resource_name = "RESET"
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSpriteLower:position")
+tracks/0/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.43333334),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 61), Vector2(0, 0)]
+"values": [Vector2(0, 32)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSprite:position")
+tracks/1/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSpriteLower:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.13333334, 0.43333334),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 32), Vector2(0, 0)]
+"values": [Vector2(0, 61)]
 }
 
 [sub_resource type="Animation" id="Animation_anbd6"]
@@ -516,32 +516,32 @@ tracks/1/keys = {
 "values": [Vector2(0, 0), Vector2(0, 32)]
 }
 
-[sub_resource type="Animation" id="Animation_4ykun"]
-resource_name = "RESET"
-length = 0.001
+[sub_resource type="Animation" id="Animation_4qi5w"]
+resource_name = "open"
+length = 0.45
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSprite:position")
+tracks/0/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSpriteLower:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.43333334),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 32)]
+"values": [Vector2(0, 61), Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSpriteLower:position")
+tracks/1/path = NodePath("Path2D/PathFollow2D/StaticBody2D/Door/DoorSprite:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.13333334, 0.43333334),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 61)]
+"values": [Vector2(0, 32), Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ri4cm"]
@@ -551,91 +551,92 @@ _data = {
 &"open": SubResource("Animation_4qi5w")
 }
 
-[node name="Elevator" type="Node2D" groups=["Persistant"]]
+[node name="Elevator" type="Node2D" unique_id=330764817 groups=["Persistant"]]
 script = ExtResource("1_ophm4")
 floors = Array[float]([0.5])
 init_floor = 1
 
-[node name="Path2D" type="Path2D" parent="."]
+[node name="Path2D" type="Path2D" parent="." unique_id=580301802]
 position = Vector2(-24, -3)
 curve = SubResource("Curve2D_ophm4")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D" unique_id=1430594686]
 position = Vector2(24, 3)
 rotates = false
 loop = false
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Path2D/PathFollow2D"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Path2D/PathFollow2D" unique_id=324143963]
 position = Vector2(-46, -57)
 
-[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=1922007767]
 position = Vector2(44, 5)
 texture = SubResource("AtlasTexture_p7nof")
 offset = Vector2(-43.0768, -24.3987)
 
-[node name="Door" type="StaticBody2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="Door" type="StaticBody2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=1426171605]
 position = Vector2(44, 5)
 
-[node name="DoorSprite" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D/Door"]
+[node name="DoorSprite" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D/Door" unique_id=1777675563]
 position = Vector2(0, 32)
 texture = SubResource("AtlasTexture_jbx0s")
 offset = Vector2(-43.0768, -24.3987)
 
-[node name="DoorSpriteLower" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D/Door"]
+[node name="DoorSpriteLower" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D/Door" unique_id=834023264]
 position = Vector2(0, 61)
 texture = SubResource("AtlasTexture_c7n2o")
 offset = Vector2(-43.0768, -24.3987)
 
-[node name="DoorCollision" type="CollisionShape2D" parent="Path2D/PathFollow2D/StaticBody2D/Door"]
+[node name="DoorCollision" type="CollisionShape2D" parent="Path2D/PathFollow2D/StaticBody2D/Door" unique_id=1777437500]
 position = Vector2(-42.5, 23)
 shape = SubResource("RectangleShape2D_rkleh")
 disabled = true
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=502235081]
 position = Vector2(9, 6)
-polygon = PackedVector2Array(-14, -9, -14, -52, 83, -52, 83, 63, -14, 63, -14, 52, 73, 52, 73, -41, -1.99999, -41, -1.99999, -9)
+polygon = PackedVector2Array(-14, -9, -14, -52, 83, -52, 83, 63, -14, 63, -17, 53, -14, 52, 73, 52, 73, -41, -1.99999, -41, -1.99999, -9)
 
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=1128329308]
 
-[node name="Sprite2D2" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="Sprite2D2" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=549090048]
 position = Vector2(41, 4)
 rotation = 1.5708
 texture = SubResource("AtlasTexture_rkleh")
 offset = Vector2(-44.741, -2.22652)
 
-[node name="Sprite2D3" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="Sprite2D3" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=1178559187]
 z_index = -1
 position = Vector2(41, 13)
 texture = SubResource("AtlasTexture_4h0vo")
 offset = Vector2(46.0914, -1.21437)
 
-[node name="Sprite2D4" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="Sprite2D4" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=1959158251]
 position = Vector2(45.2595, 22.6657)
 rotation = 1.5708
 texture = SubResource("AtlasTexture_rkleh")
 offset = Vector2(40.3343, 1.25954)
 
-[node name="Sprite2D5" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="Sprite2D5" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=524697147]
 self_modulate = Color(0.151276, 0.151276, 0.151276, 1)
 z_index = -1
 position = Vector2(44, 12)
 scale = Vector2(1.5, 1.5)
 texture = SubResource("AtlasTexture_ophm4")
 
-[node name="ButtonPanelSprite" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="ButtonPanelSprite" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=1917436458]
 position = Vector2(25, 18)
 texture = SubResource("AtlasTexture_0hm8f")
 
-[node name="ButtonPanel" type="Area2D" parent="Path2D/PathFollow2D/StaticBody2D/ButtonPanelSprite"]
+[node name="ButtonPanel" type="Area2D" parent="Path2D/PathFollow2D/StaticBody2D/ButtonPanelSprite" unique_id=885861307]
 collision_layer = 33554432
 collision_mask = 4194306
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/StaticBody2D/ButtonPanelSprite/ButtonPanel"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/StaticBody2D/ButtonPanelSprite/ButtonPanel" unique_id=1830717045]
 shape = SubResource("RectangleShape2D_p7nof")
 
-[node name="ElevatorUI" type="Control" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="ElevatorUI" type="Control" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=536098158]
 visible = false
 modulate = Color(1, 1, 1, 0)
+z_index = 3
 layout_mode = 3
 anchors_preset = 0
 offset_left = -86.0
@@ -644,7 +645,7 @@ offset_right = -1.0
 offset_bottom = 12.0
 mouse_filter = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="Path2D/PathFollow2D/StaticBody2D/ElevatorUI"]
+[node name="PanelContainer" type="PanelContainer" parent="Path2D/PathFollow2D/StaticBody2D/ElevatorUI" unique_id=1719285737]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -658,41 +659,37 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Path2D/PathFollow2D/StaticBody2D/ElevatorUI/PanelContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Path2D/PathFollow2D/StaticBody2D/ElevatorUI/PanelContainer" unique_id=1661033897]
 custom_minimum_size = Vector2(70, 80)
 layout_mode = 2
 
-[node name="ElevatorButtons" type="VBoxContainer" parent="Path2D/PathFollow2D/StaticBody2D/ElevatorUI/PanelContainer/ScrollContainer"]
+[node name="ElevatorButtons" type="VBoxContainer" parent="Path2D/PathFollow2D/StaticBody2D/ElevatorUI/PanelContainer/ScrollContainer" unique_id=1041235910]
 layout_mode = 2
 
-[node name="PlayerDetect" type="Area2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="PlayerDetect" type="Area2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=2132302769]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/StaticBody2D/PlayerDetect"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/StaticBody2D/PlayerDetect" unique_id=1951041257]
 position = Vector2(9.5, 11)
 shape = SubResource("RectangleShape2D_4h0vo")
 
-[node name="PauseMove" type="Timer" parent="."]
+[node name="PauseMove" type="Timer" parent="." unique_id=1740897814]
 one_shot = true
 
-[node name="Resume" type="Timer" parent="."]
+[node name="Resume" type="Timer" parent="." unique_id=684172645]
 one_shot = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_rkleh")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=855947547]
+libraries/ = SubResource("AnimationLibrary_rkleh")
 
-[node name="AnimationPlayerDoor" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_ri4cm")
-}
+[node name="AnimationPlayerDoor" type="AnimationPlayer" parent="." unique_id=1553097167]
+libraries/ = SubResource("AnimationLibrary_ri4cm")
 
-[node name="GlobalFlagHandler" type="Node" parent="."]
+[node name="GlobalFlagHandler" type="Node" parent="." unique_id=609123360]
 script = ExtResource("4_rkleh")
 metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
 
-[node name="PersistantStateHandler" type="Node" parent="." node_paths=PackedStringArray("actor")]
+[node name="PersistantStateHandler" type="Node" parent="." unique_id=839675796 node_paths=PackedStringArray("actor")]
 script = ExtResource("5_4h0vo")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://ckn25ouc6nwt7"

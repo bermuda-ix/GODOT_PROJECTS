@@ -34,7 +34,7 @@ extends Node2D
 @export var top_floor : float =-400
 @export var floors : Array[float]
 @export var init_floor : int = 0
-@export var locked_floors : Array[int]
+@export var locked_floors : Array[int] = [0.0, 1.0]
 
 
 #Stops based on progress_ratio
@@ -46,11 +46,10 @@ var going_up : bool = true
 
 func _ready() -> void:
 	path_2d.curve.set_point_out(1, Vector2(0,top_floor))
-	#Push bottom floor and top floor into floors array as 0 and 1 ratio
-	floors.push_front(0.0)
-	floors.push_back(1.0)
+
 	add_floor_buttons()
 	current_floor=floors[init_floor]
+	path_follow_2d.progress_ratio=current_floor
 	resume.start(3)
 	global_flag_handler.flag_name=global_flag
 	global_flag_handler.flag_active=flag_active
@@ -118,7 +117,6 @@ func move_to_floor():
 		pause()
 	if automatic:
 		up_or_down()
-		
 
 func begin_moving():
 	stopped=false
@@ -130,7 +128,7 @@ func up_or_down():
 		going_up=false
 		
 func pause():
-	if next_floor==snappedf(path_follow_2d.progress_ratio, 0.1):
+	if next_floor==path_follow_2d.progress_ratio:
 		print_debug("your floor sir")
 		if going_up:
 			animation_player.play("arrived_up")

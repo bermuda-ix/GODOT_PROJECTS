@@ -161,7 +161,9 @@ func change_2d_scene (new_scene: String, \
 		prev_2d_scene=current_2d_scene
 		return_room=prev_2d_scene.name
 	current_2d_scene=loaded_rooms_map[new_scene]
+	Events.get_player_data.emit()
 	retrieve_player_data()
+
 	load_levels(LevelsList.level_maps)
 
 func _init_objectives(dict : Dictionary):

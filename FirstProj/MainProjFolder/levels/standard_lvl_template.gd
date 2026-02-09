@@ -85,7 +85,6 @@ func _ready():
 	
 	player.scale = Vector2(pc_scale, pc_scale)
 	
-	
 	if intro_cutscene_active:
 		Events.start_cutscene.emit()
 		cutscene_player.play("INTRO")

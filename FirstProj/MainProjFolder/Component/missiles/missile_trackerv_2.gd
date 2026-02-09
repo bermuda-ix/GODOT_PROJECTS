@@ -69,6 +69,9 @@ func rotate_missile(delta : float) -> void:
 func impact():
 	explode_impact()
 
+func hard_impact():
+	explode_impact()
+
 func explode_impact():
 	var explode_inst=explode.instantiate()
 	explode_inst.global_position=Vector2(global_position.x, global_position.y)

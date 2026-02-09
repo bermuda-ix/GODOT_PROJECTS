@@ -27,6 +27,7 @@ script = ExtResource("1_2evft")
 visible = false
 
 [node name="UI_Level" parent="CanvasLayer" unique_id=1010577233 instance=ExtResource("2_s7w2s")]
+visible = false
 
 [node name="GameOver" parent="CanvasLayer" unique_id=1164434400 instance=ExtResource("3_3s3xp")]
 visible = false
