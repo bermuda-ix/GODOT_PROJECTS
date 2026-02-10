@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="6_82t0r"]
 [ext_resource type="PackedScene" uid="uid://bpfhslfhbjfti" path="res://chars/TEST_CHARS/training_dummy.tscn" id="7_t1ldw"]
-[ext_resource type="PackedScene" uid="uid://mve6miefg0i0" path="res://chars/turret_enemies/turret_base_3.tscn" id="9_dqkb5"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="10_gem31"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="11_fof0c"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="12_dqkb5"]
@@ -267,7 +266,7 @@ a = Vector2(-14, 7)
 b = Vector2(204, -69)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_01tlq"]
-size = Vector2(20, 87)
+size = Vector2(20, 180)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fof0c"]
 size = Vector2(1386, 138)
@@ -426,7 +425,7 @@ metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 [node name="StartingPos" type="Node" parent="." index="25" unique_id=1940057076]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" unique_id=1783583519 groups=["start_pos"]]
-position = Vector2(827, 34)
+position = Vector2(746, 59)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." index="26" unique_id=1116371728]
 collision_layer = 524288
@@ -443,20 +442,16 @@ light_mask = 3
 color = Color(0, 0, 0, 1)
 
 [node name="WallTest" type="StaticBody2D" parent="." index="28" unique_id=47130497]
-position = Vector2(1281, 54)
+position = Vector2(1066, 36)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallTest" index="0" unique_id=819857499]
-position = Vector2(0, 33.5)
+position = Vector2(0, -13)
 shape = SubResource("RectangleShape2D_01tlq")
 
 [node name="Enemies" type="Node" parent="." index="29" unique_id=825398583]
 
-[node name="Dummy" parent="Enemies" index="0" unique_id=1890612945 instance=ExtResource("7_t1ldw")]
-position = Vector2(620, -16)
-
-[node name="turret_base_3" parent="Enemies" index="1" unique_id=760715228 instance=ExtResource("9_dqkb5")]
-position = Vector2(1036, 99)
-scale = Vector2(0.1, 0.1)
+[node name="Dummy" parent="Enemies" index="0" unique_id=1890612945 groups=["Enemy"] instance=ExtResource("7_t1ldw")]
+position = Vector2(820, 95)
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]
 position = Vector2(1260, 1)
@@ -471,7 +466,7 @@ level = NodePath("..")
 metadata/_custom_type_script = "uid://klqpph3n6xut"
 
 [node name="PC" parent="." index="33" unique_id=907789365 instance=ExtResource("12_dqkb5")]
-position = Vector2(812, 95)
+position = Vector2(696, 96)
 
 [node name="DROPSTESTSPAWNPOINT" type="Node2D" parent="." index="34" unique_id=1494373708]
 position = Vector2(952, 35)

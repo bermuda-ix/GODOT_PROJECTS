@@ -1310,9 +1310,10 @@ ammo_count = 12
 max_ammo = 12
 shoot_speed = 0.1
 
-[node name="TargetLock" type="Node2D" parent="." unique_id=1692733426]
+[node name="TargetLock" type="Node2D" parent="." unique_id=1692733426 node_paths=PackedStringArray("actor")]
 position = Vector2(-3, -30)
 script = ExtResource("30_a5flw")
+actor = NodePath("..")
 metadata/_custom_type_script = "uid://b0uasmutdnguo"
 
 [node name="Shield" type="Area2D" parent="." unique_id=395439987]

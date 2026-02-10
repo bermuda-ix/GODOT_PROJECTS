@@ -4,6 +4,7 @@ extends LimboState
 @export var pc : PlayerEntity
 @export var state_machine : LimboHSM
 @export var hit_stop : HitStop
+@onready var flipping_right:= false
 
 func _enter() -> void:
 	anim_player.play("flip")
@@ -16,10 +17,12 @@ func _enter() -> void:
 		
 		#"on right")
 		pc.target_right = false
+		flipping_right=false
 		
 	else:
 		#"on left")
 		pc.target_right = true
+		flipping_right=true
 
 
 func _exit() -> void:

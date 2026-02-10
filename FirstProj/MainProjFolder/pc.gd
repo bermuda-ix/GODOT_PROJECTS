@@ -54,6 +54,7 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var parry_state: LimboState = $StateMachine/ParryState
 @onready var dodge_state: LimboState = $StateMachine/DodgeState
 @onready var flip_state: LimboState = $StateMachine/FlipState
+@onready var flip_end_state: LimboState = $StateMachine/FlipEndState
 @onready var staggered: LimboState = $StateMachine/Staggered
 @onready var hit: LimboState = $StateMachine/Hit
 @onready var recovery: LimboState = $StateMachine/Recovery
@@ -117,6 +118,7 @@ var sp_atk_chn = 0
 var face_right = true
 var face_dir = clampi(1, -1, 1)
 var input_dir=Input.get_axis("walk_left","walk_right")
+var wall_hold = false
 #dodge dir
 #var dodge_state = false
 
@@ -347,6 +349,9 @@ func _init_state_machine():
 	state_machine.add_transition(dodge_state, landed, &"landing")
 	state_machine.add_transition(flip_state, landed, &"landing")
 	
+	state_machine.add_transition(flip_state, flip_end_state, &"flipped_over")
+	state_machine.add_transition(flip_end_state, landed, &"landing")
+	
 	#Recovery
 	state_machine.add_transition(hit, recovery, &"recovering")
 	state_machine.add_transition(staggered, recovery, &"recovering")
@@ -412,7 +417,12 @@ func _init_state_machine():
 	#Flipping State
 	state_machine.add_transition(flip_state, jump_state, &"jump_out")
 	state_machine.add_transition(flip_state, attack_state, &"flip_attack")
-	#state_machine.add_transition(flip_state, jump_state, &"jump_out")
+	state_machine.add_transition(flip_state, wall_stick, &"hit_wall")
+	
+	state_machine.add_transition(flip_end_state, jump_state, &"jump_out")
+	state_machine.add_transition(flip_end_state, attack_state, &"flip_attack")
+	state_machine.add_transition(flip_end_state, wall_stick, &"hit_wall")
+	
 	
 	#Counter Success
 	state_machine.add_transition(parry_state, parry_success_state, &"parry_successful")
@@ -579,7 +589,7 @@ func _physics_process(delta):
 
 		
 
-		var wall_hold = false
+		#wall_hold = false
 		if(state_machine.get_active_state()!=dodge_state and parry_stance==false and state_machine.get_active_state()!=flip_state):
 			if not interact_menu_open:
 				handle_wall_jump(wall_hold, delta)
@@ -652,8 +662,7 @@ func jump(input_axis, delta):
 			state_machine.dispatch(&"start_jumping")
 
 func wall_sticking(_wall_hold : bool):
-	if not is_on_wall() or not Input.is_action_pressed("sprint"):
-			_wall_hold=false
+	if not _wall_hold:
 			gravity = 980
 	else:
 		state_machine.dispatch(&"stick_to_wall")
@@ -662,8 +671,10 @@ func wall_sticking(_wall_hold : bool):
 		gravity = 0
 		
 	if state_machine.get_active_state()==wall_stick:
-		if Input.is_action_just_released("sprint"):
-			state_machine.dispatch(&"fall_off_wall")
+		if state_machine.get_previous_active_state()==flip_state or state_machine.get_previous_active_state()==flip_end_state:
+			if Input.is_action_just_released("sprint"):
+				wall_hold = false
+				state_machine.dispatch(&"fall_off_wall")
 #breaking out of a flip. Test without timer later
 func break_out():
 	
@@ -697,8 +708,9 @@ func jump_out(jumpout_vel : float):
 
 
 func handle_wall_jump(wall_hold, delta):
-	if not is_on_wall_only(): return
-	if not Input.is_action_pressed("sprint"): return
+	#if not is_on_wall_only(): return
+	#if not Input.is_action_pressed("sprint"): return
+	if not wall_hold: return
 	var wall_normal = get_wall_normal()
 
 	
@@ -1752,19 +1764,99 @@ func flip_over():
 	#state=States.FLIP
 #
 func flipping(delta):
-#	variables set and declared
+	pass
+	#print_debug(global_position)
+#	Jumping before flipping over
+	#if is_on_wall():
+		#state_machine.dispatch(&"hit_wall")
+		#hit_stop.end_hit_stop()
+		
+	if not flipped_over:
+		pass
+		#health.immortality=true
+		#hurt_box_detect.disabled=true
+		##position.y, " ",target_size_y+target.position.y)
+		#if global_position.y>target_top-15 and not high_target:
+			#if target_right:
+				#if global_position<Vector2((target_left_edge-15),(target_top-25)):
+					#global_position=lerp(global_position, Vector2((target_left_edge-5),(target_top-40)), delta*3)
+				#else:
+					#velocity.y=movement_data.jump_velocity
+			#else:
+				#if global_position>Vector2((target_right_edge+15),(target_top-25)):
+					#global_position=lerp(global_position, Vector2((target_right_edge+5),(target_top-40)), delta*3)
+				#else:
+					#velocity.y=movement_data.jump_velocity
+							#
+		#elif global_position.y>(high_target_jump_height-15) and high_target:
+			#if target_right:
+				#if global_position<Vector2((target_left_edge),(high_target_jump_height)):
+					#global_position=lerp(global_position, Vector2((target_left_edge-5),(high_target_jump_height*0.7)), delta*3)
+				#else:
+					#velocity.y=movement_data.jump_velocity
+			#else:
+				#
+				#if global_position>Vector2((target_right_edge),(high_target_jump_height)):
+					#global_position=lerp(global_position, Vector2((target_right_edge+5),(high_target_jump_height*0.7)), delta*3)
+				#else:
+					#velocity.y=movement_data.jump_velocity
+#
+		#else:
+			#flipped_over=true
+			#hit_stop.hit_stop(.2, .5)
+
+#	flipping over
+	else:
+		pass
+		#health.immortality=false
+		#hurt_box_detect.disabled=false
+		#flipped_over=true
+		#if not high_target:
+			#if not target_right:
+				#movement = target_direction.rotated(CLOCKWISE)
+				#
+				##"flip_right")
+			#else:
+				#movement = target_direction.rotated(COUNTER_CLOCKWISE)
+				##"flip_left"
+			#
+			#if global_position.y<target_top:
+				#velocity = movement * flip_speed * delta
+				#
+			#else:
+				#velocity.y += gravity * movement_data.gravity_scale * delta
+		#else:
+			#hit_stop.hit_stop(.1, .5)
+			#jump_out_timer.start(0.05)
+			#velocity.y=0
+			
+func _on_flip_state_entered() -> void:
+	#	variables set and declared
+	print_debug("entering flip")
 	target_pos_y=(target.global_position.y)
 	var pos_above_y=target.global_position.y-global_position.y
 	target_pos_x=(target.global_position.x)
 	var pos_above_x=target.global_position.x-global_position.x
-	#print_debug(global_position)
-#	Jumping before flipping over
-	if not flipped_over:
+
+
+func _on_flip_state_updated(delta: float) -> void:
+	if is_on_wall():
+		wall_hold = true
+		state_machine.dispatch(&"hit_wall")
+		hit_stop.end_hit_stop()
+	#elif is_on_floor():
+		#state_machine.dispatch(&"landing")
+		#hit_stop.end_hit_stop()
+	else:
 		health.immortality=true
 		hurt_box_detect.disabled=true
 		#position.y, " ",target_size_y+target.position.y)
+		print_debug(global_position)
+		print_debug((target_left_edge-15)," , ",(target_top-25))
 		if global_position.y>target_top-15 and not high_target:
 			if target_right:
+				print_debug(global_position)
+				print_debug((target_left_edge-15)," , ",(target_top-25))
 				if global_position<Vector2((target_left_edge-15),(target_top-25)):
 					global_position=lerp(global_position, Vector2((target_left_edge-5),(target_top-40)), delta*3)
 				else:
@@ -1777,46 +1869,61 @@ func flipping(delta):
 							
 		elif global_position.y>(high_target_jump_height-15) and high_target:
 			if target_right:
-				if global_position<Vector2((target_left_edge),(high_target_jump_height)):
+				if global_position<Vector2((target_left_edge-15),(high_target_jump_height)):
 					global_position=lerp(global_position, Vector2((target_left_edge-5),(high_target_jump_height*0.7)), delta*3)
 				else:
-					velocity.y=movement_data.jump_velocity
+					wall_hold = true
+					state_machine.dispatch(&"hit_wall")
+					#velocity.y=movement_data.jump_velocity
 			else:
 				
-				if global_position>Vector2((target_right_edge),(high_target_jump_height)):
+				if global_position>Vector2((target_right_edge+15),(high_target_jump_height)):
 					global_position=lerp(global_position, Vector2((target_right_edge+5),(high_target_jump_height*0.7)), delta*3)
 				else:
-					velocity.y=movement_data.jump_velocity
+					wall_hold = true
+					state_machine.dispatch(&"hit_wall")
+					#velocity.y=movement_data.jump_velocity
 
 		else:
-			flipped_over=true
-			hit_stop.hit_stop(.2, .5)
+			#flipped_over=true
+			#hit_stop.hit_stop(.2, .5)
+			state_machine.dispatch(&"flipped_over")
 
-#	flipping over
+func _on_flip_end_state_entered() -> void:
+	print_debug("flipped over")
+	hit_stop.hit_stop(.2, .5)
+
+
+func _on_flip_end_state_updated(delta: float) -> void:
+	if is_on_wall():
+		wall_hold = true
+		state_machine.dispatch(&"hit_wall")
+		hit_stop.end_hit_stop()
+	elif is_on_floor():
+		state_machine.dispatch(&"landing")
+		hit_stop.end_hit_stop()
 	else:
 		health.immortality=false
 		hurt_box_detect.disabled=false
 		flipped_over=true
 		if not high_target:
-			if not target_right:
+			
+			if not flip_state.flipping_right:
 				movement = target_direction.rotated(CLOCKWISE)
 				
 				#"flip_right")
 			else:
 				movement = target_direction.rotated(COUNTER_CLOCKWISE)
 				#"flip_left"
-			
 			if global_position.y<target_top:
 				velocity = movement * flip_speed * delta
 				
 			else:
 				velocity.y += gravity * movement_data.gravity_scale * delta
 		else:
-			hit_stop.hit_stop(.1, .5)
+			#hit_stop.hit_stop(.1, .5)
 			jump_out_timer.start(0.05)
 			velocity.y=0
-		
-
 
 func _on_jump_out_timer_timeout():
 	jump_out(200)

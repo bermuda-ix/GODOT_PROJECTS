@@ -1,16 +1,27 @@
 extends Node2D
 
-@onready var hurt_box: HurtBox = $HurtBox
 @onready var stagger: Stagger = $Stagger
 @onready var health: Health = $Health
 @onready var label: Label = $Label
+@onready var collision_shape_2d: CollisionShape2D = $CharacterBody2D/CollisionShape2D
 
 @onready var teleport_dir_helper_rc: RayCast2D = $TeleportDirHelperRC
 @onready var teleport_timer: Timer = $TeleportTimer
 
+
 @onready var state_machine: LimboHSM = $StateMachine
 @onready var idle: LimboState = $StateMachine/idle
 @onready var tree_test_state: BTState = $StateMachine/TreeTestState
+@onready var death: Death = $StateMachine/Death
+
+@onready var hurt_box: HurtBox = $CharacterBody2D/HurtBox
+@onready var on_screen: VisibleOnScreenNotifier2D = $CharacterBody2D/VisibleOnScreenNotifier2D
+@onready var target_lock_node: TargetLock = $CharacterBody2D/TargetLock
+@onready var bullet_detection: BulletDetection = $CharacterBody2D/BulletDetection
+@onready var character_body_2d: CharacterBody2D = $CharacterBody2D
+
+
+
 
 
 func _ready() -> void:
@@ -33,7 +44,15 @@ func _init_state_machine() -> void:
 	state_machine.add_transition(tree_test_state, idle, tree_test_state.success_event)
 	
 	
-
+func target_lock():
+	Events.unlock_from.emit()
+	target_lock_node.target_lock()
+	
+func get_width() -> int:
+	return abs(collision_shape_2d.get_shape().size.x * character_body_2d.scale.x)
+func get_height() -> int:
+	return abs(collision_shape_2d.get_shape().size.y * character_body_2d.scale.y)
+	
 func test_function():
 	state_machine.dispatch(&"teleport_shoot")
 	

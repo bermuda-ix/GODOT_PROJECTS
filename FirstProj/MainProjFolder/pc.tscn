@@ -9007,6 +9007,8 @@ pc = NodePath("../..")
 state_machine = NodePath("..")
 hit_stop = NodePath("../../HitStop")
 
+[node name="FlipEndState" type="LimboState" parent="StateMachine" unique_id=64997339]
+
 [node name="Staggered" type="LimboState" parent="StateMachine" unique_id=1318642481 node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
 script = ExtResource("113_o2pa3")
 anim_player = NodePath("../../AnimationPlayer")
@@ -9092,6 +9094,10 @@ pc = NodePath("../..")
 [connection signal="exited" from="StateMachine/AttackState/SpecialCombo2" to="." method="_on_special_combo_2_exited"]
 [connection signal="entered" from="StateMachine/SpecialAttack" to="." method="_on_special_attack_entered"]
 [connection signal="dur_timeout" from="StateMachine/ParrySuccessState" to="StateMachine/ParrySuccessState" method="_on_dur_timeout"]
+[connection signal="entered" from="StateMachine/FlipState" to="." method="_on_flip_state_entered"]
+[connection signal="updated" from="StateMachine/FlipState" to="." method="_on_flip_state_updated"]
+[connection signal="entered" from="StateMachine/FlipEndState" to="." method="_on_flip_end_state_entered"]
+[connection signal="updated" from="StateMachine/FlipEndState" to="." method="_on_flip_end_state_updated"]
 [connection signal="entered" from="StateMachine/Death" to="." method="_on_death_entered"]
 [connection signal="updated" from="StateMachine/Death" to="." method="_on_death_updated"]
 [connection signal="entered" from="StateMachine/Dead" to="." method="_on_dead_entered"]
