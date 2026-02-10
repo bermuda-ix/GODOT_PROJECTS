@@ -8740,6 +8740,10 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
+[node name="FlipBuffer" type="Timer" parent="." unique_id=1056057937]
+wait_time = 0.1
+one_shot = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1853999065]
 libraries/ = SubResource("AnimationLibrary_qyq63")
 libraries/Cutscene = SubResource("AnimationLibrary_7nr8h")

@@ -289,6 +289,8 @@ var high_target : bool = false
 var high_target_jump_height
 @onready var jump_out_timer = $JumpOutTimer
 var flipped_over : bool = false
+@onready var flip_buffer: Timer = $FlipBuffer
+
 
 #multithreading
 var thread := Thread.new()
@@ -1837,6 +1839,7 @@ func _on_flip_state_entered() -> void:
 	var pos_above_y=target.global_position.y-global_position.y
 	target_pos_x=(target.global_position.x)
 	var pos_above_x=target.global_position.x-global_position.x
+	flip_buffer.start()
 
 
 func _on_flip_state_updated(delta: float) -> void:
@@ -1847,6 +1850,12 @@ func _on_flip_state_updated(delta: float) -> void:
 	#elif is_on_floor():
 		#state_machine.dispatch(&"landing")
 		#hit_stop.end_hit_stop()
+	elif Input.is_action_just_pressed("jump") and flip_buffer.is_stopped():
+		jump_out(30)
+		state_machine.dispatch(&"jump_out")
+	elif Input.is_action_just_pressed("attack"):
+		jump_out(15)
+		state_machine.dispatch(&"flip_attack")
 	else:
 		health.immortality=true
 		hurt_box_detect.disabled=true
@@ -1902,6 +1911,12 @@ func _on_flip_end_state_updated(delta: float) -> void:
 	elif is_on_floor():
 		state_machine.dispatch(&"landing")
 		hit_stop.end_hit_stop()
+	elif Input.is_action_just_pressed("jump"):
+		jump_out(30)
+		state_machine.dispatch(&"jump_out")
+	elif Input.is_action_just_pressed("attack"):
+		jump_out(15)
+		state_machine.dispatch(&"flip_attack")
 	else:
 		health.immortality=false
 		hurt_box_detect.disabled=false
