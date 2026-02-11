@@ -722,22 +722,24 @@ func handle_wall_jump(wall_hold, delta):
 	wall_normal = get_wall_normal()
 
 
-	if (Input.is_action_just_pressed("walk_left") or Input.is_action_just_pressed("walk_right")) and wall_hold == true:
+	if wall_hold == true:
 		#state = States.WALL_STICK
-		state_machine.dispatch(&"stick_to_wall")
-		velocity.x =0
-		velocity.y = 0
 		
-	elif (Input.is_action_just_pressed("walk_right") and wall_normal==Vector2.LEFT) \
-	or (Input.is_action_just_pressed("walk_left") and wall_normal==Vector2.RIGHT) \
-	 or Input.is_action_just_pressed("jump"):
-		state_machine.dispatch(&"jump_off_wall")
-		#knockback.x=-_jump_vel
-		#knockback.y=movement_data.jump_velocity
-		velocity.x = move_toward(velocity.x, movement_data.speed * wall_normal.x * 1.5, movement_data.acceleration*10 * delta)
-		velocity.y = movement_data.jump_velocity
-		just_wall_jump = true
-		wall_hold=false
+			
+		if (Input.is_action_just_pressed("walk_right") and wall_normal==Vector2.RIGHT) \
+		or (Input.is_action_just_pressed("walk_left") and wall_normal==Vector2.LEFT) \
+		 or Input.is_action_just_pressed("jump"):
+			state_machine.dispatch(&"jump_off_wall")
+			#knockback.x=-_jump_vel
+			#knockback.y=movement_data.jump_velocity
+			velocity.x = move_toward(velocity.x, movement_data.speed * wall_normal.x * 1.5, movement_data.acceleration*10 * delta)
+			velocity.y = movement_data.jump_velocity
+			just_wall_jump = true
+			wall_hold=false
+		else:
+			state_machine.dispatch(&"stick_to_wall")
+			velocity.x =0
+			velocity.y = 0
 
 		
 	if wall_hold == true:
