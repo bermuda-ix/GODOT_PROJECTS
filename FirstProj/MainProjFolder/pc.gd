@@ -165,6 +165,8 @@ var atk_state="ATK_1"
 #@onready var camera_2d: Camera2D = $Camera2D
 var input_axis
 
+var wall_normal : Vector2
+
 #Quick-Time Events
 @onready var qte_handler: QTEHandler = $QTEHandler
 signal attack_qte
@@ -518,7 +520,7 @@ func _process(_delta):
 	atk_state_debug()
 #
 	dodge(input_axis)
-	label.text=str(state_machine.get_active_state())
+	label.text=str(velocity)
 	#
 	if(state_machine.get_active_state()!=dodge_state and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=flip_state):
 		parry()
@@ -542,6 +544,7 @@ func _process(_delta):
 		health.health-=1
 
 func _physics_process(delta):
+	vel_y=velocity.y
 	label.text=str(velocity.x)
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		apply_gravity(delta)
@@ -612,7 +615,8 @@ func _physics_process(delta):
 		var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
 		if just_left_ledge:
 			coyote_jump_timer.start()
-		just_wall_jump = false
+		if is_on_floor():
+			just_wall_jump = false
 		
 
 		toggle_light()
@@ -648,11 +652,11 @@ func jump(input_axis, delta):
 			state_machine.dispatch(&"start_jumping")
 			velocity.y = movement_data.jump_velocity
 			
-	elif not is_on_floor() and parry_stance==false and state_machine.get_previous_active_state()!=flip_state:
+	elif not is_on_floor() and parry_stance==false and state_machine.get_previous_active_state()!=flip_state and state_machine.get_active_state()!=wall_stick:
 		#state = States.JUMP
 		if Input.is_action_just_released("jump") and velocity.y<movement_data.jump_velocity/2:
 			
-			velocity.y = movement_data.jump_velocity/2
+			#velocity.y = movement_data.jump_velocity/2
 			#state = States.JUMP
 			state_machine.dispatch(&"start_jumping")
 		if Input.is_action_just_pressed("jump") and double_jump_flag == true and just_wall_jump == false:
@@ -664,19 +668,21 @@ func jump(input_axis, delta):
 			state_machine.dispatch(&"start_jumping")
 
 func wall_sticking(_wall_hold : bool):
-	if not _wall_hold:
-			gravity = 980
-	else:
-		state_machine.dispatch(&"stick_to_wall")
+	if just_wall_jump: return
+	
+	if _wall_hold:
 		velocity.x =0
 		velocity.y = 0
-		gravity = 0
-		
+		state_machine.dispatch(&"stick_to_wall")
+	
+	
+	
 	if state_machine.get_active_state()==wall_stick:
-		if state_machine.get_previous_active_state()==flip_state or state_machine.get_previous_active_state()==flip_end_state:
+		if state_machine.get_previous_active_state()!=flip_state and state_machine.get_previous_active_state()!=flip_end_state:
 			if Input.is_action_just_released("sprint"):
 				wall_hold = false
 				state_machine.dispatch(&"fall_off_wall")
+				#assert(velocity.y!=0)
 #breaking out of a flip. Test without timer later
 func break_out():
 	
@@ -710,48 +716,34 @@ func jump_out(jumpout_vel : float):
 
 
 func handle_wall_jump(wall_hold, delta):
-	#if not is_on_wall_only(): return
-	#if not Input.is_action_pressed("sprint"): return
-	if not wall_hold: return
-	var wall_normal = get_wall_normal()
+	if not is_on_wall_only(): return
+	if not Input.is_action_pressed("sprint"): return
+	var _jump_vel=50
+	wall_normal = get_wall_normal()
 
-	
-	if Input.is_action_just_pressed("walk_left") and wall_normal == Vector2.LEFT and wall_hold == true:
+
+	if (Input.is_action_just_pressed("walk_left") or Input.is_action_just_pressed("walk_right")) and wall_hold == true:
 		#state = States.WALL_STICK
 		state_machine.dispatch(&"stick_to_wall")
 		velocity.x =0
 		velocity.y = 0
-		gravity = 0
 		
-	elif Input.is_action_just_pressed("walk_right") or Input.is_action_just_pressed("jump") or Input.is_action_just_released("sprint"):
+	elif (Input.is_action_just_pressed("walk_right") and wall_normal==Vector2.LEFT) \
+	or (Input.is_action_just_pressed("walk_left") and wall_normal==Vector2.RIGHT) \
+	 or Input.is_action_just_pressed("jump"):
 		state_machine.dispatch(&"jump_off_wall")
+		#knockback.x=-_jump_vel
+		#knockback.y=movement_data.jump_velocity
 		velocity.x = move_toward(velocity.x, movement_data.speed * wall_normal.x * 1.5, movement_data.acceleration*10 * delta)
 		velocity.y = movement_data.jump_velocity
 		just_wall_jump = true
-		
-		
-		
-		
-	if Input.is_action_just_pressed("walk_right") and wall_normal == Vector2.RIGHT and wall_hold == true:
-		state_machine.dispatch(&"stick_to_wall")
-		velocity.x =0
-		velocity.y = 0
-		gravity = 0
-	
-	elif Input.is_action_just_pressed("walk_left") or Input.is_action_just_pressed("jump")  or Input.is_action_just_released("sprint"):
-		state_machine.dispatch(&"jump_off_wall")
-		velocity.x = move_toward(velocity.x, movement_data.speed * wall_normal.x * 1.5, movement_data.acceleration*10 * delta)
-		velocity.y = movement_data.jump_velocity
-		just_wall_jump = true
-		
-		
-	
+		wall_hold=false
+
 		
 	if wall_hold == true:
 		velocity.x =0
 		velocity.y = 0
-		gravity = 0
-		
+
 	else:
 		gravity = 980
 
@@ -846,13 +838,17 @@ func update_animation(input_axis):
 				#state = States.WALKING
 				
 				if Input.is_action_pressed("sprint"):
-					if combat_states.get_active_state()!=locked:
-						walk_anim="run"
-						state_machine.dispatch(&"start_sprinting")
+					if is_on_wall():
+						wall_hold=true
 					else:
-						state_machine.dispatch(&"start_walking")
+						if combat_states.get_active_state()!=locked:
+							walk_anim="run"
+							state_machine.dispatch(&"start_sprinting")
+						else:
+							state_machine.dispatch(&"start_walking")
 					movement_data = load("res://FasterMovementData.tres")
 				elif Input.is_action_just_released("sprint"):
+					wall_hold=false
 					movement_data = load("res://DefaultMovementData.tres")
 					walk_anim="walk"
 					state_machine.dispatch(&"start_walking")
@@ -2277,3 +2273,24 @@ func _on_dead_entered() -> void:
 
 func _on_health_max_health_changed(diff: int) -> void:
 	pass # Replace with function body.
+
+
+func _on_jump_state_updated(delta: float) -> void:
+	pass
+	#assert(velocity.y!=0.0)
+	#if state_machine.get_previous_active_state()==wall_stick:
+		#assert(velocity.x!=0)
+
+
+func _on_jump_state_entered() -> void:
+	var _jump_vel_x=30
+	var _jump_vel_y=50
+	velocity.y = movement_data.jump_velocity/2
+	#
+	#if state_machine.get_previous_active_state()==wall_stick:
+		##assert(velocity.y<0)
+		#if wall_normal==Vector2.LEFT:
+			#knockback.x=-_jump_vel_y
+			#
+		#else:
+			#knockback.x=_jump_vel_y

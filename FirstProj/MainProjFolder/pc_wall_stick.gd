@@ -14,4 +14,3 @@ func _update(delta: float) -> void:
 
 func _exit() -> void:
 	pc.wall_hold = false
-	print_debug("falling")

@@ -145,7 +145,8 @@ func change_2d_scene (new_scene: String, \
 	if new_scene=="RETURN":
 		new_scene=return_room
 	
-	world_2d.add_child(loaded_rooms_map[new_scene])
+	if world_2d.get_child_count()==0:
+		world_2d.add_child(loaded_rooms_map[new_scene])
 	#player.reparent(loaded_rooms_map[new_scene])
 	
 	#Starting position is -1 if scene has no starting position
