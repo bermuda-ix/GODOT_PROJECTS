@@ -6,6 +6,7 @@ extends Node
 @export var animation_player : AnimationPlayer
 @export var tree_active : bool = true
 @export var health : Health
+@export var death_state : LimboState
 
 #Scoring variables
 @export var score : int = 3
@@ -33,6 +34,7 @@ func dying():
 	if actor.is_on_floor() and not actor.jump_timer.is_stopped():
 		actor.dying.blackboard.set_var("hit_the_floor", true)
 	actor.velocity.x=actor.knockback.x
+	
 
 func dead():
 	pass

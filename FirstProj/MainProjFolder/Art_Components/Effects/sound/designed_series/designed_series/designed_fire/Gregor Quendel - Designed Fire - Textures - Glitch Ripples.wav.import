@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ik344dtsvl11"
+path="res://.godot/imported/Gregor Quendel - Designed Fire - Textures - Glitch Ripples.wav-128aec9a267a1bdcdb38b1041b5d89fb.sample"
+
+[deps]
+
+source_file="res://Art_Components/Effects/sound/designed_series/designed_series/designed_fire/Gregor Quendel - Designed Fire - Textures - Glitch Ripples.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Fire - Textures - Glitch Ripples.wav-128aec9a267a1bdcdb38b1041b5d89fb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

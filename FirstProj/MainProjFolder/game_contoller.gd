@@ -131,6 +131,9 @@ func change_2d_scene (new_scene: String, \
 	_transition_in : String="fade_to_black", \
 	_transition_out : String="fade_from_black") -> void:
 	
+	if current_2d_scene!=null:
+		if loaded_rooms_map[new_scene].name == current_2d_scene.name:
+			return
 	
 	#player.reparent(world_2d)
 	await LevelTransition.transition_in(_transition_in)

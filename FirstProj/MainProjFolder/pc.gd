@@ -302,6 +302,7 @@ var mutex := Mutex.new()
 #DEBUG FLAGS TBR
 var stuck : bool = false
 
+
 func _ready():
 	hit_box_pos=hit_box.position
 	hb_collision.disabled=true
@@ -520,7 +521,7 @@ func _process(_delta):
 	atk_state_debug()
 #
 	dodge(input_axis)
-	label.text=str(velocity)
+	label.text=str(state_machine.get_active_state())
 	#
 	if(state_machine.get_active_state()!=dodge_state and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=flip_state):
 		parry()
@@ -538,6 +539,7 @@ func _process(_delta):
 	climb_stairs()
 	drop_down()
 	interact()
+	stick_to_wall()
 	
 	#Input for testing various things
 	if Input.is_action_just_pressed("DEBUG_KEY"):
@@ -666,6 +668,10 @@ func jump(input_axis, delta):
 			double_jump_flag = false
 			#state = States.JUMP
 			state_machine.dispatch(&"start_jumping")
+
+func stick_to_wall() -> void:
+	if Input.is_action_pressed("sprint")  and is_on_wall_only():
+			wall_hold=true
 
 func wall_sticking(_wall_hold : bool):
 	if just_wall_jump: return
@@ -825,7 +831,6 @@ func update_animation(input_axis):
 		parry_box.rotation=0
 
 	
-	
 	if combat_states.get_active_state()!=locked:
 		if input_axis != 0:
 		
@@ -840,14 +845,14 @@ func update_animation(input_axis):
 				#state = States.WALKING
 				
 				if Input.is_action_pressed("sprint"):
+
 					if is_on_wall():
 						wall_hold=true
+					if combat_states.get_active_state()!=locked:
+						walk_anim="run"
+						state_machine.dispatch(&"start_sprinting")
 					else:
-						if combat_states.get_active_state()!=locked:
-							walk_anim="run"
-							state_machine.dispatch(&"start_sprinting")
-						else:
-							state_machine.dispatch(&"start_walking")
+						state_machine.dispatch(&"start_walking")
 					movement_data = load("res://FasterMovementData.tres")
 				elif Input.is_action_just_released("sprint"):
 					wall_hold=false

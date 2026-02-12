@@ -290,6 +290,7 @@ func _init_combat_state_machine():
 	
 func _process(_delta):
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
+		bt_player.active=false
 		return
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
@@ -311,9 +312,15 @@ func _process(_delta):
 	if Input.is_action_just_pressed("DEBUG_KEY"):
 		test_function()
 		
-	if health.health<10:
-		assert(phases.get_active_state()==phase_2)
-
+	#if health.health<10:
+		#assert(phases.get_active_state()==phase_2)
+		
+	if health.health<=0 and cutscene_handler.actor_control_active:
+		assert(state_machine.get_active_state()==death)
+		
+	if health.health<=0:
+		assert(bt_player.active==false)
+		
 func _physics_process(delta):
 	##FOR TESTING REMOVE LATER
 
@@ -359,7 +366,10 @@ func _physics_process(delta):
 		velocity.x= knockback.x
 	
 	move_and_slide()
-	
+	if player_right:
+		animated_sprite_2d.flip_h=true
+	else:
+		animated_sprite_2d.flip_h=false
 
 func teleport_counter():
 	state_machine.dispatch(&"teleport_counter")
@@ -601,10 +611,14 @@ func _on_health_health_depleted() -> void:
 	if not death_cutscene:
 		death_handler.death()
 	else:
-		Events.boss_died.emit("flashback_lvl_cutscenes/first_mini_boss_kill")
+		animation_player.stop()
+		bt_player.blackboard.set_var("attack_mode", false)
+		bt_player.restart()
+		bt_player.active=false
+		Events.unlock_from.emit()
+		Events.boss_died.emit("mini_boss_1_kill")
 		Events.global_flag_trigger.emit("MiniBoss1Killed")
 		bt_player.active=false
-
 
 
 func _on_attack_timer_timeout() -> void:
@@ -767,6 +781,14 @@ func _on_staggered_entered() -> void:
 func _on_teleport_and_shoot_exited() -> void:
 	hurt_box.set_collision_layer_value(7, true)
 
+func death_on_cutscene() -> void:
+	state_machine.change_active_state(death)
 
 func _on_death_entered() -> void:
-	pass
+	bt_player.active=false
+	animation_player.play("dead")
+
+
+func _on_death_updated(delta: float) -> void:
+	bt_player.active=false
+	animation_player.play("dead")

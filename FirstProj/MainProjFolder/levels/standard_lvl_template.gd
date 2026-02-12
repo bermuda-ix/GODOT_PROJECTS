@@ -112,7 +112,7 @@ func _ready():
 	#player.set_health()
 	#player.set_max_health()
 	#player.set_stagger()
-	#player.set_max_stagger()
+	#playemr.set_max_stagger()
 	#
 	
 	#score=45
@@ -120,6 +120,7 @@ func _process(_delta):
 	
 	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size())
 	
+
 	#get_state()
 	#set_state()
 	##For testing individual levels

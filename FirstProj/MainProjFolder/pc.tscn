@@ -4288,6 +4288,34 @@ tracks/5/keys = {
 "values": [Vector2(0, 3)]
 }
 
+[sub_resource type="Animation" id="Animation_8w5mx"]
+resource_name = "Crouch"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Crouch"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
 [sub_resource type="Animation" id="Animation_l6eg2"]
 resource_name = "Flip_Attack"
 length = 0.6
@@ -7188,6 +7216,7 @@ _data = {
 &"Attack_Counter": SubResource("Animation_urihx"),
 &"Attack_Dash": SubResource("Animation_yuc35"),
 &"Attack_Down": SubResource("Animation_704ig"),
+&"Crouch": SubResource("Animation_8w5mx"),
 &"Flip_Attack": SubResource("Animation_l6eg2"),
 &"Heavy_Combo_1": SubResource("Animation_i0kkw"),
 &"Heavy_Combo_2": SubResource("Animation_cdmbu"),
@@ -8773,6 +8802,7 @@ one_shot = true
 ignore_time_scale = true
 
 [node name="STATE" type="Label" parent="." unique_id=1506403178]
+z_index = 10
 offset_left = -45.0
 offset_top = -56.0
 offset_right = -5.0
