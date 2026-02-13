@@ -1,16 +1,24 @@
-[gd_scene format=3 uid="uid://byekm646ropyj"]
+[gd_scene format=3 uid="uid://ck7gq5xvyohyn"]
 
-[ext_resource type="Script" uid="uid://cp26luiup1xmr" path="res://Component/interactables/shutdown_mech.gd" id="1_jefk4"]
-[ext_resource type="Texture2D" uid="uid://bwdyhehw5j8uj" path="res://Art_Components/Vehicles/ICV Stryker M1128 MGS (Forward sprite sheet)/IFV Stryker Base (Idle Forward).png" id="2_jefk4"]
-[ext_resource type="Texture2D" uid="uid://nqendqxys36q" path="res://Art_Components/Effects/Effect_Explosion/60fps/Spritesheets/Effect_Explosion_1_517x517.png" id="2_lamkf"]
-[ext_resource type="Texture2D" uid="uid://c4autm8qjakfv" path="res://Art_Components/LevelProps/C4.png" id="3_iinr1"]
-[ext_resource type="Texture2D" uid="uid://i12ushgxb8qa" path="res://Art_Components/LevelProps/C4_blinking.png" id="4_jefk4"]
+[ext_resource type="Script" uid="uid://cp26luiup1xmr" path="res://Component/interactables/shutdown_mech.gd" id="1_iosw3"]
+[ext_resource type="Texture2D" uid="uid://bdrqdacnr7uq1" path="res://Art_Components/Enemies/battle-mecha-sprites-pixel-art-pack/1/Death.png" id="2_r335h"]
+[ext_resource type="Texture2D" uid="uid://nqendqxys36q" path="res://Art_Components/Effects/Effect_Explosion/60fps/Spritesheets/Effect_Explosion_1_517x517.png" id="3_q0wh3"]
+[ext_resource type="Texture2D" uid="uid://c4autm8qjakfv" path="res://Art_Components/LevelProps/C4.png" id="4_ge28d"]
+[ext_resource type="Texture2D" uid="uid://i12ushgxb8qa" path="res://Art_Components/LevelProps/C4_blinking.png" id="5_ilud4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iinr1"]
+atlas = ExtResource("2_r335h")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jefk4"]
+atlas = ExtResource("2_r335h")
+region = Rect2(96, 0, 96, 96)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mmp13"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_jefk4")
+"texture": SubResource("AtlasTexture_iinr1")
 }],
 "loop": true,
 "name": &"destroyed",
@@ -18,7 +26,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_jefk4")
+"texture": SubResource("AtlasTexture_jefk4")
 }],
 "loop": true,
 "name": &"idle",
@@ -62,10 +70,10 @@ radius = 3.0
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_iinr1")
+"texture": ExtResource("4_ge28d")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_jefk4")
+"texture": ExtResource("5_ilud4")
 }],
 "loop": true,
 "name": &"Active",
@@ -400,239 +408,79 @@ _data = {
 &"idle": SubResource("Animation_mmp13")
 }
 
-[node name="ShutdownMech" type="Node2D" unique_id=1823769800]
-script = ExtResource("1_jefk4")
+[node name="ShutdownMech" type="Node2D" unique_id=2078398073]
+script = ExtResource("1_iosw3")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=924645001]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1413831255]
 sprite_frames = SubResource("SpriteFrames_mmp13")
 animation = &"idle"
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=685644786]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=930245533]
 material = SubResource("CanvasItemMaterial_h17ry")
 emitting = false
 amount = 1
-texture = ExtResource("2_lamkf")
+texture = ExtResource("3_q0wh3")
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_iwdtr")
 
-[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D" unique_id=1664010468]
+[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D" unique_id=1015875487]
 collision_layer = 4
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D/ExplostionHazard" unique_id=1535942214]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D/ExplostionHazard" unique_id=380626735]
 shape = SubResource("CircleShape2D_jefk4")
 
-[node name="GPUParticles2D4" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=23668158]
-material = SubResource("CanvasItemMaterial_h17ry")
-position = Vector2(131, 1)
-emitting = false
-amount = 1
-texture = ExtResource("2_lamkf")
-one_shot = true
-process_material = SubResource("ParticleProcessMaterial_iwdtr")
-
-[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D4" unique_id=303797461]
-collision_layer = 4
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D4/ExplostionHazard" unique_id=1666119112]
-shape = SubResource("CircleShape2D_jefk4")
-
-[node name="GPUParticles2D5" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=1429637812]
-material = SubResource("CanvasItemMaterial_h17ry")
-position = Vector2(72, -20)
-emitting = false
-amount = 1
-texture = ExtResource("2_lamkf")
-one_shot = true
-process_material = SubResource("ParticleProcessMaterial_iwdtr")
-
-[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D5" unique_id=392755016]
-collision_layer = 4
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D5/ExplostionHazard" unique_id=1559762486]
-shape = SubResource("CircleShape2D_jefk4")
-
-[node name="GPUParticles2D6" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=1731965816]
-material = SubResource("CanvasItemMaterial_h17ry")
-position = Vector2(-104, -27)
-emitting = false
-amount = 1
-texture = ExtResource("2_lamkf")
-one_shot = true
-process_material = SubResource("ParticleProcessMaterial_iwdtr")
-
-[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D6" unique_id=1128196122]
-collision_layer = 4
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D6/ExplostionHazard" unique_id=2073347607]
-shape = SubResource("CircleShape2D_jefk4")
-
-[node name="GPUParticles2D7" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=1030798918]
-material = SubResource("CanvasItemMaterial_h17ry")
-position = Vector2(-98, 22)
-emitting = false
-amount = 1
-texture = ExtResource("2_lamkf")
-one_shot = true
-process_material = SubResource("ParticleProcessMaterial_iwdtr")
-
-[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D7" unique_id=236073506]
-collision_layer = 4
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D7/ExplostionHazard" unique_id=325503491]
-shape = SubResource("CircleShape2D_jefk4")
-
-[node name="GPUParticles2D8" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=886462885]
-material = SubResource("CanvasItemMaterial_h17ry")
-position = Vector2(-66, -54)
-emitting = false
-amount = 1
-texture = ExtResource("2_lamkf")
-one_shot = true
-process_material = SubResource("ParticleProcessMaterial_iwdtr")
-
-[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D8" unique_id=1937713980]
-collision_layer = 4
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D8/ExplostionHazard" unique_id=1393065442]
-shape = SubResource("CircleShape2D_jefk4")
-
-[node name="GPUParticles2D9" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=83545739]
-material = SubResource("CanvasItemMaterial_h17ry")
-position = Vector2(3, -51)
-emitting = false
-amount = 1
-texture = ExtResource("2_lamkf")
-one_shot = true
-process_material = SubResource("ParticleProcessMaterial_iwdtr")
-
-[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D9" unique_id=1415560744]
-collision_layer = 4
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D9/ExplostionHazard" unique_id=455422978]
-shape = SubResource("CircleShape2D_jefk4")
-
-[node name="GPUParticles2D10" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=736277490]
-material = SubResource("CanvasItemMaterial_h17ry")
-position = Vector2(-49, -12)
-emitting = false
-amount = 1
-texture = ExtResource("2_lamkf")
-one_shot = true
-process_material = SubResource("ParticleProcessMaterial_iwdtr")
-
-[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D10" unique_id=207111409]
-collision_layer = 4
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D10/ExplostionHazard" unique_id=685997152]
-shape = SubResource("CircleShape2D_jefk4")
-
-[node name="GPUParticles2D11" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=1071008671]
-material = SubResource("CanvasItemMaterial_h17ry")
-position = Vector2(47, -10)
-emitting = false
-amount = 1
-texture = ExtResource("2_lamkf")
-one_shot = true
-process_material = SubResource("ParticleProcessMaterial_iwdtr")
-
-[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D11" unique_id=1585826277]
-collision_layer = 4
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D11/ExplostionHazard" unique_id=1731485540]
-shape = SubResource("CircleShape2D_jefk4")
-
-[node name="GPUParticles2D12" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=1146082465]
-material = SubResource("CanvasItemMaterial_h17ry")
-position = Vector2(73, 26)
-emitting = false
-amount = 1
-texture = ExtResource("2_lamkf")
-one_shot = true
-process_material = SubResource("ParticleProcessMaterial_iwdtr")
-
-[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D12" unique_id=1011890165]
-collision_layer = 4
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D12/ExplostionHazard" unique_id=2109431260]
-shape = SubResource("CircleShape2D_jefk4")
-
-[node name="GPUParticles2D13" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=1190092435]
-material = SubResource("CanvasItemMaterial_h17ry")
-position = Vector2(-70, 43)
-emitting = false
-amount = 1
-texture = ExtResource("2_lamkf")
-one_shot = true
-process_material = SubResource("ParticleProcessMaterial_iwdtr")
-
-[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D13" unique_id=2090164236]
-collision_layer = 4
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D13/ExplostionHazard" unique_id=385970984]
-shape = SubResource("CircleShape2D_jefk4")
-
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=437062163]
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=355332248]
 material = SubResource("CanvasItemMaterial_h17ry")
 position = Vector2(8, 32)
 emitting = false
 amount = 1
-texture = ExtResource("2_lamkf")
+texture = ExtResource("3_q0wh3")
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_iwdtr")
 
-[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D2" unique_id=1993415841]
+[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D2" unique_id=1480491030]
 collision_layer = 4
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D2/ExplostionHazard" unique_id=2062883552]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D2/ExplostionHazard" unique_id=1737029416]
 shape = SubResource("CircleShape2D_mmp13")
 
-[node name="GPUParticles2D3" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=274224974]
+[node name="GPUParticles2D3" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=1426229571]
 material = SubResource("CanvasItemMaterial_h17ry")
 position = Vector2(-22, 35)
 emitting = false
 amount = 1
-texture = ExtResource("2_lamkf")
+texture = ExtResource("3_q0wh3")
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_iwdtr")
 
-[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D3" unique_id=400360121]
+[node name="ExplostionHazard" type="Area2D" parent="AnimatedSprite2D/GPUParticles2D3" unique_id=1888089744]
 collision_layer = 4
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D3/ExplostionHazard" unique_id=1430728929]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/GPUParticles2D3/ExplostionHazard" unique_id=611358901]
 shape = SubResource("CircleShape2D_h17ry")
 
-[node name="Interact" type="Area2D" parent="AnimatedSprite2D" unique_id=1356134745]
+[node name="Interact" type="Area2D" parent="AnimatedSprite2D" unique_id=1322100990]
 collision_layer = 33554432
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Interact" unique_id=1694337492]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Interact" unique_id=871559909]
 position = Vector2(-1, 38)
 shape = SubResource("RectangleShape2D_bbl1y")
 
-[node name="Bomb" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1302310584]
+[node name="Bomb" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=728246047]
 visible = false
 position = Vector2(-0.99999994, 36)
 scale = Vector2(0.05, 0.05)
 sprite_frames = SubResource("SpriteFrames_h17ry")
 animation = &"Active"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1890328559]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=875984089]
 libraries/ = SubResource("AnimationLibrary_0ph24")
 
-[node name="BombTimer" type="Timer" parent="." unique_id=655605074]
+[node name="BombTimer" type="Timer" parent="." unique_id=12718671]
 process_mode = 3
 wait_time = 5.0
 one_shot = true
