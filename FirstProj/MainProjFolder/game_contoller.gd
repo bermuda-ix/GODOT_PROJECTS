@@ -103,6 +103,17 @@ func load_levels(dict : Dictionary) -> void:
 func reload_game() -> void:
 	get_tree().reload_current_scene()
 		
+func reload_from_checkpoint(_transition_in : String="fade_to_black", \
+	_transition_out : String="fade_from_black") -> void:
+	var _reload_scene=current_2d_scene
+	current_2d_scene.queue_free() #Deletes node entirely
+	world_2d.add_child(_reload_scene)
+	GlobalSaveData.load_persistant_data()
+	LevelTransition.transition_out(_transition_out)
+	current_2d_scene=_reload_scene
+	Events.get_player_data.emit()
+	current_2d_scene.player.global_position=Vector2(GlobalSaveData.current_save["player"]["pos_x"], GlobalSaveData.current_save["player"]["pos_y"])
+	retrieve_player_data()
 
 #Load first scene on game start
 func load_first_room (_first_room : String, \

@@ -7,9 +7,12 @@ extends Area2D
 func _ready():
 	check_flag.disabled=false
 
+func get_sate() -> bool:
+	return check_flag.disabled
+	
 func _on_body_entered(body):
 	if body.is_in_group("player") and check_flag.disabled==false:
-		print_debug("checkpoint reached")
+		print("checkpoint reached")
 		check_flag.disabled=true
 		$"../PC".set_start_pos(position)
 		GlobalSaveData.current_save["player"]["pos_x"]=global_position.x
@@ -20,3 +23,10 @@ func _on_body_entered(body):
 		else:
 			GlobalSaveData.level_state["checkpoint_reached"]="1"
 		Events.checkpoint_reached.emit()
+
+
+func _on_persistant_state_handler_update_state(value: String) -> void:
+	if value=="true":
+		check_flag.disabled=true
+	else:
+		check_flag.disabled=false
