@@ -27,6 +27,7 @@ Your Moves Are Weak"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=232048996]
+z_index = 5
 layout_mode = 0
 offset_left = 152.0
 offset_top = 192.0

@@ -2422,7 +2422,7 @@ _data = {
 a = Vector2(-17, -3)
 b = Vector2(567, -310)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qnjs1"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_04tio"]
 resource_local_to_scene = true
 size = Vector2(37.8948, 53.5486)
 
@@ -2602,11 +2602,11 @@ position = Vector2(3389, 285)
 scale = Vector2(0.5, 0.5)
 
 [node name="HeavySoldier3" parent="Enemy/soldiers" index="2" unique_id=859510641 instance=ExtResource("13_rfxm3")]
-position = Vector2(3285, 485)
+position = Vector2(3882, 438)
 scale = Vector2(0.5, 0.5)
 
 [node name="HeavySoldier4" parent="Enemy/soldiers" index="3" unique_id=770106961 instance=ExtResource("13_rfxm3")]
-position = Vector2(3348, 482)
+position = Vector2(3952, 401)
 scale = Vector2(0.5, 0.5)
 
 [node name="flying" type="Node" parent="Enemy" index="1" unique_id=1634263824]
@@ -2683,7 +2683,7 @@ position = Vector2(3485, 302)
 scale = Vector2(0.75, 0.75)
 
 [node name="GuardEnemy6" parent="Enemy/Guards" index="5" unique_id=2034909694 instance=ExtResource("16_vw32t")]
-position = Vector2(3216.0002, 491)
+position = Vector2(3809, 431)
 scale = Vector2(0.75, 0.75)
 
 [node name="SleepingGuard" parent="Enemy" index="4" unique_id=2088524183 instance=ExtResource("17_61h8j")]
@@ -3141,7 +3141,7 @@ update_scale = false
 [node name="StartingPos" type="Node" parent="." index="29" unique_id=275376811]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" unique_id=794793489 groups=["start_pos"]]
-position = Vector2(2326, 719)
+position = Vector2(3423, 464)
 
 [node name="PersistentDataHandler" type="Node" parent="." index="30" unique_id=86022096]
 script = ExtResource("24_w82j5")
@@ -3160,6 +3160,9 @@ scale = Vector2(0.05, 0.05)
 [node name="Checkpoint" parent="Checkpoints" index="0" unique_id=1485662125 instance=ExtResource("36_rfxm3")]
 position = Vector2(1982, 1173)
 
+[node name="Checkpoint2" parent="Checkpoints" index="1" unique_id=2035831753 instance=ExtResource("36_rfxm3")]
+position = Vector2(3010, 486)
+
 [node name="HeatHandler" type="Node" parent="." index="33" unique_id=33830565]
 script = ExtResource("37_r2uf8")
 metadata/_custom_type_script = "uid://2hjmonf4ss5y"
@@ -3168,7 +3171,7 @@ metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 position = Vector2(2232, 790)
 
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" parent_id_path=PackedInt32Array(1041091659, 101478943) index="0" unique_id=1988698025]
-shape = SubResource("RectangleShape2D_qnjs1")
+shape = SubResource("RectangleShape2D_04tio")
 
 [editable path="Enemy/MiniBosses/MinoBossGroup1/soldier_enemy_boss"]
 [editable path="DoorsAndSwitches/Elevator"]

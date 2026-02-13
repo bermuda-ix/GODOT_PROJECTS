@@ -9597,6 +9597,8 @@ pc = NodePath("../..")
 [connection signal="parried" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="parried_success" from="AnimatedSprite2D/ParryBox" to="." method="_on_parry_box_parried_success"]
 [connection signal="pressed" from="AnimatedSprite2D/InteractUI/PanelContainer/TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="health_changed" from="Health" to="." method="_on_health_health_changed"]
+[connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="aura_reset" from="ClashPower" to="." method="_on_clash_power_aura_reset"]
 [connection signal="increase_aura" from="ClashPower" to="." method="_on_clash_power_increase_aura"]
 [connection signal="timeout" from="ClashPower/ClashTimer" to="." method="_on_clash_timer_timeout"]
