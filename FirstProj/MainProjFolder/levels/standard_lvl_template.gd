@@ -156,8 +156,7 @@ func show_level_complete():
 	LevelTransition.fade_from_black()
 
 func show_game_over():
-	game_over.show()
-	get_tree().paused = true
+	Global.game_controller.show_game_over()
 
 #func show_pause():
 	#pause_menu.show()

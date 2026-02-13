@@ -10,6 +10,7 @@ class_name GameController extends Node
 @onready var ui_level: Control = $GUI/CanvasLayer/GAMEUI/UI_Level
 @onready var objectives_ui: objective_ui = $GUI/CanvasLayer/PauseMenuv2/TextureRect/MainPause/ObjectivesUI
 @onready var level_UI: CanvasLayer = $GUI/CanvasLayer
+@onready var game_over: ColorRect = $GUI/CanvasLayer/GameOver
 
 
 
@@ -83,7 +84,8 @@ func unpause():
 	pause_menu.hide()
 	gameui.visible=true
 	
-	
+func show_game_over():
+	game_over.show()
 	
 
 func set_region (dict : Dictionary) -> void:
