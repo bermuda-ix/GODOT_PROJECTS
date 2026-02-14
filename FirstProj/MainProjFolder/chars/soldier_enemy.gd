@@ -161,6 +161,10 @@ var distance
 
 @onready var ammo_count
 
+#Defaults for reset
+const vision_active = false
+const vision_stay_on = true
+const vision_always_on = false
 
 enum CombatStates{
 	RANGED,
@@ -180,6 +184,10 @@ var is_on_screen : bool
 @export var death_flag_name : String
 	
 func _ready():
+	#vision_active=vision_handler.active
+	#vision_stay_on=vision_handler.stay_on
+	#vision_always_on=vision_handler.always_on
+
 	player = get_tree().get_first_node_in_group("player")
 	#set_state(current_state, States.CHASE)
 	ammo_count=turret.ammo_count
@@ -207,12 +215,19 @@ func _ready():
 	_init_phase_state_machine()
 	hurt_box.set_damage_mulitplyer(1)
 	Events.allied_enemy_hit.connect(adjust_counter)
+	#Events.reload_level_checkpoint.connect(boss_reset)
+	vision_handler.active=vision_active
+	vision_handler.stay_on=vision_stay_on
+	vision_handler.always_on=vision_always_on
+	state_machine.change_active_state(idle)
+	bt_player.active=false
 	
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 	if health.health<=0:
 		queue_free()
 	if always_active:
 		alerted()
+		
 	
 # initialize state
 func _init_state_machine():
@@ -700,6 +715,7 @@ func _on_bullet_detection_bullet_detected() -> void:
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	vision_handler.active=true
+	bt_player.active=true
 	if vision_handler.player_found or vision_handler.always_on:
 		state_machine.dispatch(&"attack_mode")
 		bt_player.blackboard.set_var("attack_mode", true)
@@ -792,3 +808,16 @@ func _on_death_entered() -> void:
 func _on_death_updated(delta: float) -> void:
 	bt_player.active=false
 	animation_player.play("dead")
+
+func boss_reset() -> void:
+	vision_handler.active=vision_active
+	vision_handler.stay_on=vision_stay_on
+	vision_handler.always_on=vision_always_on
+	animation_player.stop()
+	state_machine.change_active_state(idle)
+	
+	_ready()
+	
+
+func _on_child_entered_tree(node: Node) -> void:
+	pass # Replace with function body.
