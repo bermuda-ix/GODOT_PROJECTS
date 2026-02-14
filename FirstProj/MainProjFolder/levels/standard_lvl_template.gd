@@ -41,7 +41,10 @@ var qte_options : Array[String]  = ["1", "2", "3", "4", "0"]
 @onready var hit_stop: HitStop = $HitStop
 @export var cutscene_library : String
 
-
+#Camera settings
+var camera_zoom : float = 1.0
+var camera_offset : Vector2 = Vector2.ZERO
+var camera_stationary : bool = false
 
 
 var cur_state = "IDLE"
@@ -58,7 +61,6 @@ var spawn_points : Array
 var obj : int
 
 func _ready():
-	
 	if main_room:
 		LevelsList.level_maps[self.name] = self.scene_file_path
 	
@@ -156,7 +158,7 @@ func show_level_complete():
 	LevelTransition.fade_from_black()
 
 func show_game_over():
-	Global.game_controller.show_game_over()
+	Global.game_controller.show_game_over(name)
 
 #func show_pause():
 	#pause_menu.show()
@@ -167,6 +169,14 @@ func show_game_over():
 	#get_tree().paused = false
 	#
 	
+func reload_scene():
+	camera_pos.camera_zoom=camera_zoom
+	assert(camera_pos.camera_zoom==camera_zoom)
+	camera_pos.offset=camera_offset
+	camera_pos.stationary=camera_stationary
+	var _bosses = get_tree().get_nodes_in_group("Boss")
+	for boss in _bosses:
+		boss.boss_reset()
 
 func get_state():
 	cur_state = player.get_state()

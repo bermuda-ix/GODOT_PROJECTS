@@ -13,5 +13,5 @@ func _on_retry_pressed():
 	
 	get_tree().paused=false
 	await LevelTransition.fade_to_black()
-	Events.reload_level_checkpoint.emit()
-	LevelTransition.fade_from_black()
+	Events.reload_level_checkpoint.emit.call_deferred()
+	#LevelTransition.fade_from_black()

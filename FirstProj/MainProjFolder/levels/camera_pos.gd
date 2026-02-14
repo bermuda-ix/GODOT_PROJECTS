@@ -12,6 +12,7 @@ extends Node2D
 @export var stationary : bool = false
 @export var offset : Vector2 = Vector2.ZERO
 
+var zoom_default : Vector2
 
 var rng = RandomNumberGenerator.new()
 
@@ -20,7 +21,9 @@ var shake_strength : float = 0
 func _ready() -> void:
 	Events.camera_shake.connect(camera_shake)
 	Events.player_death.connect(player_death)
+	Events.reload_level_checkpoint.connect(reset_zoom)
 	camera_2d.zoom*=camera_zoom
+	zoom_default=camera_2d.zoom
 	
 func _process(delta: float) -> void:
 	
@@ -57,3 +60,6 @@ func dramatic_zoom(_zoom_value : float) -> void:
 	
 func player_death() -> void:
 	dramatic_zoom(2)
+
+func reset_zoom() -> void:
+	camera_2d.zoom=zoom_default
