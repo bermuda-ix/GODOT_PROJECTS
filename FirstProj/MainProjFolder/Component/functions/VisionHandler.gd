@@ -23,7 +23,6 @@ func _ready() -> void:
 	player_tracking.target_position = Vector2(vision_range, 0)
 	
 
-
 func handle_vision():
 	player_colliding=player_tracking.is_colliding()
 	if not active:
@@ -35,6 +34,7 @@ func handle_vision():
 		#actor.player_colliding=player_tracking.is_colliding()
 		if player_tracking.is_colliding():
 			#print_debug(player_tracking.get_collider())
+			
 			var collision_result = player_tracking.get_collider()
 			if collision_result != player:
 				#set_state(current_state, States.GUARD)

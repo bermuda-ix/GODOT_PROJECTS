@@ -320,6 +320,7 @@ func _ready():
 	Events.close_interact_menu.connect(close_interact_menu)
 	Events.reset_player_data.connect(load_player_data)
 	Events.in_door_way.connect(set_next_room)
+	Events.reload_level_checkpoint.connect(reloaded)
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
 	_init_state_machine()
@@ -2073,7 +2074,7 @@ func _on_hit_box_parried() -> void:
 		
 		
 func _on_hit_stop_hit_stop_finished() -> void:
-	if qte_handler.actor_control_active:
+	if not qte_handler.actor_control_active:
 		no_input_qte.emit()
 	else:
 		pass
@@ -2277,6 +2278,9 @@ func _on_death_updated(delta: float) -> void:
 func _on_dead_entered() -> void:
 	Events.game_over.emit()
 
+func reloaded() -> void:
+	anim_player.stop()
+	state_machine.change_active_state(idle)
 
 func _on_health_max_health_changed(diff: int) -> void:
 	pass # Replace with function body.

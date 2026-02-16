@@ -10,6 +10,7 @@ class_name GameController extends Node
 @onready var ui_level: Control = $GUI/CanvasLayer/GAMEUI/UI_Level
 @onready var objectives_ui: objective_ui = $GUI/CanvasLayer/PauseMenuv2/TextureRect/MainPause/ObjectivesUI
 @onready var level_UI: CanvasLayer = $GUI/CanvasLayer
+@onready var game_over: ColorRect = $GUI/CanvasLayer/GameOver
 
 
 
@@ -45,6 +46,7 @@ func _ready() -> void:
 	Events.load_objectives.connect(_init_objectives)
 	Events.toggle_level_processing.connect(toggle_world2d_process)
 	Events.load_menu_scene.connect(change_gui_scene)
+	Events.reload_level_checkpoint.connect(reload_from_checkpoint)
 	
 	Events.pause.connect(show_pause)
 	Events.unpause.connect(unpause)
@@ -83,7 +85,9 @@ func unpause():
 	pause_menu.hide()
 	gameui.visible=true
 	
-	
+func show_game_over(value: String):
+	current_2d_scene.set_process(false)
+	game_over.show()
 	
 
 func set_region (dict : Dictionary) -> void:
@@ -105,15 +109,18 @@ func reload_game() -> void:
 		
 func reload_from_checkpoint(_transition_in : String="fade_to_black", \
 	_transition_out : String="fade_from_black") -> void:
-	var _reload_scene=current_2d_scene
-	current_2d_scene.queue_free() #Deletes node entirely
-	world_2d.add_child(_reload_scene)
+	#var _reload_scene=current_2d_scene.name
+	world_2d.call_deferred("remove_child", current_2d_scene) #removes_node
+	await current_2d_scene.tree_exited
+	world_2d.add_child(current_2d_scene)
 	GlobalSaveData.load_persistant_data()
 	LevelTransition.transition_out(_transition_out)
-	current_2d_scene=_reload_scene
+	#current_2d_scene=_reload_scene
 	Events.get_player_data.emit()
 	current_2d_scene.player.global_position=Vector2(GlobalSaveData.current_save["player"]["pos_x"], GlobalSaveData.current_save["player"]["pos_y"])
 	retrieve_player_data()
+	current_2d_scene.reload_scene()
+	game_over.hide()
 
 #Load first scene on game start
 func load_first_room (_first_room : String, \

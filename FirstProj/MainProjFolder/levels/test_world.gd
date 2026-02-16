@@ -59,6 +59,11 @@ var init_active_enemies_list : Array[Node]
 ##Proload for debugging to be romoved later
 @onready var heart_drop=preload("res://Component/interactables/heart_drop.tscn")
 
+
+#Camera settings
+var camera_zoom : float
+var camera_offset : Vector2
+var camera_stationary : bool
 ## Called when the node enters the scene tree for the first time.
 func _ready():
 	if not next_level is PackedScene:
@@ -83,6 +88,7 @@ func _ready():
 	#Events.player_death.connect(preload_next_scene)
 	Events.player_death.connect(player_death)
 	Events.boss_died.connect(boss_death)
+	#Events.reload_level_checkpoint.connect(reload_scene)
 	#Events.start_cutscene.emit()
 	#Events.end_cutsene.connect(end_cutscene)
 	#Events.queue_cutscene.emit(Cutscenes.intro_cutscene)
@@ -99,7 +105,9 @@ func _ready():
 		level_state_handler.load_level_state()
 	#player.global_position=default.global_position
 	hit_stop.end_hit_stop()
-	
+	camera_zoom=camera_pos.camera_zoom
+	camera_offset=camera_pos.offset
+	camera_stationary=camera_pos.stationary
 
 
 	
@@ -143,7 +151,12 @@ func _physics_process(delta: float) -> void:
 
 		
 func reload_scene():
-	get_tree().reload_current_scene()
+	camera_pos.camera_zoom=camera_zoom
+	camera_pos.offset=camera_offset
+	camera_pos.stationary=camera_stationary
+	var _bosses = get_tree().get_nodes_in_group("Boss")
+	for boss in _bosses:
+		boss.boss_reset()
 
 func show_level_complete():
 

@@ -2890,7 +2890,7 @@ stereo = true
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_thomt"]
 
-[node name="soldier_enemy_boss" unique_id=789104702 node_paths=PackedStringArray("hitbox", "state_machine") groups=["Persistant", "offensive_enemy"] instance=ExtResource("1_33sos")]
+[node name="soldier_enemy_boss" unique_id=789104702 node_paths=PackedStringArray("hitbox", "state_machine") groups=["Boss", "Persistant", "offensive_enemy"] instance=ExtResource("1_33sos")]
 collision_layer = 16384
 script = ExtResource("2_ggkva")
 death_cutscene = true
@@ -3288,6 +3288,7 @@ sm = NodePath("../Phases")
 phases = Array[int]([10])
 metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/COUNTER/KickCounter" method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]

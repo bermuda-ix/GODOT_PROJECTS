@@ -75,6 +75,7 @@ WorldStatic=""
 Persistant="Objects that can persist on scene reloading"
 GameLevel=""
 world=""
+Boss=""
 
 [input]
 
