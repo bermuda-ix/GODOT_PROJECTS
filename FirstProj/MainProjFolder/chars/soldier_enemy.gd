@@ -315,8 +315,12 @@ func _process(_delta):
 	#if health.health<10:
 		#assert(phases.get_active_state()==phase_2)
 		
-	if health.health<=0 and cutscene_handler.actor_control_active:
-		assert(state_machine.get_active_state()==death)
+	if health.health<=0:
+		bt_player.blackboard.set_var("attack_mode", false)
+		#bt_player.restart()
+		bt_player.active=false
+		if cutscene_handler.actor_control_active:
+			assert(state_machine.get_active_state()==death)
 		
 	if health.health<=0:
 		assert(bt_player.active==false)
