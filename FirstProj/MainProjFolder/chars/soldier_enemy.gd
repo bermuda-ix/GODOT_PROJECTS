@@ -486,6 +486,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			attack_timer.start(5)
 		"dodge":
 			state_machine.dispatch(&"dodge_end")
+		"flashback_lvl_cutscenes/first_mini_boss_kill":
+			death_on_cutscene()
 			
 
 
