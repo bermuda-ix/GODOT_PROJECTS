@@ -3273,6 +3273,7 @@ metadata/_custom_type_script = "uid://fi6gye6mlsb6"
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="50" unique_id=1801299136]
 
 [node name="BossUI" parent="CanvasLayer" index="0" unique_id=983433779 node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("138_ggkva")]
+visible = false
 mouse_filter = 2
 health = NodePath("../../Health")
 stagger = NodePath("../../Stagger")

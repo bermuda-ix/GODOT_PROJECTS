@@ -5,6 +5,7 @@ extends LimboState
 @export var hurtbox : CollisionShape2D
 var dodge_dist : float = 0.0
 var counter_dist : float = 0.0
+var dodge_speed : float = 1.0
 
 func _enter() -> void:
 	print_debug("dodging")
@@ -12,15 +13,20 @@ func _enter() -> void:
 	pc.set_collision_mask_value(15, false)
 	pc.counter_box_collision.disabled=false
 	hurtbox.disabled=true
-	dodge_dist=pc.global_position.x+10*pc.face_dir
+	if pc.input_axis==0:
+		dodge_dist=pc.global_position.x+30*pc.face_dir
+		dodge_speed=7
+	else:
+		dodge_dist=pc.global_position.x+70*pc.input_axis
+		dodge_speed=5
 	counter_dist = pc.global_position.x-10*pc.face_dir
 	
 	
 
 func _update(delta: float) -> void:
-	#pc.global_position.x=move_toward(pc.global_position.x, pc.global_position.x+10*pc.face_dir, 100*delta)
-	if pc.input_axis==0:
-		pc.global_position.x=lerpf(pc.global_position.x, dodge_dist, 0.2)
+	pc.global_position.x=lerpf(pc.global_position.x, dodge_dist, dodge_speed*delta)
+	#if pc.input_axis==0:
+		#pc.global_position.x=lerpf(pc.global_position.x, dodge_dist, 0.2)
 	
 
 func _exit() -> void:

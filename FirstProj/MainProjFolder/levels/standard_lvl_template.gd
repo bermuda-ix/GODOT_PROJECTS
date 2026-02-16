@@ -41,6 +41,8 @@ var qte_options : Array[String]  = ["1", "2", "3", "4", "0"]
 @onready var hit_stop: HitStop = $HitStop
 @export var cutscene_library : String
 
+###MiniBoss1Nodes
+@onready var mini_boss_right_boundery_col: CollisionShape2D = $Bounderies3/MiniBoss1Bounderies/MiniBossRightBoundery/MiniBossRightBounderyCol
 
 
 
@@ -246,3 +248,11 @@ func _pc_no_input_qte() -> void:
 
 func _on_external_door_switch_unlock_door() -> void:
 	pass # Replace with function body.
+
+
+
+
+func _on_mini_boss_1_flag_flag_triggered() -> void:
+	mini_boss_right_boundery_col.disabled=false
+	camera_pos.stationary=true
+	

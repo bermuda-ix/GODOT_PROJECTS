@@ -1177,7 +1177,7 @@ func dodge(input_axis):
 			
 			dodge_anim_run=dodge_anim+"_roll"
 			state_machine.dispatch(&"start_dodge")
-			velocity.x=movement_data.dodge_speed*input_axis
+			#velocity.x=movement_data.dodge_speed*input_axis
 
 		
 	
