@@ -685,6 +685,38 @@ tracks/15/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/16/type = "method"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("CameraPos")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0.2, 2.8433378, 5.298948, 6.3173103, 9.112183, 9.196998, 9.209114),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [1.0, 1.0],
+"method": &"camera_shake"
+}, {
+"args": [1.0, 1.0],
+"method": &"camera_shake"
+}, {
+"args": [1.0, 1.0],
+"method": &"camera_shake"
+}, {
+"args": [1.0, 1.0],
+"method": &"camera_shake"
+}, {
+"args": [1.0, 1.0],
+"method": &"camera_shake"
+}, {
+"args": [1.0, 1.0],
+"method": &"camera_shake"
+}, {
+"args": [2.0, 1.0],
+"method": &"camera_shake"
+}]
+}
 
 [sub_resource type="Curve2D" id="Curve2D_kcvht"]
 _data = {
@@ -1057,11 +1089,11 @@ position = Vector2(3389, 285)
 scale = Vector2(0.5, 0.5)
 
 [node name="HeavySoldier3" parent="Enemy/soldiers" index="2" unique_id=859510641 instance=ExtResource("13_rfxm3")]
-position = Vector2(3882, 438)
+position = Vector2(3389, 492)
 scale = Vector2(0.5, 0.5)
 
 [node name="HeavySoldier4" parent="Enemy/soldiers" index="3" unique_id=770106961 instance=ExtResource("13_rfxm3")]
-position = Vector2(3952, 401)
+position = Vector2(3440, 495)
 scale = Vector2(0.5, 0.5)
 
 [node name="flying" type="Node" parent="Enemy" index="1" unique_id=1634263824]
@@ -1138,7 +1170,7 @@ position = Vector2(3485, 302)
 scale = Vector2(0.75, 0.75)
 
 [node name="GuardEnemy6" parent="Enemy/Guards" index="5" unique_id=2034909694 instance=ExtResource("16_vw32t")]
-position = Vector2(3809, 431)
+position = Vector2(3267, 492.00003)
 scale = Vector2(0.75, 0.75)
 
 [node name="SleepingGuard" parent="Enemy" index="4" unique_id=2088524183 instance=ExtResource("17_61h8j")]
@@ -1620,7 +1652,8 @@ scale = Vector2(0.05, 0.05)
 [node name="Checkpoints" type="Node" parent="." index="33" unique_id=584525730]
 
 [node name="Checkpoint" parent="Checkpoints" index="0" unique_id=1485662125 instance=ExtResource("36_rfxm3")]
-position = Vector2(3094, 483)
+position = Vector2(2910, 538)
+collision_mask = 2
 
 [node name="Checkpoint2" parent="Checkpoints" index="1" unique_id=2035831753 instance=ExtResource("36_rfxm3")]
 position = Vector2(1984, 1171)
