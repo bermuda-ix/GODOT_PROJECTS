@@ -9,7 +9,8 @@ extends LimboState
 @export var movement_able : bool = true 
 
 func _enter() -> void:
-	actor.animation_player.stop()
+	#actor.animation_player.stop()
+	actor.animation_player.call_deferred("stop")
 	actor.animation_player.play("staggered")
 	#actor.hb_collision.disabled=true
 	#actor.bt_player.blackboard.set_var("staggered", true)

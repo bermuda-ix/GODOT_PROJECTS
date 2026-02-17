@@ -50,6 +50,7 @@ visible = false
 [node name="PauseMenuv2" parent="GUI/CanvasLayer" unique_id=180356415 instance=ExtResource("7_tdslp")]
 visible = false
 
+[connection signal="player_pos_reset_to_checkpoint" from="." to="." method="_on_player_pos_reset_to_checkpoint"]
 [connection signal="child_entered_tree" from="World2D" to="." method="_on_world_2d_child_entered_tree"]
 [connection signal="child_exiting_tree" from="World2D" to="." method="_on_world_2d_child_exiting_tree"]
 

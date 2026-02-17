@@ -31,8 +31,10 @@ func _update(delta: float) -> void:
 
 func _exit() -> void:
 	pc.velocity.x=0
-	pc.counter_box_collision.disabled=true
-	hurtbox.disabled=false
+	#pc.counter_box_collision.disabled=true
+	pc.counter_box_collision.call_deferred("set_disabled", true)
+	hurtbox.call_deferred("set_disabled", false)
+	#hurtbox.disabled=false
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name==pc.dodge_anim_run:

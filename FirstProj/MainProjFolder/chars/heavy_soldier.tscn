@@ -1426,10 +1426,11 @@ bt_active = false
 stay_on = true
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
-[node name="AllyVisionHandler" type="Node" parent="." unique_id=1330613628 node_paths=PackedStringArray("actor", "ally_vision")]
+[node name="AllyVisionHandler" type="Node" parent="." unique_id=1330613628 node_paths=PackedStringArray("actor", "ally_vision", "state_machine")]
 script = ExtResource("23_33dan")
 actor = NodePath("..")
 ally_vision = NodePath("../AllyVisionRaycast")
+state_machine = NodePath("../StateMachine")
 metadata/_custom_type_script = "uid://m7cps3rc3xog"
 
 [node name="DefendEnemyHandler" type="Node" parent="." unique_id=1182968085 node_paths=PackedStringArray("ally_vision_handler", "defend_state", "actor")]

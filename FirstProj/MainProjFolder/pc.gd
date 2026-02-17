@@ -1470,7 +1470,8 @@ func _on_hurt_box_got_hit(_hitbox):
 				AudioStreamManager.play(SoundFx.PUNCH_DESIGNED_HEAVY_12)
 			player_hit.emitting=true
 			player_hit.restart()
-			hurt_box_detect.disabled=true
+			#hurt_box_detect.disabled=true
+			hurt_box_detect.call_deferred("set_disabled", true)
 			hit_timer.start(0.2)
 			stagger.stagger-=1
 			if state_machine.get_previous_active_state()!=flip_state:

@@ -4,6 +4,9 @@ extends CharacterBody2D
 const SPEED = 400.0
 const JUMP_VELOCITY = -400.0
 const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
+
+signal boss_reloaded
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 @onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -179,6 +182,8 @@ var player_state : LimboState
 var is_on_screen : bool
 	
 	
+	
+	
 @export_category("Boss Variables")
 @export var lvl_boss : bool
 @export var death_flag_name : String
@@ -215,6 +220,7 @@ func _ready():
 	_init_phase_state_machine()
 	hurt_box.set_damage_mulitplyer(1)
 	Events.allied_enemy_hit.connect(adjust_counter)
+	Events.game_over.connect(game_over)
 	#Events.reload_level_checkpoint.connect(boss_reset)
 	vision_handler.active=vision_active
 	vision_handler.stay_on=vision_stay_on
@@ -309,7 +315,8 @@ func _process(_delta):
 		return
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
-	force_chase()
+	if combat_state_machine.get_active_state()==melee_mode:
+		force_chase()
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collision.disabled=true
 		return
@@ -324,19 +331,21 @@ func _process(_delta):
 	bt_player.blackboard.set_var("ammo",ammo_count)
 	
 	is_on_screen=on_screen.is_on_screen()
+	#if not is_on_screen:
+		#assert(bt_player.blackboard.get_var("attack_mode")==false)
 	if Input.is_action_just_pressed("DEBUG_KEY"):
 		test_function()
 		
 	#if health.health<10:
 		#assert(phases.get_active_state()==phase_2)
-		
+	teleport_handler.teleport_dir_helper_rc.global_position=global_position
 	if health.health<=0:
 		bt_player.blackboard.set_var("attack_mode", false)
 		#bt_player.restart()
 		bt_player.active=false
 		if cutscene_handler.actor_control_active:
 			assert(state_machine.get_active_state()==death)
-		
+	
 	if health.health<=0:
 		assert(bt_player.active==false)
 		
@@ -486,6 +495,10 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			attack_timer.start(5)
 		"dodge":
 			state_machine.dispatch(&"dodge_end")
+		"teleport_start":
+			print(global_position)
+		"teleport_end":
+			print(global_position)
 		"flashback_lvl_cutscenes/first_mini_boss_kill":
 			death_on_cutscene()
 			
@@ -532,7 +545,8 @@ func _on_stagger_staggered() -> void:
 	bt_player.restart()
 	parry_timer.start(3)
 	hit_stop.hit_stop(0.5, 1)
-	hb_collision.disabled=true
+	#hb_collision.disabled=true
+	hb_collision.call_deferred("set_disabled", true)
 	state_machine.dispatch(&"staggered")
 	Events.camera_shake.emit(2,20)
 
@@ -721,7 +735,6 @@ func _on_bullet_detection_bullet_detected() -> void:
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	vision_handler.active=true
-	bt_player.active=true
 	if vision_handler.player_found or vision_handler.always_on:
 		state_machine.dispatch(&"attack_mode")
 		bt_player.blackboard.set_var("attack_mode", true)
@@ -761,7 +774,8 @@ func _on_phase_2_entered() -> void:
 
 
 func _on_phases_handler_next_phase() -> void:
-	hurt_box_collision.disabled=true
+	#hurt_box_collision.disabled=true
+	hurt_box_collision.call_deferred("set_disabled", true)
 	changing_phase=true
 	bt_player.blackboard.set_var("attack_mode", false)
 	bt_player.restart()
@@ -816,14 +830,61 @@ func _on_death_updated(delta: float) -> void:
 	animation_player.play("dead")
 
 func boss_reset() -> void:
+	process_mode=Node.PROCESS_MODE_INHERIT
 	vision_handler.active=vision_active
 	vision_handler.stay_on=vision_stay_on
 	vision_handler.always_on=vision_always_on
+	bt_player.blackboard.set_var("attack_mode", false)
+	bt_player.blackboard.set_var("melee_mode", false)
+	bt_player.blackboard.set_var("ranged_mode", true)
+	bt_player.blackboard.set_var("within_range", false)
+	bt_player.blackboard.set_var("counter_attack", false)
+	bt_player.blackboard.set_var("counter_kick_flag", false)
+	bt_player.blackboard.set_var("staggered", false)
+	bt_player.blackboard.set_var("Phase2Active", false)
+	dying.blackboard.set_var("hit_the_floor", false)
+	bt_player.restart()
+	is_on_screen=false
+	bt_player.active=false
 	animation_player.stop()
 	state_machine.change_active_state(idle)
+	state_machine.restart()
+	combat_state_machine.change_active_state(ranged_mode)
+	combat_state_machine.restart()
+	phases.change_active_state(phase_1)
+	phases.restart()
+	health.health=health.max_health
+	stagger.stagger=stagger.max_stagger
+	movement_handler.active=false
+	phases_handler.reset_phases()
+	#process_mode=Node.PROCESS_MODE_DISABLED
+	set_process(false)
+	set_physics_process(false)
+	state_machine.remove_transition(attack, &"teleport_counter")
+	state_machine.remove_transition(staggered, &"teleport_recover")
+	state_machine.remove_transition(chasing, &"teleport_atk")
+	state_machine.remove_transition(teleport_and_shoot, teleport_and_shoot.success_event)
+	state_machine.remove_transition(teleport_and_hit, teleport_and_hit.success_event)
+	teleport_handler.teleport_dir_helper_rc.global_position=global_position
+	teleport_handler.teleport_dir_helper_rc.top_level=false
+	boss_reloaded.emit()
+	#_ready()
 	
-	_ready()
-	
+func game_over() -> void:
+	boss_ui.visible=false
+	state_machine.change_active_state(idle)
+	#process_mode=Node.PROCESS_MODE_DISABLED
+
+func boss_activate() -> void:
+	process_mode=Node.PROCESS_MODE_INHERIT
+	set_process(true)
+	set_physics_process(true)
+	bt_player.active=true
+
 
 func _on_child_entered_tree(node: Node) -> void:
 	pass # Replace with function body.
+
+
+func _on_boss_reloaded() -> void:
+	assert(is_on_screen==false)

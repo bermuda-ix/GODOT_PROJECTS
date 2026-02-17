@@ -6,7 +6,7 @@ extends LimboState
 
 func _enter() -> void:
 	anim_player.play("hit")
-	pc.hurt_box_detect.disabled=true
+	pc.hurt_box_detect.call_deferred("set_disabled", true)
 
 
 

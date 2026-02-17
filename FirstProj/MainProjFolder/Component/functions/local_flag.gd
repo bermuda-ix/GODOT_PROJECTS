@@ -12,9 +12,12 @@ func _ready() -> void:
 func flag_toggle():
 	flag_active!=flag_active
 
+func flag_reset():
+	collision_shape_2d.call_deferred("set_disabled", false)
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and flag_active:
 		print_debug("local flag activate")
-		collision_shape_2d.disabled=true
+		#collision_shape_2d.disabled=true
+		collision_shape_2d.call_deferred("set_disabled", true)
 		flag_triggered.emit()

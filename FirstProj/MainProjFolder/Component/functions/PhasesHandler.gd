@@ -6,10 +6,13 @@ class_name PhasesHandler extends Node
 
 @export var phase_active : bool
 @export var phases : Array[int]
+var default_phases : Array[int]
 @export var cur_phase : int = 1
 
 signal next_phase
 
+func _ready() -> void:
+	default_phases = phases.duplicate()
 
 func phase_change(health : int):
 	if phases.size()<=0:
@@ -20,3 +23,5 @@ func phase_change(health : int):
 		#cur_phase+=1
 		next_phase.emit()
 		
+func reset_phases() -> void:
+	phases=default_phases

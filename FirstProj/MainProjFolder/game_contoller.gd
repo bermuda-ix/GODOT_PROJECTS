@@ -1,5 +1,8 @@
 class_name GameController extends Node
 
+signal player_data_retrieved
+signal player_pos_reset_to_checkpoint
+
 @onready var world_2d: Node2D = $World2D
 
 @export var gui : Control
@@ -114,13 +117,30 @@ func reload_from_checkpoint(_transition_in : String="fade_to_black", \
 	await current_2d_scene.tree_exited
 	world_2d.add_child(current_2d_scene)
 	GlobalSaveData.load_persistant_data()
-	LevelTransition.transition_out(_transition_out)
+	
 	#current_2d_scene=_reload_scene
 	Events.get_player_data.emit()
-	current_2d_scene.player.global_position=Vector2(GlobalSaveData.current_save["player"]["pos_x"], GlobalSaveData.current_save["player"]["pos_y"])
+	reset_player_pos_checkpoint()
+	#await self.player_pos_reset_to_checkpoint
 	retrieve_player_data()
+	#await self.player_data_retrieved
+	#current_2d_scene.reload_scene()
+	##await current_2d_scene.scene_reloaded
+	#LevelTransition.transition_out(_transition_out)
+	#game_over.hide()
+
+func _on_player_pos_reset_to_checkpoint(_transition_out : String="fade_from_black") -> void:
 	current_2d_scene.reload_scene()
+	#await current_2d_scene.scene_reloaded
+	LevelTransition.transition_out(_transition_out)
 	game_over.hide()
+
+
+
+func reset_player_pos_checkpoint() -> void:
+	current_2d_scene.player.global_position=Vector2(GlobalSaveData.current_save["player"]["pos_x"], GlobalSaveData.current_save["player"]["pos_y"])
+	#current_2d_scene.camera_pos.global_position=current_2d_scene.player.global_position
+	player_pos_reset_to_checkpoint.emit()
 
 #Load first scene on game start
 func load_first_room (_first_room : String, \
@@ -282,4 +302,5 @@ func retrieve_player_data() -> void:
 	ui_level.set_max_health(GlobalSaveData.current_save["player"]["max_health"])
 	ui_level.set_stagger(GlobalSaveData.current_save["player"]["stagger"])
 	ui_level.set_max_stagger(GlobalSaveData.current_save["player"]["max_stagger"])
+	player_data_retrieved.emit()
 	

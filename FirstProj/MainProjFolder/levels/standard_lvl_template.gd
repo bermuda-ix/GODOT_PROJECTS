@@ -2,6 +2,8 @@ class_name adv_level
 
 extends Node2D
 
+signal scene_reloaded
+
 @export var next_level: PackedScene
 
 var player : PlayerEntity
@@ -12,6 +14,11 @@ var player : PlayerEntity
 @onready var camera_2d: Camera2D = $CameraPos/Camera2D	
 @export var camera_offset_y : int = 0
 @export var pc_scale : float = 1
+
+#Camera settings
+var camera_zoom : float = 1.0
+var camera_offset : Vector2 = Vector2.ZERO
+var camera_stationary : bool = false
 
 
 #@onready var collision_polygon_2d = $StaticBody2D/CollisionPolygon2D
@@ -43,7 +50,9 @@ var qte_options : Array[String]  = ["1", "2", "3", "4", "0"]
 
 ###MiniBoss1Nodes
 @onready var mini_boss_right_boundery_col: CollisionShape2D = $Bounderies3/MiniBoss1Bounderies/MiniBossRightBoundery/MiniBossRightBounderyCol
+@onready var mini_boss_1_start_pos: Node2D = $Enemy/MiniBosses/MinoBossGroup1/MiniBoss1StartPos
 @onready var soldier_enemy_boss: SoldierEnemyBoss = $Enemy/MiniBosses/MinoBossGroup1/soldier_enemy_boss
+
 
 
 
@@ -159,7 +168,7 @@ func show_level_complete():
 	LevelTransition.fade_from_black()
 
 func show_game_over():
-	game_over.show()
+	Global.game_controller.show_game_over(name)
 	get_tree().paused = true
 
 #func show_pause():
@@ -251,11 +260,38 @@ func _on_external_door_switch_unlock_door() -> void:
 	pass # Replace with function body.
 
 
-
+func reload_scene():
+	camera_pos.camera_zoom=camera_zoom
+	assert(camera_pos.camera_zoom==camera_zoom)
+	camera_pos.offset=camera_offset
+	camera_pos.stationary=camera_stationary
+	var _bosses = get_tree().get_nodes_in_group("Boss")
+	for boss in _bosses:
+		boss.boss_reset()
+		boss.global_position=mini_boss_1_start_pos.global_position
+	var _boss_boundaries = get_tree().get_nodes_in_group("boss_boundary")
+	for _boss_boundary in _boss_boundaries:
+		_boss_boundary.call_deferred("set_disabled", true)
+	var _flags = get_tree().get_nodes_in_group("group_1_flags")
+	for _flag in _flags:
+		_flag.flag_active=true
+		_flag.collision_shape_2d.call_deferred("set_disabled", false)
+		_flag.flag_reset()
+	scene_reloaded.emit()
+		
 
 func _on_mini_boss_1_flag_flag_triggered() -> void:
-	mini_boss_right_boundery_col.disabled=false
+	mini_boss_right_boundery_col.call_deferred("set_disabled", true)
+	#mini_boss_right_boundery_col.disabled=false
 	cutscene_player.play("Mini_Boss_Start")
 	soldier_enemy_boss.boss_ui.visible=true
+	soldier_enemy_boss.global_position=mini_boss_1_start_pos.global_position
+	soldier_enemy_boss.boss_activate()
 	#camera_pos.stationary=true
 	
+
+
+func _on_scene_reloaded() -> void:
+	var _boss_boundaries = get_tree().get_nodes_in_group("boss_boundary")
+	for _boss_boundary in _boss_boundaries:
+		assert(_boss_boundary.disabled==true)
