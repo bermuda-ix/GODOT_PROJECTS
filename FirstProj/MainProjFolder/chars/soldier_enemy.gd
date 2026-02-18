@@ -338,7 +338,7 @@ func _process(_delta):
 		
 	#if health.health<10:
 		#assert(phases.get_active_state()==phase_2)
-	teleport_handler.teleport_dir_helper_rc.global_position=global_position
+	#teleport_handler.teleport_dir_helper_rc.global_position=global_position
 	if health.health<=0:
 		bt_player.blackboard.set_var("attack_mode", false)
 		#bt_player.restart()

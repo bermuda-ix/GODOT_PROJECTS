@@ -3136,19 +3136,19 @@ metadata/_custom_type_script = "uid://d04qf1jqrfg1h"
 
 [node name="TeleportHandler" type="Node" parent="." index="42" unique_id=1495505504 node_paths=PackedStringArray("teleport_dir_helper_rc")]
 script = ExtResource("141_7r4t8")
-teleport_dir_helper_rc = NodePath("RayCast2D")
+teleport_dir_helper_rc = NodePath("../RayCast2D")
 metadata/_custom_type_script = "uid://c4uno006dp70c"
 
-[node name="RayCast2D" type="RayCast2D" parent="TeleportHandler" index="0" unique_id=923701194]
+[node name="RayCast2D" type="RayCast2D" parent="." index="43" unique_id=923701194]
 collision_mask = 3
 hit_from_inside = true
 collide_with_areas = true
 
-[node name="HitStop" type="Node" parent="." index="43" unique_id=1189527455]
+[node name="HitStop" type="Node" parent="." index="44" unique_id=1189527455]
 script = ExtResource("119_6oyq8")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
-[node name="LimboHSM" type="LimboHSM" parent="." index="44" unique_id=1055402908]
+[node name="LimboHSM" type="LimboHSM" parent="." index="45" unique_id=1055402908]
 
 [node name="IDLE" type="LimboState" parent="LimboHSM" index="0" unique_id=260995949 node_paths=PackedStringArray("actor")]
 script = ExtResource("120_oi1be")
@@ -3233,7 +3233,7 @@ blackboard_plan = SubResource("BlackboardPlan_jjike")
 behavior_tree = ExtResource("139_aukkt")
 blackboard_plan = SubResource("BlackboardPlan_thomt")
 
-[node name="CombatStateMachine" type="LimboHSM" parent="." index="45" unique_id=305802644]
+[node name="CombatStateMachine" type="LimboHSM" parent="." index="46" unique_id=305802644]
 
 [node name="RANGED" type="LimboState" parent="CombatStateMachine" index="0" unique_id=824960426 node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("134_lmju3")
@@ -3245,17 +3245,17 @@ script = ExtResource("135_2idfp")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="Phases" type="LimboHSM" parent="." index="46" unique_id=2049008387]
+[node name="Phases" type="LimboHSM" parent="." index="47" unique_id=2049008387]
 
 [node name="Phase1" type="LimboState" parent="Phases" index="0" unique_id=1569827271]
 
 [node name="Phase2" type="LimboState" parent="Phases" index="1" unique_id=107480339]
 
-[node name="Speed" type="Label" parent="." index="47" unique_id=1922258161]
+[node name="Speed" type="Label" parent="." index="48" unique_id=1922258161]
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="QTEHandler" type="Node" parent="." index="48" unique_id=1760859820 node_paths=PackedStringArray("actor", "anim_player", "speech", "qte_pause")]
+[node name="QTEHandler" type="Node" parent="." index="49" unique_id=1760859820 node_paths=PackedStringArray("actor", "anim_player", "speech", "qte_pause")]
 script = ExtResource("136_ylbh8")
 actor = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
@@ -3263,14 +3263,14 @@ speech = NodePath("../Speed")
 qte_pause = NodePath("../HitStop")
 metadata/_custom_type_script = "uid://wai5i0eghoou"
 
-[node name="CutsceneHandler" type="Node" parent="." index="49" unique_id=1766288813 node_paths=PackedStringArray("actor", "anim_player", "speech")]
+[node name="CutsceneHandler" type="Node" parent="." index="50" unique_id=1766288813 node_paths=PackedStringArray("actor", "anim_player", "speech")]
 script = ExtResource("137_f64i6")
 actor = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 speech = NodePath("../Speed")
 metadata/_custom_type_script = "uid://fi6gye6mlsb6"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="50" unique_id=1801299136]
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="51" unique_id=1801299136]
 
 [node name="BossUI" parent="CanvasLayer" index="0" unique_id=983433779 node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("138_ggkva")]
 visible = false
@@ -3280,7 +3280,7 @@ stagger = NodePath("../../Stagger")
 actor = NodePath("../..")
 metadata/_edit_use_anchors_ = true
 
-[node name="PhasesHandler" type="Node" parent="." index="51" unique_id=3289038 node_paths=PackedStringArray("health", "actor", "sm")]
+[node name="PhasesHandler" type="Node" parent="." index="52" unique_id=3289038 node_paths=PackedStringArray("health", "actor", "sm")]
 script = ExtResource("142_qstkj")
 health = NodePath("../Health")
 actor = NodePath("..")
