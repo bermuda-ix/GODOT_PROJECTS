@@ -268,18 +268,32 @@
 [ext_resource type="Texture2D" uid="uid://b1kmk1mg3mxhb" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_057.png" id="136_wp57p"]
 [ext_resource type="Texture2D" uid="uid://bil0bhstmn4ya" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_058.png" id="137_47q3x"]
 [ext_resource type="Texture2D" uid="uid://gd5ym8b16mrp" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_059.png" id="138_77ty3"]
+[ext_resource type="Texture2D" uid="uid://chsu5308ytyr5" path="res://Art_Components/Effects/AttackEffects/FX006/FX001.png" id="210_pwps4"]
+[ext_resource type="Texture2D" uid="uid://fsmgdjv4piqf" path="res://Art_Components/Effects/AttackEffects/FX006/FX002.png" id="211_gt6j3"]
 [ext_resource type="Texture2D" uid="uid://ctiea6xsh0wgr" path="res://Art_Components/misc/AimingBoundary.png" id="212_1o5op"]
+[ext_resource type="Texture2D" uid="uid://dh05updwkgv8m" path="res://Art_Components/Effects/AttackEffects/FX006/FX003.png" id="212_rviac"]
+[ext_resource type="Texture2D" uid="uid://cpepdbfrlqwgv" path="res://Art_Components/Effects/AttackEffects/FX006/FX004.png" id="213_lpb6m"]
+[ext_resource type="Texture2D" uid="uid://c22pc2igaqi2g" path="res://Art_Components/Effects/AttackEffects/FX006/FX005.png" id="214_nlcxh"]
+[ext_resource type="Texture2D" uid="uid://pw68vc1o7yno" path="res://Art_Components/Effects/AttackEffects/FX006/FX006.png" id="215_ysphg"]
+[ext_resource type="Texture2D" uid="uid://b4yf6bjyqn1r7" path="res://Art_Components/Effects/AttackEffects/FX006/FX007.png" id="216_d5ae8"]
+[ext_resource type="Texture2D" uid="uid://dj0jspit4kolf" path="res://Art_Components/Effects/AttackEffects/FX006/FX008.png" id="217_73dn8"]
 [ext_resource type="Texture2D" uid="uid://52ipqcs560aq" path="res://Art_Components/UI/ButtonPrompts/Audune Prompts Dark.png" id="218_f2824"]
+[ext_resource type="Texture2D" uid="uid://cvfioykkanedg" path="res://Art_Components/Effects/AttackEffects/FX006/FX009.png" id="218_k4xmx"]
+[ext_resource type="Texture2D" uid="uid://benbvfmsymc62" path="res://Art_Components/Effects/AttackEffects/FX006/FX010.png" id="219_d24pd"]
 [ext_resource type="Texture2D" uid="uid://dc06lykcbclda" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Red/Button01.png" id="219_xxtsl"]
+[ext_resource type="Texture2D" uid="uid://1pjj47rpw80w" path="res://Art_Components/Effects/AttackEffects/FX006/FX011.png" id="220_3053v"]
 [ext_resource type="FontFile" uid="uid://dl1kk08ojyafw" path="res://Art_Components/UI/Fonts/Pixica Fonts/Pixica Fonts/Pixica-Bold.ttf" id="220_fixwo"]
 [ext_resource type="Texture2D" uid="uid://h4mv56rlunfw" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Red/Button03.png" id="220_oxl1f"]
+[ext_resource type="Texture2D" uid="uid://ds36fst3q3t58" path="res://Art_Components/Effects/AttackEffects/FX006/FX012.png" id="221_6c73i"]
 [ext_resource type="Texture2D" uid="uid://dt53s3nhst2tc" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Red/Button02.png" id="221_22pp6"]
+[ext_resource type="Texture2D" uid="uid://c8bdlu5h7gnnp" path="res://Art_Components/Effects/AttackEffects/FX006/FX013.png" id="222_np862"]
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="222_qyvno"]
 [ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="230_pbr83"]
 [ext_resource type="PackedScene" uid="uid://dsj0t0v1bq42w" path="res://Component/projectiles/shotgun_bullet.tscn" id="231_ymji2"]
 [ext_resource type="Script" uid="uid://dc4c4jxhc2ky" path="res://heavy_dash_attack.gd" id="243_4jq81"]
 [ext_resource type="Script" uid="uid://dm8ejawcmedfr" path="res://heavy_attack_3.gd" id="244_m743w"]
 [ext_resource type="Script" uid="uid://dmttp4slbll7c" path="res://aim.gd" id="246_p73v2"]
+[ext_resource type="Script" uid="uid://5nuxraficihm" path="res://heavy_counter.gd" id="267_gt6j3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dirf"]
 atlas = ExtResource("218_f2824")
@@ -3771,6 +3785,50 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("210_pwps4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("211_gt6j3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("212_rviac")
+}, {
+"duration": 1.0,
+"texture": ExtResource("213_lpb6m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("214_nlcxh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("215_ysphg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("216_d5ae8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("217_73dn8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("218_k4xmx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("219_d24pd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("220_3053v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("221_6c73i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("222_np862")
+}],
+"loop": true,
+"name": &"Heavy_Counter",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("74_bw7wn")
 }, {
 "duration": 1.0,
@@ -5122,6 +5180,179 @@ tracks/11/keys = {
 "values": [true, true, false]
 }
 
+[sub_resource type="Animation" id="Animation_83noc"]
+resource_name = "Heavy_Counter"
+length = 0.5
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(31, -14.939301)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/HitBox:stagger_damage")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.29611284, 0.31576332),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/Shotty:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.18333334, 0.23333333, 0.28333333, 0.41666666, 0.5),
+"transitions": PackedFloat32Array(28.840014, 0.09807308, 1, 0.098073244, 1, 1.624505, 1),
+"update": 0,
+"values": [Vector2(-4.999999, -52), Vector2(18.000004, -62.000004), Vector2(31, -45.000004), Vector2(42.000004, -30.000002), Vector2(33, -14.000004), Vector2(33, -14.000004), Vector2(6.0000005, -21)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D/Shotty:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.18333334, 0.23333333, 0.28333333, 0.41666666, 0.5),
+"transitions": PackedFloat32Array(59.714134, 0.10511221, 1, 0.11662929, 1, 2.3784142, 1),
+"update": 0,
+"values": [-4.974181, -4.2712026, -3.6651862, -3.1000047, -2.61799, -2.61799, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D:animation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"SwordCombo02"]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AnimatedSprite2D:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.23333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 1]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AnimatedSprite2D/attack_fx:animation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Heavy_Counter"]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedSprite2D/attack_fx:frame")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.16666667, 0.18333334, 0.2, 0.21666667, 0.23333335, 0.25, 0.26666668, 0.28333336, 0.3, 0.31666666, 0.33333334, 0.35000002, 0.36666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedSprite2D/attack_fx:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.40926915, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, true, false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AnimatedSprite2D/attack_fx:flip_h")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimatedSprite2D/attack_fx:scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.2, 0.2)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("AnimatedSprite2D/attack_fx:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(31, -59)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape:size")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(52.9474, 53.5486)]
+}
+
 [sub_resource type="Animation" id="Animation_kd7ms"]
 resource_name = "Heavy_Dash_Attack"
 length = 0.4
@@ -6122,6 +6353,42 @@ tracks/49/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/50/type = "value"
+tracks/50/imported = false
+tracks/50/enabled = true
+tracks/50/path = NodePath("AnimatedSprite2D/attack_fx:flip_h")
+tracks/50/interp = 1
+tracks/50/loop_wrap = true
+tracks/50/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/51/type = "value"
+tracks/51/imported = false
+tracks/51/enabled = true
+tracks/51/path = NodePath("AnimatedSprite2D/attack_fx:scale")
+tracks/51/interp = 1
+tracks/51/loop_wrap = true
+tracks/51/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.5, 1.5)]
+}
+tracks/52/type = "value"
+tracks/52/imported = false
+tracks/52/enabled = true
+tracks/52/path = NodePath("AnimatedSprite2D/attack_fx:position")
+tracks/52/interp = 1
+tracks/52/loop_wrap = true
+tracks/52/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(29, -33)]
 }
 
 [sub_resource type="Animation" id="Animation_oktus"]
@@ -7155,6 +7422,18 @@ tracks/11/keys = {
 "method": &"shotgun_recoil"
 }]
 }
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("AnimatedSprite2D:animation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"GunFire2H"]
+}
 
 [sub_resource type="Animation" id="Animation_okwur"]
 resource_name = "shotgun_attack_fast"
@@ -7524,7 +7803,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_6tjyr"]
 resource_name = "staggered"
-length = 2.0
+length = 1.5
 step = 0.016666668
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -7738,6 +8017,7 @@ _data = {
 &"Flip_Attack": SubResource("Animation_l6eg2"),
 &"Heavy_Combo_1": SubResource("Animation_i0kkw"),
 &"Heavy_Combo_2": SubResource("Animation_cdmbu"),
+&"Heavy_Counter": SubResource("Animation_83noc"),
 &"Heavy_Dash_Attack": SubResource("Animation_kd7ms"),
 &"Heavy_Riposte": SubResource("Animation_0gauh"),
 &"Parry": SubResource("Animation_x1wk2"),
@@ -8924,7 +9204,6 @@ animation = &"heavy_attack_hit"
 visible = false
 sprite_frames = SubResource("SpriteFrames_bw7wn")
 animation = &"attack_hit"
-frame = 4
 flip_h = true
 
 [node name="attack_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1283370965]
@@ -9498,6 +9777,12 @@ script = ExtResource("243_4jq81")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 
+[node name="HeavyCounter" type="LimboState" parent="StateMachine/AttackState" unique_id=426332181 node_paths=PackedStringArray("pc", "animation_player", "state_machine")]
+script = ExtResource("267_gt6j3")
+pc = NodePath("../../..")
+animation_player = NodePath("../../../AnimationPlayer")
+state_machine = NodePath("../..")
+
 [node name="Aim" type="LimboState" parent="StateMachine" unique_id=1244651801 node_paths=PackedStringArray("pc", "anim_player", "shotty_anim_player")]
 script = ExtResource("246_p73v2")
 pc = NodePath("../..")
@@ -9627,6 +9912,7 @@ pc = NodePath("../..")
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Staggered" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Hit" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Recovery" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/AttackState/HeavyCounter" method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
 [connection signal="timeout" from="HitTimer" to="." method="_on_hit_timer_timeout"]
 [connection signal="timeout" from="JumpOutTimer" to="." method="_on_jump_out_timer_timeout"]

@@ -393,6 +393,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
 	hb_collision.disabled=true
+	hb_collision.call_deferred("set_disabled", true)
 	animated_sprite_2d.scale.x = 1
 	movement_handler.active=false
 	if player_right:

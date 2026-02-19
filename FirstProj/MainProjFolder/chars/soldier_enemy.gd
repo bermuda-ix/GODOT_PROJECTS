@@ -811,7 +811,8 @@ func _on_teleport_and_shoot_entered() -> void:
 
 
 func _on_staggered_entered() -> void:
-	pass # Replace with function body.
+	pass
+	#stagger_timer.start(3)
 
 
 func _on_teleport_and_shoot_exited() -> void:

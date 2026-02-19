@@ -82,6 +82,8 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var heavy_attack_2: LimboState = $StateMachine/AttackState/HeavyAttack2
 @onready var heavy_attack_3: LimboState = $StateMachine/AttackState/HeavyAttack3
 @onready var heavy_dash_attack: LimboState = $StateMachine/AttackState/HeavyDashAttack
+@onready var heavy_counter: LimboState = $StateMachine/AttackState/HeavyCounter
+
 
 
 @onready var atk_1_resume : bool = false
@@ -402,7 +404,9 @@ func _init_state_machine():
 	state_machine.add_transition(jump_state, attack_state, &"start_attack")
 	state_machine.add_transition(jump_state, special_attack, &"special_attack")
 	state_machine.add_transition(dodge_state, attack_state, &"dash_attack")
+	state_machine.add_transition(dodge_state, attack_state, &"heavy_dash_attack")
 	state_machine.add_transition(dodge_state, attack_state, &"combo_resume")
+	state_machine.add_transition(dodge_state, attack_state, &"heavy_counter")
 	state_machine.add_transition(falling_state, attack_state, &"start_attack")
 	state_machine.add_transition(falling_state, special_attack, &"special_attack")
 	
@@ -419,7 +423,7 @@ func _init_state_machine():
 	state_machine.add_transition(special_attack, jump_state, &"return_from_special")
 	#state_machine.add_transition(idle, special_attack, &"special_attack")
 	state_machine.add_transition(attack_state, dodge_state, &"start_dodge")
-	
+		
 	#Flipping State
 	state_machine.add_transition(flip_state, jump_state, &"jump_out")
 	state_machine.add_transition(flip_state, attack_state, &"flip_attack")
@@ -470,6 +474,8 @@ func _init_attack_states():
 	#attack_state.add_transition(attack_1, special_combo, &"special_combo")
 	#attack_state.add_transition(attack_2, special_combo, &"special_combo")
 	attack_state.add_transition(attack_state.ANYSTATE, dash_attack, &"dash_attack")
+	attack_state.add_transition(attack_state.ANYSTATE, heavy_dash_attack, &"heavy_dash_attack")
+	attack_state.add_transition(attack_state.ANYSTATE, heavy_counter, &"heavy_counter")
 	
 	#Heavy attack Combos
 	attack_state.add_transition(attack_1, heavy_attack_1, &"heavy_combo")
@@ -534,6 +540,8 @@ func _process(_delta):
 	elif state_machine.get_active_state()==dodge_state:
 		if Input.is_action_just_pressed("attack"):
 			dash_attack_enter()
+		elif Input.is_action_just_pressed("special_attack"):
+			heavy_dash_attack_enter()
 	#
 	lockon()
 	enter_door()
@@ -1002,7 +1010,10 @@ func heavy_attack():
 	if state_machine.get_active_state()!=attack_state:
 		attack_timer.paused=true
 	hit_box.set_damage(1)
-	state_machine.dispatch(&"heavy_combo")
+	if counter_flag:
+		state_machine.dispatch(&"heavy_counter")
+	else:
+		state_machine.dispatch(&"heavy_combo")
 	#if not attack_timer.is_stopped():
 		#if atk_chain == 0:
 			##attack_combo = "Attack"
@@ -1028,8 +1039,15 @@ func dash_attack_enter():
 	#attack_combo = "Attack_Dash"
 	#hit_sound = hit1
 	#AudioStreamManager.play(swing1)
-	##set_state(state, States.ATTACK)
-
+	##set_state(state, States.ATTACK) 
+	
+	
+func heavy_dash_attack_enter():
+	if state_machine.get_active_state()==attack_state:
+		return
+	attack_timer.paused=true
+	attack_state.dispatch(&"heavy_dash_attack")
+	state_machine.dispatch(&"heavy_dash_attack")
 
 
 func sp_atk():
@@ -1041,6 +1059,9 @@ func sp_atk():
 	#else:
 		#set_shotgun_free_rotate(true)
 	
+	if counter_flag:
+		attack_state.dispatch(&"heavy_counter")
+		state_machine.dispatch(&"start_attack")
 	if state_machine.get_active_state()!=parry_success_state \
 	 and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=attack_state:
 		aim_and_shoot()

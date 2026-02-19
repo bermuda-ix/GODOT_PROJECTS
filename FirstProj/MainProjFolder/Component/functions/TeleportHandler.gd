@@ -13,8 +13,8 @@ func teleport(x_dir: float, y_dir: float, _global_position: Vector2) -> Vector2:
 	if teleport_dir_helper_rc.is_colliding():
 		print_debug("blocked!")
 		teleport_dir_helper_rc.target_position=-(_global_position- teleport_dir_helper_rc.get_collision_point())
-		print_debug(teleport_dir_helper_rc.get_collision_point()," - ", teleport_dir_helper_rc.target_position)
-		teleport_dir_helper_rc.target_position-=teleport_dir_helper_rc.get_collision_point()
+		#print_debug(teleport_dir_helper_rc.get_collision_point()," - ", teleport_dir_helper_rc.target_position)
+		#teleport_dir_helper_rc.target_position-=teleport_dir_helper_rc.get_collision_point()
 		#print_debug(teleport_dir_helper_rc.target_position)
 		
 	#print_debug("preparing to move to: ", (teleport_dir_helper_rc.target_position), "from: ", _global_position)

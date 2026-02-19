@@ -31,7 +31,7 @@ func set_stagger(value: int):
 		stagger = value
 		stagger_decreased.emit(difference)
 		
-		if stagger == 0:
+		if stagger <= 0:
 			staggered.emit()
 			Events.camera_shake.emit(2,20)
 	

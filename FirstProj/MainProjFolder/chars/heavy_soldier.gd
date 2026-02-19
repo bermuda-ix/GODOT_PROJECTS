@@ -519,13 +519,14 @@ func _on_parry_timer_timeout() -> void:
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
-	hb_collision.disabled=true
+	#hb_collision.disabled=true
+	hb_collision.call_deferred("set_disabled", true)
 	movement_handler.active=false
 	animated_sprite_2d.scale.x = 1
 	movement_handler.active=false
 	knockback.x=250
 	jump_handler.handle_jump(0.2)
-	if linked_enemies!=null:
+	if linked_enemies!=null or not linked_enemies.is_empty():
 		linked_enemies.remove_at(group_link_order)
 	death_handler.death()
 
