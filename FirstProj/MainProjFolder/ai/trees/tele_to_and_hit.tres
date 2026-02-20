@@ -20,7 +20,6 @@ animation_player = SubResource("BBNode_hvpee")
 animation_name = &"teleport_start"
 
 [sub_resource type="BTWait" id="BTWait_hikry"]
-duration = 2.0
 
 [sub_resource type="BBVariant" id="BBVariant_hikry"]
 type = 1
