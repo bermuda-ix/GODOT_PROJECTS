@@ -19,6 +19,9 @@ resource_name = "AnimationPlayer"
 animation_player = SubResource("BBNode_hvpee")
 animation_name = &"teleport_start"
 
+[sub_resource type="BTWait" id="BTWait_hikry"]
+duration = 2.0
+
 [sub_resource type="BBVariant" id="BBVariant_hikry"]
 type = 1
 saved_value = false
@@ -94,7 +97,7 @@ animation_name = &"atk_1"
 
 [sub_resource type="BTSequence" id="BTSequence_vifeo"]
 custom_name = "teleport_and_hit"
-children = [SubResource("BTPlayAnimation_utuk4"), SubResource("BTAwaitAnimation_otn0j"), SubResource("BTSelector_erdlf"), SubResource("BTPlayAnimation_lp037"), SubResource("BTAwaitAnimation_tkr66"), SubResource("BTPlayAnimation_ywkss"), SubResource("BTAwaitAnimation_hvpee")]
+children = [SubResource("BTPlayAnimation_utuk4"), SubResource("BTAwaitAnimation_otn0j"), SubResource("BTWait_hikry"), SubResource("BTSelector_erdlf"), SubResource("BTPlayAnimation_lp037"), SubResource("BTAwaitAnimation_tkr66"), SubResource("BTPlayAnimation_ywkss"), SubResource("BTAwaitAnimation_hvpee")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_hikry")

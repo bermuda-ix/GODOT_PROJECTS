@@ -139,6 +139,7 @@ var distance
 @onready var staggered: LimboState = $LimboHSM/STAGGERED
 @onready var teleport_and_shoot: BTState = $LimboHSM/TeleportAndShoot
 @onready var teleport_and_hit: BTState = $LimboHSM/TeleportAndHit
+@onready var teleport_helper_raycast: RayCast2D = $RayCast2D
 
 
 
@@ -160,6 +161,7 @@ var distance
 @onready var phase_2: LimboState = $Phases/Phase2
 @onready var phases_handler: PhasesHandler = $PhasesHandler
 @onready var changing_phase := false
+@onready var combat_state_change_handler: CombatStateChangeHandler = $CombatStateChangeHandler
 
 
 @onready var ammo_count
@@ -458,10 +460,12 @@ func teleport_away() -> void:
 	var _tele_right := 100
 	var _tele_height := 80
 	
+	
+		
 	if player_right:
-		global_position=teleport_handler.teleport((global_position.x+_tele_left), (global_position.y-_tele_height), global_position)
+		global_position=teleport_handler.teleport((global_position.x+_tele_left), (global_position.y- _tele_height), global_position)
 	else:
-		global_position=teleport_handler.teleport((global_position.x+_tele_right), (global_position.y-_tele_height), global_position)
+		global_position=teleport_handler.teleport((global_position.x+_tele_right), (global_position.y- _tele_height), global_position)
 		
 func teleport_to(front : bool) -> void:
 #	X-axis offset so objects ends up consistantly in front or behind of player
@@ -470,10 +474,20 @@ func teleport_to(front : bool) -> void:
 		else: return -10
 	
 	print_debug(player.global_position)
-	if player_right:	
-		global_position=teleport_handler.teleport(player.global_position.x-offset.call(), -player.global_position.y, global_position)
+	if player_right:
+		print_debug(global_position)
+		global_position=teleport_handler.teleport(teleport_helper_raycast.target_position.x-offset.call(),\
+		 teleport_helper_raycast.target_position.y,\
+		 global_position)
+		#global_position.x+offset.call()
+		print_debug(global_position)
 	else:
-		global_position=teleport_handler.teleport(player.global_position.x+offset.call(), -player.global_position.y, global_position)
+		print_debug(global_position)
+		global_position=teleport_handler.teleport(teleport_helper_raycast.target_position.x+offset.call(),\
+		 teleport_helper_raycast.target_position.y,\
+		 global_position)
+		#global_position.y+offset.call()
+		print_debug(global_position)
 
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	if anim_name=="atk_counter":
@@ -680,7 +694,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	h_bar.text=str(current.name)
-	print_debug(current.name)
+	#print_debug(current.name)
 	if current==jump:
 		if previous==attack:
 			print_debug("down attack")
@@ -760,6 +774,8 @@ func _on_dying_entered() -> void:
 func _on_phase_2_entered() -> void:
 #	
 	bt_player.blackboard.set_var("Phase2Active", true)
+	combat_state_change_handler.ranged_dist=1000
+	bt_player.blackboard.set_var("melee_mode", true)
 	#bt_player.blackboard.set_var("attack_mode", false)
 	#bt_player.restart()
 	#state_machine.change_active_state(teleport_and_shoot)
@@ -817,6 +833,7 @@ func _on_staggered_entered() -> void:
 
 func _on_teleport_and_shoot_exited() -> void:
 	hurt_box.set_collision_layer_value(7, true)
+	teleport_helper_raycast.target_position=Vector2(0,50)
 
 func death_on_cutscene() -> void:
 	state_machine.change_active_state(death)
@@ -835,6 +852,7 @@ func boss_reset() -> void:
 	vision_handler.active=vision_active
 	vision_handler.stay_on=vision_stay_on
 	vision_handler.always_on=vision_always_on
+	combat_state_change_handler.ranged_dist=100
 	bt_player.blackboard.set_var("attack_mode", false)
 	bt_player.blackboard.set_var("melee_mode", false)
 	bt_player.blackboard.set_var("ranged_mode", true)
@@ -889,3 +907,14 @@ func _on_child_entered_tree(node: Node) -> void:
 
 func _on_boss_reloaded() -> void:
 	assert(is_on_screen==false)
+
+
+
+func _on_teleport_and_hit_updated(delta: float) -> void:
+	#teleport_helper_raycast.look_at(Vector2(player.global_position.x, player.global_position.y-100))
+	teleport_helper_raycast.target_position=player.global_position-teleport_helper_raycast.global_position
+	print_debug(player.global_position, " ", teleport_helper_raycast.target_position)
+
+
+func _on_teleport_and_hit_entered() -> void:
+	pass

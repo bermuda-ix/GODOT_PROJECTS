@@ -202,6 +202,7 @@ signal no_input_qte
 @onready var parry_box: ParryBox = $AnimatedSprite2D/ParryBox
 @onready var counter_box_collision = $CounterBox/CounterBoxCollision
 @onready var stagger: Stagger = $Stagger
+@onready var stagger_recover: Timer = $StaggerRecover
 @onready var flashlight: PointLight2D = $AnimatedSprite2D/Shotty/Flashlight
 
 @onready var spread_boundary_1: RayCast2D = $AnimatedSprite2D/Shotty/SpreadBoundary1
@@ -2061,6 +2062,11 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		
 	set_stagger()
 	set_health()
+	stagger_recover.start()
+	
+func _on_stagger_recover_timeout() -> void:
+	if stagger.stagger<stagger.max_stagger:
+		stagger.stagger+=1
 
 func _on_hurt_box_bullet_hit(_damage: int) -> void:
 	if health.health<=0:
@@ -2164,6 +2170,8 @@ func _on_attack_state_active_state_changed(current: LimboState, previous: LimboS
 		hitbox.stagger_damage=false
 	elif current in [heavy_attack_1, heavy_attack_2]:
 		hitbox.stagger_damage=true
+
+
 
 func _on_combat_states_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	pass
@@ -2327,3 +2335,7 @@ func _on_jump_state_entered() -> void:
 			#
 		#else:
 			#knockback.x=_jump_vel_y
+
+
+func _on_attack_state_exited() -> void:
+	set_shotgun_free_rotate(true)

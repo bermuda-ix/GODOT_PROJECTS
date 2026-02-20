@@ -1090,11 +1090,11 @@ position = Vector2(3389, 285)
 scale = Vector2(0.5, 0.5)
 
 [node name="HeavySoldier3" parent="Enemy/soldiers" index="2" unique_id=859510641 instance=ExtResource("13_rfxm3")]
-position = Vector2(3389, 492)
+position = Vector2(3920, 385)
 scale = Vector2(0.5, 0.5)
 
 [node name="HeavySoldier4" parent="Enemy/soldiers" index="3" unique_id=770106961 instance=ExtResource("13_rfxm3")]
-position = Vector2(3440, 495)
+position = Vector2(3971, 388)
 scale = Vector2(0.5, 0.5)
 
 [node name="flying" type="Node" parent="Enemy" index="1" unique_id=1634263824]
@@ -1171,7 +1171,7 @@ position = Vector2(3485, 302)
 scale = Vector2(0.75, 0.75)
 
 [node name="GuardEnemy6" parent="Enemy/Guards" index="5" unique_id=2034909694 instance=ExtResource("16_vw32t")]
-position = Vector2(3267, 492.00003)
+position = Vector2(3798, 385.00003)
 scale = Vector2(0.75, 0.75)
 
 [node name="SleepingGuard" parent="Enemy" index="4" unique_id=2088524183 instance=ExtResource("17_61h8j")]
@@ -1187,6 +1187,9 @@ boss = ExtResource("17_rfxm3")
 
 [node name="soldier_enemy_boss" parent="Enemy/MiniBosses/MinoBossGroup1" index="1" unique_id=789104702 instance=ExtResource("17_rfxm3")]
 position = Vector2(2209, 779)
+
+[node name="VFXSprite" parent="Enemy/MiniBosses/MinoBossGroup1/soldier_enemy_boss/AnimatedSprite2D" index="1" unique_id=1667218364]
+animation = &"teleport"
 
 [node name="Underground" type="Node" parent="Enemy" index="6" unique_id=598079795]
 

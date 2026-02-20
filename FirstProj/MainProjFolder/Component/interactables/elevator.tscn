@@ -667,6 +667,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="PlayerDetect" type="Area2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=2132302769]
+collision_layer = 33554432
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/StaticBody2D/PlayerDetect" unique_id=1951041257]

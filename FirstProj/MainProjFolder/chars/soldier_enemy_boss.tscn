@@ -3140,6 +3140,7 @@ teleport_dir_helper_rc = NodePath("../RayCast2D")
 metadata/_custom_type_script = "uid://c4uno006dp70c"
 
 [node name="RayCast2D" type="RayCast2D" parent="." index="43" unique_id=923701194]
+target_position = Vector2(0, -50)
 collision_mask = 3
 hit_from_inside = true
 collide_with_areas = true
@@ -3319,6 +3320,8 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="exited" from="LimboHSM/COUNTER/KickCounter" to="." method="_on_kick_counter_exited"]
 [connection signal="entered" from="LimboHSM/TeleportAndShoot" to="." method="_on_teleport_and_shoot_entered"]
 [connection signal="exited" from="LimboHSM/TeleportAndShoot" to="." method="_on_teleport_and_shoot_exited"]
+[connection signal="entered" from="LimboHSM/TeleportAndHit" to="." method="_on_teleport_and_hit_entered"]
+[connection signal="updated" from="LimboHSM/TeleportAndHit" to="." method="_on_teleport_and_hit_updated"]
 [connection signal="entered" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_entered"]
 [connection signal="exited" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_exited"]
 [connection signal="entered" from="LimboHSM/STAGGERED" to="." method="_on_staggered_entered"]

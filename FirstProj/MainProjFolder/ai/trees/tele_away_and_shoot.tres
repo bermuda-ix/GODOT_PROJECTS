@@ -19,6 +19,9 @@ resource_name = "AnimationPlayer"
 animation_player = SubResource("BBNode_6ptk1")
 animation_name = &"teleport_start"
 
+[sub_resource type="BTWait" id="BTWait_ompq3"]
+duration = 2.0
+
 [sub_resource type="BBNode" id="BBNode_ompq3"]
 saved_value = NodePath(".")
 resource_name = "."
@@ -54,7 +57,7 @@ children = [SubResource("BTDelay_cwndi")]
 
 [sub_resource type="BTSequence" id="BTSequence_fr0da"]
 custom_name = "Teleport_And_Shoot"
-children = [SubResource("BTPlayAnimation_6ptk1"), SubResource("BTAwaitAnimation_etrm4"), SubResource("BTCallMethod_x6v1h"), SubResource("BTPlayAnimation_7s6jg"), SubResource("BTRepeat_o18bv")]
+children = [SubResource("BTPlayAnimation_6ptk1"), SubResource("BTAwaitAnimation_etrm4"), SubResource("BTWait_ompq3"), SubResource("BTCallMethod_x6v1h"), SubResource("BTPlayAnimation_7s6jg"), SubResource("BTRepeat_o18bv")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_ompq3")
