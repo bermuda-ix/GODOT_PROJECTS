@@ -6596,7 +6596,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_pskkv"]
-resource_name = "dodge"
+resource_name = "dodge_1"
 length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -6617,10 +6617,78 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3, 0.4),
+"times": PackedFloat32Array(0, 0.033333335, 0.099999994, 0.4, 0.46666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [2, 1, 0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_lpb6m"]
+resource_name = "dodge_2"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.4, 0.43333334),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [2, 1, 0, 2]
+"values": [&"Hit", &"SwordCrouch", &"Hit", &"SwordIdle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.4, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [2, 0, 1, 2, 3, 5, 4, 3, 2, 1, 0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_nlcxh"]
+resource_name = "dodge_3"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [&"Hit", &"Dash", &"SwordIdle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.36666667, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [2, 1, 5, 1, 2]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.095756754, 0.40523148, 0.49960044),
+"transitions": PackedFloat32Array(0.2176377, 1, 1, 4.9245768),
+"update": 0,
+"values": [Vector2(0, 8), Vector2(-14, 8), Vector2(-14, 8), Vector2(0, 8)]
 }
 
 [sub_resource type="Animation" id="Animation_13tdc"]
@@ -6676,7 +6744,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_yo2cx"]
-resource_name = "dodge_roll"
+resource_name = "dodge_roll_1"
 length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -6701,6 +6769,98 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 2, 3, 5, 7, 8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 8)]
+}
+
+[sub_resource type="Animation" id="Animation_gt6j3"]
+resource_name = "dodge_roll_2"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.36666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [&"Dash", &"Roll", &"Dash"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.16666667, 0.20000002, 0.23333335, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.46666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 2, 3, 4, 5, 6, 7, 8, 2, 7, 8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 8)]
+}
+
+[sub_resource type="Animation" id="Animation_rviac"]
+resource_name = "dodge_roll_3"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [&"SwordJump", &"Roll", &"Land", &"Idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.1, 0.13333333, 0.16666666, 0.19999999, 0.23333332, 0.26666665, 0.29999998, 0.3333333, 0.4, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 2, 0, 0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.22898354, 0.36666667, 0.43333334),
+"transitions": PackedFloat32Array(0.21022414, 0.39229217, 1, 2.5491211, 2.0705297),
+"update": 0,
+"values": [Vector2(0, 8), Vector2(0, -11), Vector2(0, -18), Vector2(0, -11), Vector2(0, 8)]
 }
 
 [sub_resource type="Animation" id="Animation_3ciys"]
@@ -8038,9 +8198,13 @@ _data = {
 &"Riposte": SubResource("Animation_oktus"),
 &"check_equipment": SubResource("Animation_67eo0"),
 &"death": SubResource("Animation_wyy57"),
-&"dodge": SubResource("Animation_pskkv"),
+&"dodge_1": SubResource("Animation_pskkv"),
+&"dodge_2": SubResource("Animation_lpb6m"),
+&"dodge_3": SubResource("Animation_nlcxh"),
 &"dodge_back": SubResource("Animation_13tdc"),
-&"dodge_roll": SubResource("Animation_yo2cx"),
+&"dodge_roll_1": SubResource("Animation_yo2cx"),
+&"dodge_roll_2": SubResource("Animation_gt6j3"),
+&"dodge_roll_3": SubResource("Animation_rviac"),
 &"falling": SubResource("Animation_3ciys"),
 &"flip": SubResource("Animation_s1lpt"),
 &"flip_backwards": SubResource("Animation_k8ewf"),
@@ -9504,7 +9668,6 @@ shape = SubResource("RectangleShape2D_pmx5o")
 [node name="Health" type="Node" parent="." unique_id=994567121]
 script = ExtResource("4_q0gnn")
 max_health = 10
-immortality = true
 
 [node name="ClashPower" type="Node" parent="." unique_id=2128103427 node_paths=PackedStringArray("health", "stagger")]
 script = ExtResource("82_h0fyw")
@@ -9518,6 +9681,7 @@ one_shot = true
 
 [node name="Stagger" type="Node" parent="." unique_id=1993234788]
 script = ExtResource("53_7ax8a")
+max_stagger = 5
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="StaggerRecover" type="Timer" parent="." unique_id=45084604]
@@ -9847,11 +10011,17 @@ hit_stop = NodePath("../../../HitStop")
 [node name="Nothing" type="LimboState" parent="StateMachine/ParrySuccessState" unique_id=637919947]
 script = ExtResource("100_8mfft")
 
-[node name="DodgeState" type="LimboState" parent="StateMachine" unique_id=1001049042 node_paths=PackedStringArray("anim_player", "pc", "hurtbox")]
+[node name="DodgeState" type="LimboState" parent="StateMachine" unique_id=1001049042 node_paths=PackedStringArray("anim_player", "pc", "hurtbox", "stagger", "state_machine", "dodge_buffer")]
 script = ExtResource("107_yif7d")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 hurtbox = NodePath("../../HurtBox/CollisionShape2D")
+stagger = NodePath("../../Stagger")
+state_machine = NodePath("..")
+dodge_buffer = NodePath("DodgeBuffer")
+
+[node name="DodgeBuffer" type="Timer" parent="StateMachine/DodgeState" unique_id=34708469]
+one_shot = true
 
 [node name="FlipState" type="LimboState" parent="StateMachine" unique_id=1796314275 node_paths=PackedStringArray("anim_player", "pc", "state_machine", "hit_stop")]
 script = ExtResource("108_mj1xc")
@@ -9905,6 +10075,7 @@ pc = NodePath("../..")
 [connection signal="aura_reset" from="ClashPower" to="." method="_on_clash_power_aura_reset"]
 [connection signal="increase_aura" from="ClashPower" to="." method="_on_clash_power_increase_aura"]
 [connection signal="timeout" from="ClashPower/ClashTimer" to="." method="_on_clash_timer_timeout"]
+[connection signal="stagger_decreased" from="Stagger" to="." method="_on_stagger_stagger_decreased"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="timeout" from="StaggerRecover" to="." method="_on_stagger_recover_timeout"]
 [connection signal="body_entered" from="StarsDetector" to="." method="_on_stars_detector_body_entered"]
@@ -9951,6 +10122,9 @@ pc = NodePath("../..")
 [connection signal="exited" from="StateMachine/AttackState/SpecialCombo2" to="." method="_on_special_combo_2_exited"]
 [connection signal="entered" from="StateMachine/SpecialAttack" to="." method="_on_special_attack_entered"]
 [connection signal="dur_timeout" from="StateMachine/ParrySuccessState" to="StateMachine/ParrySuccessState" method="_on_dur_timeout"]
+[connection signal="entered" from="StateMachine/DodgeState" to="." method="_on_dodge_state_entered"]
+[connection signal="exited" from="StateMachine/DodgeState" to="." method="_on_dodge_state_exited"]
+[connection signal="timeout" from="StateMachine/DodgeState/DodgeBuffer" to="StateMachine/DodgeState" method="_on_dodge_buffer_timeout"]
 [connection signal="entered" from="StateMachine/FlipState" to="." method="_on_flip_state_entered"]
 [connection signal="updated" from="StateMachine/FlipState" to="." method="_on_flip_state_updated"]
 [connection signal="entered" from="StateMachine/FlipEndState" to="." method="_on_flip_end_state_entered"]

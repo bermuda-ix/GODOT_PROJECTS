@@ -59,7 +59,11 @@ func _physics_process(delta):
 	linear_velocity = (dir *(SPEED +accel))
 	position += (dir * (SPEED +accel) * delta)
 
-
+func bullet_dodged() -> void:
+	set_collision_mask_value(2, false)
+	set_collision_mask_value(8, false)
+	modulate.a=120
+	
 func set_angular_vel(_rotation_speed : float) -> void:
 	angular_velocity=deg_to_rad(rotation_speed)
 

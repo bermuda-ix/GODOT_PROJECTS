@@ -345,7 +345,9 @@ func _process(_delta):
 		bt_player.blackboard.set_var("attack_mode", false)
 		#bt_player.restart()
 		bt_player.active=false
-		if cutscene_handler.actor_control_active:
+		if not death_cutscene:
+			pass
+		elif cutscene_handler.actor_control_active:
 			assert(state_machine.get_active_state()==death)
 	
 	if health.health<=0:
@@ -890,7 +892,8 @@ func boss_reset() -> void:
 	#_ready()
 	
 func game_over() -> void:
-	boss_ui.visible=false
+	#boss_ui.visible=false
+	boss_ui.set_deferred("visible", false)
 	state_machine.change_active_state(idle)
 	#process_mode=Node.PROCESS_MODE_DISABLED
 

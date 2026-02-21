@@ -45,6 +45,7 @@ func _ready():
 		Events.spawn_update.connect(spawn_update)
 		Events.increase_heat_lvl.connect(heat_increased)
 		Events.reset_heat.connect(reset_heat)
+		spawn_timer.one_shot=false
 
 #func load_enemies():
 	#match

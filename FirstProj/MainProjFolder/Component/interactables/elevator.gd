@@ -13,6 +13,7 @@ extends Node2D
 @onready var elevator_buttons: VBoxContainer = $Path2D/PathFollow2D/StaticBody2D/ElevatorUI/PanelContainer/ScrollContainer/ElevatorButtons
 @onready var global_flag_handler: GlobalFlagHandler = $GlobalFlagHandler
 @onready var door_collision: CollisionShape2D = $Path2D/PathFollow2D/StaticBody2D/Door/DoorCollision
+@onready var player_detect_collision: CollisionShape2D = $Path2D/PathFollow2D/StaticBody2D/PlayerDetect/CollisionShape2D
 
 
 
@@ -54,6 +55,7 @@ func _ready() -> void:
 	global_flag_handler.flag_name=global_flag
 	global_flag_handler.flag_active=flag_active
 	Events.open_interact_menu.connect(open_elevator_menu)
+	player_detect_collision.call_deferred("set_disabled", !active)
 	#Events.checkpoint_reached.connect(save_state)
 	
 func _physics_process(delta: float) -> void:
@@ -193,6 +195,7 @@ func _on_player_detect_body_exited(body: Node2D) -> void:
 
 func _on_global_flag_handler_flag_activate() -> void:
 	active=true
+	player_detect_collision.call_deferred("set_disabled", false)
 
 #Persistant Helper Functions
 func get_state() -> String:

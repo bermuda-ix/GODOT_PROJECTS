@@ -408,8 +408,12 @@ func _init_state_machine():
 	state_machine.add_transition(dodge_state, attack_state, &"heavy_dash_attack")
 	state_machine.add_transition(dodge_state, attack_state, &"combo_resume")
 	state_machine.add_transition(dodge_state, attack_state, &"heavy_counter")
+	
+	state_machine.add_transition(dodge_state, dodge_state, &"dodge_chain")
+	
 	state_machine.add_transition(falling_state, attack_state, &"start_attack")
 	state_machine.add_transition(falling_state, special_attack, &"special_attack")
+	
 	
 	state_machine.add_transition(idle, special_attack, &"special_attack")
 	state_machine.add_transition(walking, special_attack, &"special_attack")
@@ -1213,10 +1217,19 @@ func dodge(input_axis):
 		state_machine.dispatch(&"return_to_idle")
 	
 
+func _on_dodge_state_entered() -> void:
+	stagger_recover.stop()
+
+func _on_dodge_state_exited() -> void:
+	stagger_recover.start()
+
+
 func lockon():
 	var target_dist : Vector2 = Vector2.ZERO
 	
 	if Input.is_action_just_pressed("lockon"):
+		if combat_states.get_active_state()==locked:
+			combat_states.dispatch(&"unlocking")
 		enemies = get_tree().get_nodes_in_group("Enemy")
 		if enemies.is_empty():
 			return
@@ -1448,14 +1461,18 @@ func get_max_health() -> int:
 	return health.max_health
 
 func set_health() -> void:
-	Global.game_controller.update_health(health.health)
+	Global.game_controller.call_deferred("update_health",health.health)
+	#Global.game_controller.update_health(health.health)
 func set_max_health() -> void:
 	#update_max_health.emit(health.max_health)
-	Global.game_controller.update_max_health(health.max_health)
+	Global.game_controller.call_deferred("update_max_health",health.max_health)
+	#Global.game_controller.update_max_health(health.max_health)
 func set_stagger() -> void:
-	Global.game_controller.update_stagger(stagger.stagger)
+	Global.game_controller.call_deferred("update_stagger", stagger.stagger)
+	#Global.game_controller.update_stagger(stagger.stagger)
 func set_max_stagger() -> void:
-	Global.game_controller.update_max_stagger(stagger.max_stagger)
+	Global.game_controller.call_deferred("update_max_stagger", stagger.max_stagger)
+	#Global.game_controller.update_max_stagger(stagger.max_stagger)
 
 
 func _on_health_health_depleted():
@@ -2067,6 +2084,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 func _on_stagger_recover_timeout() -> void:
 	if stagger.stagger<stagger.max_stagger:
 		stagger.stagger+=1
+		set_stagger()
 
 func _on_hurt_box_bullet_hit(_damage: int) -> void:
 	if health.health<=0:
@@ -2339,3 +2357,7 @@ func _on_jump_state_entered() -> void:
 
 func _on_attack_state_exited() -> void:
 	set_shotgun_free_rotate(true)
+
+
+func _on_stagger_stagger_decreased(diff: int) -> void:
+	set_stagger()

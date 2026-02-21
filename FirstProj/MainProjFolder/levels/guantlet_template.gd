@@ -160,7 +160,7 @@ func _physics_process(delta: float) -> void:
 	
 func show_boss_countdown() -> void:
 	if not boss_spawn_timer.is_stopped():
-		boss_countdown.text=str(boss_spawn_timer.time_left)
+		boss_countdown.text=str(snappedf(boss_spawn_timer.time_left, 0.01))
 
 
 		
@@ -333,6 +333,8 @@ func spawn_boss():
 	var _boss=boss_preload.instantiate()
 	_boss.global_position=boss_spawn_point.global_position
 	add_child(_boss)
+	_boss.boss_ui.activate_boss_ui()
+	_boss.boss_ui.set_deferred("visible", true)
 
 
 func boss_death():

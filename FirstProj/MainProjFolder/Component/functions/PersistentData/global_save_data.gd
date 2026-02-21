@@ -14,8 +14,8 @@ const default_save : Dictionary = {
 	player = {
 		health = 10,
 		max_health=10,
-		stagger=3,
-		max_stagger=3,
+		stagger=5,
+		max_stagger=5,
 		pos_x = 0,
 		pos_y=0
 	}
@@ -26,8 +26,8 @@ var current_save : Dictionary = {
 	player = {
 		health = 10,
 		max_health=10,
-		stagger=3,
-		max_stagger=3,
+		stagger=5,
+		max_stagger=5,
 		pos_x = 0,
 		pos_y=0
 	}
