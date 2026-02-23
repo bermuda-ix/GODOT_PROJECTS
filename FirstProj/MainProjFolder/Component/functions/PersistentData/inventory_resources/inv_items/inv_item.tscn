@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://c6a31gx7v6ajc"]
+[gd_scene format=3 uid="uid://c6a31gx7v6ajc"]
 
 [ext_resource type="Script" uid="uid://bkxsityycc12h" path="res://Component/functions/PersistentData/inventory_resources/inv_items/inv_item.gd" id="1_xs3pp"]
 
-[node name="InvItem" type="Control"]
+[node name="InvItem" type="Control" unique_id=293665085]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 3
 anchors_preset = 0
@@ -10,7 +10,7 @@ offset_right = 80.0
 offset_bottom = 41.0
 script = ExtResource("1_xs3pp")
 
-[node name="InvItemTexture" type="PanelContainer" parent="."]
+[node name="InvItemTexture" type="PanelContainer" parent="." unique_id=1417135568]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 0
@@ -18,14 +18,14 @@ offset_right = 32.0
 offset_bottom = 40.0
 size_flags_horizontal = 4
 
-[node name="TextureRect" type="TextureRect" parent="InvItemTexture"]
+[node name="TextureRect" type="TextureRect" parent="InvItemTexture" unique_id=829827321]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 expand_mode = 1
 
-[node name="AmountText" type="PanelContainer" parent="."]
+[node name="AmountText" type="PanelContainer" parent="." unique_id=1343590636]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 0
@@ -33,7 +33,6 @@ offset_left = 39.0
 offset_right = 79.0
 offset_bottom = 40.0
 
-[node name="TextEdit" type="TextEdit" parent="AmountText"]
+[node name="TextEdit" type="RichTextLabel" parent="AmountText" unique_id=550227841]
 layout_mode = 2
-theme_override_colors/background_color = Color(0, 0, 0, 0)
 text = "x1"

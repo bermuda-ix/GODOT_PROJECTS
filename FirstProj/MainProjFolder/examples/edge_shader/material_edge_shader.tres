@@ -1,6 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dpec5hjpflmri"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dpec5hjpflmri"]
 
-[ext_resource type="Shader" uid="uid://c21rfefihstoo" path="res://examples/edge_shader/edge_shader.gdshader" id="1_akl0v"]
+[ext_resource type="Shader" uid="uid://c7ujk5ppgsqr2" path="res://Component/effects/shaders/player_shader.gdshader" id="1_cicae"]
 
 [resource]
-shader = ExtResource("1_akl0v")
+shader = ExtResource("1_cicae")

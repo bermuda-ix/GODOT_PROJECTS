@@ -1,7 +1,7 @@
 class_name inv_item extends Control
 
 @onready var inv_item_texture_rect: TextureRect = $InvItemTexture/TextureRect
-@onready var amount_text: TextEdit = $AmountText/TextEdit
+@onready var amount_text: RichTextLabel = $AmountText/TextEdit
 
 @export var inv_item_texture : Texture2D : set = set_item_texture
 @export var amount : int = 0 : set = set_amount

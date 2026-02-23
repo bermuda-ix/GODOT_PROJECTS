@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://hg63g0t3rx0q"]
+
+[ext_resource type="Script" uid="uid://dqexksc3am4gr" path="res://Component/UI_Rec/Char_Dialogue/dialogue_box.gd" id="1_k0prl"]
+[ext_resource type="Texture2D" uid="uid://dyu3ayrq0ewg0" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Green/Panel03.png" id="1_yknj5"]
+[ext_resource type="Texture2D" uid="uid://xemupsa1wdax" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Green/Panel07.png" id="2_optwx"]
+[ext_resource type="PackedScene" uid="uid://cr83me6yppmvk" path="res://Component/UI_Rec/Char_Dialogue/dialogue.tscn" id="3_2ogq0"]
+
+[node name="DialogueBox" type="Control" unique_id=1807181331]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 8.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k0prl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1542689781]
+custom_minimum_size = Vector2(448, 64)
+layout_mode = 0
+offset_right = 448.0
+offset_bottom = 64.0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=928764771]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("1_yknj5")
+expand_mode = 1
+
+[node name="PortraitContainer" type="PanelContainer" parent="HBoxContainer/TextureRect" unique_id=2069804592]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 10.0
+offset_right = 61.0
+offset_bottom = 52.0
+
+[node name="Portrait" type="TextureRect" parent="HBoxContainer/TextureRect/PortraitContainer" unique_id=2003836208]
+layout_mode = 2
+
+[node name="CharName" type="RichTextLabel" parent="HBoxContainer/TextureRect" unique_id=2100347674]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 61.0
+offset_bottom = 8.0
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer" unique_id=1169709022]
+z_index = 1
+custom_minimum_size = Vector2(448, 64)
+layout_mode = 2
+texture = ExtResource("2_optwx")
+expand_mode = 1
+
+[node name="DialogueContainer" type="PanelContainer" parent="HBoxContainer/TextureRect2" unique_id=1992823839]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 8.0
+offset_right = 395.0
+offset_bottom = 52.0
+
+[node name="DialogueText" parent="HBoxContainer/TextureRect2/DialogueContainer" unique_id=1848131381 instance=ExtResource("3_2ogq0")]
+layout_mode = 2

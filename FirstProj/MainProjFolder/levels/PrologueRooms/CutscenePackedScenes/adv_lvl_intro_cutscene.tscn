@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://cimg1u7dq8qci"]
+
+[ext_resource type="Texture2D" uid="uid://bj13qy2ckri8q" path="res://Art_Components/Backgrounds/night_1/1.png" id="1_4klpg"]
+[ext_resource type="Script" uid="uid://r5fdcwnd78xk" path="res://levels/PrologueRooms/CutscenePackedScenes/adv_lvl_intro_cutscene.gd" id="1_kyvyf"]
+[ext_resource type="Texture2D" uid="uid://b1p3fdvwsdnfy" path="res://Art_Components/Backgrounds/night_1/2.png" id="2_kyvyf"]
+[ext_resource type="Texture2D" uid="uid://d0gvriwjqa03k" path="res://Art_Components/Backgrounds/background2.png" id="3_a51nm"]
+[ext_resource type="Texture2D" uid="uid://b03d4l8fn2u7k" path="res://Art_Components/Backgrounds/background3.png" id="4_lpo0g"]
+
+[sub_resource type="Animation" id="Animation_4klpg"]
+resource_name = "Begin"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(288, 104), Vector2(288, 160)]
+}
+
+[sub_resource type="Animation" id="Animation_kyvyf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(288, 104)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a51nm"]
+_data = {
+&"Begin": SubResource("Animation_4klpg"),
+&"RESET": SubResource("Animation_kyvyf")
+}
+
+[node name="AdvLvlIntroCutscene" type="Node2D" unique_id=2019984495]
+script = ExtResource("1_kyvyf")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=914315837]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1272337848]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Background" type="Node2D" parent="." unique_id=454343048]
+
+[node name="Sky" type="Parallax2D" parent="Background" unique_id=2067855744]
+scroll_scale = Vector2(1, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Sky" unique_id=846626725]
+texture = ExtResource("1_4klpg")
+centered = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background/Sky" unique_id=690575472]
+position = Vector2(0, -32)
+texture = ExtResource("2_kyvyf")
+centered = false
+
+[node name="MountainFar" type="Parallax2D" parent="Background" unique_id=1422356580]
+scroll_scale = Vector2(1, 0.3)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/MountainFar" unique_id=2044794119]
+self_modulate = Color(0.396889, 0.396889, 0.396889, 1)
+scale = Vector2(1, 0.6765625)
+texture = ExtResource("3_a51nm")
+centered = false
+
+[node name="MountainsNear" type="Parallax2D" parent="Background" unique_id=676858689]
+scroll_scale = Vector2(1, 0.35)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/MountainsNear" unique_id=1116517738]
+self_modulate = Color(0.646029, 0.646029, 0.646029, 1)
+scale = Vector2(1, 0.6765625)
+texture = ExtResource("4_lpo0g")
+centered = false
+
+[node name="Camera2D" type="Camera2D" parent="Background" unique_id=1445754895]
+position = Vector2(288, 104)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1265659924]
+root_node = NodePath("../Background/Camera2D")
+libraries/ = SubResource("AnimationLibrary_a51nm")
+
+[node name="Foreground" type="Node2D" parent="." unique_id=670889300]
