@@ -2,12 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://bj13qy2ckri8q" path="res://Art_Components/Backgrounds/night_1/1.png" id="1_4klpg"]
 [ext_resource type="Script" uid="uid://r5fdcwnd78xk" path="res://levels/PrologueRooms/CutscenePackedScenes/adv_lvl_intro_cutscene.gd" id="1_kyvyf"]
+[ext_resource type="PackedScene" uid="uid://hg63g0t3rx0q" path="res://Component/UI_Rec/Char_Dialogue/dialogue_box.tscn" id="2_a51nm"]
 [ext_resource type="Texture2D" uid="uid://b1p3fdvwsdnfy" path="res://Art_Components/Backgrounds/night_1/2.png" id="2_kyvyf"]
 [ext_resource type="Texture2D" uid="uid://d0gvriwjqa03k" path="res://Art_Components/Backgrounds/background2.png" id="3_a51nm"]
 [ext_resource type="Texture2D" uid="uid://b03d4l8fn2u7k" path="res://Art_Components/Backgrounds/background3.png" id="4_lpo0g"]
 
 [sub_resource type="Animation" id="Animation_4klpg"]
 resource_name = "Begin"
+length = 8.066667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -31,6 +33,23 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(288, 104), Vector2(288, 160)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../CanvasLayer/DialogueBox")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(4.0333333, 7.133333),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": ["This is a test string, calling from the dialogue box parent node", 1.0],
+"method": &"play_top"
+}, {
+"args": ["I am a huge furry please rape my face", 1.0],
+"method": &"play_bot"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_kyvyf"]
@@ -78,6 +97,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
+
+[node name="DialogueBox" parent="CanvasLayer" unique_id=1807181331 instance=ExtResource("2_a51nm")]
 
 [node name="Background" type="Node2D" parent="." unique_id=454343048]
 
