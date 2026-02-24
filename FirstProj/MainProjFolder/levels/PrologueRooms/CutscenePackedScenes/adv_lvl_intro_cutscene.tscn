@@ -99,6 +99,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0)
 
 [node name="DialogueBox" parent="CanvasLayer" unique_id=1807181331 instance=ExtResource("2_a51nm")]
+z_index = 3
 
 [node name="Background" type="Node2D" parent="." unique_id=454343048]
 

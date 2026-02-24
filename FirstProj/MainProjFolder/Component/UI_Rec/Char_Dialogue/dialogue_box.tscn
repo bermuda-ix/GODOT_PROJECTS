@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://xemupsa1wdax" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Green/Panel07.png" id="2_optwx"]
 [ext_resource type="PackedScene" uid="uid://cr83me6yppmvk" path="res://Component/UI_Rec/Char_Dialogue/dialogue.tscn" id="3_2ogq0"]
 
-[node name="DialogueBox" type="Control" unique_id=1807181331]
+[node name="DialogueBoxController" type="Control" unique_id=1807181331]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
