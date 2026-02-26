@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cimg1u7dq8qci"]
+[gd_scene format=4 uid="uid://cimg1u7dq8qci"]
 
 [ext_resource type="Texture2D" uid="uid://bj13qy2ckri8q" path="res://Art_Components/Backgrounds/night_1/1.png" id="1_4klpg"]
 [ext_resource type="Script" uid="uid://r5fdcwnd78xk" path="res://levels/PrologueRooms/CutscenePackedScenes/adv_lvl_intro_cutscene.gd" id="1_kyvyf"]
@@ -6,10 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://b1p3fdvwsdnfy" path="res://Art_Components/Backgrounds/night_1/2.png" id="2_kyvyf"]
 [ext_resource type="Texture2D" uid="uid://d0gvriwjqa03k" path="res://Art_Components/Backgrounds/background2.png" id="3_a51nm"]
 [ext_resource type="Texture2D" uid="uid://b03d4l8fn2u7k" path="res://Art_Components/Backgrounds/background3.png" id="4_lpo0g"]
+[ext_resource type="TileSet" uid="uid://5vc1chccqln4" path="res://levels/level_components/factory_tile_set_main_platform.tres" id="7_lpo0g"]
+[ext_resource type="Texture2D" uid="uid://bwdyhehw5j8uj" path="res://Art_Components/Vehicles/ICV Stryker M1128 MGS (Forward sprite sheet)/IFV Stryker Base (Idle Forward).png" id="8_haycv"]
+[ext_resource type="Material" uid="uid://dj1nixtcnmqd7" path="res://Art_Components/CharSpriteFrames/Shaders/JokerOutline.tres" id="9_clkak"]
+[ext_resource type="SpriteFrames" uid="uid://bynqgblwx727f" path="res://Art_Components/CharSpriteFrames/JokerFrames.tres" id="9_nnibq"]
+[ext_resource type="Shader" uid="uid://bcrm1kicwpnvh" path="res://Art_Components/CharSpriteFrames/Shaders/AceOutline.gdshader" id="11_clkak"]
 
 [sub_resource type="Animation" id="Animation_4klpg"]
 resource_name = "Begin"
-length = 8.066667
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -17,10 +22,10 @@ tracks/0/path = NodePath("../../CanvasLayer/ColorRect:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+"values": [Color(0, 0, 0, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -29,7 +34,7 @@ tracks/1/path = NodePath(".:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 1.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(288, 104), Vector2(288, 160)]
@@ -41,14 +46,11 @@ tracks/2/path = NodePath("../../CanvasLayer/DialogueBox")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(4.0333333, 7.133333),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["This is a test string, calling from the dialogue box parent node", 1.0],
+"args": ["This is a test string, calling from the dialogue box parent node", 1.0, true, "joker", "joker_default"],
 "method": &"play_top"
-}, {
-"args": ["I am a huge furry please rape my face", 1.0],
-"method": &"play_bot"
 }]
 }
 
@@ -85,6 +87,20 @@ _data = {
 &"RESET": SubResource("Animation_kyvyf")
 }
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_clkak"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_haycv")
+}],
+"loop": true,
+"name": &"off",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lussa"]
+shader = ExtResource("11_clkak")
+
 [node name="AdvLvlIntroCutscene" type="Node2D" unique_id=2019984495]
 script = ExtResource("1_kyvyf")
 
@@ -100,8 +116,13 @@ color = Color(0, 0, 0, 0)
 
 [node name="DialogueBox" parent="CanvasLayer" unique_id=1807181331 instance=ExtResource("2_a51nm")]
 z_index = 3
+offset_left = 0.0
+offset_top = 41.0
+offset_right = 0.0
+offset_bottom = 41.0
 
 [node name="Background" type="Node2D" parent="." unique_id=454343048]
+z_index = -1
 
 [node name="Sky" type="Parallax2D" parent="Background" unique_id=2067855744]
 scroll_scale = Vector2(1, 0)
@@ -143,3 +164,85 @@ root_node = NodePath("../Background/Camera2D")
 libraries/ = SubResource("AnimationLibrary_a51nm")
 
 [node name="Foreground" type="Node2D" parent="." unique_id=670889300]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Foreground" unique_id=940181419]
+tile_map_data = PackedByteArray("AAD//wgAAAAPAAAAAAD//wkAAAAPAAEAAAAAAAgAAAAQAAAAAAAAAAkAAAAQAAEAAAABAAgAAAARAAAAAAABAAkAAAARAAEAAAACAAgAAAASAAAAAAACAAkAAAASAAEAAAADAAgAAAATAAAAAAADAAkAAAATAAEAAAAEAAgAAAAUAAAAAAAEAAkAAAAUAAEAAAAFAAgAAAASAAAAAAAFAAkAAAASAAEAAAAGAAgAAAATAAAAAAAGAAkAAAATAAEAAAAHAAgAAAAUAAAAAAAHAAkAAAAUAAEAAAAIAAgAAAASAAAAAAAIAAkAAAASAAEAAAAJAAgAAAATAAAAAAAJAAkAAAATAAEAAAAKAAgAAAAUAAAAAAAKAAkAAAAUAAEAAAALAAgAAAARAAAAAAALAAkAAAARAAEAAAAMAAgAAAASAAAAAAAMAAkAAAASAAEAAAANAAgAAAATAAAAAAANAAkAAAATAAEAAAAOAAgAAAAUAAAAAAAOAAkAAAAUAAEAAAAPAAgAAAAQAAAAAAAPAAkAAAAQAAEAAAAQAAgAAAARAAAAAAAQAAkAAAARAAEAAAARAAgAAAASAAAAAAARAAkAAAASAAEAAAD+/wgAAAAOAAAAAAD+/wkAAAAOAAEAAAD9/wgAAAANAAAAAAD9/wkAAAANAAEAAAASAAgAAAATAAAAAAASAAkAAAATAAEAAAATAAgAAAAUAAAAAAATAAkAAAAUAAEAAAA=")
+tile_set = ExtResource("7_lpo0g")
+
+[node name="TruckTransport" type="AnimatedSprite2D" parent="." unique_id=2078874934]
+position = Vector2(136, 233)
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("SpriteFrames_clkak")
+animation = &"off"
+
+[node name="TruckAnimationPlayer" type="AnimationPlayer" parent="TruckTransport" unique_id=1431959137]
+
+[node name="JokerCutscene" type="AnimatedSprite2D" parent="." unique_id=1370434993]
+self_modulate = Color(0.5254902, 0.33333334, 0.19215687, 1)
+texture_filter = 2
+material = ExtResource("9_clkak")
+position = Vector2(98, 235)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("9_nnibq")
+animation = &"Idle"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="JokerCutscene" unique_id=1894217816]
+
+[node name="AceCutscene" type="AnimatedSprite2D" parent="." unique_id=402570105]
+texture_filter = 2
+material = SubResource("ShaderMaterial_lussa")
+position = Vector2(79, 235)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("9_nnibq")
+animation = &"Idle"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AceCutscene" unique_id=109245540]
+
+[node name="KnightCutscene" type="AnimatedSprite2D" parent="." unique_id=584577613]
+z_index = -1
+texture_filter = 2
+material = SubResource("ShaderMaterial_lussa")
+position = Vector2(88, 201)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("9_nnibq")
+animation = &"Crouch"
+flip_h = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="KnightCutscene" unique_id=1731646584]
+
+[node name="QueenCutscene" type="AnimatedSprite2D" parent="." unique_id=279446641]
+z_index = -1
+texture_filter = 2
+material = SubResource("ShaderMaterial_lussa")
+position = Vector2(115, 193)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("9_nnibq")
+animation = &"GunCrouch"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="QueenCutscene" unique_id=587582663]
+
+[node name="PageCutscene" type="AnimatedSprite2D" parent="." unique_id=1191662350]
+z_index = -1
+texture_filter = 2
+material = SubResource("ShaderMaterial_lussa")
+position = Vector2(165, 214)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("9_nnibq")
+animation = &"GunReload"
+frame = 6
+frame_progress = 0.3403971
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PageCutscene" unique_id=1551698518]
+
+[node name="KingCutscene" type="AnimatedSprite2D" parent="." unique_id=1806033037]
+texture_filter = 2
+material = SubResource("ShaderMaterial_lussa")
+position = Vector2(170, 235)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("9_nnibq")
+animation = &"Idle"
+flip_h = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="KingCutscene" unique_id=1383521268]
+
+[connection signal="end_of_dialogue" from="CanvasLayer/DialogueBox" to="." method="_on_dialogue_box_end_of_dialogue"]

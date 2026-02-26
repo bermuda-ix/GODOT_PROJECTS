@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dyu3ayrq0ewg0" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Green/Panel03.png" id="1_yknj5"]
 [ext_resource type="Texture2D" uid="uid://xemupsa1wdax" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Green/Panel07.png" id="2_optwx"]
 [ext_resource type="PackedScene" uid="uid://cr83me6yppmvk" path="res://Component/UI_Rec/Char_Dialogue/dialogue.tscn" id="3_2ogq0"]
+[ext_resource type="Texture2D" uid="uid://ckcv7kwk8pxdl" path="res://Art_Components/Portaits/DEFAULT/blank_portrait.png" id="3_rv4bw"]
 
 [node name="DialogueBoxController" type="Control" unique_id=1807181331]
 layout_mode = 3
@@ -41,6 +42,9 @@ offset_bottom = 52.0
 
 [node name="PortraitTop" type="TextureRect" parent="TopDialogue/TextureRect/PortraitContainer" unique_id=2003836208]
 layout_mode = 2
+texture = ExtResource("3_rv4bw")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="CharNameTop" type="RichTextLabel" parent="TopDialogue/TextureRect" unique_id=2100347674]
 layout_mode = 0
@@ -110,6 +114,9 @@ offset_bottom = 52.0
 
 [node name="PortraitBot" type="TextureRect" parent="BottomDialogue/TextureRect/PortraitContainer" unique_id=2052236760]
 layout_mode = 2
+texture = ExtResource("3_rv4bw")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="CharNameBot" type="RichTextLabel" parent="BottomDialogue/TextureRect" unique_id=1520682705]
 layout_mode = 0
@@ -118,3 +125,6 @@ offset_top = 2.0
 offset_right = 61.0
 offset_bottom = 8.0
 horizontal_alignment = 1
+
+[connection signal="text_finished" from="TopDialogue/TextureRect2/DialogueContainer/DialogueTextTop" to="." method="_on_dialogue_text_top_text_finished"]
+[connection signal="text_finished" from="BottomDialogue/TextureRect2/DialogueContainer/DialogueTextBot" to="." method="_on_dialogue_text_bot_text_finished"]

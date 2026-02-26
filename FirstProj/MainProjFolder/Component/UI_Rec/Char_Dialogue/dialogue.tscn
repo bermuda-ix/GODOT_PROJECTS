@@ -2,6 +2,21 @@
 
 [ext_resource type="Script" uid="uid://cn4grp2r3dgju" path="res://Component/UI_Rec/Char_Dialogue/dialogue.gd" id="1_5jlo7"]
 
+[sub_resource type="Animation" id="Animation_5jlo7"]
+resource_name = "Dialogue"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DialogueText:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
 [sub_resource type="Animation" id="Animation_c87gw"]
 length = 0.001
 tracks/0/type = "value"
@@ -17,25 +32,10 @@ tracks/0/keys = {
 "values": [0.0]
 }
 
-[sub_resource type="Animation" id="Animation_5jlo7"]
-resource_name = "Test"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("DialogueText:visible_ratio")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qjwrk"]
 _data = {
-&"RESET": SubResource("Animation_c87gw"),
-&"Test": SubResource("Animation_5jlo7")
+&"Dialogue": SubResource("Animation_5jlo7"),
+&"RESET": SubResource("Animation_c87gw")
 }
 
 [node name="Dialogue" type="Control" unique_id=1848131381]
@@ -60,3 +60,5 @@ visible_ratio = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1483055990]
 libraries/ = SubResource("AnimationLibrary_qjwrk")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

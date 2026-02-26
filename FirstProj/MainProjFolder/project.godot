@@ -36,6 +36,7 @@ Global="*res://Component/functions/PersistentData/global.gd"
 LevelsList="*res://levels/level_components/Levels.gd"
 InventoryDict="*res://Component/functions/PersistentData/inventory_dict.gd"
 ObjectivesByLevel="*res://Component/functions/PersistentData/Objectives/objectives_by_level.gd"
+PortraitsData="*uid://b6swg5p7h5ul1"
 
 [debug]
 
