@@ -22,21 +22,23 @@ signal end_of_dialogue
 
 func play_top(_dialogue_string : String = "This is a test string, calling from the dialogue box parent node",\
  _speed : float = 1.0,\
- _pause_on_finish : bool = true,\
+ _pause_on_finish : bool = false,\
  _character : String = "default",\
  _portrait : String = "default") -> void:
+	portrait_top.texture=load(PortraitsData.portraits[_character][_portrait])
 	top_dialogue.call_deferred("set_visible", true)
 	dialogue_text_top.play_dialogue(_dialogue_string, _speed)
-	portrait_top.texture=load(PortraitsData.portraits[_character][_portrait])
+	
 	
 func play_bot(_dialogue_string : String = "I am a huge furry please rape my face",\
  _speed : float = 1.0,\
- _pause_on_finish : bool = true,\
+ _pause_on_finish : bool = false,\
  _character : String = "default",\
  _portrait : String = "default") -> void:
+	portrait_bot.texture=load(PortraitsData.portraits[_character][_portrait])
 	bottom_dialogue.call_deferred("set_visible", true)
 	dialogue_text_bot.play_dialogue(_dialogue_string, _speed)
-	portrait_bot.texture=load(PortraitsData.portraits[_character][_portrait])
+	
 	
 func hide_top():
 	top_dialogue.call_deferred("set_visible", false)

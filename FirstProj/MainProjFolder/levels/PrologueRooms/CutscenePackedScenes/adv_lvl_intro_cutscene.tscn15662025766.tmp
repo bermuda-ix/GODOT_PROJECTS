@@ -30,32 +30,30 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(0, 0, 0, 1)]
 }
-tracks/1/type = "method"
+tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../../CanvasLayer/DialogueBox")
+tracks/1/path = NodePath(".:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.099999994),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": ["Joker... hey, Joker, you there?", 1.0, false, "default", "default"],
-"method": &"play_top"
-}]
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(288, 104), Vector2(288, 160)]
 }
 tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../..")
+tracks/2/path = NodePath("../../CanvasLayer/DialogueBox")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(2),
+"times": PackedFloat32Array(0.099999994),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [],
-"method": &"cutscene_wait_for_input"
+"args": ["This is a test string, calling from the dialogue box parent node", 1.0, true, "default", "default"],
+"method": &"play_top"
 }]
 }
 
@@ -76,34 +74,46 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../../JokerCutscene:animation")
+tracks/1/path = NodePath(".:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"Jump"]
+"update": 0,
+"values": [Vector2(288, 104)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../../JokerCutscene:position")
+tracks/2/path = NodePath("../../JokerCutscene:animation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(267, 235)]
+"update": 1,
+"values": [&"Jump"]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("../../JokerCutscene:frame")
+tracks/3/path = NodePath("../../JokerCutscene:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(267, 235)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../JokerCutscene:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -181,23 +191,6 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 2, 2, 0]
-}
-tracks/6/type = "method"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("../../CanvasLayer/DialogueBox")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.05),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"hide_both"
-}, {
-"args": ["Ah! What the hell man!?", 1.0, false, "joker", "joker_default"],
-"method": &"play_top"
-}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_a51nm"]
@@ -987,7 +980,7 @@ texture = ExtResource("4_lpo0g")
 centered = false
 
 [node name="Camera2D" type="Camera2D" parent="Background" unique_id=1445754895]
-position = Vector2(284, 183)
+position = Vector2(288, 104)
 zoom = Vector2(2, 2)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1265659924]
@@ -1094,5 +1087,4 @@ flip_h = true
 libraries/ = SubResource("AnimationLibrary_5wdao")
 
 [connection signal="end_of_dialogue" from="CanvasLayer/DialogueBox" to="." method="_on_dialogue_box_end_of_dialogue"]
-[connection signal="animation_changed" from="AnimationPlayer" to="." method="_on_animation_player_animation_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
