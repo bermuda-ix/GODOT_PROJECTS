@@ -61,4 +61,8 @@ visible_ratio = 0.0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1483055990]
 libraries/ = SubResource("AnimationLibrary_qjwrk")
 
+[node name="DialogueTimer" type="Timer" parent="." unique_id=329937798]
+wait_time = 0.05
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="DialogueTimer" to="." method="_on_dialogue_timer_timeout"]

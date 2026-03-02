@@ -5,15 +5,23 @@ extends Node2D
 
 @onready var dialogue_box: DialogueBoxController = $CanvasLayer/DialogueBox
 
-@onready var cutscene_queue : PackedStringArray
+@onready var cutscene_queue : Array[String]
+
+@onready var skippable : bool = true
 
 
 func _ready() -> void:
-	cutscene_queue=animation_player.get_animation_list()
+	cutscene_queue.assign(animation_player.get_animation_list())
 	if cutscene_queue.has("RESET"):
 		var _reset_index=cutscene_queue.find("RESET")
 		cutscene_queue.remove_at(_reset_index)	
+	if cutscene_queue.has("END"):
+		var _reset_index=cutscene_queue.find("END")
+		cutscene_queue.remove_at(_reset_index)
+	cutscene_queue.sort_custom(func(a, b): return int(a) < int(b))
+	cutscene_queue.push_back(&"END")
 	print_debug(cutscene_queue)
+	
 	#animation_player.play()
 	for i in cutscene_queue:
 		if i==cutscene_queue[0]:
@@ -24,17 +32,48 @@ func _ready() -> void:
 	
 
 func _process(delta: float) -> void:
-	if not animation_player.is_playing():
-		if Input.is_action_just_pressed("attack")\
-		 or Input.is_action_just_pressed("jump")\
-		 or Input.is_action_just_pressed("Interact"):
-			animation_player.play()
-			#dialogue_box.hide_both()
-
+	#if not (dialogue_box.playing_bot and dialogue_box.playing_top):
+		#if Input.is_action_just_pressed("attack")\
+		 #or Input.is_action_just_pressed("jump")\
+		 #or Input.is_action_just_pressed("Interact"):
+			#cutscene_queue.remove_at(0)
+			#if cutscene_queue.is_empty():
+				#print("end of scene")
+			#else:
+				#animation_player.play(cutscene_queue[0])
+			##dialogue_box.hide_both()
+	#else:
+		#if (Input.is_action_just_pressed("attack")\
+		 #or Input.is_action_just_pressed("jump")\
+		 #or Input.is_action_just_pressed("Interact")) and skippable:
+			#dialogue_box.skip_to_end()
+			#animation_player.pause()
+			
+	if (Input.is_action_just_pressed("attack")\
+	 or Input.is_action_just_pressed("jump")\
+	 or Input.is_action_just_pressed("Interact")):
+		if (dialogue_box.playing_bot or dialogue_box.playing_top):
+			if skippable:
+				animation_player.stop(true)
+				dialogue_box.skip_to_end()
+			else:
+				pass
+		elif not animation_player.is_playing():
+			cutscene_queue.remove_at(0)
+			if cutscene_queue.is_empty():
+				print("end of scene")
+			else:
+				animation_player.play(cutscene_queue[0])
+		else:
+			pass
+			
+			
+	
 func cutscene_wait_for_input() -> void:
 	animation_player.pause()
 
-
+func toggle_skip(value : bool) -> void:
+	skippable=value
 
 func _on_dialogue_box_end_of_dialogue() -> void:
 	#cutscene_wait_for_input()
