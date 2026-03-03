@@ -22,6 +22,16 @@ func _ready() -> void:
 	cutscene_queue.push_back(&"END")
 	print_debug(cutscene_queue)
 	
+	###########################
+	##Preload adventure level##
+	###########################
+	
+	Global.game_controller.call_preload_levels(LevelsList.prologue_unique_levels)
+	Global.game_controller.call_preload_levels(LevelsList.level_maps)
+	Global.game_controller._init_objectives(ObjectivesByLevel.prologue_init_objectives)
+	
+	###########################
+	
 	#animation_player.play()
 	for i in cutscene_queue:
 		if i==cutscene_queue[0]:
@@ -74,6 +84,9 @@ func cutscene_wait_for_input() -> void:
 
 func toggle_skip(value : bool) -> void:
 	skippable=value
+
+func end_cutscene(_next_scene : String = "PrologueLvl") -> void:
+	Global.game_controller.change_2d_scene("PrologueLvl", true, false, -1, "fade_to_black_quick", "fade_from_black_quick")
 
 func _on_dialogue_box_end_of_dialogue() -> void:
 	#cutscene_wait_for_input()

@@ -31,10 +31,17 @@ const HIGHSCORE_LIST = "res://LVL_Transitions/highscore_list.tscn"
 		"PrologueGarage2" : "uid://c8il70paf1pfv",
 		"PrologueGarage3" : "uid://cpax3imqk1mix"
 	}
+#Cutscenes PackedScenes
+@onready var adv_cutscenes : Dictionary ={
+	"IntroCutscene" : "uid://cimg1u7dq8qci"
+}
+
+
 
 @onready var guantlet_lvls : Dictionary = {
 		"GuantletLvl" : "uid://djj0ggyoi07b2"
 	}
+	
 
 #Connected duplicated rooms
 @onready var level_maps : Dictionary = {

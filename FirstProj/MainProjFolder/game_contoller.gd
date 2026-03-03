@@ -98,15 +98,25 @@ func set_region (dict : Dictionary) -> void:
 
 #refactor to use global array/map of full levels
 func load_levels(dict : Dictionary) -> void:
+	
+	mutex.lock()
 	for room in dict:
-		
 		#print_debug(room)
 		#print_debug(dict[room])
 		if loaded_rooms_map.has(room) == false:
 			loaded_rooms_map[room]=load(dict[room]).instantiate()
-		
 		#loaded_rooms.append(load(dict[room]).instantiate())
 		#i+=1
+	mutex.unlock()
+	
+func call_preload_levels(_dict : Dictionary):
+	thread.start(load_levels.bind(_dict))
+	
+#func adjacent_rooms_loaded()-> void:
+	#thread.wait_to_finish()
+	#print_debug("rooms preloaded")
+
+
 func reload_game() -> void:
 	get_tree().reload_current_scene()
 		
@@ -155,12 +165,41 @@ func load_first_room (_first_room : String, \
 
 #Toggle UI vissibility
 func toggle_game_ui(value : bool) -> void:
-	level_UI.visible = value
+	level_UI.set_deferred("visible", value)
+	
 #Toggle world2D, the main level processing tree, processing
 func toggle_world2d_process(value : bool) -> void:
 	world_2d.set_process(value)
 	world_2d.visible=value
 
+#Load single scene
+func load_cutscene(new_scene: String, \
+	delete: bool = true, \
+	keep_running: bool = false, \
+	_transition_in : String="fade_to_black", \
+	_transition_out : String="fade_from_black") -> void:
+	
+	await LevelTransition.transition_in(_transition_in)
+	toggle_game_ui(false)
+	if current_2d_scene != null:
+		if delete:
+			current_2d_scene.queue_free() #Deletes node entirely
+		elif keep_running:
+			current_2d_scene.visible = false #Keep in mem and running
+		else:
+			world_2d.call_deferred("remove_child", current_2d_scene)
+			
+			
+	var _new_2d_scene=load(LevelsList.adv_cutscenes[new_scene]).instantiate()
+	if world_2d.get_child_count()==0:
+		world_2d.add_child(_new_2d_scene)
+		
+	if current_2d_scene != null:
+		prev_2d_scene=current_2d_scene
+		return_room=prev_2d_scene.name
+	current_2d_scene=_new_2d_scene
+	LevelTransition.transition_out(_transition_out)
+	
 #Change scenes
 func change_2d_scene (new_scene: String, \
 	delete: bool = true, \
@@ -178,6 +217,7 @@ func change_2d_scene (new_scene: String, \
 	if current_2d_scene != null:
 		if delete:
 			current_2d_scene.queue_free() #Deletes node entirely
+			await current_2d_scene.tree_exited
 		elif keep_running:
 			current_2d_scene.visible = false #Keep in mem and running
 		else:
@@ -208,8 +248,8 @@ func change_2d_scene (new_scene: String, \
 
 	load_levels(LevelsList.level_maps)
 
-func _init_objectives(dict : Dictionary):
-	objectives_ui._init_objectives_list(dict)
+func _init_objectives(_dict : Dictionary):
+	thread.start(objectives_ui._init_objectives_list.bind(_dict))
 	
 #Change GUI Scene
 func change_gui_scene (new_scene: String, \
@@ -225,6 +265,7 @@ func change_gui_scene (new_scene: String, \
 	gui.add_child(current_gui_scene)
 	LevelTransition.transition_out(_transition_out)
 	
+
 # preload next scene, if not already loaded
 func preload_scene(_new_scene: String):
 	mutex.lock()
@@ -235,10 +276,9 @@ func preload_scene(_new_scene: String):
 func call_preload_scene(_new_scene: String):
 	thread.start(preload_scene.bind(_new_scene))
 	
-
 func scene_loaded()-> void:
 	thread.wait_to_finish()
-	print_debug("scene preloaded")
+	print_debug("thread_finished")
 
 #remove world2d, for moving to menu only scene
 func remove_world2d_scene() -> void:

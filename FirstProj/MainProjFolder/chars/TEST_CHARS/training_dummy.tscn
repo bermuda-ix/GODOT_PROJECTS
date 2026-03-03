@@ -112,4 +112,3 @@ one_shot = true
 [connection signal="received_damage" from="CharacterBody2D/HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="received_stagger_damage" from="CharacterBody2D/HurtBox" to="." method="_on_hurt_box_received_stagger_damage"]
 [connection signal="bullet_detected" from="CharacterBody2D/BulletDetection" to="." method="_on_bullet_detection_bullet_detected"]
-[connection signal="timeout" from="TeleportTimer" to="." method="_on_teleport_timer_timeout"]

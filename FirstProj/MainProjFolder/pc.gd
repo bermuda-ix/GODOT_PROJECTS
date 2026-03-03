@@ -1780,7 +1780,8 @@ func parry_success():
 func _on_hit_box_area_entered(_area):
 	hit_sound=hit1
 	AudioStreamManager.play(hit_sound)
-	hb_collision.disabled
+	#hb_collision.disabled
+	hb_collision.set_thread_safe("disabled", true)
 	hit_fx.visible=true
 	hit_fx_player.stop()
 	hit_fx_player.play(hit_animation)

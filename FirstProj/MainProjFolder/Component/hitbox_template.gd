@@ -7,6 +7,9 @@ signal parried()
 @export var stagger: Stagger
 @export var stagger_damage : bool = false
 
+@export var launch : bool = false
+@export var knock_back : bool = false
+
 func _ready():
 	connect("area_entered", _on_parried)
 

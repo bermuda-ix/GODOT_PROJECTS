@@ -6,7 +6,7 @@ signal scene_reloaded
 
 @export var next_level: PackedScene
 
-var player : PlayerEntity
+@export var player : PlayerEntity
 @onready var cutscene_active : bool = false
 #@onready var init_starting_pos: Node2D = $DoorsAndSwitches/Entries/StartingPos
 @onready var init_starting_pos: Node2D = $StartingPos/Default
@@ -87,7 +87,9 @@ func _ready():
 	#Events.pause.connect(show_pause)
 	#Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
-	player=get_tree().get_first_node_in_group("player")
+	
+	if player == null:
+		player=get_tree().get_first_node_in_group("player")
 	
 	player.attack_qte.connect(_pc_attack_qte)
 	player.block_qte.connect(_pc_block_qte)
@@ -259,6 +261,8 @@ func _pc_no_input_qte() -> void:
 func _on_external_door_switch_unlock_door() -> void:
 	pass # Replace with function body.
 
+func toggle_ui(_value : bool) -> void:
+	Global.game_controller.toggle_game_ui(_value)
 
 func reload_scene():
 	camera_pos.camera_zoom=camera_zoom

@@ -2229,8 +2229,8 @@ tracks/7/keys = {
 "values": [Vector2(39, -10)]
 }
 
-[sub_resource type="Animation" id="Animation_i0kkw"]
-resource_name = "Heavy_Combo_1"
+[sub_resource type="Animation" id="Animation_2dddn"]
+resource_name = "Heavy_Cancel"
 length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -2353,6 +2353,70 @@ tracks/9/keys = {
 "args": ["shotgun_fire"],
 "method": &"call_audioplayer"
 }]
+}
+
+[sub_resource type="Animation" id="Animation_i0kkw"]
+resource_name = "Heavy_Combo_1"
+length = 0.33333334
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667, 0.20000002, 0.23333335, 0.26666668, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"Kick01", &"Idle"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.047849424, 0.1708908, 0.18541652),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [false, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/HitBox:launch")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.33333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("StateMachine/Aim:aim_speed_scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.33333334),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
 }
 
 [sub_resource type="Animation" id="Animation_cdmbu"]
@@ -3712,6 +3776,30 @@ tracks/52/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(29, -33)]
+}
+tracks/53/type = "value"
+tracks/53/imported = false
+tracks/53/enabled = true
+tracks/53/path = NodePath("AnimatedSprite2D/HitBox:launch")
+tracks/53/interp = 1
+tracks/53/loop_wrap = true
+tracks/53/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/54/type = "value"
+tracks/54/imported = false
+tracks/54/enabled = true
+tracks/54/path = NodePath("StateMachine/Aim:aim_speed_scale")
+tracks/54/interp = 1
+tracks/54/loop_wrap = true
+tracks/54/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
 }
 
 [sub_resource type="Animation" id="Animation_oktus"]
@@ -5534,6 +5622,7 @@ _data = {
 &"Attack_Down": SubResource("Animation_704ig"),
 &"Crouch": SubResource("Animation_8w5mx"),
 &"Flip_Attack": SubResource("Animation_l6eg2"),
+&"Heavy_Cancel": SubResource("Animation_2dddn"),
 &"Heavy_Combo_1": SubResource("Animation_i0kkw"),
 &"Heavy_Combo_2": SubResource("Animation_cdmbu"),
 &"Heavy_Counter": SubResource("Animation_83noc"),

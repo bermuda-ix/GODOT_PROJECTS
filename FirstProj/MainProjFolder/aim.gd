@@ -2,8 +2,10 @@ extends LimboState
 @export var pc : PlayerEntity
 @export var anim_player : AnimationPlayer
 @export var shotty_anim_player : AnimationPlayer
+@export var aim_speed_scale=1
 
 func _enter() -> void:
+	shotty_anim_player.speed_scale=aim_speed_scale
 	shotty_anim_player.play("shotgun_aim")
 
 func _update(delta: float) -> void:
@@ -12,4 +14,4 @@ func _update(delta: float) -> void:
 
 func _exit() -> void:
 	shotty_anim_player.pause()
-	
+	shotty_anim_player.speed_scale=1

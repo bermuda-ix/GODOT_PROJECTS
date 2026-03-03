@@ -4,9 +4,8 @@ extends LimboState
 @export var pc : PlayerEntity
 
 func _enter() -> void:
-	anim_player.speed_scale=1.5
+	anim_player.speed_scale=1
 	anim_player.play("Heavy_Combo_1")
-	pc.velocity.x=-250*(-pc.face_dir)
 	pc.heavy_attack_flag=true
 	
 #func _update(delta: float) -> void:

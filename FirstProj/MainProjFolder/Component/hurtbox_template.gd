@@ -6,9 +6,12 @@ signal received_damage(damage: int)
 signal received_stagger_damage(damage: int)
 signal got_hit(hitbox: HitBox)
 signal bullet_hit(_damage: int)
-signal knockback(hitbox: HitBox)
+
 signal parried()
 signal weakpoint_hit()
+
+signal launched()
+signal knockback()
 
 @export var health: Health
 @export var stagger: Stagger
@@ -21,6 +24,12 @@ func _ready():
 	connect("body_entered", _bullet_hit)
 
 func _on_area_entered(hitbox: HitBox) -> void:
+	
+	if hitbox.launch:
+		launched.emit()
+	if hitbox.knock_back:
+		knockback.emit()
+	
 	if health.health<=0:
 		return
 	if hitbox != null:
