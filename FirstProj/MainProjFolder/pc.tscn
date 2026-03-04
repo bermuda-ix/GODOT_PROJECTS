@@ -7429,11 +7429,12 @@ pc = NodePath("../../..")
 animation_player = NodePath("../../../AnimationPlayer")
 state_machine = NodePath("../..")
 
-[node name="Aim" type="LimboState" parent="StateMachine" unique_id=1244651801 node_paths=PackedStringArray("pc", "anim_player", "shotty_anim_player")]
+[node name="Aim" type="LimboState" parent="StateMachine" unique_id=1244651801 node_paths=PackedStringArray("pc", "anim_player", "shotty_anim_player", "clash_power")]
 script = ExtResource("246_p73v2")
 pc = NodePath("../..")
 anim_player = NodePath("../../AnimationPlayer")
 shotty_anim_player = NodePath("../../AnimatedSprite2D/Shotty/ShottyAnimationPlayer")
+clash_power = NodePath("../../ClashPower")
 
 [node name="SpecialAttack" type="LimboState" parent="StateMachine" unique_id=1245630320 node_paths=PackedStringArray("anim_player", "shotty_anim_player", "pc")]
 script = ExtResource("104_ctchq")
@@ -7529,6 +7530,7 @@ pc = NodePath("../..")
 script = ExtResource("109_mj1xc")
 pc = NodePath("../..")
 
+[connection signal="clash_up" from="." to="." method="_on_clash_up"]
 [connection signal="area_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_body_entered"]
 [connection signal="parried" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_parried"]

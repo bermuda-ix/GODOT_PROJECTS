@@ -50,6 +50,7 @@ const JUMP_VELOCITY = -400.0
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @export var jump_speed : float = 120.0
 @export var chase_speed : float = 80.0
+@export var knockback_distance : float = 500
 
 var current_speed : float = 40.0
 var prev_speed : float = 40.0
@@ -493,3 +494,12 @@ func _on_launched_entered() -> void:
 
 func _on_hurt_box_launched() -> void:
 	state_machine.change_active_state(launched)
+
+
+func _on_hurt_box_knockback() -> void:
+	player.clash_up.emit()
+	if player_right:
+		knockback.x=-knockback_distance
+	else:
+		knockback.x=knockback_distance
+	

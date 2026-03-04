@@ -1525,6 +1525,7 @@ metadata/_edit_use_anchors_ = true
 [connection signal="timeout" from="LaunchTimer" to="." method="_on_launch_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="knockback" from="HurtBox" to="." method="_on_hurt_box_knockback"]
 [connection signal="launched" from="HurtBox" to="." method="_on_hurt_box_launched"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]

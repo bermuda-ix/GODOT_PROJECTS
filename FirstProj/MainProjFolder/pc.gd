@@ -18,6 +18,7 @@ const COUNTER_CLOCKWISE=-PI/2
 #signals
 signal flip
 signal jump_out_signal
+signal clash_up
 
 signal update_health(value : int)
 signal update_max_health(value : int)
@@ -2369,3 +2370,7 @@ func _on_attack_state_exited() -> void:
 
 func _on_stagger_stagger_decreased(diff: int) -> void:
 	set_stagger()
+
+
+func _on_clash_up() -> void:
+	clash_power.increase_clash()

@@ -3,9 +3,10 @@ extends LimboState
 @export var anim_player : AnimationPlayer
 @export var shotty_anim_player : AnimationPlayer
 @export var aim_speed_scale=1
+@export var clash_power: ClashPower
 
 func _enter() -> void:
-	shotty_anim_player.speed_scale=aim_speed_scale
+	shotty_anim_player.speed_scale=aim_speed_scale+(clash_power.clash_power/2)
 	shotty_anim_player.play("shotgun_aim")
 
 func _update(delta: float) -> void:
