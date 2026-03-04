@@ -1206,7 +1206,7 @@ position = Vector2(2006, 751)
 boss = ExtResource("17_rfxm3")
 
 [node name="soldier_enemy_boss" parent="Enemy/MiniBosses/MinoBossGroup1" index="1" unique_id=789104702 instance=ExtResource("17_rfxm3")]
-position = Vector2(2209, 779)
+position = Vector2(2072, 776)
 
 [node name="Underground" type="Node" parent="Enemy" index="6" unique_id=598079795]
 
