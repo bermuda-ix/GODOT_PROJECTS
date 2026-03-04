@@ -22,6 +22,32 @@ resource_name = "false"
 variable = &"staggered"
 value = SubResource("BBVariant_cj7pg")
 
+[sub_resource type="BBVariant" id="BBVariant_eyph0"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_qbeam"]
+variable = &"launched"
+value = SubResource("BBVariant_eyph0")
+
+[sub_resource type="BTSequence" id="BTSequence_yapl0"]
+custom_name = "Launched"
+children = [SubResource("BTCheckVar_qbeam")]
+
+[sub_resource type="BBVariant" id="BBVariant_iyge6"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_6sx6v"]
+variable = &"falling"
+value = SubResource("BBVariant_iyge6")
+
+[sub_resource type="BTSequence" id="BTSequence_gnp2y"]
+custom_name = "Falling"
+children = [SubResource("BTCheckVar_6sx6v")]
+
 [sub_resource type="BBVariant" id="BBVariant_qkysk"]
 type = 1
 saved_value = true
@@ -376,7 +402,7 @@ custom_name = "ShootingStance"
 children = [SubResource("BTSequence_pb4ri"), SubResource("BTSequence_4yj4i")]
 
 [sub_resource type="BTSelector" id="BTSelector_ct688"]
-children = [SubResource("BTSequence_c1urr"), SubResource("BTSelector_sfx0f")]
+children = [SubResource("BTSequence_yapl0"), SubResource("BTSequence_gnp2y"), SubResource("BTSequence_c1urr"), SubResource("BTSelector_sfx0f")]
 
 [sub_resource type="BTSequence" id="BTSequence_vjri2"]
 children = [SubResource("BTCheckVar_qpg7m"), SubResource("BTSelector_ct688")]

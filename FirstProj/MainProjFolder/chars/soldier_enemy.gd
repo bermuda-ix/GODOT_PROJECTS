@@ -139,6 +139,10 @@ var distance
 @onready var staggered: LimboState = $LimboHSM/STAGGERED
 @onready var teleport_and_shoot: BTState = $LimboHSM/TeleportAndShoot
 @onready var teleport_and_hit: BTState = $LimboHSM/TeleportAndHit
+@onready var launch: Launch = $LimboHSM/Launch
+
+
+
 @onready var teleport_helper_raycast: RayCast2D = $RayCast2D
 
 
@@ -210,6 +214,8 @@ func _ready():
 	bt_player.blackboard.set_var("counter_kick_flag", false)
 	bt_player.blackboard.set_var("staggered", false)
 	bt_player.blackboard.set_var("Phase2Active", false)
+	bt_player.blackboard.set_var("launched", false)
+	bt_player.blackboard.set_var("falling", false)
 	dying.blackboard.set_var("hit_the_floor", false)
 	#turret.setup(0.2)
 	boss_ui.activate_boss_ui()
@@ -774,7 +780,7 @@ func _on_dying_entered() -> void:
 
 
 func _on_phase_2_entered() -> void:
-#	
+	launch.air_time=0.5
 	bt_player.blackboard.set_var("Phase2Active", true)
 	combat_state_change_handler.ranged_dist=1000
 	bt_player.blackboard.set_var("melee_mode", true)
@@ -793,6 +799,8 @@ func _on_phase_2_entered() -> void:
 
 func _on_phases_handler_next_phase() -> void:
 	#hurt_box_collision.disabled=true
+	bt_player.blackboard.set_var("launched", false)
+	bt_player.blackboard.set_var("falling", false)
 	hurt_box_collision.call_deferred("set_disabled", true)
 	changing_phase=true
 	bt_player.blackboard.set_var("attack_mode", false)
@@ -820,6 +828,7 @@ func _on_phasetransition_exited() -> void:
 
 
 func _on_phasetransition_updated(delta: float) -> void:
+	
 	assert(bt_player.blackboard.get_var("attack_mode")==false)
 
 
@@ -921,3 +930,13 @@ func _on_teleport_and_hit_updated(delta: float) -> void:
 
 func _on_teleport_and_hit_entered() -> void:
 	pass
+
+
+func _on_hurt_box_launched() -> void:
+	state_machine.change_active_state(launch)
+		
+
+
+func _on_launch_timer_timeout() -> void:
+	if phases.get_active_state()==phase_2:
+		teleport_counter()

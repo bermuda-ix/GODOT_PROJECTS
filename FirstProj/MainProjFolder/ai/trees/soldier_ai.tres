@@ -48,6 +48,16 @@ var/Phase2Active/type = 1
 var/Phase2Active/value = false
 var/Phase2Active/hint = 0
 var/Phase2Active/hint_string = ""
+var/launched/name = &"launched"
+var/launched/type = 1
+var/launched/value = false
+var/launched/hint = 0
+var/launched/hint_string = ""
+var/falling/name = &"falling"
+var/falling/type = 1
+var/falling/value = false
+var/falling/hint = 0
+var/falling/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_s1wjr"]
 type = 1
@@ -67,6 +77,32 @@ resource_name = "false"
 [sub_resource type="BTCheckVar" id="BTCheckVar_qpg7m"]
 variable = &"staggered"
 value = SubResource("BBVariant_cj7pg")
+
+[sub_resource type="BBVariant" id="BBVariant_kadvv"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_j4731"]
+variable = &"launched"
+value = SubResource("BBVariant_kadvv")
+
+[sub_resource type="BTSequence" id="BTSequence_myvia"]
+custom_name = "Launched"
+children = [SubResource("BTCheckVar_j4731")]
+
+[sub_resource type="BBVariant" id="BBVariant_k3jx5"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_x777n"]
+variable = &"falling"
+value = SubResource("BBVariant_k3jx5")
+
+[sub_resource type="BTSequence" id="BTSequence_p7kfe"]
+custom_name = "Falling"
+children = [SubResource("BTCheckVar_x777n")]
 
 [sub_resource type="BBVariant" id="BBVariant_qkysk"]
 type = 1
@@ -389,7 +425,7 @@ custom_name = "ShootingStance"
 children = [SubResource("BTSequence_pb4ri"), SubResource("BTSequence_4yj4i")]
 
 [sub_resource type="BTSelector" id="BTSelector_ct688"]
-children = [SubResource("BTSequence_c1urr"), SubResource("BTSelector_sfx0f")]
+children = [SubResource("BTSequence_myvia"), SubResource("BTSequence_p7kfe"), SubResource("BTSequence_c1urr"), SubResource("BTSelector_sfx0f")]
 
 [sub_resource type="BTSequence" id="BTSequence_vjri2"]
 children = [SubResource("BTCheckVar_qpg7m"), SubResource("BTSelector_ct688")]

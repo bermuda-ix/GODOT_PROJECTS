@@ -147,6 +147,8 @@ func _ready():
 	bt_player.blackboard.set_var("ranged_mode", true)
 	bt_player.blackboard.set_var("within_range", false)
 	bt_player.blackboard.set_var("staggered", false)
+	bt_player.blackboard.set_var("launched", false)
+	bt_player.blackboard.set_var("falling", false)
 	dying.blackboard.set_var("hit_the_floor", false)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
