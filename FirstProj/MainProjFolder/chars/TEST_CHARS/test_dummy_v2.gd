@@ -30,7 +30,8 @@ extends CharacterBody2D
 @onready var teleport_timer: Timer = $TeleportTimer
 
 @onready var launch_timer: Timer = $LaunchTimer
-@onready var launch_height : float = 100
+@onready var launch_height : float = 40
+@onready var launch_strength : float = 40
 
 func _ready() -> void:
 	pass
@@ -82,7 +83,7 @@ func _on_hurt_box_launched() -> void:
 	print_debug("launched")
 	launch_timer.start(1)
 	state_machine.change_active_state(launched)
-	launch_height=global_position.y-40
+	launch_height=global_position.y-launch_strength
 
 
 func _on_launch_timer_timeout() -> void:

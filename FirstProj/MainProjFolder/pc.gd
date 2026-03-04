@@ -192,6 +192,7 @@ signal no_input_qte
 @onready var special_attack_buffer_timer: Timer = $SpecialAttackBufferTimer
 @onready var reset_combo_flag : bool = false
 @onready var heavy_attack_flag : bool = false
+@onready var hit_buffer: Timer = $HitBuffer
 
 
 @export var attack_timer_len : float = 0.3
@@ -909,7 +910,6 @@ func update_animation(input_axis):
 		
 		
 func attack_animate():
-
 	if attacking==true or state_machine.get_active_state()==hit:
 		return
 
@@ -1010,7 +1010,6 @@ func _on_heavy_attack_buffer_timer_timeout() -> void:
 	#attack_timer.paused=false
 	
 func heavy_attack():
-	
 	heavy_attack_buffer_timer.stop()
 	if state_machine.get_active_state()!=attack_state:
 		attack_timer.paused=true
@@ -1664,6 +1663,7 @@ func _on_animation_player_animation_finished(anim_name):
 			
 		#else:
 			#state_machine.dispatch(&"return_to_idle")
+		hit_buffer.stop()
 		hb_collision.disabled=true
 		
 	
@@ -1778,13 +1778,20 @@ func parry_success():
 
 
 func _on_hit_box_area_entered(_area):
-	hit_sound=hit1
-	AudioStreamManager.play(hit_sound)
-	#hb_collision.disabled
-	hb_collision.set_thread_safe("disabled", true)
-	hit_fx.visible=true
-	hit_fx_player.stop()
-	hit_fx_player.play(hit_animation)
+	print(hit_buffer.time_left)
+	if hit_buffer.time_left>0:
+		return
+	else:
+		assert(hit_buffer.is_stopped()==true)
+		assert(hit_buffer.time_left<=0)
+		hit_buffer.start(1)
+		hit_sound=hit1
+		AudioStreamManager.play(hit_sound)
+		#hb_collision.disabled
+		hb_collision.set_deferred("disabled", true)
+		hit_fx.visible=true
+		hit_fx_player.stop()
+		hit_fx_player.play(hit_animation)
 
 
 func _on_hit_box_body_entered(body):

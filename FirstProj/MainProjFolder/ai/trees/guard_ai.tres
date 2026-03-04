@@ -8,6 +8,21 @@ var/ammo/type = 2
 var/ammo/value = 0
 var/ammo/hint = 0
 var/ammo/hint_string = ""
+var/launched/name = &"launched"
+var/launched/type = 1
+var/launched/value = false
+var/launched/hint = 0
+var/launched/hint_string = ""
+var/staggered/name = &"staggered"
+var/staggered/type = 1
+var/staggered/value = false
+var/staggered/hint = 0
+var/staggered/hint_string = ""
+var/falling/name = &"falling"
+var/falling/type = 1
+var/falling/value = false
+var/falling/hint = 0
+var/falling/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_2nsp0"]
 type = 1
@@ -18,6 +33,32 @@ resource_name = "true"
 variable = &"attack_mode"
 value = SubResource("BBVariant_2nsp0")
 custom_name = "AttackMode"
+
+[sub_resource type="BBVariant" id="BBVariant_pquhl"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_fh6a1"]
+variable = &"launched"
+value = SubResource("BBVariant_pquhl")
+
+[sub_resource type="BTSequence" id="BTSequence_dk6q0"]
+custom_name = "Launched"
+children = [SubResource("BTCheckVar_fh6a1")]
+
+[sub_resource type="BBVariant" id="BBVariant_bob2m"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_exfju"]
+variable = &"falling"
+value = SubResource("BBVariant_bob2m")
+
+[sub_resource type="BTSequence" id="BTSequence_fopnx"]
+custom_name = "Falling"
+children = [SubResource("BTCheckVar_exfju")]
 
 [sub_resource type="BBVariant" id="BBVariant_dy0rb"]
 type = 1
@@ -195,10 +236,14 @@ children = [SubResource("BTSequence_bob2m")]
 children = [SubResource("BTSequence_ojhjv"), SubResource("BTCooldown_hp7h8")]
 
 [sub_resource type="BTSequence" id="BTSequence_381y2"]
+custom_name = "Attack"
 children = [SubResource("BTCheckVar_pquhl"), SubResource("BTSelector_ahbr2")]
 
+[sub_resource type="BTSelector" id="BTSelector_2nsp0"]
+children = [SubResource("BTSequence_dk6q0"), SubResource("BTSequence_fopnx"), SubResource("BTSequence_381y2")]
+
 [sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_fiv6f"]
-children = [SubResource("BTSequence_381y2")]
+children = [SubResource("BTSelector_2nsp0")]
 
 [sub_resource type="BTSequence" id="BTSequence_hoto7"]
 custom_name = "Attacks"

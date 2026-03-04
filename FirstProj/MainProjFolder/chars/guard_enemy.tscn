@@ -102,6 +102,7 @@
 [ext_resource type="PackedScene" uid="uid://b74ywj4npkesd" path="res://Component/bullet_projectile.tscn" id="79_m3s8r"]
 [ext_resource type="Script" uid="uid://bnpx2avsix2an" path="res://Component/functions/GroupEnemyManager.gd" id="86_m3s8r"]
 [ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="97_onb8s"]
+[ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="100_jseaa"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ngkqw"]
 animations = [{
@@ -1256,7 +1257,6 @@ collide_with_areas = true
 
 [node name="Health" type="Node" parent="." unique_id=2114117969]
 script = ExtResource("8_kbb6k")
-max_health = 1
 metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=1621757423]
@@ -1281,6 +1281,9 @@ one_shot = true
 [node name="AttackTimer" type="Timer" parent="." unique_id=2052838920]
 
 [node name="StaggerTimer" type="Timer" parent="." unique_id=1678317936]
+
+[node name="LaunchTimer" type="Timer" parent="." unique_id=813462658]
+one_shot = true
 
 [node name="HitBox" type="Area2D" parent="." unique_id=1236886276 node_paths=PackedStringArray("stagger")]
 position = Vector2(29, 19)
@@ -1479,6 +1482,14 @@ bt_player = NodePath("../../BTPlayer")
 behavior_tree = ExtResource("97_onb8s")
 blackboard_plan = SubResource("BlackboardPlan_ri8gu")
 
+[node name="LAUNCHED" type="LimboState" parent="LimboHSM" unique_id=1376982772 node_paths=PackedStringArray("actor", "launch_timer")]
+script = ExtResource("100_jseaa")
+actor = NodePath("../..")
+launch_timer = NodePath("../../LaunchTimer")
+launch_strength = 50.0
+
+[node name="FALLING" type="LimboState" parent="LimboHSM" unique_id=1065190892]
+
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=1758670167]
 
 [node name="RANGED" type="LimboState" parent="CombatStateMachine" unique_id=1132427303 node_paths=PackedStringArray("actor", "bt_player")]
@@ -1511,8 +1522,10 @@ metadata/_edit_use_anchors_ = true
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="LaunchTimer" to="." method="_on_launch_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="launched" from="HurtBox" to="." method="_on_hurt_box_launched"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
 [connection signal="body_exited" from="AttackRange" to="." method="_on_attack_range_body_exited"]
@@ -1521,3 +1534,5 @@ metadata/_edit_use_anchors_ = true
 [connection signal="player_sighted" from="VisionHandler" to="." method="_on_vision_handler_player_sighted"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
 [connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]
+[connection signal="entered" from="LimboHSM/LAUNCHED" to="." method="_on_launched_entered"]
+[connection signal="entered" from="LimboHSM/FALLING" to="." method="_on_falling_entered"]

@@ -86,6 +86,9 @@ var player_state : LimboState
 @onready var dodge: LimboState = $LimboHSM/DODGE
 @onready var hit: LimboState = $LimboHSM/HIT
 @onready var staggered: LimboState = $LimboHSM/STAGGERED
+@onready var launched: Launch = $LimboHSM/LAUNCHED
+@onready var falling: LimboState = $LimboHSM/FALLING
+
 var state
 
 #Combat States
@@ -177,6 +180,8 @@ func _init_state_machine():
 	state_machine.add_transition(hit, attack, &"hit_recover")
 	state_machine.add_transition(attack, dodge, &"dodge")
 	state_machine.add_transition(dodge, attack, &"dodge_end")
+	state_machine.add_transition(launched, hit, &"midair_hit")
+	state_machine.add_transition(hit, falling, &"falling")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -232,7 +237,6 @@ func _process(_delta):
 	elif (state_machine.get_active_state()!=death or state_machine.get_active_state()==dying) and health.health<=0:
 		state_machine.dispatch(&"die")
 		
-		
 	handle_vision()
 	if not attack_range.has_overlapping_bodies():
 		bt_player.blackboard.set_var("within_range", false)
@@ -270,7 +274,11 @@ func _physics_process(delta):
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
 		return
-	
+	elif state_machine.get_active_state()!=launched:
+		velocity.y += gravity * delta
+	else:
+		global_position.y=lerpf(global_position.y, launched.launch_height, 0.1)
+		velocity.y=0
 
 	
 	if state_machine.get_active_state()==staggered and parry_timer.time_left>0.0:
@@ -392,7 +400,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
-	hb_collision.disabled=true
+	#hb_collision.disabled=true
 	hb_collision.call_deferred("set_disabled", true)
 	animated_sprite_2d.scale.x = 1
 	movement_handler.active=false
@@ -460,3 +468,26 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	if vision_handler.player_found or vision_handler.always_on:
 		state_machine.dispatch(&"attack_mode")
 		bt_player.blackboard.set_var("attack_mode", true)
+
+
+func _on_launch_timer_timeout() -> void:
+	pass # Replace with function body.
+	state_machine.dispatch(&"midair_hit")
+	###Falling to idle
+	
+
+
+func _on_falling_entered() -> void:
+	bt_player.blackboard.set_var("launched", false)
+	bt_player.blackboard.set_var("falling", true)
+	if is_on_floor():
+		bt_player.blackboard.set_var("falling", false)
+		state_machine.change_active_state(attack)
+
+
+func _on_launched_entered() -> void:
+	bt_player.blackboard.set_var("launched", true)
+
+
+func _on_hurt_box_launched() -> void:
+	state_machine.change_active_state(launched)

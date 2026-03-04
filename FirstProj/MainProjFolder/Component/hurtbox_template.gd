@@ -51,16 +51,7 @@ func _bullet_hit(_rigid_body : RigidBody2D) -> void:
 	var _damage=1
 	if health.health<=0:
 		return
-	#if _rigid_body.is_in_group("PlayerBullet"):
-		#_rigid_body.hard_impact()
-		#if stagger.stagger>0:
-			#stagger.stagger-=1
-		#else:
-			#health.health-=1
-	#else:
-		#bullet_hit.emit(_damage)
-		#health.health-=_damage
-		#print(health.health)
+
 	_rigid_body.hard_impact()
 	if stagger.stagger>0:
 		stagger.stagger-=1
@@ -70,14 +61,6 @@ func _bullet_hit(_rigid_body : RigidBody2D) -> void:
 		bullet_hit.emit(_damage)
 	_rigid_body.impact()
 		
-
-#func _on_parried(parrybox: ParryBox) -> void:
-	#if parrybox!= null:
-		#parried.emit()
-
-#func _on_weakpoint_hit(area: Area2D) -> void:
-	#if area.is_in_group("spc_atk"):
-		#weakpoint_hit.emit()
 		
 
 
