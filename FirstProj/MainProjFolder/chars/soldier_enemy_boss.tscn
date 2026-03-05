@@ -3002,6 +3002,7 @@ debug_color = Color(0.913049, 0.224478, 0.48102, 0.42)
 
 [node name="HitBox" parent="." index="23" node_paths=PackedStringArray("stagger") groups=["regular_enemy_hb"]]
 stagger = NodePath("../Stagger")
+knock_back_strength = 50.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0" unique_id=1086028451]
 position = Vector2(-14, -7)
