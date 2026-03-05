@@ -535,7 +535,7 @@ func _process(_delta):
 	atk_state_debug()
 #
 	dodge(input_axis)
-	label.text=str(state_machine.get_active_state())
+	label.text=str(face_dir)
 	#
 	if(state_machine.get_active_state()!=dodge_state and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=flip_state):
 		parry()
@@ -833,6 +833,10 @@ func handle_air_acceleration(input_axis, delta):
 		velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.air_acceleration * delta)
 
 func update_animation(input_axis):
+	##disable moving when knocked back with high knockback strength
+	if knockback.x>50:
+		return
+	
 	if Input.is_action_pressed("up"):
 		if Input.is_action_pressed("walk_right"):
 			parry_box.rotation=-(PI/4)
@@ -1388,15 +1392,15 @@ func _on_hazard_detector_area_entered(area):
 		health.health -= 1
 	elif area.is_in_group("bullet"):
 		hit_stop.hit_stop(0.05, 0.1)
-		knockback.x = -10
+		#knockback.x = -10
 		kb_dir=global_position.direction_to(area.global_position)
 		#"knockback")
 		kb_dir=round(kb_dir)
 		#kb_dir.x, " ", knockback)
-		knockback.x = kb_dir.x * knockback.x
+		#knockback.x = kb_dir.x * knockback.x
 		knockback.y=-5
 		#velocity.x = movement_data.speed + knockback.x
-		health.health -= 1
+		#health.health -= 1
 		
 		health.set_temporary_immortality(0.2)
 		if state_machine.get_previous_active_state()==flip_state:
@@ -1415,7 +1419,7 @@ func _on_hazard_detector_area_entered(area):
 		set_stagger()
 	elif area.is_in_group("Enemy"):
 		hit_stop.hit_stop(0.05, 0.05)
-		knockback.x = input_dir.x * knockback.x *0.25
+		#knockback.x = input_dir.x * knockback.x *0.25
 		
 
 func _on_interactable_detector_area_entered(area: Area2D) -> void:
@@ -1461,17 +1465,21 @@ func get_max_health() -> int:
 	return health.max_health
 
 func set_health() -> void:
-	Global.game_controller.call_deferred("update_health",health.health)
+	if Global.game_controller!=null:
+		Global.game_controller.call_deferred("update_health",health.health)
 	#Global.game_controller.update_health(health.health)
 func set_max_health() -> void:
 	#update_max_health.emit(health.max_health)
-	Global.game_controller.call_deferred("update_max_health",health.max_health)
+	if Global.game_controller!=null:
+		Global.game_controller.call_deferred("update_max_health",health.max_health)
 	#Global.game_controller.update_max_health(health.max_health)
 func set_stagger() -> void:
-	Global.game_controller.call_deferred("update_stagger", stagger.stagger)
+	if Global.game_controller!=null:
+		Global.game_controller.call_deferred("update_stagger", stagger.stagger)
 	#Global.game_controller.update_stagger(stagger.stagger)
 func set_max_stagger() -> void:
-	Global.game_controller.call_deferred("update_max_stagger", stagger.max_stagger)
+	if Global.game_controller!=null:
+		Global.game_controller.call_deferred("update_max_stagger", stagger.max_stagger)
 	#Global.game_controller.update_max_stagger(stagger.max_stagger)
 
 
@@ -1514,37 +1522,37 @@ func _on_hurt_box_got_hit(_hitbox):
 			hit_timer.start(0.2)
 			stagger.stagger-=1
 			if state_machine.get_previous_active_state()!=flip_state:
-				if parry_success_state.get_previous_active_state()==heavy_riposte:
-					if target_right:
-						knockback.x=400
-					else:
-						knockback.x=-400
-				else:
-					if hb_dir_right:
-						knockback.x=-15
-					else:
-						knockback.x=15
+				#if parry_success_state.get_previous_active_state()==heavy_riposte:
+					#if target_right:
+						#knockback.x=400
+					#else:
+						#knockback.x=-400
+				#else:
+					#if hb_dir_right:
+						#knockback.x=-15
+					#else:
+						#knockback.x=15
 				state_machine.dispatch(&"got_hit")
 			set_stagger()
 			
 		elif hitbox.is_in_group("heavy_hitbox"):
-			knockback.x = -400
+			#knockback.x = -400
 			kb_dir=global_position.direction_to(_hitbox.global_position)
 			#"knockback")
 			kb_dir=round(kb_dir)
 			#kb_dir.x, " ", knockback)
-			knockback.x = kb_dir.x * knockback.x
+			#knockback.x = kb_dir.x * knockback.x
 			velocity.y=movement_data.jump_velocity/2
 			#velocity.x = movement_data.speed + knockback.x
 			health.set_temporary_immortality(0.2)
 		else:
-			set_collision_mask_value(16384, false)
-			knockback.x = -35
+			set_collision_mask_value(15, false)
+			#knockback.x = -35
 			kb_dir=global_position.direction_to(_hitbox.global_position)
 			#"knockback")
 			kb_dir=round(kb_dir)
 			#kb_dir.x, " ", knockback)
-			knockback.x = kb_dir.x * knockback.x
+			#knockback.x = kb_dir.x * knockback.x
 			velocity.y=movement_data.jump_velocity/2
 			#velocity.x = movement_data.speed + knockback.x
 			health.set_temporary_immortality(0.2)
@@ -1560,36 +1568,6 @@ func _on_parry_box_parried_success() -> void:
 	clash_power.increase_clash()
 	#clash_visual.emitting=true
 	
-#func _on_hurt_box_area_entered(area):
-	#if health.health<=0:
-		#return
-	##if area.is_in_group("bullet"):
-		##hit_stop.hit_stop(0.05, 0.1)
-		##knockback.x = -10
-		##kb_dir=global_position.direction_to(area.global_position)
-		###"knockback")
-		##kb_dir=round(kb_dir)
-		###kb_dir.x, " ", knockback)
-		##knockback.x = kb_dir.x * knockback.x
-		##knockback.y=-5
-		###velocity.x = movement_data.speed + knockback.x
-		##health.health -= 1
-		##health.set_temporary_immortality(0.2)
-		##if state_machine.get_previous_active_state()==flip_state:
-			##state_machine.dispatch(&"return_to_idle")
-		##if clash_power.clash_power>1:
-			##health.health-=clash_power.clash_power
-			##stagger.stagger-=clash_power.clash_power
-			##clash_power.reset_clash()
-			##clash_timer.stop()
-			##if clash_power.clash_power==clash_power.clash_max:
-				##hit_stop.hit_stop(.3,.5)
-		##set_health()
-		##set_stagger()
-	#
-		#
-	#elif area.is_in_group("Enemy"):
-		#pass
 	
 func _on_collectible_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Hearts"):
@@ -2076,10 +2054,10 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	Events.camera_shake.emit(2,20)
 	if state_machine.get_active_state()==flip_state:
 		#print_debug("countered! your moves are weak!")
-		if target_right:
-			knockback.x=400
-		else:
-			knockback.x=-400
+		#if target_right:
+			#knockback.x=400
+		#else:
+			#knockback.x=-400
 		#velocity.x = movement_data.speed + knockback.x
 		state_machine.dispatch(&"got_hit")
 	elif state_machine.get_active_state()==parry_success_state:
@@ -2374,3 +2352,10 @@ func _on_stagger_stagger_decreased(diff: int) -> void:
 
 func _on_clash_up() -> void:
 	clash_power.increase_clash()
+
+
+func _on_hurt_box_knockback(knock_back_strength: float) -> void:
+	knockback.x=knock_back_strength*(face_dir)
+	print_debug(velocity.x)
+	print_debug(knockback.x)
+	

@@ -11,7 +11,7 @@ signal parried()
 signal weakpoint_hit()
 
 signal launched()
-signal knockback()
+signal knockback(knock_back_strength : float)
 
 @export var health: Health
 @export var stagger: Stagger
@@ -28,7 +28,7 @@ func _on_area_entered(hitbox: HitBox) -> void:
 	if hitbox.launch:
 		launched.emit()
 	if hitbox.knock_back:
-		knockback.emit()
+		knockback.emit(hitbox.knock_back_strength)
 	
 	if health.health<=0:
 		return

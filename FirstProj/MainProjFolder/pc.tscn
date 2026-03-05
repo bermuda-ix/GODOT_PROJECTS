@@ -7130,6 +7130,7 @@ shape = SubResource("RectangleShape2D_pmx5o")
 [node name="Health" type="Node" parent="." unique_id=994567121]
 script = ExtResource("4_q0gnn")
 max_health = 10
+immortality = true
 
 [node name="ClashPower" type="Node" parent="." unique_id=2128103427 node_paths=PackedStringArray("health", "stagger")]
 script = ExtResource("82_h0fyw")
@@ -7144,6 +7145,7 @@ one_shot = true
 [node name="Stagger" type="Node" parent="." unique_id=1993234788]
 script = ExtResource("53_7ax8a")
 max_stagger = 5
+stagger_immortality = true
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="StaggerRecover" type="Timer" parent="." unique_id=45084604]
@@ -7574,6 +7576,7 @@ pc = NodePath("../..")
 [connection signal="timeout" from="JumpOutTimer" to="." method="_on_jump_out_timer_timeout"]
 [connection signal="bullet_hit" from="HurtBox" to="." method="_on_hurt_box_bullet_hit"]
 [connection signal="got_hit" from="HurtBox" to="." method="_on_hurt_box_got_hit"]
+[connection signal="knockback" from="HurtBox" to="." method="_on_hurt_box_knockback"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="area_entered" from="CounterBox" to="." method="_on_counter_box_area_entered"]
 [connection signal="body_entered" from="CounterBox" to="." method="_on_counter_box_body_entered"]

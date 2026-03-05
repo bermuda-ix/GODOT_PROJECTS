@@ -21924,8 +21924,8 @@ z_index = -1
 position = Vector2(-33, -70)
 
 [node name="ShutdownMech" parent="." unique_id=840080560 instance=ExtResource("7_b474n")]
-position = Vector2(105, 270)
-scale = Vector2(1.2, 1.2)
+position = Vector2(105, 282)
+scale = Vector2(0.8, 0.8)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1104976704]
 light_mask = 3
@@ -21968,4 +21968,4 @@ self_modulate = Color(1, 1, 1, 0)
 occluder = SubResource("OccluderPolygon2D_1d63f")
 
 [node name="PC" parent="." unique_id=1041091659 instance=ExtResource("11_s4tmg")]
-position = Vector2(442, 294)
+position = Vector2(357, 309)

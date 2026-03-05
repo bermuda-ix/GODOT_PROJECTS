@@ -21924,8 +21924,8 @@ z_index = -1
 position = Vector2(-33, -61)
 
 [node name="ShutdownMech" parent="." unique_id=923140003 instance=ExtResource("7_pm3xw")]
-position = Vector2(105, 270)
-scale = Vector2(1.2, 1.2)
+position = Vector2(112, 281)
+scale = Vector2(0.8, 0.8)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1291469058]
 light_mask = 3

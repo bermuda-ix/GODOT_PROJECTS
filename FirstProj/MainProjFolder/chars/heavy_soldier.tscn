@@ -18,16 +18,23 @@
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="13_b855v"]
 [ext_resource type="Script" uid="uid://5ijvah6jjgdb" path="res://Component/hitbox_template.gd" id="14_0rfay"]
 [ext_resource type="Script" uid="uid://dj5amth02vbhe" path="res://Component/parrybox_template.gd" id="14_2a376"]
+[ext_resource type="Texture2D" uid="uid://uwvwmgsvpopx" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_01.png" id="14_8fd3j"]
+[ext_resource type="Texture2D" uid="uid://8c5el5hw0nr4" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_02.png" id="15_4oiad"]
 [ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="15_8nnwq"]
+[ext_resource type="Texture2D" uid="uid://d356qhwywssq6" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_03.png" id="16_45iaw"]
 [ext_resource type="Script" uid="uid://bsha0mnmfnjww" path="res://Component/functions/MovementHandler.gd" id="16_ivtdb"]
 [ext_resource type="Script" uid="uid://wkp4a7ybuj21" path="res://Component/functions/VisionHandler.gd" id="16_pk3h2"]
+[ext_resource type="Texture2D" uid="uid://bjfmauhrnaoos" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_04.png" id="17_3m7sr"]
 [ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="17_tlhl2"]
+[ext_resource type="Texture2D" uid="uid://56sfe15c5257" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_05.png" id="18_m3ibw"]
 [ext_resource type="Script" uid="uid://cf3jqneer6g2o" path="res://Component/attack_range.gd" id="18_n5mdn"]
 [ext_resource type="Script" uid="uid://dgyx4da7oymh2" path="res://Component/functions/JumpHandler.gd" id="18_o2fe2"]
 [ext_resource type="Script" uid="uid://5h8g0n4mebtm" path="res://Component/functions/ShootAttackManager.gd" id="18_pk3h2"]
+[ext_resource type="Texture2D" uid="uid://cigufkslvb086" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_06.png" id="19_c7ekc"]
 [ext_resource type="Script" uid="uid://cx8bi64kwoulc" path="res://Component/functions/PlayerTrackingHandler.gd" id="20_eopqg"]
 [ext_resource type="Script" uid="uid://cr58jnxs33hft" path="res://Component/functions/deathHandler.gd" id="20_jdney"]
 [ext_resource type="Script" uid="uid://co05jfawt7xsm" path="res://Component/functions/GetPlayerInfoHandler.gd" id="20_vtt0c"]
+[ext_resource type="Texture2D" uid="uid://kqvbd8q4uj2l" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_07.png" id="20_wdorp"]
 [ext_resource type="Script" uid="uid://ddhk64y60klpg" path="res://Component/functions/MeleeAttackManager.gd" id="22_rumpe"]
 [ext_resource type="Script" uid="uid://m7cps3rc3xog" path="res://Component/functions/AllyVisionHandler.gd" id="23_33dan"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="24_ni375"]
@@ -586,6 +593,35 @@ initial_velocity_min = 65.69
 initial_velocity_max = 124.09
 gravity = Vector3(0, 98, 0)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_ahhik"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_8fd3j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_4oiad")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_45iaw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_3m7sr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_m3ibw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_c7ekc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_wdorp")
+}],
+"loop": true,
+"name": &"melee_attack_fx",
+"speed": 5.0
+}]
+
 [sub_resource type="Animation" id="Animation_vtt0c"]
 length = 0.001
 tracks/0/type = "value"
@@ -720,6 +756,54 @@ tracks/10/keys = {
 "update": 0,
 "values": [Vector2(-25, 9)]
 }
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimatedSprite2D/VFXSprite:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("AnimatedSprite2D/VFXSprite:animation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"melee_attack_fx"]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("AnimatedSprite2D/VFXSprite:frame")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("HitBox:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -39)]
+}
 
 [sub_resource type="Animation" id="Animation_86qvh"]
 resource_name = "dead"
@@ -845,6 +929,106 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_rh8ku"]
+resource_name = "melee_attack"
+length = 0.36666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"parry"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/VFXSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/VFXSprite:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"melee_attack_fx"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D/VFXSprite:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667, 0.2, 0.23333335),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.0401431, 0.0987302),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-10, 0), Vector2(0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("HitBox/hb_collision:disabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.3, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("HitBox:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.041666668, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -39), Vector2(-8, -39), Vector2(0, -39)]
 }
 
 [sub_resource type="Animation" id="Animation_2a376"]
@@ -1094,7 +1278,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(-25, 9)]
+"values": [Vector2(-26, -30)]
 }
 
 [sub_resource type="Animation" id="Animation_iqleq"]
@@ -1149,7 +1333,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(-27, 23)]
+"values": [Vector2(-27, -16)]
 }
 
 [sub_resource type="Animation" id="Animation_jdney"]
@@ -1200,6 +1384,7 @@ _data = {
 &"death": SubResource("Animation_cl2c2"),
 &"hit": SubResource("Animation_a5flw"),
 &"idle": SubResource("Animation_ct51r"),
+&"melee_attack": SubResource("Animation_rh8ku"),
 &"parry": SubResource("Animation_2a376"),
 &"parry_success": SubResource("Animation_n5mdn"),
 &"reload": SubResource("Animation_b8y0i"),
@@ -1223,7 +1408,7 @@ size = Vector2(30, 77)
 size = Vector2(9, 51)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a5flw"]
-size = Vector2(108, 82)
+size = Vector2(52, 82)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_uhne8"]
 
@@ -1234,7 +1419,6 @@ size = Vector2(108, 82)
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vtt0c"]
 
 [node name="HeavySoldier" type="CharacterBody2D" unique_id=1955221828 node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant", "defensive_enemy"]]
-position = Vector2(-6, -6)
 collision_layer = 16384
 script = ExtResource("1_ct51r")
 hitbox = NodePath("HitBox")
@@ -1281,6 +1465,13 @@ one_shot = true
 explosiveness = 1.0
 randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_2a376")
+
+[node name="VFXSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=374116599]
+visible = false
+position = Vector2(3, -10)
+rotation = 1.5707941
+sprite_frames = SubResource("SpriteFrames_ahhik")
+animation = &"melee_attack_fx"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=13363768]
 libraries/ = SubResource("AnimationLibrary_n5mdn")
@@ -1330,6 +1521,7 @@ metadata/_custom_type_script = "uid://dj5amth02vbhe"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ParryBox" unique_id=1378034518 groups=["shield"]]
 position = Vector2(12, 25.5)
 shape = SubResource("RectangleShape2D_86qvh")
+disabled = true
 one_way_collision_margin = 0.0
 
 [node name="HitBox" type="Area2D" parent="." unique_id=403153839 node_paths=PackedStringArray("stagger")]
@@ -1338,6 +1530,8 @@ collision_layer = 8
 collision_mask = 128
 script = ExtResource("14_0rfay")
 stagger = NodePath("../Stagger")
+knock_back = true
+knock_back_strength = 55.0
 metadata/_custom_type_script = "uid://5ijvah6jjgdb"
 
 [node name="hb_collision" type="CollisionShape2D" parent="HitBox" unique_id=1331286408]
@@ -1381,7 +1575,7 @@ script = ExtResource("18_n5mdn")
 metadata/_custom_type_script = "uid://cf3jqneer6g2o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" unique_id=1223872206]
-position = Vector2(-14, 26)
+position = Vector2(0, 26)
 shape = SubResource("RectangleShape2D_a5flw")
 
 [node name="NavigationTimer" type="Timer" parent="." unique_id=1927431750]
@@ -1531,6 +1725,8 @@ actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 metadata/_custom_type_script = "uid://b5an13nv6em7m"
 
+[node name="MeleeAttack" type="LimboState" parent="StateMachine" unique_id=1241376327]
+
 [node name="ShootingStates" type="LimboHSM" parent="StateMachine" unique_id=1760371473 node_paths=PackedStringArray("actor", "player_info", "shoot_attack_handler", "turret")]
 script = ExtResource("37_ypkgb")
 actor = NodePath("../..")
@@ -1652,6 +1848,7 @@ hit_from_inside = true
 [connection signal="active_state_changed" from="StateMachine" to="." method="_on_state_machine_active_state_changed"]
 [connection signal="entered" from="StateMachine/Chasing" to="." method="_on_chasing_entered"]
 [connection signal="entered" from="StateMachine/Attack" to="." method="_on_attack_entered"]
+[connection signal="entered" from="StateMachine/MeleeAttack" to="." method="_on_melee_attack_entered"]
 [connection signal="active_state_changed" from="StateMachine/ShootingStates" to="." method="_on_shooting_states_active_state_changed"]
 [connection signal="entered" from="StateMachine/ShootingStates" to="." method="_on_shooting_states_entered"]
 [connection signal="entered" from="StateMachine/ShootingStates/Shooting" to="." method="_on_shooting_entered"]

@@ -9,6 +9,7 @@ signal parried()
 
 @export var launch : bool = false
 @export var knock_back : bool = false
+@export var knock_back_strength : float = 100.0
 
 func _ready():
 	connect("area_entered", _on_parried)

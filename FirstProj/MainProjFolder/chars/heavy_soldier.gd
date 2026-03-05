@@ -85,6 +85,7 @@ var player_state : LimboState
 @onready var chasing: Chasing = $StateMachine/Chasing
 @onready var jump: Jump = $StateMachine/Jump
 @onready var attack: Attack = $StateMachine/Attack
+@onready var melee_attack: LimboState = $StateMachine/MeleeAttack
 @onready var shooting_states: LimboHSM = $StateMachine/ShootingStates
 @onready var shooting: Shooting = $StateMachine/ShootingStates/Shooting
 @onready var shooting_defense: LimboState = $StateMachine/ShootingStates/ShootingDefense
@@ -269,6 +270,9 @@ func _init_state_machine():
 	state_machine.add_transition(parry, shooting_states, parry.success_event)
 	state_machine.add_transition(attack, shooting_states, &"start_shoot")
 	state_machine.add_transition(chasing, shooting_states, &"start_shoot")
+	state_machine.add_transition(chasing, melee_attack, &"melee_attack")
+	state_machine.add_transition(melee_attack, chasing, &"resume_chase")
+	
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -425,7 +429,10 @@ func _on_shooting_states_active_state_changed(current: LimboState, previous: Lim
 
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
-	state_machine.dispatch(&"parry")
+	if player.attacking:
+		state_machine.dispatch(&"parry")
+	else:
+		state_machine.dispatch(&"melee_attack")
 
 func parry_success() -> void:
 	print_debug("parried")
@@ -576,7 +583,7 @@ func alerted() -> void :
 
 func force_chase():
 	is_on_screen=on_screen.is_on_screen()
-	if not is_on_screen and vision_handler.always_on==true and state_machine.get_active_state()!=chasing:
+	if not is_on_screen and vision_handler.always_on==true and state_machine.get_active_state()!=chasing and state_machine.get_active_state()!=melee_attack:
 		state_machine.change_active_state(chasing)
 
 func _on_parry_box_bullet_stopped() -> void:
@@ -604,3 +611,9 @@ func _on_ally_vision_handler_ally_gone() -> void:
 func chase():
 	#set_state(current_state, States.CHASE)
 	state_machine.dispatch(&"start_chase")
+
+
+func _on_melee_attack_entered() -> void:
+	animation_player.play("melee_attack")
+	await animation_player.animation_finished
+	state_machine.dispatch(&"resume_chase")

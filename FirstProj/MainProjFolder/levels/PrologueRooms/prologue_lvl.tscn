@@ -18,10 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://idc8e7mjacdd" path="res://Component/turret_link.tscn" id="15_ffcw5"]
 [ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="16_vw32t"]
 [ext_resource type="PackedScene" uid="uid://dak3j323lms0s" path="res://chars/sleeping_guard.tscn" id="17_61h8j"]
-[ext_resource type="PackedScene" uid="uid://bu15hg23253kf" path="res://levels/level_components/named_boss_spawn.tscn" id="17_658m8"]
-[ext_resource type="PackedScene" uid="uid://cu7yn55uf2fn8" path="res://chars/soldier_enemy_boss.tscn" id="17_rfxm3"]
 [ext_resource type="PackedScene" uid="uid://b7ppm0ysps4q6" path="res://Component/resources/enemy_group.tscn" id="19_658m8"]
-[ext_resource type="Script" uid="uid://7cyh5ujpo4sp" path="res://levels/Boundery.gd" id="20_e156f"]
 [ext_resource type="AudioStream" uid="uid://dxedk74ivrhne" path="res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - small knock.wav" id="20_lt1cf"]
 [ext_resource type="PackedScene" uid="uid://b2ll7yf0xbexn" path="res://levels/PrologueRooms/prologue_room_one.tscn" id="21_7klgn"]
 [ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="21_7qfih"]
@@ -37,7 +34,6 @@
 [ext_resource type="PackedScene" uid="uid://d3gnpvd8ye3rt" path="res://Art_Components/LevelProps/large_door_sprite.tscn" id="24_veiog"]
 [ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="24_w82j5"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="31_2mqv2"]
-[ext_resource type="PackedScene" uid="uid://bkr6h5xga8wr" path="res://Component/functions/local_flag.tscn" id="32_lt1cf"]
 [ext_resource type="PackedScene" uid="uid://bqufbaasjdchb" path="res://Component/Consumables/elevator_key_card.tscn" id="33_j2fky"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="36_rfxm3"]
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="37_r2uf8"]
@@ -361,71 +357,59 @@ tracks/9/keys = {
 }
 tracks/10/type = "value"
 tracks/10/imported = false
-tracks/10/enabled = false
-tracks/10/path = NodePath("Enemy/MiniBosses/MinoBossGroup1/soldier_enemy_boss:position")
+tracks/10/enabled = true
+tracks/10/path = NodePath("PC:position")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(2011, 783)]
+"values": [Vector2(2232, 790)]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("PC:position")
+tracks/11/path = NodePath("CutsceneAudio:attenuation")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(2232, 790)]
+"values": [0.0063457275]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("CutsceneAudio:attenuation")
+tracks/12/path = NodePath("CutsceneAudio:max_distance")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0063457275]
+"values": [2000.0]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("CutsceneAudio:max_distance")
+tracks/13/path = NodePath("CutsceneAudio:position")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [2000.0]
+"values": [Vector2(2232, 733)]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("CutsceneAudio:position")
+tracks/14/path = NodePath("CameraPos:stationary")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2232, 733)]
-}
-tracks/15/type = "value"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("CameraPos:stationary")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -435,35 +419,25 @@ tracks/15/keys = {
 [sub_resource type="Animation" id="Animation_lwduo"]
 resource_name = "mini_boss_1_kill"
 length = 11.0
-tracks/0/type = "animation"
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Enemy/MiniBosses/MinoBossGroup1/soldier_enemy_boss/AnimationPlayer")
+tracks/0/path = NodePath("CameraPos:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": PackedStringArray("flashback_lvl_cutscenes/first_mini_boss_kill"),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CameraPos:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0, 11),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2(2210, 724), Vector2(2210, 724)]
 }
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(11),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -471,25 +445,25 @@ tracks/2/keys = {
 "method": &"end_cutscene"
 }]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("CanvasLayer/ScreenFlash:color")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/ScreenFlash:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 0.406126),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
-tracks/4/type = "method"
-tracks/4/imported = false
-tracks/4/enabled = false
-tracks/4/path = NodePath(".")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0, 5),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
@@ -500,13 +474,13 @@ tracks/4/keys = {
 "method": &"remove_path"
 }]
 }
-tracks/5/type = "method"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath(".")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -514,13 +488,13 @@ tracks/5/keys = {
 "method": &"play_cutscene_segment"
 }]
 }
-tracks/6/type = "method"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("HitStop")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HitStop")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0, 0.7, 1.5666667, 3.95, 6.3700004, 8.3, 9.24),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "values": [{
@@ -546,57 +520,45 @@ tracks/6/keys = {
 "method": &"hit_stop"
 }]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Enemy/MiniBosses/MinoBossGroup1/soldier_enemy_boss:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 9.033334, 9.566667, 10.06, 10.766666),
-"transitions": PackedFloat32Array(1, 0.2500002, 1, 0.18946461, 1),
-"update": 0,
-"values": [Vector2(2222, 783), Vector2(2222, 783), Vector2(2200, 783), Vector2(2200, 783), Vector2(2157, 783)]
-}
-tracks/8/type = "animation"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("PC/CutsceneSubPlayer")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
+tracks/6/type = "animation"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("PC/CutsceneSubPlayer")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
 "clips": PackedStringArray("flashback_lvl_cutscenes/first_mini_boss_kill"),
 "times": PackedFloat32Array(0)
 }
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("PC:position")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("PC:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(2232, 790)]
 }
-tracks/10/type = "animation"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("PC/AnimationPlayer")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
+tracks/8/type = "animation"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("PC/AnimationPlayer")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
 "clips": PackedStringArray("[stop]", "Parry", "[stop]", "Crouch", "[stop]", "Parry", "[stop]", "dodge", "Parry", "[stop]"),
 "times": PackedFloat32Array(0, 0.16666667, 0.56666666, 1.8666667, 2.3, 2.7666667, 3.4, 4.366667, 5.17, 5.5666666)
 }
-tracks/11/type = "audio"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("CutsceneAudio")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
+tracks/9/type = "audio"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CutsceneAudio")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
@@ -640,62 +602,62 @@ tracks/11/keys = {
 }],
 "times": PackedFloat32Array(0.2, 1.5666667, 2, 2.7333333, 3.9333334, 4.3918886, 5.1, 6.266667, 7.347002, 8.066667)
 }
-tracks/11/use_blend = true
+tracks/9/use_blend = true
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("CutsceneAudio:attenuation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0063457275]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CutsceneAudio:max_distance")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2000.0]
+}
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("CutsceneAudio:attenuation")
+tracks/12/path = NodePath("CutsceneAudio:position")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0063457275]
+"values": [Vector2(2232, 733)]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("CutsceneAudio:max_distance")
+tracks/13/path = NodePath("CameraPos:stationary")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [2000.0]
-}
-tracks/14/type = "value"
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/path = NodePath("CutsceneAudio:position")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2232, 733)]
-}
-tracks/15/type = "value"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("CameraPos:stationary")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
 "times": PackedFloat32Array(11),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
 }
-tracks/16/type = "method"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("CameraPos")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/keys = {
+tracks/14/type = "method"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("CameraPos")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
 "times": PackedFloat32Array(0.2, 2.8433378, 5.298948, 6.3173103, 9.112183, 9.196998, 9.209114),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "values": [{
@@ -913,7 +875,7 @@ _data = {
 a = Vector2(-17, -3)
 b = Vector2(567, -310)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_658m8"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ffcw5"]
 resource_local_to_scene = true
 size = Vector2(37.8948, 53.5486)
 
@@ -1086,7 +1048,7 @@ position = Vector2(5, 14)
 [node name="soldiers" type="Node" parent="Enemy" index="0" unique_id=968911607]
 
 [node name="HeavySoldier" parent="Enemy/soldiers" index="0" unique_id=358019937 instance=ExtResource("13_rfxm3")]
-position = Vector2(3895, 1190)
+position = Vector2(2168, 784)
 scale = Vector2(0.5, 0.5)
 
 [node name="HeavySoldier2" parent="Enemy/soldiers" index="1" unique_id=498514818 instance=ExtResource("13_rfxm3")]
@@ -1191,7 +1153,11 @@ position = Vector2(3120.0002, 480)
 scale = Vector2(0.75, 0.75)
 
 [node name="GuardEnemy12" parent="Enemy/Guards" index="11" unique_id=758035523 instance=ExtResource("16_vw32t")]
-position = Vector2(2424, 1184)
+position = Vector2(2128, 776)
+scale = Vector2(0.75, 0.75)
+
+[node name="GuardEnemy13" parent="Enemy/Guards" index="12" unique_id=1643444086 instance=ExtResource("16_vw32t")]
+position = Vector2(2080, 776.00006)
 scale = Vector2(0.75, 0.75)
 
 [node name="SleepingGuard" parent="Enemy" index="4" unique_id=2088524183 instance=ExtResource("17_61h8j")]
@@ -1200,13 +1166,6 @@ position = Vector2(656, 457)
 [node name="MiniBosses" type="Node" parent="Enemy" index="5" unique_id=2049315033]
 
 [node name="MinoBossGroup1" type="Node" parent="Enemy/MiniBosses" index="0" unique_id=912337328]
-
-[node name="MiniBoss1StartPos" parent="Enemy/MiniBosses/MinoBossGroup1" index="0" unique_id=1896744289 instance=ExtResource("17_658m8")]
-position = Vector2(2006, 751)
-boss = ExtResource("17_rfxm3")
-
-[node name="soldier_enemy_boss" parent="Enemy/MiniBosses/MinoBossGroup1" index="1" unique_id=789104702 instance=ExtResource("17_rfxm3")]
-position = Vector2(2072, 776)
 
 [node name="Underground" type="Node" parent="Enemy" index="6" unique_id=598079795]
 
@@ -1345,25 +1304,7 @@ collision_mask = 8409091
 position = Vector2(24, 278.5)
 shape = SubResource("RectangleShape2D_jyauw")
 
-[node name="MiniBossCutscene" type="StaticBody2D" parent="Bounderies3" index="1" unique_id=1365262994]
-position = Vector2(1900, 460)
-collision_mask = 16387
-script = ExtResource("20_e156f")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounderies3/MiniBossCutscene" index="0" unique_id=986298476]
-position = Vector2(24, 278.5)
-shape = SubResource("RectangleShape2D_jyauw")
-
-[node name="MiniBoss1Bounderies" type="Node" parent="Bounderies3" index="2" unique_id=423800988]
-
-[node name="MiniBossRightBoundery" type="StaticBody2D" parent="Bounderies3/MiniBoss1Bounderies" index="0" unique_id=1645129629]
-position = Vector2(2491, 478)
-collision_mask = 8409091
-
-[node name="MiniBossRightBounderyCol" type="CollisionShape2D" parent="Bounderies3/MiniBoss1Bounderies/MiniBossRightBoundery" index="0" unique_id=1329456911]
-position = Vector2(24, 278.5)
-shape = SubResource("RectangleShape2D_jyauw")
-disabled = true
+[node name="MiniBoss1Bounderies" type="Node" parent="Bounderies3" index="1" unique_id=423800988]
 
 [node name="CutscenePlayer" type="AnimationPlayer" parent="." index="18" unique_id=330418463]
 libraries/ = SubResource("AnimationLibrary_tnflb")
@@ -1526,11 +1467,6 @@ position = Vector2(-34, -68)
 
 [node name="BossFlags" type="Node" parent="." index="23" unique_id=874729598]
 
-[node name="MiniBoss1Flag" parent="BossFlags" index="0" unique_id=1854475719 node_paths=PackedStringArray("connected_object") groups=["group_1_flags"] instance=ExtResource("32_lt1cf")]
-position = Vector2(2470, 637)
-connected_object = NodePath("../../Enemy/MiniBosses/MinoBossGroup1/soldier_enemy_boss")
-flag_active = true
-
 [node name="DoorsAndSwitches" type="Node" parent="." index="24" unique_id=478390257]
 
 [node name="Elevator" parent="DoorsAndSwitches" index="0" unique_id=20094444 instance=ExtResource("21_7qfih")]
@@ -1690,13 +1626,10 @@ metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 position = Vector2(2232, 790)
 
 [node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" parent_id_path=PackedInt32Array(1041091659, 101478943) index="0" unique_id=1988698025]
-shape = SubResource("RectangleShape2D_658m8")
+shape = SubResource("RectangleShape2D_ffcw5")
 
 [connection signal="scene_reloaded" from="." to="." method="_on_scene_reloaded"]
-[connection signal="flag_triggered" from="BossFlags/MiniBoss1Flag" to="." method="_on_mini_boss_1_flag_flag_triggered"]
 
-[editable path="Enemy/MiniBosses/MinoBossGroup1/soldier_enemy_boss"]
-[editable path="BossFlags/MiniBoss1Flag"]
 [editable path="DoorsAndSwitches/Elevator"]
 [editable path="DoorsAndSwitches/Elevator2"]
 [editable path="PC"]

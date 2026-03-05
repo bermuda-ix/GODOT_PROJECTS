@@ -1,6 +1,6 @@
 class_name objectives_by_level extends Node
 
-@onready var prologue_init_objectives : Dictionary = {"bluemech" : 5, "redmech" : 3, "greenmech" : 5}
+@onready var prologue_init_objectives : Dictionary = {"truck" : 5}
 @onready var guanlet_init_objectives : Dictionary = { }
 @onready var objectives_total : Dictionary = { }
 
