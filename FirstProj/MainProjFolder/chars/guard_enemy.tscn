@@ -99,6 +99,7 @@
 [ext_resource type="Texture2D" uid="uid://b0ve4x1jtfkm5" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run06.png" id="55_s7q1o"]
 [ext_resource type="Texture2D" uid="uid://jtbb0utqt4by" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run07.png" id="56_mg5cm"]
 [ext_resource type="Texture2D" uid="uid://bs6mlkbsi1yvh" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run08.png" id="57_1kl2o"]
+[ext_resource type="Script" uid="uid://dpg0824supe1e" path="res://Component/functions/drop_handler.gd" id="75_id1bf"]
 [ext_resource type="PackedScene" uid="uid://b74ywj4npkesd" path="res://Component/bullet_projectile.tscn" id="79_m3s8r"]
 [ext_resource type="Script" uid="uid://bnpx2avsix2an" path="res://Component/functions/GroupEnemyManager.gd" id="86_m3s8r"]
 [ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="97_onb8s"]
@@ -1333,6 +1334,11 @@ rect = Rect2(4, 4, 6, 6)
 [node name="BTPlayer" type="BTPlayer" parent="." unique_id=1126207676]
 behavior_tree = ExtResource("15_j02m3")
 blackboard_plan = SubResource("BlackboardPlan_q7gmp")
+
+[node name="DropHandler" type="Node" parent="." unique_id=2044196216 node_paths=PackedStringArray("actor")]
+script = ExtResource("75_id1bf")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://dpg0824supe1e"
 
 [node name="PlayerTrackingHandler" type="Node" parent="." unique_id=1415402084 node_paths=PackedStringArray("actor")]
 script = ExtResource("13_72jhu")

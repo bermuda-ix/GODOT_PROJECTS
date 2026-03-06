@@ -19,50 +19,90 @@
 [ext_resource type="Script" uid="uid://5ijvah6jjgdb" path="res://Component/hitbox_template.gd" id="14_0rfay"]
 [ext_resource type="Script" uid="uid://dj5amth02vbhe" path="res://Component/parrybox_template.gd" id="14_2a376"]
 [ext_resource type="Texture2D" uid="uid://uwvwmgsvpopx" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_01.png" id="14_8fd3j"]
+[ext_resource type="Texture2D" uid="uid://qfh5j5lr8yec" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_001.png" id="14_d0pli"]
 [ext_resource type="Texture2D" uid="uid://8c5el5hw0nr4" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_02.png" id="15_4oiad"]
+[ext_resource type="Texture2D" uid="uid://dnb383hd7mkmt" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_002.png" id="15_8h24x"]
 [ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="15_8nnwq"]
 [ext_resource type="Texture2D" uid="uid://d356qhwywssq6" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_03.png" id="16_45iaw"]
+[ext_resource type="Texture2D" uid="uid://bfdk4k4pk83ji" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_003.png" id="16_i52b7"]
 [ext_resource type="Script" uid="uid://bsha0mnmfnjww" path="res://Component/functions/MovementHandler.gd" id="16_ivtdb"]
 [ext_resource type="Script" uid="uid://wkp4a7ybuj21" path="res://Component/functions/VisionHandler.gd" id="16_pk3h2"]
 [ext_resource type="Texture2D" uid="uid://bjfmauhrnaoos" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_04.png" id="17_3m7sr"]
+[ext_resource type="Texture2D" uid="uid://cogaf0kgw7lgr" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_004.png" id="17_3nwb8"]
 [ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="17_tlhl2"]
 [ext_resource type="Texture2D" uid="uid://56sfe15c5257" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_05.png" id="18_m3ibw"]
 [ext_resource type="Script" uid="uid://cf3jqneer6g2o" path="res://Component/attack_range.gd" id="18_n5mdn"]
 [ext_resource type="Script" uid="uid://dgyx4da7oymh2" path="res://Component/functions/JumpHandler.gd" id="18_o2fe2"]
+[ext_resource type="Texture2D" uid="uid://bfk7lmfwf1hlq" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_005.png" id="18_p6p7v"]
 [ext_resource type="Script" uid="uid://5h8g0n4mebtm" path="res://Component/functions/ShootAttackManager.gd" id="18_pk3h2"]
 [ext_resource type="Texture2D" uid="uid://cigufkslvb086" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_06.png" id="19_c7ekc"]
+[ext_resource type="Texture2D" uid="uid://drbmuufectpfj" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_006.png" id="19_ry6a6"]
 [ext_resource type="Script" uid="uid://cx8bi64kwoulc" path="res://Component/functions/PlayerTrackingHandler.gd" id="20_eopqg"]
 [ext_resource type="Script" uid="uid://cr58jnxs33hft" path="res://Component/functions/deathHandler.gd" id="20_jdney"]
+[ext_resource type="Texture2D" uid="uid://27y5l2xo6r04" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_007.png" id="20_l6337"]
 [ext_resource type="Script" uid="uid://co05jfawt7xsm" path="res://Component/functions/GetPlayerInfoHandler.gd" id="20_vtt0c"]
 [ext_resource type="Texture2D" uid="uid://kqvbd8q4uj2l" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_07.png" id="20_wdorp"]
+[ext_resource type="Texture2D" uid="uid://btugybh5xnyik" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_008.png" id="21_5hkc3"]
+[ext_resource type="Texture2D" uid="uid://bh7q4en3ytah8" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_009.png" id="22_eslx7"]
 [ext_resource type="Script" uid="uid://ddhk64y60klpg" path="res://Component/functions/MeleeAttackManager.gd" id="22_rumpe"]
 [ext_resource type="Script" uid="uid://m7cps3rc3xog" path="res://Component/functions/AllyVisionHandler.gd" id="23_33dan"]
+[ext_resource type="Texture2D" uid="uid://b5ypge3tj0jbj" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_010.png" id="23_iu76f"]
+[ext_resource type="Texture2D" uid="uid://6hc7kwmnqkxp" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_011.png" id="24_gymyr"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="24_ni375"]
 [ext_resource type="Script" uid="uid://c7kbv7d5voapj" path="res://Component/functions/DefendEnemy.gd" id="24_o2wso"]
+[ext_resource type="Texture2D" uid="uid://c7l7qeiwcqwgt" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_012.png" id="25_q1xjq"]
 [ext_resource type="Script" uid="uid://cvo1e5meai30k" path="res://Component/functions/CombatStateChangeHandler.gd" id="25_uhne8"]
+[ext_resource type="Texture2D" uid="uid://bsgwu12ysm627" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_013.png" id="26_h6epv"]
 [ext_resource type="Script" uid="uid://daq7xh1e6l7u6" path="res://chars/idle.gd" id="26_i7wao"]
 [ext_resource type="Script" uid="uid://d2wausty5l457" path="res://chars/jump.gd" id="26_rumpe"]
 [ext_resource type="Script" uid="uid://dgja48rcyj78n" path="res://chars/chasing.gd" id="27_2a376"]
 [ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="27_okbgj"]
+[ext_resource type="Texture2D" uid="uid://cffkpopv0qksc" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_014.png" id="27_qltt5"]
+[ext_resource type="Texture2D" uid="uid://v1k5prwx2c5m" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_015.png" id="28_17sh8"]
 [ext_resource type="PackedScene" uid="uid://b74ywj4npkesd" path="res://Component/bullet_projectile.tscn" id="28_86qvh"]
 [ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="28_xp1ci"]
 [ext_resource type="Script" uid="uid://b5an13nv6em7m" path="res://chars/attack.gd" id="29_ct51r"]
+[ext_resource type="Texture2D" uid="uid://brv6aehcyf62u" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_016.png" id="29_uqtsu"]
+[ext_resource type="Texture2D" uid="uid://bpsneha28ecd" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_017.png" id="30_7stqr"]
 [ext_resource type="Script" uid="uid://b0uasmutdnguo" path="res://chars/target_lock.gd" id="30_a5flw"]
 [ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="30_vtt0c"]
+[ext_resource type="Texture2D" uid="uid://c2nr6c075ma7y" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_018.png" id="31_pam2w"]
+[ext_resource type="Texture2D" uid="uid://d3wv3vdsllged" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_019.png" id="32_8ejf8"]
 [ext_resource type="Script" uid="uid://bnpx2avsix2an" path="res://Component/functions/GroupEnemyManager.gd" id="32_86qvh"]
 [ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="32_a5flw"]
 [ext_resource type="Script" uid="uid://d20gnlqqx7l6k" path="res://chars/heavy_soldier_state_machine.gd" id="32_s0mi6"]
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="33_eopqg"]
+[ext_resource type="Texture2D" uid="uid://b0nakaa5du2tu" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_020.png" id="33_sqr55"]
 [ext_resource type="Script" uid="uid://f8o0kgomg38" path="res://chars/parry.gd" id="34_i7wao"]
 [ext_resource type="Script" uid="uid://c4yno8xy5erif" path="res://chars/death.gd" id="34_s0mi6"]
+[ext_resource type="Texture2D" uid="uid://bvlb553h48xyr" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_021.png" id="34_uek0c"]
+[ext_resource type="Texture2D" uid="uid://b30owder4gcpv" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_022.png" id="35_7bq3n"]
+[ext_resource type="Texture2D" uid="uid://b5b1ntqewxmha" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_023.png" id="36_txdj5"]
+[ext_resource type="Texture2D" uid="uid://prtyr253gbf7" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_024.png" id="37_72l74"]
 [ext_resource type="Script" uid="uid://dxm8lwrnlvxmj" path="res://chars/shooting_states.gd" id="37_ypkgb"]
+[ext_resource type="Texture2D" uid="uid://c0hb873s2s8a0" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_025.png" id="38_yf5ua"]
+[ext_resource type="Texture2D" uid="uid://bnakveke2me4o" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_026.png" id="39_g7jpo"]
 [ext_resource type="Script" uid="uid://6lcwbcgt2hxx" path="res://chars/reload.gd" id="39_i83c4"]
 [ext_resource type="Script" uid="uid://bdhtg4sor0v57" path="res://chars/shooting_defense.gd" id="39_iqleq"]
+[ext_resource type="Texture2D" uid="uid://cjdhu3guqwuqw" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_027.png" id="40_4cgwk"]
 [ext_resource type="BehaviorTree" uid="uid://t2han52xa64j" path="res://ai/trees/parry.tres" id="40_iqleq"]
+[ext_resource type="Texture2D" uid="uid://4lytnnajqvg" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_028.png" id="41_4pxgm"]
+[ext_resource type="Texture2D" uid="uid://cyr675myk8g0c" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_029.png" id="42_g8y6e"]
+[ext_resource type="Texture2D" uid="uid://7wq8rrq24xe0" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_030.png" id="43_4sa57"]
+[ext_resource type="Texture2D" uid="uid://cabrb4ks4k4ux" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_031.png" id="44_n51gf"]
 [ext_resource type="BehaviorTree" uid="uid://bmndudr2pew41" path="res://ai/trees/defend_ally.tres" id="44_oqlwu"]
 [ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="45_jdney"]
+[ext_resource type="Texture2D" uid="uid://l2lt0frvpack" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_032.png" id="45_qfovh"]
+[ext_resource type="Texture2D" uid="uid://cea6tvwdmidux" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_033.png" id="46_b07go"]
+[ext_resource type="Texture2D" uid="uid://b14vqgf2wmybq" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_034.png" id="47_84vlx"]
 [ext_resource type="PackedScene" uid="uid://bro4najrj7577" path="res://Component/UI_Rec/npc_stats.tscn" id="47_b8y0i"]
 [ext_resource type="Script" uid="uid://cyc80ne8pluln" path="res://chars/dying.gd" id="47_cl2c2"]
+[ext_resource type="Texture2D" uid="uid://crh0hse1taume" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_035.png" id="48_lqhoa"]
+[ext_resource type="Texture2D" uid="uid://dq2j3bijs3bch" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_036.png" id="49_xmcqr"]
+[ext_resource type="Texture2D" uid="uid://bn2edd6cxgry0" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_037.png" id="50_oiist"]
+[ext_resource type="Texture2D" uid="uid://2ahwdt1sqjy7" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_038.png" id="51_tk4wc"]
+[ext_resource type="Texture2D" uid="uid://kp51w4fs4ikf" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_039.png" id="52_0u53p"]
+[ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="100_8h24x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv57o"]
 size = Vector2(42, 76)
@@ -597,6 +637,128 @@ gravity = Vector3(0, 98, 0)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("14_d0pli")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_8h24x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_i52b7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_3nwb8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_p6p7v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_ry6a6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_l6337")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_5hkc3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_eslx7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_iu76f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_gymyr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_q1xjq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_h6epv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_qltt5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_17sh8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_uqtsu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_7stqr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_pam2w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_8ejf8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_sqr55")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_uek0c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_7bq3n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_txdj5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_72l74")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_yf5ua")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_g7jpo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_4cgwk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_4pxgm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_g8y6e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_4sa57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_n51gf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_qfovh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_b07go")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_84vlx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_lqhoa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_xmcqr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_oiist")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_tk4wc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_0u53p")
+}],
+"loop": true,
+"name": &"charge",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("14_8fd3j")
 }, {
 "duration": 1.0,
@@ -804,6 +966,54 @@ tracks/14/keys = {
 "update": 0,
 "values": [Vector2(0, -39)]
 }
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("AnimatedSprite2D/VFXSprite:self_modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("AnimatedSprite2D/VFXSprite:scale")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("HitBox:collision_mask")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [192]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("HitBox:knock_back")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_86qvh"]
 resource_name = "dead"
@@ -933,7 +1143,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_rh8ku"]
 resource_name = "melee_attack"
-length = 0.36666667
+length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -941,7 +1151,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.26666668),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"parry"]
@@ -953,7 +1163,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.26666668),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
@@ -965,10 +1175,10 @@ tracks/2/path = NodePath("AnimatedSprite2D/VFXSprite:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.03333333, 0.33333334),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.26666668, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [false, true, false]
+"values": [true, false, true, false]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -977,10 +1187,10 @@ tracks/3/path = NodePath("AnimatedSprite2D/VFXSprite:animation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [&"melee_attack_fx"]
+"values": [&"charge", &"melee_attack_fx"]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -989,10 +1199,10 @@ tracks/4/path = NodePath("AnimatedSprite2D/VFXSprite:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667, 0.2, 0.23333335),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667, 0.20000002, 0.23333335, 0.3, 0.33333334, 0.36666667, 0.40000004, 0.43333334, 0.4666667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6]
+"values": [17, 14, 11, 8, 7, 6, 5, 4, 0, 1, 2, 3, 4, 5, 6]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -1001,7 +1211,7 @@ tracks/5/path = NodePath("AnimatedSprite2D:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.0401431, 0.0987302),
+"times": PackedFloat32Array(0.26666668, 0.30680978, 0.3653969),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(-10, 0), Vector2(0, 0)]
@@ -1013,7 +1223,7 @@ tracks/6/path = NodePath("HitBox/hb_collision:disabled")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.033333335, 0.3, 0.33333334),
+"times": PackedFloat32Array(0, 0.2, 0.5666667, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [true, false, false, true]
@@ -1025,10 +1235,58 @@ tracks/7/path = NodePath("HitBox:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.041666668, 0.1),
+"times": PackedFloat32Array(0.26666668, 0.30833334, 0.36666667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0, -39), Vector2(-8, -39), Vector2(0, -39)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedSprite2D/VFXSprite:self_modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.23529412, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedSprite2D/VFXSprite:scale")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.2994455),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(0.3, 0.3), Vector2(1, 1)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("HitBox:collision_mask")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0.06666668, 0.26666668, 0.3200595),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [64, 64, 192]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("HitBox:knock_back")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_2a376"]
@@ -1394,6 +1652,9 @@ _data = {
 &"staggered": SubResource("Animation_jdney")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8fd3j"]
+size = Vector2(13, 65)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_86qvh"]
 size = Vector2(20, 81)
 
@@ -1402,7 +1663,7 @@ radius = 6.0
 height = 48.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2fe2"]
-size = Vector2(30, 77)
+size = Vector2(25, 77)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ao47q"]
 size = Vector2(9, 51)
@@ -1507,8 +1768,15 @@ script = ExtResource("30_a5flw")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://b0uasmutdnguo"
 
-[node name="Shield" type="Area2D" parent="." unique_id=395439987]
-position = Vector2(0, -39)
+[node name="Shield" type="Area2D" parent="." unique_id=395439987 groups=["shield"]]
+position = Vector2(-16, -43)
+collision_layer = 268435456
+collision_mask = 64
+priority = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shield" unique_id=1636982715]
+position = Vector2(3.5, 38.5)
+shape = SubResource("RectangleShape2D_8fd3j")
 
 [node name="ParryBox" type="Area2D" parent="." unique_id=2025508034 groups=["shield"]]
 position = Vector2(-25, -37)
@@ -1524,10 +1792,11 @@ shape = SubResource("RectangleShape2D_86qvh")
 disabled = true
 one_way_collision_margin = 0.0
 
-[node name="HitBox" type="Area2D" parent="." unique_id=403153839 node_paths=PackedStringArray("stagger")]
+[node name="HitBox" type="Area2D" parent="." unique_id=403153839 node_paths=PackedStringArray("stagger") groups=["hitbox"]]
 position = Vector2(0, -39)
 collision_layer = 8
-collision_mask = 128
+collision_mask = 192
+collision_priority = 2.0
 script = ExtResource("14_0rfay")
 stagger = NodePath("../Stagger")
 knock_back = true
@@ -1546,10 +1815,11 @@ collision_mask = 8396864
 script = ExtResource("15_8nnwq")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
+shielded = true
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
 [node name="hurt_box_collision" type="CollisionShape2D" parent="HurtBox" unique_id=580559194]
-position = Vector2(4, 27.5)
+position = Vector2(6.5, 27.5)
 shape = SubResource("RectangleShape2D_o2fe2")
 
 [node name="HurtBox_Weakpoint" type="Area2D" parent="." unique_id=314062531 node_paths=PackedStringArray("health", "stagger")]
@@ -1593,6 +1863,8 @@ autostart = true
 [node name="StaggerTimer" type="Timer" parent="." unique_id=1973379460]
 
 [node name="DeathTimer" type="Timer" parent="." unique_id=380799588]
+
+[node name="LaunchTimer" type="Timer" parent="." unique_id=2028719636]
 
 [node name="DeathHandler" type="Node" parent="." unique_id=946252204 node_paths=PackedStringArray("actor", "sm", "animation_player", "health")]
 script = ExtResource("20_jdney")
@@ -1789,6 +2061,12 @@ behavior_tree = ExtResource("45_jdney")
 blackboard_plan = SubResource("BlackboardPlan_vtt0c")
 script = ExtResource("47_cl2c2")
 
+[node name="Launch" type="LimboState" parent="StateMachine" unique_id=1511695115 node_paths=PackedStringArray("actor", "launch_timer")]
+script = ExtResource("100_8h24x")
+actor = NodePath("../..")
+launch_timer = NodePath("../../LaunchTimer")
+metadata/_custom_type_script = "uid://dscn2ndlewuut"
+
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=455656030]
 
 [node name="melee" type="LimboState" parent="CombatStateMachine" unique_id=429295658 node_paths=PackedStringArray("actor", "bt_player")]
@@ -1833,7 +2111,11 @@ hit_from_inside = true
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
+[connection signal="area_entered" from="Shield" to="." method="_on_shield_area_entered"]
 [connection signal="bullet_stopped" from="ParryBox" to="." method="_on_parry_box_bullet_stopped"]
+[connection signal="clash_knock_back" from="HitBox" to="." method="_on_hit_box_clash_knock_back"]
+[connection signal="clash_launch" from="HitBox" to="." method="_on_hit_box_clash_launch"]
+[connection signal="clashed" from="HitBox" to="." method="_on_hit_box_clashed"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="area_entered" from="HurtBox_Weakpoint" to="." method="_on_hurt_box_weakpoint_area_entered"]
@@ -1842,6 +2124,7 @@ hit_from_inside = true
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="StaggerTimer" to="." method="_on_stagger_timer_timeout"]
+[connection signal="timeout" from="LaunchTimer" to="." method="_on_launch_timer_timeout"]
 [connection signal="player_sighted" from="VisionHandler" to="." method="_on_vision_handler_player_sighted"]
 [connection signal="ally_gone" from="AllyVisionHandler" to="." method="_on_ally_vision_handler_ally_gone"]
 [connection signal="found_ally" from="AllyVisionHandler" to="." method="_on_ally_vision_handler_found_ally"]
@@ -1855,4 +2138,5 @@ hit_from_inside = true
 [connection signal="entered" from="StateMachine/ShootingStates/ShootingDefense" to="." method="_on_shooting_defense_entered"]
 [connection signal="exited" from="StateMachine/Parry" to="." method="_on_parry_exited"]
 [connection signal="entered" from="StateMachine/Dying" to="." method="_on_dying_entered"]
+[connection signal="entered" from="StateMachine/Launch" to="." method="_on_launch_entered"]
 [connection signal="active_state_changed" from="CombatStateMachine" to="." method="_on_combat_state_machine_active_state_changed"]

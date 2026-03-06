@@ -2356,6 +2356,6 @@ func _on_clash_up() -> void:
 
 func _on_hurt_box_knockback(knock_back_strength: float) -> void:
 	knockback.x=knock_back_strength*(face_dir)
-	print_debug(velocity.x)
-	print_debug(knockback.x)
+	#print_debug(velocity.x)
+	#print_debug(knockback.x)
 	

@@ -7026,10 +7026,10 @@ trail_enabled = true
 trail_lifetime = 0.1
 process_material = SubResource("ParticleProcessMaterial_34r87")
 
-[node name="HitBox" type="Area2D" parent="AnimatedSprite2D" unique_id=101478943 node_paths=PackedStringArray("stagger")]
+[node name="HitBox" type="Area2D" parent="AnimatedSprite2D" unique_id=101478943 node_paths=PackedStringArray("stagger") groups=["player_hitbox"]]
 position = Vector2(0, -16.3107)
 collision_layer = 64
-collision_mask = 273
+collision_mask = 268435737
 script = ExtResource("6_y7jp7")
 stagger = NodePath("../../Stagger")
 

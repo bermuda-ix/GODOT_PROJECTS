@@ -77,6 +77,7 @@ Persistant="Objects that can persist on scene reloading"
 GameLevel=""
 world=""
 Boss=""
+hitbox=""
 
 [input]
 
@@ -239,6 +240,7 @@ MAnualLoad={
 2d_physics/layer_26="Interactable"
 2d_physics/layer_27="DropBelowPlatform"
 2d_physics/layer_28="CounterBox"
+2d_physics/layer_29="Shield"
 
 [network]
 

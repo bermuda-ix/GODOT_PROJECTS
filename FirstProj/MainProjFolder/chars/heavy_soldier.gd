@@ -97,6 +97,7 @@ var player_state : LimboState
 @onready var staggered: Staggered = $StateMachine/Staggered
 @onready var dying: BTState = $StateMachine/Dying
 @onready var death: Death = $StateMachine/Death
+@onready var launch: Launch = $StateMachine/Launch
 
 
 
@@ -227,6 +228,11 @@ func _physics_process(delta: float) -> void:
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
 		return
+	elif state_machine.get_active_state()!=launch:
+		velocity.y += gravity * delta
+	else:
+		global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
+		velocity.y=0
 	
 	velocity.x = current_speed + knockback.x
 	#print_debug(current_speed)
@@ -272,7 +278,7 @@ func _init_state_machine():
 	state_machine.add_transition(chasing, shooting_states, &"start_shoot")
 	state_machine.add_transition(chasing, melee_attack, &"melee_attack")
 	state_machine.add_transition(melee_attack, chasing, &"resume_chase")
-	
+	state_machine.add_transition(launch, idle, &"falling")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -407,7 +413,7 @@ func _on_shooting_defense_entered() -> void:
 
 func _on_attack_entered() -> void:
 	assert(state_machine.get_previous_active_state()!=shooting_states)
-	print_debug(state_machine.get_previous_active_state())
+	#print_debug(state_machine.get_previous_active_state())
 	if state_machine.get_active_state()!=idle:
 		if combat_state_machine.get_active_state()==ranged_mode:
 			state_machine.dispatch(&"start_shoot")
@@ -452,6 +458,8 @@ func _on_turret_shoot_bullet() -> void:
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="reload":
 		shooting_states.dispatch(&"return_shooting")
+	elif anim_name=="melee_attack":
+		state_machine.dispatch(&"resume_chase")
 
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
@@ -562,7 +570,8 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 
 func _on_shooting_states_entered() -> void:
-	print_debug("entering shooting")
+	pass
+	#print_debug("entering shooting")
 
 
 func _on_vision_handler_player_sighted() -> void:
@@ -572,7 +581,7 @@ func _on_vision_handler_player_sighted() -> void:
 				
 			
 func alerted() -> void :
-	print_debug("alerted!")
+	#print_debug("alerted!")
 	vision_handler.always_on=true
 	if on_screen.is_on_screen():
 		state_machine.dispatch(&"attack_mode")
@@ -615,5 +624,33 @@ func chase():
 
 func _on_melee_attack_entered() -> void:
 	animation_player.play("melee_attack")
-	await animation_player.animation_finished
-	state_machine.dispatch(&"resume_chase")
+
+
+func _on_hit_box_clashed() -> void:
+	animation_player.stop()
+	hit_stop.hit_stop(0.1, 0.5)
+	animation_player.play("melee_attack")
+	print_debug("clashed!")
+
+
+func _on_shield_area_entered(area: Area2D) -> void:
+	health.set_temporary_immortality(0.5)
+
+
+func _on_hit_box_clash_knock_back(_knockback : float) -> void:
+	if player_right:
+		knockback.x=_knockback
+	else:
+		knockback.x=_knockback
+
+
+func _on_hit_box_clash_launch(_launch: float) -> void:
+	state_machine.change_active_state(launch)
+
+
+func _on_launch_entered() -> void:
+	pass # Replace with function body.
+
+
+func _on_launch_timer_timeout() -> void:
+	state_machine.dispatch(&"falling")

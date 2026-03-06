@@ -6,7 +6,8 @@ extends LimboState
 #@export var bt_player : BTPlayer
 
 func _enter() -> void:
-	print_debug("begin shooting")
+	pass
+	#print_debug("begin shooting")
 	#actor.hb_collision.disabled=true
 	
 #func _exit() -> void:

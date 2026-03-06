@@ -18,6 +18,8 @@ signal knockback(knock_back_strength : float)
 @export var dmg_mult : int = 1
 @export var weakpoint : bool = false
 
+@export var shielded : bool = false
+
 func _ready():
 	connect("area_entered", _on_area_entered)
 	#connect("area_entered", _on_parried)
@@ -29,6 +31,7 @@ func _on_area_entered(hitbox: HitBox) -> void:
 		launched.emit()
 	if hitbox.knock_back:
 		knockback.emit(hitbox.knock_back_strength)
+		
 	
 	if health.health<=0:
 		return
@@ -42,10 +45,12 @@ func _on_area_entered(hitbox: HitBox) -> void:
 			#received_damage.emit(hitbox.damage)
 			got_hit.emit(hitbox)
 		else:
-			health.health -= (hitbox.damage * dmg_mult)
-			#print_debug(hitbox.damage, " ",dmg_mult)
-			received_damage.emit(hitbox.damage)
-			got_hit.emit(hitbox)
+			if shielded:
+				if not hitbox.shield_hit:
+					health.health -= (hitbox.damage * dmg_mult)
+					#print_debug(hitbox.damage, " ",dmg_mult)
+					received_damage.emit(hitbox.damage)
+					got_hit.emit(hitbox)
 
 func _bullet_hit(_rigid_body : RigidBody2D) -> void:
 	var _damage=1

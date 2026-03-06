@@ -1057,12 +1057,6 @@ scale = Vector2(0.5, 0.5)
 
 [node name="flying" type="Node" parent="Enemy" index="1" unique_id=1634263824]
 
-[node name="flying_enemy2" parent="Enemy/flying" index="0" unique_id=1650284757 instance=ExtResource("11_52g4u")]
-position = Vector2(952, -56)
-
-[node name="flying_enemy3" parent="Enemy/flying" index="1" unique_id=1927168763 instance=ExtResource("11_52g4u")]
-position = Vector2(1312, 0)
-
 [node name="turrets" type="Node" parent="Enemy" index="2" unique_id=1078090281]
 
 [node name="turret_base_3" parent="Enemy/turrets" index="0" unique_id=1923518194 instance=ExtResource("14_r2uf8")]
@@ -1160,6 +1154,10 @@ scale = Vector2(0.75, 0.75)
 position = Vector2(2080, 776.00006)
 scale = Vector2(0.75, 0.75)
 
+[node name="GuardEnemy14" parent="Enemy/Guards" index="13" unique_id=605474709 instance=ExtResource("16_vw32t")]
+position = Vector2(3152, 1184)
+scale = Vector2(0.75, 0.75)
+
 [node name="SleepingGuard" parent="Enemy" index="4" unique_id=2088524183 instance=ExtResource("17_61h8j")]
 position = Vector2(656, 457)
 
@@ -1174,12 +1172,12 @@ heavy_soldier_enemies = [NodePath("../HeavySoldier5"), NodePath("../HeavySoldier
 guard_enemies = [NodePath("../GuardEnemy6")]
 
 [node name="HeavySoldier5" parent="Enemy/Underground" index="1" unique_id=1834093229 node_paths=PackedStringArray("group_link_control") instance=ExtResource("13_rfxm3")]
-position = Vector2(2749, 1175)
+position = Vector2(2432, 1192)
 scale = Vector2(0.5, 0.5)
 group_link_control = NodePath("../EnemyGroup")
 
 [node name="HeavySoldier6" parent="Enemy/Underground" index="2" unique_id=217312310 node_paths=PackedStringArray("group_link_control") instance=ExtResource("13_rfxm3")]
-position = Vector2(2808, 1175)
+position = Vector2(3104, 1192)
 scale = Vector2(0.5, 0.5)
 group_link_control = NodePath("../EnemyGroup")
 
@@ -1243,12 +1241,12 @@ end_position = Vector2(1944, 304)
 navigation_polygon = SubResource("NavigationPolygon_dxt6w")
 
 [node name="TutorialText" type="RichTextLabel" parent="." index="11" unique_id=1558083282]
-offset_left = 467.0
-offset_top = 377.0
-offset_right = 590.0
-offset_bottom = 432.0
-text = "LMB:ATTACK
-ALT: LOCKON"
+offset_left = 448.0
+offset_top = 336.0
+offset_right = 584.0
+offset_bottom = 391.0
+text = "LMB: Light Attack
+ALT: Lockon"
 
 [node name="TutorialText2" type="RichTextLabel" parent="." index="12" unique_id=729464537]
 offset_left = 978.0
@@ -1280,17 +1278,18 @@ Jump Off Wall
 "
 
 [node name="TutorialText4" type="RichTextLabel" parent="." index="15" unique_id=85099039]
-offset_left = 2105.0
-offset_top = 242.0
-offset_right = 2435.0
-offset_bottom = 319.0
-text = "Shift + Space while locked on: Flip over"
+offset_left = 2392.0
+offset_top = 616.0
+offset_right = 2722.0
+offset_bottom = 693.0
+text = "Combo: Launch
+LMB (Light Attack) -> RMB (Heavy Attack)"
 
 [node name="TutorialText5" type="RichTextLabel" parent="." index="16" unique_id=417695015]
-offset_left = 1522.0
-offset_top = 77.0
-offset_right = 1852.0
-offset_bottom = 154.0
+offset_left = 1112.0
+offset_top = -32.0
+offset_right = 1442.0
+offset_bottom = 45.0
 text = "Hold RMB: Aim
 Release: Shoot (Higher damage)"
 
