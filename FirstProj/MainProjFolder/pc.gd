@@ -2359,3 +2359,7 @@ func _on_hurt_box_knockback(knock_back_strength: float) -> void:
 	#print_debug(velocity.x)
 	#print_debug(knockback.x)
 	
+
+
+func _on_hit_box_clashed() -> void:
+	clash_power.increase_clash()

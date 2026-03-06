@@ -1143,7 +1143,6 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_rh8ku"]
 resource_name = "melee_attack"
-length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1151,7 +1150,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.26666668),
+"times": PackedFloat32Array(0.51327384),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"parry"]
@@ -1163,7 +1162,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.26666668),
+"times": PackedFloat32Array(0.51327384),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
@@ -1175,7 +1174,7 @@ tracks/2/path = NodePath("AnimatedSprite2D/VFXSprite:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.26666668, 0.3, 0.6),
+"times": PackedFloat32Array(0, 0.51327384, 0.54660714, 0.8466072),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [true, false, true, false]
@@ -1187,7 +1186,7 @@ tracks/3/path = NodePath("AnimatedSprite2D/VFXSprite:animation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.26666668),
+"times": PackedFloat32Array(0, 0.51327384),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [&"charge", &"melee_attack_fx"]
@@ -1199,7 +1198,7 @@ tracks/4/path = NodePath("AnimatedSprite2D/VFXSprite:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667, 0.20000002, 0.23333335, 0.3, 0.33333334, 0.36666667, 0.40000004, 0.43333334, 0.4666667, 0.5),
+"times": PackedFloat32Array(0, 0.025, 0.049999993, 0.075, 0.1, 0.125, 0.15, 0.175, 0.54660714, 0.5799405, 0.61327386, 0.64660716, 0.67994046, 0.7132739, 0.7466072),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [17, 14, 11, 8, 7, 6, 5, 4, 0, 1, 2, 3, 4, 5, 6]
@@ -1211,7 +1210,7 @@ tracks/5/path = NodePath("AnimatedSprite2D:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.26666668, 0.30680978, 0.3653969),
+"times": PackedFloat32Array(0.51327384, 0.55341697, 0.61200404),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(-10, 0), Vector2(0, 0)]
@@ -1223,7 +1222,7 @@ tracks/6/path = NodePath("HitBox/hb_collision:disabled")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.5666667, 0.6),
+"times": PackedFloat32Array(0, 0.2, 0.8132739, 0.8466072),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [true, false, false, true]
@@ -1235,7 +1234,7 @@ tracks/7/path = NodePath("HitBox:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.26666668, 0.30833334, 0.36666667),
+"times": PackedFloat32Array(0.51327384, 0.55494046, 0.61327386),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0, -39), Vector2(-8, -39), Vector2(0, -39)]
@@ -1247,10 +1246,10 @@ tracks/8/path = NodePath("AnimatedSprite2D/VFXSprite:self_modulate")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.26666668, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.13333334, 0.51327384, 0.54660714),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 0.23529412, 0, 1), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 1), Color(1, 0.23529412, 0, 1), Color(1, 0.23529412, 0, 1), Color(1, 1, 1, 1)]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
@@ -1259,7 +1258,7 @@ tracks/9/path = NodePath("AnimatedSprite2D/VFXSprite:scale")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.2994455),
+"times": PackedFloat32Array(0, 0.5460527),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2(0.3, 0.3), Vector2(1, 1)]
@@ -1271,7 +1270,7 @@ tracks/10/path = NodePath("HitBox:collision_mask")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0.06666668, 0.26666668, 0.3200595),
+"times": PackedFloat32Array(0.13333334, 0.51327384, 0.56666666),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [64, 64, 192]
@@ -1744,6 +1743,7 @@ metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=1742492050]
 script = ExtResource("12_6gh4x")
+max_stagger = 1
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=162841846]
@@ -2117,6 +2117,7 @@ hit_from_inside = true
 [connection signal="clash_launch" from="HitBox" to="." method="_on_hit_box_clash_launch"]
 [connection signal="clashed" from="HitBox" to="." method="_on_hit_box_clashed"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="launched" from="HurtBox" to="." method="_on_hurt_box_launched"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="area_entered" from="HurtBox_Weakpoint" to="." method="_on_hurt_box_weakpoint_area_entered"]
 [connection signal="weakpoint_hit" from="HurtBox_Weakpoint" to="." method="_on_hurt_box_weakpoint_weakpoint_hit"]

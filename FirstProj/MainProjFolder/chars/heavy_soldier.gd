@@ -55,6 +55,8 @@ var always_active : bool
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @export var jump_speed : float = 120.0
 @export var chase_speed : float = 40.0
+@onready var launch_timer: Timer = $LaunchTimer
+
 
 var current_speed : float = 0.0
 var prev_speed : float = 00.0
@@ -219,7 +221,11 @@ func _physics_process(delta: float) -> void:
 	#
 	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
 		#hb_collison.disabled=true
-		velocity.y += gravity * delta
+		if launch_timer.time_left>0:
+			global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
+			velocity.y=0
+		else:
+			velocity.y += gravity * delta
 		velocity.x=0
 		move_and_slide()
 		return
@@ -228,11 +234,10 @@ func _physics_process(delta: float) -> void:
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
 		return
-	elif state_machine.get_active_state()!=launch:
-		velocity.y += gravity * delta
-	else:
+	elif state_machine.get_active_state()==launch:
 		global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
 		velocity.y=0
+
 	
 	velocity.x = current_speed + knockback.x
 	#print_debug(current_speed)
@@ -496,7 +501,7 @@ func _on_stagger_staggered() -> void:
 	hb_collision.disabled=true
 	current_speed=0
 	velocity.x=0
-	if (state_machine.get_active_state()!= dying and state_machine.get_active_state()!=death):
+	if (state_machine.get_active_state()!= dying and state_machine.get_active_state()!=death and state_machine.get_active_state()!=launch):
 		state_machine.dispatch(&"staggered")
 
 
@@ -628,7 +633,7 @@ func _on_melee_attack_entered() -> void:
 
 func _on_hit_box_clashed() -> void:
 	animation_player.stop()
-	hit_stop.hit_stop(0.1, 0.5)
+	hit_stop.hit_stop(0.1, 0.3)
 	animation_player.play("melee_attack")
 	print_debug("clashed!")
 
@@ -654,3 +659,9 @@ func _on_launch_entered() -> void:
 
 func _on_launch_timer_timeout() -> void:
 	state_machine.dispatch(&"falling")
+
+
+func _on_hurt_box_launched() -> void:
+	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
+	if _total_stagger_damage>=stagger.stagger:
+		state_machine.change_active_state(launch)

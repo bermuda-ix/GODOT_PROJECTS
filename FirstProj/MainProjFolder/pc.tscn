@@ -7535,6 +7535,7 @@ pc = NodePath("../..")
 [connection signal="clash_up" from="." to="." method="_on_clash_up"]
 [connection signal="area_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="clashed" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_clashed"]
 [connection signal="parried" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="parried_success" from="AnimatedSprite2D/ParryBox" to="." method="_on_parry_box_parried_success"]
 [connection signal="pressed" from="AnimatedSprite2D/InteractUI/PanelContainer/TextureButton" to="." method="_on_texture_button_pressed"]
