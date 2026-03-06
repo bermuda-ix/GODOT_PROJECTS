@@ -100,6 +100,8 @@ var player_state : LimboState
 @onready var dying: BTState = $StateMachine/Dying
 @onready var death: Death = $StateMachine/Death
 @onready var launch: Launch = $StateMachine/Launch
+@onready var falling: LimboState = $StateMachine/Falling
+@onready var landed: LimboState = $StateMachine/Landed
 
 
 
@@ -207,7 +209,8 @@ func _process(delta: float) -> void:
 	if shooting_states.get_active_state()!=reload:
 		defense_shoot()
 	reload_gun()
-	being_flipped()
+	if is_on_floor():
+		being_flipped()
 	flip_ally_vision()
 	if health.health<=0:
 		if state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death:
@@ -242,7 +245,10 @@ func _physics_process(delta: float) -> void:
 	elif state_machine.get_active_state()==launch:
 		global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
 		velocity.y=0
-
+	elif state_machine.get_active_state()==falling:
+		velocity.y += gravity * delta
+		if is_on_floor():
+			state_machine.dispatch(&"landed")
 	
 	velocity.x = current_speed + knockback.x
 	#print_debug(current_speed)
@@ -288,7 +294,9 @@ func _init_state_machine():
 	state_machine.add_transition(chasing, shooting_states, &"start_shoot")
 	state_machine.add_transition(chasing, melee_attack, &"melee_attack")
 	state_machine.add_transition(melee_attack, chasing, &"resume_chase")
-	state_machine.add_transition(launch, idle, &"falling")
+	state_machine.add_transition(launch, falling, &"falling")
+	state_machine.add_transition(falling, landed, &"landed")
+	state_machine.add_transition(landed, attack, &"resume_attack")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -375,7 +383,7 @@ func get_height() -> int:
 
 func _on_state_machine_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	#print_debug(current)
-	if current!=idle and current!=chasing:
+	if current!=idle and current!=chasing and current!=launch and current != falling and current!=landed:
 		movement_handler.active=true
 		shooting_states.dispatch(&"begin_shooting")
 	elif current==shooting_states:
@@ -470,6 +478,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		shooting_states.dispatch(&"return_shooting")
 	elif anim_name=="melee_attack":
 		state_machine.dispatch(&"resume_chase")
+	elif anim_name=="landed":
+		state_machine.dispatch(&"resume_attack")
 
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
@@ -678,3 +688,17 @@ func _on_death_entered() -> void:
 	hb_collision.set_deferred("disabled", true)
 	hurt_box_collision.set_deferred("disabled", true)
 	set_collision_mask_value(15, true)
+
+
+func _on_falling_entered() -> void:
+	animation_player.play("falling")
+
+
+func _on_falling_updated(delta: float) -> void:
+	if is_on_floor():
+		state_machine.dispatch(&"landed")
+		
+
+
+func _on_landed_entered() -> void:
+	animation_player.play("landed")

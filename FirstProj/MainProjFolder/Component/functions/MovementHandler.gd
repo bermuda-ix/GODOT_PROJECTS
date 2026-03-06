@@ -39,17 +39,20 @@ func set_keep_distance(value : bool) -> void:
 	keep_distance=value
 
 func face_player() -> void:
-	if not actor.player_right:
-		if state_machine.get_active_state()!=actor.attack:
-			actor.animated_sprite_2d.scale.x = 1
-		actor.hit_box.scale.x = 1
-		actor.attack_range.scale.x = 1
-		
+	if not active:
+		return
 	else:
-		if state_machine.get_active_state()!=actor.attack:
-			actor.animated_sprite_2d.scale.x = -1
-		actor.hit_box.scale.x = -1
-		actor.attack_range.scale.x = -1
+		if not actor.player_right:
+			if state_machine.get_active_state()!=actor.attack:
+				actor.animated_sprite_2d.scale.x = 1
+			actor.hit_box.scale.x = 1
+			actor.attack_range.scale.x = 1
+			
+		else:
+			if state_machine.get_active_state()!=actor.attack:
+				actor.animated_sprite_2d.scale.x = -1
+			actor.hit_box.scale.x = -1
+			actor.attack_range.scale.x = -1
 
 	
 func move_away(value : int) -> void:

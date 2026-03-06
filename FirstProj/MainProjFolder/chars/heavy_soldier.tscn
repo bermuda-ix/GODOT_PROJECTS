@@ -1038,6 +1038,18 @@ tracks/20/keys = {
 "update": 0,
 "values": [0.567232]
 }
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("MovementHandler:active")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_86qvh"]
 resource_name = "dead"
@@ -1094,6 +1106,59 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_i52b7"]
+resource_name = "falling"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shield/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_a5flw"]
@@ -1177,6 +1242,57 @@ tracks/2/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_3nwb8"]
+resource_name = "landed"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.500257),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"jump", &"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.500257, 0.53333336, 0.5666667, 0.6, 0.6333334, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 0, 1, 2, 3, 4, 5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Shield/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.74810475, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MovementHandler:active")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.8666667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_8h24x"]
 resource_name = "launched"
 tracks/0/type = "value"
@@ -1186,10 +1302,10 @@ tracks/0/path = NodePath("Shield/CollisionShape2D:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.97770596, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true, true, false]
+"values": [true]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -1226,6 +1342,30 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.567232, 0.567232, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MovementHandler:active")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D/VFXSprite:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_rh8ku"]
@@ -1726,8 +1866,10 @@ _data = {
 &"RESET": SubResource("Animation_vtt0c"),
 &"dead": SubResource("Animation_86qvh"),
 &"death": SubResource("Animation_cl2c2"),
+&"falling": SubResource("Animation_i52b7"),
 &"hit": SubResource("Animation_a5flw"),
 &"idle": SubResource("Animation_ct51r"),
+&"landed": SubResource("Animation_3nwb8"),
 &"launched": SubResource("Animation_8h24x"),
 &"melee_attack": SubResource("Animation_rh8ku"),
 &"parry": SubResource("Animation_2a376"),
@@ -2156,6 +2298,10 @@ actor = NodePath("../..")
 launch_timer = NodePath("../../LaunchTimer")
 metadata/_custom_type_script = "uid://dscn2ndlewuut"
 
+[node name="Falling" type="LimboState" parent="StateMachine" unique_id=822601892]
+
+[node name="Landed" type="LimboState" parent="StateMachine" unique_id=1214387260]
+
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=455656030]
 
 [node name="melee" type="LimboState" parent="CombatStateMachine" unique_id=429295658 node_paths=PackedStringArray("actor", "bt_player")]
@@ -2230,4 +2376,7 @@ hit_from_inside = true
 [connection signal="entered" from="StateMachine/Death" to="." method="_on_death_entered"]
 [connection signal="entered" from="StateMachine/Dying" to="." method="_on_dying_entered"]
 [connection signal="entered" from="StateMachine/Launch" to="." method="_on_launch_entered"]
+[connection signal="entered" from="StateMachine/Falling" to="." method="_on_falling_entered"]
+[connection signal="exited" from="StateMachine/Falling" to="." method="_on_falling_exited"]
+[connection signal="entered" from="StateMachine/Landed" to="." method="_on_landed_entered"]
 [connection signal="active_state_changed" from="CombatStateMachine" to="." method="_on_combat_state_machine_active_state_changed"]
