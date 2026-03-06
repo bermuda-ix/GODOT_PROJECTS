@@ -1014,6 +1014,30 @@ tracks/18/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Shield/CollisionShape2D:disabled")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("AnimatedSprite2D:rotation")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.567232]
+}
 
 [sub_resource type="Animation" id="Animation_86qvh"]
 resource_name = "dead"
@@ -1139,6 +1163,69 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_8h24x"]
+resource_name = "launched"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shield/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.97770596, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.9009188, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.567232, 0.567232, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_rh8ku"]
@@ -1641,6 +1728,7 @@ _data = {
 &"death": SubResource("Animation_cl2c2"),
 &"hit": SubResource("Animation_a5flw"),
 &"idle": SubResource("Animation_ct51r"),
+&"launched": SubResource("Animation_8h24x"),
 &"melee_attack": SubResource("Animation_rh8ku"),
 &"parry": SubResource("Animation_2a376"),
 &"parry_success": SubResource("Animation_n5mdn"),
@@ -1694,6 +1782,7 @@ navigation_layers = 2
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=902741220]
 texture_filter = 2
 material = SubResource("ShaderMaterial_lvmp0")
+rotation = 0.567232
 sprite_frames = SubResource("SpriteFrames_64nx0")
 animation = &"idle"
 offset = Vector2(0, -39)
@@ -1738,12 +1827,12 @@ libraries/ = SubResource("AnimationLibrary_n5mdn")
 
 [node name="Health" type="Node" parent="." unique_id=490683754]
 script = ExtResource("11_2ecav")
-max_health = 2
+max_health = 5
 metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=1742492050]
 script = ExtResource("12_6gh4x")
-max_stagger = 1
+max_stagger = 2
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=162841846]
@@ -1771,7 +1860,7 @@ metadata/_custom_type_script = "uid://b0uasmutdnguo"
 [node name="Shield" type="Area2D" parent="." unique_id=395439987 groups=["shield"]]
 position = Vector2(-16, -43)
 collision_layer = 268435456
-collision_mask = 64
+collision_mask = 8388672
 priority = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shield" unique_id=1636982715]
@@ -2138,6 +2227,7 @@ hit_from_inside = true
 [connection signal="entered" from="StateMachine/ShootingStates/Shooting" to="." method="_on_shooting_entered"]
 [connection signal="entered" from="StateMachine/ShootingStates/ShootingDefense" to="." method="_on_shooting_defense_entered"]
 [connection signal="exited" from="StateMachine/Parry" to="." method="_on_parry_exited"]
+[connection signal="entered" from="StateMachine/Death" to="." method="_on_death_entered"]
 [connection signal="entered" from="StateMachine/Dying" to="." method="_on_dying_entered"]
 [connection signal="entered" from="StateMachine/Launch" to="." method="_on_launch_entered"]
 [connection signal="active_state_changed" from="CombatStateMachine" to="." method="_on_combat_state_machine_active_state_changed"]

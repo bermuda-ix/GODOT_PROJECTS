@@ -22,6 +22,10 @@ func shoot_bullet():
 	bullet_inst.scale_size*=bullet_scale
 	#bullet_inst.set_accel(50.0)
 	#bullet_inst.tracking_time=0.01
+	if actor.has_method("get_clash_power"):
+		bullet_inst.set_damage(actor.get_clash_power())
+	else:
+		bullet_inst.set_damage(1)
 	if player_tracking_active:
 		if turret.slow_track:
 			bullet_inst.dir=turret.direction_to_player

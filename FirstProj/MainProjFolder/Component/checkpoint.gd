@@ -12,7 +12,7 @@ func get_sate() -> bool:
 	
 func _on_body_entered(body):
 	if body.is_in_group("player") and check_flag.disabled==false:
-		print("checkpoint reached")
+		print_debug("checkpoint reached")
 		#check_flag.disabled=true
 		check_flag.call_deferred("set_disabled", true)
 		body.set_start_pos(position)

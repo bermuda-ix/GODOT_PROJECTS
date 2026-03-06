@@ -187,7 +187,6 @@ func _ready():
 
 
 func _process(delta: float) -> void:
-	
 	if state_machine.get_active_state()==death:
 		hb_collision.disabled=true
 		return
@@ -210,10 +209,16 @@ func _process(delta: float) -> void:
 	reload_gun()
 	being_flipped()
 	flip_ally_vision()
+	if health.health<=0:
+		if state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death:
+			state_machine.dispatch(&"die")
 	
 	#print_debug(current_speed)
 
 func _physics_process(delta: float) -> void:
+	if state_machine.get_active_state()==death:
+		return
+	
 	if combat_state_machine.get_active_state()==ranged_mode or state_machine.get_active_state()==parry:
 		if state_machine.get_active_state()!=chasing:
 			if shooting_states.get_active_state()!=defend_ally:
@@ -502,7 +507,8 @@ func _on_stagger_staggered() -> void:
 	current_speed=0
 	velocity.x=0
 	if (state_machine.get_active_state()!= dying and state_machine.get_active_state()!=death and state_machine.get_active_state()!=launch):
-		state_machine.dispatch(&"staggered")
+		if health.health>0:
+			state_machine.dispatch(&"staggered")
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:
@@ -664,4 +670,11 @@ func _on_launch_timer_timeout() -> void:
 func _on_hurt_box_launched() -> void:
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
+		animation_player.play("launched")
 		state_machine.change_active_state(launch)
+
+
+func _on_death_entered() -> void:
+	hb_collision.set_deferred("disabled", true)
+	hurt_box_collision.set_deferred("disabled", true)
+	set_collision_mask_value(15, true)

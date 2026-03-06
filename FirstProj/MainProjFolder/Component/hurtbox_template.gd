@@ -18,6 +18,8 @@ signal knockback(knock_back_strength : float)
 @export var dmg_mult : int = 1
 @export var weakpoint : bool = false
 
+@onready var total_damage : int = 0
+
 @export var shielded : bool = false
 
 func _ready():
@@ -53,20 +55,35 @@ func _on_area_entered(hitbox: HitBox) -> void:
 					got_hit.emit(hitbox)
 
 func _bullet_hit(_rigid_body : RigidBody2D) -> void:
-	var _damage=1
+	var _damage : int 
+	if _rigid_body.has_method("get_damage"):
+		_damage=_rigid_body.get_damage()
+	else:
+		_damage=1
 	if health.health<=0:
 		return
 
 	_rigid_body.hard_impact()
+	
+	#if bullet_hit_buffer.is_stopped():
+		#bullet_hit_buffer.start()
+		#total_damage+=_damage
+	#else:
+		#total_damage+=_damage
+		#bullet_hit_buffer.start()
+	
 	if stagger.stagger>0:
 		stagger.stagger-=1
 	else:
 		health.set_health(health.health-1)
-		received_damage.emit(_damage)
+		
+		print_debug(health.health)
+		#received_damage.emit(_damage)
 		bullet_hit.emit(_damage)
 	_rigid_body.impact()
 		
 		
+
 
 
 func set_damage_mulitplyer(value:int):
@@ -74,3 +91,21 @@ func set_damage_mulitplyer(value:int):
 
 func get_damage_mulitplyer() -> int:
 	return dmg_mult
+
+#
+#func _on_bullet_hit_buffer_timeout() -> void:
+	#if total_damage>=stagger.stagger:
+		#var _damage_left=total_damage-stagger.stagger
+		#stagger.stagger=0
+		#health.health-=_damage_left
+		#received_damage.emit(_damage_left)
+		#print_debug("health left", health.health)
+		#print_debug(total_damage)
+	#elif total_damage<stagger.stagger:
+		#stagger.stagger-=total_damage
+		#print_debug(total_damage)
+	#else:
+		#health.health-=total_damage
+		#received_damage.emit(total_damage)
+		#print_debug(total_damage)
+	#total_damage=0

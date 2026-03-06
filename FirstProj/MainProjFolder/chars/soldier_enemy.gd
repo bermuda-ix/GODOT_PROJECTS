@@ -518,9 +518,9 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		"dodge":
 			state_machine.dispatch(&"dodge_end")
 		"teleport_start":
-			print(global_position)
+			print_debug(global_position)
 		"teleport_end":
-			print(global_position)
+			print_debug(global_position)
 		"flashback_lvl_cutscenes/first_mini_boss_kill":
 			death_on_cutscene()
 			

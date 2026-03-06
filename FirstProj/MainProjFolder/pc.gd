@@ -1088,6 +1088,9 @@ func aim_and_shoot():
 	elif Input.is_action_just_released("special_attack"):
 		state_machine.dispatch(&"shoot")
 
+func get_clash_power() -> int:
+	return clash_power.clash_power
+
 func heavy_combos():
 	if Input.is_action_just_pressed("special_attack"):
 		match attack_state.get_active_state():
@@ -1757,7 +1760,7 @@ func parry_success():
 
 
 func _on_hit_box_area_entered(_area):
-	print(hit_buffer.time_left)
+	#print(hit_buffer.time_left)
 	if hit_buffer.time_left>0:
 		return
 	else:
@@ -2332,14 +2335,7 @@ func _on_jump_state_entered() -> void:
 	var _jump_vel_x=30
 	var _jump_vel_y=50
 	velocity.y = movement_data.jump_velocity/2
-	#
-	#if state_machine.get_previous_active_state()==wall_stick:
-		##assert(velocity.y<0)
-		#if wall_normal==Vector2.LEFT:
-			#knockback.x=-_jump_vel_y
-			#
-		#else:
-			#knockback.x=_jump_vel_y
+
 
 
 func _on_attack_state_exited() -> void:

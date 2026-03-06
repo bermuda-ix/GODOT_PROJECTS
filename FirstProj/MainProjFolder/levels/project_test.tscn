@@ -459,7 +459,7 @@ position = Vector2(1325, 86)
 position = Vector2(1370, 43.000004)
 
 [node name="HeavySoldier" parent="Enemies" index="2" unique_id=1955221828 instance=ExtResource("10_0atxr")]
-position = Vector2(875, 92)
+position = Vector2(855, 79)
 scale = Vector2(0.6, 0.6)
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]
@@ -475,7 +475,7 @@ level = NodePath("..")
 metadata/_custom_type_script = "uid://klqpph3n6xut"
 
 [node name="PC" parent="." index="33" unique_id=907789365 instance=ExtResource("12_dqkb5")]
-position = Vector2(696, 96)
+position = Vector2(691, 88)
 
 [node name="DROPSTESTSPAWNPOINT" type="Node2D" parent="." index="34" unique_id=1494373708]
 position = Vector2(952, 35)
