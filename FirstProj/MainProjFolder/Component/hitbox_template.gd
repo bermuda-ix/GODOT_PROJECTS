@@ -27,11 +27,7 @@ func get_damage() -> int:
 
 func _on_parried(_area :Area2D) -> void:
 	if _area!= null:
-		if _area.is_in_group("shield"):
-			shield_hit=true
-			knock_back = false
-			launch = false
-		elif _area.is_in_group("hitbox"):
+		if _area.is_in_group("hitbox"):
 			damage = 0
 			knock_back = false
 			launch = false

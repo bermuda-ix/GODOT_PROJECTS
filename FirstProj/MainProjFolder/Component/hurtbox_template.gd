@@ -47,8 +47,14 @@ func _on_area_entered(hitbox: HitBox) -> void:
 			#received_damage.emit(hitbox.damage)
 			got_hit.emit(hitbox)
 		else:
-			if shielded:
-				if not hitbox.shield_hit:
+			if weakpoint:
+				health.health -= (hitbox.damage * dmg_mult)
+				stagger.stagger -= (hitbox.damage * dmg_mult)
+				#print_debug(hitbox.damage, " ",dmg_mult)
+				received_damage.emit(hitbox.damage)
+				got_hit.emit(hitbox)
+			else:
+				if not shielded:
 					health.health -= (hitbox.damage * dmg_mult)
 					#print_debug(hitbox.damage, " ",dmg_mult)
 					received_damage.emit(hitbox.damage)
@@ -80,6 +86,7 @@ func _bullet_hit(_rigid_body : RigidBody2D) -> void:
 		print_debug(health.health)
 		#received_damage.emit(_damage)
 		bullet_hit.emit(_damage)
+		received_damage.emit(_damage)
 	_rigid_body.impact()
 		
 		

@@ -522,6 +522,7 @@ func _on_stagger_staggered() -> void:
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:
+	hit_stop.hit_stop(0.05,0.25)
 	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 		Events.allied_enemy_hit.emit()
 	
@@ -533,7 +534,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		parry_timer.start(0.5)
 		if (state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death):
 			state_machine.dispatch(&"hit")
-		hit_stop.hit_stop(0.05,0.25)
+		
 		#set_state(current_state, States.HIT)
 		gpu_particles_2d.emitting=true
 		
@@ -649,7 +650,7 @@ func _on_melee_attack_entered() -> void:
 
 func _on_hit_box_clashed() -> void:
 	animation_player.stop()
-	hit_stop.hit_stop(0.1, 0.3)
+	hit_stop.hit_stop(0.05, 0.5)
 	animation_player.play("melee_attack")
 	print_debug("clashed!")
 
