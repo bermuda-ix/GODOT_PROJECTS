@@ -29,15 +29,19 @@ func _ready():
 
 func _on_area_entered(hitbox: HitBox) -> void:
 	
-	if hitbox.launch:
-		launched.emit()
-	if hitbox.knock_back:
-		knockback.emit(hitbox.knock_back_strength)
+	
 		
 	
 	if health.health<=0:
 		return
 	if hitbox != null:
+		print(hitbox.knock_back)
+		if hitbox.launch:
+			launched.emit()
+		if hitbox.knock_back:
+			print("KNOCKING BACK")
+			knockback.emit(hitbox.knock_back_strength)
+	
 		if hitbox.is_in_group("spc_atk"):
 			weakpoint_hit.emit()
 		if hitbox.stagger_damage:

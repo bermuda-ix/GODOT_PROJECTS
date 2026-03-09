@@ -549,6 +549,8 @@ func _process(_delta):
 			dash_attack_enter()
 		elif Input.is_action_just_pressed("special_attack"):
 			heavy_dash_attack_enter()
+		else:
+			pass
 	#
 	lockon()
 	enter_door()
@@ -1016,9 +1018,13 @@ func _on_heavy_attack_buffer_timer_timeout() -> void:
 	
 func heavy_attack():
 	heavy_attack_buffer_timer.stop()
+	hit_buffer.stop()
 	if state_machine.get_active_state()!=attack_state:
 		attack_timer.paused=true
 	hit_box.set_damage(1)
+	#if counter_flag:
+		#attack_state.dispatch(&"heavy_counter")
+		#state_machine.dispatch(&"start_attack")
 	if counter_flag:
 		state_machine.dispatch(&"heavy_counter")
 	else:
@@ -1068,9 +1074,7 @@ func sp_atk():
 	#else:
 		#set_shotgun_free_rotate(true)
 	
-	if counter_flag:
-		attack_state.dispatch(&"heavy_counter")
-		state_machine.dispatch(&"start_attack")
+	
 	if state_machine.get_active_state()!=parry_success_state \
 	 and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=attack_state:
 		aim_and_shoot()

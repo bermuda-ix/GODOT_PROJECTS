@@ -102,6 +102,7 @@ var player_state : LimboState
 @onready var launch: Launch = $StateMachine/Launch
 @onready var falling: LimboState = $StateMachine/Falling
 @onready var landed: LimboState = $StateMachine/Landed
+@onready var knockback_stun: LimboState = $StateMachine/KnockbackStun
 
 
 
@@ -227,10 +228,11 @@ func _physics_process(delta: float) -> void:
 			if shooting_states.get_active_state()!=defend_ally:
 				current_speed=0
 	#
-	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
+	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered or state_machine.get_active_state()==launch:
 		#hb_collison.disabled=true
 		if launch_timer.time_left>0:
 			global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
+			global_position.x=lerpf(global_position.x, launch.knocked_back, 0.1)
 			velocity.y=0
 		else:
 			velocity.y += gravity * delta
@@ -660,10 +662,18 @@ func _on_shield_area_entered(area: Area2D) -> void:
 
 
 func _on_hit_box_clash_knock_back(_knockback : float) -> void:
-	if player_right:
-		knockback.x=_knockback
+	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
+	if _total_stagger_damage>=stagger.stagger:
+		if player_right:
+			launch.knock_back_strength = -_knockback
+		else:
+			launch.knock_back_strength = _knockback
+		state_machine.change_active_state(launch)
 	else:
-		knockback.x=_knockback
+		if player_right:
+			knockback.x=-_knockback*2
+		else:
+			knockback.x=_knockback*2
 
 
 func _on_hit_box_clash_launch(_launch: float) -> void:
@@ -682,6 +692,7 @@ func _on_hurt_box_launched() -> void:
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
 		animation_player.play("launched")
+		launch.launch_strength=40
 		state_machine.change_active_state(launch)
 
 
@@ -703,3 +714,15 @@ func _on_falling_updated(delta: float) -> void:
 
 func _on_landed_entered() -> void:
 	animation_player.play("landed")
+
+
+func _on_hurt_box_knockback(knock_back_strength: float) -> void:
+	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
+	if _total_stagger_damage>=stagger.stagger:
+		if player_right:
+			launch.knock_back_strength = knock_back_strength
+		else:
+			launch.knock_back_strength = -knock_back_strength
+		launch.launch_height=0
+		state_machine.change_active_state(launch)
+		
