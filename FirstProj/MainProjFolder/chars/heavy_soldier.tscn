@@ -2344,6 +2344,8 @@ script = ExtResource("47_cl2c2")
 script = ExtResource("100_8h24x")
 actor = NodePath("../..")
 launch_timer = NodePath("../../LaunchTimer")
+launch_strength = 0.0
+knock_back_strength = 0.0
 metadata/_custom_type_script = "uid://dscn2ndlewuut"
 
 [node name="Falling" type="LimboState" parent="StateMachine" unique_id=822601892]

@@ -10,7 +10,7 @@ signal bullet_hit(_damage: int)
 signal parried()
 signal weakpoint_hit()
 
-signal launched()
+signal launched(launch_strength : float)
 signal knockback(knock_back_strength : float)
 
 @export var health: Health
@@ -37,7 +37,7 @@ func _on_area_entered(hitbox: HitBox) -> void:
 	if hitbox != null:
 		print(hitbox.knock_back)
 		if hitbox.launch:
-			launched.emit()
+			launched.emit(hitbox.launch_strength)
 		if hitbox.knock_back:
 			print("KNOCKING BACK")
 			knockback.emit(hitbox.knock_back_strength)

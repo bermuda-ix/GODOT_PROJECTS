@@ -688,11 +688,11 @@ func _on_launch_timer_timeout() -> void:
 	state_machine.dispatch(&"falling")
 
 
-func _on_hurt_box_launched() -> void:
+func _on_hurt_box_launched(launch_strength : float) -> void:
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
 		animation_player.play("launched")
-		launch.launch_strength=40
+		launch.launch_strength=launch_strength
 		state_machine.change_active_state(launch)
 
 
