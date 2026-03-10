@@ -76,8 +76,8 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Arr
 outlines = Array[PackedVector2Array]([PackedVector2Array(64, 448, 64, 496, 1632, 496, 1968, 320, 1968, 272, 1632, 448)])
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_olhh5"]
-vertices = PackedVector2Array(2289.24, 308.992, 2010, 309.961, 2010, 274, 2290.9, 274, 2374.9, 311, 2344.25, 349, 3571, 349, 3571, 311)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(0, 3, 4, 5), PackedInt32Array(6, 5, 4, 7)])
+vertices = PackedVector2Array(3572.8125, 309, 2010, 309.9922, 2010, 274, 3572.1797, 274)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(2000, 264, 2000, 320, 3583, 319, 3582, 264)])
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_jyauw"]
@@ -875,10 +875,6 @@ _data = {
 a = Vector2(-17, -3)
 b = Vector2(567, -310)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ffcw5"]
-resource_local_to_scene = true
-size = Vector2(37.8948, 53.5486)
-
 [node name="PrologueLvl" unique_id=1690552447 node_paths=PackedStringArray("player") groups=["world"] instance=ExtResource("1_w82j5")]
 next_level = ExtResource("2_mb6gy")
 player = NodePath("PC")
@@ -1055,6 +1051,14 @@ scale = Vector2(0.5, 0.5)
 position = Vector2(3962, 1188)
 scale = Vector2(0.5, 0.5)
 
+[node name="HeavySoldier3" parent="Enemy/soldiers" index="2" unique_id=1955221828 instance=ExtResource("13_rfxm3")]
+position = Vector2(2760, 88)
+scale = Vector2(0.5, 0.5)
+
+[node name="HeavySoldier4" parent="Enemy/soldiers" index="3" unique_id=360813325 instance=ExtResource("13_rfxm3")]
+position = Vector2(2392, 304)
+scale = Vector2(0.5, 0.5)
+
 [node name="flying" type="Node" parent="Enemy" index="1" unique_id=1634263824]
 
 [node name="turrets" type="Node" parent="Enemy" index="2" unique_id=1078090281]
@@ -1127,7 +1131,7 @@ position = Vector2(2272, 48)
 scale = Vector2(0.75, 0.75)
 
 [node name="GuardEnemy7" parent="Enemy/Guards" index="6" unique_id=348154536 instance=ExtResource("16_vw32t")]
-position = Vector2(2368, 88)
+position = Vector2(2400, 96)
 scale = Vector2(0.75, 0.75)
 
 [node name="GuardEnemy8" parent="Enemy/Guards" index="7" unique_id=1373452543 instance=ExtResource("16_vw32t")]
@@ -1219,6 +1223,7 @@ navigation_polygon = SubResource("NavigationPolygon_pxxff")
 navigation_layers = 2
 
 [node name="GroundNav2_Inside" type="NavigationRegion2D" parent="GroundNavs" index="1" unique_id=1390221011]
+position = Vector2(-8, 8)
 navigation_polygon = SubResource("NavigationPolygon_olhh5")
 navigation_layers = 2
 
@@ -1278,14 +1283,23 @@ Jump Off Wall
 "
 
 [node name="TutorialText4" type="RichTextLabel" parent="." index="15" unique_id=85099039]
-offset_left = 2392.0
-offset_top = 616.0
-offset_right = 2722.0
-offset_bottom = 693.0
+z_index = 1
+offset_left = 2528.0
+offset_right = 2858.0
+offset_bottom = 77.0
 text = "Combo: Launch
 LMB (Light Attack) -> RMB (Heavy Attack)"
 
-[node name="TutorialText5" type="RichTextLabel" parent="." index="16" unique_id=417695015]
+[node name="TutorialText7" type="RichTextLabel" parent="." index="16" unique_id=1833150113]
+z_index = 1
+offset_left = 2240.0
+offset_top = 640.0
+offset_right = 2570.0
+offset_bottom = 717.0
+text = "Combo: Knockback
+LMB (Light Attack) -> LMB (Light Attack) -> RMB (Heavy Attack)"
+
+[node name="TutorialText5" type="RichTextLabel" parent="." index="17" unique_id=417695015]
 offset_left = 1112.0
 offset_top = -32.0
 offset_right = 1442.0
@@ -1293,7 +1307,15 @@ offset_bottom = 45.0
 text = "Hold RMB: Aim
 Release: Shoot (Higher damage)"
 
-[node name="Bounderies3" type="Node" parent="." index="17" unique_id=577784947]
+[node name="TutorialText8" type="RichTextLabel" parent="." index="18" unique_id=1469336213]
+offset_left = 2056.0
+offset_top = 208.0
+offset_right = 2386.0
+offset_bottom = 285.0
+text = "Hit enemy's melee attack with your own
+For a Clash"
+
+[node name="Bounderies3" type="Node" parent="." index="19" unique_id=577784947]
 
 [node name="OutsideBounderies" type="StaticBody2D" parent="Bounderies3" index="0" unique_id=2085508364]
 position = Vector2(-1, 0)
@@ -1305,19 +1327,19 @@ shape = SubResource("RectangleShape2D_jyauw")
 
 [node name="MiniBoss1Bounderies" type="Node" parent="Bounderies3" index="1" unique_id=423800988]
 
-[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="18" unique_id=330418463]
+[node name="CutscenePlayer" type="AnimationPlayer" parent="." index="20" unique_id=330418463]
 libraries/ = SubResource("AnimationLibrary_tnflb")
 
-[node name="CutsceneAudio" type="AudioStreamPlayer2D" parent="." index="19" unique_id=853645673]
+[node name="CutsceneAudio" type="AudioStreamPlayer2D" parent="." index="21" unique_id=853645673]
 position = Vector2(2232, 733)
 attenuation = 0.0063457275
 max_polyphony = 8
 
-[node name="HitStop" type="Node" parent="." index="20" unique_id=1123687515]
+[node name="HitStop" type="Node" parent="." index="22" unique_id=1123687515]
 script = ExtResource("31_2mqv2")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
-[node name="Entries" type="Node" parent="." index="21" unique_id=1488504670]
+[node name="Entries" type="Node" parent="." index="23" unique_id=1488504670]
 
 [node name="StartingPos" type="Node2D" parent="Entries" index="0" unique_id=1357582905]
 position = Vector2(2199, 244)
@@ -1462,11 +1484,11 @@ exit = 1
 [node name="DoorSprite2" parent="Entries/Entry13" index="1" unique_id=1911363443 instance=ExtResource("22_relum")]
 position = Vector2(-34, -68)
 
-[node name="ObjFlags" type="Node" parent="." index="22" unique_id=19520580]
+[node name="ObjFlags" type="Node" parent="." index="24" unique_id=19520580]
 
-[node name="BossFlags" type="Node" parent="." index="23" unique_id=874729598]
+[node name="BossFlags" type="Node" parent="." index="25" unique_id=874729598]
 
-[node name="DoorsAndSwitches" type="Node" parent="." index="24" unique_id=478390257]
+[node name="DoorsAndSwitches" type="Node" parent="." index="26" unique_id=478390257]
 
 [node name="Elevator" parent="DoorsAndSwitches" index="0" unique_id=20094444 instance=ExtResource("21_7qfih")]
 position = Vector2(3627, 525)
@@ -1548,7 +1570,7 @@ door_connect = NodePath("../../Doors/Door5")
 key_required = true
 key_type = "KeyCard"
 
-[node name="Stairs" type="Node" parent="." index="25" unique_id=1418640752]
+[node name="Stairs" type="Node" parent="." index="27" unique_id=1418640752]
 
 [node name="StairsUnderground1" type="StaticBody2D" parent="Stairs" index="0" unique_id=2139755111]
 position = Vector2(5215, 1214)
@@ -1557,9 +1579,9 @@ position = Vector2(5215, 1214)
 shape = SubResource("SegmentShape2D_w82j5")
 one_way_collision = true
 
-[node name="FallthroughPlatform" type="Node" parent="." index="26" unique_id=4745813]
+[node name="FallthroughPlatform" type="Node" parent="." index="28" unique_id=4745813]
 
-[node name="Spawning" type="Node" parent="." index="27" unique_id=1797510082]
+[node name="Spawning" type="Node" parent="." index="29" unique_id=1797510082]
 
 [node name="SpawnPoints" type="Node" parent="Spawning" index="0" unique_id=2065162631]
 
@@ -1574,9 +1596,9 @@ position = Vector2(3520, 419)
 [node name="HeatSpawnFlag3" parent="Spawning/SpawnFlags" index="2" unique_id=1918522687 instance=ExtResource("22_22var")]
 position = Vector2(2129, 1101)
 
-[node name="QTEFlags" type="Node" parent="." index="28" unique_id=1211765040]
+[node name="QTEFlags" type="Node" parent="." index="30" unique_id=1211765040]
 
-[node name="Paths" type="Node" parent="." index="29" unique_id=1622414413]
+[node name="Paths" type="Node" parent="." index="31" unique_id=1622414413]
 
 [node name="Path2D" type="Path2D" parent="Paths" index="0" unique_id=2029302642]
 visible = false
@@ -1591,16 +1613,16 @@ rotates = false
 update_rotation = false
 update_scale = false
 
-[node name="StartingPos" type="Node" parent="." index="30" unique_id=275376811]
+[node name="StartingPos" type="Node" parent="." index="32" unique_id=275376811]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" unique_id=794793489 groups=["start_pos"]]
 position = Vector2(224, 424)
 
-[node name="PersistentDataHandler" type="Node" parent="." index="31" unique_id=86022096]
+[node name="PersistentDataHandler" type="Node" parent="." index="33" unique_id=86022096]
 script = ExtResource("24_w82j5")
 metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 
-[node name="Pickups" type="Node" parent="." index="32" unique_id=1437466413]
+[node name="Pickups" type="Node" parent="." index="34" unique_id=1437466413]
 
 [node name="Keys" type="Node" parent="Pickups" index="0" unique_id=2004024573]
 
@@ -1608,7 +1630,7 @@ metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 position = Vector2(2112, 49)
 scale = Vector2(0.05, 0.05)
 
-[node name="Checkpoints" type="Node" parent="." index="33" unique_id=584525730]
+[node name="Checkpoints" type="Node" parent="." index="35" unique_id=584525730]
 
 [node name="Checkpoint" parent="Checkpoints" index="0" unique_id=1485662125 instance=ExtResource("36_rfxm3")]
 position = Vector2(2910, 538)
@@ -1617,15 +1639,12 @@ collision_mask = 2
 [node name="Checkpoint2" parent="Checkpoints" index="1" unique_id=2035831753 instance=ExtResource("36_rfxm3")]
 position = Vector2(1984, 1171)
 
-[node name="HeatHandler" type="Node" parent="." index="34" unique_id=33830565]
+[node name="HeatHandler" type="Node" parent="." index="36" unique_id=33830565]
 script = ExtResource("37_r2uf8")
 metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 
-[node name="PC" parent="." index="35" unique_id=1041091659 instance=ExtResource("143_ncaf0")]
+[node name="PC" parent="." index="37" unique_id=1041091659 instance=ExtResource("143_ncaf0")]
 position = Vector2(2232, 790)
-
-[node name="HBCollision" parent="PC/AnimatedSprite2D/HitBox" parent_id_path=PackedInt32Array(1041091659, 101478943) index="0" unique_id=1988698025]
-shape = SubResource("RectangleShape2D_ffcw5")
 
 [connection signal="scene_reloaded" from="." to="." method="_on_scene_reloaded"]
 
