@@ -56,7 +56,7 @@ var always_active : bool
 @export var jump_speed : float = 120.0
 @export var chase_speed : float = 40.0
 @onready var launch_timer: Timer = $LaunchTimer
-
+@onready var knocked_back : bool = false
 
 var current_speed : float = 0.0
 var prev_speed : float = 00.0
@@ -230,7 +230,7 @@ func _physics_process(delta: float) -> void:
 	#
 	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered or state_machine.get_active_state()==launch:
 		#hb_collison.disabled=true
-		if launch_timer.time_left>0:
+		if not launch_timer.is_stopped():
 			global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
 			velocity.x=lerpf(-launch.knock_back_strength, -launch.knock_back_strength/2, 0.5)
 			#global_position.x=lerpf(global_position.x, launch.knocked_back, 0.1)
@@ -257,7 +257,6 @@ func _physics_process(delta: float) -> void:
 			state_machine.dispatch(&"landed")
 	
 	velocity.x = current_speed + knockback.x
-	print_debug(velocity.x)
 	move_and_slide()
 	movement_handler.apply_gravity(delta)
 
@@ -298,6 +297,7 @@ func _init_state_machine():
 	state_machine.add_transition(attack, shooting_states, &"start_shoot")
 	state_machine.add_transition(chasing, shooting_states, &"start_shoot")
 	state_machine.add_transition(chasing, melee_attack, &"melee_attack")
+	state_machine.add_transition(shooting_states, melee_attack, &"melee_attack")
 	state_machine.add_transition(melee_attack, chasing, &"resume_chase")
 	state_machine.add_transition(launch, falling, &"falling")
 	state_machine.add_transition(falling, landed, &"landed")
@@ -393,16 +393,7 @@ func _on_state_machine_active_state_changed(current: LimboState, previous: Limbo
 		shooting_states.dispatch(&"begin_shooting")
 	elif current==shooting_states:
 		assert(state_machine.get_previous_active_state()!=attack)
-	#match current:
-		#attack:
-			#if combat_state_machine.get_active_state()==ranged_mode:
-				#state_machine.dispatch(&"start_shoot")
-		#chasing:
-			#if combat_state_machine.get_active_state()==ranged_mode:
-				#state_machine.dispatch(&"start_shoot")
-		#shooting:
-			#if combat_state_machine.get_active_state()==melee_mode:
-				#state_machine.dispatch(&"start_chase")
+
 
 
 func _on_combat_state_machine_active_state_changed(current: LimboState, previous: LimboState) -> void:
@@ -637,8 +628,10 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 
 
 func _on_ally_vision_handler_found_ally() -> void:
-	shooting_states.dispatch(&"begin_defend")
-	defend_ally.blackboard.set_var("ally_found", true)
+	if state_machine.get_active_state()==staggered or state_machine.get_active_state()==launch\
+	or state_machine.get_active_state() == falling:
+		shooting_states.dispatch(&"begin_defend")
+		defend_ally.blackboard.set_var("ally_found", true)
 
 
 func _on_ally_vision_handler_ally_gone() -> void:
@@ -684,6 +677,8 @@ func _on_hit_box_clash_launch(_launch: float) -> void:
 
 
 func _on_launch_entered() -> void:
+	velocity.x=0
+	current_speed=0
 	animation_player.play("launched")
 	#velocity.x=-launch.knock_back_strength
 
@@ -707,7 +702,6 @@ func _on_death_entered() -> void:
 
 
 func _on_falling_entered() -> void:
-	
 	animation_player.play("falling")
 	
 
@@ -719,10 +713,12 @@ func _on_falling_updated(delta: float) -> void:
 
 
 func _on_landed_entered() -> void:
+	knocked_back=false
 	animation_player.play("landed")
 
 
 func _on_hurt_box_knockback(knock_back_strength: float) -> void:
+	knocked_back=true
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
 		if player_right:
@@ -733,3 +729,11 @@ func _on_hurt_box_knockback(knock_back_strength: float) -> void:
 		launch.air_time=1.0
 		state_machine.change_active_state(launch)
 		
+
+
+func _on_hurt_box_body_entered(body: Node2D) -> void:
+	if "knocked_back" in body:
+		if body.knocked_back == true:
+			hit_stop.hit_stop(0.2, 0.3)
+			stagger.staggered.emit()
+			Events.camera_shake.emit(2,20)

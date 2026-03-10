@@ -1,5 +1,6 @@
 class_name AllyVisionHandler extends Node
 
+@export var active : bool = true
 @export var actor : Node
 @export var ally_vision : RayCast2D
 @export var state_machine : LimboHSM
@@ -12,7 +13,10 @@ func _ready() -> void:
 	assert(ally_vision!=null)
 
 func _process(delta: float) -> void:
-	find_ally()
+	if not active:
+		return
+	else:
+		find_ally()
 
 func find_ally():
 	if state_machine.get_active_state()==actor.dying or state_machine.get_active_state()==actor.death:

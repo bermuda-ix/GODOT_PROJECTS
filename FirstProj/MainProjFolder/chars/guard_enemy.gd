@@ -87,7 +87,7 @@ var player_state : LimboState
 @onready var dodge: LimboState = $LimboHSM/DODGE
 @onready var hit: LimboState = $LimboHSM/HIT
 @onready var staggered: LimboState = $LimboHSM/STAGGERED
-@onready var launched: Launch = $LimboHSM/LAUNCHED
+@onready var launch: Launch = $LimboHSM/LAUNCHED
 @onready var falling: LimboState = $LimboHSM/FALLING
 
 var state
@@ -183,7 +183,7 @@ func _init_state_machine():
 	state_machine.add_transition(hit, attack, &"hit_recover")
 	state_machine.add_transition(attack, dodge, &"dodge")
 	state_machine.add_transition(dodge, attack, &"dodge_end")
-	state_machine.add_transition(launched, hit, &"midair_hit")
+	state_machine.add_transition(launch, hit, &"midair_hit")
 	state_machine.add_transition(hit, falling, &"falling")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
@@ -277,10 +277,10 @@ func _physics_process(delta):
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
 		return
-	elif state_machine.get_active_state()!=launched:
+	elif state_machine.get_active_state()!=launch:
 		velocity.y += gravity * delta
 	else:
-		global_position.y=lerpf(global_position.y, launched.launch_height, 0.1)
+		global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
 		velocity.y=0
 
 	
@@ -493,13 +493,26 @@ func _on_launched_entered() -> void:
 
 
 func _on_hurt_box_launched() -> void:
-	state_machine.change_active_state(launched)
+	state_machine.change_active_state(launch)
 
 
-func _on_hurt_box_knockback(_knockback_distance : float) -> void:
+func _on_hurt_box_knockback(knock_back_strength : float) -> void:
 	player.clash_up.emit()
-	if player_right:
-		knockback.x=-_knockback_distance
-	else:
-		knockback.x=_knockback_distance
+	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
+	if _total_stagger_damage>=stagger.stagger:
+		if player_right:
+			launch.knock_back_strength = knock_back_strength
+		else:
+			launch.knock_back_strength = -knock_back_strength
+		launch.launch_height=0
+		launch.air_time=1.0
+		state_machine.change_active_state(launch)
 	
+
+
+func _on_hurt_box_body_entered(body: Node2D) -> void:
+	if "knocked_back" in body:
+		if body.knocked_back == true:
+			hit_stop.hit_stop(0.5, 0.5)
+			stagger.staggered.emit()
+			Events.camera_shake.emit(2,20)

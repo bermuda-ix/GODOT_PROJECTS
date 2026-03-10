@@ -1299,14 +1299,13 @@ position = Vector2(-56, 0)
 shape = SubResource("RectangleShape2D_3nf0a")
 disabled = true
 
-[node name="HurtBox" type="Area2D" parent="." unique_id=1540858505 node_paths=PackedStringArray("health", "stagger", "bullet_hit_buffer")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=1540858505 node_paths=PackedStringArray("health", "stagger")]
 position = Vector2(0, -22)
 collision_layer = 16
-collision_mask = 8388672
+collision_mask = 8405056
 script = ExtResource("11_q7gmp")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
-bullet_hit_buffer = NodePath("BulletBuffer")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
 [node name="hurt_box_collision" type="CollisionShape2D" parent="HurtBox" unique_id=859624262]
@@ -1535,6 +1534,7 @@ metadata/_edit_use_anchors_ = true
 [connection signal="timeout" from="LaunchTimer" to="." method="_on_launch_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="body_entered" from="HurtBox" to="." method="_on_hurt_box_body_entered"]
 [connection signal="knockback" from="HurtBox" to="." method="_on_hurt_box_knockback"]
 [connection signal="launched" from="HurtBox" to="." method="_on_hurt_box_launched"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
