@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://b8gxxblyllmpd"]
+[gd_scene format=4 uid="uid://b8gxxblyllmpd"]
 
 [ext_resource type="Texture2D" uid="uid://dsdj5ohafxq0k" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Panel04.png" id="1_7gpdj"]
 [ext_resource type="Script" uid="uid://ffy5i52i2yt6" path="res://Component/UI_Rec/pause_menu_v2.gd" id="1_ks1jl"]
@@ -278,6 +278,15 @@ font_weight = 700
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 10.0
 cache/0/16/0/descent = 3.0
 cache/0/16/0/underline_position = 2.3125
@@ -1821,6 +1830,15 @@ font_weight = 700
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 10.0
 cache/0/16/0/descent = 3.0
 cache/0/16/0/underline_position = 2.3125
@@ -3225,7 +3243,7 @@ cache/0/43/0/glyphs/57/size = Vector2(19, 22)
 cache/0/43/0/glyphs/57/uv_rect = Rect2(492, 1, 19, 22)
 cache/0/43/0/glyphs/57/texture_idx = 0
 
-[node name="PauseMenuv2" type="Control"]
+[node name="PauseMenuv2" type="Control" unique_id=1142534387]
 process_mode = 2
 layout_mode = 3
 anchors_preset = 15
@@ -3235,7 +3253,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ks1jl")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1192898057]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = -0.1095679
@@ -3246,26 +3264,26 @@ grow_vertical = 2
 texture = ExtResource("1_7gpdj")
 metadata/_edit_use_anchors_ = true
 
-[node name="MainPause" type="Control" parent="TextureRect"]
+[node name="MainPause" type="Control" parent="TextureRect" unique_id=1132798982]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Container" type="CenterContainer" parent="TextureRect/MainPause"]
+[node name="Container" type="CenterContainer" parent="TextureRect/MainPause" unique_id=1306150647]
 layout_mode = 0
 offset_left = 194.0
 offset_top = 71.5
 offset_right = 413.0
 offset_bottom = 116.5
 
-[node name="Label" type="Label" parent="TextureRect/MainPause/Container"]
+[node name="Label" type="Label" parent="TextureRect/MainPause/Container" unique_id=1832502993]
 modulate = Color(0.5468543, 1, 1, 1)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_f00qf")
 theme_override_font_sizes/font_size = 43
 text = "TARGETS:"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/MainPause"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/MainPause" unique_id=621137220]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 0
 offset_left = 17.0
@@ -3275,7 +3293,7 @@ offset_bottom = 390.5
 scale = Vector2(0.8, 0.8)
 theme_override_constants/separation = 30
 
-[node name="ReturnButton" type="TextureButton" parent="TextureRect/MainPause/VBoxContainer"]
+[node name="ReturnButton" type="TextureButton" parent="TextureRect/MainPause/VBoxContainer" unique_id=1706198052]
 layout_mode = 2
 size_flags_horizontal = 0
 texture_normal = ExtResource("2_07p6k")
@@ -3283,70 +3301,70 @@ texture_pressed = ExtResource("5_1qtoj")
 texture_hover = ExtResource("6_pbvfj")
 texture_focused = ExtResource("6_pbvfj")
 
-[node name="Container" type="CenterContainer" parent="TextureRect/MainPause/VBoxContainer/ReturnButton"]
+[node name="Container" type="CenterContainer" parent="TextureRect/MainPause/VBoxContainer/ReturnButton" unique_id=1852656521]
 layout_mode = 0
 offset_left = 28.75
 offset_top = 25.250004
 offset_right = 192.49998
 offset_bottom = 60.250004
 
-[node name="Label" type="Label" parent="TextureRect/MainPause/VBoxContainer/ReturnButton/Container"]
+[node name="Label" type="Label" parent="TextureRect/MainPause/VBoxContainer/ReturnButton/Container" unique_id=54881196]
 modulate = Color(0.5468543, 1, 1, 1)
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontFile_2a1vp")
 theme_override_font_sizes/font_size = 43
 text = "CONTINUE"
 
-[node name="QuitButton" type="TextureButton" parent="TextureRect/MainPause/VBoxContainer"]
+[node name="QuitButton" type="TextureButton" parent="TextureRect/MainPause/VBoxContainer" unique_id=210153134]
 layout_mode = 2
 texture_normal = ExtResource("2_07p6k")
 texture_pressed = ExtResource("5_1qtoj")
 texture_hover = ExtResource("6_pbvfj")
 texture_focused = ExtResource("6_pbvfj")
 
-[node name="Container" type="CenterContainer" parent="TextureRect/MainPause/VBoxContainer/QuitButton"]
+[node name="Container" type="CenterContainer" parent="TextureRect/MainPause/VBoxContainer/QuitButton" unique_id=822113297]
 layout_mode = 0
 offset_left = 28.75
 offset_top = 25.250004
 offset_right = 192.49998
 offset_bottom = 60.250004
 
-[node name="Label" type="Label" parent="TextureRect/MainPause/VBoxContainer/QuitButton/Container"]
+[node name="Label" type="Label" parent="TextureRect/MainPause/VBoxContainer/QuitButton/Container" unique_id=1633618457]
 modulate = Color(0.5468543, 1, 1, 1)
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontFile_2a1vp")
 theme_override_font_sizes/font_size = 43
 text = "QUIT"
 
-[node name="ControlsButton" type="TextureButton" parent="TextureRect/MainPause/VBoxContainer"]
+[node name="ControlsButton" type="TextureButton" parent="TextureRect/MainPause/VBoxContainer" unique_id=169320448]
 layout_mode = 2
 texture_normal = ExtResource("2_07p6k")
 texture_pressed = ExtResource("5_1qtoj")
 texture_hover = ExtResource("5_1qtoj")
 texture_focused = ExtResource("6_pbvfj")
 
-[node name="Container" type="CenterContainer" parent="TextureRect/MainPause/VBoxContainer/ControlsButton"]
+[node name="Container" type="CenterContainer" parent="TextureRect/MainPause/VBoxContainer/ControlsButton" unique_id=1831330179]
 layout_mode = 0
 offset_left = 28.75
 offset_top = 25.250004
 offset_right = 192.49998
 offset_bottom = 60.250004
 
-[node name="Label" type="Label" parent="TextureRect/MainPause/VBoxContainer/ControlsButton/Container"]
+[node name="Label" type="Label" parent="TextureRect/MainPause/VBoxContainer/ControlsButton/Container" unique_id=1368470961]
 modulate = Color(0.5468543, 1, 1, 1)
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontFile_2a1vp")
 theme_override_font_sizes/font_size = 43
 text = "CONTROLS"
 
-[node name="ObjectivesUI" parent="TextureRect/MainPause" instance=ExtResource("7_pbvfj")]
+[node name="ObjectivesUI" parent="TextureRect/MainPause" unique_id=1501551295 instance=ExtResource("7_pbvfj")]
 layout_mode = 1
 offset_left = 205.0
 offset_top = 115.5
 offset_right = 555.0
 offset_bottom = 308.5
 
-[node name="ControlsMenu" type="Control" parent="TextureRect"]
+[node name="ControlsMenu" type="Control" parent="TextureRect" unique_id=415925927]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -3355,7 +3373,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/ControlsMenu"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/ControlsMenu" unique_id=864421590]
 layout_mode = 0
 offset_left = 17.0
 offset_top = 253.3
@@ -3364,62 +3382,62 @@ offset_bottom = 335.3
 scale = Vector2(0.8, 0.8)
 theme_override_constants/separation = 30
 
-[node name="BackButton" type="TextureButton" parent="TextureRect/ControlsMenu/VBoxContainer"]
+[node name="BackButton" type="TextureButton" parent="TextureRect/ControlsMenu/VBoxContainer" unique_id=21381286]
 layout_mode = 2
 texture_normal = ExtResource("2_07p6k")
 texture_pressed = ExtResource("5_1qtoj")
 texture_hover = ExtResource("6_pbvfj")
 texture_focused = ExtResource("6_pbvfj")
 
-[node name="Container" type="CenterContainer" parent="TextureRect/ControlsMenu/VBoxContainer/BackButton"]
+[node name="Container" type="CenterContainer" parent="TextureRect/ControlsMenu/VBoxContainer/BackButton" unique_id=2064500811]
 layout_mode = 0
 offset_left = 28.75
 offset_top = 25.250004
 offset_right = 192.49998
 offset_bottom = 60.250004
 
-[node name="Label" type="Label" parent="TextureRect/ControlsMenu/VBoxContainer/BackButton/Container"]
+[node name="Label" type="Label" parent="TextureRect/ControlsMenu/VBoxContainer/BackButton/Container" unique_id=84863550]
 modulate = Color(0.5468543, 1, 1, 1)
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontFile_2a1vp")
 theme_override_font_sizes/font_size = 43
 text = "BACK"
 
-[node name="Container" type="CenterContainer" parent="TextureRect/ControlsMenu"]
+[node name="Container" type="CenterContainer" parent="TextureRect/ControlsMenu" unique_id=1455753734]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 71.5
 offset_right = 560.0
 offset_bottom = 106.5
 
-[node name="Label" type="Label" parent="TextureRect/ControlsMenu/Container"]
+[node name="Label" type="Label" parent="TextureRect/ControlsMenu/Container" unique_id=2076075324]
 modulate = Color(0.5468543, 1, 1, 1)
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontFile_2a1vp")
 theme_override_font_sizes/font_size = 43
 text = "CONTROLS:"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="TextureRect/ControlsMenu"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="TextureRect/ControlsMenu" unique_id=1287285274]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 99.5
 offset_right = 191.0
 offset_bottom = 277.5
 
-[node name="MovementLabel" type="CenterContainer" parent="TextureRect/ControlsMenu/VBoxContainer2"]
+[node name="MovementLabel" type="CenterContainer" parent="TextureRect/ControlsMenu/VBoxContainer2" unique_id=1201762700]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TextureRect/ControlsMenu/VBoxContainer2/MovementLabel"]
+[node name="Label" type="Label" parent="TextureRect/ControlsMenu/VBoxContainer2/MovementLabel" unique_id=1739352968]
 modulate = Color(0.5468543, 1, 1, 1)
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontFile_f00qf")
 theme_override_font_sizes/font_size = 24
 text = "MOVEMENT:"
 
-[node name="CenterContainer2" type="CenterContainer" parent="TextureRect/ControlsMenu/VBoxContainer2"]
+[node name="CenterContainer2" type="CenterContainer" parent="TextureRect/ControlsMenu/VBoxContainer2" unique_id=303237080]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TextureRect/ControlsMenu/VBoxContainer2/CenterContainer2"]
+[node name="Label" type="Label" parent="TextureRect/ControlsMenu/VBoxContainer2/CenterContainer2" unique_id=1465887028]
 modulate = Color(0.5468543, 1, 1, 1)
 layout_mode = 2
 theme_override_constants/line_spacing = -9
@@ -3429,30 +3447,30 @@ text = "W
 ASD"
 horizontal_alignment = 1
 
-[node name="CenterContainer3" type="CenterContainer" parent="TextureRect/ControlsMenu/VBoxContainer2"]
+[node name="CenterContainer3" type="CenterContainer" parent="TextureRect/ControlsMenu/VBoxContainer2" unique_id=2093198033]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TextureRect/ControlsMenu/VBoxContainer2/CenterContainer3"]
+[node name="Label" type="Label" parent="TextureRect/ControlsMenu/VBoxContainer2/CenterContainer3" unique_id=934118136]
 modulate = Color(0.5468543, 1, 1, 1)
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontFile_2a1vp")
 theme_override_font_sizes/font_size = 24
 text = "ATTACKS:"
 
-[node name="CenterContainer4" type="CenterContainer" parent="TextureRect/ControlsMenu/VBoxContainer2"]
+[node name="CenterContainer4" type="CenterContainer" parent="TextureRect/ControlsMenu/VBoxContainer2" unique_id=1903767453]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TextureRect/ControlsMenu/VBoxContainer2/CenterContainer4"]
+[node name="Label" type="Label" parent="TextureRect/ControlsMenu/VBoxContainer2/CenterContainer4" unique_id=1423556914]
 modulate = Color(0.5468543, 1, 1, 1)
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontFile_2a1vp")
 theme_override_font_sizes/font_size = 28
 text = "LMB:      BASIC"
 
-[node name="CenterContainer5" type="CenterContainer" parent="TextureRect/ControlsMenu/VBoxContainer2"]
+[node name="CenterContainer5" type="CenterContainer" parent="TextureRect/ControlsMenu/VBoxContainer2" unique_id=823373199]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TextureRect/ControlsMenu/VBoxContainer2/CenterContainer5"]
+[node name="Label" type="Label" parent="TextureRect/ControlsMenu/VBoxContainer2/CenterContainer5" unique_id=253727667]
 modulate = Color(0.5468543, 1, 1, 1)
 layout_mode = 2
 theme_override_fonts/font = SubResource("FontFile_2a1vp")

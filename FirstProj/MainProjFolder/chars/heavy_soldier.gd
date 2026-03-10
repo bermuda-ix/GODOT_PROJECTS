@@ -102,7 +102,6 @@ var player_state : LimboState
 @onready var launch: Launch = $StateMachine/Launch
 @onready var falling: LimboState = $StateMachine/Falling
 @onready var landed: LimboState = $StateMachine/Landed
-@onready var knockback_stun: LimboState = $StateMachine/KnockbackStun
 
 
 

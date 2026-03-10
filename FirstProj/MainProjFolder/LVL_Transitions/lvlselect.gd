@@ -26,7 +26,7 @@ func _on_boss_pressed():
 	
 	#Global.game_controller.load_levels(LevelsList.prologue_unique_levels)
 	#Global.game_controller.load_levels(LevelsList.level_maps)
-	#Global.game_controller._init_objectives(ObjectivesByLevel.prologue_init_objectives)
+	Global.game_controller._init_objectives(ObjectivesByLevel.prologue_init_objectives)
 		
 	#Global.game_controller.toggle_player(true)
 	

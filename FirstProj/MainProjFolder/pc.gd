@@ -316,7 +316,7 @@ func _ready():
 	set_start_pos(global_position)
 	sp_atk_type = sp_atk_cone
 	load_player_data()
-	#Events.set_player_data.connect(save_player_data)
+	Events.set_player_data.connect(save_player_data)
 	Events.parried.connect(parry_success)
 	Events.play_cutscene_segment.connect(play_cutscene)
 	Events.checkpoint_reached.connect(save_player_data)

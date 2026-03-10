@@ -237,7 +237,6 @@ func change_2d_scene (new_scene: String, \
 		#print_debug(loaded_rooms_map[new_scene].starting_pos.size(), " ",_starting_pos)
 		loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].starting_pos[_starting_pos]
 		
-		
 	LevelTransition.transition_out(_transition_out)
 	if current_2d_scene != null:
 		prev_2d_scene=current_2d_scene
