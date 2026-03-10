@@ -232,11 +232,13 @@ func _physics_process(delta: float) -> void:
 		#hb_collison.disabled=true
 		if launch_timer.time_left>0:
 			global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
-			global_position.x=lerpf(global_position.x, launch.knocked_back, 0.1)
+			velocity.x=lerpf(-launch.knock_back_strength, -launch.knock_back_strength/2, 0.5)
+			#global_position.x=lerpf(global_position.x, launch.knocked_back, 0.1)
 			velocity.y=0
 		else:
+			
 			velocity.y += gravity * delta
-		velocity.x=0
+		#velocity.x=knockback.x
 		move_and_slide()
 		return
 	elif state_machine.get_active_state()==dying:
@@ -247,14 +249,15 @@ func _physics_process(delta: float) -> void:
 	elif state_machine.get_active_state()==launch:
 		global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
 		velocity.y=0
+		
 	elif state_machine.get_active_state()==falling:
+		velocity.x=lerpf(-launch.knock_back_strength/2, 0, 0.9)
 		velocity.y += gravity * delta
 		if is_on_floor():
 			state_machine.dispatch(&"landed")
 	
 	velocity.x = current_speed + knockback.x
-	#print_debug(current_speed)
-	#print_debug(velocity.x)
+	print_debug(velocity.x)
 	move_and_slide()
 	movement_handler.apply_gravity(delta)
 
@@ -681,8 +684,8 @@ func _on_hit_box_clash_launch(_launch: float) -> void:
 
 
 func _on_launch_entered() -> void:
-	pass # Replace with function body.
-
+	animation_player.play("launched")
+	#velocity.x=-launch.knock_back_strength
 
 func _on_launch_timer_timeout() -> void:
 	state_machine.dispatch(&"falling")
@@ -691,6 +694,7 @@ func _on_launch_timer_timeout() -> void:
 func _on_hurt_box_launched(launch_strength : float) -> void:
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
+		launch.air_time=1.0
 		animation_player.play("launched")
 		launch.launch_strength=launch_strength
 		state_machine.change_active_state(launch)
@@ -703,7 +707,9 @@ func _on_death_entered() -> void:
 
 
 func _on_falling_entered() -> void:
+	
 	animation_player.play("falling")
+	
 
 
 func _on_falling_updated(delta: float) -> void:
@@ -724,5 +730,6 @@ func _on_hurt_box_knockback(knock_back_strength: float) -> void:
 		else:
 			launch.knock_back_strength = -knock_back_strength
 		launch.launch_height=0
+		launch.air_time=1.0
 		state_machine.change_active_state(launch)
 		

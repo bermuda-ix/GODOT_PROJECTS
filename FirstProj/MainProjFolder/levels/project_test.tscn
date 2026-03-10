@@ -444,7 +444,7 @@ light_mask = 3
 color = Color(0, 0, 0, 1)
 
 [node name="WallTest" type="StaticBody2D" parent="." index="28" unique_id=47130497]
-position = Vector2(827, 33)
+position = Vector2(936, 33)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallTest" index="0" unique_id=819857499]
 position = Vector2(128, -13)
@@ -459,7 +459,7 @@ position = Vector2(1325, 86)
 position = Vector2(1370, 43.000004)
 
 [node name="HeavySoldier" parent="Enemies" index="2" unique_id=1955221828 instance=ExtResource("10_0atxr")]
-position = Vector2(855, 79)
+position = Vector2(864.00006, 88)
 scale = Vector2(0.6, 0.6)
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]
