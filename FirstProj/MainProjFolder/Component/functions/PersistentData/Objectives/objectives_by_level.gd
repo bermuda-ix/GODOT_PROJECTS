@@ -4,6 +4,13 @@ class_name objectives_by_level extends Node
 @onready var guanlet_init_objectives : Dictionary = { }
 @onready var objectives_total : Dictionary = { }
 
+
+@onready var objective_resorces : Dictionary = {
+	"truck" : {
+		"TEXTURE" : "uid://bwdyhehw5j8uj"
+		}
+}
+
 func _ready() -> void:
 	objectives_total = {"Prologue" : prologue_init_objectives}
 

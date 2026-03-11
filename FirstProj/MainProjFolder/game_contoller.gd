@@ -179,7 +179,7 @@ func load_cutscene(new_scene: String, \
 	_transition_in : String="fade_to_black", \
 	_transition_out : String="fade_from_black") -> void:
 	
-	await LevelTransition.transition_in(_transition_in)
+	#await LevelTransition.transition_in(_transition_in)
 	toggle_game_ui(false)
 	if current_2d_scene != null:
 		if delete:

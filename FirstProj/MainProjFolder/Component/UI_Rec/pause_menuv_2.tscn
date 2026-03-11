@@ -3357,12 +3357,13 @@ theme_override_fonts/font = SubResource("FontFile_2a1vp")
 theme_override_font_sizes/font_size = 43
 text = "CONTROLS"
 
-[node name="ObjectivesUI" parent="TextureRect/MainPause" unique_id=1501551295 instance=ExtResource("7_pbvfj")]
-layout_mode = 1
-offset_left = 205.0
-offset_top = 115.5
-offset_right = 555.0
-offset_bottom = 308.5
+[node name="ObjectivesUI" parent="TextureRect/MainPause" unique_id=1059520297 instance=ExtResource("7_pbvfj")]
+process_mode = 3
+layout_mode = 0
+offset_left = 192.0
+offset_top = 116.5
+offset_right = 560.0
+offset_bottom = 262.5
 
 [node name="ControlsMenu" type="Control" parent="TextureRect" unique_id=415925927]
 visible = false
