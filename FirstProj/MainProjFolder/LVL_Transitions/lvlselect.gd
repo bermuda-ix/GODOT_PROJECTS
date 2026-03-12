@@ -28,7 +28,7 @@ func _on_boss_pressed():
 	boss.set_deferred("disabled", true)
 	#Global.game_controller.load_levels(LevelsList.prologue_unique_levels)
 	#Global.game_controller.load_levels(LevelsList.level_maps)
-	Global.game_controller._init_objectives(ObjectivesByLevel.prologue_init_objectives)
+	#Global.game_controller._init_objectives(ObjectivesByLevel.prologue_init_objectives)
 		
 	#Global.game_controller.toggle_player(true)
 	Global.game_controller.toggle_game_ui(true)

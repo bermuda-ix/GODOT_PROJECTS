@@ -111,6 +111,9 @@ func load_levels(dict : Dictionary) -> void:
 	
 func call_preload_levels(_dict : Dictionary):
 	thread.start(load_levels.bind(_dict))
+	thread.call_deferred("wait_to_finish")
+	print("scenes loaded")
+	#call_deferred("scene_loaded")
 	
 #func adjacent_rooms_loaded()-> void:
 	#thread.wait_to_finish()
@@ -248,7 +251,7 @@ func change_2d_scene (new_scene: String, \
 	load_levels(LevelsList.level_maps)
 
 func _init_objectives(_dict : Dictionary):
-	thread.start(objectives_ui._init_objectives_list.bind(_dict))
+	objectives_ui._init_objectives_list(_dict)
 	
 #Change GUI Scene
 func change_gui_scene (new_scene: String, \
@@ -269,11 +272,11 @@ func change_gui_scene (new_scene: String, \
 func preload_scene(_new_scene: String):
 	mutex.lock()
 	new_gui_level=load(_new_scene).instantiate()
-	call_deferred("scene_loaded")
 	mutex.unlock()
 	
 func call_preload_scene(_new_scene: String):
 	thread.start(preload_scene.bind(_new_scene))
+	call_deferred("scene_loaded")
 	
 func scene_loaded()-> void:
 	thread.wait_to_finish()

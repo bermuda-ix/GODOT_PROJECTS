@@ -8,7 +8,7 @@ extends Node2D
 @onready var cutscene_queue : Array[String]
 
 @onready var skippable : bool = true
-
+var thread:= Thread.new()
 
 func _ready() -> void:
 	cutscene_queue.assign(animation_player.get_animation_list())
@@ -26,8 +26,8 @@ func _ready() -> void:
 	##Preload adventure level##
 	###########################
 	
-	Global.game_controller.call_preload_levels(LevelsList.prologue_unique_levels)
-	Global.game_controller.call_preload_levels(LevelsList.level_maps)
+	thread.start(load_next_levels)
+	
 	Global.game_controller._init_objectives(ObjectivesByLevel.prologue_init_objectives)
 	
 	###########################
@@ -87,6 +87,12 @@ func toggle_skip(value : bool) -> void:
 
 func end_cutscene(_next_scene : String = "PrologueLvl") -> void:
 	Global.game_controller.change_2d_scene("PrologueLvl", true, false, -1, "fade_to_black_quick", "fade_from_black_quick")
+
+func load_next_levels():
+	Global.game_controller.load_levels(LevelsList.prologue_unique_levels)
+	Global.game_controller.load_levels(LevelsList.level_maps)
+	thread.call_deferred("wait_to_finish")
+	print_debug("next levels loaded")
 
 func _on_dialogue_box_end_of_dialogue() -> void:
 	#cutscene_wait_for_input()

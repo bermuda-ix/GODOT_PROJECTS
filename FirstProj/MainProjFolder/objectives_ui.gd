@@ -32,14 +32,15 @@ func add_objective(_name : String, _value : String = "objective instruction", _t
 	
 	
 	new_level_objective.name=_name
-	var obj_texture=load(ObjectivesByLevel.objective_resorces[name]["TEXTURE"])
+	var obj_texture=load(ObjectivesByLevel.objective_resorces[_name]["TEXTURE"])
 	new_level_objective.set_objective_texture(obj_texture)
 	print_debug("adding new inv item: ", new_level_objective.name)
-	objectives.call_deferred("add_child",new_level_objective)
-	await new_level_objective.call_deferred_thread_group("tree_entered")
-	while true:
-		if new_level_objective.texture_rect!=null:
-			break
+	objectives.add_child(new_level_objective)
+	#objectives.call_deferred("add_child",new_level_objective)
+	#await new_level_objective.call_deferred_thread_group("tree_entered")
+	#while true:
+		#if new_level_objective.texture_rect!=null:
+			#break
 	new_level_objective.update_objective_ui()
 
 
