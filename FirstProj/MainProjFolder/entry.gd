@@ -13,6 +13,7 @@ signal enter_area(room : PackedScene)
 
 @export_category("Connected Room")
 @export var room : PackedScene
+@export var locked : bool = false
 
 @export_category("Return position Override")
 @export var location_override : bool = false

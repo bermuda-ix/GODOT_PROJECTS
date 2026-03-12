@@ -237,6 +237,11 @@ signal no_input_qte
 @onready var entry_pos : int = 0
 @onready var prev_starting_pos : int = 0
 @onready var in_door_way : bool = false
+
+@onready var in_door_way_local : bool = false
+@onready var door_locked : bool = false
+@onready var door_local_exit : Vector2 = Vector2(0,0)
+
 @onready var animated_door : bool = false
 
 @onready var game_controller : GameController
@@ -1373,6 +1378,10 @@ func enter_door() -> void:
 				
 				Global.game_controller.change_2d_scene(next_room, false, false, entry_pos, "fade_to_black_quick", "fade_from_black_quick")
 			#entry_pos=prev_starting_pos
+			
+	elif in_door_way_local:
+		if Input.is_action_just_pressed("up"):
+			global_position=door_local_exit
 
 func climb_stairs() -> void:
 	if Input.is_action_pressed("down") and stairs_detected==false:
@@ -1433,7 +1442,17 @@ func _on_interactable_detector_area_entered(area: Area2D) -> void:
 	if area.is_in_group("door"):
 		interact_prompt_player.play("Enter")
 		if area.is_in_group("AnimatedDoor") or area.is_in_group("door"):
-			in_door_way=true
+			
+			if area.local != null:
+				if area.local == true:
+					in_door_way_local=true
+					door_local_exit=area.player_next_entry()
+			else:
+				in_door_way=true
+			if area.locked:
+				door_locked = true
+			else: 
+				door_locked = false
 			if area.is_in_group("AnimatedDoor"):
 				animated_door=true
 	else:
@@ -1446,6 +1465,8 @@ func _on_interactable_detector_area_exited(area: Area2D) -> void:
 		if area.is_in_group("AnimatedDoor"):
 			in_door_way=false
 			animated_door=false
+			in_door_way_local=false
+			door_locked=false
 	else:
 		interact_ready=false
 	

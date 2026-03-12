@@ -990,17 +990,23 @@ tile_set = ExtResource("7_kuq7b")
 
 [node name="Props" type="Node" parent="." index="6" unique_id=1204222298]
 
-[node name="SecDoor(Locked)" parent="Props" index="0" unique_id=1179271345 instance=ExtResource("22_relum")]
+[node name="SecDoorLower" parent="Props" index="0" unique_id=1179271345 instance=ExtResource("22_relum")]
 z_index = -1
 position = Vector2(832, 400)
 
-[node name="EntryLocal" parent="Props/SecDoor(Locked)" index="8" unique_id=569438534 instance=ExtResource("9_vw32t")]
+[node name="SecEntryLower" parent="Props/SecDoorLower" index="8" unique_id=569438534 node_paths=PackedStringArray("door") instance=ExtResource("9_vw32t")]
+position = Vector2(32, 72)
+door = NodePath("../../SecDoorUpper/SecEntryUpper")
+locked = true
 
-[node name="SecDoor(Locked)2" parent="Props" index="1" unique_id=531555550 instance=ExtResource("22_relum")]
+[node name="SecDoorUpper" parent="Props" index="1" unique_id=531555550 instance=ExtResource("22_relum")]
 z_index = -1
 position = Vector2(944, 264)
 
-[node name="EntryLocal" parent="Props/SecDoor(Locked)2" index="8" unique_id=1896034594 instance=ExtResource("9_vw32t")]
+[node name="SecEntryUpper" parent="Props/SecDoorUpper" index="8" unique_id=1896034594 node_paths=PackedStringArray("door") instance=ExtResource("9_vw32t")]
+position = Vector2(32, 72)
+door = NodePath("../../SecDoorLower/SecEntryLower")
+locked = true
 
 [node name="LabArchitect" parent="." index="7" unique_id=1237793606 instance=ExtResource("6_drpgx")]
 position = Vector2(-8, 392)
@@ -1535,18 +1541,18 @@ progress = 427.00067
 [node name="Door" parent="DoorsAndSwitches/Elevator2/Path2D/PathFollow2D/StaticBody2D" parent_id_path=PackedInt32Array(947318894, 324143963) index="1" unique_id=1426171605]
 collision_mask = 3
 
-[node name="lab_door_switch2" parent="DoorsAndSwitches" index="2" unique_id=324318305 node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
+[node name="lab_door_switch2" parent="DoorsAndSwitches" index="2" unique_id=324318305 node_paths=PackedStringArray("doors_connected") instance=ExtResource("8_2mqv2")]
 z_index = -1
 position = Vector2(680, 480)
-door_connect = NodePath("../Door")
+doors_connected = [NodePath("../Door")]
 
 [node name="Door" parent="DoorsAndSwitches" index="3" unique_id=649978357 instance=ExtResource("9_kuq7b")]
 position = Vector2(736, 448)
 scale = Vector2(1.03607, 1.19587)
 
-[node name="lab_door_switch3" parent="DoorsAndSwitches" index="4" unique_id=1400215572 node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
+[node name="lab_door_switch3" parent="DoorsAndSwitches" index="4" unique_id=1400215572 node_paths=PackedStringArray("doors_connected") instance=ExtResource("8_2mqv2")]
 position = Vector2(1040, 344)
-door_connect = NodePath("../Door2")
+doors_connected = [NodePath("../../Props/SecDoorLower/SecEntryLower"), NodePath("../../Props/SecDoorUpper/SecEntryUpper"), NodePath("../Door2")]
 
 [node name="Door2" parent="DoorsAndSwitches" index="5" unique_id=773479434 instance=ExtResource("9_kuq7b")]
 z_index = -1
@@ -1564,9 +1570,9 @@ z_index = -1
 position = Vector2(5833, 856)
 scale = Vector2(1, 1.18132)
 
-[node name="lab_door_switch4" parent="DoorsAndSwitches" index="8" unique_id=2024849315 node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
+[node name="lab_door_switch4" parent="DoorsAndSwitches" index="8" unique_id=2024849315 node_paths=PackedStringArray("doors_connected") instance=ExtResource("8_2mqv2")]
 position = Vector2(5806, 889)
-door_connect = NodePath("../Door4")
+doors_connected = [NodePath("../Door4"), NodePath("../Doors/Door5")]
 key_required = true
 key_type = "KeyCard"
 
@@ -1578,10 +1584,10 @@ position = Vector2(5833, 1166)
 
 [node name="Switches" type="Node" parent="DoorsAndSwitches" index="10" unique_id=1974026977]
 
-[node name="lab_door_switch" parent="DoorsAndSwitches/Switches" index="0" unique_id=116342019 node_paths=PackedStringArray("door_connect") instance=ExtResource("8_2mqv2")]
+[node name="lab_door_switch" parent="DoorsAndSwitches/Switches" index="0" unique_id=116342019 node_paths=PackedStringArray("doors_connected") instance=ExtResource("8_2mqv2")]
 z_index = 1
 position = Vector2(5803, 1198)
-door_connect = NodePath("../../Doors/Door5")
+doors_connected = [NodePath("../../Door4"), NodePath("../../Doors/Door5")]
 key_required = true
 key_type = "KeyCard"
 

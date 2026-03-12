@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b0qjxcbylpvkv"]
 
 [ext_resource type="Script" uid="uid://cgjb3k7cj2tlw" path="res://levels/level_components/entry_local.gd" id="1_fwf01"]
+[ext_resource type="Theme" uid="uid://boqtjf88xcpu4" path="res://demo/assets/ui.theme" id="2_fctbk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_646mt"]
 
@@ -13,5 +14,19 @@ entry_dir = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=75006286]
 shape = SubResource("RectangleShape2D_646mt")
 
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=289299077]
+visible = false
+z_index = 10
+offset_left = -17.0
+offset_top = -27.0
+offset_right = 23.0
+offset_bottom = 13.0
+theme = ExtResource("2_fctbk")
+text = "LOCKED"
+
+[node name="UITimer" type="Timer" parent="." unique_id=154547422]
+one_shot = true
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="UITimer" to="." method="_on_ui_timer_timeout"]
