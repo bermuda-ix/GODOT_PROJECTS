@@ -16,7 +16,7 @@ extends Node
 func set_leader(value: int) -> void:
 	if value==0:
 		leader=true
-		print_debug("leader found")
+		#print_debug("leader found")
 	else:
 		leader=false
 
@@ -26,10 +26,10 @@ func get_leader() -> bool:
 func set_even_order(value: int):
 	if value==0 or value % 2 == 0:
 		even_order=true
-		print_debug("I'm even")
+		#print_debug("I'm even")
 	else:
 		even_order=false
-		print_debug("I'm odd")
+		#print_debug("I'm odd")
 
 func get_even_order() -> bool:
 	return even_order

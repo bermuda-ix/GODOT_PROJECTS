@@ -990,17 +990,19 @@ tile_set = ExtResource("7_kuq7b")
 
 [node name="Props" type="Node" parent="." index="6" unique_id=1204222298]
 
-[node name="SecDoor(Locked)" parent="Props" index="0" unique_id=1179271345 instance=ExtResource("22_relum")]
+[node name="SecDoorUpper" parent="Props" index="0" unique_id=1179271345 instance=ExtResource("22_relum")]
 z_index = -1
 position = Vector2(832, 400)
 
-[node name="EntryLocal" parent="Props/SecDoor(Locked)" index="8" unique_id=569438534 instance=ExtResource("9_vw32t")]
+[node name="SecEntryUpper" parent="Props/SecDoorUpper" index="8" unique_id=569438534 instance=ExtResource("9_vw32t")]
+position = Vector2(144, -64)
 
-[node name="SecDoor(Locked)2" parent="Props" index="1" unique_id=531555550 instance=ExtResource("22_relum")]
+[node name="SecDoorLower" parent="Props" index="1" unique_id=531555550 instance=ExtResource("22_relum")]
 z_index = -1
 position = Vector2(944, 264)
 
-[node name="EntryLocal" parent="Props/SecDoor(Locked)2" index="8" unique_id=1896034594 instance=ExtResource("9_vw32t")]
+[node name="SecEntryLower" parent="Props/SecDoorLower" index="8" unique_id=581344071 instance=ExtResource("9_vw32t")]
+position = Vector2(-80, 200)
 
 [node name="LabArchitect" parent="." index="7" unique_id=1237793606 instance=ExtResource("6_drpgx")]
 position = Vector2(-8, 392)

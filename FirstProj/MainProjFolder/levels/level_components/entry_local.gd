@@ -12,7 +12,7 @@ signal enter_area(room : PackedScene)
 @onready var player : PlayerEntity
 
 @export_category("Connected Entry")
-@export var door : PackedScene
+@export var door : Node2D
 @export var locked : bool = false
 
 func _ready() -> void:
