@@ -27,6 +27,7 @@ signal update_max_stagger
 
 #Player Stats
 @export var movement_data : PlayerMovementData
+@onready var aim_speed=movement_data.speed
 @export var health: Health
 @onready var _new_health := 0
 @export var hitbox: HitBox
@@ -119,7 +120,7 @@ var atk_chain = 0
 var sp_atk_chn = 0
 #true = facing right fals= facing left
 var face_right = true
-var face_dir = clampi(1, -1, 1)
+var face_dir = clampi(-1, -1, 1)
 var input_dir=Input.get_axis("walk_left","walk_right")
 var wall_hold = false
 #dodge dir
@@ -403,6 +404,9 @@ func _init_state_machine():
 	state_machine.add_transition(sprint, staggered, &"got_staggered")
 	state_machine.add_transition(sprint, hit, &"got_hit")
 	
+	#Resume walking
+	state_machine.add_transition(attack_state, walking, &"resume_walking")
+	
 	#Hit
 	state_machine.add_transition(parry_success_state, hit, &"got_hit")
 	
@@ -540,7 +544,7 @@ func _process(_delta):
 	atk_state_debug()
 #
 	dodge(input_axis)
-	label.text=str(face_dir)
+	label.text=str(attack_timer.time_left)
 	#
 	if(state_machine.get_active_state()!=dodge_state and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=flip_state):
 		parry()
@@ -620,7 +624,8 @@ func _physics_process(delta):
 		
 
 		#wall_hold = false
-		if(state_machine.get_active_state()!=dodge_state and parry_stance==false and state_machine.get_active_state()!=flip_state):
+		if(state_machine.get_active_state()!=dodge_state and parry_stance==false \
+		and state_machine.get_active_state()!=flip_state and state_machine.get_active_state()!=attack_state):
 			if not interact_menu_open:
 				handle_wall_jump(wall_hold, delta)
 				jump(input_axis, delta)
@@ -631,7 +636,8 @@ func _physics_process(delta):
 				apply_air_resistance(input_axis, delta)
 				shotgun_free_rotate()
 			sp_atk()
-		
+		elif state_machine.get_active_state()==attack_state:
+			sp_atk()
 		
 		
 		var was_on_floor = is_on_floor()
@@ -793,7 +799,10 @@ func handle_acceleration(input_axis, delta):
 	if not is_on_floor(): return
 	if s_atk: return
 	if input_axis != 0:
-		velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.acceleration * delta)
+		if state_machine.get_active_state()==aim:
+			velocity.x = move_toward(velocity.x, aim_speed * input_axis, movement_data.acceleration * delta)
+		else:
+			velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.acceleration * delta)
 		if state_machine.get_active_state()==idle:
 			state_machine.dispatch(&"start_walking")
 
@@ -868,7 +877,7 @@ func update_animation(input_axis):
 				animated_sprite_2d.scale.x=1
 				
 					
-			if state_machine.get_previous_active_state()!=attack_state and s_atk==false:
+			if state_machine.get_previous_active_state()!=attack_state and s_atk==false and not attack_timer.is_stopped():
 				#state = States.WALKING
 				
 				if Input.is_action_pressed("sprint"):
@@ -935,12 +944,19 @@ func attack_animate():
 		attacking=true
 		
 		
+func start_attack_timer() -> void:
+	attack_timer.start(0.2)
 		
-		
+
+	
+	
+
 func regular_attack() -> void:
 	if state_machine.get_active_state()==parry_success_state:
 		return
-	attack_timer.start()
+	
+	#attack_timer.start()
+
 	if state_machine.get_active_state()!=attack_state:
 		attack_timer.paused=true
 		
@@ -1136,7 +1152,7 @@ func gun_cone(spread : int) -> Array[int]:
 		_bullet_spawn_angles.push_front(_bullet_spawn_angle)
 		_bullet_spawn_angle+=_spread_angle
 	return _bullet_spawn_angles
-	label.text=str(_bullet_spawn_angles)
+	label.text=str(aim_speed)
 
 func _on_special_attack_entered() -> void:
 	pass
@@ -1620,10 +1636,10 @@ func _on_animation_player_animation_finished(anim_name):
 		#"attack finished")
 		hit_success=false
 		attacking=false
-		if input_axis!=0:
-			anim_player.play(walk_anim)
-		else:
-			anim_player.play("idle")
+		#if input_axis!=0:
+			#anim_player.play(walk_anim)
+		#else:
+			#anim_player.play("idle")
 		match anim_name:
 			"Attack_Counter":
 				counter_flag=false
@@ -1704,7 +1720,7 @@ func _on_attack_timer_timeout():
 	attack_combo = "Attack"
 	
 	if input_axis!=0:
-		state_machine.dispatch(&"start_walking")
+		state_machine.dispatch(&"resume_walking")
 	else:
 		state_machine.dispatch(&"return_to_idle")
 	#attack_state.dispatch(&"reset_combo")
@@ -2384,3 +2400,12 @@ func _on_hurt_box_knockback(knock_back_strength: float) -> void:
 
 func _on_hit_box_clashed() -> void:
 	clash_power.increase_clash()
+
+
+func _on_animation_player_animation_changed(old_name: StringName, new_name: StringName) -> void:
+	pass
+
+func _on_animation_player_current_animation_changed(name: StringName) -> void:
+	#pass
+	if name == "walk":
+		print_debug("where")

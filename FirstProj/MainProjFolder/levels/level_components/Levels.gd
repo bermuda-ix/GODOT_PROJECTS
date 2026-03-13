@@ -42,6 +42,11 @@ const HIGHSCORE_LIST = "res://LVL_Transitions/highscore_list.tscn"
 		"GuantletLvl" : "uid://djj0ggyoi07b2"
 	}
 	
+#####################################################
+###TODO: Function to Unload Rooms not in map      ###
+###		 Save persistant data from unloaded rooms ###
+###		 Reload persistant data on flag           ###
+#####################################################
 
 #Connected duplicated rooms
 @onready var level_maps : Dictionary = {
