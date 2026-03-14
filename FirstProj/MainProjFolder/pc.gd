@@ -610,7 +610,7 @@ func _physics_process(delta):
 			##state = States.DODGE
 		
 		## Add the gravity.
-		if(parry_stance==false):
+		if(parry_stance==false) and state_machine.get_active_state()!=attack_state:
 			apply_gravity(delta) 
 		var input_axis = Input.get_axis("walk_left", "walk_right")
 		if input_axis<0:
