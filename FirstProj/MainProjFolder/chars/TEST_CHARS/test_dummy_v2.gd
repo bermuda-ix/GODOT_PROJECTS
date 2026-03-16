@@ -33,6 +33,10 @@ extends CharacterBody2D
 @onready var launch_height : float = 40
 @onready var launch_strength : float = 40
 
+var is_on_screen : bool
+@onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D2
+
+
 func _ready() -> void:
 	pass
 	_init_state_machine()

@@ -1198,7 +1198,10 @@ func set_shotgun_target_look(value : bool):
 	
 func shotgun_unlock():
 	if Input.is_action_just_released("sprint"):
-		set_shotgun_target_look(false)
+		if target==null:
+			set_shotgun_target_look(false)
+		else:
+			shotty_target=null
 
 var shotty_target : Node2D
 
@@ -1206,6 +1209,9 @@ func shotgun_point_to_target():
 	if shotty_target!=null:
 		set_shotgun_target_look(true)
 		shotty.look_at(shotty_target.global_position)
+	elif target!=null:
+		set_shotgun_target_look(true)
+		shotty.look_at(target.global_position)
 	else:
 		set_shotgun_target_look(false)
 		
@@ -1297,8 +1303,11 @@ func lockon():
 		if not target.on_screen.is_on_screen() or target.state_machine.get_active_state()==target.death:
 			
 			target=null
+			set_shotgun_target_look(false)
 		else:
 			target.target_lock()
+			shotty_target=target
+			set_shotgun_target_look(true)
 		
 	if target == null:
 		

@@ -22,7 +22,10 @@ func _update(delta: float) -> void:
 		pc.shotty_target=pc.find_closest_enemy()
 		pc.shotgun_point_to_target()
 	elif Input.is_action_just_released("sprint"):
-		pc.set_shotgun_target_look(false)
+		if pc.target==null:
+			pc.set_shotgun_target_look(false)
+		else:
+			pass
 
 func _exit() -> void:
 	shotty_anim_player.pause()
