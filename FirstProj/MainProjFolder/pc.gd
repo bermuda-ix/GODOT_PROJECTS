@@ -212,6 +212,7 @@ signal no_input_qte
 @onready var spread_boundary_2: RayCast2D = $AnimatedSprite2D/Shotty/SpreadBoundary2
 @onready var spread : int = 5
 @onready var shotgun_lookat_mouse : bool = true
+@onready var shotgun_lookat_target : bool = false
 @onready var shoot_handler: ShootHandler = $ShootHandler
 @onready var bullet_dir: Vector2 = Vector2.ZERO
 
@@ -562,6 +563,7 @@ func _process(_delta):
 			pass
 	#
 	lockon()
+	shotgun_unlock()
 	enter_door()
 	climb_stairs()
 	drop_down()
@@ -852,6 +854,9 @@ func update_animation(input_axis):
 	##disable moving when knocked back with high knockback strength
 	if knockback.x>50:
 		return
+	##Set shotgun scale to default
+	
+	
 	
 	if Input.is_action_pressed("up"):
 		if Input.is_action_pressed("walk_right"):
@@ -1180,12 +1185,30 @@ func rotation_to_direction(_rotation_degrees : int) -> Vector2:
 	return direction
 
 func shotgun_free_rotate():
-	if shotgun_lookat_mouse:
+	if shotgun_lookat_target:
+		shotgun_point_to_target()
+	elif shotgun_lookat_mouse:
 		shotty.look_at(get_global_mouse_position())
 
 func set_shotgun_free_rotate(value : bool):
 	shotgun_lookat_mouse=value
 
+func set_shotgun_target_look(value : bool):
+	shotgun_lookat_target=value
+	
+func shotgun_unlock():
+	if Input.is_action_just_released("sprint"):
+		set_shotgun_target_look(false)
+
+var shotty_target : Node2D
+
+func shotgun_point_to_target():
+	if shotty_target!=null:
+		set_shotgun_target_look(true)
+		shotty.look_at(shotty_target.global_position)
+	else:
+		set_shotgun_target_look(false)
+		
 func parry():
 	
 	if Input.is_action_just_pressed("parry") and state_machine.get_active_state()!=parry_success_state:
@@ -1267,7 +1290,7 @@ func lockon():
 			return
 		
 		Events.unlock_from.emit()
-		find_closest_enemy()
+		target = find_closest_enemy()
 		
 		
 
@@ -1310,7 +1333,7 @@ func lockon():
 				#"on left")
 				target_right = true
 			
-func find_closest_enemy():
+func find_closest_enemy() -> Node2D:
 	enemies.clear()
 	
 	enemies = get_tree().get_nodes_in_group("Enemy")
@@ -1333,7 +1356,7 @@ func find_closest_enemy():
 		else:
 			continue
 			
-	target=closest_enemy
+	return closest_enemy
 	
 	
 	
