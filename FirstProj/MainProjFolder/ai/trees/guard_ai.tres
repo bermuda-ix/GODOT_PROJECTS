@@ -170,7 +170,7 @@ custom_name = "Attack"
 children = [SubResource("BTCheckVar_wkd5u"), SubResource("BTCallMethod_ru3pv"), SubResource("BTSelector_7tj05"), SubResource("BTSelector_bob2m"), SubResource("BTSelector_8sobk")]
 
 [sub_resource type="BTCooldown" id="BTCooldown_gb5fh"]
-duration = 0.8
+duration = 0.2
 start_cooled = true
 children = [SubResource("BTSequence_virdo")]
 

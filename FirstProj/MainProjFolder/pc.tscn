@@ -1743,10 +1743,10 @@ tracks/10/path = NodePath("StateMachine/AttackState")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.16666667),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [10.0],
+"args": [200.0],
 "method": &"attack_lunge_setup"
 }]
 }
@@ -1873,10 +1873,10 @@ tracks/9/path = NodePath("StateMachine/AttackState")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.06666667),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [10.0],
+"args": [200.0],
 "method": &"attack_lunge_setup"
 }]
 }
@@ -1991,10 +1991,10 @@ tracks/8/path = NodePath("StateMachine/AttackState")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [10.0],
+"args": [200.0],
 "method": &"attack_lunge_setup"
 }]
 }

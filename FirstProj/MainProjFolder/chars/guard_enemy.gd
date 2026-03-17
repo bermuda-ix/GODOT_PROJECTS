@@ -325,13 +325,13 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	match anim_name:
 		"atk_1":
 			atk_chain="_2"
-			attack_timer.start(1)
+			attack_timer.start(0.3)
 		"atk_2":
 			atk_chain="_3"
-			attack_timer.start(1)
+			attack_timer.start(0.3)
 		"atk_3":
 			atk_chain="_1"
-			attack_timer.start(1)
+			attack_timer.start(0.3)
 		"dodge":
 			state_machine.dispatch(&"dodge_end")
 
