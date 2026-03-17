@@ -292,7 +292,8 @@ func _physics_process(delta):
 		velocity.x = current_speed + knockback.x
 		velocity.y += gravity * delta
 	else:
-		velocity.x= knockback.x
+		if state_machine.get_active_state()!=attack:
+			velocity.x= knockback.x
 		
 	#	apply gravity when in air
 	if not is_on_floor():

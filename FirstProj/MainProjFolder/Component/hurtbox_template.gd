@@ -35,11 +35,11 @@ func _on_area_entered(hitbox: HitBox) -> void:
 	if health.health<=0:
 		return
 	if hitbox != null:
-		print(hitbox.knock_back)
+		#print(hitbox.knock_back)
 		if hitbox.launch:
 			launched.emit(hitbox.launch_strength)
 		if hitbox.knock_back:
-			print("KNOCKING BACK")
+			#print("KNOCKING BACK")
 			knockback.emit(hitbox.knock_back_strength)
 	
 		if hitbox.is_in_group("spc_atk"):

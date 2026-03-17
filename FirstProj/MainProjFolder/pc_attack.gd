@@ -31,6 +31,6 @@ func attack_lunge() -> void:
 	pc.velocity.x=lerpf(pc.velocity.x, 0, 0.5)
 
 func attack_lunge_setup(_lunge_distance := 50.0) -> void:
-	pc.velocity.x=lunge_distance*-pc.face_dir
+	pc.velocity.x=_lunge_distance*-pc.face_dir
 	starting = pc.global_position.x
-	lunge_distance=_lunge_distance
+	#lunge_distance=_lunge_distance

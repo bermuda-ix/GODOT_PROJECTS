@@ -10,6 +10,7 @@ var attack_dir := 1
 
 func _enter() -> void:
 	actor.state="ATTACK"
+	actor.velocity= Vector2.ZERO
 	if actor.player_right:
 		attack_dir = 1
 	else:
@@ -20,13 +21,17 @@ func _enter() -> void:
 func _update(delta: float) -> void:
 	
 	attack_lunge()
+	#print_debug(actor.velocity.x)
 	
 #func _exit() -> void:
 	#print_debug("exit")
-
 func attack_lunge() -> void:
-	actor.global_position.x=lerpf(starting, actor.global_position.x+(lunge_distance*attack_dir), 0.5)
+	actor.move_and_slide()
+	print_debug(actor.velocity.x)
+	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.5)
 
-func attack_lunge_setup(_lunge_distance := 5.0) -> void:
+func attack_lunge_setup(_lunge_distance := 200.0) -> void:
 	starting = actor.global_position.x
-	lunge_distance=_lunge_distance
+	#lunge_distance=_lunge_distance
+	actor.velocity.x=_lunge_distance*attack_dir
+	print_debug(actor.velocity.x)

@@ -459,7 +459,7 @@ position = Vector2(1325, 86)
 position = Vector2(1331, -12.999992)
 
 [node name="GuardEnemy" parent="Enemies" index="2" unique_id=2034909694 instance=ExtResource("10_0atxr")]
-position = Vector2(610, -232)
+position = Vector2(910, 80)
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]
 position = Vector2(1260, 1)
