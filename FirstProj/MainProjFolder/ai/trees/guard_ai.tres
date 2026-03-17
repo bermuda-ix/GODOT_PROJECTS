@@ -23,6 +23,21 @@ var/falling/type = 1
 var/falling/value = false
 var/falling/hint = 0
 var/falling/hint_string = ""
+var/atk_1/name = &"atk_1"
+var/atk_1/type = 1
+var/atk_1/value = false
+var/atk_1/hint = 0
+var/atk_1/hint_string = ""
+var/atk_2/name = &"atk_2"
+var/atk_2/type = 1
+var/atk_2/value = false
+var/atk_2/hint = 0
+var/atk_2/hint_string = ""
+var/atk_3/name = &"atk_3"
+var/atk_3/type = 1
+var/atk_3/value = false
+var/atk_3/hint = 0
+var/atk_3/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_2nsp0"]
 type = 1
@@ -108,9 +123,51 @@ resource_name = "MeleeAttackManager"
 node = SubResource("BBNode_8sobk")
 method = &"melee_attack"
 
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_dk6q0"]
+variable = &"atk_1"
+
+[sub_resource type="BBNode" id="BBNode_fopnx"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_2nsp0"]
+animation_player = SubResource("BBNode_fopnx")
+animation_name = &"atk_1"
+
+[sub_resource type="BTSelector" id="BTSelector_7tj05"]
+children = [SubResource("BTCheckTrigger_dk6q0"), SubResource("BTAwaitAnimation_2nsp0")]
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_dy0rb"]
+variable = &"atk_2"
+
+[sub_resource type="BBNode" id="BBNode_pquhl"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_fh6a1"]
+animation_player = SubResource("BBNode_pquhl")
+animation_name = &"atk_2"
+
+[sub_resource type="BTSelector" id="BTSelector_bob2m"]
+children = [SubResource("BTCheckTrigger_dy0rb"), SubResource("BTAwaitAnimation_fh6a1")]
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_exfju"]
+variable = &"atk_3"
+
+[sub_resource type="BBNode" id="BBNode_i45wg"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_wkd5u"]
+animation_player = SubResource("BBNode_i45wg")
+animation_name = &"atk_3"
+
+[sub_resource type="BTSelector" id="BTSelector_8sobk"]
+children = [SubResource("BTCheckTrigger_exfju"), SubResource("BTAwaitAnimation_wkd5u")]
+
 [sub_resource type="BTSequence" id="BTSequence_virdo"]
 custom_name = "Attack"
-children = [SubResource("BTCheckVar_wkd5u"), SubResource("BTCallMethod_ru3pv")]
+children = [SubResource("BTCheckVar_wkd5u"), SubResource("BTCallMethod_ru3pv"), SubResource("BTSelector_7tj05"), SubResource("BTSelector_bob2m"), SubResource("BTSelector_8sobk")]
 
 [sub_resource type="BTCooldown" id="BTCooldown_gb5fh"]
 duration = 0.8
@@ -228,7 +285,7 @@ custom_name = "Shoot"
 children = [SubResource("BTCheckVar_dy0rb"), SubResource("BTSelector_uiybs")]
 
 [sub_resource type="BTCooldown" id="BTCooldown_hp7h8"]
-duration = 0.5
+duration = 0.1
 start_cooled = true
 children = [SubResource("BTSequence_bob2m")]
 

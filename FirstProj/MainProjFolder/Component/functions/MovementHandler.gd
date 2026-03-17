@@ -11,6 +11,7 @@ extends Node
 @export var air_turn : bool = true
 
 @export var face_player_active : bool = true
+var direction 
 
 func _physics_process(delta: float) -> void:
 	
@@ -20,7 +21,7 @@ func _physics_process(delta: float) -> void:
 		return
 		
 	else:
-		var direction= actor.global_position - actor.player.global_position
+		direction= actor.global_position - actor.player.global_position
 		if face_player_active:
 			face_player()
 		

@@ -2929,7 +2929,7 @@ process_material = SubResource("ParticleProcessMaterial_j0qvy")
 visible = false
 position = Vector2(-1.0000038, 22.999996)
 sprite_frames = SubResource("SpriteFrames_bpr6j")
-animation = &"phase_cange_start"
+animation = &"teleport"
 
 [node name="AudioFX" type="AudioStreamPlayer2D" parent="AnimatedSprite2D/VFXSprite" index="0" unique_id=805414101]
 max_polyphony = 4

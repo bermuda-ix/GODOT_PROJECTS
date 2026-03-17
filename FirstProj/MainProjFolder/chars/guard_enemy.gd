@@ -325,15 +325,20 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	match anim_name:
 		"atk_1":
 			atk_chain="_2"
-			attack_timer.start(5)
+			attack_timer.start(1)
 		"atk_2":
 			atk_chain="_3"
-			attack_timer.start(5)
+			attack_timer.start(1)
 		"atk_3":
 			atk_chain="_1"
-			attack_timer.start(5)
+			attack_timer.start(1)
 		"dodge":
 			state_machine.dispatch(&"dodge_end")
+
+func set_attack_trigger(_value : String) -> void:
+	pass
+	var _chain := "atk"+atk_chain
+	bt_player.blackboard.set_var(_chain, true)
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
@@ -451,6 +456,7 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 
 
 func _on_vision_handler_player_sighted() -> void:
+	bt_player.blackboard.set_var("attack_mode", true)
 	if linked_enemies!=null:
 		for i in range(linked_enemies.size()):
 			linked_enemies[i].alerted()
