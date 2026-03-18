@@ -401,7 +401,9 @@ func _physics_process(delta):
 	if state_machine.get_active_state()==chasing:
 		velocity.x = current_speed + knockback.x
 	else:
-		velocity.x= knockback.x
+		if state_machine.get_active_state()!=attack:
+			velocity.x= knockback.x
+		
 	
 	move_and_slide()
 	if player_right:
