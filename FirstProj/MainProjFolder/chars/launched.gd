@@ -11,4 +11,11 @@ class_name Launch extends LimboState
 func _enter() -> void:
 	launch_height=actor.global_position.y-launch_strength
 	knocked_back=actor.global_position.x-knock_back_strength
+	actor.velocity.x=launch_strength
 	launch_timer.start(air_time)
+
+func _update(delta: float) -> void:
+	if not launch_timer.is_stopped():
+		actor.velocity.y=lerpf(actor.velocity.y, launch_height*10, 0.1)
+		print_debug(actor.velocity.y)
+		actor.velocity.x=lerpf(-knock_back_strength, -knock_back_strength/2, 0.5)

@@ -942,3 +942,5 @@ func _on_hurt_box_launched() -> void:
 func _on_launch_timer_timeout() -> void:
 	if phases.get_active_state()==phase_2:
 		teleport_counter()
+	else:
+		state_machine.dispatch(&"falling")

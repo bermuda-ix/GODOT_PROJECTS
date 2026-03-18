@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cu7yn55uf2fn8"]
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_33sos"]
-[ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_enemy.gd" id="2_ggkva"]
+[ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_boss.gd" id="2_87q8v"]
 [ext_resource type="Shader" uid="uid://38ktkg87cgya" path="res://Art_Components/Effects/CustomRes/outline_effect_static.gdshader" id="3_8fc12"]
 [ext_resource type="Texture2D" uid="uid://c6kovqjcnxlly" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Jump/Jump01.png" id="3_sqn71"]
 [ext_resource type="Texture2D" uid="uid://bcow13fj0p561" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Jump/Jump02.png" id="4_4m1ae"]
@@ -2891,13 +2891,9 @@ stereo = true
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_thomt"]
 
-[node name="soldier_enemy_boss" unique_id=789104702 node_paths=PackedStringArray("hitbox", "state_machine") groups=["Boss", "Persistant", "offensive_enemy"] instance=ExtResource("1_33sos")]
+[node name="soldier_enemy_boss" unique_id=789104702 groups=["Boss", "Persistant", "offensive_enemy"] instance=ExtResource("1_33sos")]
 collision_layer = 16384
-script = ExtResource("2_ggkva")
-death_cutscene = true
-chase_speed = 120.0
-hitbox = NodePath("HitBox")
-state_machine = NodePath("LimboHSM")
+script = ExtResource("2_87q8v")
 
 [node name="NavigationAgent2D" parent="." index="0"]
 navigation_layers = 2
@@ -2929,7 +2925,7 @@ process_material = SubResource("ParticleProcessMaterial_j0qvy")
 visible = false
 position = Vector2(-1.0000038, 22.999996)
 sprite_frames = SubResource("SpriteFrames_bpr6j")
-animation = &"teleport"
+animation = &"phase_cange_start"
 
 [node name="AudioFX" type="AudioStreamPlayer2D" parent="AnimatedSprite2D/VFXSprite" index="0" unique_id=805414101]
 max_polyphony = 4
@@ -3299,7 +3295,6 @@ sm = NodePath("../Phases")
 phases = Array[int]([10])
 metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 
-[connection signal="boss_reloaded" from="." to="." method="_on_boss_reloaded"]
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/COUNTER/KickCounter" method="_on_animation_player_animation_finished"]

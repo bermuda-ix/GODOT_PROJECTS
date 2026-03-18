@@ -43,6 +43,8 @@ const JUMP_VELOCITY = -400.0
 @onready var dodge_timer: Timer = $DodgeTimer
 @onready var attack_timer: Timer = $AttackTimer
 @onready var stagger_timer: Timer = $StaggerTimer
+@onready var launch_timer: Timer = $LaunchTimer
+
 
 #movement
 @onready var movement_handler: MovementHandler = $MovementHandler
@@ -89,6 +91,8 @@ var player_state : LimboState
 @onready var staggered: LimboState = $LimboHSM/STAGGERED
 @onready var launch: Launch = $LimboHSM/LAUNCHED
 @onready var falling: LimboState = $LimboHSM/FALLING
+@onready var landed: LimboState = $LimboHSM/Landed
+
 
 var state
 
@@ -184,7 +188,10 @@ func _init_state_machine():
 	state_machine.add_transition(attack, dodge, &"dodge")
 	state_machine.add_transition(dodge, attack, &"dodge_end")
 	state_machine.add_transition(launch, hit, &"midair_hit")
+	state_machine.add_transition(launch, falling, &"falling")
 	state_machine.add_transition(hit, falling, &"falling")
+	state_machine.add_transition(falling, landed, &"landed")
+	state_machine.add_transition(landed, attack, &"resume_attack")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -239,7 +246,8 @@ func _process(_delta):
 		hb_collision.disabled=true
 	elif (state_machine.get_active_state()!=death or state_machine.get_active_state()==dying) and health.health<=0:
 		state_machine.dispatch(&"die")
-		
+	
+			
 	handle_vision()
 	if not attack_range.has_overlapping_bodies():
 		bt_player.blackboard.set_var("within_range", false)
@@ -277,6 +285,13 @@ func _physics_process(delta):
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
 		return
+	#elif  state_machine.get_active_state()==launch:
+		#if not launch_timer.is_stopped():
+			#velocity.y=lerpf(velocity.y, launch.launch_height*10, 0.1)
+			#print_debug(velocity.y)
+			#velocity.x=lerpf(-launch.knock_back_strength, -launch.knock_back_strength/2, 0.5)
+			##global_position.x=lerpf(global_position.x, launch.knocked_back, 0.1)
+			##velocity.y=0
 	elif state_machine.get_active_state()!=launch:
 		velocity.y += gravity * delta
 	else:
@@ -313,7 +328,8 @@ func target_lock():
 	
 func chase():
 	#set_state(current_state, States.CHASE)
-	state_machine.change_active_state(chasing)
+	if state_machine.get_active_state()!=chasing:
+		state_machine.change_active_state(chasing)
 	
 func get_width() -> int:
 	return collision_shape_2d.get_shape().radius
@@ -335,6 +351,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			attack_timer.start(0.3)
 		"dodge":
 			state_machine.dispatch(&"dodge_end")
+
+
 
 func set_attack_trigger(_value : String) -> void:
 	pass
@@ -374,8 +392,8 @@ func _on_stagger_staggered() -> void:
 	bt_player.restart()
 	parry_timer.start(3)
 	hb_collision.disabled=true
-	print_debug("staggered")
-	state_machine.dispatch(&"staggered")
+	if state_machine.get_active_state()!=launch:
+		state_machine.dispatch(&"staggered")
 
 func _on_parry_timer_timeout() -> void:
 	if state_machine.get_active_state()==staggered:
@@ -448,7 +466,7 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 	if not visible_on_screen_notifier_2d.is_on_screen():
 		if current==attack:
 			push_error("ERROR: State changed")
-	
+	print_debug(current)
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	
@@ -482,24 +500,25 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 
 func _on_launch_timer_timeout() -> void:
 	pass # Replace with function body.
-	state_machine.dispatch(&"midair_hit")
+	state_machine.dispatch(&"falling")
 	###Falling to idle
 	
 
 
 func _on_falling_entered() -> void:
+	animation_player.play("falling")
 	bt_player.blackboard.set_var("launched", false)
 	bt_player.blackboard.set_var("falling", true)
-	if is_on_floor():
-		bt_player.blackboard.set_var("falling", false)
-		state_machine.change_active_state(attack)
+
 
 
 func _on_launched_entered() -> void:
+	animation_player.play("launched")
 	bt_player.blackboard.set_var("launched", true)
 
 
-func _on_hurt_box_launched() -> void:
+func _on_hurt_box_launched(launch_strength: float) -> void:
+	launch.launch_strength=launch_strength
 	state_machine.change_active_state(launch)
 
 
@@ -523,3 +542,20 @@ func _on_hurt_box_body_entered(body: Node2D) -> void:
 			hit_stop.hit_stop(0.5, 0.5)
 			stagger.staggered.emit()
 			Events.camera_shake.emit(2,20)
+
+
+
+func _on_hit_exited() -> void:
+	pass # Replace with function body.
+
+
+func _on_falling_updated(delta: float) -> void:
+	pass
+	#if is_on_floor():
+		#
+		#state_machine.dispatch(&"landed")
+
+
+func _on_landed_landed() -> void:
+	bt_player.blackboard.set_var("falling", false)
+	state_machine.dispatch(&"resume_attack")

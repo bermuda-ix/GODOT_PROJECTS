@@ -22,6 +22,8 @@ var always_active : bool
 @onready var nav_agent = $NavigationAgent2D
 @onready var jump_timer = $JumpTimer
 @onready var movement_handler: MovementHandler = $MovementHandler
+@onready var knocked_back : bool = false
+
 
 #Cutscene Vars
 @onready var speed: Label = $Speed
@@ -129,6 +131,10 @@ var distance
 @onready var bulletdodge: BulletDodge = $LimboHSM/BULLETDODGE
 @onready var hit: LimboState = $LimboHSM/HIT
 @onready var staggered: LimboState = $LimboHSM/STAGGERED
+@onready var launch: Launch = $LimboHSM/Launch
+@onready var falling: LimboState = $LimboHSM/Falling
+@onready var landed: LimboState = $LimboHSM/Landed
+
 
 #Counter States
 @onready var counter_sm: LimboHSM = $LimboHSM/COUNTER
@@ -212,6 +218,9 @@ func _init_state_machine():
 	state_machine.add_transition(attack, bulletdodge, &"bullet_dodge")
 	state_machine.add_transition(bulletdodge, chasing, &"finish_bullet_dodge")
 	state_machine.add_transition(bulletdodge, attack, &"resume_attack")
+	state_machine.add_transition(launch, falling, &"falling")
+	state_machine.add_transition(falling, landed, &"landed")
+	state_machine.add_transition(landed, attack, &"resume_attack")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -638,5 +647,39 @@ func _on_bulletdodge_exited() -> void:
 	
 
 
-func _on_dying_entered() -> void:
-	boss_ui.deactivate_boss_ui()
+func _on_hurt_box_launched(launch_strength: float) -> void:
+	launch.launch_strength=launch_strength
+	state_machine.change_active_state(launch)
+
+
+func _on_hurt_box_knockback(knock_back_strength: float) -> void:
+	launch.launch_strength=knock_back_strength
+	state_machine.change_active_state(launch)
+
+
+func _on_timer_timeout() -> void:
+	state_machine.dispatch(&"falling")
+
+
+func _on_falling_entered() -> void:
+	animation_player.play("falling")
+
+
+func _on_falling_exited() -> void:
+	pass
+
+
+func _on_falling_updated(delta: float) -> void:
+	if is_on_floor():
+		state_machine.dispatch(&"landed")
+
+
+func _on_landed_entered() -> void:
+	knocked_back=false
+	animation_player.play("landed")
+
+
+func _on_launch_entered() -> void:
+	velocity.x=0
+	current_speed=0
+	animation_player.play("launched")

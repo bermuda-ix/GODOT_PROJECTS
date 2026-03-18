@@ -91,9 +91,16 @@
 [ext_resource type="Texture2D" uid="uid://b5wk6psk5eo7" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunFire/GunFire04.png" id="44_0jy08"]
 [ext_resource type="Texture2D" uid="uid://b1oggfv0aohno" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Hit/Hit03.png" id="44_m3s8r"]
 [ext_resource type="Texture2D" uid="uid://cnc744fcjhst7" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunFire/GunFire05.png" id="45_tc6fw"]
+[ext_resource type="Texture2D" uid="uid://uyrqxa0qabyo" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback06.png" id="46_1kl2o"]
+[ext_resource type="Texture2D" uid="uid://yxlldbqfjb1q" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Land/Land01.png" id="47_w7cvb"]
+[ext_resource type="Texture2D" uid="uid://xxhrnu0kk1ih" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Land/Land02.png" id="48_gxq5f"]
+[ext_resource type="Texture2D" uid="uid://bkennx5ijffrf" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback01.png" id="49_msm5e"]
 [ext_resource type="Texture2D" uid="uid://1jdgd5wxnh6v" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run01.png" id="50_id1bf"]
+[ext_resource type="Texture2D" uid="uid://chdfl2cddmjq2" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback02.png" id="50_w4w2i"]
 [ext_resource type="Texture2D" uid="uid://dppvvwwb3qbob" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run02.png" id="51_nythj"]
+[ext_resource type="Texture2D" uid="uid://b5ssjqaq1iq6i" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback03.png" id="51_tamim"]
 [ext_resource type="Texture2D" uid="uid://dogbr8y7xeok1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run03.png" id="52_7vhub"]
+[ext_resource type="Texture2D" uid="uid://bjnfgcf24kup1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback04.png" id="52_afsyd"]
 [ext_resource type="Texture2D" uid="uid://ccgapfic22wrm" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run04.png" id="53_t1agh"]
 [ext_resource type="Texture2D" uid="uid://b2iqiamhgb2bn" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run05.png" id="54_20lum"]
 [ext_resource type="Texture2D" uid="uid://b0ve4x1jtfkm5" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Run/Run06.png" id="55_s7q1o"]
@@ -104,6 +111,8 @@
 [ext_resource type="Script" uid="uid://bnpx2avsix2an" path="res://Component/functions/GroupEnemyManager.gd" id="86_m3s8r"]
 [ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="97_onb8s"]
 [ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="100_jseaa"]
+[ext_resource type="Script" uid="uid://dly3pw0jr2gav" path="res://chars/falling.gd" id="109_w7cvb"]
+[ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="110_gxq5f"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ngkqw"]
 animations = [{
@@ -269,6 +278,46 @@ animations = [{
 }],
 "loop": true,
 "name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("25_es3xv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_1kl2o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_w7cvb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_gxq5f")
+}],
+"loop": true,
+"name": &"landed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("49_msm5e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_w4w2i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_tamim")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_afsyd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_es3xv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_1kl2o")
+}],
+"loop": true,
+"name": &"launched",
 "speed": 5.0
 }, {
 "frames": [{
@@ -978,6 +1027,35 @@ tracks/6/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
 }
 
+[sub_resource type="Animation" id="Animation_gxq5f"]
+resource_name = "falling"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"launched"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
 [sub_resource type="Animation" id="Animation_tqjrv"]
 resource_name = "hit"
 length = 0.1
@@ -1118,6 +1196,62 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_msm5e"]
+resource_name = "landed"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"landed"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.36666667, 0.56666666, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_1kl2o"]
+resource_name = "launched"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"launched"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
 }
 
 [sub_resource type="Animation" id="Animation_sgday"]
@@ -1281,8 +1415,11 @@ _data = {
 &"atk_3": SubResource("Animation_ksmfd"),
 &"dead": SubResource("Animation_ri8gu"),
 &"death": SubResource("Animation_nm53c"),
+&"falling": SubResource("Animation_gxq5f"),
 &"hit": SubResource("Animation_tqjrv"),
 &"idle": SubResource("Animation_j02m3"),
+&"landed": SubResource("Animation_msm5e"),
+&"launched": SubResource("Animation_1kl2o"),
 &"reload": SubResource("Animation_sgday"),
 &"run": SubResource("Animation_w7cvb"),
 &"shoot": SubResource("Animation_es3xv"),
@@ -1352,6 +1489,7 @@ metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=1621757423]
 script = ExtResource("9_34xo2")
+max_stagger = 1
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="NavigationTimer" type="Timer" parent="." unique_id=1426565053]
@@ -1586,7 +1724,15 @@ actor = NodePath("../..")
 launch_timer = NodePath("../../LaunchTimer")
 launch_strength = 50.0
 
-[node name="FALLING" type="LimboState" parent="LimboHSM" unique_id=1065190892]
+[node name="FALLING" type="LimboState" parent="LimboHSM" unique_id=1065190892 node_paths=PackedStringArray("actor", "state_machine")]
+script = ExtResource("109_w7cvb")
+actor = NodePath("../..")
+state_machine = NodePath("..")
+
+[node name="Landed" type="LimboState" parent="LimboHSM" unique_id=269903046 node_paths=PackedStringArray("animation_player", "actor")]
+script = ExtResource("110_gxq5f")
+animation_player = NodePath("../../AnimationPlayer")
+actor = NodePath("../..")
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=1758670167]
 
@@ -1615,6 +1761,7 @@ metadata/_edit_use_anchors_ = true
 [node name="VisibleOnScreenNotifier2D2" type="VisibleOnScreenNotifier2D" parent="." unique_id=595900798]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/Landed" method="_on_animation_player_animation_finished"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
@@ -1634,5 +1781,9 @@ metadata/_edit_use_anchors_ = true
 [connection signal="player_sighted" from="VisionHandler" to="." method="_on_vision_handler_player_sighted"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
 [connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]
+[connection signal="exited" from="LimboHSM/HIT" to="." method="_on_hit_exited"]
 [connection signal="entered" from="LimboHSM/LAUNCHED" to="." method="_on_launched_entered"]
 [connection signal="entered" from="LimboHSM/FALLING" to="." method="_on_falling_entered"]
+[connection signal="updated" from="LimboHSM/FALLING" to="." method="_on_falling_updated"]
+[connection signal="entered" from="LimboHSM/Landed" to="." method="_on_landed_entered"]
+[connection signal="landed" from="LimboHSM/Landed" to="." method="_on_landed_landed"]
