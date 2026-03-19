@@ -94,6 +94,7 @@ var player_state : LimboState
 @onready var landed: LimboState = $LimboHSM/Landed
 
 
+
 var state
 
 #Combat States
@@ -394,6 +395,7 @@ func _on_stagger_staggered() -> void:
 	hb_collision.disabled=true
 	if state_machine.get_active_state()!=launch:
 		state_machine.dispatch(&"staggered")
+	Events.camera_shake.emit(2,20)
 
 func _on_parry_timer_timeout() -> void:
 	if state_machine.get_active_state()==staggered:

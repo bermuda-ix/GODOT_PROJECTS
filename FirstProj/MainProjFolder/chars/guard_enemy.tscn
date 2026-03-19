@@ -1489,7 +1489,6 @@ metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=1621757423]
 script = ExtResource("9_34xo2")
-max_stagger = 1
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="NavigationTimer" type="Timer" parent="." unique_id=1426565053]
@@ -1722,6 +1721,7 @@ blackboard_plan = SubResource("BlackboardPlan_ri8gu")
 script = ExtResource("100_jseaa")
 actor = NodePath("../..")
 launch_timer = NodePath("../../LaunchTimer")
+air_time = 0.1
 launch_strength = 50.0
 
 [node name="FALLING" type="LimboState" parent="LimboHSM" unique_id=1065190892 node_paths=PackedStringArray("actor", "state_machine")]

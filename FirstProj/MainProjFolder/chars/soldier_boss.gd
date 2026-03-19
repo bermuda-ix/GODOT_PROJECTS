@@ -124,7 +124,7 @@ var distance
 @onready var death_handler: DeathHandler = $DeathHandler
 
 #State Machine
-@export var state_machine : LimboHSM
+@onready var state_machine : LimboHSM = $LimboHSM
 #states
 @onready var idle: LimboState = $LimboHSM/IDLE
 @onready var chasing: LimboState = $LimboHSM/CHASING
@@ -703,8 +703,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
-	h_bar.text=str(current.name)
-	#print_debug(current.name)
+	print_debug(current)
 	if current==jump:
 		if previous==attack:
 			print_debug("down attack")

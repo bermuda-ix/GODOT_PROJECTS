@@ -118,22 +118,25 @@ var distance
 @onready var death_handler: DeathHandler = $DeathHandler
 
 #State Machine
-@export var state_machine : LimboHSM
+@onready var state_machine : LimboHSM = $LimboHSM
+
 #states
-@onready var idle: LimboState = $LimboHSM/IDLE
-@onready var chasing: LimboState = $LimboHSM/CHASING
-@onready var jump: LimboState = $LimboHSM/JUMP
-@onready var death: LimboState = $LimboHSM/DEATH
-@onready var dying: BTState = $LimboHSM/DYING
-@onready var attack: LimboState = $LimboHSM/ATTACK
-@onready var shooting: LimboState = $LimboHSM/SHOOTING
-@onready var dodge: LimboState = $LimboHSM/DODGE
+@onready var idle: Idle = $LimboHSM/IDLE
+@onready var chasing: Chasing = $LimboHSM/CHASING
+@onready var jump: Jump = $LimboHSM/JUMP
+@onready var death: Death = $LimboHSM/DEATH
+@onready var attack: Attack = $LimboHSM/ATTACK
+@onready var shooting: Shooting = $LimboHSM/SHOOTING
+@onready var dodge: Dodge = $LimboHSM/DODGE
 @onready var bulletdodge: BulletDodge = $LimboHSM/BULLETDODGE
-@onready var hit: LimboState = $LimboHSM/HIT
-@onready var staggered: LimboState = $LimboHSM/STAGGERED
+@onready var hit: Hit = $LimboHSM/HIT
+@onready var staggered: Staggered = $LimboHSM/STAGGERED
+@onready var dying: BTState = $LimboHSM/DYING
 @onready var launch: Launch = $LimboHSM/Launch
 @onready var falling: LimboState = $LimboHSM/Falling
 @onready var landed: LimboState = $LimboHSM/Landed
+
+
 
 
 #Counter States
@@ -147,6 +150,8 @@ var distance
 @onready var melee_mode: LimboState = $CombatStateMachine/MELEE
 
 @onready var ammo_count
+
+var is_on_screen : bool
 
 
 enum CombatStates{
@@ -176,9 +181,9 @@ func _ready():
 	bt_player.blackboard.set_var("staggered", false)
 	dying.blackboard.set_var("hit_the_floor", false)
 	#turret.setup(0.2)
-	boss_ui.activate_boss_ui()
-	boss_ui.set_max_boss_health(health.max_health)
-	boss_ui.set_boss_health(health.health)
+	#boss_ui.activate_boss_ui()
+	#boss_ui.set_max_boss_health(health.max_health)
+	#boss_ui.set_boss_health(health.health)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 	_init_combat_state_machine()
@@ -310,12 +315,12 @@ func _physics_process(delta):
 	if not is_on_floor():
 		if state_machine.get_active_state()==death:
 			velocity.y=0
-		else:
+		elif state_machine.get_active_state()!=launch:
 			velocity.y += gravity * delta
 	else:
 		dying.blackboard.set_var("hit_the_floor", true)
 		
-	if state_machine.get_active_state()==staggered and parry_timer.time_left>0.0:
+	if state_machine.get_active_state()==staggered and parry_timer.time_left>0.0 and state_machine.get_active_state()!=launch:
 		state_machine.change_active_state(staggered)
 		
 	#handle_movement()
@@ -437,7 +442,8 @@ func _on_stagger_staggered() -> void:
 	parry_timer.start(3)
 	
 	hb_collision.disabled=true
-	state_machine.dispatch(&"staggered")
+	if state_machine.get_active_state()!=launch:
+		state_machine.dispatch(&"staggered")
 	Events.camera_shake.emit(2,20)
 
 
@@ -578,8 +584,9 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
-	h_bar.text=str(current.name)
-	#print_debug(current.name)
+	print_debug(current)
+	if current==launch:
+		print_debug("start here")
 	if current==jump:
 		if previous==attack:
 			print_debug("down attack")
@@ -657,12 +664,14 @@ func _on_hurt_box_knockback(knock_back_strength: float) -> void:
 	state_machine.change_active_state(launch)
 
 
-func _on_timer_timeout() -> void:
+func _on_launch_timer_timeout() -> void:
 	state_machine.dispatch(&"falling")
 
 
 func _on_falling_entered() -> void:
 	animation_player.play("falling")
+	bt_player.blackboard.set_var("launched", false)
+	bt_player.blackboard.set_var("falling", true)
 
 
 func _on_falling_exited() -> void:
@@ -682,4 +691,11 @@ func _on_landed_entered() -> void:
 func _on_launch_entered() -> void:
 	velocity.x=0
 	current_speed=0
+	bt_player.blackboard.set_var("launched", true)
 	animation_player.play("launched")
+
+
+func _on_landed_landed() -> void:
+	bt_player.blackboard.set_var("launched", false)
+	bt_player.blackboard.set_var("falling", false)
+	state_machine.dispatch(&"resume_attack")
