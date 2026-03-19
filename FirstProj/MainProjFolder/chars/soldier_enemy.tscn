@@ -2023,7 +2023,7 @@ position = Vector2(-6, 0)
 shape = SubResource("CircleShape2D_4yjj7")
 
 [node name="Stagger" parent="." index="26"]
-max_stagger = 1
+max_stagger = 5
 
 [node name="Turret" parent="." index="27" unique_id=659128668 instance=ExtResource("57_lhivr")]
 position = Vector2(-8, -7)

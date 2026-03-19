@@ -566,6 +566,7 @@ func _on_turret_shoot_bullet() -> void:
 	shoot_handler.shoot_bullet()
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	is_on_screen=false
 	if not player_found:
 		vision_handler.active=false
 	if state_machine.get_active_state()==death:
@@ -635,6 +636,7 @@ func _on_bullet_detection_bullet_detected() -> void:
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	is_on_screen=true
 	vision_handler.active=true
 	if vision_handler.player_found or vision_handler.always_on:
 		state_machine.dispatch(&"attack_mode")

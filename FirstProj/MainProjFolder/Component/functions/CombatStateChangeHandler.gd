@@ -27,7 +27,10 @@ func _physics_process(delta: float) -> void:
 				combat_state_machine.dispatch(&"ranged_mode")
 				sm.dispatch(&"start_attack")
 			else:
-				sm.dispatch(&"start_chase")
+				if sm.get_active_state()!=actor.chasing:
+					sm.dispatch(&"start_chase")
+				else:
+					pass
 			
 #		MELEE ATTACK
 		else:
