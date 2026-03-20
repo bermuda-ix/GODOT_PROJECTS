@@ -152,6 +152,7 @@ func _ready():
 	bt_player.blackboard.set_var("attack_mode", false)
 	bt_player.blackboard.set_var("melee_mode", false)
 	bt_player.blackboard.set_var("atk_counter", false)
+	bt_player.blackboard.set_var("atk_1", true)
 	bt_player.blackboard.set_var("ranged_mode", true)
 	bt_player.blackboard.set_var("within_range", false)
 	bt_player.blackboard.set_var("staggered", false)
@@ -344,12 +345,15 @@ func get_height() -> int:
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	match anim_name:
 		"atk_1":
+			bt_player.blackboard.set_var("atk_2", true)
 			atk_chain="_2"
 			attack_timer.start(0.3)
 		"atk_2":
+			bt_player.blackboard.set_var("atk_3", true)
 			atk_chain="_3"
 			attack_timer.start(0.3)
 		"atk_3":
+			bt_player.blackboard.set_var("atk_1", true)
 			atk_chain="_1"
 			attack_timer.start(0.3)
 		"atk_counter":
