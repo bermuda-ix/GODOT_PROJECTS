@@ -4,13 +4,19 @@ extends Node
 @export var actor : Node2D
 
 func melee_attack():
-	actor.state_machine.change_active_state(actor.attack)
-	#"melee attack")
+	if actor.state_machine.get_active_state()==actor.attack:
+		pass
+	else:
+		actor.state_machine.change_active_state(actor.attack)
+		#"melee attack")
 	actor.animation_player.play("atk"+actor.atk_chain)
-
+	
 func melee_counter():
-	actor.state_machine.change_active_state(actor.attack)
-	#print_debug("counter")
+	if actor.state_machine.get_active_state()==actor.attack:
+		pass
+	else:
+		actor.state_machine.change_active_state(actor.attack)
+		#print_debug("counter")
 	actor.animation_player.play("atk_counter")
 
 #func slam(value: String):

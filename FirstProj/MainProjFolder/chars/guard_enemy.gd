@@ -151,6 +151,7 @@ func _ready():
 	next=nav_agent.get_next_path_position()
 	bt_player.blackboard.set_var("attack_mode", false)
 	bt_player.blackboard.set_var("melee_mode", false)
+	bt_player.blackboard.set_var("atk_counter", false)
 	bt_player.blackboard.set_var("ranged_mode", true)
 	bt_player.blackboard.set_var("within_range", false)
 	bt_player.blackboard.set_var("staggered", false)
@@ -351,6 +352,10 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		"atk_3":
 			atk_chain="_1"
 			attack_timer.start(0.3)
+		"atk_counter":
+			bt_player.blackboard.set_var("atk_counter", false)
+			atk_chain="_1"
+			bt_player.blackboard.set_var("atk_1", true)
 		"dodge":
 			state_machine.dispatch(&"dodge_end")
 
@@ -520,9 +525,9 @@ func _on_launched_entered() -> void:
 		hit_stop.hit_stop(0.2, 0.5)
 		landed.landed_type="landed_recover"
 		if player_right:
-			velocity.x=-350
+			velocity.x=-750
 		else:
-			velocity.x=350
+			velocity.x=750
 			
 		launch.launch_height=launch.launch_height/2
 		animation_player.play("jump_recover")
@@ -576,7 +581,10 @@ func _on_landed_landed() -> void:
 	if counter_flag:
 		atk_chain="_counter"
 		bt_player.blackboard.set_var("atk_counter", true)
-		state_machine.dispatch(&"resume_attack")
+		bt_player.blackboard.set_var("melee_mode", true)
+		bt_player.blackboard.set_var("within_range", true)
+		#state_machine.dispatch(&"resume_attack")
+		melee_attack_manager.melee_counter()
 		counter_flag=false
 	else:
 		state_machine.dispatch(&"resume_attack")
@@ -584,3 +592,10 @@ func _on_landed_landed() -> void:
 func launch_recover() -> void:
 	launch_timer.stop()
 	state_machine.dispatch(&"falling")
+
+
+func _on_animation_player_animation_changed(old_name: StringName, new_name: StringName) -> void:
+	if old_name=="atk_counter":
+		print_debug("w0t")
+	if new_name=="atk_counter":
+		print_debug("starting")
