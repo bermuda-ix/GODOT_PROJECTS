@@ -29,7 +29,13 @@ func attack_lunge() -> void:
 	actor.move_and_slide()
 	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.5)
 
+func attack_jump() -> void:
+	actor.velocity.y=lerpf(actor.velocity.y, 0, 0.5)
+
 func attack_lunge_setup(_lunge_distance := 200.0) -> void:
 	starting = actor.global_position.x
 	#lunge_distance=_lunge_distance
 	actor.velocity.x=_lunge_distance*attack_dir
+
+func attack_jump_setup(_jump_height := 50) -> void:
+	actor.velocity.y=-_jump_height

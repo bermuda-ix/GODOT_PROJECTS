@@ -38,6 +38,11 @@ var/atk_3/type = 1
 var/atk_3/value = false
 var/atk_3/hint = 0
 var/atk_3/hint_string = ""
+var/atk_counter/name = &"atk_counter"
+var/atk_counter/type = 1
+var/atk_counter/value = false
+var/atk_counter/hint = 0
+var/atk_counter/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_2nsp0"]
 type = 1
@@ -134,7 +139,7 @@ resource_name = "AnimationPlayer"
 animation_player = SubResource("BBNode_fopnx")
 animation_name = &"atk_1"
 
-[sub_resource type="BTSelector" id="BTSelector_7tj05"]
+[sub_resource type="BTSequence" id="BTSequence_pquhl"]
 children = [SubResource("BTCheckTrigger_dk6q0"), SubResource("BTAwaitAnimation_2nsp0")]
 
 [sub_resource type="BTCheckTrigger" id="BTCheckTrigger_dy0rb"]
@@ -148,7 +153,7 @@ resource_name = "AnimationPlayer"
 animation_player = SubResource("BBNode_pquhl")
 animation_name = &"atk_2"
 
-[sub_resource type="BTSelector" id="BTSelector_bob2m"]
+[sub_resource type="BTSequence" id="BTSequence_fh6a1"]
 children = [SubResource("BTCheckTrigger_dy0rb"), SubResource("BTAwaitAnimation_fh6a1")]
 
 [sub_resource type="BTCheckTrigger" id="BTCheckTrigger_exfju"]
@@ -162,12 +167,30 @@ resource_name = "AnimationPlayer"
 animation_player = SubResource("BBNode_i45wg")
 animation_name = &"atk_3"
 
-[sub_resource type="BTSelector" id="BTSelector_8sobk"]
+[sub_resource type="BTSequence" id="BTSequence_i45wg"]
 children = [SubResource("BTCheckTrigger_exfju"), SubResource("BTAwaitAnimation_wkd5u")]
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_fopnx"]
+variable = &"atk_counter"
+
+[sub_resource type="BBNode" id="BBNode_2nsp0"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_7tj05"]
+animation_player = SubResource("BBNode_2nsp0")
+animation_name = &"atk_counter"
+
+[sub_resource type="BTSequence" id="BTSequence_dy0rb"]
+children = [SubResource("BTCheckTrigger_fopnx"), SubResource("BTAwaitAnimation_7tj05")]
+
+[sub_resource type="BTSelector" id="BTSelector_wkd5u"]
+custom_name = "AttackType"
+children = [SubResource("BTSequence_pquhl"), SubResource("BTSequence_fh6a1"), SubResource("BTSequence_i45wg"), SubResource("BTSequence_dy0rb")]
 
 [sub_resource type="BTSequence" id="BTSequence_virdo"]
 custom_name = "Attack"
-children = [SubResource("BTCheckVar_wkd5u"), SubResource("BTCallMethod_ru3pv"), SubResource("BTSelector_7tj05"), SubResource("BTSelector_bob2m"), SubResource("BTSelector_8sobk")]
+children = [SubResource("BTCheckVar_wkd5u"), SubResource("BTCallMethod_ru3pv"), SubResource("BTSelector_wkd5u")]
 
 [sub_resource type="BTCooldown" id="BTCooldown_gb5fh"]
 duration = 0.2

@@ -115,6 +115,7 @@ var state
 @export var hitbox: HitBox
 var parried : bool = false 
 var attacking : bool = false
+@onready var counter_flag : bool = false
 
 #Shooting
 @onready var shoot_attack_manager: ShootAttackManager = $ShootAttackManager
@@ -308,7 +309,7 @@ func _physics_process(delta):
 		velocity.x = current_speed + knockback.x
 		velocity.y += gravity * delta
 	else:
-		if state_machine.get_active_state()!=attack:
+		if state_machine.get_active_state()!=attack and state_machine.get_active_state()!=launch:
 			velocity.x= knockback.x
 		
 	#	apply gravity when in air
@@ -468,7 +469,7 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 	if not visible_on_screen_notifier_2d.is_on_screen():
 		if current==attack:
 			push_error("ERROR: State changed")
-	print_debug(current)
+	#print_debug(current)
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	
@@ -515,7 +516,20 @@ func _on_falling_entered() -> void:
 
 
 func _on_launched_entered() -> void:
-	animation_player.play("launched")
+	if stagger.stagger >0:
+		hit_stop.hit_stop(0.2, 0.5)
+		landed.landed_type="landed_recover"
+		if player_right:
+			velocity.x=-350
+		else:
+			velocity.x=350
+			
+		launch.launch_height=launch.launch_height/2
+		animation_player.play("jump_recover")
+		counter_flag=true
+	else:
+		landed.landed_type="landed"
+		animation_player.play("launched")
 	bt_player.blackboard.set_var("launched", true)
 
 
@@ -557,7 +571,16 @@ func _on_falling_updated(delta: float) -> void:
 		#
 		#state_machine.dispatch(&"landed")
 
-
 func _on_landed_landed() -> void:
 	bt_player.blackboard.set_var("falling", false)
-	state_machine.dispatch(&"resume_attack")
+	if counter_flag:
+		atk_chain="_counter"
+		bt_player.blackboard.set_var("atk_counter", true)
+		state_machine.dispatch(&"resume_attack")
+		counter_flag=false
+	else:
+		state_machine.dispatch(&"resume_attack")
+
+func launch_recover() -> void:
+	launch_timer.stop()
+	state_machine.dispatch(&"falling")

@@ -9,6 +9,8 @@ signal clash_knock_back(_knockback : float)
 @export var damage: int = 1 : set = set_damage, get = get_damage
 @export var stagger: Stagger
 @export var stagger_damage : bool = false
+@export var active : bool = false : set = set_active
+
 
 @export var launch : bool = false
 @export var knock_back : bool = false
@@ -17,8 +19,12 @@ signal clash_knock_back(_knockback : float)
 
 @onready var shield_hit : bool = false
 
+
 func _ready():
 	connect("area_entered", _on_parried)
+
+func set_active(_value:bool)->void:
+	active=_value
 
 func set_damage(value: int):
 	damage = value

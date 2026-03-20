@@ -1834,12 +1834,13 @@ func parry_success():
 
 func _on_hit_box_area_entered(_area):
 	#print(hit_buffer.time_left)
-	if hit_buffer.time_left>0:
+	if not hitbox.active:
 		return
 	else:
-		assert(hit_buffer.is_stopped()==true)
-		assert(hit_buffer.time_left<=0)
+		#assert(hit_buffer.is_stopped()==true)
+		#assert(hit_buffer.time_left<=0)
 		hit_buffer.start(1)
+		hitbox.active=false
 		hit_sound=hit1
 		AudioStreamManager.play(hit_sound)
 		#hb_collision.disabled

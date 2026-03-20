@@ -22,6 +22,7 @@ signal knockback(knock_back_strength : float)
 
 @export var shielded : bool = false
 
+
 func _ready():
 	connect("area_entered", _on_area_entered)
 	#connect("area_entered", _on_parried)
@@ -29,40 +30,42 @@ func _ready():
 
 func _on_area_entered(hitbox: HitBox) -> void:
 	
-	
+	if not hitbox.active:
+		return
 		
 	
-	if health.health<=0:
+	elif health.health<=0:
 		return
-	if hitbox != null:
-		#print(hitbox.knock_back)
-		if hitbox.launch:
-			launched.emit(hitbox.launch_strength)
-		if hitbox.knock_back:
-			#print("KNOCKING BACK")
-			knockback.emit(hitbox.knock_back_strength)
-	
-		if hitbox.is_in_group("spc_atk"):
-			weakpoint_hit.emit()
-		if hitbox.stagger_damage:
-			stagger.stagger -= (hitbox.damage * dmg_mult)
-			### Maybe add minimum health damage to stagger attacks?  
-			#print_debug(hitbox.damage, " ",dmg_mult)
-			#received_damage.emit(hitbox.damage)
-			got_hit.emit(hitbox)
-		else:
-			if weakpoint:
-				health.health -= (hitbox.damage * dmg_mult)
+	else:
+		if hitbox != null:
+			#print(hitbox.knock_back)
+			if hitbox.launch:
+				launched.emit(hitbox.launch_strength)
+			if hitbox.knock_back:
+				#print("KNOCKING BACK")
+				knockback.emit(hitbox.knock_back_strength)
+		
+			if hitbox.is_in_group("spc_atk"):
+				weakpoint_hit.emit()
+			if hitbox.stagger_damage:
 				stagger.stagger -= (hitbox.damage * dmg_mult)
+				### Maybe add minimum health damage to stagger attacks?  
 				#print_debug(hitbox.damage, " ",dmg_mult)
-				received_damage.emit(hitbox.damage)
+				#received_damage.emit(hitbox.damage)
 				got_hit.emit(hitbox)
 			else:
-				if not shielded:
+				if weakpoint:
 					health.health -= (hitbox.damage * dmg_mult)
+					stagger.stagger -= (hitbox.damage * dmg_mult)
 					#print_debug(hitbox.damage, " ",dmg_mult)
 					received_damage.emit(hitbox.damage)
 					got_hit.emit(hitbox)
+				else:
+					if not shielded:
+						health.health -= (hitbox.damage * dmg_mult)
+						#print_debug(hitbox.damage, " ",dmg_mult)
+						received_damage.emit(hitbox.damage)
+						got_hit.emit(hitbox)
 
 func _bullet_hit(_rigid_body : RigidBody2D) -> void:
 	var _damage : int 
