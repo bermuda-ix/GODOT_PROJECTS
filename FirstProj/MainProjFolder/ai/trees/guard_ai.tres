@@ -207,13 +207,13 @@ custom_name = "Attack"
 children = [SubResource("BTCheckVar_wkd5u"), SubResource("BTCallMethod_ru3pv"), SubResource("BTSelector_wkd5u")]
 
 [sub_resource type="BTCooldown" id="BTCooldown_gb5fh"]
-duration = 0.2
+duration = 0.01
 start_cooled = true
-children = [SubResource("BTSequence_virdo")]
+_enabled = false
 
 [sub_resource type="BTSelector" id="BTSelector_heplg"]
 custom_name = "attacks"
-children = [SubResource("BTCooldown_gb5fh")]
+children = [SubResource("BTSequence_virdo"), SubResource("BTCooldown_gb5fh")]
 
 [sub_resource type="BTSequence" id="BTSequence_mqn1v"]
 custom_name = "AttackRange"
