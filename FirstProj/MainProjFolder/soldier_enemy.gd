@@ -179,6 +179,7 @@ func _ready():
 	bt_player.blackboard.set_var("counter_attack", false)
 	bt_player.blackboard.set_var("counter_kick_flag", false)
 	bt_player.blackboard.set_var("staggered", false)
+	bt_player.blackboard.set_var("atk_1", true)
 	dying.blackboard.set_var("hit_the_floor", false)
 	#turret.setup(0.2)
 	#boss_ui.activate_boss_ui()
@@ -380,23 +381,50 @@ func get_height() -> int:
 	return collision_shape_2d.get_shape().radius+10
 
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
+	match anim_name:
+		"atk_1":
+			bt_player.blackboard.set_var("atk_2", true)
+			bt_player.active=false
+			attacking=true
+		"atk_2":
+			bt_player.blackboard.set_var("atk_3", true)
+			bt_player.active=false
+			attacking=true
+		"atk_3":
+			bt_player.blackboard.set_var("atk_1", true)
+			bt_player.active=false
+			attacking=true
+		"atk_counter":
+			bt_player.blackboard.set_var("atk_counter", false)
+			atk_chain="_1"
+			bt_player.blackboard.set_var("atk_1", true)
+			bt_player.active=false
+			attacking=true
+			
 	if anim_name=="atk_counter":
 		hit_stop_dur=0.2
 		await animation_player.animation_finished
 	else:
 		hit_stop_dur=0.1
+		
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	match anim_name:
 		"atk_1":
 			atk_chain="_2"
-			attack_timer.start(5)
+			attack_timer.start(0.3)
+			bt_player.active=true
+			attacking=false
 		"atk_2":
 			atk_chain="_3"
 			attack_timer.start(5)
+			bt_player.active=true
+			attacking=false
 		"atk_3":
 			atk_chain="_1"
 			attack_timer.start(5)
+			bt_player.active=true
+			attacking=false
 		"dodge":
 			state_machine.dispatch(&"dodge_end")
 			
