@@ -348,21 +348,45 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			bt_player.blackboard.set_var("atk_2", true)
 			atk_chain="_2"
 			attack_timer.start(0.3)
+			bt_player.active=true
+			attacking=false
 		"atk_2":
 			bt_player.blackboard.set_var("atk_3", true)
 			atk_chain="_3"
 			attack_timer.start(0.3)
+			bt_player.active=true
+			attacking=false
 		"atk_3":
 			bt_player.blackboard.set_var("atk_1", true)
 			atk_chain="_1"
 			attack_timer.start(0.3)
+			bt_player.active=true
+			attacking=false
 		"atk_counter":
 			bt_player.blackboard.set_var("atk_counter", false)
 			atk_chain="_1"
 			bt_player.blackboard.set_var("atk_1", true)
+			bt_player.active=true
+			attacking=false
 		"dodge":
 			state_machine.dispatch(&"dodge_end")
 
+func _on_animation_player_animation_started(anim_name: StringName) -> void:
+	match anim_name:
+		"atk_1":
+			bt_player.active=false
+			attacking=true
+		"atk_2":
+			bt_player.active=false
+			attacking=true
+		"atk_3":
+			bt_player.active=false
+			attacking=true
+		"atk_counter":
+			bt_player.active=false
+			attacking=true
+		"dodge":
+			state_machine.dispatch(&"dodge_end")
 
 
 func set_attack_trigger(_value : String) -> void:
@@ -371,13 +395,17 @@ func set_attack_trigger(_value : String) -> void:
 	bt_player.blackboard.set_var(_chain, true)
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
+	if attacking==true:
+		return
+	elif body.is_in_group("player") and state_machine.get_active_state()!=staggered:
 		bt_player.blackboard.set_var("within_range", true)
 		#set_state(current_state, States.ATTACK)
 		state_machine.dispatch(&"start_attack")
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
-	if body.is_in_group("player") and not animation_player.is_playing() and state_machine.get_active_state()!=staggered:
+	if attacking==true:
+		return
+	elif body.is_in_group("player") and not animation_player.is_playing() and state_machine.get_active_state()!=staggered:
 		bt_player.blackboard.set_var("within_range", false)
 		#set_state(current_state, States.CHASE)
 		state_machine.dispatch(&"start_chase")

@@ -15,6 +15,8 @@ func _physics_process(delta: float) -> void:
 		return
 	elif sm.get_active_state()==actor.staggered or sm.get_active_state()==actor.idle:
 		return
+	elif actor.attacking:
+		return
 	else:
 		actor.distance=abs(actor.global_position.x-actor.player.global_position.x)
 		#print_debug(actor.distance)

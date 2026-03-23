@@ -78,7 +78,10 @@ func handle_vision():
 					sm.dispatch(&"start_attack")
 				else:
 					#actor.set_state(actor.current_state, actor.States.CHASE)
-					sm.dispatch(&"start_chase")
+					if actor.attacking==false:
+						sm.dispatch(&"start_chase")
+					else:
+						return
 			else:
 				pass
 	#player_found = true

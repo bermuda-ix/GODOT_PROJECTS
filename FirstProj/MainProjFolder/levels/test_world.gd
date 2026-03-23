@@ -312,7 +312,7 @@ func boss_death():
 	boss_spawn_level+=1
 	Events.reset_heat.emit()
 
-func _on_pc_attack_qte() -> void:
+func _on_pc_qte() -> void:
 	cutscene_player.queue(qte_options[0])
 
 

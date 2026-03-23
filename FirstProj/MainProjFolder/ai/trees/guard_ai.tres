@@ -43,6 +43,11 @@ var/atk_counter/type = 1
 var/atk_counter/value = false
 var/atk_counter/hint = 0
 var/atk_counter/hint_string = ""
+var/atk_finished/name = &"atk_finished"
+var/atk_finished/type = 1
+var/atk_finished/value = false
+var/atk_finished/hint = 0
+var/atk_finished/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_2nsp0"]
 type = 1
