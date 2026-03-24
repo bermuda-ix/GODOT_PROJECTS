@@ -2092,6 +2092,7 @@ process_material = SubResource("ParticleProcessMaterial_2a376")
 
 [node name="VFXSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=374116599]
 visible = false
+modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 position = Vector2(-9.999999, -16)
 rotation = 1.5707941
 sprite_frames = SubResource("SpriteFrames_ahhik")

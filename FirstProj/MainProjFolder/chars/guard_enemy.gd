@@ -456,10 +456,11 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	if damage<health.health:
 		if state_machine.get_active_state()!=dying or state_machine.get_active_date()!=death:
 			hit_stop.hit_stop(0.05,0.25)
-		parry_timer.start(0.5)
+		parry_timer.start(0.1)
 		state_machine.dispatch(&"hit")
 		gpu_particles_2d.restart()
 		gpu_particles_2d.emitting=true
+		atk_resume_helper()
 		
 	else:
 		
@@ -597,8 +598,53 @@ func _on_hurt_box_body_entered(body: Node2D) -> void:
 			Events.camera_shake.emit(2,20)
 
 
+func _on_hit_entered() -> void:
+	bt_player.blackboard.set_var("hit", true)
 
 func _on_hit_exited() -> void:
+	bt_player.blackboard.set_var("hit", false)
+
+
+func _on_hit_box_clashed() -> void:
+	animation_player.stop()
+	hit_stop.hit_stop(0.05, 0.5)
+	print_debug("clashed!")
+	stagger.stagger-=1
+	atk_resume_helper()
+	
+
+func atk_resume_helper() -> void:
+	match atk_chain:
+		"_1":
+			bt_player.blackboard.set_var("atk_2", true)
+			atk_chain="_2"
+			attack_timer.start(0.3)
+			bt_player.active=true
+			attacking=false
+		"_2":
+			bt_player.blackboard.set_var("atk_3", true)
+			atk_chain="_3"
+			attack_timer.start(0.3)
+			bt_player.active=true
+			attacking=false
+		"_3":
+			bt_player.blackboard.set_var("atk_1", true)
+			atk_chain="_1"
+			attack_timer.start(0.3)
+			bt_player.active=true
+			attacking=false
+		"_counter":
+			bt_player.blackboard.set_var("atk_counter", false)
+			atk_chain="_1"
+			bt_player.blackboard.set_var("atk_1", true)
+			bt_player.active=true
+			attacking=false
+
+func _on_hit_box_clash_knock_back(_knockback: float) -> void:
+	pass # Replace with function body.
+
+
+func _on_hit_box_clash_launch(_launch: float) -> void:
 	pass # Replace with function body.
 
 

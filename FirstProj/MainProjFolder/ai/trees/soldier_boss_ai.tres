@@ -266,20 +266,64 @@ resource_name = "MeleeAttackManager"
 node = SubResource("BBNode_ysbiq")
 method = &"melee_attack"
 
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_6rn7d"]
+variable = &"atk_1"
+
+[sub_resource type="BBNode" id="BBNode_ack5y"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_eyph0"]
+animation_player = SubResource("BBNode_ack5y")
+animation_name = &"atk_1"
+
+[sub_resource type="BTSequence" id="BTSequence_qbeam"]
+children = [SubResource("BTCheckTrigger_6rn7d"), SubResource("BTAwaitAnimation_eyph0")]
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_yapl0"]
+variable = &"atk_2"
+
+[sub_resource type="BBNode" id="BBNode_iyge6"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_6sx6v"]
+animation_player = SubResource("BBNode_iyge6")
+animation_name = &"atk_2"
+
+[sub_resource type="BTSequence" id="BTSequence_s6tab"]
+children = [SubResource("BTCheckTrigger_yapl0"), SubResource("BTAwaitAnimation_6sx6v")]
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_ltw85"]
+variable = &"atk_3"
+
+[sub_resource type="BBNode" id="BBNode_odh0y"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_kowid"]
+animation_player = SubResource("BBNode_odh0y")
+animation_name = &"atk_3"
+
+[sub_resource type="BTSequence" id="BTSequence_71eun"]
+children = [SubResource("BTCheckTrigger_ltw85"), SubResource("BTAwaitAnimation_kowid")]
+
+[sub_resource type="BTSelector" id="BTSelector_sp7fd"]
+custom_name = "AttackType"
+children = [SubResource("BTSequence_qbeam"), SubResource("BTSequence_s6tab"), SubResource("BTSequence_71eun")]
+
 [sub_resource type="BTSequence" id="BTSequence_yfw6d"]
 custom_name = "Attack"
-children = [SubResource("BTCheckVar_aa25s"), SubResource("BTCallMethod_qwr6t")]
+children = [SubResource("BTCheckVar_aa25s"), SubResource("BTCallMethod_qwr6t"), SubResource("BTSelector_sp7fd")]
 
 [sub_resource type="BTCooldown" id="BTCooldown_5mvyu"]
 duration = 0.1
 start_cooled = true
 children = [SubResource("BTSequence_yfw6d")]
 
-[sub_resource type="BTAlwaysSucceed" id="BTAlwaysSucceed_vjri2"]
-
 [sub_resource type="BTSelector" id="BTSelector_qpg7m"]
 custom_name = "attacks"
-children = [SubResource("BTSequence_bltxt"), SubResource("BTSequence_qkysk"), SubResource("BTCooldown_5mvyu"), SubResource("BTAlwaysSucceed_vjri2")]
+children = [SubResource("BTSequence_bltxt"), SubResource("BTSequence_qkysk"), SubResource("BTCooldown_5mvyu")]
 
 [sub_resource type="BTSequence" id="BTSequence_7vhxb"]
 custom_name = "AttackRange"

@@ -73,6 +73,11 @@ var/atk_3/type = 1
 var/atk_3/value = false
 var/atk_3/hint = 0
 var/atk_3/hint_string = ""
+var/hit/name = &"hit"
+var/hit/type = 1
+var/hit/value = false
+var/hit/hint = 0
+var/hit/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_s1wjr"]
 type = 1
@@ -92,6 +97,19 @@ resource_name = "false"
 [sub_resource type="BTCheckVar" id="BTCheckVar_qpg7m"]
 variable = &"staggered"
 value = SubResource("BBVariant_cj7pg")
+
+[sub_resource type="BBVariant" id="BBVariant_j4731"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_myvia"]
+variable = &"hit"
+value = SubResource("BBVariant_j4731")
+
+[sub_resource type="BTSequence" id="BTSequence_tv5vl"]
+custom_name = "Hit"
+children = [SubResource("BTCheckVar_myvia")]
 
 [sub_resource type="BBVariant" id="BBVariant_kadvv"]
 type = 1
@@ -484,7 +502,7 @@ custom_name = "ShootingStance"
 children = [SubResource("BTSequence_pb4ri"), SubResource("BTSequence_4yj4i")]
 
 [sub_resource type="BTSelector" id="BTSelector_ct688"]
-children = [SubResource("BTSequence_myvia"), SubResource("BTSequence_p7kfe"), SubResource("BTSequence_c1urr"), SubResource("BTSelector_sfx0f")]
+children = [SubResource("BTSequence_tv5vl"), SubResource("BTSequence_myvia"), SubResource("BTSequence_p7kfe"), SubResource("BTSequence_c1urr"), SubResource("BTSelector_sfx0f")]
 
 [sub_resource type="BTSequence" id="BTSequence_vjri2"]
 children = [SubResource("BTCheckVar_qpg7m"), SubResource("BTSelector_ct688")]
