@@ -1037,7 +1037,7 @@ tracks/3/path = NodePath("HitBox/hb_collision:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.666667, 0.766667),
+"times": PackedFloat32Array(0, 0.2, 0.666667, 0.766667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [true, false, false, true]
@@ -1147,10 +1147,10 @@ tracks/12/path = NodePath("HitBox:collision_mask")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.36666667, 0.62333333, 0.67333335),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2053913, 0.46666667, 0.62333333, 0.67333335),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [128, 192, 192, 128]
+"values": [128, 64, 192, 192, 128]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
@@ -1235,7 +1235,7 @@ tracks/3/path = NodePath("HitBox/hb_collision:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.566667, 0.666667),
+"times": PackedFloat32Array(0, 0.2, 0.566667, 0.666667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [true, false, false, true]
@@ -1357,10 +1357,10 @@ tracks/13/path = NodePath("HitBox:collision_mask")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.65666664, 0.7066667),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.19984019, 0.4, 0.65666664, 0.7066667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [128, 192, 192, 128]
+"values": [128, 64, 192, 192, 128]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
