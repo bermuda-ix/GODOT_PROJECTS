@@ -3100,7 +3100,6 @@ process_material = SubResource("ParticleProcessMaterial_j0qvy")
 
 [node name="VFXSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D" index="1" unique_id=1667218364]
 visible = false
-modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 material = SubResource("ShaderMaterial_y174x")
 instance_shader_parameters/FloatParameter = 0.002000000095
 instance_shader_parameters/GlowColor = Color(0.6439188, 0, 1.1190649, 1)
