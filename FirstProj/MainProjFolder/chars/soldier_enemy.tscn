@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_ojqla"]
 [ext_resource type="Script" uid="uid://df5enosil1r6q" path="res://soldier_enemy.gd" id="2_bmgxt"]
 [ext_resource type="Texture2D" uid="uid://cfqevgd8avemg" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Punch01/Punch0101.png" id="2_ygtfh"]
+[ext_resource type="Shader" uid="uid://d1ksiplmprxb6" path="res://chars/outline_static_v2.gdshader" id="3_eqop3"]
 [ext_resource type="Texture2D" uid="uid://dv4j3mqle1vq3" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Punch01/Punch0102.png" id="3_sgwjc"]
 [ext_resource type="Texture2D" uid="uid://c6kovqjcnxlly" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Jump/Jump01.png" id="3_td4vm"]
 [ext_resource type="Texture2D" uid="uid://dmnnugtpjbxn4" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Punch01/Punch0103.png" id="4_3n4em"]
@@ -188,6 +189,12 @@
 [ext_resource type="Texture2D" uid="uid://dlfj8ycunyumx" path="res://Art_Components/Effects/Spritesheets/Gravity-Sheet.png" id="136_swwb7"]
 [ext_resource type="Script" uid="uid://dly3pw0jr2gav" path="res://chars/falling.gd" id="143_51rru"]
 [ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="144_37wjj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5wlso"]
+shader = ExtResource("3_eqop3")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/neighbor_pixels = 2
+shader_parameter/center_distance_cap = 2
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p1s76"]
 animations = [{
@@ -3327,6 +3334,7 @@ debug_enabled = true
 [node name="AnimatedSprite2D" parent="." index="1"]
 modulate = Color(0.454524, 0.454524, 0.454524, 1)
 self_modulate = Color(0.521141, 0.521141, 0.521141, 1)
+material = SubResource("ShaderMaterial_5wlso")
 sprite_frames = SubResource("SpriteFrames_p1s76")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D" index="0" unique_id=10149476]
@@ -3421,6 +3429,7 @@ health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0" unique_id=904485034]
+visible = false
 shape = SubResource("RectangleShape2D_xhp7j")
 debug_color = Color(0.913049, 0.224478, 0.48102, 0.42)
 
@@ -3428,6 +3437,7 @@ debug_color = Color(0.913049, 0.224478, 0.48102, 0.42)
 stagger = NodePath("../Stagger")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0" unique_id=192844547]
+visible = false
 position = Vector2(-14, -7)
 shape = SubResource("RectangleShape2D_vjgnw")
 disabled = true
@@ -3437,6 +3447,7 @@ collision_layer = 1024
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" index="0" unique_id=657462260]
+visible = false
 position = Vector2(0, -13.5)
 shape = SubResource("RectangleShape2D_0c6of")
 
@@ -3444,6 +3455,7 @@ shape = SubResource("RectangleShape2D_0c6of")
 position = Vector2(-11, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection" index="0" unique_id=1194467557]
+visible = false
 position = Vector2(-6, 0)
 shape = SubResource("CircleShape2D_4yjj7")
 

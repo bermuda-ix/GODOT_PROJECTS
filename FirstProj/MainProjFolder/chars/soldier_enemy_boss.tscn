@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cyceakrgrsniu" path="res://chars/base_enemy.tscn" id="1_33sos"]
 [ext_resource type="Script" uid="uid://b75sbyquxa1gj" path="res://chars/soldier_boss.gd" id="2_87q8v"]
-[ext_resource type="Shader" uid="uid://38ktkg87cgya" path="res://Art_Components/Effects/CustomRes/outline_effect_static.gdshader" id="3_8fc12"]
+[ext_resource type="Shader" uid="uid://d1ksiplmprxb6" path="res://chars/outline_static_v2.gdshader" id="3_2r4bp"]
 [ext_resource type="Texture2D" uid="uid://c6kovqjcnxlly" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Jump/Jump01.png" id="3_sqn71"]
 [ext_resource type="Texture2D" uid="uid://bcow13fj0p561" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Jump/Jump02.png" id="4_4m1ae"]
 [ext_resource type="Texture2D" uid="uid://bvivyxbuv2agx" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Jump/Jump03.png" id="5_7r4t8"]
@@ -196,7 +196,10 @@
 [ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="150_87q8v"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_chkyp"]
-shader = ExtResource("3_8fc12")
+shader = ExtResource("3_2r4bp")
+shader_parameter/color = Color(1, 0.30980393, 0, 1)
+shader_parameter/neighbor_pixels = 2
+shader_parameter/center_distance_cap = 2
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p1s76"]
 animations = [{

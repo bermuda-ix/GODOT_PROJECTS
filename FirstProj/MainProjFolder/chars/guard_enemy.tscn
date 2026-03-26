@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://woaeddeaesia" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle02.png" id="2_kbb6k"]
 [ext_resource type="Texture2D" uid="uid://cfqevgd8avemg" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Punch01/Punch0101.png" id="2_ms5j4"]
 [ext_resource type="PackedScene" uid="uid://cdeu1v1a1bwmd" path="res://Component/interactables/heart_drop.tscn" id="2_tqjrv"]
+[ext_resource type="Shader" uid="uid://d1ksiplmprxb6" path="res://chars/outline_static_v2.gdshader" id="3_4sxct"]
 [ext_resource type="Texture2D" uid="uid://bsrw6gsqslsy1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle03.png" id="3_34xo2"]
 [ext_resource type="Texture2D" uid="uid://dv4j3mqle1vq3" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Punch01/Punch0102.png" id="3_xicrs"]
 [ext_resource type="Texture2D" uid="uid://c2eu0v2wn2wt4" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle04.png" id="4_8kxdo"]
@@ -131,6 +132,12 @@
 [ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="100_jseaa"]
 [ext_resource type="Script" uid="uid://dly3pw0jr2gav" path="res://chars/falling.gd" id="109_w7cvb"]
 [ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="110_gxq5f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7w5gj"]
+shader = ExtResource("3_4sxct")
+shader_parameter/color = Color(1, 0, 0, 1)
+shader_parameter/neighbor_pixels = 2
+shader_parameter/center_distance_cap = 2
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ngkqw"]
 animations = [{
@@ -2248,13 +2255,12 @@ size = Vector2(48, 68.5)
 [node name="GuardEnemy" type="CharacterBody2D" unique_id=2034909694 node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant", "offensive_enemy"]]
 collision_layer = 16384
 script = ExtResource("1_4q725")
-jump_speed = null
-chase_speed = null
 hitbox = NodePath("HitBox")
 drop = ExtResource("2_tqjrv")
 death_time_scale = 0.05
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1549901189]
+material = SubResource("ShaderMaterial_7w5gj")
 position = Vector2(0, -22)
 sprite_frames = SubResource("SpriteFrames_ngkqw")
 flip_h = true
