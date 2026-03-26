@@ -430,6 +430,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			
 
 
+
 func _on_attack_range_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
 		bt_player.blackboard.set_var("within_range", true)

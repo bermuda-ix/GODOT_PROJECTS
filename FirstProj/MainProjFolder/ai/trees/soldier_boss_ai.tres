@@ -308,9 +308,23 @@ animation_name = &"atk_3"
 [sub_resource type="BTSequence" id="BTSequence_71eun"]
 children = [SubResource("BTCheckTrigger_ltw85"), SubResource("BTAwaitAnimation_kowid")]
 
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_ack5y"]
+variable = &"atk_4"
+
+[sub_resource type="BBNode" id="BBNode_eyph0"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_qbeam"]
+animation_player = SubResource("BBNode_eyph0")
+animation_name = &"atk_4"
+
+[sub_resource type="BTSequence" id="BTSequence_iyge6"]
+children = [SubResource("BTCheckTrigger_ack5y"), SubResource("BTAwaitAnimation_qbeam")]
+
 [sub_resource type="BTSelector" id="BTSelector_sp7fd"]
 custom_name = "AttackType"
-children = [SubResource("BTSequence_qbeam"), SubResource("BTSequence_s6tab"), SubResource("BTSequence_71eun")]
+children = [SubResource("BTSequence_qbeam"), SubResource("BTSequence_s6tab"), SubResource("BTSequence_71eun"), SubResource("BTSequence_iyge6")]
 
 [sub_resource type="BTSequence" id="BTSequence_yfw6d"]
 custom_name = "Attack"
