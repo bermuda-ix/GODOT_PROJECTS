@@ -605,6 +605,7 @@ func _on_attack_entered() -> void:
 
 func _on_hit_box_area_entered(_area: Area2D) -> void:
 	hit_stop.hit_stop(0.05,0.1)
+	hit_box.active=false
 
 
 func _on_hit_box_parried() -> void:
