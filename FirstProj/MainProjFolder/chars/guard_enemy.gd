@@ -340,23 +340,22 @@ func get_width() -> int:
 func get_height() -> int:
 	return collision_shape_2d.get_shape().radius+10
 
-func atk_resume_helper() -> void:
-	var _atk_type = melee_attack_manager.get_combo().substr(4, -1)
-	if _atk_type=="_counter":
-		bt_player.blackboard.set_var("atk_counter", false)
-		melee_attack_manager.reset_combo()
-		bt_player.blackboard.set_var(melee_attack_manager.get_combo(), true)
-	else:
-		melee_attack_manager.next_combo()
-		bt_player.blackboard.set_var(melee_attack_manager.get_combo(), true)
-			
-	attack_timer.start(0.3)
-	bt_player.active=true
-	attacking=false
+#func atk_resume_helper() -> void:
+	#var _atk_type = melee_attack_manager.get_combo().substr(4, -1)
+	#if _atk_type=="_counter":
+		#bt_player.blackboard.set_var("atk_counter", false)
+		#melee_attack_manager.reset_combo()
+		#bt_player.blackboard.set_var(melee_attack_manager.get_combo(), true)
+	#else:
+		#melee_attack_manager.next_combo()
+		#bt_player.blackboard.set_var(melee_attack_manager.get_combo(), true)
+			#
+	#attack_timer.start(0.3)
+	#bt_player.active=true
+	#attacking=false
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	
-	print_debug(anim_name.substr(0, 3))
 	if anim_name.substr(0, 3)=="atk":
 		if anim_name=="atk_counter":
 			bt_player.blackboard.set_var("atk_counter", false)
@@ -477,7 +476,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		state_machine.dispatch(&"hit")
 		gpu_particles_2d.restart()
 		gpu_particles_2d.emitting=true
-		atk_resume_helper()
+		melee_attack_manager.atk_resume_helper()
 		
 	else:
 		
@@ -627,7 +626,7 @@ func _on_hit_box_clashed() -> void:
 	hit_stop.hit_stop(0.05, 0.5)
 	print_debug("clashed!")
 	stagger.stagger-=1
-	atk_resume_helper()
+	melee_attack_manager.atk_resume_helper()
 	
 
 

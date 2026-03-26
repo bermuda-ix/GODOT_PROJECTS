@@ -2248,6 +2248,8 @@ size = Vector2(48, 68.5)
 [node name="GuardEnemy" type="CharacterBody2D" unique_id=2034909694 node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant", "offensive_enemy"]]
 collision_layer = 16384
 script = ExtResource("1_4q725")
+jump_speed = null
+chase_speed = null
 hitbox = NodePath("HitBox")
 drop = ExtResource("2_tqjrv")
 death_time_scale = 0.05

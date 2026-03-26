@@ -40,6 +40,20 @@ func reset_combo() -> void:
 func set_attack(_value : String) -> void:
 	atk_type+_value
 
+func atk_resume_helper() -> void:
+	var _atk_type = get_combo().substr(4, -1)
+	if _atk_type=="_counter":
+		actor.bt_player.blackboard.set_var("atk_counter", false)
+		reset_combo()
+		actor.bt_player.blackboard.set_var(get_combo(), true)
+	else:
+		next_combo()
+		actor.bt_player.blackboard.set_var(get_combo(), true)
+			
+	actor.attack_timer.start(0.3)
+	actor.bt_player.active=true
+	actor.attacking=false
+
 #func slam(value: String):
 	##pass
 	#var slam_type=value.capitalize()
