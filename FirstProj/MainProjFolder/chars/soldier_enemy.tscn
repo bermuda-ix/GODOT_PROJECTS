@@ -3534,6 +3534,7 @@ metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 [node name="MeleeAttackManager" type="Node" parent="." index="37" unique_id=261027490 node_paths=PackedStringArray("actor")]
 script = ExtResource("86_j1fbf")
 actor = NodePath("..")
+combo_max = 4
 metadata/_custom_type_script = "uid://ddhk64y60klpg"
 
 [node name="ShootAttackManager" type="Node" parent="." index="38" unique_id=800866985 node_paths=PackedStringArray("actor", "animation_player", "turret")]

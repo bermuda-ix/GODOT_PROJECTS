@@ -78,6 +78,11 @@ var/hit/type = 1
 var/hit/value = false
 var/hit/hint = 0
 var/hit/hint_string = ""
+var/atk_4/name = &"atk_4"
+var/atk_4/type = 1
+var/atk_4/value = false
+var/atk_4/hint = 0
+var/atk_4/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_s1wjr"]
 type = 1
@@ -388,9 +393,23 @@ animation_name = &"atk_3"
 [sub_resource type="BTSequence" id="BTSequence_sfx0f"]
 children = [SubResource("BTCheckTrigger_77dq3"), SubResource("BTAwaitAnimation_4yj4i")]
 
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_cj7pg"]
+variable = &"atk_4"
+
+[sub_resource type="BBNode" id="BBNode_p7kfe"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_pb4ri"]
+animation_player = SubResource("BBNode_p7kfe")
+animation_name = &"atk_4"
+
+[sub_resource type="BTSequence" id="BTSequence_nmhtu"]
+children = [SubResource("BTCheckTrigger_cj7pg"), SubResource("BTAwaitAnimation_pb4ri")]
+
 [sub_resource type="BTSelector" id="BTSelector_p2s1w"]
 custom_name = "AttackType"
-children = [SubResource("BTSequence_cle5d"), SubResource("BTSequence_1tbiw"), SubResource("BTSequence_sfx0f")]
+children = [SubResource("BTSequence_cle5d"), SubResource("BTSequence_1tbiw"), SubResource("BTSequence_sfx0f"), SubResource("BTSequence_nmhtu")]
 
 [sub_resource type="BTSequence" id="BTSequence_yfw6d"]
 custom_name = "Attack"
