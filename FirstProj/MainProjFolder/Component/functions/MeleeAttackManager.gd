@@ -42,6 +42,7 @@ func set_attack(_value : String) -> void:
 
 func atk_resume_helper() -> void:
 	var _atk_type = get_combo().substr(4, -1)
+	print_debug(_atk_type)
 	if _atk_type=="_counter":
 		actor.bt_player.blackboard.set_var("atk_counter", false)
 		reset_combo()

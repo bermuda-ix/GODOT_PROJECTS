@@ -311,7 +311,10 @@ func _physics_process(delta):
 		hb_collision.disabled=true
 		return
 	#melee_range_failsafe()
-	#counter_attack()
+	if state_machine.get_active_state()!=launch:
+		if is_on_floor():
+			bt_player.blackboard.set_var("launched", false)
+			bt_player.blackboard.set_var("falling", false)
 	# Add the gravity.
 	if not is_on_floor():
 		if state_machine.get_active_state()==death:
@@ -405,6 +408,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		attacking=false
 	elif anim_name=="dodge":
 		state_machine.dispatch(&"dodge_end")
+		bt_player.active=true
 			
 
 
@@ -447,7 +451,7 @@ func _on_stagger_staggered() -> void:
 	#bt_player.blackboard.set_var("staggered", true)
 	bt_player.restart()
 	parry_timer.start(3)
-	
+	melee_attack_manager.reset_combo()
 	hb_collision.disabled=true
 	if state_machine.get_active_state()!=launch:
 		state_machine.dispatch(&"staggered")
@@ -517,7 +521,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		#set_state(current_state, States.HIT)
 		gpu_particles_2d.emitting=true
 		melee_attack_manager.atk_resume_helper()
-		
+		bt_player.active=true
 	else:
 		print_debug("kill shot")
 		
@@ -557,7 +561,10 @@ func _on_attack_timer_timeout() -> void:
 		state_machine.dispatch(&"start_attack")
 	else:
 		#set_state(current_state, States.CHASE)
-		state_machine.dispatch(&"start_chase")
+		if attacking:
+			return
+		else:
+			state_machine.dispatch(&"start_chase")
 
 
 func _on_turret_shoot_bullet() -> void:
@@ -594,6 +601,8 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	print_debug(current)
+	if current==chasing:
+		print_debug("chasing")
 	if current==launch:
 		print_debug("start here")
 	if current==jump:
@@ -607,6 +616,25 @@ func _on_hit_box_area_entered(_area: Area2D) -> void:
 	hit_stop.hit_stop(0.05,0.1)
 	hit_box.active=false
 
+func _on_hit_box_clashed() -> void:
+	animation_player.stop()
+	hit_box.active=false
+	hit_stop.hit_stop(0.05, 0.5)
+	print_debug("clashed!")
+	stagger.stagger-=1
+	melee_attack_manager.atk_resume_helper()
+	if player_right:
+		knockback.x=-100
+	else:
+		knockback.x=100
+
+
+func _on_hit_box_clash_launch(_launch: float) -> void:
+	pass # Replace with function body.
+
+
+func _on_hit_box_clash_knock_back(_knockback: float) -> void:
+	pass # Replace with function body.
 
 func _on_hit_box_parried() -> void:
 	parried=true

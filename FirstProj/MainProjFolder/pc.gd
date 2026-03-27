@@ -509,10 +509,6 @@ func _init_attack_states():
 	attack_state.add_transition(attack_state.ANYSTATE, attack_1, &"reset_combo")
 
 func _process(_delta):
-	############################################################################
-	#Until I can figure out why health doesn't update on bullet htis this STAYS#
-	############################################################################
-
 	
 	#if anim_player.is_playing():
 		#print_debug("animation playing")
@@ -1597,7 +1593,7 @@ func _on_hurt_box_got_hit(_hitbox):
 			hurt_box_detect.call_deferred("set_disabled", true)
 			hit_timer.start(0.2)
 			stagger.stagger-=1
-			if state_machine.get_previous_active_state()!=flip_state:
+			if state_machine.get_previous_active_state()!=flip_state and state_machine.get_previous_active_state()!=attack_state:
 				#if parry_success_state.get_previous_active_state()==heavy_riposte:
 					#if target_right:
 						#knockback.x=400
@@ -2433,6 +2429,8 @@ func _on_hurt_box_knockback(knock_back_strength: float) -> void:
 
 func _on_hit_box_clashed() -> void:
 	clash_power.increase_clash()
+	hit_box.active=false
+	
 
 
 func _on_animation_player_animation_changed(old_name: StringName, new_name: StringName) -> void:

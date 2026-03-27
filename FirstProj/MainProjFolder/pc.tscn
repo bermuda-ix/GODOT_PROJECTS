@@ -1620,7 +1620,7 @@ tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.266667, 0.4),
+"times": PackedFloat32Array(0, 0.099999994, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [true, false, true]
@@ -1763,6 +1763,18 @@ tracks/11/keys = {
 "args": [true],
 "method": &"set_active"
 }]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.26827586, 0.40133205),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [268435721, 268435737, 268435721]
 }
 
 [sub_resource type="Animation" id="Animation_vtlvl"]
@@ -1908,6 +1920,18 @@ tracks/10/keys = {
 "method": &"set_active"
 }]
 }
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.40133205),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [268435721, 268435737, 268435721]
+}
 
 [sub_resource type="Animation" id="Animation_222nm"]
 resource_name = "Attack_3"
@@ -2039,6 +2063,18 @@ tracks/9/keys = {
 "args": [true],
 "method": &"set_active"
 }]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.40133205),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [268435721, 268435737, 268435721]
 }
 
 [sub_resource type="Animation" id="Animation_euoq7"]
@@ -2267,6 +2303,18 @@ tracks/8/keys = {
 "method": &"set_active"
 }]
 }
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.099999994, 0.40133205),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [268435721, 268435737, 268435721]
+}
 
 [sub_resource type="Animation" id="Animation_yuc35"]
 resource_name = "Attack_Dash"
@@ -2397,6 +2445,18 @@ tracks/9/keys = {
 "args": [true],
 "method": &"set_active"
 }]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [268435721, 268435737, 268435721]
 }
 
 [sub_resource type="Animation" id="Animation_704ig"]
@@ -2888,7 +2948,7 @@ tracks/2/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.5, 0.5333333),
+"times": PackedFloat32Array(0, 0.06666667, 0.5, 0.5333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [true, false, false, true]
@@ -3069,6 +3129,18 @@ tracks/16/keys = {
 "method": &"set_active"
 }]
 }
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.53333336),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [268435721, 268435737, 268435721]
+}
 
 [sub_resource type="Animation" id="Animation_cdmbu"]
 resource_name = "Heavy_Combo_2"
@@ -3080,7 +3152,7 @@ tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.53333336),
+"times": PackedFloat32Array(0, 0.06666668, 0.53333336),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -3317,6 +3389,18 @@ tracks/19/keys = {
 "method": &"set_active"
 }]
 }
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.53333336),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [268435721, 268435737, 268435721]
+}
 
 [sub_resource type="Animation" id="Animation_83noc"]
 resource_name = "Heavy_Counter"
@@ -3329,7 +3413,7 @@ tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.33333334),
+"times": PackedFloat32Array(0, 0.083333336, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -3503,6 +3587,18 @@ tracks/14/keys = {
 "args": [true],
 "method": &"set_active"
 }]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [268435721, 268435737, 268435721]
 }
 
 [sub_resource type="Animation" id="Animation_kd7ms"]
@@ -4643,6 +4739,18 @@ tracks/57/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [SubResource("RectangleShape2D_0g83a")]
+}
+tracks/58/type = "value"
+tracks/58/imported = false
+tracks/58/enabled = true
+tracks/58/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
+tracks/58/interp = 1
+tracks/58/loop_wrap = true
+tracks/58/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [268435737]
 }
 
 [sub_resource type="Animation" id="Animation_oktus"]
@@ -7596,6 +7704,7 @@ floor_stop_on_slope = false
 floor_constant_speed = true
 floor_max_angle = 0.872665
 floor_snap_length = 2.0
+safe_margin = 0.1
 script = ExtResource("1_x210m")
 movement_data = ExtResource("2_4grev")
 health = NodePath("Health")

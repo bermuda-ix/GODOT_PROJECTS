@@ -77,13 +77,7 @@ func _bullet_hit(_rigid_body : RigidBody2D) -> void:
 		return
 
 	_rigid_body.hard_impact()
-	
-	#if bullet_hit_buffer.is_stopped():
-		#bullet_hit_buffer.start()
-		#total_damage+=_damage
-	#else:
-		#total_damage+=_damage
-		#bullet_hit_buffer.start()
+
 	
 	if stagger.stagger>0:
 		stagger.stagger-=1
@@ -96,8 +90,6 @@ func _bullet_hit(_rigid_body : RigidBody2D) -> void:
 		received_damage.emit(_damage)
 	_rigid_body.impact()
 		
-		
-
 
 
 func set_damage_mulitplyer(value:int):
@@ -105,21 +97,3 @@ func set_damage_mulitplyer(value:int):
 
 func get_damage_mulitplyer() -> int:
 	return dmg_mult
-
-#
-#func _on_bullet_hit_buffer_timeout() -> void:
-	#if total_damage>=stagger.stagger:
-		#var _damage_left=total_damage-stagger.stagger
-		#stagger.stagger=0
-		#health.health-=_damage_left
-		#received_damage.emit(_damage_left)
-		#print_debug("health left", health.health)
-		#print_debug(total_damage)
-	#elif total_damage<stagger.stagger:
-		#stagger.stagger-=total_damage
-		#print_debug(total_damage)
-	#else:
-		#health.health-=total_damage
-		#received_damage.emit(total_damage)
-		#print_debug(total_damage)
-	#total_damage=0

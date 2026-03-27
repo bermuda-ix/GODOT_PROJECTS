@@ -3169,8 +3169,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3lv2e"]
-radius = 8.0
-height = 38.0
+radius = 13.0
+height = 44.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xhp7j"]
 size = Vector2(32, 42)
@@ -3238,7 +3238,7 @@ instance_shader_parameters/MaskColor = Color(0.42040226, 0.14544845, 0.3025623, 
 position = Vector2(-1.0000038, 22.999996)
 rotation = 1.1582785
 sprite_frames = SubResource("SpriteFrames_bpr6j")
-animation = &"teleport"
+animation = &"atk"
 flip_h = true
 flip_v = true
 
@@ -3253,7 +3253,7 @@ libraries/flashback_lvl_cutscenes = SubResource("AnimationLibrary_5sek5")
 libraries/ = SubResource("AnimationLibrary_t6q84")
 
 [node name="CollisionShape2D" parent="." index="4"]
-visible = false
+position = Vector2(-1, -3)
 shape = SubResource("CapsuleShape2D_3lv2e")
 
 [node name="WallChecks" parent="." index="5"]

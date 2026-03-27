@@ -661,7 +661,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			#set_state(current_state, States.HIT)
 			gpu_particles_2d.emitting=true
 			melee_attack_manager.atk_resume_helper()
-			
+			bt_player.active=true
 		else:
 			print_debug("kill shot")
 		

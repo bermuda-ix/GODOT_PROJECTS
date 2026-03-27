@@ -185,6 +185,7 @@ children = [SubResource("BTComment_j4731"), SubResource("BTComment_myvia")]
 
 [sub_resource type="BTSequence" id="BTSequence_x777n"]
 children = [SubResource("BTCheckVar_kadvv"), SubResource("BTSelector_k3jx5")]
+_enabled = false
 
 [sub_resource type="BTCheckTrigger" id="BTCheckTrigger_wr2jt"]
 variable = &"counter_kick_flag"
@@ -403,6 +404,7 @@ resource_name = "AnimationPlayer"
 [sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_pb4ri"]
 animation_player = SubResource("BBNode_p7kfe")
 animation_name = &"atk_4"
+max_time = 4.0
 
 [sub_resource type="BTSequence" id="BTSequence_nmhtu"]
 children = [SubResource("BTCheckTrigger_cj7pg"), SubResource("BTAwaitAnimation_pb4ri")]

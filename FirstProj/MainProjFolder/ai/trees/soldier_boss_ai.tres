@@ -22,6 +22,19 @@ resource_name = "false"
 variable = &"staggered"
 value = SubResource("BBVariant_cj7pg")
 
+[sub_resource type="BBVariant" id="BBVariant_qbeam"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_yapl0"]
+variable = &"hit"
+value = SubResource("BBVariant_qbeam")
+
+[sub_resource type="BTSequence" id="BTSequence_ltw85"]
+custom_name = "Hit"
+children = [SubResource("BTCheckVar_yapl0")]
+
 [sub_resource type="BBVariant" id="BBVariant_eyph0"]
 type = 1
 saved_value = true
@@ -460,7 +473,7 @@ custom_name = "ShootingStance"
 children = [SubResource("BTSequence_pb4ri"), SubResource("BTSequence_4yj4i")]
 
 [sub_resource type="BTSelector" id="BTSelector_ct688"]
-children = [SubResource("BTSequence_yapl0"), SubResource("BTSequence_gnp2y"), SubResource("BTSequence_c1urr"), SubResource("BTSelector_sfx0f")]
+children = [SubResource("BTSequence_ltw85"), SubResource("BTSequence_yapl0"), SubResource("BTSequence_gnp2y"), SubResource("BTSequence_c1urr"), SubResource("BTSelector_sfx0f")]
 
 [sub_resource type="BTSequence" id="BTSequence_vjri2"]
 children = [SubResource("BTCheckVar_qpg7m"), SubResource("BTSelector_ct688")]

@@ -4,4 +4,4 @@ extends LimboState
 @export var pc : PlayerEntity
 
 func _enter() -> void:
-	pc.anim_player.play(pc.walk_anim)
+	pc.anim_player.play(pc.walk_anim.to_lower())
