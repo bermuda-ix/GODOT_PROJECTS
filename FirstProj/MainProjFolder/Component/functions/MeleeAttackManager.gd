@@ -13,7 +13,8 @@ func melee_attack():
 	else:
 		actor.state_machine.change_active_state(actor.attack)
 		#"melee attack")
-	actor.animation_player.play(combo)
+	if not actor.attacking:
+		actor.animation_player.play(combo)
 	
 func melee_counter():
 	if actor.state_machine.get_active_state()==actor.attack:

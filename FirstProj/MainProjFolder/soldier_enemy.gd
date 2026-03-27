@@ -385,6 +385,7 @@ func get_height() -> int:
 
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	if anim_name.substr(0, 3)=="atk":
+		hit_box.active=true
 		if anim_name=="atk_counter":
 			hit_stop_dur=0.2
 		else:
@@ -505,6 +506,7 @@ func alerted() -> void :
 		state_machine.dispatch(&"start_chase")
 
 func _on_hurt_box_received_damage(damage: int) -> void:
+	
 	if clash_mult>1:
 		stagger.stagger-=(clash_mult-1)
 	if player.state_machine.get_active_state()==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
@@ -525,16 +527,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	else:
 		print_debug("kill shot")
 		
-	
-	#if current_state != States.DEATH:
-		#animation_player.play("RESET")
-	#
-	#if current_state==States.STAGGERED:
-		#"big damage")
-		#
-		##health.health-=2
-	#else:
-		#"not big damage")
+
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
@@ -613,6 +606,7 @@ func _on_attack_entered() -> void:
 	bt_player.blackboard.set_var("attack_mode", true)
 
 func _on_hit_box_area_entered(_area: Area2D) -> void:
+	print_debug(_area)
 	hit_stop.hit_stop(0.05,0.1)
 	hit_box.active=false
 

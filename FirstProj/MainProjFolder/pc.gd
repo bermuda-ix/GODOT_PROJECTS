@@ -1829,12 +1829,11 @@ func parry_success():
 
 
 func _on_hit_box_area_entered(_area):
-	#print(hit_buffer.time_left)
 	if not hitbox.active:
 		return
 	else:
-		#assert(hit_buffer.is_stopped()==true)
-		#assert(hit_buffer.time_left<=0)
+		print_debug(hit_box)
+		print_debug(hurt_box)
 		hit_buffer.start(1)
 		hitbox.active=false
 		hit_sound=hit1

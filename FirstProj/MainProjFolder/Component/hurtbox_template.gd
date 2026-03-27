@@ -29,7 +29,6 @@ func _ready():
 	connect("body_entered", _bullet_hit)
 
 func _on_area_entered(hitbox: HitBox) -> void:
-	
 	if not hitbox.active:
 		return
 		
@@ -37,6 +36,7 @@ func _on_area_entered(hitbox: HitBox) -> void:
 	elif health.health<=0:
 		return
 	else:
+		hitbox.active=false
 		if hitbox != null:
 			#print(hitbox.knock_back)
 			if hitbox.launch:
