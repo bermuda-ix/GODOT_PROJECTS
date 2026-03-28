@@ -3430,7 +3430,7 @@ height = 46.0
 size = Vector2(32, 42)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgnw"]
-size = Vector2(16, 12)
+size = Vector2(32, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0c6of"]
 size = Vector2(45, 59)
@@ -3525,6 +3525,7 @@ immortality = false
 one_shot = true
 
 [node name="StaggerTimer" type="Timer" parent="." index="16" unique_id=1638559460]
+wait_time = 5.0
 one_shot = true
 
 [node name="ClashPower" type="Node" parent="." index="17" unique_id=499779485]

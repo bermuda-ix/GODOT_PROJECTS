@@ -516,3 +516,4 @@ shape = SubResource("RectangleShape2D_fof0c")
 environment = SubResource("Environment_0atxr")
 
 [editable path="CameraPos"]
+[editable path="PC"]

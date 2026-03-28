@@ -448,12 +448,13 @@ func _on_navigation_timer_timeout() -> void:
 
 
 func _on_stagger_staggered() -> void:
-	#set_state(current_state, States.STAGGERED)
-	#bt_player.blackboard.set_var("staggered", true)
+	bt_player.blackboard.set_var("staggered", true)
 	bt_player.restart()
 	parry_timer.start(3)
 	melee_attack_manager.reset_combo()
-	hb_collision.disabled=true
+	hb_collision.set_deferred("disabled", true)
+	hurt_box_collision.set_deferred("disabled", false)
+	hurt_box.set_damage_mulitplyer(3)
 	if state_machine.get_active_state()!=launch:
 		state_machine.dispatch(&"staggered")
 	Events.camera_shake.emit(2,20)
@@ -531,7 +532,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
-	hb_collision.disabled=true
+	hb_collision.set_deferred("disabled", true)	
 	movement_handler.active=false
 	animated_sprite_2d.scale.x = 1
 	movement_handler.active=false
@@ -593,9 +594,9 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
-	print_debug(current)
-	if current==chasing:
-		print_debug("chasing")
+	#print_debug(current)
+	#if current==chasing:
+		#print_debug("chasing")
 	if current==launch:
 		print_debug("start here")
 	if current==jump:
@@ -608,19 +609,19 @@ func _on_attack_entered() -> void:
 func _on_hit_box_area_entered(_area: Area2D) -> void:
 	print_debug(_area)
 	hit_stop.hit_stop(0.05,0.1)
-	hit_box.active=false
+	#hit_box.active=false
 
 func _on_hit_box_clashed() -> void:
-	animation_player.stop()
-	hit_box.active=false
+	#animation_player.stop()
+	#hit_box.active=false
 	hit_stop.hit_stop(0.05, 0.5)
 	print_debug("clashed!")
 	stagger.stagger-=1
 	melee_attack_manager.atk_resume_helper()
 	if player_right:
-		knockback.x=-100
+		knockback.x=-200
 	else:
-		knockback.x=100
+		knockback.x=200
 
 
 func _on_hit_box_clash_launch(_launch: float) -> void:

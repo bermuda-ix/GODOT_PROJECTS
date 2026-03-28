@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://car58671gasr8" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/FX/LandingDust/LandingDust06.png" id="68_7s5mg"]
 [ext_resource type="AudioStream" uid="uid://bh3fmbavwgkpt" path="res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/10 Guage Shotgun-SoundBible.com-74120584.wav" id="69_6tjyr"]
 [ext_resource type="Texture2D" uid="uid://nqendqxys36q" path="res://Art_Components/Effects/Effect_Explosion/60fps/Spritesheets/Effect_Explosion_1_517x517.png" id="72_0o5du"]
+[ext_resource type="Shader" uid="uid://c0lvqekkgl8f8" path="res://chars/AFXGlowVisual.tres" id="73_dxewg"]
 [ext_resource type="Texture2D" uid="uid://iy7cv60p1c82" path="res://Art_Components/Effects/VFX Free Pack/Effect_Anima/60fps/Frames/Effect_Anima_1/Effect_Anima_1_000.png" id="74_4jq81"]
 [ext_resource type="Texture2D" uid="uid://bves5t1cfykf6" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX021/FX021_01.png" id="74_bw7wn"]
 [ext_resource type="Texture2D" uid="uid://blcu07iovyclb" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_01.png" id="74_e0a0t"]
@@ -45,21 +46,25 @@
 [ext_resource type="Script" uid="uid://c5hmrhuiwsrdd" path="res://pc_sprint.gd" id="78_hpd44"]
 [ext_resource type="Texture2D" uid="uid://db6b2fvmouj2" path="res://Art_Components/Effects/VFX Free Pack/Effect_Anima/60fps/Frames/Effect_Anima_1/Effect_Anima_1_004.png" id="78_mesnb"]
 [ext_resource type="Texture2D" uid="uid://dchoeftyjo2db" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_05.png" id="78_mgxb6"]
+[ext_resource type="Texture2D" uid="uid://m3jri3t1n0c5" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Explosion/EX041/EX041.png" id="79_4ma0u"]
 [ext_resource type="Script" uid="uid://ldj3a8xnrvge" path="res://pc_landed.gd" id="79_7k7vw"]
 [ext_resource type="Texture2D" uid="uid://d8yr0nvxsaaq" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX021/FX021_06.png" id="79_e0a0t"]
 [ext_resource type="Texture2D" uid="uid://0eiqdmi2p6k8" path="res://Art_Components/Effects/VFX Free Pack/Effect_Anima/60fps/Frames/Effect_Anima_1/Effect_Anima_1_005.png" id="79_i0kkw"]
 [ext_resource type="Texture2D" uid="uid://dw5oc0ki0ekkf" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_000.png" id="79_joxu4"]
 [ext_resource type="Texture2D" uid="uid://1ohxxwdv5q3a" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX021/FX021_07.png" id="80_80ao1"]
 [ext_resource type="AudioStream" uid="uid://266rkppmswxk" path="res://Art_Components/Effects/sound/swishes/swishes/swish-1.wav" id="80_jesqx"]
+[ext_resource type="Texture2D" uid="uid://ddsq3otmvjc2r" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Explosion/EX041/EX042.png" id="80_k4mcs"]
 [ext_resource type="Texture2D" uid="uid://cdyrwq7atgttm" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_001.png" id="80_obi53"]
 [ext_resource type="Texture2D" uid="uid://ckcpiktp8j1eb" path="res://Art_Components/Effects/VFX Free Pack/Effect_Anima/60fps/Frames/Effect_Anima_1/Effect_Anima_1_006.png" id="80_pbr83"]
 [ext_resource type="AudioStream" uid="uid://bmbijx41c06ke" path="res://Art_Components/Effects/sound/swishes/swishes/swish-7.wav" id="81_0o5du"]
 [ext_resource type="Texture2D" uid="uid://7ih5ogd8j1n5" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_002.png" id="81_fn1yn"]
 [ext_resource type="Texture2D" uid="uid://ckokytw486hoj" path="res://Art_Components/Effects/Spritesheets/Smoke Simple 3.png" id="81_mdoa6"]
+[ext_resource type="Texture2D" uid="uid://ctokd5jw07ak2" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Explosion/EX041/EX043.png" id="81_nb5s4"]
 [ext_resource type="Texture2D" uid="uid://fex87ekf3uvh" path="res://Art_Components/Effects/VFX Free Pack/Effect_Anima/60fps/Frames/Effect_Anima_1/Effect_Anima_1_007.png" id="81_ymji2"]
 [ext_resource type="Texture2D" uid="uid://8o2s4oyqe4oi" path="res://Art_Components/Effects/VFX Free Pack/Effect_Anima/60fps/Frames/Effect_Anima_1/Effect_Anima_1_008.png" id="82_1o5op"]
 [ext_resource type="Texture2D" uid="uid://bic4txpugxmmn" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_003.png" id="82_ek6xs"]
 [ext_resource type="Script" uid="uid://byay512l00w0p" path="res://Component/functions/ClashPower.gd" id="82_h0fyw"]
+[ext_resource type="Texture2D" uid="uid://bb11d5dj54kem" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Explosion/EX041/EX044.png" id="82_sfdpl"]
 [ext_resource type="AudioStream" uid="uid://ps6ukg2feqoj" path="res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/Pump Shotgun-SoundBible.com-1653268682.wav" id="83_dlcc0"]
 [ext_resource type="Texture2D" uid="uid://ciy6efohctkg" path="res://Art_Components/Effects/VFX Free Pack/Effect_Anima/60fps/Frames/Effect_Anima_1/Effect_Anima_1_009.png" id="83_f2824"]
 [ext_resource type="Texture2D" uid="uid://biogj5p1yipt8" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_004.png" id="83_sl608"]
@@ -904,6 +909,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_luuse"]
+shader = ExtResource("73_dxewg")
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_bw7wn"]
 animations = [{
 "frames": [{
@@ -924,6 +932,23 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack_hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("79_4ma0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_k4mcs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_nb5s4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_sfdpl")
+}],
+"loop": true,
+"name": &"clashed",
 "speed": 5.0
 }, {
 "frames": [{
@@ -6491,7 +6516,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Walk"]
+"values": [&"SwordWalk"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -6988,6 +7013,130 @@ tracks/3/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("hit_fx:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("hit_fx:instance_shader_parameters/GlowColor")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(8.622459e-05, 2.968426, 2.4752479, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("hit_fx:instance_shader_parameters/MaskColor")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.9411765, 0.5568628, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1ddda"]
+resource_name = "clashed"
+length = 0.26666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("hit_fx:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"clashed"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("hit_fx:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.23333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("hit_fx:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("hit_fx:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.5, 1.5)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("hit_fx/hit_fx2:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("hit_fx:instance_shader_parameters/GlowColor")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(8.622459e-05, 2.968426, 2.4752479, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("hit_fx:instance_shader_parameters/MaskColor")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.9411765, 0.5568628, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_joxu4"]
 resource_name = "heavy_attack_landed"
@@ -7039,6 +7188,18 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0.2, 0.2)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("hit_fx:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_e0a0t"]
@@ -7132,6 +7293,7 @@ tracks/6/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_80ao1"]
 _data = {
 &"RESET": SubResource("Animation_obi53"),
+&"clashed": SubResource("Animation_1ddda"),
 &"heavy_attack_landed": SubResource("Animation_joxu4"),
 &"hit_landed": SubResource("Animation_e0a0t")
 }
@@ -7761,7 +7923,12 @@ sprite_frames = SubResource("SpriteFrames_dvd57")
 animation = &"heat_aura"
 
 [node name="hit_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=289266714]
+visible = false
 z_index = 1
+material = SubResource("ShaderMaterial_luuse")
+instance_shader_parameters/FloatParameter = 0.002000000095
+instance_shader_parameters/GlowColor = Color(8.622459e-05, 2.968426, 2.4752479, 1)
+instance_shader_parameters/MaskColor = Color(1, 0.9411765, 0.5568628, 1)
 position = Vector2(39, -28)
 sprite_frames = SubResource("SpriteFrames_bw7wn")
 animation = &"heavy_attack_hit"

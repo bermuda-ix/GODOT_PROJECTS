@@ -936,12 +936,14 @@ func attack_animate():
 		return
 
 	elif Input.is_action_just_pressed("attack"):
+		hitbox.active=true
 		regular_attack()
 		heavy_attack_buffer_timer.start()
 		attacking=true
 		#
 		#
 	if Input.is_action_pressed("special_attack") and not heavy_attack_buffer_timer.is_stopped():
+		hitbox.active=true
 		attacking=true
 		
 		
@@ -1832,8 +1834,6 @@ func _on_hit_box_area_entered(_area):
 	if not hitbox.active:
 		return
 	else:
-		print_debug(hit_box)
-		print_debug(hurt_box)
 		hit_buffer.start(1)
 		hitbox.active=false
 		hit_sound=hit1
@@ -2428,6 +2428,7 @@ func _on_hurt_box_knockback(knock_back_strength: float) -> void:
 
 func _on_hit_box_clashed() -> void:
 	clash_power.increase_clash()
+	hit_fx_player.play("clashed")
 	hit_box.active=false
 	
 
@@ -2437,5 +2438,5 @@ func _on_animation_player_animation_changed(old_name: StringName, new_name: Stri
 
 func _on_animation_player_current_animation_changed(name: StringName) -> void:
 	#pass
-	if name == "walk":
+	if name == "Walk":
 		print_debug("where")
