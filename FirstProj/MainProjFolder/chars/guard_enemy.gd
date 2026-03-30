@@ -15,6 +15,7 @@ const JUMP_VELOCITY = -400.0
 
 #Animation Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var vfx_player: AnimationPlayer = $AnimationPlayer/VFXPlayer
 #Target lock
 @onready var target_lock_node: TargetLock = $TargetLock
 #Visible on screen
@@ -369,7 +370,10 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	elif anim_name=="dodge":
 		state_machine.dispatch(&"dodge_end")
 	
-	
+func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name=="staggered_entered":
+		vfx_player.play("staggered")
+
 	
 	#match anim_name:
 		#"atk_1":
@@ -609,6 +613,7 @@ func _on_hurt_box_knockback(knock_back_strength : float) -> void:
 func _on_hurt_box_body_entered(body: Node2D) -> void:
 	if "knocked_back" in body:
 		if body.knocked_back == true:
+			knockback.x=body.velocity.x/2
 			hit_stop.hit_stop(0.5, 0.5)
 			stagger.staggered.emit()
 			Events.camera_shake.emit(2,20)

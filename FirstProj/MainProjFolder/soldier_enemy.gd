@@ -19,6 +19,7 @@ var always_active : bool
 @onready var chase_timer = $ChaseTimer as Timer
 @onready var animated_sprite_2d = $AnimatedSprite2D as AnimatedSprite2D
 @onready var animation_player = $AnimationPlayer as AnimationPlayer
+@onready var vfx_player: AnimationPlayer = $AnimationPlayer/VFXPlayer
 @onready var nav_agent = $NavigationAgent2D
 @onready var jump_timer = $JumpTimer
 @onready var movement_handler: MovementHandler = $MovementHandler
@@ -733,3 +734,8 @@ func _on_landed_landed() -> void:
 	bt_player.blackboard.set_var("launched", false)
 	bt_player.blackboard.set_var("falling", false)
 	state_machine.dispatch(&"resume_attack")
+
+
+func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name=="staggered_entered":
+		vfx_player.play("staggered")

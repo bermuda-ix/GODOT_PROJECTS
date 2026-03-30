@@ -7,11 +7,13 @@ extends LimboState
 @export var stagger : Stagger
 @export var bt_player : BTPlayer
 @export var movement_able : bool = true 
+@export var vfx_player : AnimationPlayer
 
 func _enter() -> void:
 	#actor.animation_player.stop()
 	actor.animation_player.call_deferred("stop")
 	actor.animation_player.play("staggered")
+	vfx_player.play("staggered_entered")
 	#actor.hb_collision.disabled=true
 	#actor.bt_player.blackboard.set_var("staggered", true)
 	#actor.parry_timer.start(3)
@@ -35,3 +37,4 @@ func _exit() -> void:
 		movement_handler.active=true
 	actor.hurt_box.set_damage_mulitplyer(1)
 	stagger.stagger = stagger.max_stagger
+	vfx_player.call_deferred("stop")

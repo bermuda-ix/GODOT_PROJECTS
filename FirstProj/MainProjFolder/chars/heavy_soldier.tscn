@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="13_b855v"]
 [ext_resource type="Script" uid="uid://5ijvah6jjgdb" path="res://Component/hitbox_template.gd" id="14_0rfay"]
 [ext_resource type="Script" uid="uid://dj5amth02vbhe" path="res://Component/parrybox_template.gd" id="14_2a376"]
+[ext_resource type="Shader" uid="uid://c0lvqekkgl8f8" path="res://chars/AFXGlowVisual.tres" id="14_7bq3n"]
 [ext_resource type="Texture2D" uid="uid://uwvwmgsvpopx" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_01.png" id="14_8fd3j"]
 [ext_resource type="Texture2D" uid="uid://qfh5j5lr8yec" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_001.png" id="14_d0pli"]
 [ext_resource type="Texture2D" uid="uid://8c5el5hw0nr4" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX033/FX033_02.png" id="15_4oiad"]
@@ -102,6 +103,25 @@
 [ext_resource type="Texture2D" uid="uid://bn2edd6cxgry0" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_037.png" id="50_oiist"]
 [ext_resource type="Texture2D" uid="uid://2ahwdt1sqjy7" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_038.png" id="51_tk4wc"]
 [ext_resource type="Texture2D" uid="uid://kp51w4fs4ikf" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_039.png" id="52_0u53p"]
+[ext_resource type="Texture2D" uid="uid://iwrv518dufut" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun01.png" id="61_txdj5"]
+[ext_resource type="Texture2D" uid="uid://c54rv6q7h1puq" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun02.png" id="62_72l74"]
+[ext_resource type="Texture2D" uid="uid://diym71cn5dbuu" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun03.png" id="63_yf5ua"]
+[ext_resource type="Texture2D" uid="uid://dtcstmlvkk56n" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun04.png" id="64_g7jpo"]
+[ext_resource type="Texture2D" uid="uid://qihlcxyjmmwc" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun05.png" id="65_4cgwk"]
+[ext_resource type="Texture2D" uid="uid://q3dr0lr5qwk6" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun06.png" id="66_4pxgm"]
+[ext_resource type="Texture2D" uid="uid://dwsxu38mve8x8" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun07.png" id="67_g8y6e"]
+[ext_resource type="Texture2D" uid="uid://c6bkv5f3p5nmf" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun08.png" id="68_4sa57"]
+[ext_resource type="Texture2D" uid="uid://bow21w7e4uekd" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun09.png" id="69_n51gf"]
+[ext_resource type="Texture2D" uid="uid://c3tt168os4sof" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun10.png" id="70_qfovh"]
+[ext_resource type="Texture2D" uid="uid://b6ch5wab1hvms" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00210.png" id="71_b07go"]
+[ext_resource type="Texture2D" uid="uid://cicdijwufr0ug" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00211.png" id="72_84vlx"]
+[ext_resource type="Texture2D" uid="uid://byyslxpsi15v2" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00212.png" id="73_lqhoa"]
+[ext_resource type="Texture2D" uid="uid://c4aghcsjixkee" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00213.png" id="74_xmcqr"]
+[ext_resource type="Texture2D" uid="uid://s6sshsost6sm" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00214.png" id="75_oiist"]
+[ext_resource type="Texture2D" uid="uid://byq4nxagr614u" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00215.png" id="76_tk4wc"]
+[ext_resource type="Texture2D" uid="uid://jc52qoo2mhuf" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00216.png" id="77_0u53p"]
+[ext_resource type="Texture2D" uid="uid://dpiavufx84ssj" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00217.png" id="78_oh1oc"]
+[ext_resource type="Texture2D" uid="uid://tldys6blkcg8" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00218.png" id="79_nyvl3"]
 [ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="100_8h24x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv57o"]
@@ -633,6 +653,9 @@ initial_velocity_min = 65.69
 initial_velocity_max = 124.09
 gravity = Vector3(0, 98, 0)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s1lrb"]
+shader = ExtResource("14_7bq3n")
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_ahhik"]
 animations = [{
 "frames": [{
@@ -781,6 +804,73 @@ animations = [{
 }],
 "loop": true,
 "name": &"melee_attack_fx",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("61_txdj5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_72l74")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_yf5ua")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_g7jpo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_4cgwk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_4pxgm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_g8y6e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_4sa57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_n51gf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_qfovh")
+}],
+"loop": true,
+"name": &"staggered",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("71_b07go")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_84vlx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_lqhoa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_xmcqr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_oiist")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_tk4wc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_0u53p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_oh1oc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_nyvl3")
+}],
+"loop": true,
+"name": &"staggered_entered",
 "speed": 5.0
 }]
 
@@ -1036,7 +1126,7 @@ tracks/20/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.567232]
+"values": [0.0]
 }
 tracks/21/type = "value"
 tracks/21/imported = false
@@ -1085,6 +1175,18 @@ tracks/24/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-9.999999, -16)]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("AnimatedSprite2D/VFXSprite:rotation")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.5707941]
 }
 
 [sub_resource type="Animation" id="Animation_86qvh"]
@@ -1646,6 +1748,18 @@ tracks/13/keys = {
 "update": 1,
 "values": [Vector2(-9.999999, -16), Vector2(2.395976, -12)]
 }
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("AnimatedSprite2D/VFXSprite:rotation")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.5707941]
+}
 
 [sub_resource type="Animation" id="Animation_2a376"]
 resource_name = "parry"
@@ -2013,6 +2127,253 @@ _data = {
 &"staggered": SubResource("Animation_jdney")
 }
 
+[sub_resource type="Animation" id="Animation_7bq3n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D/VFXSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.5707941]
+}
+
+[sub_resource type="Animation" id="Animation_iysbu"]
+resource_name = "staggered"
+length = 0.6333333
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D/VFXSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -30)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D/VFXSprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D/VFXSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4, 0.46666667, 0.53333336, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../AnimatedSprite2D/VFXSprite:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"staggered"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../AnimatedSprite2D/VFXSprite:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(3.2944162, 3.2944162, 3.2944162, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../AnimatedSprite2D/VFXSprite:instance_shader_parameters/FloatParameter")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.002000000095]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../AnimatedSprite2D/VFXSprite:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../AnimatedSprite2D/VFXSprite:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_b4d3i"]
+resource_name = "staggered_entered"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D/VFXSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"staggered_entered"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D/VFXSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667, 0.20000002, 0.23333335, 0.26666668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D/VFXSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../AnimatedSprite2D/VFXSprite:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../AnimatedSprite2D/VFXSprite:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 6)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../AnimatedSprite2D/VFXSprite:instance_shader_parameters/MaskColor")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../AnimatedSprite2D/VFXSprite:instance_shader_parameters/GlowColor")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = false
+tracks/7/path = NodePath("../AnimatedSprite2D/VFXSprite:instance_shader_parameters/FloatParameter")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../AnimatedSprite2D/VFXSprite:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2.454227, 2.454227, 2.454227, 1)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../AnimatedSprite2D/VFXSprite:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7bq3n"]
+_data = {
+&"RESET": SubResource("Animation_7bq3n"),
+&"staggered": SubResource("Animation_iysbu"),
+&"staggered_entered": SubResource("Animation_b4d3i")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8fd3j"]
 size = Vector2(13, 65)
 
@@ -2057,7 +2418,6 @@ navigation_layers = 2
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=902741220]
 texture_filter = 2
 material = SubResource("ShaderMaterial_lvmp0")
-rotation = 0.567232
 sprite_frames = SubResource("SpriteFrames_64nx0")
 animation = &"idle"
 offset = Vector2(0, -39)
@@ -2092,7 +2452,11 @@ process_material = SubResource("ParticleProcessMaterial_2a376")
 
 [node name="VFXSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=374116599]
 visible = false
-modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
+modulate = Color(3.2944162, 3.2944162, 3.2944162, 1)
+material = SubResource("ShaderMaterial_s1lrb")
+instance_shader_parameters/FloatParameter = 0.002000000095
+instance_shader_parameters/GlowColor = Color(0, 0, 0, 1)
+instance_shader_parameters/MaskColor = Color(0, 0, 0, 1)
 position = Vector2(-9.999999, -16)
 rotation = 1.5707941
 sprite_frames = SubResource("SpriteFrames_ahhik")
@@ -2100,6 +2464,9 @@ animation = &"melee_attack_fx"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=13363768]
 libraries/ = SubResource("AnimationLibrary_n5mdn")
+
+[node name="VFXPlayer" type="AnimationPlayer" parent="AnimationPlayer" unique_id=1677836055]
+libraries/ = SubResource("AnimationLibrary_7bq3n")
 
 [node name="Health" type="Node" parent="." unique_id=490683754]
 script = ExtResource("11_2ecav")
@@ -2406,12 +2773,13 @@ actor = NodePath("../..")
 anim_player = NodePath("../../AnimationPlayer")
 timer = NodePath("../../ParryTimer")
 
-[node name="Staggered" type="LimboState" parent="StateMachine" unique_id=369894600 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player")]
+[node name="Staggered" type="LimboState" parent="StateMachine" unique_id=369894600 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player", "vfx_player")]
 script = ExtResource("33_eopqg")
 actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
 stagger = NodePath("../../Stagger")
 bt_player = NodePath("../../BTPlayer")
+vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
 metadata/_custom_type_script = "uid://bmeh2aawck5wy"
 
 [node name="Death" type="LimboState" parent="StateMachine" unique_id=1478229458 node_paths=PackedStringArray("actor", "animation_player")]
@@ -2477,6 +2845,7 @@ hit_from_inside = true
 [node name="DodgeTimer" type="Timer" parent="." unique_id=827337093]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer/VFXPlayer" to="." method="_on_vfx_player_animation_finished"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]

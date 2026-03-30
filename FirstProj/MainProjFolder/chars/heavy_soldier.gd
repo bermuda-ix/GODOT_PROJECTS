@@ -14,6 +14,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 #Animation Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var vfx_player: AnimationPlayer = $AnimationPlayer/VFXPlayer
 #Target lock
 @onready var target_lock_node: TargetLock = $TargetLock
 #Visible on screen
@@ -476,6 +477,9 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	elif anim_name=="landed":
 		state_machine.dispatch(&"resume_attack")
 
+func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name=="staggered_entered":
+		vfx_player.play("staggered")
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if state_machine.get_active_state()==parry and player_state!=player.flip_state:

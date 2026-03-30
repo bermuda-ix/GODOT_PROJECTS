@@ -1637,6 +1637,9 @@ func _on_hit_timer_timeout() -> void:
 		state_machine.dispatch(&"return_to_idle")
 	player_hit.emitting=false
 
+func _on_hit_buffer_timeout() -> void:
+	state_machine.dispatch(&"recovering")
+
 func _on_parry_box_parried_success() -> void:
 	state_machine.dispatch(&"parry_successful")
 	clash_power.increase_clash()

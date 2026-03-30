@@ -8597,17 +8597,19 @@ hit_stop = NodePath("../../HitStop")
 
 [node name="FlipEndState" type="LimboState" parent="StateMachine" unique_id=64997339]
 
-[node name="Staggered" type="LimboState" parent="StateMachine" unique_id=1318642481 node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
+[node name="Staggered" type="LimboState" parent="StateMachine" unique_id=1318642481 node_paths=PackedStringArray("anim_player", "pc", "state_machine", "hit_buffer")]
 script = ExtResource("113_o2pa3")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 state_machine = NodePath("..")
+hit_buffer = NodePath("../../HitBuffer")
 
-[node name="Hit" type="LimboState" parent="StateMachine" unique_id=1359588615 node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
+[node name="Hit" type="LimboState" parent="StateMachine" unique_id=1359588615 node_paths=PackedStringArray("anim_player", "pc", "state_machine", "hit_buffer")]
 script = ExtResource("109_egqmi")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 state_machine = NodePath("..")
+hit_buffer = NodePath("../../HitBuffer")
 
 [node name="Recovery" type="LimboState" parent="StateMachine" unique_id=739040723 node_paths=PackedStringArray("anim_player", "pc", "state_machine")]
 script = ExtResource("110_162b8")
@@ -8658,6 +8660,7 @@ pc = NodePath("../..")
 [connection signal="timeout" from="SpecialAttackBufferTimer" to="." method="_on_special_attack_buffer_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="CounterTimer" to="." method="_on_counter_timer_timeout"]
+[connection signal="timeout" from="HitBuffer" to="." method="_on_hit_buffer_timeout"]
 [connection signal="animation_changed" from="AnimationPlayer" to="." method="_on_animation_player_animation_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Landed" method="_on_animation_player_animation_finished"]
