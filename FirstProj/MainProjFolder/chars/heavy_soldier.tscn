@@ -103,6 +103,10 @@
 [ext_resource type="Texture2D" uid="uid://bn2edd6cxgry0" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_037.png" id="50_oiist"]
 [ext_resource type="Texture2D" uid="uid://2ahwdt1sqjy7" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_038.png" id="51_tk4wc"]
 [ext_resource type="Texture2D" uid="uid://kp51w4fs4ikf" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_039.png" id="52_0u53p"]
+[ext_resource type="Texture2D" uid="uid://c5hfiyj42h84j" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I131.png" id="54_g7jpo"]
+[ext_resource type="Texture2D" uid="uid://vyynpmgk4ux1" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I132.png" id="55_4cgwk"]
+[ext_resource type="Texture2D" uid="uid://cq8t28b0vcbgb" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I133.png" id="56_4pxgm"]
+[ext_resource type="Texture2D" uid="uid://5slw7nxxexbj" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I134.png" id="57_g8y6e"]
 [ext_resource type="Texture2D" uid="uid://iwrv518dufut" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun01.png" id="61_txdj5"]
 [ext_resource type="Texture2D" uid="uid://c54rv6q7h1puq" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun02.png" id="62_72l74"]
 [ext_resource type="Texture2D" uid="uid://diym71cn5dbuu" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun03.png" id="63_yf5ua"]
@@ -778,6 +782,23 @@ animations = [{
 }],
 "loop": true,
 "name": &"charge",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("54_g7jpo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_4cgwk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_4pxgm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_g8y6e")
+}],
+"loop": true,
+"name": &"knocked_back",
 "speed": 5.0
 }, {
 "frames": [{
@@ -2141,6 +2162,142 @@ tracks/0/keys = {
 "update": 0,
 "values": [1.5707941]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D/VFXSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D/VFXSprite:flip_v")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../AnimatedSprite2D/VFXSprite:flip_h")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../AnimatedSprite2D/VFXSprite:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, -31)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../AnimatedSprite2D/VFXSprite:animation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"knocked_back"]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../AnimatedSprite2D/VFXSprite:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_4sa57"]
+resource_name = "knocked_back"
+length = 0.13333334
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D/VFXSprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D/VFXSprite:flip_v")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D/VFXSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-7, -13)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../AnimatedSprite2D/VFXSprite:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"knocked_back"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../AnimatedSprite2D/VFXSprite:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
 
 [sub_resource type="Animation" id="Animation_iysbu"]
 resource_name = "staggered"
@@ -2242,6 +2399,30 @@ tracks/7/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../AnimatedSprite2D/VFXSprite:flip_v")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../AnimatedSprite2D/VFXSprite:flip_h")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_b4d3i"]
 resource_name = "staggered_entered"
@@ -2304,7 +2485,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 6)]
+"values": [Vector2(3, -31)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -2366,10 +2547,35 @@ tracks/9/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../AnimatedSprite2D/VFXSprite:flip_h")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("../AnimatedSprite2D/VFXSprite:flip_v")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7bq3n"]
 _data = {
 &"RESET": SubResource("Animation_7bq3n"),
+&"knocked_back": SubResource("Animation_4sa57"),
 &"staggered": SubResource("Animation_iysbu"),
 &"staggered_entered": SubResource("Animation_b4d3i")
 }
@@ -2452,15 +2658,16 @@ process_material = SubResource("ParticleProcessMaterial_2a376")
 
 [node name="VFXSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=374116599]
 visible = false
-modulate = Color(3.2944162, 3.2944162, 3.2944162, 1)
+modulate = Color(2.454227, 2.454227, 2.454227, 1)
 material = SubResource("ShaderMaterial_s1lrb")
 instance_shader_parameters/FloatParameter = 0.002000000095
 instance_shader_parameters/GlowColor = Color(0, 0, 0, 1)
 instance_shader_parameters/MaskColor = Color(0, 0, 0, 1)
-position = Vector2(-9.999999, -16)
+position = Vector2(3, -31)
 rotation = 1.5707941
 sprite_frames = SubResource("SpriteFrames_ahhik")
-animation = &"melee_attack_fx"
+animation = &"knocked_back"
+flip_v = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=13363768]
 libraries/ = SubResource("AnimationLibrary_n5mdn")
@@ -2845,7 +3052,9 @@ hit_from_inside = true
 [node name="DodgeTimer" type="Timer" parent="." unique_id=827337093]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_changed" from="AnimationPlayer/VFXPlayer" to="." method="_on_vfx_player_animation_changed"]
 [connection signal="animation_finished" from="AnimationPlayer/VFXPlayer" to="." method="_on_vfx_player_animation_finished"]
+[connection signal="animation_started" from="AnimationPlayer/VFXPlayer" to="." method="_on_vfx_player_animation_started"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]

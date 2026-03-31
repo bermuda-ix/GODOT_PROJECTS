@@ -480,6 +480,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="staggered_entered":
 		vfx_player.play("staggered")
+	
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if state_machine.get_active_state()==parry and player_state!=player.flip_state:
@@ -662,6 +663,7 @@ func _on_shield_area_entered(area: Area2D) -> void:
 
 func _on_hit_box_clash_knock_back(_launch : float, _knockback : float) -> void:
 	knocked_back=true
+	vfx_player.play("knocked_back")
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
 		if player_right:
@@ -724,6 +726,7 @@ func _on_landed_entered() -> void:
 
 func _on_hurt_box_knockback(_launch_strength: float, _knock_back_strength: float) -> void:
 	knocked_back=true
+	vfx_player.play("knocked_back")
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
 		if player_right:
@@ -742,3 +745,13 @@ func _on_hurt_box_body_entered(body: Node2D) -> void:
 			hit_stop.hit_stop(0.2, 0.3)
 			stagger.staggered.emit()
 			Events.camera_shake.emit(2,20)
+
+
+func _on_vfx_player_animation_started(anim_name: StringName) -> void:
+	if anim_name=="knocked_back":
+		print_debug("oof")
+
+
+func _on_vfx_player_animation_changed(old_name: StringName, new_name: StringName) -> void:
+	if old_name=="knocked_back":
+		print_debug(new_name)

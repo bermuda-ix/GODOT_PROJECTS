@@ -301,7 +301,7 @@ func _physics_process(delta):
 	elif state_machine.get_active_state()!=launch:
 		velocity.y += gravity * delta
 	else:
-		global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
+		#global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
 		velocity.y=0
 
 	
@@ -374,6 +374,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="staggered_entered":
 		vfx_player.play("staggered")
+	
 
 	
 	#match anim_name:
@@ -599,6 +600,7 @@ func _on_hurt_box_launched(launch_strength: float) -> void:
 
 func _on_hurt_box_knockback(_launch_strength : float, _knock_back_strength : float) -> void:
 	player.clash_up.emit()
+	vfx_player.play("knocked_back")
 	hit_stop.hit_stop(0.5, 0.5)
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
@@ -640,6 +642,7 @@ func _on_hit_box_clashed() -> void:
 
 func _on_hit_box_clash_knock_back(_launch : float, _knockback : float) -> void:
 	knocked_back=true
+	vfx_player.play("knocked_back")
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
 		if player_right:

@@ -18,7 +18,7 @@ func _enter() -> void:
 func _update(delta: float) -> void:
 	
 	actor.velocity.y=lerpf(actor.velocity.y, 0, 0.1)
-	#print_debug(actor.velocity.x)
+	print_debug(actor.velocity.y)
 	actor.velocity.x=lerpf(actor.velocity.x, actor.velocity.x/2, 0.1)
 	if actor.velocity.y>=-5.0 and launch_timer.is_stopped():
 		launch_timer.start(air_time)
