@@ -11,7 +11,7 @@ signal parried()
 signal weakpoint_hit()
 
 signal launched(launch_strength : float)
-signal knockback(knock_back_strength : float)
+signal knockback(launch_strength : float, knock_back_strength : float)
 
 @export var health: Health
 @export var stagger: Stagger
@@ -21,12 +21,14 @@ signal knockback(knock_back_strength : float)
 @onready var total_damage : int = 0
 
 @export var shielded : bool = false
+@export var knockback_active : bool = true
 
 
 func _ready():
 	connect("area_entered", _on_area_entered)
 	#connect("area_entered", _on_parried)
 	connect("body_entered", _bullet_hit)
+	connect("body_entered", _knocked_back_enemy_collision)
 
 func _on_area_entered(hitbox: HitBox) -> void:
 	if not hitbox.active:
@@ -39,11 +41,11 @@ func _on_area_entered(hitbox: HitBox) -> void:
 		hitbox.active=false
 		if hitbox != null:
 			#print(hitbox.knock_back)
-			if hitbox.launch:
-				launched.emit(hitbox.launch_strength)
+			#if hitbox.launch:
+				#launched.emit(hitbox.launch_strength)
 			if hitbox.knock_back:
-				#print("KNOCKING BACK")
-				knockback.emit(hitbox.knock_back_strength)
+				print_debug(hitbox.launch_strength, ", ", hitbox.knock_back_strength)
+				knockback.emit(hitbox.launch_strength, hitbox.knock_back_strength)
 		
 			if hitbox.is_in_group("spc_atk"):
 				weakpoint_hit.emit()
@@ -91,6 +93,19 @@ func _bullet_hit(_rigid_body : RigidBody2D) -> void:
 	_rigid_body.impact()
 		
 
+func _knocked_back_enemy_collision(_body : CharacterBody2D):
+	var _launch_strength := 0
+	if not knockback_active:
+		return
+	elif "knocked_back" in _body:
+		if _body.knocked_back == false:
+			return
+		else:
+			knockback.emit(_launch_strength, _body.velocity.x/2)
+			#knockback.x=_rigid_body.velocity.x/2
+			stagger.staggered.emit()
+			Events.camera_shake.emit(2,20)
+	pass
 
 func set_damage_mulitplyer(value:int):
 	dmg_mult=value

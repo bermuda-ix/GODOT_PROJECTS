@@ -48,6 +48,11 @@ var/atk_finished/type = 1
 var/atk_finished/value = false
 var/atk_finished/hint = 0
 var/atk_finished/hint_string = ""
+var/hit/name = &"hit"
+var/hit/type = 3
+var/hit/value = 0.0
+var/hit/hint = 0
+var/hit/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_2nsp0"]
 type = 1

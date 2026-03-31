@@ -34,6 +34,7 @@ const JUMP_VELOCITY = -400.0
 @onready var hurt_box_collision: CollisionShape2D = $HurtBox/hurt_box_collision
 @onready var hit_stop: HitStop = $HitStop
 @onready var hit_stop_dur = 0.0
+@onready var knocked_back = false
 
 #Timers
 @onready var navigation_timer: Timer = $NavigationTimer
@@ -596,27 +597,29 @@ func _on_hurt_box_launched(launch_strength: float) -> void:
 	state_machine.change_active_state(launch)
 
 
-func _on_hurt_box_knockback(knock_back_strength : float) -> void:
+func _on_hurt_box_knockback(_launch_strength : float, _knock_back_strength : float) -> void:
 	player.clash_up.emit()
+	hit_stop.hit_stop(0.5, 0.5)
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
 		if player_right:
-			launch.knock_back_strength = knock_back_strength
+			launch.knock_back_strength = _knock_back_strength
 		else:
-			launch.knock_back_strength = -knock_back_strength
-		launch.launch_height=0
+			launch.knock_back_strength = -_knock_back_strength
+		launch.launch_strength=_launch_strength
 		launch.air_time=1.0
 		state_machine.change_active_state(launch)
 	
 
 
 func _on_hurt_box_body_entered(body: Node2D) -> void:
-	if "knocked_back" in body:
-		if body.knocked_back == true:
-			knockback.x=body.velocity.x/2
-			hit_stop.hit_stop(0.5, 0.5)
-			stagger.staggered.emit()
-			Events.camera_shake.emit(2,20)
+	pass
+	#if "knocked_back" in body:
+		#if body.knocked_back == true:
+			#knockback.x=body.velocity.x/2
+			#hit_stop.hit_stop(0.5, 0.5)
+			#stagger.staggered.emit()
+			#Events.camera_shake.emit(2,20)
 
 
 func _on_hit_entered() -> void:
@@ -635,19 +638,21 @@ func _on_hit_box_clashed() -> void:
 	
 
 
-func _on_hit_box_clash_knock_back(_knockback: float) -> void:
+func _on_hit_box_clash_knock_back(_launch : float, _knockback : float) -> void:
+	knocked_back=true
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
 		if player_right:
 			launch.knock_back_strength = -_knockback
 		else:
 			launch.knock_back_strength = _knockback
+		launch.launch_strength=_launch
 		state_machine.change_active_state(launch)
 	else:
 		if player_right:
 			knockback.x=-_knockback*2
 		else:
-			knockback.x=_knockback*2 
+			knockback.x=_knockback*2
 
 
 func _on_hit_box_clash_launch(_launch: float) -> void:

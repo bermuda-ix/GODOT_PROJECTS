@@ -629,8 +629,21 @@ func _on_hit_box_clash_launch(_launch: float) -> void:
 	pass # Replace with function body.
 
 
-func _on_hit_box_clash_knock_back(_knockback: float) -> void:
-	pass # Replace with function body.
+func _on_hit_box_clash_knock_back(_launch : float, _knockback : float) -> void:
+	knocked_back=true
+	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
+	if _total_stagger_damage>=stagger.stagger:
+		if player_right:
+			launch.knock_back_strength = -_knockback
+		else:
+			launch.knock_back_strength = _knockback
+		launch.launch_strength=_launch
+		state_machine.change_active_state(launch)
+	else:
+		if player_right:
+			knockback.x=-_knockback*2
+		else:
+			knockback.x=_knockback*2
 
 func _on_hit_box_parried() -> void:
 	parried=true

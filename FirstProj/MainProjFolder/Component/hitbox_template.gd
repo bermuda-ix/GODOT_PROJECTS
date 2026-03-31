@@ -4,7 +4,7 @@ extends Area2D
 signal parried()
 signal clashed()
 signal clash_launch(_launch: float)
-signal clash_knock_back(_knockback : float)
+signal clash_knock_back(_launch: float, _knockback : float)
 
 @export var damage: int = 1 : set = set_damage, get = get_damage
 @export var stagger: Stagger
@@ -47,9 +47,9 @@ func _on_parried(_area :Area2D) -> void:
 			knock_back = false
 			launch = false
 			if _area.knock_back:
-				clash_knock_back.emit(_area.knock_back_strength)
-			elif _area.launch:
-				clash_launch.emit(40)
+				clash_knock_back.emit(_area.launch_strength, _area.knock_back_strength)
+			#elif _area.launch:
+				#clash_launch.emit(40)
 			else:
 				clashed.emit()
 		elif _area.is_in_group("ParryBox"):

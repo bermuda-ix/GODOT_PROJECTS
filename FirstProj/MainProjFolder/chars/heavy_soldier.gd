@@ -232,7 +232,7 @@ func _physics_process(delta: float) -> void:
 		#hb_collison.disabled=true
 		if not launch_timer.is_stopped():
 			global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
-			velocity.x=lerpf(-launch.knock_back_strength, -launch.knock_back_strength/2, 0.5)
+			#velocity.x=lerpf(-launch.knock_back_strength, -launch.knock_back_strength/2, 0.5)
 			#global_position.x=lerpf(global_position.x, launch.knocked_back, 0.1)
 			velocity.y=0
 		else:
@@ -246,9 +246,9 @@ func _physics_process(delta: float) -> void:
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
 		return
-	elif state_machine.get_active_state()==launch:
-		global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
-		velocity.y=0
+	#elif state_machine.get_active_state()==launch:
+		#global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
+		#velocity.y=0
 		
 	elif state_machine.get_active_state()==falling:
 		velocity.x=lerpf(-launch.knock_back_strength/2, 0, 0.9)
@@ -660,27 +660,29 @@ func _on_shield_area_entered(area: Area2D) -> void:
 	health.set_temporary_immortality(0.5)
 
 
-func _on_hit_box_clash_knock_back(_knockback : float) -> void:
+func _on_hit_box_clash_knock_back(_launch : float, _knockback : float) -> void:
+	knocked_back=true
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
 		if player_right:
 			launch.knock_back_strength = -_knockback
 		else:
 			launch.knock_back_strength = _knockback
+		launch.launch_strength=_launch
 		state_machine.change_active_state(launch)
 	else:
 		if player_right:
-			knockback.x=-_knockback*2
+			knockback.x=-_knockback/2
 		else:
-			knockback.x=_knockback*2
+			knockback.x=_knockback/2
 
 
-func _on_hit_box_clash_launch(_launch: float) -> void:
-	state_machine.change_active_state(launch)
+#func _on_hit_box_clash_launch(_launch: float) -> void:
+	#state_machine.change_active_state(launch)
 
 
 func _on_launch_entered() -> void:
-	velocity.x=0
+	#velocity.x=0
 	current_speed=0
 	animation_player.play("launched")
 	#velocity.x=-launch.knock_back_strength
@@ -720,15 +722,15 @@ func _on_landed_entered() -> void:
 	animation_player.play("landed")
 
 
-func _on_hurt_box_knockback(knock_back_strength: float) -> void:
+func _on_hurt_box_knockback(_launch_strength: float, _knock_back_strength: float) -> void:
 	knocked_back=true
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
 		if player_right:
-			launch.knock_back_strength = knock_back_strength
+			launch.knock_back_strength = -_knock_back_strength
 		else:
-			launch.knock_back_strength = -knock_back_strength
-		launch.launch_height=0
+			launch.knock_back_strength =_knock_back_strength
+		launch.launch_strength=_launch_strength
 		launch.air_time=1.0
 		state_machine.change_active_state(launch)
 		
