@@ -12,6 +12,8 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 #Basic
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var vfx_sprite: AnimatedSprite2D = $AnimatedSprite2D/VFXSprite
+
 #Animation Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var vfx_player: AnimationPlayer = $AnimationPlayer/VFXPlayer
@@ -652,6 +654,7 @@ func _on_melee_attack_entered() -> void:
 
 func _on_hit_box_clashed() -> void:
 	animation_player.stop()
+	vfx_sprite.set_deferred("visible", false)
 	hit_stop.hit_stop(0.05, 0.5)
 	animation_player.play("melee_attack")
 	print_debug("clashed!")
