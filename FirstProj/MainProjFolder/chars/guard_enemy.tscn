@@ -155,6 +155,7 @@
 [ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="110_gxq5f"]
 [ext_resource type="Texture2D" uid="uid://dpiavufx84ssj" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00217.png" id="111_wwao7"]
 [ext_resource type="Texture2D" uid="uid://tldys6blkcg8" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00218.png" id="112_56c4f"]
+[ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="153_q58od"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7w5gj"]
 shader = ExtResource("3_4sxct")
@@ -3024,6 +3025,11 @@ script = ExtResource("110_gxq5f")
 animation_player = NodePath("../../AnimationPlayer")
 actor = NodePath("../..")
 
+[node name="Clashed" type="LimboState" parent="LimboHSM" unique_id=1901555582 node_paths=PackedStringArray("anim_player", "state_machine")]
+script = ExtResource("153_q58od")
+anim_player = NodePath("../../AnimationPlayer")
+state_machine = NodePath("..")
+
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=1758670167]
 
 [node name="RANGED" type="LimboState" parent="CombatStateMachine" unique_id=1132427303 node_paths=PackedStringArray("actor", "bt_player")]
@@ -3053,6 +3059,7 @@ metadata/_edit_use_anchors_ = true
 [connection signal="animation_changed" from="AnimationPlayer" to="." method="_on_animation_player_animation_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/Landed" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/Clashed" method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
 [connection signal="animation_finished" from="AnimationPlayer/VFXPlayer" to="." method="_on_vfx_player_animation_finished"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]

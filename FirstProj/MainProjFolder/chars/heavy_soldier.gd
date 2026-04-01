@@ -36,6 +36,8 @@ var always_active : bool
 @onready var stagger: Stagger = $Stagger
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var hurt_box_collision: CollisionShape2D = $HurtBox/hurt_box_collision
+@onready var hurt_box_weakpoint: HurtBox = $HurtBox_Weakpoint
+@onready var hurt_box_weakpoint_collision: CollisionShape2D = $HurtBox_Weakpoint/CollisionShape2D
 @onready var hit_stop: HitStop = $HitStop
 @onready var hit_stop_dur = 0.0
 @onready var parry_box: ParryBox = $ParryBox
@@ -105,6 +107,7 @@ var player_state : LimboState
 @onready var launch: Launch = $StateMachine/Launch
 @onready var falling: LimboState = $StateMachine/Falling
 @onready var landed: LimboState = $StateMachine/Landed
+@onready var clashed: Clashed = $StateMachine/Clashed
 
 
 
@@ -258,6 +261,11 @@ func _physics_process(delta: float) -> void:
 		if is_on_floor():
 			state_machine.dispatch(&"landed")
 	
+	if player_right:
+		hurt_box_weakpoint_collision.set_deferred("disabled", false)
+	else:
+		hurt_box_weakpoint_collision.set_deferred("disabled", true)
+	
 	velocity.x = current_speed + knockback.x
 	move_and_slide()
 	movement_handler.apply_gravity(delta)
@@ -304,6 +312,8 @@ func _init_state_machine():
 	state_machine.add_transition(launch, falling, &"falling")
 	state_machine.add_transition(falling, landed, &"landed")
 	state_machine.add_transition(landed, attack, &"resume_attack")
+	state_machine.add_transition(melee_attack, clashed, &"clashed")
+	state_machine.add_transition(clashed, melee_attack, &"resume_melee")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -390,7 +400,8 @@ func get_height() -> int:
 
 func _on_state_machine_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	#print_debug(current)
-	if current!=idle and current!=chasing and current!=launch and current != falling and current!=landed:
+	if current!=idle and current!=chasing and current!=launch and current != falling and current!=landed and current!=melee_attack and current!=clashed\
+	and current!=death:
 		movement_handler.active=true
 		shooting_states.dispatch(&"begin_shooting")
 	elif current==shooting_states:
@@ -409,8 +420,9 @@ func _on_combat_state_machine_active_state_changed(current: LimboState, previous
 			if shooting_states.get_active_state()!=defend_ally:
 				current_speed=0
 		elif current==melee_mode:
-			movement_handler.active=true
-			state_machine.dispatch(&"start_chase")
+			if state_machine.get_active_state()!=melee_attack:
+				movement_handler.active=true
+				state_machine.dispatch(&"start_chase")
 		
 
 func _on_chasing_entered() -> void:
@@ -443,7 +455,8 @@ func being_flipped() -> void:
 	if player_state==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 		movement_handler.active=false
 	else:
-		movement_handler.active=true
+		if state_machine.get_active_state()!=melee_attack:
+			movement_handler.active=true
 
 func _on_shooting_states_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	pass
@@ -478,6 +491,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		state_machine.dispatch(&"resume_chase")
 	elif anim_name=="landed":
 		state_machine.dispatch(&"resume_attack")
+	elif anim_name=="clashed":
+		state_machine.dispatch(&"resume_melee")
 
 func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="staggered_entered":
@@ -514,6 +529,7 @@ func _on_hurt_box_weakpoint_weakpoint_hit() -> void:
 
 
 func _on_stagger_staggered() -> void:
+	hurt_box.shielded=false
 	stagger_timer.start(3)
 	hb_collision.disabled=true
 	current_speed=0
@@ -547,6 +563,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 func _on_stagger_timer_timeout() -> void:
 	if health.health>0:
 		state_machine.dispatch(&"stagger_recover")
+		hurt_box.set_deferred("shielded", true)
 	else:
 		state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
 
@@ -649,15 +666,21 @@ func chase():
 
 
 func _on_melee_attack_entered() -> void:
+	movement_handler.active=false
+	velocity.x=0
+	current_speed=0
 	animation_player.play("melee_attack")
-
+	
+func _on_melee_attack_updated(delta: float) -> void:
+	assert(movement_handler.active==false)
 
 func _on_hit_box_clashed() -> void:
 	animation_player.stop()
 	vfx_sprite.set_deferred("visible", false)
 	hit_stop.hit_stop(0.05, 0.5)
-	animation_player.play("melee_attack")
-	print_debug("clashed!")
+	state_machine.dispatch(&"clashed")
+	#animation_player.play("melee_attack")
+	#print_debug("clashed!")
 
 
 func _on_shield_area_entered(area: Area2D) -> void:

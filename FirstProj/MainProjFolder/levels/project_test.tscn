@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://dn0fhusgltn4m" path="res://chars/heavy_soldier.tscn" id="10_f7lwp"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="10_gem31"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="11_fof0c"]
-[ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="11_v0mnv"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="12_dqkb5"]
 [ext_resource type="Script" uid="uid://klqpph3n6xut" path="res://Component/functions/PersistentData/LevelStateHandler.gd" id="12_v15hm"]
 
@@ -488,12 +487,6 @@ position = Vector2(1331, -12.999992)
 [node name="HeavySoldier" parent="Enemies" index="2" unique_id=1955221828 instance=ExtResource("10_f7lwp")]
 position = Vector2(879, 77)
 scale = Vector2(0.7, 0.7)
-
-[node name="GuardEnemy" parent="Enemies" index="3" unique_id=2034909694 instance=ExtResource("11_v0mnv")]
-position = Vector2(944, 82)
-
-[node name="GuardEnemy2" parent="Enemies" index="4" unique_id=270918773 instance=ExtResource("11_v0mnv")]
-position = Vector2(1003, 83)
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]
 position = Vector2(1260, 1)

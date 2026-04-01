@@ -208,6 +208,7 @@
 [ext_resource type="Texture2D" uid="uid://bow21w7e4uekd" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun09.png" id="154_12atc"]
 [ext_resource type="Texture2D" uid="uid://tldys6blkcg8" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00218.png" id="154_sxist"]
 [ext_resource type="Texture2D" uid="uid://c3tt168os4sof" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun10.png" id="155_1sqeb"]
+[ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="190_gmb02"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5wlso"]
 shader = ExtResource("3_eqop3")
@@ -4150,6 +4151,11 @@ script = ExtResource("144_37wjj")
 animation_player = NodePath("../../AnimationPlayer")
 actor = NodePath("../..")
 
+[node name="Clashed" type="LimboState" parent="LimboHSM" index="15" unique_id=1151451137 node_paths=PackedStringArray("anim_player", "state_machine")]
+script = ExtResource("190_gmb02")
+anim_player = NodePath("../../AnimationPlayer")
+state_machine = NodePath("..")
+
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="31" unique_id=1379831898]
 position = Vector2(0, -19)
 rect = Rect2(14, 17, 4, 4)
@@ -4293,6 +4299,7 @@ metadata/_custom_type_script = "uid://fi6gye6mlsb6"
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/COUNTER/KickCounter" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/Landed" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/Clashed" method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
 [connection signal="animation_finished" from="AnimationPlayer/VFXPlayer" to="." method="_on_vfx_player_animation_finished"]
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]

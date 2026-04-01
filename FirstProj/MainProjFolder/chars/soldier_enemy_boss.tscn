@@ -194,6 +194,7 @@
 [ext_resource type="Script" uid="uid://c4uno006dp70c" path="res://Component/functions/TeleportHandler.gd" id="141_7r4t8"]
 [ext_resource type="Script" uid="uid://eulrkc0hl0ww" path="res://Component/functions/PhasesHandler.gd" id="142_qstkj"]
 [ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="150_87q8v"]
+[ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="189_ia0g3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_chkyp"]
 shader = ExtResource("3_2r4bp")
@@ -3238,7 +3239,7 @@ instance_shader_parameters/MaskColor = Color(0.42040226, 0.14544845, 0.3025623, 
 position = Vector2(-1.0000038, 22.999996)
 rotation = 1.1582785
 sprite_frames = SubResource("SpriteFrames_bpr6j")
-animation = &"atk"
+animation = &"teleport"
 flip_h = true
 flip_v = true
 
@@ -3571,6 +3572,12 @@ actor = NodePath("../..")
 launch_timer = NodePath("../../LaunchTimer")
 metadata/_custom_type_script = "uid://dscn2ndlewuut"
 
+[node name="Clashed" type="LimboState" parent="LimboHSM" index="16" unique_id=612323006 node_paths=PackedStringArray("anim_player", "state_machine")]
+script = ExtResource("189_ia0g3")
+anim_player = NodePath("../../AnimationPlayer")
+state_machine = NodePath("..")
+metadata/_custom_type_script = "uid://d30t6dtun2xcd"
+
 [node name="CombatStateMachine" type="LimboHSM" parent="." index="48" unique_id=305802644]
 
 [node name="RANGED" type="LimboState" parent="CombatStateMachine" index="0" unique_id=824960426 node_paths=PackedStringArray("actor", "bt_player")]
@@ -3629,6 +3636,7 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/COUNTER/KickCounter" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/Clashed" method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]

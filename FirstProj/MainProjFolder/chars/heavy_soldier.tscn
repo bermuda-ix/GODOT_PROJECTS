@@ -126,7 +126,9 @@
 [ext_resource type="Texture2D" uid="uid://jc52qoo2mhuf" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00216.png" id="77_0u53p"]
 [ext_resource type="Texture2D" uid="uid://dpiavufx84ssj" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00217.png" id="78_oh1oc"]
 [ext_resource type="Texture2D" uid="uid://tldys6blkcg8" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00218.png" id="79_nyvl3"]
+[ext_resource type="AudioStream" uid="uid://bkjje5hbliijj" path="res://Art_Components/Effects/sound/hits/PUNCH_DESIGNED_HEAVY_14.wav" id="84_4pxgm"]
 [ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="100_8h24x"]
+[ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="125_4cgwk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv57o"]
 size = Vector2(42, 76)
@@ -1209,6 +1211,58 @@ tracks/25/keys = {
 "update": 0,
 "values": [1.5707941]
 }
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("AnimatedSprite2D/VFXSprite:flip_v")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_g7jpo"]
+resource_name = "clashed"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/VFXSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_86qvh"]
 resource_name = "dead"
@@ -1608,7 +1662,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.51327384),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"parry"]
@@ -1620,7 +1674,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.51327384),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
@@ -1680,7 +1734,7 @@ tracks/6/path = NodePath("HitBox/hb_collision:disabled")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.8132739, 0.8466072),
+"times": PackedFloat32Array(0, 0.03333333, 0.8132739, 0.8466072),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [true, false, false, true]
@@ -1780,6 +1834,30 @@ tracks/14/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.5707941]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("AnimatedSprite2D/VFXSprite:flip_v")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("HurtBox:shielded")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_2a376"]
@@ -2031,6 +2109,18 @@ tracks/3/keys = {
 "update": 1,
 "values": [Vector2(-26, -30)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HurtBox:shielded")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_iqleq"]
 resource_name = "shoot_defense"
@@ -2086,6 +2176,18 @@ tracks/3/keys = {
 "update": 1,
 "values": [Vector2(-27, -16)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HurtBox:shielded")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_jdney"]
 resource_name = "staggered"
@@ -2127,10 +2229,23 @@ tracks/2/keys = {
 "update": 1,
 "values": [Color(1, 1, 1, 1), Color(100, 100, 100, 1)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HurtBox:shielded")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n5mdn"]
 _data = {
 &"RESET": SubResource("Animation_vtt0c"),
+&"clashed": SubResource("Animation_g7jpo"),
 &"dead": SubResource("Animation_86qvh"),
 &"death": SubResource("Animation_cl2c2"),
 &"falling": SubResource("Animation_i52b7"),
@@ -2669,6 +2784,9 @@ sprite_frames = SubResource("SpriteFrames_ahhik")
 animation = &"knocked_back"
 flip_v = true
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1804512724]
+stream = ExtResource("84_4pxgm")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=13363768]
 libraries/ = SubResource("AnimationLibrary_n5mdn")
 
@@ -2682,7 +2800,7 @@ metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=1742492050]
 script = ExtResource("12_6gh4x")
-max_stagger = 2
+max_stagger = 5
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=162841846]
@@ -3013,6 +3131,11 @@ metadata/_custom_type_script = "uid://dscn2ndlewuut"
 
 [node name="Landed" type="LimboState" parent="StateMachine" unique_id=1214387260]
 
+[node name="Clashed" type="LimboState" parent="StateMachine" unique_id=1880104669 node_paths=PackedStringArray("anim_player", "state_machine")]
+script = ExtResource("125_4cgwk")
+anim_player = NodePath("../../AnimationPlayer")
+state_machine = NodePath("..")
+
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=455656030]
 
 [node name="melee" type="LimboState" parent="CombatStateMachine" unique_id=429295658 node_paths=PackedStringArray("actor", "bt_player")]
@@ -3052,6 +3175,7 @@ hit_from_inside = true
 [node name="DodgeTimer" type="Timer" parent="." unique_id=827337093]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Clashed" method="_on_animation_player_animation_finished"]
 [connection signal="animation_changed" from="AnimationPlayer/VFXPlayer" to="." method="_on_vfx_player_animation_changed"]
 [connection signal="animation_finished" from="AnimationPlayer/VFXPlayer" to="." method="_on_vfx_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer/VFXPlayer" to="." method="_on_vfx_player_animation_started"]
@@ -3084,6 +3208,7 @@ hit_from_inside = true
 [connection signal="entered" from="StateMachine/Chasing" to="." method="_on_chasing_entered"]
 [connection signal="entered" from="StateMachine/Attack" to="." method="_on_attack_entered"]
 [connection signal="entered" from="StateMachine/MeleeAttack" to="." method="_on_melee_attack_entered"]
+[connection signal="updated" from="StateMachine/MeleeAttack" to="." method="_on_melee_attack_updated"]
 [connection signal="active_state_changed" from="StateMachine/ShootingStates" to="." method="_on_shooting_states_active_state_changed"]
 [connection signal="entered" from="StateMachine/ShootingStates" to="." method="_on_shooting_states_entered"]
 [connection signal="entered" from="StateMachine/ShootingStates/Shooting" to="." method="_on_shooting_entered"]

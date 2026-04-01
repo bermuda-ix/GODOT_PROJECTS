@@ -33,11 +33,13 @@ func _ready():
 func _on_area_entered(hitbox: HitBox) -> void:
 	if not hitbox.active:
 		return
-		
+	elif shielded:
+		return
 	
 	elif health.health<=0:
 		return
 	else:
+		assert(shielded!=true)
 		hitbox.active=false
 		if hitbox != null:
 			#print(hitbox.knock_back)

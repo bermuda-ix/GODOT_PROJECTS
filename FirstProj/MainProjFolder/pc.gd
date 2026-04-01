@@ -541,7 +541,7 @@ func _process(_delta):
 	atk_state_debug()
 #
 	dodge(input_axis)
-	label.text=str(attack_timer.time_left)
+	label.text=str(clash_power.clash_power)
 	#
 	if(state_machine.get_active_state()!=dodge_state and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=flip_state):
 		parry()
