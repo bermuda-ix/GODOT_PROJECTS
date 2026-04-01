@@ -78,6 +78,7 @@ GameLevel=""
 world=""
 Boss=""
 hitbox=""
+regular_enemy_hb=""
 
 [input]
 

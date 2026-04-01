@@ -37,14 +37,14 @@ func _on_parried(_area :Area2D) -> void:
 	if _area!= null:
 		if _area.is_in_group("regular_enemy_hb"):
 			_area.active=false
-			active=false
+			#active=false
 			damage = 0
 			knock_back = false
 			launch = false
 			clashed.emit()
 		elif _area.is_in_group("player_hitbox"):
 			_area.active=false
-			active=false
+			#active=false
 			damage = 0
 			knock_back = false
 			launch = false

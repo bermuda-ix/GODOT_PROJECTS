@@ -689,6 +689,7 @@ func _on_shield_area_entered(area: Area2D) -> void:
 
 func _on_hit_box_clash_knock_back(_launch : float, _knockback : float) -> void:
 	knocked_back=true
+	hurt_box.shielded=false
 	vfx_player.play("knocked_back")
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
