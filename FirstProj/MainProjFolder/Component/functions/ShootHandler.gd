@@ -12,7 +12,7 @@ extends Node
 
 @export var bullet_speed : float = 400.0
 
-
+@export var bullet_damage : int = 1
 
 var turret_order : int =0
 

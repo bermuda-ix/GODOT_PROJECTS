@@ -86,7 +86,7 @@ func _bullet_hit(_rigid_body : RigidBody2D) -> void:
 	if stagger.stagger>0:
 		stagger.stagger-=1
 	else:
-		health.set_health(health.health-1)
+		health.health-=1
 		
 		print_debug(health.health)
 		#received_damage.emit(_damage)

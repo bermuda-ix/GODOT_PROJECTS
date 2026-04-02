@@ -3942,7 +3942,7 @@ flip_h = true
 [node name="AudioFX" type="AudioStreamPlayer2D" parent="AnimatedSprite2D/VFXSprite" index="0" unique_id=871617277]
 max_polyphony = 4
 
-[node name="AnimationPlayer" parent="." index="2"]
+[node name="AnimationPlayer" parent="." index="2" groups=["regular_enemy_hb"]]
 libraries/ = SubResource("AnimationLibrary_c6g3t")
 libraries/Cutscene = SubResource("AnimationLibrary_he81y")
 
