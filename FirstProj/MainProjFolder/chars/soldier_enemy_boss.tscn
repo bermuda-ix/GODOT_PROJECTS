@@ -3239,7 +3239,7 @@ instance_shader_parameters/MaskColor = Color(0.42040226, 0.14544845, 0.3025623, 
 position = Vector2(-1.0000038, 22.999996)
 rotation = 1.1582785
 sprite_frames = SubResource("SpriteFrames_bpr6j")
-animation = &"teleport"
+animation = &"atk"
 flip_h = true
 flip_v = true
 

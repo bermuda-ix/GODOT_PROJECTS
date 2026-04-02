@@ -550,7 +550,8 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		return
 	health.set_temporary_immortality(0.2)
 	if damage<=health.health:
-		parry_timer.start(0.5)
+		if state_machine.get_active_state()!=staggered:
+			parry_timer.start(0.5)
 		if (state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death):
 			state_machine.dispatch(&"hit")
 		

@@ -655,8 +655,9 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			return
 		health.set_temporary_immortality(0.2)
 		if damage<=health.health:
-			parry_timer.start(0.5)
-			state_machine.dispatch(&"hit")
+			if state_machine.get_active_state()!=staggered:
+				parry_timer.start(0.5)
+				state_machine.dispatch(&"hit")
 			hit_stop.hit_stop(0.05,0.25)
 			#set_state(current_state, States.HIT)
 			gpu_particles_2d.emitting=true
