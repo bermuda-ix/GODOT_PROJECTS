@@ -64,6 +64,15 @@ variable = &"attack_mode"
 value = SubResource("BBVariant_2nsp0")
 custom_name = "AttackMode"
 
+[sub_resource type="BBVariant" id="BBVariant_ru3pv"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_virdo"]
+variable = &"staggered"
+value = SubResource("BBVariant_ru3pv")
+
 [sub_resource type="BBVariant" id="BBVariant_8sobk"]
 type = 1
 saved_value = true
@@ -360,7 +369,7 @@ custom_name = "Attack"
 children = [SubResource("BTCheckVar_pquhl"), SubResource("BTSelector_ahbr2")]
 
 [sub_resource type="BTSelector" id="BTSelector_2nsp0"]
-children = [SubResource("BTSequence_gb5fh"), SubResource("BTSequence_dk6q0"), SubResource("BTSequence_fopnx"), SubResource("BTSequence_381y2")]
+children = [SubResource("BTCheckVar_virdo"), SubResource("BTSequence_gb5fh"), SubResource("BTSequence_dk6q0"), SubResource("BTSequence_fopnx"), SubResource("BTSequence_381y2")]
 
 [sub_resource type="BTRepeatUntilFailure" id="BTRepeatUntilFailure_fiv6f"]
 children = [SubResource("BTSelector_2nsp0")]

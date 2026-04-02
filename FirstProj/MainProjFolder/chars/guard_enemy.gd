@@ -437,15 +437,17 @@ func _on_navigation_timer_timeout() -> void:
 
 func _on_stagger_staggered() -> void:
 	bt_player.restart()
-	parry_timer.start(3)
+	parry_timer.start(5)
 	hb_collision.disabled=true
 	if state_machine.get_active_state()!=launch:
-		state_machine.dispatch(&"staggered")
+		bt_player.blackboard.set_var("staggered", true)
+		state_machine.change_active_state(staggered)
 	Events.camera_shake.emit(2,20)
 
 func _on_parry_timer_timeout() -> void:
 	if state_machine.get_active_state()==staggered:
 		state_machine.dispatch(&"stagger_recover")
+		bt_player.blackboard.set_var("staggered", false)
 	elif state_machine.get_active_state()==hit:
 		state_machine.dispatch(&"hit_recover")
 	movement_handler.active=true
@@ -453,6 +455,8 @@ func _on_parry_timer_timeout() -> void:
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:
+	#if state_machine.get_active_state()==staggered:
+		#return
 	
 	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 		Events.allied_enemy_hit.emit()
@@ -464,8 +468,10 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	if damage<health.health:
 		if state_machine.get_active_state()!=dying or state_machine.get_active_date()!=death:
 			hit_stop.hit_stop(0.05,0.25)
-		parry_timer.start(0.1)
-		state_machine.dispatch(&"hit")
+		
+		if state_machine.get_active_state()!=staggered:
+			parry_timer.start(0.1)
+			state_machine.dispatch(&"hit")
 		gpu_particles_2d.restart()
 		gpu_particles_2d.emitting=true
 		melee_attack_manager.atk_resume_helper()

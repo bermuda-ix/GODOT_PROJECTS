@@ -936,11 +936,12 @@ func attack_animate():
 		return
 
 	elif Input.is_action_just_pressed("attack"):
+
 		hitbox.active=true
 		regular_attack()
 		heavy_attack_buffer_timer.start()
 		attacking=true
-		#
+			#
 		#
 	if Input.is_action_pressed("special_attack") and not heavy_attack_buffer_timer.is_stopped():
 		hitbox.active=true
@@ -1121,13 +1122,16 @@ func get_clash_power() -> int:
 
 func heavy_combos():
 	if Input.is_action_just_pressed("special_attack"):
-		match attack_state.get_active_state():
-			attack_1:
-				heavy_attack()
-			attack_2:
-				heavy_attack()
-			attack_3:
-				pass
+		if shotgun_lookat_target and Input.is_action_pressed("sprint"):
+			shotgun_shoot()
+		else:
+			match attack_state.get_active_state():
+				attack_1:
+					heavy_attack()
+				attack_2:
+					heavy_attack()
+				attack_3:
+					pass
 
 func _on_special_attack_buffer_timer_timeout() -> void:
 	if state_machine.get_active_state()==attack_state:
