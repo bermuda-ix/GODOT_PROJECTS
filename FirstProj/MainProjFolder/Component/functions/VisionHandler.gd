@@ -23,6 +23,12 @@ func _ready() -> void:
 	player_tracking.target_position = Vector2(vision_range, 0)
 	
 
+func get_player_relative_loc():
+	if player.global_position.x>actor.global_position.x:
+		actor.player_right=true
+	else:
+		actor.player_right=false
+
 func handle_vision():
 	player_colliding=player_tracking.is_colliding()
 	if not active:

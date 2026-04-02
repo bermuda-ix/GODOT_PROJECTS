@@ -122,11 +122,16 @@
 [ext_resource type="Shader" uid="uid://c0lvqekkgl8f8" path="res://chars/AFXGlowVisual.tres" id="85_g6e5q"]
 [ext_resource type="Texture2D" uid="uid://dyjyc3cyn746a" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Shoot/shoot01.png" id="85_y0u4g"]
 [ext_resource type="Texture2D" uid="uid://pqg4g00kit6" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Shoot/shoot02.png" id="86_g6e5q"]
+[ext_resource type="Texture2D" uid="uid://c7g25rtqehv3m" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire01.png" id="86_hsppp"]
 [ext_resource type="Script" uid="uid://bnpx2avsix2an" path="res://Component/functions/GroupEnemyManager.gd" id="86_m3s8r"]
 [ext_resource type="Texture2D" uid="uid://c5rydbynprxq4" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_01.png" id="87_4sxct"]
+[ext_resource type="Texture2D" uid="uid://cngu045j01sui" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire02.png" id="87_nf2nc"]
 [ext_resource type="Texture2D" uid="uid://bb7ulyxk1bcwl" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_02.png" id="88_7w5gj"]
+[ext_resource type="Texture2D" uid="uid://ibg00s0pu8qi" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire03.png" id="88_v2a41"]
+[ext_resource type="Texture2D" uid="uid://dlk26jwqxo6t1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire04.png" id="89_4qwl5"]
 [ext_resource type="Texture2D" uid="uid://bkpxhxq6jd3iq" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_03.png" id="89_aus6e"]
 [ext_resource type="Texture2D" uid="uid://c2safri3xr8y7" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_04.png" id="90_31j11"]
+[ext_resource type="Texture2D" uid="uid://dqmwsu55fxh47" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire05.png" id="90_d0jhl"]
 [ext_resource type="Texture2D" uid="uid://cqpelmj4ie8mt" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_05.png" id="91_h1t3e"]
 [ext_resource type="Texture2D" uid="uid://iwrv518dufut" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun01.png" id="94_qd8om"]
 [ext_resource type="Texture2D" uid="uid://c5hfiyj42h84j" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I131.png" id="94_xyblf"]
@@ -483,6 +488,26 @@ animations = [{
 }],
 "loop": true,
 "name": &"shoot",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("86_hsppp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87_nf2nc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("88_v2a41")
+}, {
+"duration": 1.0,
+"texture": ExtResource("89_4qwl5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("90_d0jhl")
+}],
+"loop": true,
+"name": &"shoot_crouch",
 "speed": 5.0
 }, {
 "frames": [],
@@ -924,6 +949,18 @@ tracks/23/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 22)]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("LimboHSM/DODGE:_velocity_x")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-50.0]
 }
 
 [sub_resource type="Animation" id="Animation_uutj5"]
@@ -1588,6 +1625,22 @@ tracks/5/keys = {
 "values": [Vector2(8, 22)]
 }
 
+[sub_resource type="Animation" id="Animation_q58od"]
+resource_name = "clashed"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(2.454227, 2.454227, 2.454227, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_ri8gu"]
 resource_name = "dead"
 length = 0.1
@@ -1775,6 +1828,135 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_lur8h"]
+resource_name = "dodge_back"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.23333333, 0.3, 0.36666667, 0.4, 0.43333334, 0.46666667, 0.49999997, 0.5333334, 0.5666667, 0.6, 0.6333333, 0.73333335),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 5, 4, 3, 2, 7, 8, 0, 1, 2, 3, 4, 1, 2, 3, 4, 9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.33333334, 0.33693516, 0.72112495),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [&"roll", &"roll", &"shoot_crouch", &"roll"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LimboHSM/DODGE:_velocity_x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0.0]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShootAttackManager")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.46666667, 0.5953572),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"shoot_refactor"
+}, {
+"args": [],
+"method": &"shoot_refactor"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D/AttackVFX:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.46666667, 0.51270396, 0.5953572, 0.6413945),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D/AttackVFX:animation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Shoot"]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AnimatedSprite2D/AttackVFX:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.47082162, 0.5, 0.5995121, 0.6286905),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 0, 1]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AnimatedSprite2D/AttackVFX:flip_h")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedSprite2D/AttackVFX:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-28, 15)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedSprite2D/AttackVFX:instance_shader_parameters/GlowColor")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(3.2944162, 1.6634394, 1.0782797, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_gxq5f"]
@@ -2342,8 +2524,10 @@ _data = {
 &"atk_2": SubResource("Animation_631s8"),
 &"atk_3": SubResource("Animation_ksmfd"),
 &"atk_counter": SubResource("Animation_oos3y"),
+&"clashed": SubResource("Animation_q58od"),
 &"dead": SubResource("Animation_ri8gu"),
 &"death": SubResource("Animation_nm53c"),
+&"dodge_back": SubResource("Animation_lur8h"),
 &"falling": SubResource("Animation_gxq5f"),
 &"hit": SubResource("Animation_tqjrv"),
 &"idle": SubResource("Animation_j02m3"),
@@ -2950,6 +3134,7 @@ metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
 [node name="Turret" parent="." unique_id=1096786705 instance=ExtResource("29_dxprx")]
 position = Vector2(-17, -8)
+multi_shot = true
 ammo_count = 6
 max_ammo = 6
 
@@ -2989,6 +3174,7 @@ script = ExtResource("27_yw64w")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 animation_player = NodePath("../../AnimationPlayer")
+_velocity_x = -50.0
 
 [node name="HIT" type="LimboState" parent="LimboHSM" unique_id=1101422511 node_paths=PackedStringArray("actor", "hurtbox", "animation_player")]
 script = ExtResource("28_yhec4")
@@ -3084,6 +3270,7 @@ metadata/_edit_use_anchors_ = true
 [connection signal="player_sighted" from="VisionHandler" to="." method="_on_vision_handler_player_sighted"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
 [connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]
+[connection signal="entered" from="LimboHSM/DODGE" to="." method="_on_dodge_entered"]
 [connection signal="entered" from="LimboHSM/HIT" to="." method="_on_hit_entered"]
 [connection signal="exited" from="LimboHSM/HIT" to="." method="_on_hit_exited"]
 [connection signal="entered" from="LimboHSM/LAUNCHED" to="." method="_on_launched_entered"]

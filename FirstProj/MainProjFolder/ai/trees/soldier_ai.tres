@@ -83,6 +83,11 @@ var/atk_4/type = 1
 var/atk_4/value = false
 var/atk_4/hint = 0
 var/atk_4/hint_string = ""
+var/dodge/name = &"dodge"
+var/dodge/type = 1
+var/dodge/value = false
+var/dodge/hint = 0
+var/dodge/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_s1wjr"]
 type = 1
@@ -141,6 +146,19 @@ value = SubResource("BBVariant_k3jx5")
 [sub_resource type="BTSequence" id="BTSequence_p7kfe"]
 custom_name = "Falling"
 children = [SubResource("BTCheckVar_x777n")]
+
+[sub_resource type="BBVariant" id="BBVariant_myvia"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_k3jx5"]
+variable = &"dodge"
+value = SubResource("BBVariant_myvia")
+
+[sub_resource type="BTSequence" id="BTSequence_uo0gr"]
+custom_name = "Dodge"
+children = [SubResource("BTCheckVar_k3jx5")]
 
 [sub_resource type="BBVariant" id="BBVariant_qkysk"]
 type = 1
@@ -518,7 +536,7 @@ custom_name = "ShootingStance"
 children = [SubResource("BTSequence_pb4ri"), SubResource("BTSequence_4yj4i")]
 
 [sub_resource type="BTSelector" id="BTSelector_ct688"]
-children = [SubResource("BTSequence_tv5vl"), SubResource("BTSequence_myvia"), SubResource("BTSequence_p7kfe"), SubResource("BTSequence_c1urr"), SubResource("BTSelector_sfx0f")]
+children = [SubResource("BTSequence_tv5vl"), SubResource("BTSequence_myvia"), SubResource("BTSequence_p7kfe"), SubResource("BTSequence_uo0gr"), SubResource("BTSequence_c1urr"), SubResource("BTSelector_sfx0f")]
 
 [sub_resource type="BTSequence" id="BTSequence_vjri2"]
 children = [SubResource("BTCheckVar_qpg7m"), SubResource("BTSelector_ct688")]

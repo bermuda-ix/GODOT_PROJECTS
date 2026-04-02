@@ -94,6 +94,7 @@ var player_state : LimboState
 @onready var launch: Launch = $LimboHSM/LAUNCHED
 @onready var falling: LimboState = $LimboHSM/FALLING
 @onready var landed: LimboState = $LimboHSM/Landed
+@onready var clashed: Clashed = $LimboHSM/Clashed
 
 
 
@@ -160,6 +161,7 @@ func _ready():
 	bt_player.blackboard.set_var("staggered", false)
 	bt_player.blackboard.set_var("launched", false)
 	bt_player.blackboard.set_var("falling", false)
+	bt_player.blackboard.set_var("dodge", false)
 	dying.blackboard.set_var("hit_the_floor", false)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
@@ -193,6 +195,9 @@ func _init_state_machine():
 	state_machine.add_transition(hit, attack, &"hit_recover")
 	state_machine.add_transition(attack, dodge, &"dodge")
 	state_machine.add_transition(dodge, attack, &"dodge_end")
+	state_machine.add_transition(attack, clashed, &"clashed")
+	state_machine.add_transition(clashed, attack, &"counter_attack")
+	state_machine.add_transition(clashed, dodge, &"dodge_back")
 	state_machine.add_transition(launch, hit, &"midair_hit")
 	state_machine.add_transition(launch, falling, &"falling")
 	state_machine.add_transition(hit, falling, &"falling")
@@ -232,15 +237,7 @@ func _process(_delta):
 	bt_player.blackboard.set_var("ammo",ammo_count)
 	dir = to_local(next)
 	norm_delta=_delta
-	#if state_machine.get_active_state()==chasing and is_on_floor() and current_speed!=0:
-		#var dir_test = to_local(nav_agent.get_next_path_position())
-		#if dir_test.x>0:
-			#assert(current_speed>0)
-		#else:
-			#assert(current_speed<0)
-	#elif state_machine.get_active_state()==chasing and is_on_floor():
-		#assert(current_speed!=0)
-	#print_debug(current_speed)
+	vision_handler.get_player_relative_loc()
 	
 	if not is_on_screen and vision_handler.always_on==true and state_machine.get_active_state()!=chasing:
 		state_machine.change_active_state(chasing)
@@ -291,13 +288,7 @@ func _physics_process(delta):
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
 		return
-	#elif  state_machine.get_active_state()==launch:
-		#if not launch_timer.is_stopped():
-			#velocity.y=lerpf(velocity.y, launch.launch_height*10, 0.1)
-			#print_debug(velocity.y)
-			#velocity.x=lerpf(-launch.knock_back_strength, -launch.knock_back_strength/2, 0.5)
-			##global_position.x=lerpf(global_position.x, launch.knocked_back, 0.1)
-			##velocity.y=0
+	
 	elif state_machine.get_active_state()!=launch:
 		velocity.y += gravity * delta
 	else:
@@ -313,7 +304,7 @@ func _physics_process(delta):
 		velocity.x = current_speed + knockback.x
 		velocity.y += gravity * delta
 	else:
-		if state_machine.get_active_state()!=attack and state_machine.get_active_state()!=launch:
+		if state_machine.get_active_state()!=attack and state_machine.get_active_state()!=launch and state_machine.get_active_state()!=dodge:
 			velocity.x= knockback.x
 		
 	#	apply gravity when in air
@@ -342,19 +333,6 @@ func get_width() -> int:
 func get_height() -> int:
 	return collision_shape_2d.get_shape().radius+10
 
-#func atk_resume_helper() -> void:
-	#var _atk_type = melee_attack_manager.get_combo().substr(4, -1)
-	#if _atk_type=="_counter":
-		#bt_player.blackboard.set_var("atk_counter", false)
-		#melee_attack_manager.reset_combo()
-		#bt_player.blackboard.set_var(melee_attack_manager.get_combo(), true)
-	#else:
-		#melee_attack_manager.next_combo()
-		#bt_player.blackboard.set_var(melee_attack_manager.get_combo(), true)
-			#
-	#attack_timer.start(0.3)
-	#bt_player.active=true
-	#attacking=false
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	
@@ -368,8 +346,16 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		attack_timer.start(0.3)
 		bt_player.active=true
 		attacking=false
-	elif anim_name=="dodge":
+	elif anim_name=="clashed":
+		dodge.dodge_anim="dodge_back"
+		dodge.dodge_setup(-400, 0)
+		bt_player.blackboard.set_var("dodge", true)
+		state_machine.dispatch(&"dodge_back")
+	elif anim_name=="dodge_back":
+		bt_player.blackboard.set_var("dodge", false)
 		state_machine.dispatch(&"dodge_end")
+		bt_player.blackboard.set_var("within_range", true)
+		bt_player.restart()
 	
 func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="staggered_entered":
@@ -636,7 +622,7 @@ func _on_hit_box_clashed() -> void:
 	hit_stop.hit_stop(0.05, 0.5)
 	print_debug("clashed!")
 	stagger.stagger-=1
-	melee_attack_manager.atk_resume_helper()
+	state_machine.dispatch(&"clashed")
 	
 
 
@@ -691,3 +677,7 @@ func _on_animation_player_animation_changed(old_name: StringName, new_name: Stri
 		print_debug("w0t")
 	if new_name=="atk_counter":
 		print_debug("starting")
+
+
+func _on_dodge_entered() -> void:
+	movement_handler.active=false

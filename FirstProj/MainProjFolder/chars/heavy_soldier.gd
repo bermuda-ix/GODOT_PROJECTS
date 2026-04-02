@@ -209,6 +209,7 @@ func _process(delta: float) -> void:
 	vision_handler.handle_vision()
 	distance = abs(global_position.x-player.global_position.x)
 	force_chase()
+	vision_handler.get_player_relative_loc()
 	#if ammo_count<0:
 		#print_debug("RELOAD")
 		#animation_player.stop()
