@@ -271,7 +271,7 @@ var sp_atk_type = sp_atk_cone
 var sp_atk_dmg :int = 1
 var thrust : bool = false
 
-var attacking : bool = false
+@export var attacking : bool = false : set = set_attacking
 
 var counter_flag : bool = false
 @onready var counter_timer = $CounterTimer
@@ -435,6 +435,7 @@ func _init_state_machine():
 	state_machine.add_transition(walking, aim, &"aim")
 	state_machine.add_transition(sprint, aim, &"aim")
 	state_machine.add_transition(jump_state, aim, &"aim")
+	state_machine.add_transition(attack_state, aim, &"aim")
 	state_machine.add_transition(aim, special_attack, &"shoot")
 	
 	state_machine.add_transition(special_attack, jump_state, &"return_from_special")
@@ -945,7 +946,7 @@ func attack_animate():
 		#
 	if Input.is_action_pressed("special_attack") and not heavy_attack_buffer_timer.is_stopped():
 		hitbox.active=true
-		attacking=true
+		
 		
 		
 func start_attack_timer() -> void:
@@ -1104,7 +1105,10 @@ func sp_atk():
 	 and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=attack_state:
 		aim_and_shoot()
 	else:
-		heavy_combos()
+		if Input.is_action_pressed("sprint"):
+			aim_and_shoot()
+		else:
+			heavy_combos()
 		
 	
 	#if Input.is_action_pressed("attack") and not special_attack_buffer_timer.is_stopped():
@@ -1122,9 +1126,8 @@ func get_clash_power() -> int:
 
 func heavy_combos():
 	if Input.is_action_just_pressed("special_attack"):
-		if shotgun_lookat_target and Input.is_action_pressed("sprint"):
-			shotgun_shoot()
-		else:
+		if not attacking:
+			attacking=true
 			match attack_state.get_active_state():
 				attack_1:
 					heavy_attack()
@@ -1132,6 +1135,11 @@ func heavy_combos():
 					heavy_attack()
 				attack_3:
 					pass
+
+func set_attacking(value : bool) -> void:
+	if value==true:
+		print_debug("begin_attack")
+	attacking=value
 
 func _on_special_attack_buffer_timer_timeout() -> void:
 	if state_machine.get_active_state()==attack_state:
