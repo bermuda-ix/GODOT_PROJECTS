@@ -1116,7 +1116,7 @@ func sp_atk():
 		#heavy_attack()
 		
 func aim_and_shoot():
-	if (Input.is_action_pressed("special_attack"))	and heavy_attack_buffer_timer.is_stopped():
+	if (Input.is_action_pressed("special_attack"))	and not attacking:
 		state_machine.dispatch(&"aim")
 	elif Input.is_action_just_released("special_attack"):
 		state_machine.dispatch(&"shoot")
