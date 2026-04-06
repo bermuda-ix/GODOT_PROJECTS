@@ -347,15 +347,22 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		bt_player.active=true
 		attacking=false
 	elif anim_name=="clashed":
-		dodge.dodge_anim="dodge_back"
-		dodge.dodge_setup(-400, 0)
+		var _dodge_chance = randi_range(0,1)
+		if _dodge_chance==0:
+			dodge.dodge_anim="dodge_forward"
+			dodge.dodge_setup(150, 0)
+		else:
+			dodge.dodge_anim="dodge_back"
+			dodge.dodge_setup(-400, 0)
 		bt_player.blackboard.set_var("dodge", true)
 		state_machine.dispatch(&"dodge_back")
-	elif anim_name=="dodge_back":
+	elif anim_name==dodge.dodge_anim:
 		bt_player.blackboard.set_var("dodge", false)
 		state_machine.dispatch(&"dodge_end")
 		bt_player.blackboard.set_var("within_range", true)
+		set_collision_layer_value(15, true)
 		bt_player.restart()
+		melee_attack_manager.atk_resume_helper()
 	
 func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="staggered_entered":
@@ -438,7 +445,7 @@ func _on_navigation_timer_timeout() -> void:
 func _on_stagger_staggered() -> void:
 	bt_player.restart()
 	parry_timer.start(5)
-	hb_collision.disabled=true
+	hb_collision.set_deferred("disabled", true)
 	if state_machine.get_active_state()!=launch:
 		bt_player.blackboard.set_var("staggered", true)
 		state_machine.change_active_state(staggered)

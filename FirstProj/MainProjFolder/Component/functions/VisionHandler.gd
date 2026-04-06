@@ -28,6 +28,7 @@ func get_player_relative_loc():
 		actor.player_right=true
 	else:
 		actor.player_right=false
+		
 
 func handle_vision():
 	player_colliding=player_tracking.is_colliding()
