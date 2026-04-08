@@ -1112,7 +1112,7 @@ tracks/9/path = NodePath("AnimatedSprite2D/AttackVFX:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0.033333335, 0.23333333, 0.25937206, 0.4, 0.41666666, 0.56666666),
+"times": PackedFloat32Array(0.033333335, 0.06666667, 0.1, 0.4, 0.41666666, 0.56666666),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [false, false, true, true, false, false]
@@ -1160,10 +1160,10 @@ tracks/13/path = NodePath("AnimatedSprite2D/AttackVFX:instance_shader_parameters
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.26666668),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(0.76270527, 1.8247963, 0.67885596, 1)]
+"values": [Color(1.401985, 3.2944162, 1.2525827, 1), Color(1.401985, 3.2944162, 1.2525827, 1), Color(0.76270527, 1.8247963, 0.67885596, 1)]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
@@ -1298,7 +1298,7 @@ tracks/9/path = NodePath("AnimatedSprite2D/AttackVFX:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0.033333335, 0.23333333, 0.43838838, 0.53333336, 0.56666666, 0.74568295),
+"times": PackedFloat32Array(0.033333335, 0.13333334, 0.16666666, 0.53333336, 0.56666666, 0.74568295),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [false, false, true, true, false, false]
@@ -1358,10 +1358,10 @@ tracks/14/path = NodePath("AnimatedSprite2D/AttackVFX:instance_shader_parameters
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.33333334, 0.4436885),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(0.76270527, 1.8247963, 0.67885596, 1)]
+"values": [Color(1.401985, 3.2944162, 1.2525827, 1), Color(1.401985, 3.2944162, 1.2525827, 1), Color(0.76270527, 1.8247963, 0.67885596, 1)]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
@@ -1496,7 +1496,7 @@ tracks/9/path = NodePath("AnimatedSprite2D/AttackVFX:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0.033333335, 0.23333333, 0.40505505, 0.545683, 0.5623497, 0.71234965),
+"times": PackedFloat32Array(0.033333335, 0.13333334, 0.2, 0.545683, 0.5623497, 0.71234965),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [false, false, true, true, false, false]
@@ -1556,10 +1556,10 @@ tracks/14/path = NodePath("AnimatedSprite2D/AttackVFX:instance_shader_parameters
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.26666668, 0.42579785),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(0.76270527, 1.8247963, 0.67885596, 1)]
+"values": [Color(1.401985, 3.2944162, 1.2525827, 1), Color(1.401985, 3.2944162, 1.2525827, 1), Color(0.76270527, 1.8247963, 0.67885596, 1)]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
@@ -3105,7 +3105,7 @@ one_shot = true
 [node name="LaunchTimer" type="Timer" parent="." unique_id=813462658]
 one_shot = true
 
-[node name="HitBox" type="Area2D" parent="." unique_id=1236886276 node_paths=PackedStringArray("stagger")]
+[node name="HitBox" type="Area2D" parent="." unique_id=1236886276 node_paths=PackedStringArray("stagger") groups=["hitbox"]]
 position = Vector2(29, 19)
 collision_layer = 8
 collision_mask = 128
@@ -3117,7 +3117,7 @@ metadata/_custom_type_script = "uid://5ijvah6jjgdb"
 shape = SubResource("RectangleShape2D_3nf0a")
 disabled = true
 
-[node name="HurtBox" type="Area2D" parent="." unique_id=1540858505 node_paths=PackedStringArray("health", "stagger")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=1540858505 node_paths=PackedStringArray("health", "stagger") groups=["regular_enemy_hb"]]
 position = Vector2(0, -22)
 collision_layer = 16
 collision_mask = 8405056

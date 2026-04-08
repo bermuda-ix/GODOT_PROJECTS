@@ -24,6 +24,7 @@ var always_active : bool
 @onready var jump_timer = $JumpTimer
 @onready var movement_handler: MovementHandler = $MovementHandler
 @onready var knocked_back : bool = false
+@onready var teleport_handler: TeleportHandler = $TeleportHandler
 
 
 #Cutscene Vars
@@ -136,6 +137,8 @@ var distance
 @onready var launch: Launch = $LimboHSM/Launch
 @onready var falling: LimboState = $LimboHSM/Falling
 @onready var landed: LimboState = $LimboHSM/Landed
+@onready var clashed: Clashed = $LimboHSM/Clashed
+@onready var teleport: LimboState = $LimboHSM/Teleport
 
 
 
@@ -228,6 +231,11 @@ func _init_state_machine():
 	state_machine.add_transition(launch, falling, &"falling")
 	state_machine.add_transition(falling, landed, &"landed")
 	state_machine.add_transition(landed, attack, &"resume_attack")
+	
+	state_machine.add_transition(attack, clashed, &"clashed")
+	state_machine.add_transition(clashed, teleport, &"teleport")
+	#state_machine.add_transition(clashed, dodge, &"dodge_back")
+	
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -408,12 +416,13 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		attack_timer.start(0.3)
 		bt_player.active=true
 		attacking=false
+	elif anim_name=="clashed":
+		state_machine.dispatch(&"teleport")
+		
 	elif anim_name=="dodge":
 		state_machine.dispatch(&"dodge_end")
 		bt_player.active=true
 			
-
-
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
@@ -619,11 +628,12 @@ func _on_hit_box_clashed() -> void:
 	hit_stop.hit_stop(0.05, 0.5)
 	print_debug("clashed!")
 	stagger.stagger-=1
-	melee_attack_manager.atk_resume_helper()
-	if player_right:
-		knockback.x=-200
-	else:
-		knockback.x=200
+	#if player_right:
+		#knockback.x=-200
+	#else:
+		#knockback.x=200
+	state_machine.dispatch(&"clashed")
+	
 
 
 func _on_hit_box_clash_launch(_launch: float) -> void:
@@ -753,3 +763,12 @@ func _on_landed_landed() -> void:
 func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="staggered_entered":
 		vfx_player.play("staggered")
+
+
+func _on_teleport_away_entered() -> void:
+	animation_player.play("teleport_start")
+	await animation_player.animation_finished
+	teleport_handler.teleport_to(false, player.global_position)
+	animation_player.play("teleport_end")
+	await animation_player.animation_finished
+	state_machine.dispatch(&"resume_attack")

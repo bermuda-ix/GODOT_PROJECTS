@@ -470,8 +470,6 @@ func teleport_away() -> void:
 	var _tele_right := 100
 	var _tele_height := 80
 	
-	
-		
 	if player_right:
 		global_position=teleport_handler.teleport((global_position.x+_tele_left), (global_position.y- _tele_height), global_position)
 	else:

@@ -334,6 +334,25 @@ func get_height() -> int:
 	return collision_shape_2d.get_shape().radius+10
 
 
+func dodge_counter() -> void:
+	var _dodge_chance = randi_range(0,1)
+	if _dodge_chance==0:
+		dodge.dodge_anim="dodge_forward"
+		dodge.dodge_setup(150, 0)
+	else:
+		dodge.dodge_anim="dodge_back"
+		dodge.dodge_setup(-400, 0)
+	bt_player.blackboard.set_var("dodge", true)
+	state_machine.dispatch(&"dodge_back")
+
+func dodge_end() -> void:
+	bt_player.blackboard.set_var("dodge", false)
+	state_machine.dispatch(&"dodge_end")
+	bt_player.blackboard.set_var("within_range", true)
+	set_collision_layer_value(15, true)
+	bt_player.restart()
+	melee_attack_manager.atk_resume_helper()
+	
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	
 	if anim_name.substr(0, 3)=="atk":
@@ -346,23 +365,13 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		attack_timer.start(0.3)
 		bt_player.active=true
 		attacking=false
+		
+		
 	elif anim_name=="clashed":
-		var _dodge_chance = randi_range(0,1)
-		if _dodge_chance==0:
-			dodge.dodge_anim="dodge_forward"
-			dodge.dodge_setup(150, 0)
-		else:
-			dodge.dodge_anim="dodge_back"
-			dodge.dodge_setup(-400, 0)
-		bt_player.blackboard.set_var("dodge", true)
-		state_machine.dispatch(&"dodge_back")
+		dodge_counter()
+		
 	elif anim_name==dodge.dodge_anim:
-		bt_player.blackboard.set_var("dodge", false)
-		state_machine.dispatch(&"dodge_end")
-		bt_player.blackboard.set_var("within_range", true)
-		set_collision_layer_value(15, true)
-		bt_player.restart()
-		melee_attack_manager.atk_resume_helper()
+		dodge_end()
 	
 func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="staggered_entered":
@@ -636,6 +645,7 @@ func _on_hit_box_clashed() -> void:
 	print_debug("clashed!")
 	stagger.stagger-=1
 	state_machine.dispatch(&"clashed")
+	
 	
 
 

@@ -2849,7 +2849,7 @@ shape = SubResource("RectangleShape2D_86qvh")
 disabled = true
 one_way_collision_margin = 0.0
 
-[node name="HitBox" type="Area2D" parent="." unique_id=403153839 node_paths=PackedStringArray("stagger") groups=["hitbox", "regular_enemy_hb"]]
+[node name="HitBox" type="Area2D" parent="." unique_id=403153839 node_paths=PackedStringArray("stagger") groups=["hitbox"]]
 position = Vector2(0, -39)
 collision_layer = 8
 collision_mask = 192
@@ -2865,7 +2865,7 @@ position = Vector2(-11, 26)
 shape = SubResource("CapsuleShape2D_pk3h2")
 disabled = true
 
-[node name="HurtBox" type="Area2D" parent="." unique_id=50613339 node_paths=PackedStringArray("health", "stagger")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=50613339 node_paths=PackedStringArray("health", "stagger") groups=["regular_enemy_hb"]]
 position = Vector2(0, -39)
 collision_layer = 16
 collision_mask = 8413248

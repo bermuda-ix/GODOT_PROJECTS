@@ -4,5 +4,6 @@ class_name Clashed extends LimboState
 @export var state_machine : LimboHSM
 
 func _enter() -> void:
-	anim_player.play("clashed")
-	
+	if anim_player.has_animation("clashed"):
+		anim_player.play("clashed")
+	AudioStreamManager.play(SoundFx.SOCAPEX_SWORDSMALL_2)

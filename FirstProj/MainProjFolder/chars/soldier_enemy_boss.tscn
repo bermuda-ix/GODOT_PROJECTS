@@ -3326,7 +3326,7 @@ stagger = NodePath("../Stagger")
 shape = SubResource("RectangleShape2D_xhp7j")
 debug_color = Color(0.913049, 0.224478, 0.48102, 0.42)
 
-[node name="HitBox" parent="." index="24" node_paths=PackedStringArray("stagger") groups=["regular_enemy_hb"]]
+[node name="HitBox" parent="." index="24" node_paths=PackedStringArray("stagger") groups=["hitbox"]]
 stagger = NodePath("../Stagger")
 knock_back_strength = 50.0
 
@@ -3466,8 +3466,9 @@ state_machine = NodePath("../LimboHSM")
 bt_player = NodePath("../BTPlayer")
 metadata/_custom_type_script = "uid://d04qf1jqrfg1h"
 
-[node name="TeleportHandler" type="Node" parent="." index="44" unique_id=1495505504 node_paths=PackedStringArray("teleport_dir_helper_rc")]
+[node name="TeleportHandler" type="Node" parent="." index="44" unique_id=1495505504 node_paths=PackedStringArray("actor", "teleport_dir_helper_rc")]
 script = ExtResource("141_7r4t8")
+actor = NodePath("..")
 teleport_dir_helper_rc = NodePath("../RayCast2D")
 metadata/_custom_type_script = "uid://c4uno006dp70c"
 

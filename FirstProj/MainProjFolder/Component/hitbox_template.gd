@@ -35,15 +35,17 @@ func get_damage() -> int:
 func _on_parried(_area :Area2D) -> void:
 	
 	if _area!= null:
-		if _area.is_in_group("regular_enemy_hb"):
-			_area.active=false
+		if _area.is_in_group("hitbox"):
+			if "active" in _area:
+				_area.active=false
 			#active=false
 			damage = 0
 			knock_back = false
 			launch = false
 			clashed.emit()
 		elif _area.is_in_group("player_hitbox"):
-			_area.active=false
+			if "active" in _area:
+				_area.active=false
 			#active=false
 			damage = 0
 			knock_back = false

@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="6_82t0r"]
 [ext_resource type="PackedScene" uid="uid://bpfhslfhbjfti" path="res://chars/TEST_CHARS/training_dummy.tscn" id="7_t1ldw"]
 [ext_resource type="PackedScene" uid="uid://msi33x3r5d1d" path="res://chars/TEST_CHARS/test_dummy_v2.tscn" id="9_dqkb5"]
-[ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="10_0atxr"]
+[ext_resource type="PackedScene" uid="uid://b5d2nkkrrcixy" path="res://chars/soldier_enemy.tscn" id="10_0atxr"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="10_gem31"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="11_fof0c"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="12_dqkb5"]
@@ -483,8 +483,8 @@ position = Vector2(1325, 86)
 [node name="TestDummyV2" parent="Enemies" index="1" unique_id=2043234278 groups=["Enemy"] instance=ExtResource("9_dqkb5")]
 position = Vector2(1331, -12.999992)
 
-[node name="GuardEnemy" parent="Enemies" index="2" unique_id=2034909694 instance=ExtResource("10_0atxr")]
-position = Vector2(949, 81)
+[node name="soldier_enemy" parent="Enemies" index="2" unique_id=1345590317 instance=ExtResource("10_0atxr")]
+position = Vector2(1000, 75)
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]
 position = Vector2(1260, 1)
