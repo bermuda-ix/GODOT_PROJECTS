@@ -552,7 +552,10 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	if damage<=health.health:
 		if state_machine.get_active_state()!=staggered:
 			parry_timer.start(0.5)
-		if (state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death):
+		else:
+			animation_player.play("hit")
+			AudioStreamManager.play(SoundFx.SOCAPEX_NEW_HITS_2)
+		if (state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death and state_machine.get_active_state()!=staggered):
 			state_machine.dispatch(&"hit")
 		
 		#set_state(current_state, States.HIT)
@@ -689,7 +692,7 @@ func _on_shield_area_entered(area: Area2D) -> void:
 	health.set_temporary_immortality(0.5)
 
 
-func _on_hit_box_clash_knock_back(_launch : float, _knockback : float) -> void:
+func _on_hit_box_clash_knock_back(_launch : float, _knockback : float, _impact_dir_right : bool) -> void:
 	knocked_back=true
 	hurt_box.shielded=false
 	vfx_player.play("knocked_back")
@@ -753,7 +756,7 @@ func _on_landed_entered() -> void:
 	animation_player.play("landed")
 
 
-func _on_hurt_box_knockback(_launch_strength: float, _knock_back_strength: float) -> void:
+func _on_hurt_box_knockback(_launch_strength: float, _knock_back_strength: float, _impact_dir_right: bool) -> void:
 	knocked_back=true
 	vfx_player.play("knocked_back")
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage

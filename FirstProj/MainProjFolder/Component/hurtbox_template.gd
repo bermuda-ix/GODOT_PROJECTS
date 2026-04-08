@@ -22,6 +22,7 @@ signal knockback(launch_strength : float, knock_back_strength : float)
 
 @export var shielded : bool = false
 @export var knockback_active : bool = true
+@onready var impact_dir_right : bool = false
 
 
 func _ready():
@@ -46,8 +47,12 @@ func _on_area_entered(hitbox: HitBox) -> void:
 			#if hitbox.launch:
 				#launched.emit(hitbox.launch_strength)
 			if hitbox.knock_back:
+				if hitbox.global_position.x > global_position.x:
+					impact_dir_right=true
+				else:
+					impact_dir_right=false
 				print_debug(hitbox.launch_strength, ", ", hitbox.knock_back_strength)
-				knockback.emit(hitbox.launch_strength, hitbox.knock_back_strength)
+				knockback.emit(hitbox.launch_strength, hitbox.knock_back_strength, impact_dir_right)
 		
 			if hitbox.is_in_group("spc_atk"):
 				weakpoint_hit.emit()
@@ -104,7 +109,11 @@ func _knocked_back_enemy_collision(_body : CharacterBody2D):
 		if _body.knocked_back == false:
 			return
 		else:
-			knockback.emit(_launch_strength, _body.velocity.x/2)
+			if _body.velocity.x >0:
+				impact_dir_right=false
+			else:
+				impact_dir_right=true
+			knockback.emit(_launch_strength, _body.velocity.x/2, impact_dir_right)
 			#knockback.x=_rigid_body.velocity.x/2
 			stagger.staggered.emit()
 			Events.camera_shake.emit(2,20)

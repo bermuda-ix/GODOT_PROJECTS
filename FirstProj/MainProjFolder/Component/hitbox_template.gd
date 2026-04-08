@@ -10,7 +10,7 @@ signal clash_knock_back(_launch: float, _knockback : float)
 @export var stagger: Stagger
 @export var stagger_damage : bool = false
 @export var active : bool = false : set = set_active
-
+@export var heavy_attack : bool = false
 
 @export var launch : bool = false
 @export var knock_back : bool = false
@@ -18,6 +18,7 @@ signal clash_knock_back(_launch: float, _knockback : float)
 @export var knock_back_strength : float = 100.0
 
 @onready var shield_hit : bool = false
+@onready var impact_dir_right : bool = false
 
 
 func _ready():
@@ -38,7 +39,16 @@ func _on_parried(_area :Area2D) -> void:
 		if _area.is_in_group("hitbox"):
 			if "active" in _area:
 				_area.active=false
-			#active=false
+			if "heavy_attack" in _area:
+				if _area.heavy_attack:
+					if _area.global_position.x > global_position.x:
+						impact_dir_right=true
+					else:
+						impact_dir_right=false
+					clash_knock_back.emit(_area.launch_strength, _area.knock_back_strength, impact_dir_right)
+					_area.heavy_attack=false
+				else:
+					pass
 			damage = 0
 			knock_back = false
 			launch = false

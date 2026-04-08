@@ -14,7 +14,7 @@ func _enter() -> void:
 	#animation_player.stop()
 	animation_player.play("hit")
 	#actor.hurt_box_collision.disabled=true
-	hurtbox.set_collision_layer_value(7, false)
+	#hurtbox.set_collision_layer_value(7, false)
 	
 	
 	

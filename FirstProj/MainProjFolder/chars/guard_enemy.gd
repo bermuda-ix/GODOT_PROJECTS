@@ -488,6 +488,9 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		if state_machine.get_active_state()!=staggered:
 			parry_timer.start(0.1)
 			state_machine.dispatch(&"hit")
+		else:
+			animation_player.play("hit")
+			AudioStreamManager.play(SoundFx.SOCAPEX_NEW_HITS_2)
 		gpu_particles_2d.restart()
 		gpu_particles_2d.emitting=true
 		melee_attack_manager.atk_resume_helper()
@@ -606,7 +609,7 @@ func _on_hurt_box_launched(launch_strength: float) -> void:
 	state_machine.change_active_state(launch)
 
 
-func _on_hurt_box_knockback(_launch_strength : float, _knock_back_strength : float) -> void:
+func _on_hurt_box_knockback(_launch_strength : float, _knock_back_strength : float, _impact_dir_right : bool) -> void:
 	player.clash_up.emit()
 	vfx_player.play("knocked_back")
 	hit_stop.hit_stop(0.5, 0.5)
@@ -649,7 +652,7 @@ func _on_hit_box_clashed() -> void:
 	
 
 
-func _on_hit_box_clash_knock_back(_launch : float, _knockback : float) -> void:
+func _on_hit_box_clash_knock_back(_launch : float, _knockback : float, _impact_dir_right: bool) -> void:
 	knocked_back=true
 	vfx_player.play("knocked_back")
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage

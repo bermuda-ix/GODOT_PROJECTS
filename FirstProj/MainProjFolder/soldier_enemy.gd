@@ -20,6 +20,7 @@ var always_active : bool
 @onready var animated_sprite_2d = $AnimatedSprite2D as AnimatedSprite2D
 @onready var animation_player = $AnimationPlayer as AnimationPlayer
 @onready var vfx_player: AnimationPlayer = $AnimationPlayer/VFXPlayer
+@onready var audio_fx: AudioStreamPlayer2D = $AnimatedSprite2D/VFXSprite/AudioFX
 @onready var nav_agent = $NavigationAgent2D
 @onready var jump_timer = $JumpTimer
 @onready var movement_handler: MovementHandler = $MovementHandler
@@ -531,6 +532,9 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		if state_machine.get_active_state()!=staggered:
 			parry_timer.start(0.5)
 			state_machine.dispatch(&"hit")
+		else:
+			animation_player.play("hit")
+			AudioStreamManager.play(SoundFx.SOCAPEX_NEW_HITS_2)
 		hit_stop.hit_stop(0.05,0.25)
 		#set_state(current_state, States.HIT)
 		gpu_particles_2d.emitting=true
@@ -628,10 +632,10 @@ func _on_hit_box_clashed() -> void:
 	hit_stop.hit_stop(0.05, 0.5)
 	print_debug("clashed!")
 	stagger.stagger-=1
-	#if player_right:
-		#knockback.x=-200
-	#else:
-		#knockback.x=200
+	if player_right:
+		knockback.x=-200
+	else:
+		knockback.x=200
 	state_machine.dispatch(&"clashed")
 	
 
@@ -640,7 +644,7 @@ func _on_hit_box_clash_launch(_launch: float) -> void:
 	pass # Replace with function body.
 
 
-func _on_hit_box_clash_knock_back(_launch : float, _knockback : float) -> void:
+func _on_hit_box_clash_knock_back(_launch : float, _knockback : float, _impact_dir_right : bool) -> void:
 	knocked_back=true
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
@@ -718,8 +722,12 @@ func _on_hurt_box_launched(launch_strength: float) -> void:
 	state_machine.change_active_state(launch)
 
 
-func _on_hurt_box_knockback(knock_back_strength: float) -> void:
-	launch.launch_strength=knock_back_strength
+func _on_hurt_box_knockback(_launch : float, _knockback : float, _impact_dir_right : bool) -> void:
+	launch.launch_strength=_launch
+	if _impact_dir_right:
+		launch.knock_back_strength=-_knockback
+	else:
+		launch.knock_back_strength=-_knockback
 	state_machine.change_active_state(launch)
 
 

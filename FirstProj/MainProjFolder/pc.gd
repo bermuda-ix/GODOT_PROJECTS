@@ -345,6 +345,9 @@ func _ready():
 	Events.get_player_data.connect(init_player_data)
 	_new_health=health.health
 	
+	#Connecting knockback signals
+	
+	
 func _init_state_machine():
 	state_machine.initial_state=idle
 	state_machine.initialize(self)
@@ -2434,12 +2437,19 @@ func _on_clash_up() -> void:
 	clash_power.increase_clash()
 
 
-func _on_hurt_box_knockback(knock_back_strength: float) -> void:
-	knockback.x=knock_back_strength*(face_dir)
-	#print_debug(velocity.x)
-	#print_debug(knockback.x)
+#func _on_hurt_box_knockback(knock_back_strength: float) -> void:
+	#knockback.x=knock_back_strength*(face_dir)
+	##print_debug(velocity.x)
+	##print_debug(knockback.x)
 	
-
+func _on_knockback(_launch_strength : float, _knockback_strength : float, impact_dir_right : bool) -> void:
+	if stagger.stagger>0:
+		_launch_strength=roundf(_launch_strength/stagger.stagger)
+		_knockback_strength=roundf(_knockback_strength/stagger.stagger)
+	if impact_dir_right:
+		_knockback_strength*=-1
+	knockback.x=_knockback_strength*(face_dir)
+	velocity.y= -(_launch_strength)
 
 func _on_hit_box_clashed() -> void:
 	clash_power.increase_clash()
