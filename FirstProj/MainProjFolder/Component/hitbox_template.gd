@@ -14,7 +14,7 @@ signal clash_knock_back(_launch: float, _knockback : float)
 
 @export var launch : bool = false
 @export var knock_back : bool = false
-@export var launch_strength : float = 40.0
+@export var launch_strength : float = 0.0
 @export var knock_back_strength : float = 100.0
 
 @onready var shield_hit : bool = false

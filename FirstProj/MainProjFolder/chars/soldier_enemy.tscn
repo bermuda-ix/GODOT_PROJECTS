@@ -1946,6 +1946,50 @@ animations = [{
 "loop": true,
 "name": &"atk_2",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("120_s8x7q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("121_i0fse")
+}, {
+"duration": 1.0,
+"texture": ExtResource("122_14rgm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("123_hq2or")
+}, {
+"duration": 1.0,
+"texture": ExtResource("124_44e62")
+}, {
+"duration": 1.0,
+"texture": ExtResource("125_m14b4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("126_exxvn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("127_imtcj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("128_i4s6h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("129_wc3fj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("130_ftii2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("131_jt08e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("132_srvoq")
+}],
+"loop": true,
+"name": &"dwn_atk",
+"speed": 5.0
 }]
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_1dxn7"]
@@ -2277,6 +2321,78 @@ tracks/26/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("HitBox:knock_back")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("HitBox:launch_strength")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("HitBox:knock_back_strength")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [100.0]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("HitBox:heavy_attack")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("AnimatedSprite2D/VFXSprite:instance_shader_parameters/MaskColor")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.45669794, 0.90440625, 0.84567034, 1)]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("AnimatedSprite2D/VFXSprite:instance_shader_parameters/GlowColor")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2.684356, 0.7794749, 0, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_0vyy2"]
@@ -2962,7 +3078,7 @@ tracks/12/keys = {
 "times": PackedFloat32Array(0, 0.38550222, 0.4066394, 0.625, 1.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [Color(1.0866501, 0.0134035135, 6.609165, 1), Color(1.740947, 0.62994397, 1.7758842, 1), Color(0.56006944, 0.853542, 1.8247963, 1), Color(0.7207807, 1.8247963, 1.8247963, 1), Color(1.0409292, 1.5638378, 3.2944162, 1)]
+"values": [Color(1.0866501, 0.0134035135, 6.609165, 1), Color(1.740947, 0.62994397, 1.7758842, 1), Color(0.56006944, 0.853542, 1.8247963, 1), Color(2.684356, 0.7794749, 0, 1), Color(1.0409292, 1.5638378, 3.2944162, 1)]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
@@ -2971,10 +3087,10 @@ tracks/13/path = NodePath("AnimatedSprite2D/VFXSprite:instance_shader_parameters
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.375, 0.4, 0.62787396, 0.65517265, 1.3036811),
+"times": PackedFloat32Array(0, 0.375, 0.4, 0.62787396, 0.65, 1.3036811),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Color(0.22293329, 0.0478103, 0.22834435, 1), Color(0.22293329, 0.0478103, 0.22834435, 1), Color(0.053559586, 0.057939515, 0.09077182, 1), Color(0.28235295, 0.44705883, 0.98039216, 1), Color(0.22637582, 0.49505275, 0.4371402, 1), Color(0.56078434, 0.8901961, 0.8117647, 1)]
+"values": [Color(0.22293329, 0.0478103, 0.22834435, 1), Color(0.22293329, 0.0478103, 0.22834435, 1), Color(0.053559586, 0.057939515, 0.09077182, 1), Color(0.28235295, 0.44705883, 0.98039216, 1), Color(0.45669794, 0.90440625, 0.84567034, 1), Color(0.56078434, 0.8901961, 0.8117647, 1)]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
@@ -3073,6 +3189,54 @@ tracks/21/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("HitBox:knock_back")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("HitBox:launch_strength")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [20.0]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("HitBox:knock_back_strength")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [100.0]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("HitBox:heavy_attack")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_0nqgj"]
@@ -3814,7 +3978,6 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_buxyb"]
 resource_name = "shoot"
 length = 0.6
-loop_mode = 1
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -3885,7 +4048,7 @@ tracks/5/path = NodePath("AnimatedSprite2D/AttackVFX:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.14603727),
+"times": PackedFloat32Array(0, 0.25, 0.35),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -3909,7 +4072,7 @@ tracks/7/path = NodePath("AnimatedSprite2D/AttackVFX:frame")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.2, 0.22917838),
+"times": PackedFloat32Array(0.27499998, 0.30417836),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 1]
@@ -3949,6 +4112,18 @@ tracks/10/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(3.2944162, 1.6634394, 1.0782797, 1)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimatedSprite2D/AttackVFX:rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_2kcob"]
@@ -4054,7 +4229,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 0, 0, 1)]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -4265,6 +4440,90 @@ tracks/19/keys = {
 "update": 0,
 "values": [Vector2(0, -32), Vector2(0, -32), Vector2(0, -24)]
 }
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("HitBox:knock_back")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("HitBox:launch_strength")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [20.0]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("HitBox:knock_back_strength")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [100.0]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("HitBox:heavy_attack")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("AnimatedSprite2D/VFXSprite:visible")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("AnimatedSprite2D/VFXSprite:instance_shader_parameters/GlowColor")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 0.275),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(3.2944162, 0.5927219, 0.3312676, 1), Color(2.684356, 0.7794749, 0, 1)]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("AnimatedSprite2D/VFXSprite:instance_shader_parameters/MaskColor")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0.275),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.45669794, 0.90440625, 0.84567034, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_r1f6l"]
 resource_name = "teleport_start"
@@ -4380,6 +4639,30 @@ tracks/8/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedSprite2D/VFXSprite:instance_shader_parameters/MaskColor")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.1534343, 0.77827036, 0.4609301, 1)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AnimatedSprite2D/VFXSprite:instance_shader_parameters/GlowColor")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2.1496465, 0.16047597, 1.8722218, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c6g3t"]
@@ -4787,7 +5070,6 @@ process_material = SubResource("ParticleProcessMaterial_j0qvy")
 [node name="VFXSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D" index="1" unique_id=925836022]
 visible = false
 modulate = Color(3.4265816, 3.4265816, 3.4265816, 1)
-self_modulate = Color(0, 0, 0, 1)
 material = SubResource("ShaderMaterial_swwb7")
 instance_shader_parameters/FloatParameter = 0.002000000095
 instance_shader_parameters/GlowColor = Color(0, 0, 0, 1)
@@ -4805,11 +5087,12 @@ max_polyphony = 4
 visible = false
 material = SubResource("ShaderMaterial_mf8bn")
 instance_shader_parameters/FloatParameter = 0.002000000095
-instance_shader_parameters/GlowColor = Color(1.401985, 3.2944162, 1.2525827, 1)
-instance_shader_parameters/MaskColor = Color(0.45452422, 0.45452428, 0.45452422, 1)
+instance_shader_parameters/GlowColor = Color(3.2944162, 1.6634394, 1.0782797, 1)
+instance_shader_parameters/MaskColor = Color(0.45407635, 0.46974182, 0.32481256, 1)
 position = Vector2(-28, 21)
 sprite_frames = SubResource("SpriteFrames_onvjj")
-animation = &"atk_1"
+animation = &"Shoot"
+frame = 1
 flip_h = true
 
 [node name="AnimationPlayer" parent="." index="2" groups=["regular_enemy_hb"]]
@@ -4875,14 +5158,20 @@ one_shot = true
 position = Vector2(0, -24)
 script = ExtResource("57_d6os8")
 
-[node name="HurtBox" parent="." index="22" node_paths=PackedStringArray("health", "stagger") groups=["regular_enemy_hb"]]
+[node name="HurtBox" parent="." index="22" node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["regular_enemy_hb"]]
 collision_mask = 8397376
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
+back_attack_flag = NodePath("BackAttackFlag")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0" unique_id=904485034]
 shape = SubResource("RectangleShape2D_xhp7j")
 debug_color = Color(0.913049, 0.224478, 0.48102, 0.42)
+
+[node name="BackAttackFlag" type="RayCast2D" parent="HurtBox" index="1" unique_id=1168979820]
+position = Vector2(1, -20)
+target_position = Vector2(92, 0)
+collision_mask = 2
 
 [node name="HitBox" parent="." index="23" node_paths=PackedStringArray("stagger") groups=["hitbox"]]
 stagger = NodePath("../Stagger")

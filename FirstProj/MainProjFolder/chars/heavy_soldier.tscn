@@ -2865,13 +2865,14 @@ position = Vector2(-11, 26)
 shape = SubResource("CapsuleShape2D_pk3h2")
 disabled = true
 
-[node name="HurtBox" type="Area2D" parent="." unique_id=50613339 node_paths=PackedStringArray("health", "stagger") groups=["regular_enemy_hb"]]
+[node name="HurtBox" type="Area2D" parent="." unique_id=50613339 node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["regular_enemy_hb"]]
 position = Vector2(0, -39)
 collision_layer = 16
 collision_mask = 8413248
 script = ExtResource("15_8nnwq")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
+back_attack_flag = NodePath("BackAttackFlag")
 shielded = true
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
@@ -2879,13 +2880,19 @@ metadata/_custom_type_script = "uid://bet3nodk2voxv"
 position = Vector2(6.5, 27.5)
 shape = SubResource("RectangleShape2D_o2fe2")
 
-[node name="HurtBox_Weakpoint" type="Area2D" parent="." unique_id=314062531 node_paths=PackedStringArray("health", "stagger")]
+[node name="BackAttackFlag" type="RayCast2D" parent="HurtBox" unique_id=790806504]
+position = Vector2(14, 30)
+target_position = Vector2(92, 0)
+collision_mask = 2
+
+[node name="HurtBox_Weakpoint" type="Area2D" parent="." unique_id=314062531 node_paths=PackedStringArray("health", "stagger", "back_attack_flag")]
 position = Vector2(0, -39)
 collision_layer = 16
 collision_mask = 8256
 script = ExtResource("15_8nnwq")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
+back_attack_flag = NodePath("../HurtBox/BackAttackFlag")
 dmg_mult = 2
 weakpoint = true
 metadata/_custom_type_script = "uid://bet3nodk2voxv"

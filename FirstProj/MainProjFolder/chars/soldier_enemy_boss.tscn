@@ -193,7 +193,14 @@
 [ext_resource type="BehaviorTree" uid="uid://cryvbc7fjtiqp" path="res://ai/trees/soldier_boss_trees/phase_transition.tres" id="139_aukkt"]
 [ext_resource type="Script" uid="uid://c4uno006dp70c" path="res://Component/functions/TeleportHandler.gd" id="141_7r4t8"]
 [ext_resource type="Script" uid="uid://eulrkc0hl0ww" path="res://Component/functions/PhasesHandler.gd" id="142_qstkj"]
+[ext_resource type="Texture2D" uid="uid://dyjyc3cyn746a" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Shoot/shoot01.png" id="148_58mng"]
+[ext_resource type="Texture2D" uid="uid://pqg4g00kit6" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Shoot/shoot02.png" id="149_dl6qc"]
 [ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="150_87q8v"]
+[ext_resource type="Texture2D" uid="uid://c5rydbynprxq4" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_01.png" id="150_sr808"]
+[ext_resource type="Texture2D" uid="uid://bb7ulyxk1bcwl" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_02.png" id="151_crmns"]
+[ext_resource type="Texture2D" uid="uid://bkpxhxq6jd3iq" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_03.png" id="152_8xulu"]
+[ext_resource type="Texture2D" uid="uid://c2safri3xr8y7" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_04.png" id="153_5u5ds"]
+[ext_resource type="Texture2D" uid="uid://cqpelmj4ie8mt" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_05.png" id="154_fnbuc"]
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="189_ia0g3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_chkyp"]
@@ -1815,6 +1822,69 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fliv7"]
+shader = ExtResource("106_apghb")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_725ad"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("148_58mng")
+}, {
+"duration": 1.0,
+"texture": ExtResource("149_dl6qc")
+}],
+"loop": true,
+"name": &"Shoot",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("150_sr808")
+}, {
+"duration": 1.0,
+"texture": ExtResource("151_crmns")
+}, {
+"duration": 1.0,
+"texture": ExtResource("152_8xulu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("153_5u5ds")
+}, {
+"duration": 1.0,
+"texture": ExtResource("154_fnbuc")
+}],
+"loop": true,
+"name": &"atk_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("107_y3n31")
+}, {
+"duration": 1.0,
+"texture": ExtResource("108_tagbv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("109_oordo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("110_tmkua")
+}, {
+"duration": 1.0,
+"texture": ExtResource("111_avobk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("112_muatw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("113_r4dbx")
+}],
+"loop": true,
+"name": &"atk_2",
+"speed": 5.0
+}]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_lm085"]
 atlas = ExtResource("99_thomt")
 region = Rect2(0, 0, 273, 273)
@@ -3246,6 +3316,17 @@ flip_v = true
 [node name="AudioFX" type="AudioStreamPlayer2D" parent="AnimatedSprite2D/VFXSprite" index="0" unique_id=805414101]
 max_polyphony = 4
 
+[node name="AttackVFX" type="AnimatedSprite2D" parent="AnimatedSprite2D" index="2" unique_id=193571614]
+visible = false
+material = SubResource("ShaderMaterial_fliv7")
+instance_shader_parameters/FloatParameter = 0.002000000095
+instance_shader_parameters/GlowColor = Color(1.401985, 3.2944162, 1.2525827, 1)
+instance_shader_parameters/MaskColor = Color(0.45452422, 0.45452428, 0.45452422, 1)
+position = Vector2(-28, 21)
+sprite_frames = SubResource("SpriteFrames_725ad")
+animation = &"atk_1"
+flip_h = true
+
 [node name="AnimationPlayer" parent="." index="2"]
 libraries/ = ExtResource("100_ggkva")
 libraries/flashback_lvl_cutscenes = SubResource("AnimationLibrary_5sek5")
@@ -3316,15 +3397,20 @@ one_shot = true
 position = Vector2(0, -24)
 script = ExtResource("101_6tb62")
 
-[node name="HurtBox" parent="." index="23" node_paths=PackedStringArray("health", "stagger") groups=["regular_enemy_hb"]]
-visible = false
+[node name="HurtBox" parent="." index="23" node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["regular_enemy_hb"]]
 collision_mask = 8397376
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
+back_attack_flag = NodePath("BackAttackFlag")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0" unique_id=1428330784]
 shape = SubResource("RectangleShape2D_xhp7j")
 debug_color = Color(0.913049, 0.224478, 0.48102, 0.42)
+
+[node name="BackAttackFlag" type="RayCast2D" parent="HurtBox" index="1" unique_id=796101030]
+position = Vector2(0, -17)
+target_position = Vector2(-94, 0)
+collision_mask = 2
 
 [node name="HitBox" parent="." index="24" node_paths=PackedStringArray("stagger") groups=["hitbox"]]
 stagger = NodePath("../Stagger")
@@ -3336,7 +3422,6 @@ shape = SubResource("RectangleShape2D_vjgnw")
 disabled = true
 
 [node name="AttackRange" parent="." index="25"]
-visible = false
 collision_layer = 1024
 collision_mask = 2
 
@@ -3345,7 +3430,6 @@ position = Vector2(0, -13.5)
 shape = SubResource("RectangleShape2D_0c6of")
 
 [node name="BulletDetection" parent="." index="26" unique_id=1193340460 instance=ExtResource("102_sqnmd")]
-visible = false
 position = Vector2(-11, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection" index="0" unique_id=558004549]

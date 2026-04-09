@@ -15,11 +15,12 @@ signal knockback(launch_strength : float, knock_back_strength : float)
 
 @export var health: Health
 @export var stagger: Stagger
+@export var back_attack_flag : RayCast2D
 @export var dmg_mult : int = 1
 @export var weakpoint : bool = false
 
-@onready var total_damage : int = 0
 
+@onready var total_damage : int = 0
 @export var shielded : bool = false
 @export var knockback_active : bool = true
 @onready var impact_dir_right : bool = false
@@ -34,7 +35,7 @@ func _ready():
 func _on_area_entered(hitbox: HitBox) -> void:
 	if not hitbox.active:
 		return
-	elif shielded:
+	elif shielded and not back_attack_flag.is_colliding():
 		return
 	
 	elif health.health<=0:
@@ -63,7 +64,7 @@ func _on_area_entered(hitbox: HitBox) -> void:
 				#received_damage.emit(hitbox.damage)
 				got_hit.emit(hitbox)
 			else:
-				if weakpoint:
+				if weakpoint or back_attack_flag.is_colliding():
 					health.health -= (hitbox.damage * dmg_mult)
 					stagger.stagger -= (hitbox.damage * dmg_mult)
 					#print_debug(hitbox.damage, " ",dmg_mult)

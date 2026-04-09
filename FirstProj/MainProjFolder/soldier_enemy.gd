@@ -408,6 +408,7 @@ func _on_animation_player_animation_started(anim_name: StringName) -> void:
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name.substr(0, 3)=="atk":
+		hit_box.heavy_attack=false
 		if anim_name=="atk_counter":
 			bt_player.blackboard.set_var("atk_counter", false)
 			melee_attack_manager.reset_combo()

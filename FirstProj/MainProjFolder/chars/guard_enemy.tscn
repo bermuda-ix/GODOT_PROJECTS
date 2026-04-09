@@ -3117,13 +3117,14 @@ metadata/_custom_type_script = "uid://5ijvah6jjgdb"
 shape = SubResource("RectangleShape2D_3nf0a")
 disabled = true
 
-[node name="HurtBox" type="Area2D" parent="." unique_id=1540858505 node_paths=PackedStringArray("health", "stagger") groups=["regular_enemy_hb"]]
+[node name="HurtBox" type="Area2D" parent="." unique_id=1540858505 node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["regular_enemy_hb"]]
 position = Vector2(0, -22)
 collision_layer = 16
 collision_mask = 8405056
 script = ExtResource("11_q7gmp")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
+back_attack_flag = NodePath("BackAttackFlag")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
 [node name="hurt_box_collision" type="CollisionShape2D" parent="HurtBox" unique_id=859624262]
@@ -3132,6 +3133,11 @@ shape = SubResource("RectangleShape2D_g6e5q")
 
 [node name="BulletBuffer" type="Timer" parent="HurtBox" unique_id=1341653298]
 wait_time = 0.1
+
+[node name="BackAttackFlag" type="RayCast2D" parent="HurtBox" unique_id=1587735091]
+position = Vector2(0, 13)
+target_position = Vector2(92, 0)
+collision_mask = 2
 
 [node name="AttackRange" type="Area2D" parent="." unique_id=2097856421]
 position = Vector2(0, -22)
