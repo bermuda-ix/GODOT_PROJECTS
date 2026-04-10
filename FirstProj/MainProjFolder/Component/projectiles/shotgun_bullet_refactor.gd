@@ -42,13 +42,7 @@ func _on_visible_on_screen_enabler_2d_screen_exited():
 		
 
 func _on_area_entered(area):
-	if area.is_in_group("shield"):
-		#impact()
-		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
-	else:
-		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
-	impact()
-
+	pass
 
 func hard_impact():
 	AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
@@ -77,3 +71,15 @@ func get_damage() -> int:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("WorldStatic"):
 		hard_impact()
+
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if area.is_in_group("shield"):
+		#impact()
+		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
+	else:
+		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
+		if area.is_in_group("regular_enemy_hb"):
+			if "bullet_impact" in area:
+				area.bullet_impact(1)
+		impact()

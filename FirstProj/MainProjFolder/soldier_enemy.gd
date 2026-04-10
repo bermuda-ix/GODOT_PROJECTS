@@ -235,6 +235,7 @@ func _init_state_machine():
 	
 	state_machine.add_transition(attack, clashed, &"clashed")
 	state_machine.add_transition(clashed, teleport, &"teleport")
+	state_machine.add_transition(teleport, attack, &"resume_attack")
 	#state_machine.add_transition(clashed, dodge, &"dodge_back")
 	
 	
@@ -694,7 +695,8 @@ func _on_staggered_exited() -> void:
 
 func _on_bullet_detection_bullet_detected() -> void:
 	#print_debug(state_machine.get_active_state())
-	state_machine.dispatch(&"bullet_dodge")
+	if state_machine.get_active_state()!=teleport and melee_attack_manager.combo_int!=4:
+		state_machine.dispatch(&"bullet_dodge")
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:

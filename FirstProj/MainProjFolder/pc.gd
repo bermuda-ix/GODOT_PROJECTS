@@ -2140,12 +2140,6 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05, 0.1)
 	Events.camera_shake.emit(2,20)
 	if state_machine.get_active_state()==flip_state:
-		#print_debug("countered! your moves are weak!")
-		#if target_right:
-			#knockback.x=400
-		#else:
-			#knockback.x=-400
-		#velocity.x = movement_data.speed + knockback.x
 		state_machine.dispatch(&"got_hit")
 	elif state_machine.get_active_state()==parry_success_state:
 		state_machine.dispatch(&"got_hit")
@@ -2437,10 +2431,6 @@ func _on_clash_up() -> void:
 	clash_power.increase_clash()
 
 
-#func _on_hurt_box_knockback(knock_back_strength: float) -> void:
-	#knockback.x=knock_back_strength*(face_dir)
-	##print_debug(velocity.x)
-	##print_debug(knockback.x)
 	
 func _on_knockback(_launch_strength : float, _knockback_strength : float, impact_dir_right : bool) -> void:
 	if stagger.stagger>0:
@@ -2450,6 +2440,9 @@ func _on_knockback(_launch_strength : float, _knockback_strength : float, impact
 		_knockback_strength*=-1
 	knockback.x=_knockback_strength*(face_dir)
 	velocity.y= -(_launch_strength)
+	###### TBD LATTER #####
+	#if _launch_strength!=0:
+		#print_debug("team rockets jerking off again")
 
 func _on_hit_box_clashed() -> void:
 	clash_power.increase_clash()

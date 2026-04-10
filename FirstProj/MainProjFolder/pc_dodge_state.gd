@@ -2,7 +2,8 @@ extends LimboState
 
 @export var anim_player : AnimationPlayer
 @export var pc : PlayerEntity
-@export var hurtbox : CollisionShape2D
+@export var hurt_box : HurtBox
+#@export var hurtbox : CollisionShape2D
 @export var stagger : Stagger
 @export var state_machine : LimboHSM
 @export var dodge_buffer : Timer
@@ -17,7 +18,8 @@ func _enter() -> void:
 	anim_player.play(pc.dodge_anim_run+"_"+str(dodge_chain))
 	pc.set_collision_mask_value(15, false)
 	pc.counter_box_collision.disabled=false
-	hurtbox.disabled=true
+	hurt_box.active=false
+	#hurtbox.disabled=true
 	if pc.input_axis==0:
 		dodge_dist=pc.global_position.x+30*pc.face_dir
 		dodge_speed=7
@@ -47,8 +49,9 @@ func _exit() -> void:
 	pc.velocity.x=0
 	#pc.counter_box_collision.disabled=true
 	pc.counter_box_collision.call_deferred("set_disabled", true)
-	hurtbox.call_deferred("set_disabled", false)
+	#hurtbox.call_deferred("set_disabled", false)
 	#hurtbox.disabled=false
+	hurt_box.active=true
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name==(pc.dodge_anim_run+"_"+str(dodge_chain)):

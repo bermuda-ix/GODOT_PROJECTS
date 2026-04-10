@@ -24,13 +24,20 @@ signal knockback(launch_strength : float, knock_back_strength : float)
 @export var shielded : bool = false
 @export var knockback_active : bool = true
 @onready var impact_dir_right : bool = false
-
+@onready var bullet_buffer : Timer = Timer.new()
+@onready var bullet_damage : int = 0
 
 func _ready():
 	connect("area_entered", _on_area_entered)
 	#connect("area_entered", _on_parried)
 	connect("body_entered", _bullet_hit)
 	connect("body_entered", _knocked_back_enemy_collision)
+	
+	add_child(bullet_buffer)
+	bullet_buffer.autostart=false
+	bullet_buffer.one_shot=true
+	bullet_buffer.ignore_time_scale=true
+	bullet_buffer.timeout.connect(bullet_buffer_timeout)
 
 func _on_area_entered(hitbox: HitBox) -> void:
 	if not hitbox.active:
@@ -46,9 +53,6 @@ func _on_area_entered(hitbox: HitBox) -> void:
 		assert(shielded!=true)
 		hitbox.active=false
 		if hitbox != null:
-			#print(hitbox.knock_back)
-			#if hitbox.launch:
-				#launched.emit(hitbox.launch_strength)
 			if hitbox.knock_back:
 				if hitbox.global_position.x > global_position.x:
 					impact_dir_right=true
@@ -62,47 +66,53 @@ func _on_area_entered(hitbox: HitBox) -> void:
 			if hitbox.stagger_damage:
 				stagger.stagger -= (hitbox.damage * dmg_mult)
 				### Maybe add minimum health damage to stagger attacks?  
-				#print_debug(hitbox.damage, " ",dmg_mult)
-				#received_damage.emit(hitbox.damage)
+
 				got_hit.emit(hitbox)
 			else:
 				if weakpoint or back_attack_flag.is_colliding():
 					health.health -= (hitbox.damage * dmg_mult)
 					stagger.stagger -= (hitbox.damage * dmg_mult)
-					#print_debug(hitbox.damage, " ",dmg_mult)
 					received_damage.emit(hitbox.damage)
 					got_hit.emit(hitbox)
 				else:
 					if not shielded:
 						health.health -= (hitbox.damage * dmg_mult)
-						#print_debug(hitbox.damage, " ",dmg_mult)
 						received_damage.emit(hitbox.damage)
 						got_hit.emit(hitbox)
 
 func _bullet_hit(_rigid_body : RigidBody2D) -> void:
-	var _damage : int 
-	if _rigid_body.has_method("get_damage"):
-		_damage=_rigid_body.get_damage()
-	else:
-		_damage=1
-	if health.health<=0:
-		return
-
-	_rigid_body.hard_impact()
-
 	
-	if stagger.stagger>0:
-		stagger.stagger-=1
-	else:
+	pass
+	
+	#var _damage : int 
+	#if _rigid_body.has_method("get_damage"):
+		#_damage=_rigid_body.get_damage()
+	#else:
+		#_damage=1
+	#if health.health<=0:
+		#return
+#
+	#_rigid_body.hard_impact()
+#
+	#
+	#if stagger.stagger>0:
 		#stagger.stagger-=1
-		health.health-=1
-		
-		print_debug(health.health)
+	#else:
+		##stagger.stagger-=1
+		#health.health-=1
+		#
+		#print_debug(health.health)
+		##received_damage.emit(_damage)
+		#bullet_hit.emit(_damage)
 		#received_damage.emit(_damage)
-		bullet_hit.emit(_damage)
-		received_damage.emit(_damage)
-	_rigid_body.impact()
+	#_rigid_body.impact()
 		
+
+func bullet_impact(_damage : int = 1) -> void:
+	if not active:
+		return
+	bullet_buffer.start(0.2)
+	bullet_damage+=1
 
 func _knocked_back_enemy_collision(_body : CharacterBody2D):
 	var _launch_strength := 0
@@ -127,3 +137,25 @@ func set_damage_mulitplyer(value:int):
 
 func get_damage_mulitplyer() -> int:
 	return dmg_mult
+
+
+func bullet_buffer_timeout() -> void:
+	if stagger.stagger>0:
+		if bullet_damage<=stagger.stagger:
+			stagger.stagger-=bullet_damage
+		else:
+			stagger.set_stagger(0)
+			var _left_over_damage = bullet_damage-stagger.stagger
+			health.health-=_left_over_damage
+			bullet_hit.emit(_left_over_damage)
+			received_damage.emit(_left_over_damage)
+			bullet_damage=0
+	else:
+		#stagger.stagger-=1
+		health.set_health(health.health-bullet_damage)
+		
+		print_debug(health.health)
+		#received_damage.emit(_damage)
+		bullet_hit.emit(bullet_damage)
+		received_damage.emit(bullet_damage)
+		bullet_damage=0

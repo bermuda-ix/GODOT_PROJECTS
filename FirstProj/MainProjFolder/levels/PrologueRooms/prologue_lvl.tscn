@@ -1190,7 +1190,7 @@ position = Vector2(2128, 776)
 scale = Vector2(0.75, 0.75)
 
 [node name="GuardEnemy13" parent="Enemy/Guards" index="12" unique_id=1643444086 instance=ExtResource("16_vw32t")]
-position = Vector2(2080, 776.00006)
+position = Vector2(2104, 776)
 scale = Vector2(0.75, 0.75)
 
 [node name="GuardEnemy14" parent="Enemy/Guards" index="13" unique_id=605474709 instance=ExtResource("16_vw32t")]

@@ -8139,8 +8139,8 @@ texture = ExtResource("5_pvc8c")
 
 [node name="SpAtkHitBox" type="Area2D" parent="AnimatedSprite2D/Shotty" unique_id=1612925221 groups=["sp_atk_default"]]
 position = Vector2(0, 3.5762787e-07)
-collision_layer = 64
-collision_mask = 272
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("6_y7jp7")
 stagger_damage = true
 metadata/_custom_type_script = "uid://5ijvah6jjgdb"
@@ -8496,7 +8496,7 @@ scale = Vector2(0.463877, 0.379525)
 text = "State"
 metadata/_edit_use_anchors_ = true
 
-[node name="HurtBox" type="Area2D" parent="." unique_id=263329233 node_paths=PackedStringArray("health", "stagger", "back_attack_flag")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=263329233 node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["player_hurtbox"]]
 collision_layer = 128
 collision_mask = 4104
 script = ExtResource("9_s8nmr")
@@ -8725,11 +8725,11 @@ hit_stop = NodePath("../../../HitStop")
 [node name="Nothing" type="LimboState" parent="StateMachine/ParrySuccessState" unique_id=637919947]
 script = ExtResource("100_8mfft")
 
-[node name="DodgeState" type="LimboState" parent="StateMachine" unique_id=1001049042 node_paths=PackedStringArray("anim_player", "pc", "hurtbox", "stagger", "state_machine", "dodge_buffer")]
+[node name="DodgeState" type="LimboState" parent="StateMachine" unique_id=1001049042 node_paths=PackedStringArray("anim_player", "pc", "hurt_box", "stagger", "state_machine", "dodge_buffer")]
 script = ExtResource("107_yif7d")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
-hurtbox = NodePath("../../HurtBox/CollisionShape2D")
+hurt_box = NodePath("../../HurtBox")
 stagger = NodePath("../../Stagger")
 state_machine = NodePath("..")
 dodge_buffer = NodePath("DodgeBuffer")

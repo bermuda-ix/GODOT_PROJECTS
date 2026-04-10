@@ -3272,6 +3272,7 @@ stereo = true
 
 [node name="soldier_enemy_boss" unique_id=789104702 groups=["Boss", "Persistant", "offensive_enemy"] instance=ExtResource("1_33sos")]
 collision_layer = 16384
+safe_margin = 0.2
 script = ExtResource("2_87q8v")
 
 [node name="NavigationAgent2D" parent="." index="0"]
