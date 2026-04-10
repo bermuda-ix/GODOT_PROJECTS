@@ -571,8 +571,10 @@ func _process(_delta):
 	stick_to_wall()
 	
 	#Input for testing various things
-	if Input.is_action_just_pressed("DEBUG_KEY"):
-		health.health-=1
+	#if Input.is_action_just_pressed("DEBUG_KEY"):
+		#slow_down_aim()
+	#elif Input.is_action_just_released("DEBUG_KEY"):
+		#end_slow_down()
 
 func _physics_process(delta):
 	vel_y=velocity.y
@@ -1119,10 +1121,22 @@ func sp_atk():
 		#heavy_attack()
 		
 func aim_and_shoot():
+	
 	if (Input.is_action_pressed("special_attack"))	and not attacking:
 		state_machine.dispatch(&"aim")
+		if not is_on_floor():
+			slow_down_aim()
+		else:
+			end_slow_down()
 	elif Input.is_action_just_released("special_attack"):
 		state_machine.dispatch(&"shoot")
+		end_slow_down()
+
+func slow_down_aim():
+	Engine.time_scale=0.5
+
+func end_slow_down():
+	Engine.time_scale=1
 
 func get_clash_power() -> int:
 	return clash_power.clash_power
@@ -1293,9 +1307,11 @@ func dodge(input_axis):
 
 func _on_dodge_state_entered() -> void:
 	stagger_recover.stop()
+	hurt_box.active=false
 
 func _on_dodge_state_exited() -> void:
 	stagger_recover.start()
+	hurt_box.active=true
 
 
 func lockon():
@@ -2164,9 +2180,12 @@ func _on_stagger_recover_timeout() -> void:
 		set_stagger()
 
 func _on_hurt_box_bullet_hit(_damage: int) -> void:
-	if health.health<=0:
-		return
-	Events.camera_shake.emit(2,20)
+	if state_machine.get_active_state()==dodge_state:
+		hit_stop.hit_stop(0.5, 1)
+	else:
+		if health.health<=0:
+			return
+		Events.camera_shake.emit(2,20)
 	#_new_health = health.health-_damage
 	#health.health=_new_health
 	#print_debug(health.health)

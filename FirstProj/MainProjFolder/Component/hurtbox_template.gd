@@ -18,7 +18,7 @@ signal knockback(launch_strength : float, knock_back_strength : float)
 @export var back_attack_flag : RayCast2D
 @export var dmg_mult : int = 1
 @export var weakpoint : bool = false
-
+@export var active : bool = true
 
 @onready var total_damage : int = 0
 @export var shielded : bool = false
@@ -34,6 +34,8 @@ func _ready():
 
 func _on_area_entered(hitbox: HitBox) -> void:
 	if not hitbox.active:
+		return
+	elif not active:
 		return
 	elif shielded and not back_attack_flag.is_colliding():
 		return

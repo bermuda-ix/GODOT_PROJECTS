@@ -189,10 +189,14 @@
 [ext_resource type="Texture2D" uid="uid://dlfj8ycunyumx" path="res://Art_Components/Effects/Spritesheets/Gravity-Sheet.png" id="136_swwb7"]
 [ext_resource type="Script" uid="uid://dly3pw0jr2gav" path="res://chars/falling.gd" id="143_51rru"]
 [ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="144_37wjj"]
+[ext_resource type="Texture2D" uid="uid://c5hfiyj42h84j" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I131.png" id="144_isax7"]
+[ext_resource type="Texture2D" uid="uid://vyynpmgk4ux1" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I132.png" id="145_mf8bn"]
 [ext_resource type="Texture2D" uid="uid://b6ch5wab1hvms" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00210.png" id="146_imtcj"]
 [ext_resource type="Texture2D" uid="uid://iwrv518dufut" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun01.png" id="146_j070x"]
+[ext_resource type="Texture2D" uid="uid://cq8t28b0vcbgb" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I133.png" id="146_onvjj"]
 [ext_resource type="Texture2D" uid="uid://c54rv6q7h1puq" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun02.png" id="147_gmb02"]
 [ext_resource type="Texture2D" uid="uid://cicdijwufr0ug" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00211.png" id="147_i4s6h"]
+[ext_resource type="Texture2D" uid="uid://5slw7nxxexbj" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I134.png" id="147_y0e6h"]
 [ext_resource type="Texture2D" uid="uid://diym71cn5dbuu" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun03.png" id="148_4ys4l"]
 [ext_resource type="Texture2D" uid="uid://byyslxpsi15v2" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00212.png" id="148_wc3fj"]
 [ext_resource type="Texture2D" uid="uid://dtcstmlvkk56n" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun04.png" id="149_1glkw"]
@@ -1370,6 +1374,23 @@ animations = [{
 }],
 "loop": true,
 "name": &"down_atk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("144_isax7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("145_mf8bn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("146_onvjj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("147_y0e6h")
+}],
+"loop": true,
+"name": &"knocked_back",
 "speed": 5.0
 }, {
 "frames": [{
@@ -4865,6 +4886,57 @@ tracks/8/keys = {
 "values": [Color(3.4265816, 3.4265816, 3.4265816, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_isax7"]
+resource_name = "knocked_back"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D/VFXSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-5, 18)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D/VFXSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"knocked_back"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D/VFXSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../AnimatedSprite2D/VFXSprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.13333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
 [sub_resource type="Animation" id="Animation_bc731"]
 resource_name = "staggered"
 length = 0.6333333
@@ -5069,6 +5141,7 @@ tracks/8/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4ys4l"]
 _data = {
 &"RESET": SubResource("Animation_j070x"),
+&"knocked_back": SubResource("Animation_isax7"),
 &"staggered": SubResource("Animation_bc731"),
 &"staggered_entered": SubResource("Animation_gmb02")
 }
@@ -5109,6 +5182,7 @@ avoidance_enabled = true
 debug_enabled = true
 
 [node name="AnimatedSprite2D" parent="." index="1"]
+modulate = Color(0.454524, 0.454524, 0.454524, 1)
 self_modulate = Color(0.521141, 0.521141, 0.521141, 1)
 material = SubResource("ShaderMaterial_5wlso")
 sprite_frames = SubResource("SpriteFrames_p1s76")
