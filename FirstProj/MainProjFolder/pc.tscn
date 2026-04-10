@@ -8409,7 +8409,7 @@ debug_color = Color(0, 0.5950001, 0.7, 0)
 
 [node name="HazardDetector" type="Area2D" parent="." unique_id=1401140940 groups=["player"]]
 collision_layer = 2
-collision_mask = 278540
+collision_mask = 282636
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HazardDetector" unique_id=545274729]
 position = Vector2(0.249986, 4)
@@ -8496,16 +8496,20 @@ scale = Vector2(0.463877, 0.379525)
 text = "State"
 metadata/_edit_use_anchors_ = true
 
-[node name="HurtBox" type="Area2D" parent="." unique_id=263329233 node_paths=PackedStringArray("health", "stagger")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=263329233 node_paths=PackedStringArray("health", "stagger", "back_attack_flag")]
 collision_layer = 128
 collision_mask = 4104
 script = ExtResource("9_s8nmr")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
+back_attack_flag = NodePath("../BackAttackFlag")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=635584027 groups=["player"]]
 position = Vector2(1, -10)
 shape = SubResource("RectangleShape2D_oupih")
+
+[node name="BackAttackFlag" type="RayCast2D" parent="." unique_id=1319491597]
+target_position = Vector2(-34, 0)
 
 [node name="CounterBox" type="Area2D" parent="." unique_id=811846985]
 collision_layer = 0

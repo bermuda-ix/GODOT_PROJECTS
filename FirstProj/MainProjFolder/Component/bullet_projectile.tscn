@@ -6,6 +6,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_vt6nh"]
 radius = 3.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_wdbjx"]
+radius = 3.0
+
 [node name="BulletProjectile" type="RigidBody2D" unique_id=1896458504 groups=["bullet"]]
 modulate = Color(18.892157, 18.892157, 18.892157, 1)
 collision_layer = 4096
@@ -28,6 +31,13 @@ texture = ExtResource("1_p6xas")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1298455145]
 position = Vector2(2, 1)
 rect = Rect2(-3, -2, 2, 2)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1096474883 groups=["bullet"]]
+collision_layer = 4096
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1035255250]
+shape = SubResource("CircleShape2D_wdbjx")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -1483,33 +1483,12 @@ func _on_hazard_detector_area_entered(area):
 		global_position=starting_position
 		
 		health.health -= 1
-	elif area.is_in_group("bullet"):
-		hit_stop.hit_stop(0.05, 0.1)
-		#knockback.x = -10
-		kb_dir=global_position.direction_to(area.global_position)
-		#"knockback")
-		kb_dir=round(kb_dir)
-		#kb_dir.x, " ", knockback)
-		#knockback.x = kb_dir.x * knockback.x
-		knockback.y=-5
-		#velocity.x = movement_data.speed + knockback.x
-		#health.health -= 1
-		
-		health.set_temporary_immortality(0.2)
-		if state_machine.get_previous_active_state()==flip_state:
-			state_machine.dispatch(&"return_to_idle")
-		if clash_power.clash_power>1:
-			health.health-=clash_power.clash_power
-			stagger.stagger-=clash_power.clash_power
-			clash_power.reset_clash()
-			clash_timer.stop()
-			if clash_power.clash_power==clash_power.clash_max:
-				hit_stop.hit_stop(.3,.5)
+	#elif area.is_in_group("bullet"):
+		#if state_machine.get_active_state()==dodge_state:
+			#hit_stop.hit_stop(0.05, 0.1)
+		#else:
+			#return
 	
-		if area.has_method("impact"):
-			area.impact()
-		set_health()
-		set_stagger()
 	elif area.is_in_group("Enemy"):
 		hit_stop.hit_stop(0.05, 0.05)
 		#knockback.x = input_dir.x * knockback.x *0.25
@@ -2106,13 +2085,15 @@ func _on_counter_box_area_entered(area):
 		
 func _on_counter_box_body_entered(body: Node2D) -> void:
 	if body.is_in_group("bullet"):
-		body.bullet_dodged()
-		counter_flag = true
-		counter_timer.start()
-		clash_power.clash_power += 1
-	clash_power.increase_clash()
-	#clash_visual.emitting=true
-	clash_timer.start()
+		if state_machine.get_active_state()!=dodge_state:
+			return
+		else:
+			hit_stop.hit_stop(0.05, 0.5)
+			body.bullet_dodged()
+			counter_flag = true
+			counter_timer.start()
+			clash_power.increase_clash()
+			clash_timer.start()
 
 func _on_counter_timer_timeout():
 	counter_flag = false
