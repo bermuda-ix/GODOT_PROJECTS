@@ -26,6 +26,7 @@ var scale_size : float
 @onready var tracking_timer: Timer = $TrackingTimer
 @onready var initial_fire_timer: Timer = $InitialFireTimer
 @onready var damage : int = 1 : set = set_damage, get = get_damage
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
 # Called when the node enters the scene tree for the first time.
@@ -46,7 +47,10 @@ func _process(delta: float) -> void:
 	#print_debug(global_position)
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
+	var current_rotate=wrapf(global_rotation, 0, 2*PI)
 	linear_velocity = (dir *(SPEED +accel))
+	if tracking_timer.is_stopped():
+		angular_velocity=lerpf(angular_velocity, 0 , 0.5)
 
 func _physics_process(delta):
 	
@@ -56,11 +60,14 @@ func _physics_process(delta):
 		rotate_missile(delta)
 		#animated_sprite_2d.global_rotation_degrees=wrapf(missile_rotation, 0, 360)
 		dir=(player_tracker.to_global(player_tracker.target_position) -player_tracker.to_global(Vector2.ZERO)).normalized()
+		var _distance_to_player = global_position-player.global_position
+		if _distance_to_player < Vector2(20,20):
+			stop_tracking()
 		
 	else:
 		accel += (accel*.02)
-		#dir=dir
-
+		#rotation_speed=lerpf(rotation_speed, 0, 0.4)
+	
 	
 	#position += (dir * (SPEED +accel) * delta)
 
@@ -118,7 +125,11 @@ func get_speed() -> float:
 func set_rot_speed(value: float):
 	rotation_speed=value
 
-
+func stop_tracking() -> void:
+	tracking_timer.stop()
+	set_angular_vel(0)
+	animation_player.play("accelerate_to_hit")
+	#set_accel(5)
 
 func _on_visible_on_screen_enabler_2d_screen_exited() -> void:
 	#pass
@@ -127,3 +138,7 @@ func _on_visible_on_screen_enabler_2d_screen_exited() -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("WorldStatic"):
 		explode_impact()
+
+
+func _on_tracking_timer_timeout() -> void:
+	animation_player.play("accelerate_to_hit")

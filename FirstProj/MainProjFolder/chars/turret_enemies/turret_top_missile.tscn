@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="5_cfx3q"]
 [ext_resource type="BehaviorTree" uid="uid://b1t5gv0bt5din" path="res://ai/trees/turret_ai.tres" id="6_hcpf5"]
 [ext_resource type="Script" uid="uid://daq7xh1e6l7u6" path="res://chars/idle.gd" id="7_877uo"]
-[ext_resource type="Script" uid="uid://b5an13nv6em7m" path="res://chars/attack.gd" id="8_w5dw7"]
 [ext_resource type="Script" uid="uid://c4yno8xy5erif" path="res://chars/death.gd" id="9_54tau"]
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="10_wbg5a"]
 [ext_resource type="Script" uid="uid://cx8bi64kwoulc" path="res://Component/functions/PlayerTrackingHandler.gd" id="11_s3aut"]
@@ -413,11 +412,6 @@ blackboard_plan = SubResource("BlackboardPlan_c3g7k")
 script = ExtResource("7_877uo")
 actor = NodePath("../..")
 
-[node name="Attack" type="LimboState" parent="LimboHSM" unique_id=1170613494 node_paths=PackedStringArray("actor", "bt_player")]
-script = ExtResource("8_w5dw7")
-actor = NodePath("../..")
-bt_player = NodePath("../../BTPlayer")
-
 [node name="Death" type="LimboState" parent="LimboHSM" unique_id=1311555457 node_paths=PackedStringArray("actor")]
 script = ExtResource("9_54tau")
 actor = NodePath("../..")
@@ -428,6 +422,8 @@ actor = NodePath("../..")
 stagger = NodePath("../../Stagger")
 bt_player = NodePath("../../BTPlayer")
 movement_able = false
+
+[node name="AttackMode" type="LimboState" parent="LimboHSM" unique_id=1229577481]
 
 [node name="ParryTimer" type="Timer" parent="." unique_id=391432651]
 one_shot = true
@@ -452,6 +448,8 @@ actor = NodePath("..")
 player_tracking_active = false
 turret = NodePath("../Sprite2D/Turret")
 projectile = ExtResource("14_nqoxs")
+rotation_speed = 3.0
+bullet_tracking_time = 1.0
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
 [node name="ShootAttackManager" type="Node" parent="." unique_id=308917637 node_paths=PackedStringArray("actor", "animation_player", "turret")]

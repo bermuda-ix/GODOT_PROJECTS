@@ -2094,6 +2094,8 @@ func _on_counter_box_body_entered(body: Node2D) -> void:
 			counter_timer.start()
 			clash_power.increase_clash()
 			clash_timer.start()
+	elif body.is_in_group("missile"):
+		body.stop_tracking()
 
 func _on_counter_timer_timeout():
 	counter_flag = false

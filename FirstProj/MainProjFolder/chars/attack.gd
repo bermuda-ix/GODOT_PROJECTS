@@ -12,11 +12,13 @@ func _enter() -> void:
 	actor.state="ATTACK"
 	if "velocity" in actor:
 		actor.velocity= Vector2.ZERO
-	if actor.player_right:
-		attack_dir = 1
-	else:
-		attack_dir = -1
-	starting = actor.global_position.x
+	if "player_right" in actor:
+		if actor.player_right:
+			attack_dir = 1
+		else:
+			attack_dir = -1
+	if "starting" in actor:
+		starting = actor.global_position.x
 	#print_debug("begin attack")
 	#bt_player.blackboard.set_var("attack_mode", true)
 func _update(delta: float) -> void:

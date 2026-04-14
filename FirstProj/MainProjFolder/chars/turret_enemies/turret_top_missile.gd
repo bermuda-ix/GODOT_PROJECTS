@@ -33,7 +33,7 @@ signal shoot
 
 @onready var state_machine: LimboHSM = $LimboHSM
 @onready var idle: LimboState = $LimboHSM/Idle
-@onready var attack: LimboState = $LimboHSM/Attack
+@onready var attack: LimboState = $LimboHSM/AttackMode
 @onready var death: LimboState = $LimboHSM/Death
 @onready var player : PlayerEntity = null
 @onready var stagger: LimboState = $LimboHSM/Stagger
