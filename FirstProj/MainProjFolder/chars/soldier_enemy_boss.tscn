@@ -125,11 +125,16 @@
 [ext_resource type="AnimationLibrary" uid="uid://dtyhxqe1jf0av" path="res://Component/resources/animation_res/soldier_boss.res" id="100_ggkva"]
 [ext_resource type="Script" uid="uid://b0uasmutdnguo" path="res://chars/target_lock.gd" id="101_6tb62"]
 [ext_resource type="PackedScene" uid="uid://303jj447mrmm" path="res://Component/functions/bullet_detection.tscn" id="102_sqnmd"]
+[ext_resource type="Texture2D" uid="uid://c7g25rtqehv3m" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire01.png" id="103_5u5ds"]
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="103_jr353"]
 [ext_resource type="BehaviorTree" uid="uid://bmgha5eqvo172" path="res://ai/trees/soldier_boss_ai.tres" id="103_nmnuj"]
+[ext_resource type="Texture2D" uid="uid://cngu045j01sui" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire02.png" id="104_fnbuc"]
+[ext_resource type="Texture2D" uid="uid://ibg00s0pu8qi" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire03.png" id="105_fliv7"]
 [ext_resource type="Script" uid="uid://cx8bi64kwoulc" path="res://Component/functions/PlayerTrackingHandler.gd" id="105_tnx7y"]
 [ext_resource type="Script" uid="uid://bsha0mnmfnjww" path="res://Component/functions/MovementHandler.gd" id="106_518fh"]
+[ext_resource type="Texture2D" uid="uid://dlk26jwqxo6t1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire04.png" id="106_725ad"]
 [ext_resource type="Shader" uid="uid://c0lvqekkgl8f8" path="res://chars/AFXGlowVisual.tres" id="106_apghb"]
+[ext_resource type="Texture2D" uid="uid://dqmwsu55fxh47" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire05.png" id="107_5kjb4"]
 [ext_resource type="Script" uid="uid://dgyx4da7oymh2" path="res://Component/functions/JumpHandler.gd" id="107_sapcc"]
 [ext_resource type="Texture2D" uid="uid://ipkcr82ii051" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0221/S0221.png" id="107_y3n31"]
 [ext_resource type="Script" uid="uid://cr58jnxs33hft" path="res://Component/functions/deathHandler.gd" id="108_gs3hl"]
@@ -653,6 +658,26 @@ animations = [{
 }],
 "loop": true,
 "name": &"shoot",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("103_5u5ds")
+}, {
+"duration": 1.0,
+"texture": ExtResource("104_fnbuc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105_fliv7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106_725ad")
+}, {
+"duration": 1.0,
+"texture": ExtResource("107_5kjb4")
+}],
+"loop": true,
+"name": &"shoot_crouch",
 "speed": 5.0
 }, {
 "frames": [{
@@ -3272,6 +3297,7 @@ stereo = true
 
 [node name="soldier_enemy_boss" unique_id=789104702 groups=["Boss", "Persistant", "offensive_enemy"] instance=ExtResource("1_33sos")]
 collision_layer = 16384
+collision_mask = 19
 safe_margin = 0.2
 script = ExtResource("2_87q8v")
 
@@ -3310,7 +3336,7 @@ instance_shader_parameters/MaskColor = Color(0.42040226, 0.14544845, 0.3025623, 
 position = Vector2(-1.0000038, 22.999996)
 rotation = 1.1582785
 sprite_frames = SubResource("SpriteFrames_bpr6j")
-animation = &"atk"
+animation = &"teleport"
 flip_h = true
 flip_v = true
 
@@ -3321,11 +3347,12 @@ max_polyphony = 4
 visible = false
 material = SubResource("ShaderMaterial_fliv7")
 instance_shader_parameters/FloatParameter = 0.002000000095
-instance_shader_parameters/GlowColor = Color(1.401985, 3.2944162, 1.2525827, 1)
+instance_shader_parameters/GlowColor = Color(3.2944162, 1.6634394, 1.0782797, 1)
 instance_shader_parameters/MaskColor = Color(0.45452422, 0.45452428, 0.45452422, 1)
-position = Vector2(-28, 21)
+position = Vector2(-28, 15)
 sprite_frames = SubResource("SpriteFrames_725ad")
-animation = &"atk_1"
+animation = &"Shoot"
+frame = 1
 flip_h = true
 
 [node name="AnimationPlayer" parent="." index="2"]
@@ -3734,6 +3761,7 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="launched" from="HurtBox" to="." method="_on_hurt_box_launched"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="clashed" from="HitBox" to="." method="_on_hit_box_clashed"]
 [connection signal="parried" from="HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="body_entered" from="AttackRange" to="." method="_on_attack_range_body_entered"]
 [connection signal="body_exited" from="AttackRange" to="." method="_on_attack_range_body_exited"]

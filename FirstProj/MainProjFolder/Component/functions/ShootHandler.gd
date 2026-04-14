@@ -14,6 +14,8 @@ extends Node
 
 @export var bullet_damage : int = 1
 
+@export var bullet_tracking_time : float = 3.0
+
 var turret_order : int =0
 
 func shoot_bullet():
@@ -22,6 +24,11 @@ func shoot_bullet():
 	bullet_inst.scale_size*=bullet_scale
 	#bullet_inst.set_accel(50.0)
 	#bullet_inst.tracking_time=0.01
+	if bullet_inst.is_in_group("missile"):
+		bullet_inst.set_accel(50.0)
+		bullet_inst.tracking_time=bullet_tracking_time
+	
+	
 	if actor.has_method("get_clash_power"):
 		bullet_inst.set_damage(actor.get_clash_power())
 	else:
@@ -37,10 +44,11 @@ func shoot_bullet():
 	if player_tracking_active:
 		bullet_inst.spawnRot = actor.player_tracker_pivot.rotation_degrees
 	else:
-		bullet_inst.spawnRot = actor.bullet_dir.angle()
+		bullet_inst.spawnRot = actor.global_rotation_degrees
 		#print_debug(bullet_inst.dir)
 		
 	actor.get_tree().current_scene.add_child(bullet_inst)
+
 
 func set_projectile(_projectile : PackedScene):
 	projectile = _projectile

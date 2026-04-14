@@ -5,10 +5,11 @@ extends StaticBody2D
 @onready var target_lock_node: TargetLock = $TargetLock
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var death_handler: DeathHandler = $DeathHandler
-@onready var turret_top: TurretTop = $turret_top
+@onready var turret_top: Node2D = $turret_top
 @onready var despawn_handler: DespawnHandler = $DespawnHandler
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var hurt_box_collision: CollisionPolygon2D = $HurtBox/HurtBoxCollision
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 @onready var hit_stop: HitStop = $HitStop
 
@@ -113,3 +114,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 func stagger_recover()->void:
 	stagger.stagger=stagger.max_stagger
 	hurt_box.set_damage_mulitplyer(1)
+
+
+func _on_turret_top_shoot() -> void:
+	animation_player.play("Firing")

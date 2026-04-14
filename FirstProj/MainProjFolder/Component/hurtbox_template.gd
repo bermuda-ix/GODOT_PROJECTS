@@ -11,7 +11,7 @@ signal parried()
 signal weakpoint_hit()
 
 signal launched(launch_strength : float)
-signal knockback(launch_strength : float, knock_back_strength : float)
+signal knockback(launch_strength : float, knock_back_strength : float, impact_dir_right : bool)
 
 @export var health: Health
 @export var stagger: Stagger

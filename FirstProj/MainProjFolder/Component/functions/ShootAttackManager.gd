@@ -53,6 +53,8 @@ func shoot():
 				turret.ammo_count=turret.max_ammo
 			else:
 				pass
+				
+
 func fire_missile():
 	pass
 

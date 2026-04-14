@@ -82,8 +82,8 @@ func _ready():
 	#GlobalSaveData.save_game()
 	spawn_points = get_tree().get_nodes_in_group("SpawnPoint")
 	heat_handler.heat_lvl_spawn()
-	for i in spawn_points.size():
-		print_debug(spawn_points[i].name)
+	#for i in spawn_points.size():
+		#print_debug(spawn_points[i].name)
 	Events.increase_heat_lvl.connect(increase_heat)
 	#Events.player_death.connect(preload_next_scene)
 	Events.player_death.connect(player_death)

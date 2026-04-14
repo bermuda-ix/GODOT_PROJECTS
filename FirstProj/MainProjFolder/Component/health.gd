@@ -71,8 +71,8 @@ func set_health(value: int):
 			health_depleted.emit()
 			Events.camera_shake.emit(3,20)
 	
-	else:
-		print_debug("No change in health")
+	#else:
+		#print_debug("No change in health")
 	#print_debug(health)
 
 func get_health():

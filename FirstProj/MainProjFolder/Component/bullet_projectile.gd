@@ -86,16 +86,17 @@ func _on_body_entered(body: Node) -> void:
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	if area.is_in_group("shield"):
-		#impact()
-		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
-	else:
-		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
-		if area.is_in_group("regular_enemy_hb") or area.is_in_group("player_hurtbox"):
-			if "active" in area:
-				if not area.active:
-					return
-				else:
-					if "bullet_impact" in area:
-						area.bullet_impact(1)
-					impact()
+	pass
+	#if area.is_in_group("shield"):
+		##impact()
+		#AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
+	#else:
+		#AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
+		#if area.is_in_group("regular_enemy_hb") or area.is_in_group("player_hurtbox"):
+			#if "active" in area:
+				#if not area.active:
+					#return
+				#else:
+					#if "bullet_impact" in area:
+						#area.bullet_impact(1)
+					#impact()

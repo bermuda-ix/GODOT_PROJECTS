@@ -56,3 +56,6 @@ const QUBODUP_BANG_SHORT = "res://Art_Components/Effects/sound/qubodup-Bangs/qub
 const SOCAPE_SMALL_KNOCK = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - small knock.wav"
 const SOCAPEX_SWORDSMALL_2 = "uid://ra1umenu5afl"
 const SOCAPEX_NEW_HITS_2 = "uid://dwklbfjnk7beo"
+
+#Enums
+enum ImpactSFX {SOCAPE_SMALL_KNOCK, SOCAPEX_SWORDSMALL_2, SOCAPEX_NEW_HITS_2, QUBODUP_BANG_LONG, QUBODUP_BANG_MID, QUBODUP_BANG_SHORT}

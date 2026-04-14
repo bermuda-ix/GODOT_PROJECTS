@@ -10,7 +10,8 @@ var attack_dir := 1
 
 func _enter() -> void:
 	actor.state="ATTACK"
-	actor.velocity= Vector2.ZERO
+	if "velocity" in actor:
+		actor.velocity= Vector2.ZERO
 	if actor.player_right:
 		attack_dir = 1
 	else:

@@ -17,7 +17,7 @@ var init_dir
 var player : PlayerEntity = null
 var tracking_time : float = 0.5
 var initial_time : float = 0.05
-
+var scale_size : float
 
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -25,6 +25,7 @@ var initial_time : float = 0.05
 @onready var gpu_particles_2d: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
 @onready var tracking_timer: Timer = $TrackingTimer
 @onready var initial_fire_timer: Timer = $InitialFireTimer
+@onready var damage : int = 1 : set = set_damage, get = get_damage
 
 
 # Called when the node enters the scene tree for the first time.
@@ -32,32 +33,36 @@ func _ready():
 	set_as_top_level(true)
 	player = get_tree().get_first_node_in_group("player")
 	global_position = spawnPos
+	global_rotation_degrees=spawnRot
+	print_debug(global_position)
 	animated_sprite_2d.global_rotation=deg_to_rad(spawnRot)
 	tracking_rot=animated_sprite_2d.global_rotation_degrees
-	
-	init_dir=(player_tracker.to_global(player_tracker.target_position) -player_tracker.to_global(Vector2.ZERO)).normalized()
-	
+	scale*=scale_size
+	dir=(player_tracker.to_global(player_tracker.target_position) -player_tracker.to_global(Vector2.ZERO)).normalized()
+	#dir=(Vector2.RIGHT.rotated(global_rotation_degrees)).normalized()
 
 func _process(delta: float) -> void:
 	pass
 	#print_debug(global_position)
 
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
+	linear_velocity = (dir *(SPEED +accel))
+
 func _physics_process(delta):
-	
 	
 	
 	if not tracking_timer.is_stopped():
 		track_player()
 		rotate_missile(delta)
 		#animated_sprite_2d.global_rotation_degrees=wrapf(missile_rotation, 0, 360)
-		dir=Vector2.RIGHT.rotated(animated_sprite_2d.global_rotation)
+		dir=(player_tracker.to_global(player_tracker.target_position) -player_tracker.to_global(Vector2.ZERO)).normalized()
 		
 	else:
 		accel += (accel*.02)
 		#dir=dir
 
-	linear_velocity = (dir *(SPEED +accel))
-	position += (dir * (SPEED +accel) * delta)
+	
+	#position += (dir * (SPEED +accel) * delta)
 
 func bullet_dodged() -> void:
 	set_collision_mask_value(2, false)
@@ -66,6 +71,12 @@ func bullet_dodged() -> void:
 	
 func set_angular_vel(_rotation_speed : float) -> void:
 	angular_velocity=deg_to_rad(rotation_speed)
+
+func set_damage(value : int) -> void:
+	damage=value
+
+func get_damage() -> int:
+	return damage
 
 func rotate_missile(delta : float) -> void:
 	animated_sprite_2d.global_rotation=rotate_toward(animated_sprite_2d.global_rotation,tracking_rot, deg_to_rad(rotation_speed))
@@ -106,6 +117,8 @@ func get_speed() -> float:
 	
 func set_rot_speed(value: float):
 	rotation_speed=value
+
+
 
 func _on_visible_on_screen_enabler_2d_screen_exited() -> void:
 	#pass

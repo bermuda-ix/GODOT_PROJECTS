@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://d1xsuny35cgdk" path="res://Art_Components/missile/spr_missile_half.png" id="1_518kb"]
 [ext_resource type="Script" uid="uid://bncuonjb6yvor" path="res://Component/missiles/missile_trackerv_2.gd" id="1_616uy"]
+[ext_resource type="Script" uid="uid://oh43vctkhpbh" path="res://Component/projectile_hitbox.gd" id="3_i8skp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_616uy"]
 animations = [{
@@ -42,9 +43,9 @@ color_ramp = SubResource("GradientTexture1D_tg5ar")
 radius = 2.0091877
 height = 19.99914
 
-[node name="MissileTrackerV2" type="RigidBody2D" unique_id=67338603 groups=["bullet"]]
+[node name="MissileTrackerV2" type="RigidBody2D" unique_id=67338603 groups=["bullet", "missile"]]
 collision_layer = 4096
-collision_mask = 131
+collision_mask = 194
 continuous_cd = 2
 contact_monitor = true
 max_contacts_reported = 5
@@ -84,6 +85,17 @@ shape = SubResource("CapsuleShape2D_4mv8y")
 position = Vector2(3.17722, 0)
 scale = Vector2(2.23027, 1)
 rect = Rect2(-5.459976, -1, 8.070772, 2)
+
+[node name="ProjectileHitBox" type="Area2D" parent="." unique_id=2071040978 node_paths=PackedStringArray("actor")]
+collision_layer = 4096
+collision_mask = 216
+script = ExtResource("3_i8skp")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://oh43vctkhpbh"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileHitBox" unique_id=1609519912]
+rotation = -1.58007
+shape = SubResource("CapsuleShape2D_4mv8y")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="InitialFireTimer" to="." method="_on_initial_fire_timer_timeout"]

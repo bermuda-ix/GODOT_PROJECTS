@@ -140,6 +140,8 @@ var distance
 @onready var teleport_and_shoot: BTState = $LimboHSM/TeleportAndShoot
 @onready var teleport_and_hit: BTState = $LimboHSM/TeleportAndHit
 @onready var launch: Launch = $LimboHSM/Launch
+@onready var clashed: Clashed = $LimboHSM/Clashed
+
 
 
 
@@ -275,6 +277,8 @@ func _init_state_machine():
 	state_machine.add_transition(dying, death, dying.success_event)
 	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
 	
+	state_machine.add_transition(attack, clashed, &"clashed")
+	
 	state_machine.add_transition(state_machine.ANYSTATE, phase_transition, &"begin_next_phase")
 	state_machine.add_transition(phase_transition, teleport_and_shoot, phase_transition.success_event)
 	state_machine.remove_transition(dying, &"begin_next_phase")
@@ -287,6 +291,7 @@ func _init_TEST_state_machine():
 	state_machine.set_active(true)
 	
 	state_machine.add_transition(idle, teleport_and_shoot, &"teleport_counter")
+	
 	state_machine.add_transition(teleport_and_shoot, idle, teleport_and_shoot.success_event)
 	state_machine.add_transition(idle, hit, &"got_hit")
 	state_machine.add_transition(hit, idle, &"hit_recover")
@@ -497,6 +502,26 @@ func teleport_to(front : bool) -> void:
 		#global_position.y+offset.call()
 		print_debug(global_position)
 
+func dodge_counter() -> void:
+	var _dodge_chance = randi_range(0,1)
+	if _dodge_chance==0:
+		dodge.dodge_anim="dodge_forward"
+		dodge.dodge_setup(150, 0)
+	else:
+		dodge.dodge_anim="dodge_back"
+		dodge.dodge_setup(-400, 0)
+	bt_player.blackboard.set_var("dodge", true)
+	state_machine.dispatch(&"dodge_back")
+
+func dodge_end() -> void:
+	bt_player.blackboard.set_var("dodge", false)
+	state_machine.dispatch(&"dodge_end")
+	bt_player.blackboard.set_var("within_range", true)
+	set_collision_layer_value(15, true)
+	bt_player.restart()
+	melee_attack_manager.atk_resume_helper()
+
+
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	
 	if anim_name.substr(0, 3)=="atk":
@@ -526,6 +551,9 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		attacking=false
 	elif anim_name=="dodge":
 		state_machine.dispatch(&"dodge_end")
+	elif anim_name=="clashed":
+		if stagger.stagger>0:
+			clash_counter()
 	#elif "teleport_start":
 			#print_debug(global_position)
 	#elif "teleport_end":
@@ -822,6 +850,7 @@ func _on_phases_handler_next_phase() -> void:
 func _on_phasetransition_entered() -> void:
 	
 	state_machine.add_transition(attack, teleport_and_shoot, &"teleport_counter")
+	state_machine.add_transition(clashed, teleport_and_shoot, &"teleport_clash")
 	state_machine.add_transition(staggered, teleport_and_shoot, &"teleport_recover")
 	state_machine.add_transition(chasing, teleport_and_hit, &"teleport_atk")
 	
@@ -952,3 +981,20 @@ func _on_launch_timer_timeout() -> void:
 		teleport_counter()
 	else:
 		state_machine.dispatch(&"falling")
+
+
+func _on_hit_box_clashed() -> void:
+	hit_stop.hit_stop(0.05, 0.5)
+	print_debug("clashed!")
+	stagger.stagger-=1
+	if player_right:
+		knockback.x=-200
+	else:
+		knockback.x=200
+	state_machine.dispatch(&"clashed")
+	
+func clash_counter() -> void:
+	if phases.get_active_state()==phase_1:
+		state_machine.dispatch(&"counter")
+	else:
+		state_machine.dispatch(&"teleport_clash")

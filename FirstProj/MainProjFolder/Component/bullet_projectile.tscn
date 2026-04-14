@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cyvi7boaxgxo6" path="res://Art_Components/Enemies/battle-mecha-sprites-pixel-art-pack/3/Bullet.png" id="1_p6xas"]
 [ext_resource type="Script" uid="uid://ogysyo440lhh" path="res://Component/bullet_projectile.gd" id="1_vt6nh"]
+[ext_resource type="Script" uid="uid://oh43vctkhpbh" path="res://Component/projectile_hitbox.gd" id="3_wdbjx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vt6nh"]
 radius = 3.0
@@ -32,13 +33,16 @@ texture = ExtResource("1_p6xas")
 position = Vector2(2, 1)
 rect = Rect2(-3, -2, 2, 2)
 
-[node name="Area2D" type="Area2D" parent="." unique_id=1096474883 groups=["bullet"]]
+[node name="ProjectileHitbox" type="Area2D" parent="." unique_id=1096474883 node_paths=PackedStringArray("actor") groups=["bullet"]]
 collision_layer = 4096
 collision_mask = 128
+script = ExtResource("3_wdbjx")
+actor = NodePath("..")
+impact_sfx = "res://Art_Components/Effects/sound/qubodup-Bangs/qubodup-Bangs/ogg_vorbis/qubodup-BangMid.ogg"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1035255250]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileHitbox" unique_id=1035255250]
 shape = SubResource("CircleShape2D_wdbjx")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="ProjectileHitbox" to="." method="_on_area_2d_area_entered"]
