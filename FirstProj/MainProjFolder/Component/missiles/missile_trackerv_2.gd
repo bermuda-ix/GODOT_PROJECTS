@@ -97,6 +97,7 @@ func hard_impact():
 func explode_impact():
 	var explode_inst=explode.instantiate()
 	explode_inst.global_position=Vector2(global_position.x, global_position.y)
+	explode_inst.scale*=-0.2
 	get_tree().current_scene.add_child(explode_inst)
 	await get_tree().create_timer(0.01).timeout 
 	queue_free()

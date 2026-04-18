@@ -884,7 +884,8 @@ func update_animation(input_axis):
 				animated_sprite_2d.scale.x=1
 				
 					
-			if state_machine.get_previous_active_state()!=attack_state and s_atk==false and not attack_timer.is_stopped():
+			#if state_machine.get_previous_active_state()!=attack_state and s_atk==false and not attack_timer.is_stopped():
+			if state_machine.get_previous_active_state()!=attack_state and s_atk==false:
 				#state = States.WALKING
 				
 				if Input.is_action_pressed("sprint"):

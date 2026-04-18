@@ -1,4 +1,4 @@
-extends Node2D
+class_name elevator_front extends Node2D
 
 @onready var path_follow_2d: PathFollow2D = $Path2D/PathFollow2D
 @onready var pause_move: Timer = $PauseMove
@@ -14,6 +14,7 @@ extends Node2D
 @onready var global_flag_handler: GlobalFlagHandler = $GlobalFlagHandler
 @onready var door_collision: CollisionShape2D = $Path2D/PathFollow2D/StaticBody2D/Door/DoorCollision
 @onready var player_detect_collision: CollisionShape2D = $Path2D/PathFollow2D/StaticBody2D/PlayerDetect/CollisionShape2D
+@onready var wall_collision: CollisionPolygon2D = $Path2D/PathFollow2D/StaticBody2D/WallCollision
 
 
 
@@ -40,6 +41,9 @@ extends Node2D
 @export var key_required : bool = false
 @export var key_type : String
 
+signal open_door
+signal close_door
+
 #Stops based on progress_ratio
 #@export var stops_ratio : Array[float]
 
@@ -57,6 +61,7 @@ func _ready() -> void:
 	global_flag_handler.flag_name=global_flag
 	global_flag_handler.flag_active=flag_active
 	Events.open_interact_menu.connect(open_elevator_menu)
+	wall_collision.set_deferred("disabled", true)
 	player_detect_collision.call_deferred("set_disabled", !active)
 	#Events.checkpoint_reached.connect(save_state)
 	
@@ -94,6 +99,8 @@ func choose_floor(_floor : int) -> void:
 	if stopped:
 		current_floor = path_follow_2d.progress_ratio
 		next_floor = floors[_floor]
+		wall_collision.set_deferred("disabled", false)
+		close_door.emit()
 		if current_floor<next_floor:
 			print_debug("Moving up to floor ", _floor)
 			going_up=true
@@ -110,12 +117,16 @@ func choose_floor(_floor : int) -> void:
 		print_debug("currently moving")
 	
 
-
+func get_floor_number() -> int:
+	return floors.find(next_floor)
 
 func move_to_floor():
+	
+	
 	if open_flag and not stopped:
 		if going_up:
-				path_follow_2d.progress +=speed
+
+			path_follow_2d.progress +=speed
 		else:
 			path_follow_2d.progress -=speed
 		pause()
@@ -132,14 +143,17 @@ func up_or_down():
 		going_up=false
 		
 func pause():
-	if next_floor==snapped(path_follow_2d.progress_ratio, 0.01):
+	if (next_floor>=snapped(path_follow_2d.progress_ratio-0.001, 0.001) and next_floor<snapped(path_follow_2d.progress_ratio+0.001, 0.001)):
+		path_follow_2d.progress_ratio=next_floor
+		wall_collision.set_deferred("disabled", true)
+		open_door.emit()
 		print_debug("your floor sir")
 		if going_up:
 			animation_player.play("arrived_up")
-			animation_player_door.play("open")
+			#animation_player_door.play("open")
 		else:
 			animation_player.play("arrived_down")
-			animation_player_door.play("open")
+			#animation_player_door.play("open")
 		stopped=true
 		#pause_move.start(5)
 
