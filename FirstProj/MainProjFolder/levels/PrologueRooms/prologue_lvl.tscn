@@ -922,6 +922,14 @@ point_count = 2
 a = Vector2(-17, -3)
 b = Vector2(567, -310)
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_5m18i"]
+a = Vector2(-2, -4)
+b = Vector2(479, -4)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_vcexo"]
+a = Vector2(-2, -4)
+b = Vector2(993, -4)
+
 [node name="PrologueLvl" unique_id=1690552447 node_paths=PackedStringArray("player") groups=["world"] instance=ExtResource("1_w82j5")]
 next_level = ExtResource("2_mb6gy")
 player = NodePath("PC")
@@ -1065,6 +1073,8 @@ tile_set = ExtResource("10_658m8")
 
 [node name="UndergroundRamp1" type="StaticBody2D" parent="Ramps" index="0" unique_id=1607064158]
 position = Vector2(7920, 769.37445)
+collision_layer = 524288
+collision_mask = 16386
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ramps/UndergroundRamp1" index="0" unique_id=1790837832]
 shape = SubResource("SegmentShape2D_658m8")
@@ -1072,6 +1082,8 @@ one_way_collision = true
 
 [node name="UndergroundRamp2" type="StaticBody2D" parent="Ramps" index="1" unique_id=773982265]
 position = Vector2(9479, 480.85907)
+collision_layer = 524288
+collision_mask = 16386
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ramps/UndergroundRamp2" index="0" unique_id=118321678]
 shape = SubResource("SegmentShape2D_e156f")
@@ -1378,6 +1390,20 @@ end_position = Vector2(32, 8)
 position = Vector2(8624, 920)
 start_position = Vector2(136, -32)
 end_position = Vector2(32, 8)
+
+[node name="GNav_UG_DropDown1" type="NavigationLink2D" parent="GroundNavs/Links" index="7" unique_id=143790435]
+position = Vector2(5340, 888)
+bidirectional = false
+navigation_layers = 2
+start_position = Vector2(120, 0)
+end_position = Vector2(121, 163)
+
+[node name="GNav_UG_DropDown2" type="NavigationLink2D" parent="GroundNavs/Links" index="8" unique_id=484251601]
+position = Vector2(7790, 888)
+bidirectional = false
+navigation_layers = 2
+start_position = Vector2(120, 0)
+end_position = Vector2(120, 305)
 
 [node name="Underground1" type="NavigationRegion2D" parent="GroundNavs" index="5" unique_id=220303808]
 navigation_polygon = SubResource("NavigationPolygon_dxt6w")
@@ -1771,6 +1797,24 @@ shape = SubResource("SegmentShape2D_7qfih")
 one_way_collision = true
 
 [node name="FallthroughPlatform" type="Node" parent="." index="31" unique_id=4745813]
+
+[node name="PlatformUnderground1" type="StaticBody2D" parent="FallthroughPlatform" index="0" unique_id=1086135563]
+position = Vector2(5305, 908)
+collision_layer = 67108864
+collision_mask = 16386
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FallthroughPlatform/PlatformUnderground1" index="0" unique_id=1857207571]
+shape = SubResource("SegmentShape2D_5m18i")
+one_way_collision = true
+
+[node name="PlatformUnderground2" type="StaticBody2D" parent="FallthroughPlatform" index="1" unique_id=722826058]
+position = Vector2(7737, 908)
+collision_layer = 67108864
+collision_mask = 16386
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FallthroughPlatform/PlatformUnderground2" index="0" unique_id=772737433]
+shape = SubResource("SegmentShape2D_vcexo")
+one_way_collision = true
 
 [node name="Spawning" type="Node" parent="." index="32" unique_id=1797510082]
 

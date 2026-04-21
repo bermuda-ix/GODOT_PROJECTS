@@ -23,6 +23,7 @@ func _physics_process(delta: float) -> void:
 		return
 		
 	else:
+		
 		direction= actor.global_position - actor.player.global_position
 		if face_player_active:
 			face_player()
@@ -33,6 +34,8 @@ func _physics_process(delta: float) -> void:
 				move_away(distance_from)
 			else:
 				move_closer()
+				climb_stairs()
+				fall_through_platform()
 				#print_debug(actor.global_position.x)
 		
 
@@ -61,7 +64,7 @@ func face_player() -> void:
 func move_away(value : int) -> void:
 	#print_debug("move away")
 		
-	var dir = actor.to_local(actor.nav_agent.get_next_path_position())
+	var dir := actor.to_local(actor.nav_agent.get_next_path_position())
 		#actor.h_bar.text=str(actor.health.health, " : ", actor.stagger.stagger, " : vel_x:", actor.velocity.x)
 	if abs(dir.x) < value:
 		state_machine.dispatch(&"run_and_shoot")
@@ -85,7 +88,7 @@ func move_away(value : int) -> void:
 		state_machine.dispatch(&"start_shoot")
 
 func move_closer() -> void:
-	var dir = actor.to_local(actor.nav_agent.get_next_path_position())
+	var dir := actor.to_local(actor.nav_agent.get_next_path_position())
 	#print_debug(dir.x)
 		#actor.h_bar.text=str(actor.health.health, " : ", actor.stagger.stagger, " : vel_x:", actor.velocity.x)
 	if dir.x < 0 and actor.is_on_floor():
@@ -101,6 +104,28 @@ func move_closer() -> void:
 			#actor.animated_sprite_2d.scale.x = 1
 		#actor.hit_box.scale.x = 1
 		#actor.attack_range.scale.x = 1
+
+func climb_stairs():
+	var dir_y := actor.to_local(actor.nav_agent.get_next_path_position()).y
+	if actor.global_position.y<dir_y:
+		actor.set_collision_mask_value(20, true)
+		#if "climb_stairs" in actor:
+			#actor.climb_stairs=true
+	else:
+		actor.set_collision_mask_value(20, false)
+		#if "climb_stairs" in actor:
+			#actor.climb_stairs=false
+
+func fall_through_platform():
+	var dir_y := actor.to_local(actor.nav_agent.get_next_path_position()).y
+	if actor.global_position.y>dir_y:
+		actor.set_collision_mask_value(27, false)
+		#if "fall_through_platform" in actor:
+			#actor.fall_through_platform=true
+	else:
+		actor.set_collision_mask_value(27, true)
+		#if "fall_through_platform" in actor:
+			#actor.cfall_through_platform=false
 
 func knockback_set(value_x : int, value_y : int) -> void:
 	if actor.player_right:
