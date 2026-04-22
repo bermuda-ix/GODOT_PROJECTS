@@ -1063,7 +1063,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["This plan sucks.", "Default", false, "default", "default", "???"],
+"args": ["What a frickin' mess...", "Default", false, "default", "default", "???"],
 "method": &"play_bot"
 }]
 }

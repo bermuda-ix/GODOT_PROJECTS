@@ -61,6 +61,7 @@ func set_heat_lvl(value : int) -> void:
 
 func increase_heat_gauge(value : int) -> void:
 	heat_fill+=value
+	GlobalSaveData.heat_stats["heat_gauge"]=heat_fill
 	if heat_fill>=100:
 		Events.increase_heat_lvl.emit(1)
 	else:

@@ -33,6 +33,7 @@ var camera_stationary : bool = false
 @onready var starting_pos: Array[Vector2]
 #@onready var starting_positions : Dictionary = {}
 @onready var persistent_data_handler: PersistentDataHandler = $PersistentDataHandler
+@onready var heat_handler: HeatHandler = $HeatHandler
 
 
 @export var lvl_type = "goal"
@@ -87,6 +88,8 @@ func _ready():
 	#Events.pause.connect(show_pause)
 	#Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
+	#Events.increase_heat_lvl.connect(increase_heat)
+	
 	
 	if player == null:
 		player=get_tree().get_first_node_in_group("player")
@@ -202,6 +205,18 @@ func set_health():
 	
 func inc_score(value : int):
 	score += 1
+
+func set_max_heat(_value : int) -> void:
+	heat_handler.max_heat_level=_value
+
+func toggle_spawn(_value : bool, _enemy_type) -> void:
+	var _spawn_points := get_tree().get_nodes_in_group("SpawnPoint")
+	if _value:
+		for i in range(_spawn_points.size(), 0, -1):
+			_spawn_points[i].activate(_enemy_type)
+	else:
+		for i in range(_spawn_points.size(), 0, -1):
+			_spawn_points[i].deactivate(_enemy_type)
 
 func handle_spawn():
 	pass

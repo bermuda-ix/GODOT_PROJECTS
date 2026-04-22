@@ -170,7 +170,7 @@ func spawn_update(enemy_spawn, add : bool):
 func spawn_timer_update(value : float) -> void:
 	spawn_timer.wait_time=value
 
-func heat_increased(value : int) -> void:
+func heat_increased(_max_enemy : int, _spawn_time : float) -> void:
 	max_enemy+=1
 	spawn_timer.wait_time-=0.5
 	

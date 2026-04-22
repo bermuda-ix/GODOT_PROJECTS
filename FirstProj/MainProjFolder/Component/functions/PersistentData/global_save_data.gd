@@ -43,11 +43,20 @@ var level_state : Dictionary = {
 	scene_path="",
 	items=[],
 	persistence = {
-		"" : ""
+		"" = ""
 		},
 	checkpoint_reached=""
 	}
 	
+var heat_stats := {
+		region = {
+			region_name = "ADV_FLASHBACK",
+			heat = {
+				current_heat_level=""
+				}
+			},
+		heat_gauge=""
+		}
 	
 var score : int = 0
 var score_name : String = "TEST"

@@ -55,6 +55,7 @@ signal boss_spawn
 signal increase_heat_gauge
 signal increase_heat_lvl
 signal reset_heat
+signal retrieve_heat_stats
 
 signal parried
 signal staggered

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b8htmq8u3ykss"]
+[gd_scene format=3 uid="uid://b8htmq8u3ykss"]
 
 [ext_resource type="Texture2D" uid="uid://cm36bhcpc0hsc" path="res://Art_Components/tile_maps/_PNG/1. main platforms.png" id="1_4moad"]
 [ext_resource type="Script" uid="uid://bjx74gi53j4rg" path="res://Component/interactables/door.gd" id="1_flptw"]
@@ -20,36 +20,36 @@ region = Rect2(906.885, -0.0078454, 10.4645, 95.9792)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_80ptt"]
 polygon = PackedVector2Array(-5.99983, 47, -5.99983, 47, 5.00017, 47, 4.99983, -48, -6.00017, -48)
 
-[node name="Door" type="Node2D" groups=["Persistant"]]
+[node name="Door" type="Node2D" unique_id=723154059 groups=["Persistant"]]
 script = ExtResource("1_flptw")
 connected_switch = "Door1"
 
-[node name="Path2D" type="Path2D" parent="."]
+[node name="Path2D" type="Path2D" parent="." unique_id=1809353174]
 curve = SubResource("Curve2D_2h5dv")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D" groups=["door"]]
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D" unique_id=980793771 groups=["door"]]
 rotation = -1.5707964
 loop = false
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Path2D/PathFollow2D"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Path2D/PathFollow2D" unique_id=963176128]
 rotation = 1.5708
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=554817634]
 shape = SubResource("RectangleShape2D_c3yeq")
 
-[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=503750099]
 texture = SubResource("AtlasTexture_1s761")
 
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=707029582]
 vertices = PackedVector2Array(-8.00017, -48, -7.99982, 48, 8.00018, 48, 7.99983, -48)
 affect_navigation_mesh = true
 carve_navigation_mesh = true
 avoidance_layers = 2
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Path2D/PathFollow2D/StaticBody2D"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=63352160]
 occluder = SubResource("OccluderPolygon2D_80ptt")
 
-[node name="IsOpen" type="Node" parent="."]
+[node name="IsOpen" type="Node" parent="." unique_id=1491869510]
 script = ExtResource("3_flptw")
 metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 

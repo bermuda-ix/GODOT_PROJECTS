@@ -34,4 +34,4 @@ func open_from_signal(value : String = "default"):
 		open_flag=true
 
 func _on_is_open_data_loaded(value) -> void:
-	pass # Replace with function body.
+	open_flag=value

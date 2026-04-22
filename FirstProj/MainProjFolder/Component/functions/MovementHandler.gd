@@ -107,7 +107,7 @@ func move_closer() -> void:
 
 func climb_stairs():
 	var dir_y := actor.to_local(actor.nav_agent.get_next_path_position()).y
-	if actor.global_position.y<dir_y:
+	if actor.global_position.y<dir_y or abs(actor.global_position.y-dir_y)>=10:
 		actor.set_collision_mask_value(20, true)
 		#if "climb_stairs" in actor:
 			#actor.climb_stairs=true

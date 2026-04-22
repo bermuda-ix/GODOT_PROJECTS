@@ -930,6 +930,24 @@ b = Vector2(479, -4)
 a = Vector2(-2, -4)
 b = Vector2(993, -4)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_658m8"]
+size = Vector2(207, 621)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e156f"]
+size = Vector2(577, 621)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7qfih"]
+size = Vector2(1204, 492)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5m18i"]
+size = Vector2(1112, 219)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcexo"]
+size = Vector2(1112, 219)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4koma"]
+size = Vector2(246, 726)
+
 [node name="PrologueLvl" unique_id=1690552447 node_paths=PackedStringArray("player") groups=["world"] instance=ExtResource("1_w82j5")]
 next_level = ExtResource("2_mb6gy")
 player = NodePath("PC")
@@ -1185,7 +1203,7 @@ rotation = -1.5708
 scale = Vector2(0.1, 0.1)
 
 [node name="turret_base_4" parent="Enemy/turrets" index="1" unique_id=1753773796 node_paths=PackedStringArray("turret_link_control") instance=ExtResource("14_r2uf8")]
-position = Vector2(938, 71)
+position = Vector2(1117, 70)
 scale = Vector2(-0.1, 0.1)
 turret_link_control = NodePath("../TurretLink")
 
@@ -1292,7 +1310,7 @@ heavy_soldier_enemies = [NodePath("../HeavySoldier5"), NodePath("../HeavySoldier
 guard_enemies = [NodePath("../GuardEnemy6")]
 
 [node name="HeavySoldier5" parent="Enemy/Underground" index="1" unique_id=1834093229 node_paths=PackedStringArray("group_link_control") instance=ExtResource("13_rfxm3")]
-position = Vector2(2432, 1192)
+position = Vector2(2520, 1192)
 scale = Vector2(0.5, 0.5)
 group_link_control = NodePath("../EnemyGroup")
 
@@ -1302,22 +1320,22 @@ scale = Vector2(0.5, 0.5)
 group_link_control = NodePath("../EnemyGroup")
 
 [node name="GuardEnemy6" parent="Enemy/Underground" index="3" unique_id=216217353 node_paths=PackedStringArray("group_link_control") instance=ExtResource("16_vw32t")]
-position = Vector2(2490, 1187)
+position = Vector2(2578, 1187)
 scale = Vector2(0.75, 0.75)
 group_link_control = NodePath("../EnemyGroup")
 
 [node name="Turrets" type="Node" parent="Enemy/Underground" index="4" unique_id=1096692305]
 
 [node name="turret_base_3" parent="Enemy/Underground/Turrets" index="0" unique_id=385641151 instance=ExtResource("14_r2uf8")]
-position = Vector2(2420, 1096)
+position = Vector2(2885, 1096)
 scale = Vector2(-0.15, -0.15)
 
 [node name="turret_base_4" parent="Enemy/Underground/Turrets" index="1" unique_id=1816447384 instance=ExtResource("14_r2uf8")]
-position = Vector2(2678, 1097)
+position = Vector2(3653.0002, 1097)
 scale = Vector2(-0.15, -0.15)
 
 [node name="turret_base_5" parent="Enemy/Underground/Turrets" index="2" unique_id=1134855068 instance=ExtResource("14_r2uf8")]
-position = Vector2(2947, 1097)
+position = Vector2(3365, 1097)
 scale = Vector2(-0.15, -0.15)
 
 [node name="TurretLink" parent="Enemy/Underground/Turrets" index="3" unique_id=1557337183 node_paths=PackedStringArray("turrets") instance=ExtResource("15_ffcw5")]
@@ -1824,12 +1842,80 @@ one_way_collision = true
 
 [node name="HeatSpawnFlag" parent="Spawning/SpawnFlags" index="0" unique_id=412168771 instance=ExtResource("22_22var")]
 position = Vector2(714, 387)
+max_heat = 1
 
 [node name="HeatSpawnFlag2" parent="Spawning/SpawnFlags" index="1" unique_id=1271674839 instance=ExtResource("22_22var")]
 position = Vector2(3520, 419)
+max_heat = 1
 
 [node name="HeatSpawnFlag3" parent="Spawning/SpawnFlags" index="2" unique_id=1918522687 instance=ExtResource("22_22var")]
 position = Vector2(2129, 1101)
+max_heat = 3
+
+[node name="NoSpawnZones" type="Node" parent="Spawning" index="2" unique_id=659818042]
+
+[node name="Zone1" type="Area2D" parent="Spawning/NoSpawnZones" index="0" unique_id=1618819292]
+position = Vector2(1821, 659)
+collision_layer = 65536
+collision_mask = 131072
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawning/NoSpawnZones/Zone1" index="0" unique_id=560287182]
+position = Vector2(93.5, 300.5)
+shape = SubResource("RectangleShape2D_658m8")
+
+[node name="Zone2" type="Area2D" parent="Spawning/NoSpawnZones" index="1" unique_id=1350580635]
+position = Vector2(3526, -55)
+collision_layer = 65536
+collision_mask = 131072
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawning/NoSpawnZones/Zone2" index="0" unique_id=1405102729]
+position = Vector2(278.5, 300.5)
+shape = SubResource("RectangleShape2D_e156f")
+
+[node name="Zone3" type="Area2D" parent="Spawning/NoSpawnZones" index="2" unique_id=1559683613]
+position = Vector2(760, 41)
+collision_layer = 65536
+collision_mask = 131072
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawning/NoSpawnZones/Zone3" index="0" unique_id=1901351177]
+position = Vector2(591, 91)
+shape = SubResource("RectangleShape2D_7qfih")
+
+[node name="Zone4" type="Area2D" parent="Spawning/NoSpawnZones" index="3" unique_id=1657629509]
+position = Vector2(5138, -55)
+collision_layer = 65536
+collision_mask = 131072
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawning/NoSpawnZones/Zone4" index="0" unique_id=1331576390]
+position = Vector2(278.5, 300.5)
+shape = SubResource("RectangleShape2D_e156f")
+
+[node name="Zone5" type="Area2D" parent="Spawning/NoSpawnZones" index="4" unique_id=1908247146]
+position = Vector2(5701, -145)
+collision_layer = 65536
+collision_mask = 131072
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawning/NoSpawnZones/Zone5" index="0" unique_id=1769407771]
+position = Vector2(546, 100)
+shape = SubResource("RectangleShape2D_5m18i")
+
+[node name="Zone6" type="Area2D" parent="Spawning/NoSpawnZones" index="5" unique_id=526149333]
+position = Vector2(6644, -345)
+collision_layer = 65536
+collision_mask = 131072
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawning/NoSpawnZones/Zone6" index="0" unique_id=1664687118]
+position = Vector2(546, 99.5)
+shape = SubResource("RectangleShape2D_vcexo")
+
+[node name="Zone7" type="Area2D" parent="Spawning/NoSpawnZones" index="6" unique_id=1407841983]
+position = Vector2(7674, -215)
+collision_layer = 65536
+collision_mask = 131072
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawning/NoSpawnZones/Zone7" index="0" unique_id=946866639]
+position = Vector2(113, 237)
+shape = SubResource("RectangleShape2D_4koma")
 
 [node name="QTEFlags" type="Node" parent="." index="33" unique_id=1211765040]
 
@@ -1883,6 +1969,12 @@ z_index = 1
 position = Vector2(2232, 790)
 
 [connection signal="scene_reloaded" from="." to="." method="_on_scene_reloaded"]
+[connection signal="set_max_heat" from="Spawning/SpawnFlags/HeatSpawnFlag" to="." method="set_max_heat"]
+[connection signal="toggle_spawn" from="Spawning/SpawnFlags/HeatSpawnFlag" to="." method="toggle_spawn"]
+[connection signal="set_max_heat" from="Spawning/SpawnFlags/HeatSpawnFlag2" to="." method="set_max_heat"]
+[connection signal="toggle_spawn" from="Spawning/SpawnFlags/HeatSpawnFlag2" to="." method="toggle_spawn"]
+[connection signal="set_max_heat" from="Spawning/SpawnFlags/HeatSpawnFlag3" to="." method="set_max_heat"]
+[connection signal="toggle_spawn" from="Spawning/SpawnFlags/HeatSpawnFlag3" to="." method="toggle_spawn"]
 
 [editable path="Enemy/Guards/GuardEnemy"]
 [editable path="DoorsAndSwitches/Elevators/Elevator"]

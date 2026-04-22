@@ -14,7 +14,8 @@ func _ready() -> void:
 func trigger_flag(_flag : String) -> void:
 	if _flag == flag_name:
 		if flag_active:
-			flag_triggered != flag_triggered
+			flag_triggered = true
+			flag_active = false
 			flag_activate.emit()
 	else:
 		pass
