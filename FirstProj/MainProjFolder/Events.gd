@@ -106,6 +106,8 @@ signal door_opened
 signal open_interact_menu
 signal close_interact_menu
 
+signal call_elevator
+
 #Inventory update
 signal add_inventory
 signal remove_inventory

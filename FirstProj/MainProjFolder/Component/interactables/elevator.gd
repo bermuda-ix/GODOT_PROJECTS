@@ -1,4 +1,4 @@
-extends Node2D
+class_name elevator extends Node2D
 
 @onready var path_follow_2d: PathFollow2D = $Path2D/PathFollow2D
 @onready var pause_move: Timer = $PauseMove

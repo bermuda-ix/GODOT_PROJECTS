@@ -246,6 +246,9 @@ signal no_input_qte
 
 @onready var animated_door : bool = false
 
+@onready var elevator_door : bool = false
+@onready var elevator_connected : Node2D = null
+
 @onready var game_controller : GameController
 
 @onready var enemies : Array =[]
@@ -1460,6 +1463,7 @@ func enter_door() -> void:
 	elif in_door_way_local:
 		if Input.is_action_just_pressed("up"):
 			global_position=door_local_exit
+			
 
 func climb_stairs() -> void:
 	if Input.is_action_pressed("down") and stairs_detected==false:
@@ -1512,6 +1516,10 @@ func _on_interactable_detector_area_entered(area: Area2D) -> void:
 				door_locked = false
 			if area.is_in_group("AnimatedDoor"):
 				animated_door=true
+	elif area.is_in_group("elevator_door"):
+		interact_prompt_player.play("call_elevator")
+		interact_ready=false
+		elevator_door=true
 	else:
 		interact_prompt_player.play("Interact")
 		interact_ready=true
@@ -1528,8 +1536,12 @@ func _on_interactable_detector_area_exited(area: Area2D) -> void:
 		interact_ready=false
 	
 func interact() -> void:
-	if interact_ready and Input.is_action_just_pressed("Interact"):
-		Events.open_interact_menu.emit()
+	if Input.is_action_just_pressed("Interact"):
+		if interact_ready:
+			Events.open_interact_menu.emit()
+		elif elevator_door:
+			Events.call_elevator.emit()
+
 
 func open_interact_menu():
 	interact_menu_open=true

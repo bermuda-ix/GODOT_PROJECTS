@@ -1691,6 +1691,92 @@ exit = 1
 [node name="DoorSprite2" parent="Entries/Entry13" index="1" unique_id=1911363443 instance=ExtResource("22_relum")]
 position = Vector2(-34, -68)
 
+[node name="Entry15" parent="Entries" index="15" unique_id=1347066081 instance=ExtResource("22_5m18i")]
+position = Vector2(6968, 448)
+room = ExtResource("22_drpgx")
+
+[node name="DoorSprite2" parent="Entries/Entry15" index="1" unique_id=1466192164 instance=ExtResource("22_relum")]
+position = Vector2(-32, -50)
+
+[node name="Entry16" parent="Entries" index="16" unique_id=659299622 instance=ExtResource("22_5m18i")]
+position = Vector2(6488, 448)
+room = ExtResource("22_drpgx")
+
+[node name="DoorSprite2" parent="Entries/Entry16" index="1" unique_id=1944474580 instance=ExtResource("22_relum")]
+position = Vector2(-32, -49)
+
+[node name="Entry17" parent="Entries" index="17" unique_id=1587930130 instance=ExtResource("22_5m18i")]
+position = Vector2(6232, 448)
+room = ExtResource("23_veiog")
+
+[node name="DoorSprite2" parent="Entries/Entry17" index="1" unique_id=641141628 instance=ExtResource("22_relum")]
+position = Vector2(-30, -47)
+
+[node name="Entry18" parent="Entries" index="18" unique_id=1048850857 instance=ExtResource("22_5m18i")]
+position = Vector2(5976, 240)
+room = ExtResource("21_7klgn")
+
+[node name="DoorSprite2" parent="Entries/Entry18" index="1" unique_id=1400554592 instance=ExtResource("22_relum")]
+position = Vector2(-33, -43)
+
+[node name="Entry19" parent="Entries" index="19" unique_id=1974303573 instance=ExtResource("22_5m18i")]
+position = Vector2(6232, 240)
+room = ExtResource("23_veiog")
+
+[node name="DoorSprite2" parent="Entries/Entry19" index="1" unique_id=202237301 instance=ExtResource("22_relum")]
+position = Vector2(-33, -44)
+
+[node name="Entry20" parent="Entries" index="20" unique_id=561461136 instance=ExtResource("22_5m18i")]
+position = Vector2(6488, 240)
+room = ExtResource("22_drpgx")
+
+[node name="DoorSprite2" parent="Entries/Entry20" index="1" unique_id=184160373 instance=ExtResource("22_relum")]
+position = Vector2(-33, -42)
+
+[node name="Entry21" parent="Entries" index="21" unique_id=920312659 instance=ExtResource("22_5m18i")]
+position = Vector2(6968, 240)
+room = ExtResource("22_drpgx")
+
+[node name="DoorSprite2" parent="Entries/Entry21" index="1" unique_id=2136106081 instance=ExtResource("22_relum")]
+position = Vector2(-33, -44)
+
+[node name="Entry22" parent="Entries" index="22" unique_id=1954429143 instance=ExtResource("22_5m18i")]
+position = Vector2(7384, 240)
+room = ExtResource("23_veiog")
+
+[node name="DoorSprite2" parent="Entries/Entry22" index="1" unique_id=1024156319 instance=ExtResource("22_relum")]
+position = Vector2(-33, -45)
+
+[node name="Entry23" parent="Entries" index="23" unique_id=972256260 instance=ExtResource("22_5m18i")]
+position = Vector2(7384, 0)
+room = ExtResource("21_7klgn")
+
+[node name="DoorSprite2" parent="Entries/Entry23" index="1" unique_id=2058062958 instance=ExtResource("22_relum")]
+position = Vector2(-33, -46)
+
+[node name="Entry24" parent="Entries" index="24" unique_id=215549894 instance=ExtResource("22_5m18i")]
+position = Vector2(6968, 0)
+room = ExtResource("21_7klgn")
+
+[node name="DoorSprite2" parent="Entries/Entry24" index="1" unique_id=1222620990 instance=ExtResource("22_relum")]
+position = Vector2(-33, -44)
+
+[node name="LocalDoors" type="Node" parent="Entries" index="25" unique_id=591886969]
+
+[node name="EntryLocal" parent="Entries/LocalDoors" index="0" unique_id=2056552325 node_paths=PackedStringArray("door") instance=ExtResource("9_vw32t")]
+position = Vector2(7386, 452)
+door = NodePath("../EntryLocal2")
+
+[node name="DoorSprite" parent="Entries/LocalDoors/EntryLocal" index="3" unique_id=1827428106 instance=ExtResource("21_mb6gy")]
+position = Vector2(-33, -51)
+
+[node name="EntryLocal2" parent="Entries/LocalDoors" index="1" unique_id=358395660 node_paths=PackedStringArray("door") instance=ExtResource("9_vw32t")]
+position = Vector2(7896, 452)
+door = NodePath("../EntryLocal")
+
+[node name="DoorSprite" parent="Entries/LocalDoors/EntryLocal2" index="3" unique_id=1544691221 instance=ExtResource("21_mb6gy")]
+position = Vector2(-33, -53)
+
 [node name="ObjFlags" type="Node" parent="." index="27" unique_id=19520580]
 
 [node name="BossFlags" type="Node" parent="." index="28" unique_id=874729598]
@@ -1937,7 +2023,7 @@ update_scale = false
 [node name="StartingPos" type="Node" parent="." index="35" unique_id=275376811]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" unique_id=794793489 groups=["start_pos"]]
-position = Vector2(7991, 1160)
+position = Vector2(7450, 848)
 
 [node name="PersistentDataHandler" type="Node" parent="." index="36" unique_id=86022096]
 script = ExtResource("24_w82j5")

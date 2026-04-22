@@ -15,6 +15,7 @@ class_name elevator_front extends Node2D
 @onready var door_collision: CollisionShape2D = $Path2D/PathFollow2D/StaticBody2D/Door/DoorCollision
 @onready var player_detect_collision: CollisionShape2D = $Path2D/PathFollow2D/StaticBody2D/PlayerDetect/CollisionShape2D
 @onready var wall_collision: CollisionPolygon2D = $Path2D/PathFollow2D/StaticBody2D/WallCollision
+@onready var floor_collision: CollisionPolygon2D = $Path2D/PathFollow2D/StaticBody2D/FloorCollision
 
 
 
@@ -27,6 +28,8 @@ class_name elevator_front extends Node2D
 @export var active : bool = true
 @export var automatic : bool = false
 @export var speed : int = 1
+
+@onready var player_in_elevator := false
 
 #floors
 @export_category("Floor Variables")
@@ -99,7 +102,10 @@ func choose_floor(_floor : int) -> void:
 	if stopped:
 		current_floor = path_follow_2d.progress_ratio
 		next_floor = floors[_floor]
-		wall_collision.set_deferred("disabled", false)
+		if player_in_elevator:
+			wall_collision.set_deferred("disabled", false)
+		else:
+			wall_collision.set_deferred("disabled", true)
 		close_door.emit()
 		if current_floor<next_floor:
 			print_debug("Moving up to floor ", _floor)
@@ -119,6 +125,9 @@ func choose_floor(_floor : int) -> void:
 
 func get_floor_number() -> int:
 	return floors.find(next_floor)
+
+func get_current_floor_number() -> int:
+	return floors.find(current_floor)
 
 func move_to_floor():
 	
@@ -198,6 +207,7 @@ func _on_player_detect_body_entered(body: Node2D) -> void:
 		return
 	else:
 		if body.is_in_group("player"):
+			player_in_elevator=true
 			animation_player_door.play("open")
 
 
@@ -206,6 +216,7 @@ func _on_player_detect_body_exited(body: Node2D) -> void:
 		return
 	else:
 		if body.is_in_group("player"):
+			player_in_elevator=false
 			animation_player_door.play("close")
 
 
