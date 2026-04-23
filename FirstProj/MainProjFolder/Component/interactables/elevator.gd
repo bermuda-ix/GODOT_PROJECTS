@@ -143,6 +143,10 @@ func pause():
 		stopped=true
 		#pause_move.start(5)
 
+func get_floor_number() -> int:
+	return floors.find(next_floor)
+
+
 #func save_state():
 	#var _name=self.get_path()
 	#GlobalSaveData.add_persistent_value(_name, str(active))

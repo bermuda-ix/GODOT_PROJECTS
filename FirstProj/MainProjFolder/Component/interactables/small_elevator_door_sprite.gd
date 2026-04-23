@@ -55,7 +55,7 @@ func call_elevator() -> void:
 		return
 	else:
 		var _elevator_floor = connected_elevator.get_floor_number()
-		if floor == _elevator_floor:
+		if floor == _elevator_floor or not connected_elevator.stopped:
 			return
 		else:
 			connected_elevator.choose_floor(floor)
