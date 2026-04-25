@@ -1794,6 +1794,7 @@ key_type = "ElevatorKey"
 [node name="Elevator1CallButton" parent="DoorsAndSwitches" index="1" unique_id=1025863354 node_paths=PackedStringArray("connected_elevator") instance=ExtResource("33_e156f")]
 position = Vector2(3539.0002, 289)
 connected_elevator = NodePath("../Elevator")
+floor = 1
 
 [node name="Elevator1CallButton2" parent="DoorsAndSwitches" index="2" unique_id=818120698 node_paths=PackedStringArray("connected_elevator") instance=ExtResource("33_e156f")]
 position = Vector2(3542, 496)
@@ -1813,11 +1814,14 @@ active = false
 floors = Array[float]([0.0, 1.0])
 locked_floors = Array[int]([])
 
-[node name="Elevator2CallButton" parent="DoorsAndSwitches" index="5" unique_id=2085488252 instance=ExtResource("33_e156f")]
+[node name="Elevator2CallButton" parent="DoorsAndSwitches" index="5" unique_id=2085488252 node_paths=PackedStringArray("connected_elevator") instance=ExtResource("33_e156f")]
 position = Vector2(1992, 1188)
+connected_elevator = NodePath("../Elevator2")
+floor = 1
 
-[node name="Elevator2CallButton2" parent="DoorsAndSwitches" index="6" unique_id=66478147 instance=ExtResource("33_e156f")]
-position = Vector2(2019, 767)
+[node name="Elevator2CallButton2" parent="DoorsAndSwitches" index="6" unique_id=66478147 node_paths=PackedStringArray("connected_elevator") instance=ExtResource("33_e156f")]
+position = Vector2(2016, 764)
+connected_elevator = NodePath("../Elevator2")
 
 [node name="lab_door_switch2" parent="DoorsAndSwitches" index="7" unique_id=324318305 node_paths=PackedStringArray("doors_connected") instance=ExtResource("8_2mqv2")]
 z_index = -1

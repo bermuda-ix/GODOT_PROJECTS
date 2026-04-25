@@ -85,6 +85,7 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var heavy_attack_3: LimboState = $StateMachine/AttackState/HeavyAttack3
 @onready var heavy_dash_attack: LimboState = $StateMachine/AttackState/HeavyDashAttack
 @onready var heavy_counter: LimboState = $StateMachine/AttackState/HeavyCounter
+@onready var attack_closer: LimboState = $StateMachine/AttackState/AttackCloser
 
 
 
@@ -390,6 +391,7 @@ func _init_state_machine():
 	state_machine.add_transition(idle, flip_state, &"start_flip")
 	state_machine.add_transition(idle, staggered, &"got_staggered")
 	state_machine.add_transition(idle, hit, &"got_hit")
+	state_machine.add_transition(idle, attack_state, &"attack_closer")
 	
 	#From Walking
 	state_machine.add_transition(walking, sprint, &"start_sprinting")
@@ -400,6 +402,7 @@ func _init_state_machine():
 	state_machine.add_transition(walking, flip_state, &"start_flip")
 	state_machine.add_transition(walking, staggered, &"got_staggered")
 	state_machine.add_transition(walking, hit, &"got_hit")
+	state_machine.add_transition(walking, attack_state, &"attack_closer")
 	
 	#From Sprinting
 	state_machine.add_transition(sprint, walking, &"start_walking")
@@ -410,6 +413,7 @@ func _init_state_machine():
 	state_machine.add_transition(sprint, flip_state, &"start_flip")
 	state_machine.add_transition(sprint, staggered, &"got_staggered")
 	state_machine.add_transition(sprint, hit, &"got_hit")
+	state_machine.add_transition(sprint, attack_state, &"attack_closer")
 	
 	#Resume walking
 	state_machine.add_transition(attack_state, walking, &"resume_walking")
@@ -422,6 +426,7 @@ func _init_state_machine():
 	#state_machine.add_transition(special_attack, attack_state, &"special_to_attack")
 	state_machine.add_transition(jump_state, attack_state, &"start_attack")
 	state_machine.add_transition(jump_state, special_attack, &"special_attack")
+	state_machine.add_transition(jump_state, attack_state, &"attack_closer")
 	state_machine.add_transition(dodge_state, attack_state, &"dash_attack")
 	state_machine.add_transition(dodge_state, attack_state, &"heavy_dash_attack")
 	state_machine.add_transition(dodge_state, attack_state, &"combo_resume")
@@ -500,6 +505,7 @@ func _init_attack_states():
 	attack_state.add_transition(attack_state.ANYSTATE, dash_attack, &"dash_attack")
 	attack_state.add_transition(attack_state.ANYSTATE, heavy_dash_attack, &"heavy_dash_attack")
 	attack_state.add_transition(attack_state.ANYSTATE, heavy_counter, &"heavy_counter")
+	attack_state.add_transition(attack_state.ANYSTATE, attack_closer, &"attack_closer")
 	
 	#Heavy attack Combos
 	attack_state.add_transition(attack_1, heavy_attack_1, &"heavy_combo")
@@ -948,7 +954,15 @@ func attack_animate():
 	elif Input.is_action_just_pressed("attack"):
 
 		hitbox.active=true
-		regular_attack()
+		if combat_states.get_active_state()!=locked:
+			regular_attack()
+		else:
+			assert(target!=null)
+			var _dist_to_target_x=abs(global_position.x-target.global_position.x)
+			var _dist_to_target_y=abs(global_position.y-target.global_position.y)
+			if Input.is_action_pressed("sprint") and (_dist_to_target_x>50 or _dist_to_target_y>50):
+				attack_closer.closing_dir= global_position.direction_to(target.global_position)
+				closing_attack()
 		heavy_attack_buffer_timer.start()
 		attacking=true
 			#
@@ -1099,6 +1113,9 @@ func heavy_dash_attack_enter():
 	attack_state.dispatch(&"heavy_dash_attack")
 	state_machine.dispatch(&"heavy_dash_attack")
 
+func closing_attack() -> void:
+	state_machine.dispatch(&"attack_closer")
+	attack_state.dispatch(&"attack_closer")
 
 func sp_atk():
 	if s_atk:
@@ -1290,7 +1307,10 @@ func dodge(input_axis):
 		
 		if input_axis == 0:
 			dodge_anim_run=dodge_anim
-			velocity.x=0
+			if attack_state.get_active_state()!=attack_closer:
+				return
+			else:
+				velocity.x=0
 			state_machine.dispatch(&"start_dodge")
 		else:
 			
@@ -1717,6 +1737,8 @@ func _on_animation_player_animation_finished(anim_name):
 				attack_timer.start(.2)
 				attack_timer.paused=false
 				anim_player.play("landed")
+				attacking=false
+				
 			"shotgun_finish":
 				attack_timer.start(1.5)
 			"Heavy_Combo_1":
@@ -1739,7 +1761,8 @@ func _on_animation_player_animation_finished(anim_name):
 				
 				if state_machine.get_previous_active_state()==flip_state:
 					state_machine.dispatch(&"jump_out")
-			
+			"landed":
+				state_machine.dispatch(&"return_to_idle")
 		#else:
 			#state_machine.dispatch(&"return_to_idle")
 		hit_buffer.stop()
@@ -1770,7 +1793,7 @@ func _on_animation_player_animation_finished(anim_name):
 		#pass
 
 func _on_attack_timer_timeout():
-	if state_machine.get_active_state()==parry_success_state:
+	if state_machine.get_active_state()==parry_success_state or attack_state.get_active_state()==attack_closer:
 		return
 	atk_chain = 0
 	attack_combo = "Attack"

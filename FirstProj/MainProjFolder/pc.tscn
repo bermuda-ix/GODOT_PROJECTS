@@ -8,11 +8,23 @@
 [ext_resource type="Script" uid="uid://cnxm24jqclb68" path="res://Component/health.gd" id="4_q0gnn"]
 [ext_resource type="SpriteFrames" uid="uid://bynqgblwx727f" path="res://Art_Components/CharSpriteFrames/JokerFrames.tres" id="5_2dddn"]
 [ext_resource type="Texture2D" uid="uid://dus86lxw4ytis" path="res://Art_Components/Shotgun/Efecto.png" id="5_pvc8c"]
+[ext_resource type="Texture2D" uid="uid://drufm8cs4vff8" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/FX/DashDust/DashDust01.png" id="6_g4o0l"]
 [ext_resource type="Texture2D" uid="uid://dv3l2s77h7bq8" path="res://Art_Components/Shotgun/BalaEscopeta.png" id="6_mbdqo"]
 [ext_resource type="Script" uid="uid://5ijvah6jjgdb" path="res://Component/hitbox_template.gd" id="6_y7jp7"]
 [ext_resource type="AudioStream" uid="uid://dxedk74ivrhne" path="res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - small knock.wav" id="7_02w0c"]
+[ext_resource type="Texture2D" uid="uid://cxbaaw4u4bkfe" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/FX/DashDust/DashDust02.png" id="7_wyrhc"]
 [ext_resource type="Script" uid="uid://dj5amth02vbhe" path="res://Component/parrybox_template.gd" id="8_7q1rp"]
+[ext_resource type="Texture2D" uid="uid://nbfuc745ll5o" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/FX/DashDust/DashDust03.png" id="8_upqci"]
+[ext_resource type="Texture2D" uid="uid://dptgls0ay8ti" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/FX/DashDust/DashDust04.png" id="9_5b77s"]
 [ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="9_s8nmr"]
+[ext_resource type="Texture2D" uid="uid://cxfo4cq7xrw8s" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/FX/DashDust/DashDust05.png" id="10_4604p"]
+[ext_resource type="Texture2D" uid="uid://xp4q2aokpg1d" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/FX/DashDust/DashDust06.png" id="11_us2hh"]
+[ext_resource type="Texture2D" uid="uid://i3f4wudl0s0p" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/FX/DashDust/DashDust07.png" id="12_8ntwy"]
+[ext_resource type="Texture2D" uid="uid://dshq5djmcvncb" path="res://Art_Components/Effects/DashFX/IAHC001.png" id="13_78ax8"]
+[ext_resource type="Texture2D" uid="uid://cxvemeiv7fldq" path="res://Art_Components/Effects/DashFX/IAHC002.png" id="14_wp57p"]
+[ext_resource type="Texture2D" uid="uid://dyo70ce0nstg6" path="res://Art_Components/Effects/DashFX/IAHC003.png" id="15_47q3x"]
+[ext_resource type="Texture2D" uid="uid://c7cdkbu41sfv1" path="res://Art_Components/Effects/DashFX/IAHC004.png" id="16_77ty3"]
+[ext_resource type="Texture2D" uid="uid://bvkboaa5by4j4" path="res://Art_Components/Effects/DashFX/IAHC005.png" id="17_4jq81"]
 [ext_resource type="Script" uid="uid://ba6pwl0vfuyp" path="res://Component/stagger.gd" id="53_7ax8a"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="53_jef5t"]
 [ext_resource type="FontFile" uid="uid://n231m6uqsq6x" path="res://demo/assets/fonts/junction_bold.otf" id="59_4yxaj"]
@@ -231,6 +243,7 @@
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="222_qyvno"]
 [ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="230_pbr83"]
 [ext_resource type="PackedScene" uid="uid://dsj0t0v1bq42w" path="res://Component/projectiles/shotgun_bullet.tscn" id="231_ymji2"]
+[ext_resource type="Script" uid="uid://50oq66c4rimc" path="res://attack_closer.gd" id="232_wyrhc"]
 [ext_resource type="Script" uid="uid://dc4c4jxhc2ky" path="res://heavy_dash_attack.gd" id="243_4jq81"]
 [ext_resource type="Script" uid="uid://dm8ejawcmedfr" path="res://heavy_attack_3.gd" id="244_m743w"]
 [ext_resource type="Script" uid="uid://dmttp4slbll7c" path="res://aim.gd" id="246_p73v2"]
@@ -509,6 +522,52 @@ region = Rect2(0, 696, 108, 116)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3ciys"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_g4o0l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wyrhc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_upqci")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_5b77s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_4604p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_us2hh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_8ntwy")
+}],
+"loop": true,
+"name": &"dash_dust",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_78ax8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_wp57p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_47q3x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_77ty3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_4jq81")
+}],
+"loop": true,
+"name": &"dash_fx",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("63_4w4bi")
@@ -2222,6 +2281,111 @@ tracks/8/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_mesnb"]
+resource_name = "Attack_Closer"
+length = 0.16666667
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"AttackDash"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/sprite_fx:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-26, -19)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/sprite_fx:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D/sprite_fx:animation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"dash_fx"]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D/sprite_fx:frame")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_4ma0u"]
+resource_name = "Attack_Closer_Begin"
+length = 0.16666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"AttackCloserBegin"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
 [sub_resource type="Animation" id="Animation_urihx"]
 resource_name = "Attack_Counter"
 length = 0.45
@@ -2375,7 +2539,7 @@ tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3),
+"times": PackedFloat32Array(0, 0.06666667, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [true, false, true]
@@ -2398,10 +2562,10 @@ tracks/2/path = NodePath("AnimatedSprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.06666667, 0.1, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2]
+"values": [1, 0, 0, 1]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -2413,7 +2577,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"DashAttack"]
+"values": [&"AttackDash"]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -2515,6 +2679,18 @@ tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("AnimatedSprite2D/sprite_fx:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -4921,6 +5097,18 @@ tracks/61/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/62/type = "value"
+tracks/62/imported = false
+tracks/62/enabled = true
+tracks/62/path = NodePath("AnimatedSprite2D/sprite_fx:position")
+tracks/62/interp = 1
+tracks/62/loop_wrap = true
+tracks/62/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-26, -19)]
+}
 
 [sub_resource type="Animation" id="Animation_oktus"]
 resource_name = "Riposte"
@@ -6737,6 +6925,8 @@ _data = {
 &"Attack_2": SubResource("Animation_vtlvl"),
 &"Attack_3": SubResource("Animation_222nm"),
 &"Attack_Chain": SubResource("Animation_euoq7"),
+&"Attack_Closer": SubResource("Animation_mesnb"),
+&"Attack_Closer_Begin": SubResource("Animation_4ma0u"),
 &"Attack_Counter": SubResource("Animation_urihx"),
 &"Attack_Dash": SubResource("Animation_yuc35"),
 &"Attack_Down": SubResource("Animation_704ig"),
@@ -8095,7 +8285,7 @@ metadata/_aseprite_wizard_source_file_hash_ = "e40bf6776b8b2a4268a34f1cf42c192c"
 
 [node name="sprite_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=5149376]
 visible = false
-position = Vector2(3, -39)
+position = Vector2(-26, -19)
 sprite_frames = SubResource("SpriteFrames_3ciys")
 animation = &"staggered"
 
@@ -8718,6 +8908,13 @@ pc = NodePath("../../..")
 animation_player = NodePath("../../../AnimationPlayer")
 state_machine = NodePath("../..")
 
+[node name="AttackCloser" type="LimboState" parent="StateMachine/AttackState" unique_id=1025760922 node_paths=PackedStringArray("actor", "anim_player", "attack_state")]
+script = ExtResource("232_wyrhc")
+actor = NodePath("../../..")
+anim_player = NodePath("../../../AnimationPlayer")
+attack_state = NodePath("..")
+speed = 200.0
+
 [node name="Aim" type="LimboState" parent="StateMachine" unique_id=1244651801 node_paths=PackedStringArray("pc", "anim_player", "shotty_anim_player", "clash_power")]
 script = ExtResource("246_p73v2")
 pc = NodePath("../..")
@@ -8823,6 +9020,7 @@ pc = NodePath("../..")
 
 [connection signal="clash_up" from="." to="." method="_on_clash_up"]
 [connection signal="area_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="area_entered" from="AnimatedSprite2D/HitBox" to="StateMachine/AttackState/AttackCloser" method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_body_entered"]
 [connection signal="clash_knock_back" from="AnimatedSprite2D/HitBox" to="." method="_on_knockback"]
 [connection signal="clashed" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_clashed"]
@@ -8856,6 +9054,7 @@ pc = NodePath("../..")
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Landed" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/AttackState/HeavyCounter" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/AttackState/AttackCloser" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/SpecialAttack" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/ParrySuccessState/Riposte" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/ParrySuccessState/HeavyRiposte" method="_on_animation_player_animation_finished"]
@@ -8884,6 +9083,7 @@ pc = NodePath("../..")
 [connection signal="exited" from="StateMachine/AttackState" to="." method="_on_attack_state_exited"]
 [connection signal="exited" from="StateMachine/AttackState/SpecialCombo" to="." method="_on_special_combo_exited"]
 [connection signal="exited" from="StateMachine/AttackState/SpecialCombo2" to="." method="_on_special_combo_2_exited"]
+[connection signal="dur_timeout" from="StateMachine/AttackState/AttackCloser" to="StateMachine/AttackState/AttackCloser" method="_on_dur_timeout"]
 [connection signal="entered" from="StateMachine/SpecialAttack" to="." method="_on_special_attack_entered"]
 [connection signal="dur_timeout" from="StateMachine/ParrySuccessState" to="StateMachine/ParrySuccessState" method="_on_dur_timeout"]
 [connection signal="entered" from="StateMachine/DodgeState" to="." method="_on_dodge_state_entered"]
