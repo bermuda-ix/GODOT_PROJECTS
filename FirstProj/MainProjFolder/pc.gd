@@ -1148,11 +1148,17 @@ func sp_atk():
 func aim_and_shoot():
 	
 	if (Input.is_action_pressed("special_attack"))	and not attacking:
-		state_machine.dispatch(&"aim")
-		if not is_on_floor():
-			slow_down_aim()
+		if ammo==0:
+			if not reload_timer.is_stopped():
+				return
+			else:
+				reload_gun()
 		else:
-			end_slow_down()
+			state_machine.dispatch(&"aim")
+			if not is_on_floor():
+				slow_down_aim()
+			else:
+				end_slow_down()
 	elif Input.is_action_just_released("special_attack"):
 		state_machine.dispatch(&"shoot")
 		end_slow_down()
@@ -1219,15 +1225,14 @@ func _on_special_attack_entered() -> void:
 		#shoot_handler.shoot_bullet()
 
 func shotgun_shoot() -> void:
-	if ammo==0:
-		if not reload_timer.is_stopped():
-			return
-		else:
-			reload_gun()
+	
 	var _bullet_dirs : Array[int] = gun_cone(spread)
+	Events.remove_ammo.emit()
+	ammo-=1
 	for i in spread:
 		bullet_dir = rotation_to_direction(_bullet_dirs[i])
 		shoot_handler.shoot_bullet()
+		
 
 func shotgun_recoil() -> void:
 	Events.camera_shake.emit(1,20)
@@ -1240,6 +1245,9 @@ func _on_reload_timer_timeout() -> void:
 		reload_timer.stop()
 	else:
 		ammo+=1
+		Events.reload_ammo.emit()
+		shotty_animation_player.stop()
+		shotty_animation_player.play("reload")
 		if ammo>=max_ammo:
 			reload_timer.stop()
 

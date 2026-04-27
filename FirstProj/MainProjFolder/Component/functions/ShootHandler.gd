@@ -47,7 +47,10 @@ func shoot_bullet():
 	if player_tracking_active:
 		bullet_inst.spawnRot = actor.player_tracker_pivot.rotation_degrees
 	else:
-		bullet_inst.spawnRot = actor.global_rotation_degrees
+		if bullet_inst.is_in_group("missile"):
+			bullet_inst.spawnRot = actor.global_rotation_degrees
+		else:
+			bullet_inst.spawnRot = turret.global_rotation_degrees
 		#print_debug(bullet_inst.dir)
 		
 	actor.get_tree().current_scene.add_child(bullet_inst)

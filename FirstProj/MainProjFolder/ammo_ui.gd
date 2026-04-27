@@ -9,11 +9,13 @@ extends HBoxContainer
 
 func _ready() -> void:
 	Events.set_ammo_type.connect(set_ammo_gui)
+	Events.remove_ammo.connect(remove_ammo)
+	Events.reload_ammo.connect(reloading_ammo)
 	set_ammo_gui()
 	
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("DEBUG_KEY"):
-		remove_ammo()
+#func _process(delta: float) -> void:
+	#if Input.is_action_just_pressed("DEBUG_KEY"):
+		#remove_ammo()
 
 func set_ammo_gui() -> void:
 	grow_horizontal=Control.GROW_DIRECTION_END
@@ -28,7 +30,7 @@ func set_ammo_gui() -> void:
 
 func remove_ammo() -> void:
 	if current_ammo<=0:
-		reloading_ammo()
+		return
 	else:
 		var _cur_ammo := get_children()
 		var _last_ammo = _cur_ammo.back()
