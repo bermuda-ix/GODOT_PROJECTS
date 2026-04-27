@@ -65,7 +65,13 @@ signal enemy_parried
 signal set_player_data
 signal get_player_data
 signal reset_player_data
+
 signal player_death
+
+#Handle GUI Events
+signal set_ammo_type
+signal remove_ammo
+signal reload_ammo
 
 #Checkpoints
 signal checkpoint_reached

@@ -221,6 +221,13 @@
 [ext_resource type="Texture2D" uid="uid://6dbp4ru2jm0g" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0231/S0236.png" id="163_dxewg"]
 [ext_resource type="Texture2D" uid="uid://dhj8cyixk4khm" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0231/S0237.png" id="164_4ma0u"]
 [ext_resource type="Texture2D" uid="uid://evt3pj61kiqq" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0231/S0238.png" id="165_k4mcs"]
+[ext_resource type="Texture2D" uid="uid://dvl2vpy3qgrna" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0131/S0131.png" id="175_wp57p"]
+[ext_resource type="Texture2D" uid="uid://dniaa7h7a5f6u" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0131/S0132.png" id="176_47q3x"]
+[ext_resource type="Texture2D" uid="uid://dwap635iv0xlu" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0131/S0133.png" id="177_77ty3"]
+[ext_resource type="Texture2D" uid="uid://bxv3rssoecas5" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0131/S0134.png" id="178_4jq81"]
+[ext_resource type="Texture2D" uid="uid://butyrjnpffr8" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0131/S0135.png" id="179_8p2jh"]
+[ext_resource type="Texture2D" uid="uid://b030pce8hcce6" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0131/S0136.png" id="180_m743w"]
+[ext_resource type="Texture2D" uid="uid://xvo171adnyca" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0131/S0137.png" id="181_p73v2"]
 [ext_resource type="Texture2D" uid="uid://chsu5308ytyr5" path="res://Art_Components/Effects/AttackEffects/FX006/FX001.png" id="210_pwps4"]
 [ext_resource type="Texture2D" uid="uid://fsmgdjv4piqf" path="res://Art_Components/Effects/AttackEffects/FX006/FX002.png" id="211_gt6j3"]
 [ext_resource type="Texture2D" uid="uid://ctiea6xsh0wgr" path="res://Art_Components/misc/AimingBoundary.png" id="212_1o5op"]
@@ -1196,6 +1203,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mesnb"]
+shader = ExtResource("73_dxewg")
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_ve5vy"]
 animations = [{
 "frames": [{
@@ -1266,6 +1276,32 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("175_wp57p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("176_47q3x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("177_77ty3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("178_4jq81")
+}, {
+"duration": 1.0,
+"texture": ExtResource("179_8p2jh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("180_m743w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("181_p73v2")
+}],
+"loop": true,
+"name": &"attack_dash",
 "speed": 5.0
 }, {
 "frames": [{
@@ -2357,6 +2393,18 @@ tracks/5/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 4]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("HurtBox:active")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_4ma0u"]
 resource_name = "Attack_Closer_Begin"
@@ -2694,6 +2742,78 @@ tracks/12/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("HurtBox:active")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("AnimatedSprite2D/attack_fx:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.0760269, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [false, true, false]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("AnimatedSprite2D/attack_fx:animation")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0.076787174),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"attack_dash"]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("AnimatedSprite2D/attack_fx:frame")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0.076787174, 0.10000001, 0.13333334, 0.16666667, 0.20000002, 0.23333335, 0.26666668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("AnimatedSprite2D/attack_fx:rotation")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("AnimatedSprite2D/attack_fx:position")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16, -30)]
 }
 
 [sub_resource type="Animation" id="Animation_704ig"]
@@ -5108,6 +5228,18 @@ tracks/62/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-26, -19)]
+}
+tracks/63/type = "value"
+tracks/63/imported = false
+tracks/63/enabled = true
+tracks/63/path = NodePath("HurtBox:active")
+tracks/63/interp = 1
+tracks/63/loop_wrap = true
+tracks/63/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_oktus"]
@@ -8316,6 +8448,11 @@ flip_h = true
 
 [node name="attack_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1283370965]
 visible = false
+self_modulate = Color(0.11302159, 1.732707e-06, 0.5558638, 1)
+material = SubResource("ShaderMaterial_mesnb")
+instance_shader_parameters/FloatParameter = 0.002000000095
+instance_shader_parameters/GlowColor = Color(0.34590444, 0.98675764, 1.8247963, 1)
+instance_shader_parameters/MaskColor = Color(0.047058824, 0, 0.3137255, 1)
 position = Vector2(29, -33)
 rotation = -2.094392
 scale = Vector2(1.5, 1.5)
@@ -8718,6 +8855,7 @@ one_shot = true
 ignore_time_scale = true
 
 [node name="STATE" type="Label" parent="." unique_id=1506403178]
+visible = false
 z_index = 10
 offset_left = -45.0
 offset_top = -56.0
@@ -8806,6 +8944,10 @@ turret = NodePath("../AnimatedSprite2D/Shotty/Turret")
 projectile = ExtResource("231_ymji2")
 bullet_speed = 800.0
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
+
+[node name="ReloadTimer" type="Timer" parent="ShootHandler" unique_id=1890707630]
+wait_time = 0.2
+ignore_time_scale = true
 
 [node name="StateMachine" type="LimboHSM" parent="." unique_id=822739335]
 
@@ -9075,6 +9217,7 @@ pc = NodePath("../..")
 [connection signal="body_entered" from="CounterBox" to="." method="_on_counter_box_body_entered"]
 [connection signal="area_entered" from="CollectibleBox" to="." method="_on_collectible_box_area_entered"]
 [connection signal="timeout" from="Speech/SpeechTimer" to="." method="_on_speech_timer_timeout"]
+[connection signal="timeout" from="ShootHandler/ReloadTimer" to="." method="_on_reload_timer_timeout"]
 [connection signal="active_state_changed" from="StateMachine" to="." method="_on_state_machine_active_state_changed"]
 [connection signal="entered" from="StateMachine/Idle" to="." method="_on_idle_entered"]
 [connection signal="entered" from="StateMachine/JumpState" to="." method="_on_jump_state_entered"]

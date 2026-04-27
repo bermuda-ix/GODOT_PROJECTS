@@ -281,12 +281,6 @@ script = ExtResource("2_v15hm")
 lvl_type = "test"
 no_load = true
 
-[node name="UI_Level" parent="CanvasLayer" index="1"]
-offset_left = -67.0
-offset_top = 12.0
-offset_right = -67.0
-offset_bottom = 12.0
-
 [node name="PauseMenu" parent="CanvasLayer" index="4" unique_id=1178148108 instance=ExtResource("2_t1ldw")]
 process_mode = 3
 visible = false

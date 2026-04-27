@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bii2hd3sn2yv"]
+
+[ext_resource type="Script" uid="uid://b5kh1o1gy51aa" path="res://ammo_ui.gd" id="1_pm38o"]
+
+[node name="AmmoUI" type="HBoxContainer" unique_id=1696704328]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -530.0
+offset_bottom = -297.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -16
+script = ExtResource("1_pm38o")

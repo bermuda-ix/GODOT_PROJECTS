@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://fvrl0oqgar1f" path="res://Component/UI_Rec/heat_fill_gauge.tscn" id="4_rl24j"]
 [ext_resource type="PackedScene" uid="uid://c1r2gnplhmhoc" path="res://Component/UI_Rec/heat_lvl_gauge.tscn" id="5_6s1hp"]
 [ext_resource type="PackedScene" uid="uid://bg7vj7g4xbk8p" path="res://Component/UI_Rec/stagger_bar.tscn" id="6_kdbrr"]
+[ext_resource type="PackedScene" uid="uid://bii2hd3sn2yv" path="res://Component/UI_Rec/ammo_ui.tscn" id="7_l7h4l"]
 
 [node name="UI_Level" type="Control" unique_id=2112489589 groups=["GameUI"]]
 layout_mode = 3
@@ -65,3 +66,8 @@ offset_top = 26.0
 offset_right = 471.0
 offset_bottom = 26.0
 scale = Vector2(2, 2.5)
+
+[node name="AmmoUI" parent="." unique_id=1696704328 instance=ExtResource("7_l7h4l")]
+layout_mode = 1
+offset_top = 48.0
+offset_bottom = -249.0

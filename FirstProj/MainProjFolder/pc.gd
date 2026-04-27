@@ -31,7 +31,9 @@ signal update_max_stagger
 @export var health: Health
 @onready var _new_health := 0
 @export var hitbox: HitBox
-@export var ammo : int = 0
+@export var max_ammo : int = 8
+@export var ammo : int = 8
+@export var ammo_reserves : int = 32
 @export var TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
 @onready var clash_power: ClashPower = $ClashPower
 @onready var clash_timer: Timer = $ClashPower/ClashTimer
@@ -216,6 +218,8 @@ signal no_input_qte
 @onready var shotgun_lookat_target : bool = false
 @onready var shoot_handler: ShootHandler = $ShootHandler
 @onready var bullet_dir: Vector2 = Vector2.ZERO
+@onready var reload_timer: Timer = $ShootHandler/ReloadTimer
+
 
 @onready var sprite_fx: AnimatedSprite2D = $AnimatedSprite2D/sprite_fx
 @onready var hurt_box_detect = $HurtBox/CollisionShape2D
@@ -1215,6 +1219,11 @@ func _on_special_attack_entered() -> void:
 		#shoot_handler.shoot_bullet()
 
 func shotgun_shoot() -> void:
+	if ammo==0:
+		if not reload_timer.is_stopped():
+			return
+		else:
+			reload_gun()
 	var _bullet_dirs : Array[int] = gun_cone(spread)
 	for i in spread:
 		bullet_dir = rotation_to_direction(_bullet_dirs[i])
@@ -1222,6 +1231,18 @@ func shotgun_shoot() -> void:
 
 func shotgun_recoil() -> void:
 	Events.camera_shake.emit(1,20)
+
+func reload_gun() -> void:
+	reload_timer.start()
+
+func _on_reload_timer_timeout() -> void:
+	if ammo>=max_ammo:
+		reload_timer.stop()
+	else:
+		ammo+=1
+		if ammo>=max_ammo:
+			reload_timer.stop()
+
 
 func rotation_to_direction(_rotation_degrees : int) -> Vector2:
 	 # Convert rotation from degrees to radians (skip if already in radians)
