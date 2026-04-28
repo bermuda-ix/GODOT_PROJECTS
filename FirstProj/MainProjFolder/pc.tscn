@@ -1475,6 +1475,73 @@ tracks/5/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_77ty3"]
+resource_name = "rapid_reload"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Shell:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.10000001, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Shell:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.0186319, 0.0196802)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Shell:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.16666667, 0.23333335, 0.33333337),
+"transitions": PackedFloat32Array(0.2, 1, 0.2, 1, 4.92458),
+"update": 0,
+"values": [Vector2(-2.69225, -22.5), Vector2(-2.69226, -86.2499), Vector2(-2.69225, -22.5), Vector2(-2.69226, -86.2499), Vector2(-2.69225, -22.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Shell:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.0001, 0.06666667, 0.16666667, 0.16676667, 0.23333335, 0.33333337),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 3.14159, 0.0, 0.0, 3.14159, 6.28319]
+}
+tracks/4/type = "audio"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../AudioStreamPlayer2D")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.3,
+"stream": ExtResource("83_dlcc0")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/4/use_blend = true
+
 [sub_resource type="Animation" id="Animation_47q3x"]
 resource_name = "reload"
 tracks/0/type = "value"
@@ -1718,6 +1785,7 @@ tracks/4/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xxtsl"]
 _data = {
 &"RESET": SubResource("Animation_xxtsl"),
+&"rapid_reload": SubResource("Animation_77ty3"),
 &"reload": SubResource("Animation_47q3x"),
 &"shotgun_aim": SubResource("Animation_f2824"),
 &"shotgun_reset": SubResource("Animation_0dirf")

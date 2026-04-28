@@ -37,17 +37,27 @@ func remove_ammo() -> void:
 		remove_child(_last_ammo)
 		current_ammo-=1
 	
-func reloading_ammo() -> void:
+func reloading_ammo(_ammo : int = 1) -> void:
 	if current_ammo>=max_ammo:
 		return
 	else:
-		var ammo_texture_rect : TextureRect = TextureRect.new()
-		ammo_texture_rect.texture=ammo_type
-		ammo_texture_rect.expand_mode=TextureRect.EXPAND_FIT_WIDTH
-		ammo_texture_rect.texture=ammo_type
-		#var _ammo = ammo_texture_rect.instantiate()
-		add_child(ammo_texture_rect)
-		current_ammo+=1
+		if _ammo==1:
+			var ammo_texture_rect : TextureRect = TextureRect.new()
+			ammo_texture_rect.texture=ammo_type
+			ammo_texture_rect.expand_mode=TextureRect.EXPAND_FIT_WIDTH
+			ammo_texture_rect.texture=ammo_type
+			#var _ammo = ammo_texture_rect.instantiate()
+			add_child(ammo_texture_rect)
+			current_ammo+=1
+		else:
+			for i in range(_ammo, 0, -1):
+				var ammo_texture_rect : TextureRect = TextureRect.new()
+				ammo_texture_rect.texture=ammo_type
+				ammo_texture_rect.expand_mode=TextureRect.EXPAND_FIT_WIDTH
+				ammo_texture_rect.texture=ammo_type
+				#var _ammo = ammo_texture_rect.instantiate()
+				add_child(ammo_texture_rect)
+				current_ammo+=1
 
 func set_ammo_type(_texture : Texture2D) -> void:
 	ammo_type=_texture

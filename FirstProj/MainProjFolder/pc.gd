@@ -514,7 +514,7 @@ func _init_attack_states():
 	#Heavy attack Combos
 	attack_state.add_transition(attack_1, heavy_attack_1, &"heavy_combo")
 	attack_state.add_transition(attack_2, heavy_attack_2, &"heavy_combo")
-	attack_state.add_transition(attack_3, special_combo_2, &"special_combo")
+	attack_state.add_transition(attack_3, special_combo_2, &"heavy_finisher")
 
 	#attack_state.add_transition(heavy_attack_2, special_combo_2, &"next_attack")
 
@@ -1182,20 +1182,29 @@ func heavy_combos():
 				attack_2:
 					heavy_attack()
 				attack_3:
-					pass
-
+					attack_timer.paused=true
+					finishers()
+					
 func set_attacking(value : bool) -> void:
 	if value==true:
 		print_debug("begin_attack")
 	attacking=value
 
+func finishers() -> void:
+	heavy_attack_buffer_timer.stop()
+	hit_buffer.stop()
+	if state_machine.get_active_state()!=attack_state:
+		attack_timer.paused=true
+	hit_box.set_damage(3)
+	state_machine.dispatch(&"heavy_finisher")
+
 func _on_special_attack_buffer_timer_timeout() -> void:
 	if state_machine.get_active_state()==attack_state:
 		if attack_timer.is_stopped():
-			attack_timer.start(0.3)
+			attack_timer.start(1.5)
 			attack_timer.paused=false
 		
-		attack_state.dispatch(&"special_combo")
+		attack_state.dispatch(&"heavy_finisher")
 	else:
 		
 		if attack_timer.is_stopped():
@@ -1251,6 +1260,11 @@ func _on_reload_timer_timeout() -> void:
 		if ammo>=max_ammo:
 			reload_timer.stop()
 
+func reload_gun_amount(_reload_amount : int) -> void:
+	ammo+=_reload_amount
+	Events.reload_ammo.emit(_reload_amount)
+	shotty_animation_player.stop()
+	shotty_animation_player.play("rapid_reload")
 
 func rotation_to_direction(_rotation_degrees : int) -> Vector2:
 	 # Convert rotation from degrees to radians (skip if already in radians)
@@ -1769,7 +1783,8 @@ func _on_animation_player_animation_finished(anim_name):
 				attacking=false
 				
 			"shotgun_finish":
-				attack_timer.start(1.5)
+				attack_timer.start(0.1)
+				attack_timer.paused=false
 			"Heavy_Combo_1":
 				#reset_combo_flag=true
 				attacking=false
@@ -2200,6 +2215,8 @@ func _on_animation_player_animation_started(anim_name):
 	elif anim_name=="shotgun_attack":
 		vel_y=velocity.y
 		#s_atk=true
+	elif anim_name=="shotgun_finish":
+		print_debug("heavy finisher")
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	if health.health<=0:

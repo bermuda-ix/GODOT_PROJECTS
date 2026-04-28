@@ -7,6 +7,7 @@ func _enter() -> void:
 	anim_player.speed_scale=1
 	anim_player.play("Heavy_Combo_1")
 	pc.heavy_attack_flag=true
+	pc.reload_gun_amount(2)
 	
 #func _update(delta: float) -> void:
 	#pass

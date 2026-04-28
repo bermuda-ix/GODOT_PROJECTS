@@ -9,6 +9,7 @@ func _enter() -> void:
 	anim_player.play("Heavy_Combo_2")
 	pc.hit_fx_player.speed_scale=1.5
 	pc.hit_animation="heavy_attack_landed"
+	pc.reload_gun_amount(2)
 
 func _exit() -> void:
 	pc.reset_combo_flag=true

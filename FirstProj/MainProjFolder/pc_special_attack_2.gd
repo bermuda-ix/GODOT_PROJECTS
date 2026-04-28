@@ -6,6 +6,7 @@ extends LimboState
 func _enter() -> void:
 	anim_player.speed_scale=1.5
 	anim_player.play("shotgun_finish")
+	pc.reload_gun_amount(4)
 
 func _exit() -> void:
 	pc.set_shotgun_free_rotate(true)
