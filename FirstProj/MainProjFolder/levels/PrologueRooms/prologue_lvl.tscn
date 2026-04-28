@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://d4ixead72khtg" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding2.png" id="10_rfxm3"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="11_52g4u"]
 [ext_resource type="PackedScene" uid="uid://dn0fhusgltn4m" path="res://chars/heavy_soldier.tscn" id="13_rfxm3"]
+[ext_resource type="Texture2D" uid="uid://bri4af6o6wyf6" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding2blur.png" id="14_7qfih"]
 [ext_resource type="PackedScene" uid="uid://mve6miefg0i0" path="res://chars/turret_enemies/turret_base_3.tscn" id="14_r2uf8"]
 [ext_resource type="PackedScene" uid="uid://idc8e7mjacdd" path="res://Component/turret_link.tscn" id="15_ffcw5"]
 [ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="16_vw32t"]
@@ -81,6 +82,9 @@ b = Vector2(593, -291.31647)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_e156f"]
 b = Vector2(-775, -387.4883)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5m18i"]
+load_path = "res://.godot/imported/factoryBuilding.png-df66c6c23bcc9ba8cc415b421a14d59b.ctex"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_htxyq"]
 vertices = PackedVector2Array(1645.83, 430, 1122, 430, 1122, 322, 1882.08, 322)
@@ -931,6 +935,10 @@ b = Vector2(479, -4)
 a = Vector2(-2, -4)
 b = Vector2(993, -4)
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_4koma"]
+a = Vector2(-2, -4)
+b = Vector2(298, 1)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_658m8"]
 size = Vector2(207, 621)
 
@@ -1170,6 +1178,31 @@ z_index = -2
 position = Vector2(3912, 202)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("10_rfxm3")
+
+[node name="Sprite2D3" type="Sprite2D" parent="LabArchitect/Backgrounds" index="2" unique_id=1829008216]
+z_index = -2
+position = Vector2(7961, 202)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("14_7qfih")
+
+[node name="Sprite2D4" type="Sprite2D" parent="LabArchitect/Backgrounds" index="3" unique_id=1964457927]
+z_index = -1
+position = Vector2(9196, 103)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("9_f1jjf")
+
+[node name="Sprite2D5" type="Sprite2D" parent="LabArchitect/Backgrounds" index="4" unique_id=956897379]
+z_index = -1
+position = Vector2(10793, 103)
+scale = Vector2(0.4, 0.4)
+texture = SubResource("CompressedTexture2D_5m18i")
+flip_h = true
+
+[node name="Sprite2D6" type="Sprite2D" parent="LabArchitect/Backgrounds" index="5" unique_id=1188198293]
+z_index = -2
+position = Vector2(9997, 202)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("14_7qfih")
 
 [node name="Desert_Background" parent="." index="10" unique_id=1325935797 instance=ExtResource("7_veiog")]
 position = Vector2(5, 14)
@@ -1942,6 +1975,16 @@ collision_mask = 16386
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FallthroughPlatform/PlatformUnderground2" index="0" unique_id=772737433]
 shape = SubResource("SegmentShape2D_vcexo")
+one_way_collision = true
+
+[node name="PlatformUnderground3" type="StaticBody2D" parent="FallthroughPlatform" index="2" unique_id=2006135419]
+position = Vector2(8905, 499)
+collision_layer = 67108864
+collision_mask = 16386
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FallthroughPlatform/PlatformUnderground3" index="0" unique_id=387567613]
+position = Vector2(0, -3)
+shape = SubResource("SegmentShape2D_4koma")
 one_way_collision = true
 
 [node name="Spawning" type="Node" parent="." index="32" unique_id=1797510082]

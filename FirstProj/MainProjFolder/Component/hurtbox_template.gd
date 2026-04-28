@@ -53,6 +53,10 @@ func _on_area_entered(hitbox: HitBox) -> void:
 		assert(shielded!=true)
 		hitbox.active=false
 		if hitbox != null:
+			if stagger.stagger<=0:
+				dmg_mult=3
+			else:
+				dmg_mult=1
 			if hitbox.knock_back:
 				if hitbox.global_position.x > global_position.x:
 					impact_dir_right=true
