@@ -102,7 +102,8 @@ func _ready():
 	
 	player.scale = Vector2(pc_scale, pc_scale)
 	
-	player.global_position=init_starting_pos.global_position
+	if init_starting_pos!=null:
+		player.global_position=init_starting_pos.global_position
 	
 	if intro_cutscene_active:
 		Events.start_cutscene.emit()
@@ -127,36 +128,11 @@ func _ready():
 	player.init_player_data()
 	
 	
-#func _init_player_data():
-	#player.set_health()
-	#player.set_max_health()
-	#player.set_stagger()
-	#playemr.set_max_stagger()
-	#
-	
-	#score=45
 func _process(_delta):
 	
 	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size())
 	
 
-	#get_state()
-	#set_state()
-	##For testing individual levels
-	#get_health()
-	#set_health()
-	#
-	#if lvl_type=="goal":
-	#
-		#if obj<=1:
-			#Events.level_completed.connect(show_level_complete)
-			##print_debug("leven complete")
-		##label.text=str("Obj: ",obj)
-	#else:
-		##label.text = str("Score: ", score)
-		#handle_spawn()
-		#if Input.is_action_just_pressed("Pause"):
-			#show_pause()
 
 func _physics_process(delta: float) -> void:
 	if not cutscene_active and not camera_pos.stationary:
@@ -221,9 +197,13 @@ func toggle_spawn(_value : bool, _enemy_type) -> void:
 func handle_spawn():
 	pass
 
+func dialogue_flag_listener(_dialogue) -> void:
+	pass
+
 func play_cutscene_segment(_cutscene_segment : String):
 	var _cutscene=cutscene_library+"/"+_cutscene_segment
 	Events.play_cutscene_segment.emit(_cutscene)
+	cutscene_player.play(_cutscene)
 
 func end_cutscene():
 	Events.end_cutsene.emit()

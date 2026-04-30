@@ -16,3 +16,7 @@ func defeated() -> void:
 	
 func set_active(value : bool) -> void:
 	active=value
+
+
+func _on_local_flag_flag_triggered() -> void:
+	active=true

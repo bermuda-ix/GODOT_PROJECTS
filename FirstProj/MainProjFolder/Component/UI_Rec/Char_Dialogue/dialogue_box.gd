@@ -103,3 +103,6 @@ func skip_to_end() -> void:
 	playing_bot=false
 	playing_top=false
 	wait_for_input()
+
+func auto_play_next() -> void:
+	pass

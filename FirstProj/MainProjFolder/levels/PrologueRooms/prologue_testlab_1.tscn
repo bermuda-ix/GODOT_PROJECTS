@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cxqapy0tyeigc" path="res://ui_level.tscn" id="3_0rkmb"]
 [ext_resource type="PackedScene" uid="uid://dva6hjing4p6o" path="res://LVL_Transitions/game_over.tscn" id="4_hyxn6"]
 [ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="5_oqnxn"]
+[ext_resource type="PackedScene" uid="uid://hg63g0t3rx0q" path="res://Component/UI_Rec/Char_Dialogue/dialogue_box.tscn" id="6_hyxn6"]
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="6_qy7pe"]
 [ext_resource type="PackedScene" uid="uid://dnliwh5g1v8xb" path="res://levels/level_components/entry.tscn" id="7_hxta3"]
 [ext_resource type="TileSet" uid="uid://duvitr2o4lrsy" path="res://levels/level_components/factory_tile_set_building_platform.tres" id="8_lgu5s"]
@@ -34,6 +35,8 @@ visible = false
 
 [node name="PauseMenu" parent="CanvasLayer" unique_id=1009403505 instance=ExtResource("5_oqnxn")]
 visible = false
+
+[node name="DialogueBoxController" parent="CanvasLayer" unique_id=1807181331 instance=ExtResource("6_hyxn6")]
 
 [node name="CameraPos" parent="." unique_id=901635692 instance=ExtResource("6_qy7pe")]
 position = Vector2(373, 208)
@@ -93,7 +96,7 @@ shadow_filter = 1
 [node name="CeilingLight" parent="Lights" unique_id=1589762950 instance=ExtResource("12_0rkmb")]
 position = Vector2(310, 110)
 
-[node name="Area2D" parent="Lights/CeilingLight" index="2"]
+[node name="Area2D" parent="Lights/CeilingLight" index="2" unique_id=1084444762]
 visible = false
 
 [node name="CutscenePlayer" type="AnimationPlayer" parent="." unique_id=730436609]

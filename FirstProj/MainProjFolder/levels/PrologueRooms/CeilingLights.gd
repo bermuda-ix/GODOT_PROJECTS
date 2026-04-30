@@ -6,6 +6,8 @@ class_name CeilingLights extends PointLight2D
 @onready var flicker_timer := Timer.new()
 @onready var shut_off_flag: GlobalFlagHandler = $ShutOffFlag
 @onready var flicker_on_player_flag: GlobalFlagHandler = $FlickerOnPlayerFlag
+@onready var persistent_data_handler: PersistentDataHandler = $PersistentDataHandler
+@onready var persistent_data_handler3: PersistentDataHandler = $FlickerOnPlayerFlag/PersistentDataHandler
 
 
 
@@ -18,6 +20,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if flicker_active:
 		flicker()
+		
 
 func flicker() -> void:
 	var _flicker : int = randi_range(0, 100)
@@ -44,3 +47,24 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 func _on_shut_off_flag_flag_activate() -> void:
 	flicker_on_player_flag.flag_active=true
 	enabled=false
+
+
+func _on_persistent_data_handler_data_loaded(value: String) -> void:
+	if value == "true":
+		enabled=true
+	else:
+		enabled=true
+
+
+func _on_persistent_data_handler_flicker_data_loaded(value: String) -> void:
+	if value == "true":
+		flicker_active=true
+	else:
+		flicker_active=true
+
+
+func _on_persistent_data_handler_flicker_on_player_data_loaded(value: String) -> void:
+	if value == "true":
+		flicker_on_player_flag.flag_active=true
+	else:
+		flicker_on_player_flag.flag_active=true

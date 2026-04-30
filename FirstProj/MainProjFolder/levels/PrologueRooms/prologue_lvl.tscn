@@ -36,6 +36,7 @@
 [ext_resource type="PackedScene" uid="uid://y6x600dn2kkk" path="res://levels/PrologueRooms/prologue_room_tres.tscn" id="23_veiog"]
 [ext_resource type="PackedScene" uid="uid://d3gnpvd8ye3rt" path="res://Art_Components/LevelProps/large_door_sprite.tscn" id="24_veiog"]
 [ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="24_w82j5"]
+[ext_resource type="AnimationLibrary" uid="uid://bk438p27efdr7" path="res://Component/functions/Animations/adv_flashback_1/flashback_lvl_cutscenes.res" id="26_5m18i"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="31_2mqv2"]
 [ext_resource type="PackedScene" uid="uid://dbehmleqq3x2e" path="res://Component/interactables/elevator_call_button.tscn" id="33_e156f"]
 [ext_resource type="PackedScene" uid="uid://bqufbaasjdchb" path="res://Component/Consumables/elevator_key_card.tscn" id="33_j2fky"]
@@ -1570,6 +1571,7 @@ shape = SubResource("RectangleShape2D_jyauw")
 
 [node name="CutscenePlayer" type="AnimationPlayer" parent="." index="23" unique_id=330418463]
 libraries/ = SubResource("AnimationLibrary_tnflb")
+libraries/flashback_lvl_cutscenes = ExtResource("26_5m18i")
 
 [node name="CutsceneAudio" type="AudioStreamPlayer2D" parent="." index="24" unique_id=853645673]
 position = Vector2(2232, 733)

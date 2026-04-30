@@ -14,6 +14,7 @@ signal player_pos_reset_to_checkpoint
 @onready var objectives_ui: objective_ui = $GUI/CanvasLayer/PauseMenuv2/TextureRect/MainPause/ObjectivesUI
 @onready var level_UI: CanvasLayer = $GUI/CanvasLayer
 @onready var game_over: ColorRect = $GUI/CanvasLayer/GameOver
+@onready var dialogue_box_controller: DialogueBoxController = $GUI/CanvasLayer/DialogueBoxController
 
 
 
@@ -306,7 +307,8 @@ func remove_gui_from_existing(gui_name : String) -> void:
 	if _node!=null:
 		gameui.call_deferred("remove_child", _node)
 	
-
+func toggle_dialogue(_visible : bool) -> void:
+	dialogue_box_controller.set_deferred("visible", _visible)
 
 #func toggle_player(activate : bool) -> void:
 	#if activate:

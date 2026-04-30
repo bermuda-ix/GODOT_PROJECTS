@@ -8,6 +8,7 @@
 [ext_resource type="TileSet" uid="uid://5vc1chccqln4" path="res://levels/level_components/factory_tile_set_main_platform.tres" id="5_xip4b"]
 [ext_resource type="TileSet" uid="uid://d3ogb8uexylqk" path="res://Art_Components/tile_maps/tile_layers/lab_props.tres" id="6_5egue"]
 [ext_resource type="TileSet" uid="uid://vhrg3ian7oco" path="res://Art_Components/tile_maps/lab_architect.tres" id="7_xip4b"]
+[ext_resource type="AnimationLibrary" uid="uid://bk438p27efdr7" path="res://Component/functions/Animations/adv_flashback_1/flashback_lvl_cutscenes.res" id="9_ggnol"]
 [ext_resource type="PackedScene" uid="uid://ho0i4h5ycmin" path="res://Component/interactables/ceiling_lights.tscn" id="9_j8gjg"]
 [ext_resource type="PackedScene" uid="uid://dnliwh5g1v8xb" path="res://levels/level_components/entry.tscn" id="10_egu0m"]
 [ext_resource type="PackedScene" uid="uid://doeltmms2ss7a" path="res://Art_Components/LevelProps/door_sprite.tscn" id="11_8kup7"]
@@ -16,14 +17,287 @@
 [ext_resource type="PackedScene" uid="uid://8k6jvhupkwca" path="res://chars/enemies/demon_stalker.tscn" id="16_p7bsn"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="17_j8gjg"]
 [ext_resource type="PackedScene" uid="uid://y6x600dn2kkk" path="res://levels/PrologueRooms/prologue_room_tres.tscn" id="17_n0r6o"]
+[ext_resource type="PackedScene" uid="uid://cnohm1wttm6jd" path="res://Component/functions/cutscene_flag.tscn" id="18_g5ibn"]
+[ext_resource type="PackedScene" uid="uid://bu15hg23253kf" path="res://levels/level_components/named_boss_spawn.tscn" id="18_isdh8"]
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="19_tshqc"]
+[ext_resource type="PackedScene" uid="uid://2qlf7u6fvrm" path="res://chars/enemies/npc_cutscene.tscn" id="21_n0r6o"]
+[ext_resource type="Shader" uid="uid://d1ksiplmprxb6" path="res://chars/outline_static_v2.gdshader" id="22_ggnol"]
+[ext_resource type="Script" uid="uid://dqexksc3am4gr" path="res://Component/UI_Rec/Char_Dialogue/dialogue_box.gd" id="23_k5twc"]
+
+[sub_resource type="Animation" id="Animation_hldr0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SoldierBoss_Cutscene:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SoldierBoss_Cutscene:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Ace_Cutscene:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Ace_Cutscene:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SoldierBoss_Cutscene:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Ace_Cutscene:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("SoldierBoss_Cutscene:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2303, 252)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Ace_Cutscene:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2511, 254)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("PC:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2552, 284)]
+}
+
+[sub_resource type="Animation" id="Animation_sts4t"]
+resource_name = "hallway_miniboss_intro"
+length = 4.0
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PC/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("idle"),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SoldierBoss_Cutscene:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 2.4, 3.3666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [&"idle", &"idle", &"reload", &"gun_idle"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SoldierBoss_Cutscene:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.36666667, 2.4624538, 2.5333333, 2.6, 2.6666667, 2.9333334, 3, 3.0666666, 3.1333334, 3.2, 3.4333332),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Ace_Cutscene:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"idle", &"idle"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Ace_Cutscene:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.36666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 0]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(3.8666666),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_cutscene"
+}]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("SoldierBoss_Cutscene:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Ace_Cutscene:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("SoldierBoss_Cutscene:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2303, 252)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Ace_Cutscene:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2575, 253)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("PC:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2552, 284)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ggnol"]
+_data = {
+&"RESET": SubResource("Animation_hldr0"),
+&"hallway_miniboss_intro": SubResource("Animation_sts4t")
+}
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_egu0m"]
 polygon = PackedVector2Array(-5143, -981, -5147, 596, -4605, 608, -4602, 248, -4365, 254, -4362, 280, -4213, 278, -4211, 252, -3851, 252, -3852, 278, -3696, 280, -3695, 250, -3361, 252, -3363, 279, -3202, 280, -3202, 248, -2945, 250, -2945, 279, -2785, 280, -2783, 251, -2464, 247, -2464, 278, -2306, 280, -2302, 241, -2002, 246, -1996, 280, -1842, 280, -1834.723, 245.68848, -1488, 248, -1486, 280, -1331, 282, -1325.201, 241.31015, -934, 243, -928, 279, -765, 278, -764, 241, -340, 244, -334, 281, -183, 276, -181.8436, 244.23679, 274, 246, 276, 280, 427, 278, 428, 249, 688, 245, 689, 451, 1573, 618, 1485, -966)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_glpjs"]
+shader = ExtResource("22_ggnol")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/neighbor_pixels = 1
+shader_parameter/center_distance_cap = 1
+
+[sub_resource type="Animation" id="Animation_5i7id"]
+resource_name = "idle"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wbdor"]
+_data = {
+&"idle": SubResource("Animation_5i7id")
+}
+
 [node name="PrologueHallway1" type="Node2D" unique_id=2096370402]
 script = ExtResource("1_8kup7")
 main_room = true
+cutscene_library = "flashback_lvl_cutscenes"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=121233864]
 
@@ -62,6 +336,10 @@ tile_set = ExtResource("6_5egue")
 z_index = -1
 tile_map_data = PackedByteArray("AADZ/g4AAAAsABIAAADZ/g8AAAAsABMAAADa/g4AAAAtABIAAADa/g8AAAAtABMAAADb/g8AAAAuABMAAADc/g8AAAAvABMAAADd/g4AAAAsABIAAADd/g8AAAAsABMAAADe/g4AAAAtABIAAADe/g8AAAAtABMAAADf/g4AAAAuABIAAADf/g8AAAAuABMAAADb/hAAAAAuABQAAADb/hEAAAAuABUAAADc/hAAAAAvABQAAADc/hEAAAAvABUAAADd/hAAAAAsABQAAADd/hEAAAAsABUAAADe/hAAAAAtABQAAADe/hEAAAAtABUAAADf/hAAAAAuABQAAADf/hEAAAAuABUAAADX/g4AAAAsABIAAADX/g8AAAAsABMAAADX/hAAAAAsABQAAADX/hEAAAAsABUAAADY/g4AAAAtABIAAADY/g8AAAAtABMAAADY/hAAAAAtABQAAADY/hEAAAAtABUAAADZ/hAAAAAsABQAAADZ/hEAAAAsABUAAADa/hAAAAAtABQAAADa/hEAAAAtABUAAADg/g4AAAAvABIAAADg/g8AAAAvABMAAADg/hAAAAAvABQAAADg/hEAAAAvABUAAADh/g4AAAAwABIAAADh/g8AAAAwABMAAADh/hAAAAAwABQAAADh/hEAAAAwABUAAADb/g4AAAAuABIAAADc/g4AAAAvABIAAAA=")
 tile_set = ExtResource("6_5egue")
+
+[node name="CutscenePlayer" type="AnimationPlayer" parent="." unique_id=1180786720]
+libraries/ = SubResource("AnimationLibrary_ggnol")
+libraries/flashback_lvl_cutscenes = ExtResource("9_ggnol")
 
 [node name="Shadows" type="Node" parent="." unique_id=1733070720]
 
@@ -178,6 +456,52 @@ position = Vector2(-2776, 137)
 position = Vector2(-2565, 142)
 
 [node name="PC" parent="." unique_id=1041091659 instance=ExtResource("17_j8gjg")]
-position = Vector2(309, 249)
+position = Vector2(-2552, 284)
+
+[node name="BossArena" type="Node" parent="." unique_id=1859008299]
+
+[node name="BossIntro" parent="BossArena" unique_id=157589397 instance=ExtResource("18_g5ibn")]
+position = Vector2(-2563, 142)
+cutscene_name = "hallway_miniboss_intro"
+flag_active = true
+
+[node name="NamedBossSpawn" parent="BossArena" unique_id=1896744289 instance=ExtResource("18_isdh8")]
+position = Vector2(-2302, 260)
+active = false
+
+[node name="CameraAnchor" type="Node2D" parent="BossArena" unique_id=309757154]
+position = Vector2(-2203, 207)
+
+[node name="BoundaryLeft" type="StaticBody2D" parent="BossArena" unique_id=586913385]
+
+[node name="BoundaryRight" type="StaticBody2D" parent="BossArena" unique_id=233904099]
+
+[node name="SoldierBoss_Cutscene" parent="." unique_id=1998686262 instance=ExtResource("21_n0r6o")]
+self_modulate = Color(0.45490196, 0.45490196, 0.45490196, 1)
+material = SubResource("ShaderMaterial_glpjs")
+position = Vector2(-2303, 252)
+animation = &"idle"
+flip_h = true
+
+[node name="SoldierBossAnimPlayer" type="AnimationPlayer" parent="SoldierBoss_Cutscene" unique_id=679000525]
+libraries/ = SubResource("AnimationLibrary_wbdor")
+
+[node name="Ace_Cutscene" parent="." unique_id=933460979 instance=ExtResource("21_n0r6o")]
+position = Vector2(-2511, 254)
+animation = &"idle"
+
+[node name="AceAnimPlayer" type="AnimationPlayer" parent="Ace_Cutscene" unique_id=905692935]
+root_node = NodePath("../../SoldierBoss_Cutscene")
+
+[node name="DialogueBoxController" type="Control" parent="." unique_id=737660561]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("23_k5twc")
+metadata/_custom_type_script = "uid://dqexksc3am4gr"
+
+[connection signal="play_cutscene" from="BossArena/BossIntro" to="." method="play_cutscene_segment"]
 
 [editable path="DemonStalker"]
+[editable path="PC"]

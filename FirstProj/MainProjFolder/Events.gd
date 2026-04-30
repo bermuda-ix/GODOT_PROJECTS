@@ -100,6 +100,19 @@ signal start_qte
 signal qte_choice
 signal qte_end
 
+signal play_dialogue_top(_dialogue_string : String,\
+ _speed : String,\
+ _pause_on_finish : bool,\
+ _character : String,\
+ _portrait : String,\
+ _name : String)
+signal play_dialogue_bot(_dialogue_string : String,\
+ _speed : String,\
+ _pause_on_finish : bool,\
+ _character : String,\
+ _portrait : String,\
+ _name : String)
+
 signal prepare_arena
 signal activate_arena
 
@@ -121,3 +134,4 @@ signal update_inventory
 
 #Global Generic Flag
 signal global_flag_trigger
+signal dialogue_flag_trigger
