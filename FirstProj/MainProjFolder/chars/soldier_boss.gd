@@ -143,8 +143,6 @@ var distance
 @onready var clashed: Clashed = $LimboHSM/Clashed
 
 
-
-
 @onready var teleport_helper_raycast: RayCast2D = $RayCast2D
 
 
@@ -169,8 +167,13 @@ var distance
 @onready var changing_phase := false
 @onready var combat_state_change_handler: CombatStateChangeHandler = $CombatStateChangeHandler
 
+var spawn_loc : Vector2
 
 @onready var ammo_count
+
+#DEBUG
+func _set(global_position, value):
+	global_position=value
 
 #Defaults for reset
 const vision_active = false
@@ -223,6 +226,7 @@ func _ready():
 	boss_ui.activate_boss_ui()
 	boss_ui.set_max_boss_health(health.max_health)
 	boss_ui.set_boss_health(health.health)
+	boss_ui.set_deferred("visible", true)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 	_init_combat_state_machine()
@@ -245,6 +249,7 @@ func _ready():
 		alerted()
 		
 	
+	print_debug(global_position)
 # initialize state
 func _init_state_machine():
 	state_machine.initial_state=idle
@@ -534,8 +539,10 @@ func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	elif anim_name== "dodge":
 		state_machine.dispatch(&"dodge_end")
 		
-	elif "flashback_lvl_cutscenes/first_mini_boss_kill":
+	elif anim_name=="flashback_lvl_cutscenes/first_mini_boss_kill":
 		print_debug("w0t")
+	else:
+		pass
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

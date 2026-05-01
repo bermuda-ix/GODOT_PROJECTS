@@ -290,7 +290,8 @@ func _on_mini_boss_1_flag_flag_triggered() -> void:
 	soldier_enemy_boss.boss_activate()
 	#camera_pos.stationary=true
 	
-
+func boss_start() -> void:
+	pass
 
 func _on_scene_reloaded() -> void:
 	var _boss_boundaries = get_tree().get_nodes_in_group("boss_boundary")
