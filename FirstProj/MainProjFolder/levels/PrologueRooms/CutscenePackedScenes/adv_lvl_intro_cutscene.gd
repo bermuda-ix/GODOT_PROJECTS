@@ -42,22 +42,6 @@ func _ready() -> void:
 	
 
 func _process(delta: float) -> void:
-	#if not (dialogue_box.playing_bot and dialogue_box.playing_top):
-		#if Input.is_action_just_pressed("attack")\
-		 #or Input.is_action_just_pressed("jump")\
-		 #or Input.is_action_just_pressed("Interact"):
-			#cutscene_queue.remove_at(0)
-			#if cutscene_queue.is_empty():
-				#print("end of scene")
-			#else:
-				#animation_player.play(cutscene_queue[0])
-			##dialogue_box.hide_both()
-	#else:
-		#if (Input.is_action_just_pressed("attack")\
-		 #or Input.is_action_just_pressed("jump")\
-		 #or Input.is_action_just_pressed("Interact")) and skippable:
-			#dialogue_box.skip_to_end()
-			#animation_player.pause()
 			
 	if (Input.is_action_just_pressed("attack")\
 	 or Input.is_action_just_pressed("jump")\

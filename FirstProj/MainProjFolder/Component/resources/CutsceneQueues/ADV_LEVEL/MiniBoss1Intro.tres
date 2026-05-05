@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="CutsceneQueue" format=3 uid="uid://dxu3jt66nwsqf"]
+
+[ext_resource type="Script" uid="uid://dq2pnu5gtu78e" path="res://Component/resources/CutsceneQueues/cutscene_queue.gd" id="1_fcew8"]
+
+[resource]
+script = ExtResource("1_fcew8")
+cutscene_list = Array[String](["SOLDIER1", "SOLDIER2", "JOKER1", "ACE1", "SOLDIER3", "JOKER2", "JOKER3", "SOLDIER4", "ACE2", "SOLDIER5", "JOKER4", "SOLDIER6"])

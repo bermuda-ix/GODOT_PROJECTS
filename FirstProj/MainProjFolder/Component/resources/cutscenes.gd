@@ -10,13 +10,15 @@ extends Node
 
 
 ########################
-#Prologue LVL Cutscenes#
+#ADV LVL Cutscenes#
 ########################
 
 @onready var intro_cutscene : Array[String] = ["idle_walk", "idle_walk", "idle_walk", "idle_speech", "idle_speech", "idle_speech", "zoom_lvl_examine", "check_equipment"]
 
-
+@onready var Cutscenes : Dictionary = {
+	"MiniBoss1" = "uid://dxu3jt66nwsqf"
+}
 
 ###################
-#Prologue LVL QTES#
+#ADV LVL QTES#
 ###################

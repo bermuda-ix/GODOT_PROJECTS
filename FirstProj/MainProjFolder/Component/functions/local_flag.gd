@@ -3,9 +3,11 @@ class_name LocalFlag extends Node2D
 @export var cutscene_name : String
 @export var flag_active : bool = false
 @export var dialogue_only : bool = true
+@export var single_cutscene : bool = true
 @onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
+signal load_cutscene_queue(_cutscene_list : String)
 signal play_cutscene(_cutscene_name : String)
-
+signal play_cutscene_list()
 
 func _ready() -> void:
 	collision_shape_2d.disabled=false
@@ -21,4 +23,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		print_debug("local flag activate")
 		#collision_shape_2d.disabled=true
 		collision_shape_2d.call_deferred("set_disabled", true)
-		play_cutscene.emit(cutscene_name)
+		if single_cutscene:
+			play_cutscene.emit(cutscene_name)
+		else:
+			play_cutscene_list.emit()

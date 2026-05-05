@@ -37,7 +37,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["We’re just followin’ our contract to completion, like we always do", "Default", false, "ace", "ace_default", "ACE"],
+"args": ["We’re just followin’ our contract to completion, like we always do", "Default", false, "default", "ace_default", "ACE"],
 "method": &"play_top"
 }]
 }
@@ -54,7 +54,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Well we got word about an attempt on her life, you happen to know about that?", "Default", false, "ace", "ace_default", "ACE"],
+"args": ["Well we got word about an attempt on her life, you happen to know about that?", "Default", false, "default", "ace_default", "ACE"],
 "method": &"play_top"
 }]
 }
@@ -71,7 +71,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Contract’s done when the doctor’s safe, with all due respect this place looks like an absolute mess", "Default", false, "joker", "joker_default", "JOKER"],
+"args": ["Contract’s done when the doctor’s safe, with all due respect this place looks like an absolute mess", "Default", false, "default", "joker_default", "JOKER"],
 "method": &"play_top"
 }]
 }
@@ -88,7 +88,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["You really think the doc’s safe in a place like this?", "Default", false, "joker", "joker_default", "JOKER"],
+"args": ["You really think the doc’s safe in a place like this?", "Default", false, "default", "joker_default", "JOKER"],
 "method": &"play_top"
 }]
 }
@@ -105,7 +105,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["This is a test string, calling from the dialogue box parent node", "Default", false, "joker", "joker_default", "JOKER"],
+"args": ["This is a test string, calling from the dialogue box parent node", "Default", false, "default", "joker_default", "JOKER"],
 "method": &"play_top"
 }]
 }
@@ -122,7 +122,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Don’t like that look, man", "Default", false, "joker", "joker_default", "JOKER"],
+"args": ["Don’t like that look, man", "Default", false, "default", "joker_default", "JOKER"],
 "method": &"play_top"
 }]
 }
@@ -260,18 +260,6 @@ tracks/10/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-2350, 202)]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath(".:skippable")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_wbdor"]
@@ -441,7 +429,7 @@ tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-2350, 270)]
+"values": [Vector2(-2350, 202)]
 }
 tracks/14/type = "method"
 tracks/14/imported = false
@@ -528,7 +516,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_5vflx"]
 resource_name = "SOLDIER6"
-length = 4.0
+length = 1.6
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -539,7 +527,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Should’ve just gone home", "Slow", true, "default", "default", "SOLDIER"],
+"args": ["Should’ve just gone home", "Slow", false, "default", "default", "SOLDIER"],
 "method": &"play_bot"
 }]
 }
@@ -574,7 +562,7 @@ tracks/3/path = NodePath("SoldierBoss_Cutscene:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 3.9666667),
+"times": PackedFloat32Array(0, 1.5666666),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -598,7 +586,7 @@ tracks/5/path = NodePath(".")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(3.9666667),
+"times": PackedFloat32Array(1.6),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -612,36 +600,10 @@ tracks/6/path = NodePath("Ace_Cutscene:visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(3.9666667),
+"times": PackedFloat32Array(1.5666667),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath(".:skippable")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/8/type = "method"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("BossArena/NamedBossSpawn")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(3.9666667),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"manual_spawn_boss"
-}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ggnol"]

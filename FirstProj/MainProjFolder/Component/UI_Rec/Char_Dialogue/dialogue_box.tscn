@@ -97,9 +97,8 @@ script = ExtResource("1_k0prl")
 visible = false
 custom_minimum_size = Vector2(448, 64)
 layout_mode = 0
-offset_top = -23.0
 offset_right = 516.0
-offset_bottom = 41.0
+offset_bottom = 64.0
 
 [node name="TextureRect" type="TextureRect" parent="TopDialogue" unique_id=928764771]
 custom_minimum_size = Vector2(64, 64)
@@ -177,10 +176,10 @@ libraries/ = SubResource("AnimationLibrary_s1kmm")
 visible = false
 custom_minimum_size = Vector2(448, 64)
 layout_mode = 0
-offset_left = 47.0
-offset_top = 219.0
-offset_right = 563.0
-offset_bottom = 283.0
+offset_left = 56.0
+offset_top = 258.0
+offset_right = 572.0
+offset_bottom = 322.0
 
 [node name="TextureRect2" type="TextureRect" parent="BottomDialogue" unique_id=367105758]
 z_index = 1

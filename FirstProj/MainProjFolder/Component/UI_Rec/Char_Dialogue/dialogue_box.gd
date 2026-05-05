@@ -17,6 +17,8 @@ class_name DialogueBoxController
 @onready var click_prompt_player_bot: AnimationPlayer = $BottomDialogue/TextureRect/WaitForPromptBot/ClickPromptBot/ClickPromptPlayerBot
 @onready var playing_bot : bool = false
 
+@onready var autoplay_next
+
 @export_category("dialogue speed")
 #@onready var slow : float=0.1
 #@onready var default: float=0.05
@@ -37,7 +39,7 @@ signal end_of_dialogue
 
 func play_top(_dialogue_string : String = "This is a test string, calling from the dialogue box parent node",\
  _speed : String = "Default",\
- _pause_on_finish : bool = false,\
+ _autoplay : bool = false,\
  _character : String = "default",\
  _portrait : String = "default",\
  _name : String = "???") -> void:
@@ -47,11 +49,12 @@ func play_top(_dialogue_string : String = "This is a test string, calling from t
 	top_dialogue.call_deferred("set_visible", true)
 	dialogue_text_top.play_dialogue(_dialogue_string, _speed)
 	playing_top=true
+	autoplay_next=_autoplay
 	
 	
 func play_bot(_dialogue_string : String = "I am a huge furry please rape my face",\
  _speed : String = "Default",\
- _pause_on_finish : bool = false,\
+ _autoplay : bool = false,\
  _character : String = "default",\
  _portrait : String = "default",\
  _name : String = "???") -> void:
@@ -61,6 +64,7 @@ func play_bot(_dialogue_string : String = "I am a huge furry please rape my face
 	bottom_dialogue.call_deferred("set_visible", true)
 	dialogue_text_bot.play_dialogue(_dialogue_string, _speed)
 	playing_bot=true
+	autoplay_next=_autoplay
 	
 	
 func hide_top():
@@ -77,13 +81,15 @@ func hide_both():
 func _on_dialogue_text_top_text_finished() -> void:
 	end_of_dialogue.emit()
 	playing_top=false
-	wait_for_input()
+	if not autoplay_next:
+		wait_for_input()
 
 
 func _on_dialogue_text_bot_text_finished() -> void:
 	end_of_dialogue.emit()
 	playing_bot=false
-	wait_for_input()
+	if not autoplay_next:
+		wait_for_input()
 	
 func wait_for_input():
 	wait_for_prompt_bot.set_deferred("visible", true)

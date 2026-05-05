@@ -48,6 +48,12 @@ var qte_options : Array[String]  = ["1", "2", "3", "4", "0"]
 @onready var player_transform: RemoteTransform2D = $Paths/Path2D/PathFollow2D/PlayerTransform
 @onready var hit_stop: HitStop = $HitStop
 @export var cutscene_library : String
+@export var skippable : bool = true
+@onready var cutscene_queue : Array[String]
+@onready var cutscene_queue_index : int = 0
+@onready var dialogue_box_controller: DialogueBoxController = $CanvasLayer/DialogueBoxController
+
+
 
 ###MiniBoss1Nodes
 @onready var mini_boss_right_boundery_col: CollisionShape2D = $Bounderies3/MiniBoss1Bounderies/MiniBossRightBoundery/MiniBossRightBounderyCol
@@ -89,6 +95,7 @@ func _ready():
 	#Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
 	#Events.increase_heat_lvl.connect(increase_heat)
+	load_cutscene_queue(Cutscenes.Cutscenes["MiniBoss1"])
 	
 	
 	if player == null:
@@ -131,6 +138,9 @@ func _ready():
 func _process(_delta):
 	
 	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size())
+	
+	if cutscene_active:
+		dialogue_continue()
 	
 
 
@@ -200,15 +210,62 @@ func handle_spawn():
 func dialogue_flag_listener(_dialogue) -> void:
 	pass
 
+########################
+###Cutscene Functions###
+########################
+
 func play_cutscene_segment(_cutscene_segment : String):
 	var _cutscene=cutscene_library+"/"+_cutscene_segment
 	Events.play_cutscene_segment.emit(_cutscene)
 	cutscene_player.play(_cutscene)
 
+func load_cutscene_queue(_cutscene_list_rec : String):
+	var _cutscene_list : CutsceneQueue = load(_cutscene_list_rec)
+	#print_debug(_cutscene_list.cutscene_list)
+	cutscene_queue.assign(_cutscene_list.cutscene_list)
+
+func play_cutscene_queue():
+	Events.start_cutscene.emit()
+	cutscene_active=true
+	cutscene_player.play(cutscene_queue[cutscene_queue_index])
+
+func dialogue_continue():
+	if (Input.is_action_just_pressed("attack")\
+	 or Input.is_action_just_pressed("jump")\
+	 or Input.is_action_just_pressed("Interact")):
+		if (dialogue_box_controller.playing_bot or dialogue_box_controller.playing_top):
+			if skippable:
+				cutscene_player.stop(true)
+				dialogue_box_controller.skip_to_end()
+			else:
+				pass
+		elif not cutscene_player.is_playing():
+			
+			if cutscene_queue_index>=cutscene_queue.size():
+				print_debug("end_of_scene")
+			else:
+				cutscene_queue_index+=1
+				cutscene_player.play(cutscene_queue[cutscene_queue_index])
+		else:
+			pass
+			
+
 func end_cutscene():
 	Events.end_cutsene.emit()
+	dialogue_box_controller.hide_both()
 	cutscene_active=false
 	
+#################################
+###Dialogue Cutscene Functions###
+#################################
+	
+func cutscene_wait_for_input() -> void:
+	cutscene_player.pause()
+
+func toggle_skip(value : bool) -> void:
+	skippable=value
+	
+
 func boss_died(cutscene: String):
 	Events.start_cutscene.emit()
 	cutscene_player.play(cutscene)
