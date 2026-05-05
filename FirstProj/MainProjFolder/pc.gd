@@ -583,6 +583,9 @@ func _process(_delta):
 	interact()
 	stick_to_wall()
 	
+	if attacking:
+		if attack_timer.is_stopped():
+			attacking=false
 	#Input for testing various things
 	#if Input.is_action_just_pressed("DEBUG_KEY"):
 		#slow_down_aim()
@@ -967,6 +970,8 @@ func attack_animate():
 			if Input.is_action_pressed("sprint") and (_dist_to_target_x>50 or _dist_to_target_y>50):
 				attack_closer.closing_dir= global_position.direction_to(target.global_position)
 				closing_attack()
+			else:
+				regular_attack()
 		heavy_attack_buffer_timer.start()
 		attacking=true
 			#
@@ -2288,7 +2293,7 @@ func _on_idle_entered() -> void:
 
 
 func _on_state_machine_active_state_changed(current: LimboState, _previous: LimboState) -> void:
-
+	
 	if current==dodge_state:
 		
 		if attack_state.get_active_state()==attack_1:

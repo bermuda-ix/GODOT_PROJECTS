@@ -417,9 +417,9 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	if player_right:
-		animated_sprite_2d.flip_h=true
-	else:
 		animated_sprite_2d.flip_h=false
+	else:
+		animated_sprite_2d.flip_h=true
 
 func teleport_counter():
 	state_machine.dispatch(&"teleport_counter")
@@ -565,9 +565,10 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			#print_debug(global_position)
 	#elif "teleport_end":
 			#print_debug(global_position)
-	elif "flashback_lvl_cutscenes/first_mini_boss_kill":
-			death_on_cutscene()
-			
+	elif anim_name== "flashback_lvl_cutscenes/first_mini_boss_kill":
+		death_on_cutscene()
+	else:
+		pass
 
 
 func _on_attack_range_body_entered(body: Node2D) -> void:

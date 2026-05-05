@@ -48,7 +48,7 @@ func _on_visible_on_screen_enabler_2d_screen_exited():
 	queue_free()
 
 func _char_hit(hurtbox : HurtBox):
-	if hurtbox != null:
+	if hurtbox != null or hurtbox.active:
 		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
 		impact()
 		
