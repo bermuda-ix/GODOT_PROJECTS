@@ -565,7 +565,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			#print_debug(global_position)
 	#elif "teleport_end":
 			#print_debug(global_position)
-	elif anim_name== "flashback_lvl_cutscenes/first_mini_boss_kill":
+	elif anim_name== "flashback_lvl_cutscenes/miniboss_hallway_death":
 		death_on_cutscene()
 	else:
 		pass
@@ -720,9 +720,10 @@ func _on_health_health_depleted() -> void:
 		bt_player.restart()
 		bt_player.active=false
 		Events.unlock_from.emit()
-		Events.boss_died.emit("mini_boss_1_kill")
-		Events.global_flag_trigger.emit("MiniBoss1Killed")
+		Events.boss_died.emit("miniboss_hallway_death")
+		Events.global_flag_trigger.emit("miniboss_hallway_death")
 		bt_player.active=false
+		set_deferred("visible", false)
 
 
 func _on_attack_timer_timeout() -> void:

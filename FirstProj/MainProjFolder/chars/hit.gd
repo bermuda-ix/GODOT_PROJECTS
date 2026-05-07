@@ -5,6 +5,7 @@ extends LimboState
 @export var actor : Node2D
 @export var hurtbox : HurtBox
 @export var animation_player : AnimationPlayer
+@export var hit_anim : String = "hit"
 
 
 

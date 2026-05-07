@@ -117,17 +117,23 @@
 [ext_resource type="Texture2D" uid="uid://cmyvx2n2e3yj1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Stunned/Stunned05.png" id="96_rgiva"]
 [ext_resource type="Texture2D" uid="uid://b4w3h1v4gqqlv" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Stunned/Stunned06.png" id="97_y18n0"]
 [ext_resource type="Texture2D" uid="uid://cb74312fth8pt" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Stunned/Stunned07.png" id="98_0fwx0"]
+[ext_resource type="Texture2D" uid="uid://nehysgv5higb" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunSprintFire/GunSprintFire01.png" id="98_7eb78"]
 [ext_resource type="Texture2D" uid="uid://d08mxgaqvsvya" path="res://Art_Components/Effects/VFX Free Pack/Effect_EldenRing/60fps/Spritesheets/Effect_EldenRing_1_421x425.png" id="99_0aakr"]
+[ext_resource type="Texture2D" uid="uid://bxfdhxn12ik4l" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunSprintFire/GunSprintFire02.png" id="99_6tb62"]
 [ext_resource type="Texture2D" uid="uid://dlfj8ycunyumx" path="res://Art_Components/Effects/Spritesheets/Gravity-Sheet.png" id="99_33sos"]
 [ext_resource type="Texture2D" uid="uid://jx34jgnqncbn" path="res://Art_Components/Effects/Spritesheets/Eletric Expansion.png" id="99_sqn71"]
 [ext_resource type="Texture2D" uid="uid://c0d3k24lhovc2" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Spritesheets/Effect_Wheel_1_273x273.png" id="99_thomt"]
 [ext_resource type="Script" uid="uid://byay512l00w0p" path="res://Component/functions/ClashPower.gd" id="100_7eb78"]
 [ext_resource type="AnimationLibrary" uid="uid://dtyhxqe1jf0av" path="res://Component/resources/animation_res/soldier_boss.res" id="100_ggkva"]
+[ext_resource type="Texture2D" uid="uid://g5xp0if7klxf" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunSprintFire/GunSprintFire03.png" id="100_sqnmd"]
 [ext_resource type="Script" uid="uid://b0uasmutdnguo" path="res://chars/target_lock.gd" id="101_6tb62"]
+[ext_resource type="Texture2D" uid="uid://dlwt5do67v6hl" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunSprintFire/GunSprintFire04.png" id="101_jr353"]
 [ext_resource type="PackedScene" uid="uid://303jj447mrmm" path="res://Component/functions/bullet_detection.tscn" id="102_sqnmd"]
+[ext_resource type="Texture2D" uid="uid://gtk1j34mjltr" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunSprintFire/GunSprintFire05.png" id="102_yykvk"]
 [ext_resource type="Texture2D" uid="uid://c7g25rtqehv3m" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire01.png" id="103_5u5ds"]
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="103_jr353"]
 [ext_resource type="BehaviorTree" uid="uid://bmgha5eqvo172" path="res://ai/trees/soldier_boss_ai.tres" id="103_nmnuj"]
+[ext_resource type="Texture2D" uid="uid://cpeo56npeum3" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunSprintFire/GunSprintFire06.png" id="103_tnx7y"]
 [ext_resource type="Texture2D" uid="uid://cngu045j01sui" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire02.png" id="104_fnbuc"]
 [ext_resource type="Texture2D" uid="uid://ibg00s0pu8qi" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire03.png" id="105_fliv7"]
 [ext_resource type="Script" uid="uid://cx8bi64kwoulc" path="res://Component/functions/PlayerTrackingHandler.gd" id="105_tnx7y"]
@@ -661,6 +667,29 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("98_7eb78")
+}, {
+"duration": 1.0,
+"texture": ExtResource("99_6tb62")
+}, {
+"duration": 1.0,
+"texture": ExtResource("100_sqnmd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("101_jr353")
+}, {
+"duration": 1.0,
+"texture": ExtResource("102_yykvk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("103_tnx7y")
+}],
+"loop": true,
+"name": &"run_shoot",
 "speed": 5.0
 }, {
 "frames": [{
@@ -3779,6 +3808,7 @@ collision_layer = 16384
 collision_mask = 19
 safe_margin = 0.2
 script = ExtResource("2_87q8v")
+death_cutscene = true
 
 [node name="NavigationAgent2D" parent="." index="0"]
 navigation_layers = 2
@@ -4087,6 +4117,7 @@ actor = NodePath("../..")
 script = ExtResource("121_3vbeq")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
+run_anim = "shoot_run"
 
 [node name="JUMP" type="LimboState" parent="LimboHSM" index="2" unique_id=1977274499 node_paths=PackedStringArray("actor", "state_machine", "jump_handler")]
 script = ExtResource("122_dumub")

@@ -268,7 +268,8 @@ func toggle_skip(value : bool) -> void:
 
 func boss_died(cutscene: String):
 	Events.start_cutscene.emit()
-	cutscene_player.play(cutscene)
+	var _cutscene=cutscene_library+"/"+cutscene
+	cutscene_player.play(_cutscene)
 	hit_stop.hit_stop(0.5,0.5)
 	cutscene_active=true
 
