@@ -385,7 +385,7 @@ func _physics_process(delta):
 	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
 		#hb_collison.disabled=true
 		velocity.y += gravity * delta
-		velocity.x=0
+		#velocity.x=0
 		move_and_slide()
 		return
 	elif state_machine.get_active_state()==dying:
@@ -778,7 +778,7 @@ func _on_hit_box_parried() -> void:
 func _on_hit_entered() -> void:
 	bt_player.blackboard.set_var("hit", true)
 	if hit.hit_anim=="hit":
-		return
+		velocity.x=0
 	else:
 		if player_right:
 			velocity.x=-100
@@ -788,6 +788,9 @@ func _on_hit_entered() -> void:
 func _on_hit_exited() -> void:
 	bt_player.blackboard.set_var("hit", false)
 
+func _on_hit_updated(delta: float) -> void:
+	print_debug(velocity.x)
+	move_and_slide()
 
 func _on_kick_counter_exited() -> void:
 	bt_player.active=true
