@@ -146,8 +146,13 @@
 [ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="96_0nqgj"]
 [ext_resource type="Script" uid="uid://doi7s32f3duwj" path="res://chars/dodge.gd" id="98_ovyjq"]
 [ext_resource type="PackedScene" uid="uid://303jj447mrmm" path="res://Component/functions/bullet_detection.tscn" id="102_bmgxt"]
+[ext_resource type="Texture2D" uid="uid://c7g25rtqehv3m" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire01.png" id="103_gf86h"]
+[ext_resource type="Texture2D" uid="uid://cngu045j01sui" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire02.png" id="104_gt172"]
+[ext_resource type="Texture2D" uid="uid://ibg00s0pu8qi" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire03.png" id="105_y0ae0"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="105_yvx0r"]
+[ext_resource type="Texture2D" uid="uid://dlk26jwqxo6t1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire04.png" id="106_vp30k"]
 [ext_resource type="Shader" uid="uid://c0lvqekkgl8f8" path="res://chars/AFXGlowVisual.tres" id="107_8hjwg"]
+[ext_resource type="Texture2D" uid="uid://dqmwsu55fxh47" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire05.png" id="107_wwx6s"]
 [ext_resource type="Texture2D" uid="uid://ipkcr82ii051" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0221/S0221.png" id="108_nm53y"]
 [ext_resource type="Texture2D" uid="uid://djjpd2r5bwkbg" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0221/S0222.png" id="109_t7lyk"]
 [ext_resource type="PackedScene" uid="uid://b74ywj4npkesd" path="res://Component/bullet_projectile.tscn" id="110_bmgxt"]
@@ -653,6 +658,26 @@ animations = [{
 }],
 "loop": true,
 "name": &"shoot",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("103_gf86h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("104_gt172")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105_y0ae0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106_vp30k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("107_wwx6s")
+}],
+"loop": true,
+"name": &"shoot_crouch",
 "speed": 5.0
 }, {
 "frames": [{
@@ -3868,6 +3893,63 @@ tracks/3/keys = {
 "values": [Color(0.521141, 0.521141, 0.521141, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_fsf3g"]
+resource_name = "hit_quick_recover"
+length = 0.9
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.29999998, 0.325, 0.40210375, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 5, 4, 3, 2, 1, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [&"hit", &"roll", &"shoot_crouch"]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MovementHandler")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"stop_moving"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ShootAttackManager")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"shoot"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_hssic"]
 resource_name = "idle"
 length = 0.65
@@ -4869,6 +4951,7 @@ _data = {
 &"dodge": SubResource("Animation_ovyjq"),
 &"falling": SubResource("Animation_vpir5"),
 &"hit": SubResource("Animation_x3dkm"),
+&"hit_quick_recover": SubResource("Animation_fsf3g"),
 &"idle": SubResource("Animation_hssic"),
 &"kick_counter": SubResource("Animation_1hapo"),
 &"landed": SubResource("Animation_4yjj7"),
@@ -5743,6 +5826,7 @@ metadata/_custom_type_script = "uid://fi6gye6mlsb6"
 [connection signal="exited" from="LimboHSM/COUNTER/KickCounter" to="." method="_on_kick_counter_exited"]
 [connection signal="entered" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_entered"]
 [connection signal="exited" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_exited"]
+[connection signal="entered" from="LimboHSM/HIT" to="." method="_on_hit_entered"]
 [connection signal="exited" from="LimboHSM/STAGGERED" to="." method="_on_staggered_exited"]
 [connection signal="entered" from="LimboHSM/Launch" to="." method="_on_launch_entered"]
 [connection signal="entered" from="LimboHSM/Falling" to="." method="_on_falling_entered"]

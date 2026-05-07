@@ -561,6 +561,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	elif anim_name=="clashed":
 		if stagger.stagger>0:
 			clash_counter()
+	elif anim_name=="hit" or anim_name=="hit_quick_recover":
+		state_machine.dispatch(&"hit_recover")
 	#elif "teleport_start":
 			#print_debug(global_position)
 	#elif "teleport_end":
@@ -626,8 +628,8 @@ func _on_parry_timer_timeout() -> void:
 		elif phases.get_active_state()==phase_2:
 			state_machine.dispatch(&"teleport_recover")
 		
-	elif state_machine.get_active_state()==hit:
-		state_machine.dispatch(&"hit_recover")
+	#elif state_machine.get_active_state()==hit:
+		
 	movement_handler.active=true
 	hurt_box.set_damage_mulitplyer(1)
 
@@ -691,6 +693,10 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		if damage<=health.health:
 			if state_machine.get_active_state()!=staggered:
 				parry_timer.start(0.5)
+				if stagger.stagger>1:
+					hit.hit_anim="hit_quick_recover"
+				else:
+					hit.hit_anim="hit"
 				state_machine.dispatch(&"hit")
 			hit_stop.hit_stop(0.05,0.25)
 			#set_state(current_state, States.HIT)
@@ -768,6 +774,19 @@ func _on_hit_box_parried() -> void:
 	state_machine.dispatch(&"counter")
 	bt_player.restart()
 	bt_player.active=false
+
+func _on_hit_entered() -> void:
+	bt_player.blackboard.set_var("hit", true)
+	if hit.hit_anim=="hit":
+		return
+	else:
+		if player_right:
+			velocity.x=-100
+		else:
+			velocity.x=100
+
+func _on_hit_exited() -> void:
+	bt_player.blackboard.set_var("hit", false)
 
 
 func _on_kick_counter_exited() -> void:

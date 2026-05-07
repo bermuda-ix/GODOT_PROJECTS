@@ -143,6 +143,9 @@ func cutscene_move(dir : int , speed : float):
 	else:
 		actor.current_speed=0
 
+func stop_moving():
+	actor.velocity.x=0
+
 func apply_gravity(delta : float) -> void:
 	if not actor.is_on_floor():
 		actor.velocity.y += actor.gravity * delta

@@ -533,6 +533,10 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	if damage<=health.health:
 		if state_machine.get_active_state()!=staggered:
 			parry_timer.start(0.5)
+			if stagger.stagger>1:
+				hit.hit_anim="hit_quick_recover"
+			else:
+				hit.hit_anim="hit"
 			state_machine.dispatch(&"hit")
 		else:
 			animation_player.play("hit")
@@ -667,6 +671,15 @@ func _on_hit_box_parried() -> void:
 	state_machine.dispatch(&"counter")
 	bt_player.restart()
 	bt_player.active=false
+
+func _on_hit_entered() -> void:
+	if hit.hit_anim=="hit":
+		return
+	else:
+		if player_right:
+			velocity.x=-100
+		else:
+			velocity.x=100
 
 
 func _on_kick_counter_exited() -> void:

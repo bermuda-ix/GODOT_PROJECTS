@@ -11,7 +11,8 @@ func melee_attack():
 	if actor.state_machine.get_active_state()==actor.attack:
 		pass
 	else:
-		actor.state_machine.change_active_state(actor.attack)
+		#actor.state_machine.change_active_state(actor.attack)
+		actor.state_machine.dispatch(&"start_attack")
 		#"melee attack")
 	if not actor.attacking:
 		actor.animation_player.play(combo)

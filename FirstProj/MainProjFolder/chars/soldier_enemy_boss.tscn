@@ -4299,6 +4299,8 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="updated" from="LimboHSM/TeleportAndHit" to="." method="_on_teleport_and_hit_updated"]
 [connection signal="entered" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_entered"]
 [connection signal="exited" from="LimboHSM/BULLETDODGE" to="." method="_on_bulletdodge_exited"]
+[connection signal="entered" from="LimboHSM/HIT" to="." method="_on_hit_entered"]
+[connection signal="exited" from="LimboHSM/HIT" to="." method="_on_hit_exited"]
 [connection signal="entered" from="LimboHSM/STAGGERED" to="." method="_on_staggered_entered"]
 [connection signal="exited" from="LimboHSM/STAGGERED" to="." method="_on_staggered_exited"]
 [connection signal="entered" from="LimboHSM/DYING" to="." method="_on_dying_entered"]
