@@ -6233,6 +6233,34 @@ tracks/1/keys = {
 "values": [&"SwordJump"]
 }
 
+[sub_resource type="Animation" id="Animation_pbr83"]
+resource_name = "knocked_back"
+length = 0.56666666
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"KnockedBack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.53333336),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
 [sub_resource type="Animation" id="Animation_7k7vw"]
 resource_name = "landed"
 length = 0.25
@@ -7315,6 +7343,7 @@ _data = {
 &"idle_speech": SubResource("Animation_4yxaj"),
 &"idle_walk": SubResource("Animation_7ax8a"),
 &"jump": SubResource("Animation_5m6tb"),
+&"knocked_back": SubResource("Animation_pbr83"),
 &"landed": SubResource("Animation_7k7vw"),
 &"reload": SubResource("Animation_wp57p"),
 &"roll": SubResource("Animation_tj0ec"),
@@ -8963,7 +8992,6 @@ shape = SubResource("RectangleShape2D_pmx5o")
 [node name="Health" type="Node" parent="." unique_id=994567121]
 script = ExtResource("4_q0gnn")
 max_health = 10
-immortality = true
 
 [node name="ClashPower" type="Node" parent="." unique_id=2128103427 node_paths=PackedStringArray("health", "stagger")]
 script = ExtResource("82_h0fyw")
@@ -9387,6 +9415,7 @@ pc = NodePath("../..")
 [connection signal="area_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_entered" from="AnimatedSprite2D/HitBox" to="StateMachine/AttackState/AttackCloser" method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="clash_interrupt" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_clash_interrupt"]
 [connection signal="clash_knock_back" from="AnimatedSprite2D/HitBox" to="." method="_on_knockback"]
 [connection signal="clashed" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_clashed"]
 [connection signal="parried" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_parried"]

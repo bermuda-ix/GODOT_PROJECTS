@@ -628,8 +628,8 @@ func _on_parry_timer_timeout() -> void:
 		elif phases.get_active_state()==phase_2:
 			state_machine.dispatch(&"teleport_recover")
 		
-	#elif state_machine.get_active_state()==hit:
-		
+	elif state_machine.get_active_state()==hit:
+		state_machine.dispatch(&"hit_recover")
 	movement_handler.active=true
 	hurt_box.set_damage_mulitplyer(1)
 
@@ -774,11 +774,13 @@ func _on_hit_box_parried() -> void:
 	state_machine.dispatch(&"counter")
 	bt_player.restart()
 	bt_player.active=false
+	
 
 func _on_hit_entered() -> void:
 	bt_player.blackboard.set_var("hit", true)
 	if hit.hit_anim=="hit":
 		velocity.x=0
+		parry_timer.start(0.1)
 	else:
 		if player_right:
 			velocity.x=-100
@@ -789,7 +791,7 @@ func _on_hit_exited() -> void:
 	bt_player.blackboard.set_var("hit", false)
 
 func _on_hit_updated(delta: float) -> void:
-	print_debug(velocity.x)
+
 	move_and_slide()
 
 func _on_kick_counter_exited() -> void:

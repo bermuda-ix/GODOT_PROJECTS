@@ -3862,7 +3862,6 @@ instance_shader_parameters/MaskColor = Color(0.45452422, 0.45452428, 0.45452422,
 position = Vector2(-28, 15)
 sprite_frames = SubResource("SpriteFrames_725ad")
 animation = &"Shoot"
-frame = 1
 flip_h = true
 
 [node name="AnimationPlayer" parent="." index="2"]
@@ -3979,6 +3978,7 @@ shape = SubResource("CircleShape2D_4yjj7")
 
 [node name="Turret" parent="." index="28" unique_id=1929477695 instance=ExtResource("103_jr353")]
 position = Vector2(-8, -7)
+multi_shot = true
 ammo_count = 6
 max_ammo = 6
 

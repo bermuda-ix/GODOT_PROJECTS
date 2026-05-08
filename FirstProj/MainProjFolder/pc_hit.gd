@@ -4,9 +4,10 @@ extends LimboState
 @export var pc : PlayerEntity
 @export var state_machine : LimboHSM
 @export var hit_buffer : Timer
+@export var hit_anim := "hit"
 
 func _enter() -> void:
-	anim_player.play("hit")
+	anim_player.play(hit_anim)
 	hit_buffer.start(anim_player.current_animation_length)
 	pc.hurt_box_detect.call_deferred("set_disabled", true)
 
@@ -14,6 +15,7 @@ func _enter() -> void:
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name=="hit":
+	if anim_name=="hit" or "knocked_back":
 		hit_buffer.stop()
 		state_machine.dispatch(&"recovering")
+		

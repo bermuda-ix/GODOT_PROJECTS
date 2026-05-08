@@ -3,8 +3,9 @@ extends Area2D
 
 signal parried()
 signal clashed()
-signal clash_launch(_launch: float)
 signal clash_knock_back(_launch: float, _knockback : float, _impact_dir_right : bool)
+signal clash_interrupt(_launch: float, _knockback : float, _impact_dir_right : bool)
+
 
 @export var damage: int = 1 : set = set_damage, get = get_damage
 @export var stagger: Stagger
@@ -45,7 +46,7 @@ func _on_parried(_area :Area2D) -> void:
 						impact_dir_right=true
 					else:
 						impact_dir_right=false
-					clash_knock_back.emit(_area.launch_strength, _area.knock_back_strength, impact_dir_right)
+					clash_interrupt.emit(_area.launch_strength, _area.knock_back_strength, impact_dir_right)
 					_area.heavy_attack=false
 				else:
 					pass

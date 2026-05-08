@@ -53,6 +53,12 @@
 [ext_resource type="Texture2D" uid="uid://c70il3do84chb" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll08.png" id="35_y2kab"]
 [ext_resource type="Texture2D" uid="uid://65jgwhqlfphj" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll09.png" id="36_i37bb"]
 [ext_resource type="Texture2D" uid="uid://cj6pqrvsga70n" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll10.png" id="37_qkph8"]
+[ext_resource type="Texture2D" uid="uid://bkennx5ijffrf" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback01.png" id="42_rbh7g"]
+[ext_resource type="Texture2D" uid="uid://chdfl2cddmjq2" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback02.png" id="43_6luyt"]
+[ext_resource type="Texture2D" uid="uid://b5ssjqaq1iq6i" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback03.png" id="44_bsrl4"]
+[ext_resource type="Texture2D" uid="uid://bjnfgcf24kup1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback04.png" id="45_jcv2r"]
+[ext_resource type="Texture2D" uid="uid://bww2o6jkad7nf" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback05.png" id="46_pb5gt"]
+[ext_resource type="Texture2D" uid="uid://uyrqxa0qabyo" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback06.png" id="47_qetor"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cgbvk"]
 load_path = "res://.godot/imported/mc_combat_test.png-b2d036d0dffbe6befd548462c9612a3b.ctex"
@@ -1997,6 +2003,29 @@ animations = [{
 "loop": true,
 "name": &"Kick03",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("42_rbh7g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_6luyt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_bsrl4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_jcv2r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_pb5gt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_qetor")
+}],
+"loop": true,
+"name": &"KnockedBack",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,

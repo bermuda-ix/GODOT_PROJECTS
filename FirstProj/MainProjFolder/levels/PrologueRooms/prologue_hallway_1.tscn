@@ -166,6 +166,17 @@
 [ext_resource type="Texture2D" uid="uid://dwxmip1r5mrkv" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Sprint/Sprint06.png" id="158_j7bww"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="165_bw5xo"]
 
+[sub_resource type="Gradient" id="Gradient_bw5xo"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_61h8j"]
+gradient = SubResource("Gradient_bw5xo")
+
+[sub_resource type="Environment" id="Environment_lhcp8"]
+background_mode = 3
+glow_enabled = true
+adjustment_enabled = true
+adjustment_color_correction = SubResource("GradientTexture2D_61h8j")
+
 [sub_resource type="Animation" id="Animation_k5twc"]
 resource_name = "ACE1"
 tracks/0/type = "method"
@@ -2786,6 +2797,9 @@ point_count = 3
 script = ExtResource("1_8kup7")
 main_room = true
 cutscene_library = "flashback_lvl_cutscenes"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1759089609]
+environment = SubResource("Environment_lhcp8")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=121233864]
 

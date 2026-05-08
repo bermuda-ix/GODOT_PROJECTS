@@ -456,6 +456,9 @@ func _init_state_machine():
 	state_machine.add_transition(special_attack, jump_state, &"return_from_special")
 	#state_machine.add_transition(idle, special_attack, &"special_attack")
 	state_machine.add_transition(attack_state, dodge_state, &"start_dodge")
+	
+	state_machine.add_transition(attack_state, hit, &"interrupt_knockback")
+	
 		
 	#Flipping State
 	state_machine.add_transition(flip_state, jump_state, &"jump_out")
@@ -1697,6 +1700,7 @@ func _on_hurt_box_got_hit(_hitbox):
 						#knockback.x=-15
 					#else:
 						#knockback.x=15
+				hit.hit_anim="hit"
 				state_machine.dispatch(&"got_hit")
 			set_stagger()
 			
@@ -2229,8 +2233,10 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05, 0.1)
 	Events.camera_shake.emit(2,20)
 	if state_machine.get_active_state()==flip_state:
+		hit.hit_anim="knocked_back"
 		state_machine.dispatch(&"got_hit")
 	elif state_machine.get_active_state()==parry_success_state:
+		hit.hit_anim="knocked_back"
 		state_machine.dispatch(&"got_hit")
 		stagger.stagger-=3
 		
@@ -2547,3 +2553,8 @@ func _on_animation_player_current_animation_changed(name: StringName) -> void:
 	#pass
 	if name == "Walk":
 		print_debug("where")
+
+
+func _on_hit_box_clash_interrupt(_launch: float, _knockback: float, _impact_dir_right: bool) -> void:
+	state_machine.dispatch(&"interrupt_knockback")
+	hit.hit_anim="knocked_back"

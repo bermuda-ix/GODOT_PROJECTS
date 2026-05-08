@@ -272,7 +272,7 @@ size = Vector2(20, 180)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fof0c"]
 size = Vector2(1386, 138)
 
-[sub_resource type="Environment" id="Environment_0atxr"]
+[sub_resource type="Environment" id="Environment_dqkb5"]
 background_mode = 3
 glow_enabled = true
 
@@ -503,6 +503,6 @@ position = Vector2(699, 67)
 shape = SubResource("RectangleShape2D_fof0c")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="36" unique_id=1515680001]
-environment = SubResource("Environment_0atxr")
+environment = SubResource("Environment_dqkb5")
 
 [editable path="CameraPos"]
