@@ -2282,7 +2282,13 @@ func _on_hit_box_parried() -> void:
 	
 	#velocity.x = movement_data.speed + knockback.x
 
-
+func _on_hit_box_clash_interrupt(_launch: float, _knockback: float, _impact_dir_right: bool) -> void:
+	hit.hit_anim="knocked_back"
+	if _impact_dir_right:
+		knockback.x=-_knockback
+	else: 
+		knockback.x=-_knockback
+	state_machine.dispatch(&"interrupt_knockback")
 		
 		
 func _on_hit_stop_hit_stop_finished() -> void:
@@ -2553,8 +2559,3 @@ func _on_animation_player_current_animation_changed(name: StringName) -> void:
 	#pass
 	if name == "Walk":
 		print_debug("where")
-
-
-func _on_hit_box_clash_interrupt(_launch: float, _knockback: float, _impact_dir_right: bool) -> void:
-	state_machine.dispatch(&"interrupt_knockback")
-	hit.hit_anim="knocked_back"

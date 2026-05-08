@@ -6233,9 +6233,37 @@ tracks/1/keys = {
 "values": [&"SwordJump"]
 }
 
+[sub_resource type="Animation" id="Animation_g8gik"]
+resource_name = "jump_recover"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"FrontFlip", &"Jump"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667, 0.20000002, 0.23333335, 0.26666668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [11, 10, 9, 8, 7, 6, 5, 4, 0]
+}
+
 [sub_resource type="Animation" id="Animation_pbr83"]
 resource_name = "knocked_back"
-length = 0.56666666
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -6255,10 +6283,38 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.53333336),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5]
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_k5kw6"]
+resource_name = "kocked_back_landed"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"KnockedBack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [4, 5]
 }
 
 [sub_resource type="Animation" id="Animation_7k7vw"]
@@ -7343,7 +7399,9 @@ _data = {
 &"idle_speech": SubResource("Animation_4yxaj"),
 &"idle_walk": SubResource("Animation_7ax8a"),
 &"jump": SubResource("Animation_5m6tb"),
+&"jump_recover": SubResource("Animation_g8gik"),
 &"knocked_back": SubResource("Animation_pbr83"),
+&"kocked_back_landed": SubResource("Animation_k5kw6"),
 &"landed": SubResource("Animation_7k7vw"),
 &"reload": SubResource("Animation_wp57p"),
 &"roll": SubResource("Animation_tj0ec"),

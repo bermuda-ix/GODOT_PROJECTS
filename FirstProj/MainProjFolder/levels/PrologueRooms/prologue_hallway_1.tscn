@@ -171,7 +171,7 @@
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_61h8j"]
 gradient = SubResource("Gradient_bw5xo")
 
-[sub_resource type="Environment" id="Environment_lhcp8"]
+[sub_resource type="Environment" id="Environment_bw5xo"]
 background_mode = 3
 glow_enabled = true
 adjustment_enabled = true
@@ -2799,7 +2799,7 @@ main_room = true
 cutscene_library = "flashback_lvl_cutscenes"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1759089609]
-environment = SubResource("Environment_lhcp8")
+environment = SubResource("Environment_bw5xo")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=121233864]
 

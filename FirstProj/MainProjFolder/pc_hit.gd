@@ -12,7 +12,11 @@ func _enter() -> void:
 	pc.hurt_box_detect.call_deferred("set_disabled", true)
 
 
+func _update(delta: float) -> void:
+	pc.move_and_slide()
 
+func _exit() -> void:
+	print_debug("recovering")
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="hit" or "knocked_back":
