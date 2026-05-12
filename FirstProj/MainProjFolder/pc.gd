@@ -674,7 +674,11 @@ func _physics_process(delta):
 		
 
 		toggle_light()
-		knockback = lerp(knockback, Vector2.ZERO, 0.1)
+		if is_on_floor():
+			knockback = lerp(knockback, Vector2.ZERO, 0.5)
+		else:
+			knockback.x = lerpf(knockback.x, 0, 0.1)
+			knockback.y = lerpf(knockback.y, 0, 0.3)
 		forward_thrust = lerp(forward_thrust, Vector2.ZERO, 0.6)
 		#wall hold check
 		wall_sticking(wall_hold)
@@ -2282,13 +2286,14 @@ func _on_hit_box_parried() -> void:
 	
 	#velocity.x = movement_data.speed + knockback.x
 
-func _on_hit_box_clash_interrupt(_launch: float, _knockback: float, _impact_dir_right: bool) -> void:
+func _on_hit_box_clash_interrupt(_launch: float, _knockback: float, _impact_dir_right: bool, _damage: int) -> void:
 	hit.hit_anim="knocked_back"
 	if _impact_dir_right:
 		knockback.x=-_knockback
 	else: 
 		knockback.x=-_knockback
 	state_machine.dispatch(&"interrupt_knockback")
+	stagger.stagger-= _damage
 		
 		
 func _on_hit_stop_hit_stop_finished() -> void:
@@ -2542,8 +2547,8 @@ func _on_knockback(_launch_strength : float, _knockback_strength : float, impact
 	knockback.x=_knockback_strength*(face_dir)
 	velocity.y= -(_launch_strength)
 	###### TBD LATTER #####
-	#if _launch_strength!=0:
-		#print_debug("team rockets jerking off again")
+	if _launch_strength!=0:
+		print_debug("team rockets jerking off again")
 
 func _on_hit_box_clashed() -> void:
 	clash_power.increase_clash()

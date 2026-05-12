@@ -210,6 +210,7 @@ func _ready():
 	bullet = BALL_PROCETILE
 	animation_player.play("idle")
 	state="guard"
+	melee_attack_manager.combo_max=3
 	next=nav_agent.get_next_path_position()
 	bt_player.blackboard.set_var("attack_mode", false)
 	bt_player.blackboard.set_var("melee_mode", false)
@@ -283,6 +284,7 @@ func _init_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
 	
 	state_machine.add_transition(attack, clashed, &"clashed")
+	state_machine.add_transition(clashed, attack, &"resume_attack")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, phase_transition, &"begin_next_phase")
 	state_machine.add_transition(phase_transition, teleport_and_shoot, phase_transition.success_event)
@@ -548,6 +550,7 @@ func _on_animation_player_animation_started(anim_name: StringName) -> void:
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	print_debug(anim_name)
 	if anim_name.substr(0, 3)=="atk":
 		if anim_name=="atk_counter":
 			bt_player.blackboard.set_var("atk_counter", false)
@@ -888,9 +891,11 @@ func _on_phasetransition_entered() -> void:
 	state_machine.add_transition(clashed, teleport_and_shoot, &"teleport_clash")
 	state_machine.add_transition(staggered, teleport_and_shoot, &"teleport_recover")
 	state_machine.add_transition(chasing, teleport_and_hit, &"teleport_atk")
+	state_machine.add_transition(clashed, teleport_and_hit, &"teleport_atk")
 	
 	state_machine.add_transition(teleport_and_shoot, attack, teleport_and_shoot.success_event)
 	state_machine.add_transition(teleport_and_hit, attack, teleport_and_hit.success_event)
+	melee_attack_manager.combo_max=4
 
 
 
@@ -918,6 +923,7 @@ func _on_staggered_entered() -> void:
 
 func _on_teleport_and_shoot_exited() -> void:
 	hurt_box.set_collision_layer_value(7, true)
+	hurt_box.active=true
 	teleport_helper_raycast.target_position=Vector2(0,50)
 
 func death_on_cutscene() -> void:
@@ -1001,6 +1007,8 @@ func _on_teleport_and_hit_updated(delta: float) -> void:
 	teleport_helper_raycast.target_position=player.global_position-teleport_helper_raycast.global_position
 	print_debug(player.global_position, " ", teleport_helper_raycast.target_position)
 
+func _on_teleport_and_hit_exited() -> void:
+	hurt_box.active=true
 
 func _on_teleport_and_hit_entered() -> void:
 	pass
@@ -1019,7 +1027,7 @@ func _on_launch_timer_timeout() -> void:
 
 
 func _on_hit_box_clashed() -> void:
-	hit_stop.hit_stop(0.05, 0.5)
+	hit_stop.hit_stop(0.1, 1)
 	print_debug("clashed!")
 	stagger.stagger-=1
 	if player_right:
@@ -1030,6 +1038,10 @@ func _on_hit_box_clashed() -> void:
 	
 func clash_counter() -> void:
 	if phases.get_active_state()==phase_1:
-		state_machine.dispatch(&"counter")
+		melee_attack_manager.atk_resume_helper()
+		state_machine.dispatch(&"resume_attack")
 	else:
-		state_machine.dispatch(&"teleport_clash")
+		if randi_range(0,1)==0:
+			state_machine.dispatch(&"teleport_hit")
+		else:
+			state_machine.dispatch(&"teleport_shoot")

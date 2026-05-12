@@ -27,6 +27,7 @@ func _enter() -> void:
 	#actor.state="STAGGERED"
 	
 func _update(delta: float) -> void:
+	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.5)
 	if movement_able:
 		actor.movement_handler.active=false
 		movement_handler.active=false
