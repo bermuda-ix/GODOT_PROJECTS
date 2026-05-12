@@ -413,7 +413,9 @@ func _physics_process(delta):
 	else:
 		if state_machine.get_active_state()!=attack:
 			velocity.x= knockback.x
-		
+		else:
+			pass
+
 	
 	move_and_slide()
 	if player_right:

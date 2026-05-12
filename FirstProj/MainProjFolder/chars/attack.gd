@@ -21,15 +21,17 @@ func _enter() -> void:
 		starting = actor.global_position.x
 	#print_debug("begin attack")
 	#bt_player.blackboard.set_var("attack_mode", true)
+	
 func _update(delta: float) -> void:
 	
 	attack_lunge()
-	#print_debug(actor.velocity.x)
+	
 	
 #func _exit() -> void:
 	#print_debug("exit")
 func attack_lunge() -> void:
 	actor.move_and_slide()
+	print_debug(actor.velocity.x,", ",lunge_distance)
 	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.5)
 
 func attack_jump() -> void:
@@ -37,7 +39,7 @@ func attack_jump() -> void:
 
 func attack_lunge_setup(_lunge_distance := 200.0) -> void:
 	starting = actor.global_position.x
-	#lunge_distance=_lunge_distance
+	lunge_distance=_lunge_distance
 	actor.velocity.x=_lunge_distance*attack_dir
 
 func attack_jump_setup(_jump_height := 50) -> void:

@@ -356,14 +356,9 @@ children = [SubResource("BTSequence_qbeam"), SubResource("BTSequence_s6tab"), Su
 custom_name = "Attack"
 children = [SubResource("BTCheckVar_aa25s"), SubResource("BTCallMethod_qwr6t"), SubResource("BTSelector_sp7fd")]
 
-[sub_resource type="BTCooldown" id="BTCooldown_5mvyu"]
-duration = 0.01
-start_cooled = true
-children = [SubResource("BTSequence_yfw6d")]
-
 [sub_resource type="BTSelector" id="BTSelector_qpg7m"]
 custom_name = "attacks"
-children = [SubResource("BTSequence_bltxt"), SubResource("BTSequence_qkysk"), SubResource("BTCooldown_5mvyu")]
+children = [SubResource("BTSequence_bltxt"), SubResource("BTSequence_qkysk"), SubResource("BTSequence_yfw6d")]
 
 [sub_resource type="BTSequence" id="BTSequence_7vhxb"]
 custom_name = "AttackRange"

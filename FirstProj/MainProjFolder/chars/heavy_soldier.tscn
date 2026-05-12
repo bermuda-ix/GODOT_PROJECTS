@@ -3194,7 +3194,6 @@ hit_from_inside = true
 [connection signal="area_entered" from="Shield" to="." method="_on_shield_area_entered"]
 [connection signal="bullet_stopped" from="ParryBox" to="." method="_on_parry_box_bullet_stopped"]
 [connection signal="clash_knock_back" from="HitBox" to="." method="_on_hit_box_clash_knock_back"]
-[connection signal="clash_launch" from="HitBox" to="." method="_on_hit_box_clash_launch"]
 [connection signal="clashed" from="HitBox" to="." method="_on_hit_box_clashed"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="body_entered" from="HurtBox" to="." method="_on_hurt_box_body_entered"]

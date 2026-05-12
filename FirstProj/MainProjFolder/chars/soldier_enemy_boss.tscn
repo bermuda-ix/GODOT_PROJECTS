@@ -3780,10 +3780,10 @@ height = 44.0
 size = Vector2(32, 42)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgnw"]
-size = Vector2(29, 26)
+size = Vector2(29, 33)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0c6of"]
-size = Vector2(38, 59)
+size = Vector2(65, 62)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4yjj7"]
 radius = 34.0
@@ -3966,7 +3966,7 @@ collision_layer = 1024
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" index="0" unique_id=524693305]
-position = Vector2(0, -13.5)
+position = Vector2(-13.5, -12)
 shape = SubResource("RectangleShape2D_0c6of")
 
 [node name="BulletDetection" parent="." index="26" unique_id=1193340460 instance=ExtResource("102_sqnmd")]
@@ -3975,6 +3975,9 @@ position = Vector2(-11, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection" index="0" unique_id=558004549]
 position = Vector2(-6, 0)
 shape = SubResource("CircleShape2D_4yjj7")
+
+[node name="Stagger" parent="." index="27"]
+max_stagger = 10
 
 [node name="Turret" parent="." index="28" unique_id=1929477695 instance=ExtResource("103_jr353")]
 position = Vector2(-8, -7)

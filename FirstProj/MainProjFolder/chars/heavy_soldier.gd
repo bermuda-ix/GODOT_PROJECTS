@@ -465,10 +465,11 @@ func _on_shooting_states_active_state_changed(current: LimboState, previous: Lim
 
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
-	if player.attacking:
-		state_machine.dispatch(&"parry")
-	else:
-		state_machine.dispatch(&"melee_attack")
+	#if player.attacking:
+		#state_machine.dispatch(&"parry")
+	#else:
+		#state_machine.dispatch(&"melee_attack")
+	state_machine.dispatch(&"melee_attack")
 
 func parry_success() -> void:
 	print_debug("parried")
