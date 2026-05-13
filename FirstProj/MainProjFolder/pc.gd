@@ -1390,6 +1390,7 @@ func _on_dodge_state_entered() -> void:
 
 func _on_dodge_state_exited() -> void:
 	stagger_recover.start()
+	animated_sprite_2d.position.x=8.0
 	hurt_box.active=true
 
 

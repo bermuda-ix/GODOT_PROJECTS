@@ -2793,8 +2793,9 @@ _data = {
 }
 point_count = 3
 
-[node name="PrologueHallway1" type="Node2D" unique_id=2096370402]
+[node name="PrologueHallway1" type="Node2D" unique_id=2096370402 node_paths=PackedStringArray("player")]
 script = ExtResource("1_8kup7")
+player = NodePath("PC")
 main_room = true
 cutscene_library = "flashback_lvl_cutscenes"
 

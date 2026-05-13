@@ -619,7 +619,7 @@ func _on_stagger_staggered() -> void:
 	#bt_player.blackboard.set_var("staggered", true)
 	bt_player.restart()
 	parry_timer.start(3)
-	hit_stop.hit_stop(0.5, 1)
+	hit_stop.hit_stop(0.01, 0.5)
 	#hb_collision.disabled=true
 	hb_collision.call_deferred("set_disabled", true)
 	state_machine.dispatch(&"staggered")
@@ -1028,7 +1028,7 @@ func _on_launch_timer_timeout() -> void:
 
 
 func _on_hit_box_clashed() -> void:
-	hit_stop.hit_stop(0.1, 1)
+	hit_stop.hit_stop(0.1, 0.5)
 	print_debug("clashed!")
 	stagger.stagger-=1
 	if player_right:

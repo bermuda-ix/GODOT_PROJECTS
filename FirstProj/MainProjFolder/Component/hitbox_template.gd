@@ -47,6 +47,7 @@ func _on_parried(_area :Area2D) -> void:
 					else:
 						impact_dir_right=false
 					clash_interrupt.emit(_area.launch_strength, _area.knock_back_strength, impact_dir_right, _area.stagger_damage)
+					Events.camera_shake.emit(3,20)
 					_area.heavy_attack=false
 				else:
 					pass
@@ -54,6 +55,7 @@ func _on_parried(_area :Area2D) -> void:
 			knock_back = false
 			launch = false
 			clashed.emit()
+			Events.camera_shake.emit(1,20)
 		elif _area.is_in_group("player_hitbox"):
 			if "active" in _area:
 				_area.active=false
@@ -63,6 +65,7 @@ func _on_parried(_area :Area2D) -> void:
 			launch = false
 			if _area.knock_back:
 				clash_knock_back.emit(_area.launch_strength, _area.knock_back_strength)
+				Events.camera_shake.emit(2,20)
 			#elif _area.launch:
 				#clash_launch.emit(40)
 			else:

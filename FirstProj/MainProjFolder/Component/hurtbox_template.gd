@@ -63,6 +63,7 @@ func _on_area_entered(hitbox: HitBox) -> void:
 				else:
 					impact_dir_right=false
 				print_debug(hitbox.launch_strength, ", ", hitbox.knock_back_strength)
+				Events.camera_shake.emit(2,20)
 				knockback.emit(hitbox.launch_strength, hitbox.knock_back_strength, impact_dir_right)
 		
 			if hitbox.is_in_group("spc_atk"):
@@ -78,11 +79,13 @@ func _on_area_entered(hitbox: HitBox) -> void:
 					stagger.stagger -= (hitbox.damage * dmg_mult)
 					received_damage.emit(hitbox.damage)
 					got_hit.emit(hitbox)
+					Events.camera_shake.emit(2,20)
 				else:
 					if not shielded:
 						health.health -= (hitbox.damage * dmg_mult)
 						received_damage.emit(hitbox.damage)
 						got_hit.emit(hitbox)
+						Events.camera_shake.emit(2,20)
 
 func _bullet_hit(_rigid_body : RigidBody2D) -> void:
 	
