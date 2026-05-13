@@ -222,6 +222,7 @@ func _ready():
 	bt_player.blackboard.set_var("Phase2Active", false)
 	bt_player.blackboard.set_var("launched", false)
 	bt_player.blackboard.set_var("falling", false)
+	bt_player.blackboard.set_var("atk_1", true)
 	dying.blackboard.set_var("hit_the_floor", false)
 	#turret.setup(0.2)
 	boss_ui.activate_boss_ui()
@@ -420,10 +421,10 @@ func _physics_process(delta):
 
 	
 	move_and_slide()
-	if player_right:
-		animated_sprite_2d.flip_h=false
-	else:
-		animated_sprite_2d.flip_h=true
+	#if player_right:
+		#animated_sprite_2d.flip_h=false
+	#else:
+		#animated_sprite_2d.flip_h=true
 
 func teleport_counter():
 	state_machine.dispatch(&"teleport_counter")

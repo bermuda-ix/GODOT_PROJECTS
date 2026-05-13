@@ -4082,6 +4082,7 @@ actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 combat_state_machine = NodePath("../CombatStateMachine")
 bt_player = NodePath("../BTPlayer")
+ranged_dist = 200
 vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 

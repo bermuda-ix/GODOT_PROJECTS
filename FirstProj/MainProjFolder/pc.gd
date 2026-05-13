@@ -2545,7 +2545,8 @@ func _on_knockback(_launch_strength : float, _knockback_strength : float, impact
 	if impact_dir_right:
 		_knockback_strength*=-1
 	knockback.x=_knockback_strength*(face_dir)
-	velocity.y= -(_launch_strength)
+	if _launch_strength!=0:
+		velocity.y= -(_launch_strength)
 	###### TBD LATTER #####
 	if _launch_strength!=0:
 		print_debug("team rockets jerking off again")
