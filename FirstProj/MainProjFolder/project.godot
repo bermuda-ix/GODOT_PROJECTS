@@ -79,6 +79,7 @@ world=""
 Boss=""
 hitbox=""
 regular_enemy_hb=""
+Enemy_arena=""
 
 [input]
 

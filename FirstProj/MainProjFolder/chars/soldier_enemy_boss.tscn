@@ -3803,7 +3803,7 @@ stereo = true
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_thomt"]
 
-[node name="soldier_enemy_boss" unique_id=789104702 groups=["Boss", "Persistant", "offensive_enemy"] instance=ExtResource("1_33sos")]
+[node name="soldier_enemy_boss" unique_id=789104702 groups=["Boss", "Enemy_arena", "Persistant", "enemy_arena", "offensive_enemy"] instance=ExtResource("1_33sos")]
 collision_layer = 16384
 collision_mask = 19
 safe_margin = 0.2

@@ -223,7 +223,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Contract’s done when the doctor’s safe, with all due respect this place looks like an absolute mess", "Default", false, "joker", "joker_default", "JOKER"],
+"args": ["Sheesh is that what you think of us?", "Default", false, "joker", "joker_default", "JOKER"],
 "method": &"play_top"
 }]
 }
@@ -240,7 +240,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["You really think the doc’s safe in a place like this?", "Default", false, "joker", "joker_default", "JOKER"],
+"args": ["Contract’s done when the doctor’s safe, with all due respect this place looks like an absolute mess", "Default", false, "joker", "joker_default", "JOKER"],
 "method": &"play_top"
 }]
 }
@@ -257,7 +257,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["This is a test string, calling from the dialogue box parent node", "Default", false, "joker", "joker_default", "JOKER"],
+"args": ["You really think the doc’s safe in a place like this?", "Default", false, "joker", "joker_default", "JOKER"],
 "method": &"play_top"
 }]
 }
@@ -725,6 +725,18 @@ tracks/36/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/37/type = "value"
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/path = NodePath("CameraPos:boss_active")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_wbdor"]
 resource_name = "SOLDIER1"
@@ -980,7 +992,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["It’s an absolute mess because of you, jackass", "Slow", false, "default", "default", "SOLDIER"],
+"args": ["It’s a mess because of you, jackass", "Slow", false, "default", "default", "SOLDIER"],
 "method": &"play_bot"
 }]
 }
@@ -1117,6 +1129,32 @@ tracks/8/keys = {
 "values": [{
 "args": [],
 "method": &"manual_spawn_boss"
+}]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CameraPos:boss_active")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/10/type = "method"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("CameraPos")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"find_boss"
 }]
 }
 
@@ -2909,6 +2947,7 @@ color = Color(0, 0, 0, 1)
 [node name="Entries" type="Node" parent="." unique_id=1760022496]
 
 [node name="Entrance" parent="Entries" unique_id=1747332782 instance=ExtResource("10_egu0m")]
+visible = false
 position = Vector2(234, 262)
 location_override = true
 enter_to = "PrologueLvl"
