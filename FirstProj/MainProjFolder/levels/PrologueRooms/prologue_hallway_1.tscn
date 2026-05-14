@@ -945,6 +945,30 @@ tracks/16/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("SoldierBoss_Cutscene:flip_h")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Ace_Cutscene:flip_h")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_2p30m"]
 resource_name = "SOLDIER2"
@@ -1150,11 +1174,11 @@ tracks/10/path = NodePath("CameraPos")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(4),
+"times": PackedFloat32Array(3.1666667),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [],
-"method": &"find_boss"
+"args": [3.0, 175.0, 100.0, Vector2(0, 200), Vector2(-20, -60), 2.0],
+"method": &"setup_arena_camera"
 }]
 }
 
@@ -1195,7 +1219,7 @@ shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/neighbor_pixels = 1
 shader_parameter/center_distance_cap = 1
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_o44im"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_bw5xo"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -2650,7 +2674,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_qfia1"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_lhcp8"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -3070,7 +3094,7 @@ avoidance_layers = 3
 self_modulate = Color(0.45490196, 0.45490196, 0.45490196, 1)
 material = SubResource("ShaderMaterial_glpjs")
 position = Vector2(-2303, 252)
-sprite_frames = SubResource("SpriteFrames_o44im")
+sprite_frames = SubResource("SpriteFrames_bw5xo")
 animation = &"idle"
 
 [node name="SoldierBossAnimPlayer" type="AnimationPlayer" parent="SoldierBoss_Cutscene" unique_id=679000525]
@@ -3107,7 +3131,7 @@ flip_h = true
 
 [node name="Ace_Cutscene" parent="." unique_id=933460979 instance=ExtResource("21_n0r6o")]
 position = Vector2(-2511, 254)
-sprite_frames = SubResource("SpriteFrames_qfia1")
+sprite_frames = SubResource("SpriteFrames_lhcp8")
 animation = &"idle"
 flip_h = true
 

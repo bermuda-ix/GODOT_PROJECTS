@@ -31,7 +31,6 @@ func _update(delta: float) -> void:
 	#print_debug("exit")
 func attack_lunge() -> void:
 	actor.move_and_slide()
-	print_debug(actor.velocity.x,", ",lunge_distance)
 	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.5)
 
 func attack_jump() -> void:
