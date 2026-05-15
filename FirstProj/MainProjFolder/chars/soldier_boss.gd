@@ -117,6 +117,7 @@ var distance
 @onready var atk_chain : String = "_1"
 @onready var melee_attack_manager: MeleeAttackManager = $MeleeAttackManager
 @onready var shoot_attack_manager: ShootAttackManager = $ShootAttackManager
+@onready var dash_attacking : bool = false
 
 @onready var hit_stop: HitStop = $HitStop
 @onready var hit_stop_dur = 0.1
@@ -535,6 +536,10 @@ func dodge_end() -> void:
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	
 	if anim_name.substr(0, 3)=="atk":
+		if anim_name!="atk_dash":
+			return
+			print_debug(anim_name)
+		print_debug(anim_name)
 		if anim_name=="atk_counter":
 			hit_stop_dur=0.2
 		else:
@@ -556,6 +561,9 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		if anim_name=="atk_counter":
 			bt_player.blackboard.set_var("atk_counter", false)
 			melee_attack_manager.reset_combo()
+		elif anim_name=="atk_dash":
+			bt_player.blackboard.set_var("dash_hit", true)
+			dash_attacking=false
 		else:
 			melee_attack_manager.next_combo()
 		bt_player.blackboard.set_var(melee_attack_manager.get_combo(), true)
@@ -569,6 +577,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			clash_counter()
 	elif anim_name=="hit" or anim_name=="hit_quick_recover":
 		state_machine.dispatch(&"hit_recover")
+	elif anim_name=="atk_dash":
+		bt_player.blackboard.set_var("attack_dash", false)
 	#elif "teleport_start":
 			#print_debug(global_position)
 	#elif "teleport_end":
@@ -583,7 +593,15 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
 		bt_player.blackboard.set_var("within_range", true)
 		#set_state(current_state, States.ATTACK)
-		state_machine.dispatch(&"start_attack")
+		if player.attack_state.get_active_state()==player.dash_attack or player.attack_state.get_active_state()==player.attack_closer:
+			bt_player.blackboard.set_var("melee_mode", true)
+			bt_player.blackboard.set_var("counter_kick_flag", false)
+			bt_player.blackboard.set_var("counter_attack", true)
+			bt_player.blackboard.set_var("attack_dash", true)
+			dash_attacking=true
+		else:
+			state_machine.dispatch(&"start_attack")
+		
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
 	if changing_phase:
@@ -771,8 +789,15 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 func _on_attack_entered() -> void:
 	bt_player.blackboard.set_var("attack_mode", true)
 
+func _on_attack_updated(delta: float) -> void:
+	pass
+
 func _on_hit_box_area_entered(_area: Area2D) -> void:
 	hit_stop.hit_stop(0.05,0.1)
+	if dash_attacking:
+		animation_player.play_section_with_markers(&"atk_dash", &"atk_dash_hit")
+		hit_stop.hit_stop(0.1,3)
+		
 
 
 func _on_hit_box_parried() -> void:
@@ -1030,11 +1055,14 @@ func _on_launch_timer_timeout() -> void:
 func _on_hit_box_clashed() -> void:
 	hit_stop.hit_stop(0.1, 0.5)
 	print_debug("clashed!")
-	stagger.stagger-=1
+	if not hit_box.heavy_attack:
+		stagger.stagger-=1
 	if player_right:
 		knockback.x=-200
 	else:
 		knockback.x=200
+	if dash_attacking:
+		return
 	state_machine.dispatch(&"clashed")
 	
 func clash_counter() -> void:

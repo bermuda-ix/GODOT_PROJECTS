@@ -133,6 +133,42 @@ _enabled = false
 [sub_resource type="BTCheckTrigger" id="BTCheckTrigger_vjri2"]
 variable = &"counter_attack"
 
+[sub_resource type="BBNode" id="BBNode_5tega"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_kadvv"]
+node = SubResource("BBNode_5tega")
+method = &"counter_select"
+_enabled = false
+
+[sub_resource type="BBVariant" id="BBVariant_6sx6v"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_gd55t"]
+variable = &"attack_dash"
+value = SubResource("BBVariant_6sx6v")
+
+[sub_resource type="BBNode" id="BBNode_6rn7d"]
+saved_value = NodePath("MeleeAttackManager")
+resource_name = "MeleeAttackManager"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_ack5y"]
+node = SubResource("BBNode_6rn7d")
+method = &"melee_dash_attack"
+
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_qbeam"]
+variable = &"dash_hit"
+
+[sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_yapl0"]
+children = [SubResource("BTCheckTrigger_qbeam")]
+
+[sub_resource type="BTSequence" id="BTSequence_kowid"]
+custom_name = "DashAttackCounter"
+children = [SubResource("BTCheckVar_gd55t"), SubResource("BTCallMethod_ack5y"), SubResource("BTRepeatUntilSuccess_yapl0")]
+
 [sub_resource type="BTCheckTrigger" id="BTCheckTrigger_wr2jt"]
 variable = &"counter_kick_flag"
 
@@ -257,23 +293,15 @@ children = [SubResource("BTCallMethod_j4731"), SubResource("BTCallMethod_qkysk")
 
 [sub_resource type="BTSelector" id="BTSelector_vjri2"]
 custom_name = "CounterTypes"
-children = [SubResource("BTSequence_wr2jt"), SubResource("BTSequence_qpg7m")]
+children = [SubResource("BTCallMethod_kadvv"), SubResource("BTSequence_kowid"), SubResource("BTSequence_wr2jt"), SubResource("BTSequence_qpg7m")]
 
 [sub_resource type="BTSelector" id="BTSelector_p7kfe"]
 custom_name = "Phases"
 children = [SubResource("BTSelector_vjri2")]
 
-[sub_resource type="BBNode" id="BBNode_5tega"]
-saved_value = NodePath(".")
-resource_name = "."
-
-[sub_resource type="BTCallMethod" id="BTCallMethod_kadvv"]
-node = SubResource("BBNode_5tega")
-method = &"counter_select"
-
 [sub_resource type="BTSequence" id="BTSequence_qkysk"]
 custom_name = "CounterAttack"
-children = [SubResource("BTCheckTrigger_vjri2"), SubResource("BTSelector_p7kfe"), SubResource("BTCallMethod_kadvv")]
+children = [SubResource("BTCheckTrigger_vjri2"), SubResource("BTSelector_p7kfe")]
 
 [sub_resource type="BBVariant" id="BBVariant_eahdn"]
 type = 1

@@ -749,7 +749,6 @@ func wall_sticking(_wall_hold : bool):
 func break_out():
 	
 	if Input.is_action_just_pressed("jump") and not Input.is_action_pressed("sprint"):
-		
 		state_machine.dispatch(&"jump_out")
 		jump_out_signal.emit(30)
 	elif Input.is_action_just_pressed("attack"):

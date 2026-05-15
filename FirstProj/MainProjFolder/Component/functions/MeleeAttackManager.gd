@@ -26,6 +26,15 @@ func melee_counter():
 	actor.animation_player.play("atk_counter")
 	reset_combo()
 
+func melee_dash_attack():
+	if actor.state_machine.get_active_state()==actor.attack:
+		pass
+	else:
+		#actor.state_machine.change_active_state(actor.attack)
+		actor.state_machine.dispatch(&"start_attack")
+		#"melee attack")
+	actor.animation_player.play("atk_dash")
+
 func next_combo() -> void:
 	if combo_int==combo_max:
 		combo_int=1

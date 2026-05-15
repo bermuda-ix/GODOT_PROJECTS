@@ -99,11 +99,8 @@ func boss_arena_camera() -> void:
 	###Find Center point position between all entities in arena
 	var _camera_pos :=  Vector2.ZERO
 	for i in range(_entity_positions.size()-1, -1, -1):
-		print_debug(_entity_positions[i])
 		_camera_pos+=_entity_positions[i]
-	print_debug(_camera_pos)
 	_camera_pos=_camera_pos/_entity_positions.size()
-	print_debug(_camera_pos)
 	
 	###Clamp and remap camera off y to arena edge
 	_camera_pos.y=remap(clampf(abs(_camera_pos.y), 0, y_edge_limit),0,y_edge_limit, y_offset_limit.x, y_offset_limit.x)
@@ -115,9 +112,9 @@ func boss_arena_camera() -> void:
 	###Map zoom range to camera offset
 	var _camera_zoom=clampf(remap(_character_distance, x_edge_limit, 0, 0.75, zoom_limit), 0.5, zoom_limit)
 	
-	camera_2d.offset=lerp(camera_2d.offset, Vector2(0, _camera_pos.y), 0.2)
-	camera_2d.zoom=lerp(camera_2d.zoom, Vector2(_camera_zoom, _camera_zoom), 0.2)
-	global_position.x=lerpf(global_position.x, _camera_pos.x, 0.2)
+	camera_2d.offset=lerp(camera_2d.offset, Vector2(0, _camera_pos.y), 0.1)
+	camera_2d.zoom=lerp(camera_2d.zoom, Vector2(_camera_zoom, _camera_zoom), 0.1)
+	global_position.x=lerpf(global_position.x, _camera_pos.x, 0.1)
 	
 func set_boss_active(_value : bool) -> void:
 	boss_active=_value
