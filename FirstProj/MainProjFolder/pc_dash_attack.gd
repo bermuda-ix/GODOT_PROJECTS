@@ -9,4 +9,5 @@ func _enter() -> void:
 	pc.hit_fx_player.speed_scale=1
 	
 func _exit() -> void:
+	#pc.apply_gravity(pc.delta) 
 	pc.reset_combo_flag=true

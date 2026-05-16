@@ -974,7 +974,10 @@ func attack_animate():
 			var _dist_to_target_x=abs(global_position.x-target.global_position.x)
 			var _dist_to_target_y=abs(global_position.y-target.global_position.y)
 			if Input.is_action_pressed("sprint") and (_dist_to_target_x>50 or _dist_to_target_y>50):
-				attack_closer.closing_dir= global_position.direction_to(target.global_position)
+				if target.is_on_floor():
+					attack_closer.closing_dir= global_position.direction_to(Vector2(target.global_position.x, global_position.y))
+				else:
+					attack_closer.closing_dir= global_position.direction_to(target.global_position)
 				closing_attack()
 			else:
 				regular_attack()
