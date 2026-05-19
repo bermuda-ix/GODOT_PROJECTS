@@ -2564,6 +2564,8 @@ func _on_knockback(_launch_strength : float, _knockback_strength : float, impact
 
 func _on_hit_box_clashed() -> void:
 	clash_power.increase_clash()
+	if unlocked:
+		lockon()
 	hit_fx_player.play("clashed")
 	var _current_atk : String = anim_player.current_animation
 	var _atk_clash_anim : String = _current_atk+"_connect"

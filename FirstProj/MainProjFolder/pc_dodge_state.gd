@@ -17,6 +17,7 @@ func _enter() -> void:
 	dodge_buffer.start(1)
 	anim_player.play(pc.dodge_anim_run+"_"+str(dodge_chain))
 	pc.set_collision_mask_value(15, false)
+	pc.set_collision_layer_value(2, false)
 	pc.counter_box_collision.disabled=false
 	hurt_box.active=false
 	#hurtbox.disabled=true
@@ -49,6 +50,8 @@ func _exit() -> void:
 	pc.velocity.x=0
 	#pc.counter_box_collision.disabled=true
 	pc.counter_box_collision.call_deferred("set_disabled", true)
+	pc.set_collision_mask_value(15, true)
+	pc.set_collision_layer_value(2, true)
 	#hurtbox.call_deferred("set_disabled", false)
 	#hurtbox.disabled=false
 	hurt_box.active=true
@@ -57,6 +60,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name==(pc.dodge_anim_run+"_"+str(dodge_chain)):
 		pc.state_machine.dispatch(&"return_to_idle")
 		pc.set_collision_mask_value(15, true)
+		pc.set_collision_layer_value(2, true)
 
 
 func _on_dodge_buffer_timeout() -> void:
