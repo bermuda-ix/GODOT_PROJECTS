@@ -1868,6 +1868,11 @@ size = Vector2(7, 12)
 [sub_resource type="Animation" id="Animation_1ru25"]
 resource_name = "Attack"
 length = 0.55
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"Attack_connect",
+"time": 0.32194254
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -2035,6 +2040,11 @@ tracks/12/keys = {
 [sub_resource type="Animation" id="Animation_vtlvl"]
 resource_name = "Attack_2"
 length = 0.45
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"Attack_2_connect",
+"time": 0.2424757
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -2191,6 +2201,11 @@ tracks/11/keys = {
 [sub_resource type="Animation" id="Animation_222nm"]
 resource_name = "Attack_3"
 length = 0.45
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"Attack_3_connect",
+"time": 0.29137838
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true

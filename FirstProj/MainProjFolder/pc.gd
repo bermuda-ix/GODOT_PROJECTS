@@ -2557,6 +2557,11 @@ func _on_knockback(_launch_strength : float, _knockback_strength : float, impact
 func _on_hit_box_clashed() -> void:
 	clash_power.increase_clash()
 	hit_fx_player.play("clashed")
+	var _current_atk := anim_player.current_animation
+	var _atk_clash_anim : StringName = _current_atk+"_connect"
+	print_debug(_atk_clash_anim)
+	#anim_player.stop()
+	anim_player.play_section_with_markers(_current_atk, _atk_clash_anim)
 	hit_box.active=false
 	
 
