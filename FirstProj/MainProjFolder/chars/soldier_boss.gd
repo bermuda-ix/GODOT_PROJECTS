@@ -142,6 +142,8 @@ var distance
 @onready var teleport_and_hit: BTState = $LimboHSM/TeleportAndHit
 @onready var launch: Launch = $LimboHSM/Launch
 @onready var clashed: Clashed = $LimboHSM/Clashed
+@onready var falling: Falling = $LimboHSM/Falling
+@onready var land: Land = $LimboHSM/Land
 
 
 @onready var teleport_helper_raycast: RayCast2D = $RayCast2D
@@ -279,6 +281,11 @@ func _init_state_machine():
 	state_machine.add_transition(attack, bulletdodge, &"bullet_dodge")
 	state_machine.add_transition(bulletdodge, chasing, &"finish_bullet_dodge")
 	state_machine.add_transition(bulletdodge, attack, &"resume_attack")
+		
+	state_machine.add_transition(staggered, launch, &"launched")
+	state_machine.add_transition(launch, falling, &"falling")
+	state_machine.add_transition(falling, land, &"landed")
+	state_machine.add_transition(land, attack, &"start_attack")
 		
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")

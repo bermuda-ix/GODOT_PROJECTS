@@ -1,4 +1,4 @@
-extends LimboState
+class_name Falling extends LimboState
 
 @export var actor : Node2D
 @export var state_machine : LimboHSM

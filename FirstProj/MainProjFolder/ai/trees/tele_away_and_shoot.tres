@@ -20,6 +20,7 @@ animation_player = SubResource("BBNode_6ptk1")
 animation_name = &"teleport_start"
 
 [sub_resource type="BTWait" id="BTWait_ompq3"]
+duration = 0.5
 
 [sub_resource type="BBNode" id="BBNode_ompq3"]
 saved_value = NodePath(".")

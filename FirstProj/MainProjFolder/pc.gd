@@ -586,9 +586,9 @@ func _process(_delta):
 	interact()
 	stick_to_wall()
 	
-	if attacking:
-		if attack_timer.is_stopped():
-			attacking=false
+	#if attacking:
+		#if attack_timer.is_stopped():
+			#attacking=false
 	#Input for testing various things
 	#if Input.is_action_just_pressed("DEBUG_KEY"):
 		#slow_down_aim()
@@ -998,47 +998,49 @@ func start_attack_timer() -> void:
 	
 
 func regular_attack() -> void:
-	if state_machine.get_active_state()==parry_success_state:
+	if attacking:
+		return
+	elif state_machine.get_active_state()==parry_success_state:
 		return
 	
 	#attack_timer.start()
-
-	if state_machine.get_active_state()!=attack_state:
-		attack_timer.paused=true
-		
-	if counter_flag:
-		attack_combo = "Attack_Counter"
-		hit_box.set_damage(3)
-		hit_sound = hit1
-		AudioStreamManager.play(swing1)
-	elif target_below:
-		attack_combo = "Attack_Down"
-		hit_box.set_damage(2)
-		hit_sound = hit1
-		AudioStreamManager.play(swing1)
-		velocity.y=movement_data.jump_velocity/2
 	else:
-		hit_box.set_damage(1)
-		
-		attack_sfx()
-		
-		if state_machine.get_active_state()==attack_state:
-			if atk_1_resume:
-				attack_state.dispatch(&"combo_resume")
-			elif atk_2_resume:
-				attack_state.dispatch(&"combo_resume_2")
-			else:
-				#if reset_combo_flag:
-					#attack_state.dispatch(&"reset_combo")
-					#reset_combo_flag=false
-					#state_machine.dispatch(&"start_attack")
-				#else:
-				attack_state.dispatch(&"next_attack")
+		if state_machine.get_active_state()!=attack_state:
+			attack_timer.paused=true
+			
+		if counter_flag:
+			attack_combo = "Attack_Counter"
+			hit_box.set_damage(3)
+			hit_sound = hit1
+			AudioStreamManager.play(swing1)
+		elif target_below:
+			attack_combo = "Attack_Down"
+			hit_box.set_damage(2)
+			hit_sound = hit1
+			AudioStreamManager.play(swing1)
+			velocity.y=movement_data.jump_velocity/2
 		else:
-			#attack_state.initial_state=attack_1
-			state_machine.dispatch(&"start_attack")
-		#await anim_player.animation_finished
-		#attack_timer.paused=false
+			hit_box.set_damage(1)
+			
+			attack_sfx()
+			
+			if state_machine.get_active_state()==attack_state:
+				if atk_1_resume:
+					attack_state.dispatch(&"combo_resume")
+				elif atk_2_resume:
+					attack_state.dispatch(&"combo_resume_2")
+				else:
+					#if reset_combo_flag:
+						#attack_state.dispatch(&"reset_combo")
+						#reset_combo_flag=false
+						#state_machine.dispatch(&"start_attack")
+					#else:
+					attack_state.dispatch(&"next_attack")
+			else:
+				#attack_state.initial_state=attack_1
+				state_machine.dispatch(&"start_attack")
+			#await anim_player.animation_finished
+			#attack_timer.paused=false
 			
 func attack_sfx() -> void:
 	if not attack_timer.is_stopped():
@@ -1202,7 +1204,11 @@ func heavy_combos():
 func set_attacking(value : bool) -> void:
 	if value==true:
 		print_debug("begin_attack")
+	else:
+		print_debug("ending attack")
 	attacking=value
+	
+		
 
 func finishers() -> void:
 	heavy_attack_buffer_timer.stop()
@@ -1582,7 +1588,7 @@ func _on_interactable_detector_area_entered(area: Area2D) -> void:
 		interact_prompt_player.play("Enter")
 		if area.is_in_group("AnimatedDoor") or area.is_in_group("door"):
 			
-			if area.local != null:
+			if "local" in area:
 				if area.local == true:
 					in_door_way_local=true
 					door_local_exit=area.player_next_entry()
@@ -2562,6 +2568,7 @@ func _on_hit_box_clashed() -> void:
 	print_debug(_atk_clash_anim)
 	#anim_player.stop()
 	anim_player.play_section_with_markers(_current_atk, _atk_clash_anim)
+	attacking=true
 	hit_box.active=false
 	
 

@@ -11,7 +11,7 @@ func _enter() -> void:
 	#print_debug("entering attack")
 	pc.velocity=Vector2.ZERO
 	counter_dist = pc.global_position.x-10*pc.face_dir
-	#pc.attacking=true
+	pc.attacking=true
 	starting = pc.global_position.x
 
 	
@@ -24,7 +24,7 @@ func _update(delta: float) -> void:
 
 func _exit() -> void:
 	pc.attack_timer.paused=false
-	pc.attacking=false
+	#pc.attacking=false
 
 func attack_lunge() -> void:
 	pc.move_and_slide()

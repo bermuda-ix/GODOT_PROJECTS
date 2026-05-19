@@ -5,6 +5,7 @@ const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 @onready var damage : int = 1 : set = set_damage, get = get_damage
 
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 var dir : Vector2 = Vector2.RIGHT
 var spawnPos : Vector2
@@ -45,7 +46,7 @@ func _on_area_entered(area):
 	pass
 
 func hard_impact():
-	AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
+	#AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
 	impact()
 #func shoot_range():
 	#var _area2ds = get_overlapping_areas()
@@ -60,7 +61,9 @@ func impact() -> void:
 	var impact_fx=BULLET_IMPACT.instantiate()
 	impact_fx.global_position=Vector2(position.x, position.y)
 	get_tree().current_scene.add_child(impact_fx)
-	queue_free()
+	audio_stream_player_2d.play(0.15)
+	set_physics_process(false)
+	#queue_free()
 
 func set_damage(value : int) -> void:
 	damage=value
@@ -76,10 +79,15 @@ func _on_body_entered(body: Node) -> void:
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area.is_in_group("shield"):
 		#impact()
-		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
+		pass
+		#AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
 	else:
-		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
+		#AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
 		if area.is_in_group("regular_enemy_hb"):
 			if "bullet_impact" in area:
 				area.bullet_impact(1)
 		impact()
+
+
+func _on_audio_stream_player_2d_finished() -> void:
+	queue_free()

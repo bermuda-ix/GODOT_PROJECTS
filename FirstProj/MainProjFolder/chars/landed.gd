@@ -1,4 +1,4 @@
-extends LimboState
+class_name Land extends LimboState
 
 @export var animation_player : AnimationPlayer
 @export var actor : Node2D

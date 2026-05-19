@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cyvi7boaxgxo6" path="res://Art_Components/Enemies/battle-mecha-sprites-pixel-art-pack/3/Bullet.png" id="1_p6xas"]
 [ext_resource type="Script" uid="uid://ogysyo440lhh" path="res://Component/bullet_projectile.gd" id="1_vt6nh"]
 [ext_resource type="Script" uid="uid://oh43vctkhpbh" path="res://Component/projectile_hitbox.gd" id="3_wdbjx"]
+[ext_resource type="AudioStream" uid="uid://dxedk74ivrhne" path="res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - small knock.wav" id="4_rvt7j"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vt6nh"]
 radius = 3.0
@@ -43,6 +44,11 @@ impact_sfx = "res://Art_Components/Effects/sound/qubodup-Bangs/qubodup-Bangs/ogg
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileHitbox" unique_id=1035255250]
 shape = SubResource("CircleShape2D_wdbjx")
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1674848822]
+stream = ExtResource("4_rvt7j")
+pitch_scale = 1.2
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="area_entered" from="ProjectileHitbox" to="." method="_on_area_2d_area_entered"]
+[connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_audio_stream_player_2d_finished"]

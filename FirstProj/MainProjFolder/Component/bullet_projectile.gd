@@ -4,6 +4,7 @@ const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 @export var SPEED : float = 100 : set = set_speed, get = get_speed
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var damage : int = 1 : set = set_damage, get = get_damage
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 
 
@@ -49,24 +50,26 @@ func _on_visible_on_screen_enabler_2d_screen_exited():
 
 func _char_hit(hurtbox : HurtBox):
 	if hurtbox != null or hurtbox.active:
-		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
+		#AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
 		impact()
 		
 
 func _on_area_entered(area):
-	if area.is_in_group("shield"):
+	#if area.is_in_group("shield"):
 		#impact()
-		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
+		#AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
 	impact()
 
 func impact() -> void:
 	var impact_fx=BULLET_IMPACT.instantiate()
 	impact_fx.global_position=Vector2(position.x, position.y)
 	get_tree().current_scene.add_child(impact_fx)
-	queue_free()
+	audio_stream_player_2d.play(0.15)
+	set_physics_process(false)
+	#queue_free()
 	
 func hard_impact():
-	AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
+	#AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
 	impact()
 
 
@@ -100,3 +103,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 					#if "bullet_impact" in area:
 						#area.bullet_impact(1)
 					#impact()
+
+
+func _on_audio_stream_player_2d_finished() -> void:
+	queue_free()

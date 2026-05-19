@@ -244,6 +244,8 @@
 [ext_resource type="Texture2D" uid="uid://dpiavufx84ssj" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00217.png" id="172_lmcka"]
 [ext_resource type="Texture2D" uid="uid://tldys6blkcg8" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00218.png" id="173_nykr5"]
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="189_ia0g3"]
+[ext_resource type="Script" uid="uid://dly3pw0jr2gav" path="res://chars/falling.gd" id="239_lvekc"]
+[ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="240_c7cuv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_chkyp"]
 shader = ExtResource("3_2r4bp")
@@ -4264,6 +4266,14 @@ anim_player = NodePath("../../AnimationPlayer")
 vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
 state_machine = NodePath("..")
 metadata/_custom_type_script = "uid://d30t6dtun2xcd"
+
+[node name="Falling" type="LimboState" parent="LimboHSM" index="17" unique_id=1669237041]
+script = ExtResource("239_lvekc")
+metadata/_custom_type_script = "uid://dly3pw0jr2gav"
+
+[node name="Land" type="LimboState" parent="LimboHSM" index="18" unique_id=877100382]
+script = ExtResource("240_c7cuv")
+metadata/_custom_type_script = "uid://bhr6e5hybripf"
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." index="48" unique_id=305802644]
 
