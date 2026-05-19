@@ -34,6 +34,7 @@ value = SubResource("BBVariant_qbeam")
 [sub_resource type="BTSequence" id="BTSequence_ltw85"]
 custom_name = "Hit"
 children = [SubResource("BTCheckVar_yapl0")]
+_enabled = false
 
 [sub_resource type="BBVariant" id="BBVariant_yapl0"]
 type = 1
@@ -47,6 +48,7 @@ value = SubResource("BBVariant_yapl0")
 [sub_resource type="BTSequence" id="BTSequence_odh0y"]
 custom_name = "Dodge"
 children = [SubResource("BTCheckVar_iyge6")]
+_enabled = false
 
 [sub_resource type="BBVariant" id="BBVariant_eyph0"]
 type = 1
@@ -60,6 +62,7 @@ value = SubResource("BBVariant_eyph0")
 [sub_resource type="BTSequence" id="BTSequence_yapl0"]
 custom_name = "Launched"
 children = [SubResource("BTCheckVar_qbeam")]
+_enabled = false
 
 [sub_resource type="BBVariant" id="BBVariant_iyge6"]
 type = 1
@@ -73,6 +76,21 @@ value = SubResource("BBVariant_iyge6")
 [sub_resource type="BTSequence" id="BTSequence_gnp2y"]
 custom_name = "Falling"
 children = [SubResource("BTCheckVar_6sx6v")]
+_enabled = false
+
+[sub_resource type="BBVariant" id="BBVariant_gd55t"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_bltxt"]
+variable = &"clashed"
+value = SubResource("BBVariant_gd55t")
+
+[sub_resource type="BTSequence" id="BTSequence_sp7fd"]
+custom_name = "Clashed"
+children = [SubResource("BTCheckVar_bltxt")]
+_enabled = false
 
 [sub_resource type="BBVariant" id="BBVariant_qkysk"]
 type = 1
@@ -509,7 +527,7 @@ custom_name = "ShootingStance"
 children = [SubResource("BTSequence_pb4ri"), SubResource("BTSequence_4yj4i")]
 
 [sub_resource type="BTSelector" id="BTSelector_ct688"]
-children = [SubResource("BTSequence_ltw85"), SubResource("BTSequence_odh0y"), SubResource("BTSequence_yapl0"), SubResource("BTSequence_gnp2y"), SubResource("BTSequence_c1urr"), SubResource("BTSelector_sfx0f")]
+children = [SubResource("BTSequence_ltw85"), SubResource("BTSequence_odh0y"), SubResource("BTSequence_yapl0"), SubResource("BTSequence_gnp2y"), SubResource("BTSequence_sp7fd"), SubResource("BTSequence_c1urr"), SubResource("BTSelector_sfx0f")]
 
 [sub_resource type="BTSequence" id="BTSequence_vjri2"]
 children = [SubResource("BTCheckVar_qpg7m"), SubResource("BTSelector_ct688")]

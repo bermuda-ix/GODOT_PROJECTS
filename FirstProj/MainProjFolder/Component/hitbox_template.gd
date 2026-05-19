@@ -55,7 +55,7 @@ func _on_parried(_area :Area2D) -> void:
 			knock_back = false
 			launch = false
 			clashed.emit()
-			Events.camera_shake.emit(1,20)
+			Events.camera_shake.emit(0.5,10)
 		elif _area.is_in_group("player_hitbox"):
 			if "active" in _area:
 				_area.active=false
@@ -69,6 +69,7 @@ func _on_parried(_area :Area2D) -> void:
 			#elif _area.launch:
 				#clash_launch.emit(40)
 			else:
+				active=false
 				clashed.emit()
 		elif _area.is_in_group("ParryBox"):
 			#print_debug("parried!")

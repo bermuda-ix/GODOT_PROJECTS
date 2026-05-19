@@ -3420,6 +3420,23 @@ tracks/8/keys = {
 "values": [Color(3.4265816, 3.4265816, 3.4265816, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_gs3hl"]
+resource_name = "clashed"
+length = 0.1
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0.521141, 0.521141, 0.521141, 1), Color(2.454227, 2.454227, 2.454227, 1), Color(0.521141, 0.521141, 0.521141, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_isax7"]
 resource_name = "knocked_back"
 length = 0.2
@@ -3676,6 +3693,7 @@ tracks/8/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gi2km"]
 _data = {
 &"RESET": SubResource("Animation_j070x"),
+&"clashed": SubResource("Animation_gs3hl"),
 &"knocked_back": SubResource("Animation_isax7"),
 &"staggered": SubResource("Animation_bc731"),
 &"staggered_entered": SubResource("Animation_gmb02")
@@ -3828,7 +3846,7 @@ radius = 34.0
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_1dxn7"]
 stereo = true
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_x6bu2"]
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_gs3hl"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_6eofm"]
 
@@ -4026,7 +4044,7 @@ stream = SubResource("AudioStreamWAV_1dxn7")
 
 [node name="BTPlayer" type="BTPlayer" parent="." index="29" unique_id=1229422285]
 behavior_tree = ExtResource("103_nmnuj")
-blackboard_plan = SubResource("BlackboardPlan_x6bu2")
+blackboard_plan = SubResource("BlackboardPlan_gs3hl")
 
 [node name="HBar" type="Label" parent="." index="30" unique_id=841893766]
 visible = false
@@ -4240,9 +4258,10 @@ actor = NodePath("../..")
 launch_timer = NodePath("../../LaunchTimer")
 metadata/_custom_type_script = "uid://dscn2ndlewuut"
 
-[node name="Clashed" type="LimboState" parent="LimboHSM" index="16" unique_id=612323006 node_paths=PackedStringArray("anim_player", "state_machine")]
+[node name="Clashed" type="LimboState" parent="LimboHSM" index="16" unique_id=612323006 node_paths=PackedStringArray("anim_player", "vfx_player", "state_machine")]
 script = ExtResource("189_ia0g3")
 anim_player = NodePath("../../AnimationPlayer")
+vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
 state_machine = NodePath("..")
 metadata/_custom_type_script = "uid://d30t6dtun2xcd"
 
@@ -4350,5 +4369,7 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="entered" from="LimboHSM/PHASETRANSITION" to="." method="_on_phasetransition_entered"]
 [connection signal="exited" from="LimboHSM/PHASETRANSITION" to="." method="_on_phasetransition_exited"]
 [connection signal="updated" from="LimboHSM/PHASETRANSITION" to="." method="_on_phasetransition_updated"]
+[connection signal="entered" from="LimboHSM/Clashed" to="." method="_on_clashed_entered"]
+[connection signal="exited" from="LimboHSM/Clashed" to="." method="_on_clashed_exited"]
 [connection signal="entered" from="Phases/Phase2" to="." method="_on_phase_2_entered"]
 [connection signal="next_phase" from="PhasesHandler" to="." method="_on_phases_handler_next_phase"]

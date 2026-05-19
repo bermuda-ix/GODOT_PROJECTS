@@ -450,6 +450,7 @@ func target_lock():
 func chase():
 	#set_state(current_state, States.CHASE)
 	state_machine.dispatch(&"start_chase")
+	melee_attack_manager.reset_combo()
 	#state_machine.change_active_state(chasing)
 	
 func force_chase():
@@ -521,11 +522,13 @@ func dodge_counter() -> void:
 	else:
 		dodge.dodge_anim="dodge_back"
 		dodge.dodge_setup(-400, 0)
-	bt_player.blackboard.set_var("dodge", true)
+	#bt_player.blackboard.set_var("dodge", true)
+	bt_player.blackboard.set_var("staggered", true)
 	state_machine.dispatch(&"dodge_back")
 
 func dodge_end() -> void:
-	bt_player.blackboard.set_var("dodge", false)
+	#bt_player.blackboard.set_var("dodge", false)
+	bt_player.blackboard.set_var("staggered", false)
 	state_machine.dispatch(&"dodge_end")
 	bt_player.blackboard.set_var("within_range", true)
 	set_collision_layer_value(15, true)
@@ -566,6 +569,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			dash_attacking=false
 		else:
 			melee_attack_manager.next_combo()
+			if state_machine.get_active_state()==clashed:
+				bt_player.blackboard.set_var("staggered", false)
 		bt_player.blackboard.set_var(melee_attack_manager.get_combo(), true)
 		attack_timer.start(0.3)
 		bt_player.active=true
@@ -808,7 +813,8 @@ func _on_hit_box_parried() -> void:
 	
 
 func _on_hit_entered() -> void:
-	bt_player.blackboard.set_var("hit", true)
+	#bt_player.blackboard.set_var("hit", true)
+	bt_player.blackboard.set_var("staggered", true)
 	if hit.hit_anim=="hit":
 		velocity.x=0
 		parry_timer.start(0.1)
@@ -819,7 +825,8 @@ func _on_hit_entered() -> void:
 			velocity.x=100
 
 func _on_hit_exited() -> void:
-	bt_player.blackboard.set_var("hit", false)
+	#bt_player.blackboard.set_var("hit", false)
+	bt_player.blackboard.set_var("staggered", false)
 
 func _on_hit_updated(delta: float) -> void:
 
@@ -901,8 +908,9 @@ func _on_phase_2_entered() -> void:
 
 func _on_phases_handler_next_phase() -> void:
 	#hurt_box_collision.disabled=true
-	bt_player.blackboard.set_var("launched", false)
-	bt_player.blackboard.set_var("falling", false)
+	bt_player.blackboard.set_var("staggered", false)
+	#bt_player.blackboard.set_var("launched", false)
+	#bt_player.blackboard.set_var("falling", false)
 	hurt_box_collision.call_deferred("set_disabled", true)
 	changing_phase=true
 	bt_player.blackboard.set_var("attack_mode", false)
@@ -1053,7 +1061,7 @@ func _on_launch_timer_timeout() -> void:
 
 
 func _on_hit_box_clashed() -> void:
-	hit_stop.hit_stop(0.1, 0.5)
+	hit_stop.hit_stop(0.01, 1)
 	print_debug("clashed!")
 	if not hit_box.heavy_attack:
 		stagger.stagger-=1
@@ -1063,8 +1071,15 @@ func _on_hit_box_clashed() -> void:
 		knockback.x=200
 	if dash_attacking:
 		return
+	#bt_player.blackboard.set_var("staggered", true)
 	state_machine.dispatch(&"clashed")
-	
+
+func _on_clashed_entered() -> void:
+	bt_player.blackboard.set_var("staggered", true)
+
+func _on_clashed_exited() -> void:
+	bt_player.blackboard.set_var("staggered", false)
+
 func clash_counter() -> void:
 	if phases.get_active_state()==phase_1:
 		melee_attack_manager.atk_resume_helper()

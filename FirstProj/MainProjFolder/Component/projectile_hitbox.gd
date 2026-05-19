@@ -11,12 +11,13 @@ func _projectile_impact( _area : Area2D):
 		#impact()
 		AudioStreamManager.play(impact_sfx)
 	else:
-		AudioStreamManager.play(impact_sfx)
+		
 		if _area.is_in_group("regular_enemy_hb") or _area.is_in_group("player_hurtbox"):
 			if "active" in _area:
 				if not _area.active:
 					return
 				else:
+					AudioStreamManager.play(impact_sfx)
 					if "bullet_impact" in _area:
 						_area.bullet_impact(1)
 					actor.impact()
