@@ -1202,10 +1202,10 @@ func heavy_combos():
 					finishers()
 					
 func set_attacking(value : bool) -> void:
-	if value==true:
-		print_debug("begin_attack")
-	else:
-		print_debug("ending attack")
+	#if value==true:
+		#print_debug("begin_attack")
+	#else:
+		#print_debug("ending attack")
 	attacking=value
 	
 		
@@ -2239,6 +2239,8 @@ func _on_animation_player_animation_started(anim_name):
 		#s_atk=true
 	elif anim_name=="shotgun_finish":
 		print_debug("heavy finisher")
+	elif anim_name=="idle":
+		attacking=false
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	if health.health<=0:
@@ -2563,11 +2565,17 @@ func _on_knockback(_launch_strength : float, _knockback_strength : float, impact
 func _on_hit_box_clashed() -> void:
 	clash_power.increase_clash()
 	hit_fx_player.play("clashed")
-	var _current_atk := anim_player.current_animation
-	var _atk_clash_anim : StringName = _current_atk+"_connect"
+	var _current_atk : String = anim_player.current_animation
+	var _atk_clash_anim : String = _current_atk+"_connect"
+	var _atk_clash_anim_end : String = _current_atk+"_end"
+	var _atk_connect := anim_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
+	#animation_player.seek(_atk_connect, true, false)
+	print_debug(_atk_clash_anim)
+	attacking=true
+	anim_player.seek(_atk_connect, true, false)
 	print_debug(_atk_clash_anim)
 	#anim_player.stop()
-	anim_player.play_section_with_markers(_current_atk, _atk_clash_anim)
+	#anim_player.play_section_with_markers(_current_atk, _atk_clash_anim)
 	attacking=true
 	hit_box.active=false
 	

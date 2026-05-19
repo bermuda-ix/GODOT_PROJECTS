@@ -581,7 +581,10 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		bt_player.blackboard.set_var(melee_attack_manager.get_combo(), true)
 		attack_timer.start(0.3)
 		bt_player.active=true
+		bt_player.blackboard.set_var("staggered", false)
 		attacking=false
+		if state_machine.get_active_state()==clashed:
+			state_machine.dispatch(&"resume_attack")
 	elif anim_name=="dodge":
 		state_machine.dispatch(&"dodge_end")
 	elif anim_name=="clashed":
@@ -1082,7 +1085,20 @@ func _on_hit_box_clashed() -> void:
 	state_machine.dispatch(&"clashed")
 
 func _on_clashed_entered() -> void:
-	bt_player.blackboard.set_var("staggered", true)
+	#bt_player.blackboard.set_var("staggered", true)
+	print_debug(animation_player.current_animation_position)
+	var _current_atk : String = animation_player.current_animation
+	var _atk_clash_anim : String = _current_atk+"_connect"
+	var _atk_clash_anim_end : String = _current_atk+"_end"
+	var _atk_connect := animation_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
+	#animation_player.seek(_atk_connect, true, false)
+	print_debug(_atk_clash_anim)
+	attacking=true
+	animation_player.seek(_atk_connect, true, false)
+	#animation_player.play_section_with_markers(_current_atk, _atk_clash_anim, _atk_clash_anim_end)
+	print_debug(animation_player.current_animation_position)
+	AudioStreamManager.play(SoundFx.SOCAPEX_SWORDSMALL_2)
+
 
 func _on_clashed_exited() -> void:
 	bt_player.blackboard.set_var("staggered", false)

@@ -297,20 +297,36 @@ func toggle_intro_cutscene(_value : bool):
 	intro_cutscene_active=_value
 
 func _pc_attack_qte() -> void:
-	cutscene_player.queue(qte_options[0])
+	if qte_options.is_empty():
+		return
+	else:
+		if cutscene_player.has_animation(qte_options[0]):
+			cutscene_player.queue(qte_options[0])
 	
 func _pc_block_qte() -> void:
-	cutscene_player.queue(qte_options[1])
+	if qte_options.is_empty():
+		return
+	else:
+		cutscene_player.queue(qte_options[1])
 
 func _pc_dodge_qte() -> void:
-	cutscene_player.queue(qte_options[2])
+	if qte_options.is_empty():
+		return
+	else:
+		cutscene_player.queue(qte_options[2])
 
 func _pc_special_atk_qte() -> void:
-	cutscene_player.queue(qte_options[3])
+	if qte_options.is_empty():
+		return
+	else:
+		cutscene_player.queue(qte_options[3])
 
 
 func _pc_no_input_qte() -> void:
-	cutscene_player.queue(qte_options[4])
+	if qte_options.is_empty():
+		return
+	else:
+		cutscene_player.queue(qte_options[4])
 
 
 func _on_external_door_switch_unlock_door() -> void:

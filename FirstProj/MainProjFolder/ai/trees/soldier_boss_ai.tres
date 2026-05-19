@@ -397,6 +397,7 @@ children = [SubResource("BTCheckTrigger_ack5y"), SubResource("BTAwaitAnimation_q
 [sub_resource type="BTSelector" id="BTSelector_sp7fd"]
 custom_name = "AttackType"
 children = [SubResource("BTSequence_qbeam"), SubResource("BTSequence_s6tab"), SubResource("BTSequence_71eun"), SubResource("BTSequence_iyge6")]
+_enabled = false
 
 [sub_resource type="BTSequence" id="BTSequence_yfw6d"]
 custom_name = "Attack"
