@@ -374,9 +374,11 @@ func _process(_delta):
 	if Input.is_action_just_pressed("DEBUG_KEY"):
 		test_function()
 		
-	#if health.health<10:
-		#assert(phases.get_active_state()==phase_2)
-	#teleport_handler.teleport_dir_helper_rc.global_position=global_position
+	if player.state_machine.get_active_state()==player.dodge_state:
+		set_collision_mask_value(2, false)
+	else:
+		set_collision_mask_value(2, true)
+		
 	if health.health<=0:
 		bt_player.blackboard.set_var("attack_mode", false)
 		#bt_player.restart()
@@ -385,8 +387,6 @@ func _process(_delta):
 			pass
 		elif cutscene_handler.actor_control_active:
 			assert(state_machine.get_active_state()==death)
-	
-	if health.health<=0:
 		assert(bt_player.active==false)
 		
 func _physics_process(delta):

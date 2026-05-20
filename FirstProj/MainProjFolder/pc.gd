@@ -19,6 +19,7 @@ const COUNTER_CLOCKWISE=-PI/2
 signal flip
 signal jump_out_signal
 signal clash_up
+signal dodging
 
 signal update_health(value : int)
 signal update_max_health(value : int)
@@ -1394,6 +1395,7 @@ func dodge(input_axis):
 
 func _on_dodge_state_entered() -> void:
 	stagger_recover.stop()
+	dodging.emit()
 	hurt_box.active=false
 
 func _on_dodge_state_exited() -> void:
