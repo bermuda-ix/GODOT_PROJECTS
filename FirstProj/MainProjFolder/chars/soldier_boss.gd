@@ -95,15 +95,16 @@ var immortal = false
 @onready var clash_timer: Timer = $ClashTimer
 
 
-var current_speed : float = 40.0
-var prev_speed : float = 40.0
-var acceleration : float = 800.0
-var player_found : bool = true
-var player : PlayerEntity = null
-var jump_velocity = JUMP_VELOCITY
-var knockback : Vector2 = Vector2.ZERO
-var parried : bool = false 
-var attacking : bool = false
+@onready var current_speed : float = 40.0
+@onready var prev_speed : float = 40.0
+@onready var acceleration : float = 800.0
+@onready var player_found : bool = true
+@onready var player : PlayerEntity = null
+@onready var jump_velocity = JUMP_VELOCITY
+@onready var knockback : Vector2 = Vector2.ZERO
+@onready var parried : bool = false 
+@onready var attacking : bool = false
+@onready var attack_missed : bool = false
 var next_y
 var next_x
 var next
@@ -225,8 +226,16 @@ func _ready():
 	bt_player.blackboard.set_var("Phase2Active", false)
 	bt_player.blackboard.set_var("launched", false)
 	bt_player.blackboard.set_var("falling", false)
+	bt_player.blackboard.set_var("hit", false)
+	bt_player.blackboard.set_var("dodge", false)
 	bt_player.blackboard.set_var("atk_1", true)
+	bt_player.blackboard.set_var("atk_2", false)
+	
+	
 	dying.blackboard.set_var("hit_the_floor", false)
+	
+	print_debug(bt_player.blackboard.list_vars())
+	
 	#turret.setup(0.2)
 	boss_ui.activate_boss_ui()
 	boss_ui.set_max_boss_health(health.max_health)
@@ -352,7 +361,7 @@ func _process(_delta):
 	elif state_machine.get_active_state()==idle:
 		hb_collision.disabled=true
 	vision_handler.handle_vision()
-	if not attack_range.has_overlapping_bodies():
+	if not attack_range.has_overlapping_bodies() and not attacking:
 		bt_player.blackboard.set_var("within_range", false)
 	#bt_player.blackboard.get_var("attack_mode"))
 	attack_timer.one_shot=true
@@ -583,6 +592,9 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		bt_player.active=true
 		bt_player.blackboard.set_var("staggered", false)
 		attacking=false
+		if attack_missed:
+			bt_player.blackboard.set_var("within_range", false)
+			state_machine.dispatch(&"start_chase")
 		if state_machine.get_active_state()==clashed:
 			state_machine.dispatch(&"resume_attack")
 	elif anim_name=="dodge":
@@ -621,6 +633,10 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 func _on_attack_range_body_exited(body: Node2D) -> void:
 	if changing_phase:
 		return
+	elif attacking:
+		attack_missed=true
+		return
+		
 	elif body.is_in_group("player") and not animation_player.is_playing() and state_machine.get_active_state()!=staggered:
 		bt_player.blackboard.set_var("within_range", false)
 		#set_state(current_state, States.CHASE)
@@ -666,7 +682,7 @@ func _on_parry_timer_timeout() -> void:
 			state_machine.dispatch(&"stagger_recover")
 		elif phases.get_active_state()==phase_2:
 			state_machine.dispatch(&"teleport_recover")
-		
+		phases_handler.phase_change(health.health)
 	elif state_machine.get_active_state()==hit:
 		state_machine.dispatch(&"hit_recover")
 	movement_handler.active=true
@@ -714,8 +730,11 @@ func alerted() -> void :
 			state_machine.dispatch(&"start_chase")
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	print_debug(health.health)
-	phases_handler.phase_change(health.health)
+
+	if state_machine.get_active_state()!=staggered and\
+	 state_machine.get_active_state()!=launch and\
+	 state_machine.get_active_state()!=falling:
+		phases_handler.phase_change(health.health)
 	if changing_phase:
 		
 		return
@@ -745,6 +764,12 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		else:
 			print_debug("kill shot")
 		
+
+func _on_hurt_box_bullet_hit(_damage: int) -> void:
+	if state_machine.get_active_state()==staggered:
+		launch.launch_strength=20.0
+		launch.knock_back_strength=80.0
+		state_machine.dispatch(&"launched")
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
@@ -864,6 +889,8 @@ func _on_counter_updated(_delta: float) -> void:
 func _on_staggered_exited() -> void:
 	bt_player.blackboard.set_var("staggered", false)
 	bt_player.active=true
+	phases_handler.phase_change(health.health)
+
 
 
 
@@ -1112,3 +1139,8 @@ func clash_counter() -> void:
 			state_machine.dispatch(&"teleport_hit")
 		else:
 			state_machine.dispatch(&"teleport_shoot")
+
+
+func _on_land_landed() -> void:
+	state_machine.dispatch(&"resume_attack")
+	phases_handler.phase_change(health.health)

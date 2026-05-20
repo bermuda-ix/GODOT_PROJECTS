@@ -3840,7 +3840,7 @@ size = Vector2(32, 42)
 size = Vector2(29, 33)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0c6of"]
-size = Vector2(65, 62)
+size = Vector2(78, 62)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4yjj7"]
 radius = 34.0
@@ -4022,7 +4022,7 @@ collision_layer = 1024
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" index="0" unique_id=524693305]
-position = Vector2(-13.5, -12)
+position = Vector2(-20, -12)
 shape = SubResource("RectangleShape2D_0c6of")
 
 [node name="BulletDetection" parent="." index="26" unique_id=1193340460 instance=ExtResource("102_sqnmd")]
@@ -4267,12 +4267,16 @@ vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
 state_machine = NodePath("..")
 metadata/_custom_type_script = "uid://d30t6dtun2xcd"
 
-[node name="Falling" type="LimboState" parent="LimboHSM" index="17" unique_id=1669237041]
+[node name="Falling" type="LimboState" parent="LimboHSM" index="17" unique_id=1669237041 node_paths=PackedStringArray("actor", "state_machine")]
 script = ExtResource("239_lvekc")
+actor = NodePath("../..")
+state_machine = NodePath("..")
 metadata/_custom_type_script = "uid://dly3pw0jr2gav"
 
-[node name="Land" type="LimboState" parent="LimboHSM" index="18" unique_id=877100382]
+[node name="Land" type="LimboState" parent="LimboHSM" index="18" unique_id=877100382 node_paths=PackedStringArray("animation_player", "actor")]
 script = ExtResource("240_c7cuv")
+animation_player = NodePath("../../AnimationPlayer")
+actor = NodePath("../..")
 metadata/_custom_type_script = "uid://bhr6e5hybripf"
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." index="48" unique_id=305802644]
@@ -4342,6 +4346,7 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="timeout" from="ClashTimer" to="." method="_on_clash_timer_timeout"]
 [connection signal="timeout" from="LaunchTimer" to="." method="_on_launch_timer_timeout"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="bullet_hit" from="HurtBox" to="." method="_on_hurt_box_bullet_hit"]
 [connection signal="launched" from="HurtBox" to="." method="_on_hurt_box_launched"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
@@ -4381,5 +4386,6 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="updated" from="LimboHSM/PHASETRANSITION" to="." method="_on_phasetransition_updated"]
 [connection signal="entered" from="LimboHSM/Clashed" to="." method="_on_clashed_entered"]
 [connection signal="exited" from="LimboHSM/Clashed" to="." method="_on_clashed_exited"]
+[connection signal="landed" from="LimboHSM/Land" to="." method="_on_land_landed"]
 [connection signal="entered" from="Phases/Phase2" to="." method="_on_phase_2_entered"]
 [connection signal="next_phase" from="PhasesHandler" to="." method="_on_phases_handler_next_phase"]

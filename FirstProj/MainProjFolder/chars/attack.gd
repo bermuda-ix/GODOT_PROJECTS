@@ -27,8 +27,8 @@ func _update(delta: float) -> void:
 	attack_lunge()
 	
 	
-#func _exit() -> void:
-	#print_debug("exit")
+func _exit() -> void:
+	print_debug("exit")
 func attack_lunge() -> void:
 	actor.move_and_slide()
 	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.5)

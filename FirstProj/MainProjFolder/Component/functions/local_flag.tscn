@@ -9,7 +9,7 @@ b = Vector2(0, 160)
 script = ExtResource("1_agiom")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=446219285]
-collision_mask = 2
+collision_mask = 4194306
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=613989539]
 shape = SubResource("SegmentShape2D_p530q")

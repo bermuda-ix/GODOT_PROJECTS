@@ -1966,7 +1966,7 @@ tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(39, -28)]
+"values": [Vector2(26, -28)]
 }
 tracks/8/type = "method"
 tracks/8/imported = false
@@ -2127,7 +2127,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(43, -31)]
+"values": [Vector2(33, -31)]
 }
 tracks/7/type = "method"
 tracks/7/imported = false
@@ -2276,7 +2276,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(35, -17)]
+"values": [Vector2(26, -17)]
 }
 tracks/6/type = "method"
 tracks/6/imported = false
@@ -2555,6 +2555,18 @@ tracks/6/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AnimatedSprite2D/hit_fx:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(27, -18)]
+}
 
 [sub_resource type="Animation" id="Animation_4ma0u"]
 resource_name = "Attack_Closer_Begin"
@@ -2644,7 +2656,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(37, -13)]
+"values": [Vector2(27, -19)]
 }
 tracks/5/type = "method"
 tracks/5/imported = false
@@ -3708,6 +3720,18 @@ tracks/20/keys = {
 "update": 1,
 "values": [true, false]
 }
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("AnimatedSprite2D/hit_fx:position")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0.03333333),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(26, -33.3481)]
+}
 
 [sub_resource type="Animation" id="Animation_cdmbu"]
 resource_name = "Heavy_Combo_2"
@@ -3842,7 +3866,7 @@ tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(47, -34)]
+"values": [Vector2(36, -31.348099)]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
@@ -4190,6 +4214,18 @@ tracks/15/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [268435721, 268435737, 268435721]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("AnimatedSprite2D/hit_fx:position")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(36, -31.348099)]
 }
 
 [sub_resource type="Animation" id="Animation_kd7ms"]

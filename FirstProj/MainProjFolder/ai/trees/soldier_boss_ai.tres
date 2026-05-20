@@ -34,7 +34,6 @@ value = SubResource("BBVariant_qbeam")
 [sub_resource type="BTSequence" id="BTSequence_ltw85"]
 custom_name = "Hit"
 children = [SubResource("BTCheckVar_yapl0")]
-_enabled = false
 
 [sub_resource type="BBVariant" id="BBVariant_yapl0"]
 type = 1
@@ -48,7 +47,6 @@ value = SubResource("BBVariant_yapl0")
 [sub_resource type="BTSequence" id="BTSequence_odh0y"]
 custom_name = "Dodge"
 children = [SubResource("BTCheckVar_iyge6")]
-_enabled = false
 
 [sub_resource type="BBVariant" id="BBVariant_eyph0"]
 type = 1
