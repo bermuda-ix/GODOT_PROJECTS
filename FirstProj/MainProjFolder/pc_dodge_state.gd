@@ -12,6 +12,10 @@ var dodge_dist : float = 0.0
 var counter_dist : float = 0.0
 var dodge_speed : float = 1.0
 
+@onready var dodge_velocity := Vector2(100.0, 0)
+var dodge_pos_start := 0.0
+var dodge_distance := 100.0
+
 func _enter() -> void:
 	print_debug("dodging")
 	dodge_buffer.start(1)
@@ -21,27 +25,36 @@ func _enter() -> void:
 	pc.counter_box_collision.disabled=false
 	hurt_box.active=false
 	#hurtbox.disabled=true
+	#if pc.input_axis==0:
+		#dodge_dist=pc.global_position.x+30*pc.face_dir
+		#dodge_speed=7
+	#else:
+		#dodge_dist=pc.global_position.x+70*pc.input_axis
+		#dodge_speed=5
+	#counter_dist = pc.global_position.x-10*pc.face_dir
+	
 	if pc.input_axis==0:
-		dodge_dist=pc.global_position.x+30*pc.face_dir
-		dodge_speed=7
+		pc.velocity.x=dodge_velocity.x*pc.face_dir
 	else:
-		dodge_dist=pc.global_position.x+70*pc.input_axis
-		dodge_speed=5
-	counter_dist = pc.global_position.x-10*pc.face_dir
+		pc.velocity.x=dodge_velocity.x*pc.input_axis
+	dodge_pos_start=pc.global_position.x
 	
 	
 
 func _update(delta: float) -> void:
-	pc.global_position.x=lerpf(pc.global_position.x, dodge_dist, dodge_speed*delta)
-	if Input.is_action_just_pressed("Dodge") and dodge_buffer.time_left<=0.7:
-		if stagger.stagger>1:
-			stagger.stagger-=1
-			pc.set_stagger()
-		if dodge_chain==3:
-			dodge_chain=1
-		else:
-			dodge_chain+=1
-		state_machine.dispatch(&"dodge_chain")
+	#pc.global_position.x=lerpf(pc.global_position.x, dodge_dist, dodge_speed*delta)
+	if (pc.global_position.x-dodge_pos_start)>dodge_distance:
+		pc.state_machine.dispatch(&"return_to_idle")
+	else:
+		if Input.is_action_just_pressed("Dodge") and dodge_buffer.time_left<=0.7:
+			if stagger.stagger>1:
+				stagger.stagger-=1
+				pc.set_stagger()
+			if dodge_chain==3:
+				dodge_chain=1
+			else:
+				dodge_chain+=1
+			state_machine.dispatch(&"dodge_chain")
 	#if pc.input_axis==0:
 		#pc.global_position.x=lerpf(pc.global_position.x, dodge_dist, 0.2)
 	

@@ -36,6 +36,9 @@ func get_damage() -> int:
 
 func _on_parried(_area :Area2D) -> void:
 	
+	if not active:
+		return
+	
 	if _area!= null:
 		if _area.is_in_group("hitbox"):
 			if "active" in _area:
@@ -58,10 +61,7 @@ func _on_parried(_area :Area2D) -> void:
 			Events.camera_shake.emit(0.5,10)
 		elif _area.is_in_group("player_hitbox"):
 			if "active" in _area:
-				if _area.active==false:
-					return
-				else:
-					_area.active=false
+				_area.active=false
 			#active=false
 			damage = 0
 			knock_back = false

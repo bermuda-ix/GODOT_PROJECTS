@@ -354,8 +354,8 @@ func _process(_delta):
 		return
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
-	if combat_state_machine.get_active_state()==melee_mode:
-		force_chase()
+	#if combat_state_machine.get_active_state()==melee_mode:
+		#force_chase()
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collision.disabled=true
 		return
@@ -602,10 +602,13 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		bt_player.blackboard.set_var("staggered", false)
 		attacking=false
 		if attack_missed:
-			bt_player.blackboard.set_var("within_range", false)
-			state_machine.dispatch(&"start_chase")
+			if bt_player.blackboard.get_var("within_range"):
+				state_machine.dispatch(&"start_chase")
+			else:
+				state_machine.dispatch(&"resume_attack")
 		if state_machine.get_active_state()==clashed:
 			state_machine.dispatch(&"resume_attack")
+		attack_missed=false
 	elif anim_name=="dodge":
 		state_machine.dispatch(&"dodge_end")
 	elif anim_name=="clashed":
