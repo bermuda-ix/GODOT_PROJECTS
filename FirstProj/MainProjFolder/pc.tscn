@@ -9486,6 +9486,7 @@ hurt_box = NodePath("../../HurtBox")
 stagger = NodePath("../../Stagger")
 state_machine = NodePath("..")
 dodge_buffer = NodePath("DodgeBuffer")
+dodge_velocity = Vector2(300, 0)
 
 [node name="DodgeBuffer" type="Timer" parent="StateMachine/DodgeState" unique_id=34708469]
 one_shot = true

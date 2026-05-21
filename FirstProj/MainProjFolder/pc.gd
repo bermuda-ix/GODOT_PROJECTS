@@ -192,6 +192,7 @@ signal no_input_qte
 @onready var hit_timer = $HitTimer
 @onready var parry_timer = $ParryTimer
 @onready var dodge_timer = $DodgeTimer
+@onready var dodge_buffer: Timer = $StateMachine/DodgeState/DodgeBuffer
 @onready var starting_position : set = set_start_pos, get = get_start_pos
 @onready var label = $STATE
 @onready var heavy_attack_buffer_timer: Timer = $HeavyAttackBufferTimer
@@ -1367,23 +1368,31 @@ func call_audioplayer(sound : String) -> void:
 func dodge(input_axis):
 
 	if Input.is_action_just_pressed("Dodge"):
-		dodge_timer.start()
-		if not is_on_floor():
-			velocity.y=0
-		
-		if input_axis == 0:
-			dodge_anim_run=dodge_anim
-			if attack_state.get_active_state()!=attack_closer:
-				return
+		if dodge_buffer.is_stopped():
+			dodge_timer.start()
+			if not is_on_floor():
+				velocity.y=0
+			if input_axis == 0:
+				dodge_anim_run=dodge_anim
+				if attack_state.get_active_state()!=attack_closer:
+					pass
+				else:
+					velocity.x=0
+				state_machine.dispatch(&"start_dodge")
 			else:
-				velocity.x=0
-			state_machine.dispatch(&"start_dodge")
+				dodge_anim_run=dodge_anim+"_roll"
+				state_machine.dispatch(&"start_dodge")
 		else:
-			
-			dodge_anim_run=dodge_anim+"_roll"
+			if stagger.stagger>1:
+				stagger.stagger-=1
+				set_stagger()
+			if dodge_state.dodge_chain==3:
+				dodge_state.dodge_chain=1
+			else:
+				dodge_state.dodge_chain+=1
 			state_machine.dispatch(&"start_dodge")
-			#velocity.x=movement_data.dodge_speed*input_axis
-
+			#dodge_pos_start=pc.global_position.x
+	
 		
 	
 	
