@@ -5874,7 +5874,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_rviac"]
 resource_name = "dodge_roll_3"
-length = 0.5
+length = 0.46666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -5882,7 +5882,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.4, 0.43333334),
+"times": PackedFloat32Array(0, 0.1, 0.36666667, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [&"SwordJump", &"Roll", &"Land", &"Idle"]
@@ -5894,7 +5894,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.033333335, 0.1, 0.13333333, 0.16666666, 0.19999999, 0.23333332, 0.26666665, 0.29999998, 0.3333333, 0.4, 0.43333334),
+"times": PackedFloat32Array(0, 0.033333335, 0.1, 0.13333333, 0.16666666, 0.19999999, 0.23333332, 0.26666665, 0.29999998, 0.3333333, 0.36666667, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 2, 0, 0]
@@ -5906,7 +5906,7 @@ tracks/2/path = NodePath("AnimatedSprite2D:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.22898354, 0.36666667, 0.43333334),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.26666668, 0.33333334),
 "transitions": PackedFloat32Array(0.21022414, 0.39229217, 1, 2.5491211, 2.0705297),
 "update": 0,
 "values": [Vector2(0, 8), Vector2(0, -11), Vector2(0, -18), Vector2(0, -11), Vector2(0, 8)]
@@ -6154,6 +6154,18 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-1.0757e-09, -16.3107)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 8)]
 }
 
 [sub_resource type="Animation" id="Animation_4yxaj"]
@@ -8763,6 +8775,7 @@ animation = &"Interact"
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1997899952]
 self_modulate = Color(0.5253566, 0.334909, 0.19207856, 1)
 texture_filter = 2
+texture_repeat = 1
 material = ExtResource("4_2dddn")
 position = Vector2(0, 8)
 sprite_frames = ExtResource("5_2dddn")
