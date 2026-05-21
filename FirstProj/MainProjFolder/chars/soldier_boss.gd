@@ -105,6 +105,7 @@ var immortal = false
 @onready var parried : bool = false 
 @onready var attacking : bool = false
 @onready var attack_missed : bool = false
+@onready var player_behind : bool = false
 var next_y
 var next_x
 var next
@@ -491,6 +492,14 @@ func get_player_relative_loc():
 	else:
 		player_right=false
 
+func player_behind_check():
+	if (player_right and animated_sprite_2d.scale.x>0) or\
+	 (not player_right and animated_sprite_2d.scale.x<0):
+		hurt_box.active=false
+		hurt_box.weakpoint=true
+	else:
+		player_behind=false
+		hurt_box.weakpoint=false
 
 
 func get_width() -> int:
@@ -830,8 +839,9 @@ func _on_attack_entered() -> void:
 	bt_player.blackboard.set_var("attack_mode", true)
 
 func _on_attack_updated(delta: float) -> void:
-	pass
-
+	if hit_box.active:
+		player_behind_check()
+		
 func _on_hit_box_area_entered(_area: Area2D) -> void:
 	hit_stop.hit_stop(0.05,0.1)
 	if dash_attacking:

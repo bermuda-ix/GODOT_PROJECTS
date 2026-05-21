@@ -9614,3 +9614,4 @@ pc = NodePath("../..")
 [connection signal="updated" from="StateMachine/Death" to="." method="_on_death_updated"]
 [connection signal="entered" from="StateMachine/Dead" to="." method="_on_dead_entered"]
 [connection signal="active_state_changed" from="CombatStates" to="." method="_on_combat_states_active_state_changed"]
+[connection signal="updated" from="CombatStates/Locked" to="." method="_on_locked_updated"]

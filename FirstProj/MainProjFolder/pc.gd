@@ -290,7 +290,7 @@ var target_string_test : String = "NONE"
 var target_direction
 var movement
 var flip_speed
-var target_right : bool = false
+@onready var target_right : bool = false : set = set_target_right
 var vector_away : Vector2 = Vector2.ZERO
 var target_below : bool = false
 var vel_y : float = 0.0
@@ -586,6 +586,7 @@ func _process(_delta):
 	drop_down()
 	interact()
 	stick_to_wall()
+	
 	
 	#if attacking:
 		#if attack_timer.is_stopped():
@@ -933,6 +934,7 @@ func update_animation(input_axis):
 	else:
 		if not target_right:
 			animated_sprite_2d.scale.x=-1
+			assert(animated_sprite_2d.scale.x==-1)
 			if input_axis>0:
 				walk_anim="walk_back"
 			else:
@@ -1452,15 +1454,31 @@ func lockon():
 		vector_away=-((target_testing.to_global(target_testing.target_position) - target_testing.to_global(Vector2.ZERO)).normalized())
 		
 		if state_machine.get_active_state()!=flip_state:
-			if arc_vector<Vector2.RIGHT and Vector2.UP<arc_vector:
-				
-				#"on right")
-				target_right = false
-				
-			elif arc_vector>Vector2.LEFT and Vector2.UP>arc_vector:
-				#"on left")
-				target_right = true
+			target_dir()
+			#if arc_vector<Vector2.RIGHT and Vector2.UP<arc_vector:
+				#
+				##"on right")
+				#target_right = false
+				#
+			#elif arc_vector>Vector2.LEFT and Vector2.UP>arc_vector:
+				##"on left")
+				#target_right = true
 			
+func target_dir() -> void:
+	if state_machine.get_active_state()==flip_state or \
+	state_machine.get_active_state()==jump_state or \
+	state_machine.get_active_state()==dodge_state:
+		
+		return
+	else:
+		if target.global_position.x>global_position.x:
+			target_right = true
+		else:
+			target_right = false
+
+func set_target_right(_value : bool) -> void:
+	target_right=_value
+
 func find_closest_enemy() -> Node2D:
 	enemies.clear()
 	
@@ -1987,70 +2005,14 @@ func flip_over():
 #
 func flipping(delta):
 	pass
-	#print_debug(global_position)
-#	Jumping before flipping over
-	#if is_on_wall():
-		#state_machine.dispatch(&"hit_wall")
-		#hit_stop.end_hit_stop()
+
 		
 	if not flipped_over:
 		pass
-		#health.immortality=true
-		#hurt_box_detect.disabled=true
-		##position.y, " ",target_size_y+target.position.y)
-		#if global_position.y>target_top-15 and not high_target:
-			#if target_right:
-				#if global_position<Vector2((target_left_edge-15),(target_top-25)):
-					#global_position=lerp(global_position, Vector2((target_left_edge-5),(target_top-40)), delta*3)
-				#else:
-					#velocity.y=movement_data.jump_velocity
-			#else:
-				#if global_position>Vector2((target_right_edge+15),(target_top-25)):
-					#global_position=lerp(global_position, Vector2((target_right_edge+5),(target_top-40)), delta*3)
-				#else:
-					#velocity.y=movement_data.jump_velocity
-							#
-		#elif global_position.y>(high_target_jump_height-15) and high_target:
-			#if target_right:
-				#if global_position<Vector2((target_left_edge),(high_target_jump_height)):
-					#global_position=lerp(global_position, Vector2((target_left_edge-5),(high_target_jump_height*0.7)), delta*3)
-				#else:
-					#velocity.y=movement_data.jump_velocity
-			#else:
-				#
-				#if global_position>Vector2((target_right_edge),(high_target_jump_height)):
-					#global_position=lerp(global_position, Vector2((target_right_edge+5),(high_target_jump_height*0.7)), delta*3)
-				#else:
-					#velocity.y=movement_data.jump_velocity
-#
-		#else:
-			#flipped_over=true
-			#hit_stop.hit_stop(.2, .5)
-
-#	flipping over
+		
 	else:
 		pass
-		#health.immortality=false
-		#hurt_box_detect.disabled=false
-		#flipped_over=true
-		#if not high_target:
-			#if not target_right:
-				#movement = target_direction.rotated(CLOCKWISE)
-				#
-				##"flip_right")
-			#else:
-				#movement = target_direction.rotated(COUNTER_CLOCKWISE)
-				##"flip_left"
-			#
-			#if global_position.y<target_top:
-				#velocity = movement * flip_speed * delta
-				#
-			#else:
-				#velocity.y += gravity * movement_data.gravity_scale * delta
-		#else:
-			#hit_stop.hit_stop(.1, .5)
-			#jump_out_timer.start(0.05)
-			#velocity.y=0
+		
 			
 func _on_flip_state_entered() -> void:
 	#	variables set and declared
@@ -2592,3 +2554,7 @@ func _on_animation_player_current_animation_changed(name: StringName) -> void:
 	#pass
 	if name == "Walk":
 		print_debug("where")
+
+
+func _on_locked_updated(delta: float) -> void:
+	target_dir()
