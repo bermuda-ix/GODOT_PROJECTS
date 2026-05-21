@@ -598,8 +598,18 @@ func _process(_delta):
 	#elif Input.is_action_just_released("DEBUG_KEY"):
 		#end_slow_down()
 
+signal vel_y_changed
+
+#func set_velocity(_value : Vector2) -> void:
+	#super(_value)
+	#if velocity.y<0:
+		#vel_y_changed.emit(_value)
+		#print_debug("ruh roh")
+	
+
 func _physics_process(delta):
 	vel_y=velocity.y
+	
 	label.text=str(velocity.x)
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		apply_gravity(delta)
@@ -1764,7 +1774,7 @@ func _on_hurt_box_got_hit(_hitbox):
 			kb_dir=round(kb_dir)
 			#kb_dir.x, " ", knockback)
 			#knockback.x = kb_dir.x * knockback.x
-			velocity.y=movement_data.jump_velocity/2
+			#velocity.y=movement_data.jump_velocity/2
 			#velocity.x = movement_data.speed + knockback.x
 			health.set_temporary_immortality(0.2)
 
@@ -2529,7 +2539,7 @@ func _on_knockback(_launch_strength : float, _knockback_strength : float, impact
 	if impact_dir_right:
 		_knockback_strength*=-1
 	knockback.x=_knockback_strength*(face_dir)
-	if _launch_strength!=0:
+	if round(_launch_strength)!=0:
 		velocity.y= -(_launch_strength)
 	###### TBD LATTER #####
 	if _launch_strength!=0:

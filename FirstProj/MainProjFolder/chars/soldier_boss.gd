@@ -683,6 +683,8 @@ func _on_stagger_staggered() -> void:
 	hit_stop.hit_stop(0.01, 0.5)
 	#hb_collision.disabled=true
 	hb_collision.call_deferred("set_disabled", true)
+	hurt_box_collision.set_deferred("disabled", false)
+	hurt_box.active=true
 	state_machine.dispatch(&"staggered")
 	Events.camera_shake.emit(2,20)
 
