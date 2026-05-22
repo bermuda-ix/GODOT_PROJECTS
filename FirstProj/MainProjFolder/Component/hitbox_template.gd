@@ -27,6 +27,10 @@ func _ready():
 
 func set_active(_value:bool)->void:
 	active=_value
+	if _value==true:
+		print_debug("attack_activate")
+	elif active==true and _value==false:
+		print_debug("attack_deactivate")
 
 func set_damage(value: int):
 	damage = value

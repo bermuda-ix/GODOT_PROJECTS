@@ -38,6 +38,7 @@ func _enter() -> void:
 	else:
 		pc.velocity.x=dodge_velocity.x*pc.input_axis
 	dodge_pos_start=pc.global_position.x
+	#dodge_buffer.start(0.5)
 	
 	
 
@@ -45,6 +46,8 @@ func _update(delta: float) -> void:
 	#pc.global_position.x=lerpf(pc.global_position.x, dodge_dist, dodge_speed*delta)
 	if abs(pc.global_position.x-dodge_pos_start)>dodge_distance:
 		pc.state_machine.dispatch(&"return_to_idle")
+	#elif Input.is_action_just_pressed("attack") and dodge_buffer.is_stopped():
+		#pc.state_machine.dispatch(&"dash_attack")
 	#if Input.is_action_just_pressed("Dodge") and dodge_buffer.time_left<=0.95:
 		#if stagger.stagger>1:
 			#stagger.stagger-=1
@@ -78,4 +81,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 
 func _on_dodge_buffer_timeout() -> void:
-	dodge_chain=1
+	if pc.state_machine.get_active_state()==pc.dodge_state:
+		return
+	else:
+		dodge_chain=1

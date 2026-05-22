@@ -380,6 +380,8 @@ func _process(_delta):
 	else:
 		set_collision_mask_value(2, true)
 		
+	#player_behind_check()
+		
 	if health.health<=0:
 		bt_player.blackboard.set_var("attack_mode", false)
 		#bt_player.restart()
@@ -495,11 +497,13 @@ func get_player_relative_loc():
 func player_behind_check():
 	if (player_right and animated_sprite_2d.scale.x>0) or\
 	 (not player_right and animated_sprite_2d.scale.x<0):
-		hurt_box.active=false
+		hit_box.active=false
 		hurt_box.weakpoint=true
+		player_behind=true
 	else:
 		player_behind=false
 		hurt_box.weakpoint=false
+
 
 
 func get_width() -> int:
@@ -564,6 +568,7 @@ func dodge_end() -> void:
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	
 	if anim_name.substr(0, 3)=="atk":
+		movement_handler.face_player_active=false
 		if anim_name!="atk_dash":
 			return
 			print_debug(anim_name)
@@ -609,6 +614,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		if state_machine.get_active_state()==clashed:
 			state_machine.dispatch(&"resume_attack")
 		attack_missed=false
+		movement_handler.face_player_active=true
+		movement_handler.face_player()
 	elif anim_name=="dodge":
 		state_machine.dispatch(&"dodge_end")
 	elif anim_name=="clashed":
@@ -765,7 +772,9 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		if damage<=health.health:
 			if state_machine.get_active_state()!=staggered:
 				parry_timer.start(0.5)
-				if stagger.stagger>1:
+				if player_behind:
+					hit.hit_anim="hit_weakpoint"
+				elif stagger.stagger>1:
 					hit.hit_anim="hit_quick_recover"
 				else:
 					hit.hit_anim="hit"
@@ -1159,3 +1168,7 @@ func clash_counter() -> void:
 func _on_land_landed() -> void:
 	state_machine.dispatch(&"resume_attack")
 	phases_handler.phase_change(health.health)
+
+
+func _on_attack_exited() -> void:
+	movement_handler.face_player_active=true

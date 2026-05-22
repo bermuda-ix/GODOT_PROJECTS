@@ -1377,7 +1377,7 @@ func call_audioplayer(sound : String) -> void:
 ## DODGE NEEDS WORK!!!
 func dodge(input_axis):
 
-	if Input.is_action_just_pressed("Dodge"):
+	if Input.is_action_just_pressed("Dodge") and state_machine.get_active_state()!=dodge_state:
 		if dodge_buffer.is_stopped():
 			dodge_timer.start()
 			if not is_on_floor():
