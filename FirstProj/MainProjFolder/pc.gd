@@ -535,7 +535,7 @@ func _process(_delta):
 	#if anim_player.is_playing():
 		#print_debug("animation playing")
 	#else:
-		#print_debug("no play")
+	
 
 	#if clash_power.clash_power>0:
 		#clash_visual.self_modulate.a = (1/clash_power.clash_power) +0.1
@@ -565,10 +565,18 @@ func _process(_delta):
 	dodge(input_axis)
 	label.text=str(clash_power.clash_power)
 	#
-	if(state_machine.get_active_state()!=dodge_state and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=flip_state):
+	if Input.is_action_just_pressed("attack"):
+		print_debug(state_machine.get_active_state())
+		
+		
+	if(state_machine.get_active_state()!=dodge_state\
+	 and state_machine.get_active_state()!=special_attack\
+	 and state_machine.get_active_state()!=flip_state):
 		parry()
 		if not interact_menu_open:
 			attack_animate()
+		else:
+			pass
 		update_animation(input_axis)
 	elif state_machine.get_active_state()==flip_state:
 		break_out()
@@ -711,6 +719,7 @@ func return_to_idle():
 		#"flip end")
 		state_machine.dispatch(&"return_to_idle")
 		set_collision_mask_value(16384, true)
+		attacking=false
 	
 # Handle jump.
 func jump(input_axis, delta):
@@ -981,7 +990,7 @@ func attack_animate():
 		return
 
 	elif Input.is_action_just_pressed("attack"):
-
+		print_debug(state_machine.get_active_state())
 		hitbox.active=true
 		if combat_states.get_active_state()!=locked:
 			regular_attack()
@@ -2315,6 +2324,7 @@ func _on_hit_stop_hit_stop_finished() -> void:
 func _on_idle_entered() -> void:
 	anim_player.play("idle")
 	attack_timer.paused=false
+	attacking=false
 
 
 func _on_state_machine_active_state_changed(current: LimboState, _previous: LimboState) -> void:

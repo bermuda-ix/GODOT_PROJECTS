@@ -231,6 +231,7 @@ func _ready():
 	bt_player.blackboard.set_var("dodge", false)
 	bt_player.blackboard.set_var("atk_1", true)
 	bt_player.blackboard.set_var("atk_2", false)
+	bt_player.blackboard.set_var("dash_hit", false)
 	
 	
 	dying.blackboard.set_var("hit_the_floor", false)

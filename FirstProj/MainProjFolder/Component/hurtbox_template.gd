@@ -51,7 +51,7 @@ func _on_area_entered(hitbox: HitBox) -> void:
 		return
 	else:
 		assert(shielded!=true)
-		hitbox.active=false
+		#hitbox.active=false
 		if hitbox != null:
 			if stagger.stagger<=0:
 				dmg_mult=3

@@ -25,7 +25,7 @@ signal clash_interrupt(_launch: float, _knockback : float, _impact_dir_right : b
 
 
 func _ready():
-	connect("area_entered", _on_parried)
+	connect("area_entered", _on_impact)
 	print_debug(get_groups())
 
 func set_active(_value:bool)->void:
@@ -41,14 +41,13 @@ func set_damage(value: int):
 func get_damage() -> int:
 	return damage
 
-func _on_parried(_area :Area2D) -> void:
+func _on_impact(_area :Area2D) -> void:
 	
 	if not active:
 		return
 	
 	if _area!= null:
-		print_debug(_area.get_groups())
-		print_debug(_area.get_parent())
+		
 		if _area.is_in_group("hitbox"):
 			
 			if "heavy_attack" in _area:
@@ -89,6 +88,8 @@ func _on_parried(_area :Area2D) -> void:
 			#print_debug("parried!")
 			stagger.stagger -= 1
 			parried.emit()
+		elif _area.is_in_group("regular_enemy_hb"):
+			print_debug(_area.get_groups())
 		else:
-			pass
-		
+			print_debug(_area.get_groups())
+		active=false
