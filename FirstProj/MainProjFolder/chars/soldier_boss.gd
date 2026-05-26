@@ -866,8 +866,15 @@ func _on_attack_entered() -> void:
 	bt_player.blackboard.set_var("attack_mode", true)
 
 func _on_attack_updated(delta: float) -> void:
+
 	if hit_box.active:
 		player_behind_check()
+		if player_behind:
+			hurt_box.active=true
+		else:
+			hurt_box.active=false
+		
+	
 		
 func _on_hit_box_area_entered(_area: Area2D) -> void:
 	hit_stop.hit_stop(0.05,0.1)
@@ -1164,7 +1171,8 @@ func _on_clashed_entered() -> void:
 	#animation_player.seek(_atk_connect, true, false)
 	print_debug(_atk_clash_anim)
 	attacking=true
-	animation_player.seek(_atk_connect, true, false)
+	#animation_player.seek(_atk_connect, true, false)
+	animation_player.call_deferred("seek", _atk_connect, true, false)
 	#animation_player.play_section_with_markers(_current_atk, _atk_clash_anim, _atk_clash_anim_end)
 	print_debug(animation_player.current_animation_position)
 	AudioStreamManager.play(SoundFx.SOCAPEX_SWORDSMALL_2)

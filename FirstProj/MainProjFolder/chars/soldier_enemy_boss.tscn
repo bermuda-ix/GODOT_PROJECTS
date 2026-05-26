@@ -3834,10 +3834,10 @@ radius = 13.0
 height = 44.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xhp7j"]
-size = Vector2(19, 40)
+size = Vector2(8, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgnw"]
-size = Vector2(19.5, 21.25)
+size = Vector2(33.75, 21.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0c6of"]
 size = Vector2(78, 62)
@@ -3995,12 +3995,13 @@ script = ExtResource("101_6tb62")
 
 [node name="HurtBox" parent="." index="23" node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["regular_enemy_hb"]]
 collision_mask = 8397376
+priority = 1
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 back_attack_flag = NodePath("BackAttackFlag")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0" unique_id=1428330784]
-position = Vector2(-0.5, -1)
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_xhp7j")
 debug_color = Color(0.913049, 0.224478, 0.48102, 0.42)
 
@@ -4010,7 +4011,7 @@ target_position = Vector2(52, 0)
 collision_mask = 2
 
 [node name="HitBox" parent="." index="24" node_paths=PackedStringArray("stagger") groups=["hitbox"]]
-position = Vector2(-15, 2)
+position = Vector2(-26, -3)
 stagger = NodePath("../Stagger")
 knock_back_strength = 50.0
 
@@ -4020,18 +4021,17 @@ shape = SubResource("RectangleShape2D_vjgnw")
 disabled = true
 
 [node name="AttackRange" parent="." index="25"]
+position = Vector2(-20, -12)
 collision_layer = 1024
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" index="0" unique_id=524693305]
-position = Vector2(-20, -12)
 shape = SubResource("RectangleShape2D_0c6of")
 
 [node name="BulletDetection" parent="." index="26" unique_id=1193340460 instance=ExtResource("102_sqnmd")]
-position = Vector2(-11, 0)
+position = Vector2(-16, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection" index="0" unique_id=558004549]
-position = Vector2(-6, 0)
 shape = SubResource("CircleShape2D_4yjj7")
 
 [node name="Stagger" parent="." index="27"]

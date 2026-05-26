@@ -3121,6 +3121,7 @@ disabled = true
 position = Vector2(0, -22)
 collision_layer = 16
 collision_mask = 8405056
+priority = 1
 script = ExtResource("11_q7gmp")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
@@ -3380,7 +3381,6 @@ metadata/_edit_use_anchors_ = true
 [connection signal="timeout" from="LaunchTimer" to="." method="_on_launch_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="clash_knock_back" from="HitBox" to="." method="_on_hit_box_clash_knock_back"]
-[connection signal="clash_launch" from="HitBox" to="." method="_on_hit_box_clash_launch"]
 [connection signal="clashed" from="HitBox" to="." method="_on_hit_box_clashed"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="body_entered" from="HurtBox" to="." method="_on_hurt_box_body_entered"]

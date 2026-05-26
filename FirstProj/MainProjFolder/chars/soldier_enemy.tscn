@@ -5520,6 +5520,7 @@ script = ExtResource("57_d6os8")
 
 [node name="HurtBox" parent="." index="22" node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["regular_enemy_hb"]]
 collision_mask = 8397376
+priority = 1
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 back_attack_flag = NodePath("BackAttackFlag")

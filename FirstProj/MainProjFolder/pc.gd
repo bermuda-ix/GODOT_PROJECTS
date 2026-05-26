@@ -698,8 +698,8 @@ func _physics_process(delta):
 		if is_on_floor():
 			knockback = lerp(knockback, Vector2.ZERO, 0.5)
 		else:
-			knockback.x = lerpf(knockback.x, 0, 0.1)
-			knockback.y = lerpf(knockback.y, 0, 0.3)
+			knockback.x = lerpf(knockback.x, 0, 0.3)
+			knockback.y = lerpf(knockback.y, 0, 0.6)
 		forward_thrust = lerp(forward_thrust, Vector2.ZERO, 0.6)
 		#wall hold check
 		wall_sticking(wall_hold)
@@ -1996,7 +1996,7 @@ func parry_success():
 
 
 func _on_hit_box_area_entered(_area):
-	print_debug(_area.get_groups())
+	#print_debug(_area.get_groups())
 	if _area.is_in_group("hurtbox"):
 		hit_sfx()
 	
@@ -2309,9 +2309,10 @@ func _on_hit_box_clash_interrupt(_launch: float, _knockback: float, _impact_dir_
 		knockback.x=-_knockback
 	else: 
 		knockback.x=-_knockback
+	velocity.y=-_launch
 	state_machine.dispatch(&"interrupt_knockback")
 	stagger.stagger-= _damage
-		
+	attacking=false
 		
 func _on_hit_stop_hit_stop_finished() -> void:
 	if not qte_handler.actor_control_active:
