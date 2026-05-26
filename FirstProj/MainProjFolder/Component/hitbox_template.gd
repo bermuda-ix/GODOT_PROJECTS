@@ -18,18 +18,21 @@ signal clash_interrupt(_launch: float, _knockback : float, _impact_dir_right : b
 @export var launch_strength : float = 0.0
 @export var knock_back_strength : float = 100.0
 
+@export var pc_hitbos : bool = false
+
 @onready var shield_hit : bool = false
 @onready var impact_dir_right : bool = false
 
 
 func _ready():
 	connect("area_entered", _on_parried)
+	print_debug(get_groups())
 
 func set_active(_value:bool)->void:
 	active=_value
 	if _value==true:
 		print_debug("attack_activate")
-	elif active==true and _value==false:
+	elif _value==false:
 		print_debug("attack_deactivate")
 
 func set_damage(value: int):
@@ -44,9 +47,10 @@ func _on_parried(_area :Area2D) -> void:
 		return
 	
 	if _area!= null:
+		print_debug(_area.get_groups())
+		print_debug(_area.get_parent())
 		if _area.is_in_group("hitbox"):
-			if "active" in _area:
-				_area.active=false
+			
 			if "heavy_attack" in _area:
 				if _area.heavy_attack:
 					if _area.global_position.x > global_position.x:
@@ -57,16 +61,18 @@ func _on_parried(_area :Area2D) -> void:
 					Events.camera_shake.emit(3,20)
 					_area.heavy_attack=false
 				else:
-					pass
-			damage = 0
-			knock_back = false
-			launch = false
-			clashed.emit()
-			Events.camera_shake.emit(0.5,10)
+					#pass
+					damage = 0
+					knock_back = false
+					launch = false
+					clashed.emit()
+					Events.camera_shake.emit(0.5,10)
+				
+					
+				active=false
+				
 		elif _area.is_in_group("player_hitbox"):
-			if "active" in _area:
-				_area.active=false
-			#active=false
+			assert(pc_hitbos==false)
 			damage = 0
 			knock_back = false
 			launch = false
@@ -76,11 +82,13 @@ func _on_parried(_area :Area2D) -> void:
 			#elif _area.launch:
 				#clash_launch.emit(40)
 			else:
-				active=false
+				
 				clashed.emit()
+			#active=false
 		elif _area.is_in_group("ParryBox"):
 			#print_debug("parried!")
 			stagger.stagger -= 1
 			parried.emit()
 		else:
 			pass
+		

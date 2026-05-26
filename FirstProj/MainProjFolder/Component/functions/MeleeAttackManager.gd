@@ -5,7 +5,10 @@ extends Node
 @export var combo_max : int = 3
 @onready var combo_int : int = clampi(1, 1, combo_max)
 @onready var combo : String = "atk_"+str(combo_int)
-@onready var atk_type := "atk_1"
+@onready var atk_type := "atk_1" : set = set_atk_type
+
+@onready var heavy_atk_min := clampi(0, 50, 0) : set = set_heavy_atk_min
+signal heavy_attack
 
 func melee_attack():
 	if actor.state_machine.get_active_state()==actor.attack:
@@ -16,7 +19,7 @@ func melee_attack():
 		#"melee attack")
 	if not actor.attacking:
 		actor.attacking=true
-		actor.animation_player.play(combo)
+		actor.animation_player.play(atk_type)
 	else:
 		pass
 	
@@ -44,15 +47,20 @@ func next_combo() -> void:
 	else:
 		combo_int+=1
 	combo = "atk_"+str(combo_int)
+	atk_type=combo
 	
 func get_combo() -> String:
 	return combo
+	
 	
 func reset_combo() -> void:
 	combo_int=0
 
 func set_attack(_value : String) -> void:
 	atk_type+_value
+
+func set_atk_type(_value : String = "atk_1") -> void:
+	atk_type=_value
 
 func atk_resume_helper() -> void:
 	var _atk_type = get_combo().substr(4, -1)
@@ -68,6 +76,16 @@ func atk_resume_helper() -> void:
 	actor.attack_timer.start(0.3)
 	actor.bt_player.active=true
 	actor.attacking=false
+
+func heavy_attack_counter() -> bool:
+	var _heavy_atk_chance=randi_range(heavy_atk_min, 100)
+	if _heavy_atk_chance >= 50:
+		return true
+	else:
+		return false
+		
+func set_heavy_atk_min(_value : int) -> void:
+	heavy_atk_min=_value
 
 #func slam(value: String):
 	##pass

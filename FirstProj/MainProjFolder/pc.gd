@@ -327,7 +327,7 @@ var stuck : bool = false
 
 func _ready():
 	hit_box_pos=hit_box.position
-	hb_collision.disabled=true
+	#hb_collision.disabled=true
 
 	pb_rot.disabled=true
 	set_start_pos(global_position)
@@ -1871,7 +1871,7 @@ func _on_animation_player_animation_finished(anim_name):
 		#else:
 			#state_machine.dispatch(&"return_to_idle")
 		hit_buffer.stop()
-		hb_collision.disabled=true
+		#hb_collision.disabled=true
 		
 	
 	elif anim_name=="staggered":
@@ -1985,18 +1985,30 @@ func parry_success():
 
 
 func _on_hit_box_area_entered(_area):
-	if not hitbox.active:
-		return
-	else:
-		hit_buffer.start(1)
-		hitbox.active=false
-		hit_sound=hit1
-		AudioStreamManager.play(hit_sound)
-		#hb_collision.disabled
-		hb_collision.set_deferred("disabled", true)
-		hit_fx.visible=true
-		hit_fx_player.stop()
-		hit_fx_player.play(hit_animation)
+	print_debug(_area.get_groups())
+	if _area.is_in_group("hurtbox"):
+		hit_sfx()
+	
+	#if not hitbox.active:
+		#return
+	#else:
+		#hit_buffer.start(1)
+		##hitbox.active=false
+		#hit_sound=hit1
+		#AudioStreamManager.play(hit_sound)
+		##hb_collision.disabled
+		##hb_collision.set_deferred("disabled", true)
+		#hit_fx.visible=true
+		#hit_fx_player.stop()
+		#hit_fx_player.play(hit_animation)
+
+func hit_sfx() -> void:
+	hit_buffer.start(1)
+	hit_sound=hit1
+	AudioStreamManager.play(hit_sound)
+	hit_fx.visible=true
+	hit_fx_player.stop()
+	hit_fx_player.play(hit_animation)
 
 
 func _on_hit_box_body_entered(body):
@@ -2271,7 +2283,7 @@ func _on_stagger_staggered() -> void:
 	
 func _on_hit_box_parried() -> void:
 	anim_player.play("parried")
-	hb_collision.disabled=true
+	#hb_collision.disabled=true
 	if target_right:
 		knockback.x=-40
 	else:
@@ -2549,7 +2561,9 @@ func _on_hit_box_clashed() -> void:
 	clash_power.increase_clash()
 	if unlocked:
 		lockon()
-	hit_fx_player.play("clashed")
+	#hit_fx_player.play("clashed")
+	hit_animation="clashed"
+	hit_sfx()
 	var _current_atk : String = anim_player.current_animation
 	var _atk_clash_anim : String = _current_atk+"_connect"
 	var _atk_clash_anim_end : String = _current_atk+"_end"

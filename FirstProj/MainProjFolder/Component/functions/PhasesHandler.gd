@@ -17,10 +17,10 @@ func _ready() -> void:
 func phase_change(health : int):
 	if phases.size()<=0:
 		return
-	elif health<=phases.get(0):
+	elif health<=phases.get(cur_phase-1):
 		#actor.stagger_recover()
-		phases.pop_front()
-		#cur_phase+=1
+		#phases.pop_front()
+		cur_phase+=1
 		next_phase.emit()
 		
 func reset_phases() -> void:

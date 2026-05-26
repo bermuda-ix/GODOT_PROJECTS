@@ -589,7 +589,7 @@ func _on_animation_player_animation_started(anim_name: StringName) -> void:
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	print_debug(anim_name)
+	#print_debug(anim_name)
 	if anim_name.substr(0, 3)=="atk":
 		if anim_name=="atk_counter":
 			bt_player.blackboard.set_var("atk_counter", false)
@@ -598,7 +598,13 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			bt_player.blackboard.set_var("dash_hit", true)
 			dash_attacking=false
 		else:
-			melee_attack_manager.next_combo()
+			if melee_attack_manager.heavy_attack_counter():
+				if phases.get_active_state()==phase_2:
+					melee_attack_manager.set_atk_type("atk_4")
+				else:
+					melee_attack_manager.set_atk_type("atk_3")
+			else:
+				melee_attack_manager.next_combo()
 			if state_machine.get_active_state()==clashed:
 				bt_player.blackboard.set_var("staggered", false)
 		bt_player.blackboard.set_var(melee_attack_manager.get_combo(), true)
@@ -607,6 +613,9 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		bt_player.blackboard.set_var("staggered", false)
 		attacking=false
 		if attack_missed:
+			var _heavy_atk_min := melee_attack_manager.heavy_atk_min
+			_heavy_atk_min -=10
+			melee_attack_manager.set_heavy_atk_min(_heavy_atk_min)
 			if bt_player.blackboard.get_var("within_range"):
 				state_machine.dispatch(&"start_chase")
 			else:
@@ -751,7 +760,10 @@ func alerted() -> void :
 			state_machine.dispatch(&"start_chase")
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-
+	
+	if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
+		hit_stop.hit_stop(0.2, 2)
+	
 	if state_machine.get_active_state()!=staggered and\
 	 state_machine.get_active_state()!=launch and\
 	 state_machine.get_active_state()!=falling:
@@ -1124,8 +1136,14 @@ func _on_launch_timer_timeout() -> void:
 func _on_hit_box_clashed() -> void:
 	hit_stop.hit_stop(0.01, 1)
 	print_debug("clashed!")
-	if not hit_box.heavy_attack:
-		stagger.stagger-=1
+	if hit_box.heavy_attack:
+		return
+	else:
+		var _heavy_atk_min := melee_attack_manager.heavy_atk_min
+		_heavy_atk_min +=5
+		melee_attack_manager.set_heavy_atk_min(_heavy_atk_min)
+	
+	stagger.stagger-=1
 	if player_right:
 		knockback.x=-200
 	else:
