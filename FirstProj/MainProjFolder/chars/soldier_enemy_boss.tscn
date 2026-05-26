@@ -3834,7 +3834,7 @@ radius = 13.0
 height = 44.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xhp7j"]
-size = Vector2(32, 42)
+size = Vector2(19, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgnw"]
 size = Vector2(19.5, 21.25)
@@ -4000,6 +4000,7 @@ stagger = NodePath("../Stagger")
 back_attack_flag = NodePath("BackAttackFlag")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0" unique_id=1428330784]
+position = Vector2(-0.5, -1)
 shape = SubResource("RectangleShape2D_xhp7j")
 debug_color = Color(0.913049, 0.224478, 0.48102, 0.42)
 

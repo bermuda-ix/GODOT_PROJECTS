@@ -2017,7 +2017,7 @@ tracks/11/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.26827586, 0.40133205),
+"times": PackedFloat32Array(0, 0.29166666, 0.40133205),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [268435721, 268435737, 268435721]

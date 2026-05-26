@@ -69,7 +69,7 @@ func _on_parried(_area :Area2D) -> void:
 					Events.camera_shake.emit(0.5,10)
 				
 					
-				active=false
+				#active=false
 				
 		elif _area.is_in_group("player_hitbox"):
 			assert(pc_hitbos==false)
