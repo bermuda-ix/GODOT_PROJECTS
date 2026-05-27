@@ -4,6 +4,7 @@ extends LimboState
 
 @export var actor : Node2D
 @export var bt_player : BTPlayer
+@export var hit_box : HitBox
 var starting : float
 var lunge_distance := 0
 var attack_dir := 1
@@ -29,6 +30,10 @@ func _update(delta: float) -> void:
 	
 func _exit() -> void:
 	print_debug("exit")
+	hit_box.active=false
+	hit_box.clash_active=false
+	
+	
 func attack_lunge() -> void:
 	actor.move_and_slide()
 	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.5)

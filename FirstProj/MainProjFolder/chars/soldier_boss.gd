@@ -571,6 +571,7 @@ func dodge_end() -> void:
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	
 	if anim_name.substr(0, 3)=="atk":
+		hit_box.active=true
 		movement_handler.face_player_active=false
 		if anim_name!="atk_dash":
 			return

@@ -57,7 +57,7 @@ func set_temporary_immortality(time: float):
 
 
 func set_health(value: int):
-	if value < health and immortality:
+	if value < health or immortality:
 		return
 	
 	var clamped_value = clampi(value, 0, max_health)

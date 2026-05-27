@@ -3,6 +3,7 @@ extends LimboState
 @export var anim_player : AnimationPlayer
 @export var pc : PlayerEntity
 @onready var attack_state: LimboHSM = $"."
+@export var hit_box : HitBox
 var counter_dist
 var starting : float
 var lunge_distance := 500.0
@@ -25,6 +26,8 @@ func _update(delta: float) -> void:
 func _exit() -> void:
 	pc.attack_timer.paused=false
 	#pc.attacking=false
+	hit_box.active=false
+	hit_box.clash_active=false
 
 func attack_lunge() -> void:
 	pc.move_and_slide()

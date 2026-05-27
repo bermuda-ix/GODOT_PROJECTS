@@ -3994,7 +3994,7 @@ position = Vector2(0, -24)
 script = ExtResource("101_6tb62")
 
 [node name="HurtBox" parent="." index="23" node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["regular_enemy_hb"]]
-collision_mask = 8397376
+collision_mask = 8397504
 priority = 1
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
@@ -4192,10 +4192,11 @@ script = ExtResource("123_fme1f")
 actor = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="ATTACK" type="LimboState" parent="LimboHSM" index="4" unique_id=1175327493 node_paths=PackedStringArray("actor", "bt_player")]
+[node name="ATTACK" type="LimboState" parent="LimboHSM" index="4" unique_id=1175327493 node_paths=PackedStringArray("actor", "bt_player", "hit_box")]
 script = ExtResource("124_h1spd")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
+hit_box = NodePath("../../HitBox")
 
 [node name="SHOOTING" type="LimboState" parent="LimboHSM" index="5" unique_id=1178390401 node_paths=PackedStringArray("actor")]
 script = ExtResource("125_qu73d")

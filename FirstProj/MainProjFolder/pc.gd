@@ -991,7 +991,7 @@ func attack_animate():
 
 	elif Input.is_action_just_pressed("attack"):
 		print_debug(state_machine.get_active_state())
-		hitbox.active=true
+		#hitbox.active=true
 		if combat_states.get_active_state()!=locked:
 			regular_attack()
 		else:
@@ -1827,6 +1827,7 @@ func _on_animation_player_animation_finished(anim_name):
 		#"attack finished")
 		hit_success=false
 		attacking=false
+		hit_box.clash_active=false
 		#if input_axis!=0:
 			#anim_player.play(walk_anim)
 		#else:
@@ -2224,6 +2225,8 @@ func _on_hazard_detector_body_exited(body):
 
 
 func _on_animation_player_animation_started(anim_name):
+	if state_machine.get_active_state()==attack_state:
+		hit_box.active=true
 	if anim_name=="Attack_Chain":
 		if face_right:
 			forward_thrust.x=200
@@ -2584,7 +2587,7 @@ func _on_hit_box_clashed() -> void:
 	#animation_player.seek(_atk_connect, true, false)
 	print_debug(_atk_clash_anim)
 	attacking=true
-	anim_player.seek(_atk_connect, true, false)
+	anim_player.seek(_atk_connect, true, true)
 	print_debug(_atk_clash_anim)
 	#anim_player.stop()
 	#anim_player.play_section_with_markers(_current_atk, _atk_clash_anim)

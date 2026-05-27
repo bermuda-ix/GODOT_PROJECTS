@@ -18,7 +18,7 @@ signal knockback(launch_strength : float, knock_back_strength : float, impact_di
 @export var back_attack_flag : RayCast2D
 @export var dmg_mult : int = 1
 @export var weakpoint : bool = false
-@export var active : bool = true
+@export var active : bool = true : set = set_active
 
 @onready var total_damage : int = 0
 @export var shielded : bool = false
@@ -26,6 +26,13 @@ signal knockback(launch_strength : float, knock_back_strength : float, impact_di
 @onready var impact_dir_right : bool = false
 @onready var bullet_buffer : Timer = Timer.new()
 @onready var bullet_damage : int = 0
+
+func set_active(_value: bool) -> void:
+	active=_value
+	if _value==true:
+		pass
+	else:
+		pass
 
 func _ready():
 	connect("area_entered", _on_area_entered)
@@ -84,6 +91,7 @@ func _on_area_entered(hitbox: HitBox) -> void:
 					if not shielded:
 						health.health -= (hitbox.damage * dmg_mult)
 						received_damage.emit(hitbox.damage)
+						print_debug(get_parent())
 						got_hit.emit(hitbox)
 						Events.camera_shake.emit(2,20)
 

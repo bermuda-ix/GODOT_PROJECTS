@@ -11,6 +11,7 @@ signal clash_interrupt(_launch: float, _knockback : float, _impact_dir_right : b
 @export var stagger: Stagger
 @export var stagger_damage : bool = false
 @export var active : bool = false : set = set_active
+@export var clash_active : bool = false : set = set_clash_active
 @export var heavy_attack : bool = false
 
 @export var launch : bool = false
@@ -35,6 +36,9 @@ func set_active(_value:bool)->void:
 	elif _value==false:
 		print_debug("attack_deactivate")
 
+func set_clash_active(_value: bool) -> void:
+	clash_active=_value
+
 func set_damage(value: int):
 	damage = value
 	
@@ -43,13 +47,14 @@ func get_damage() -> int:
 
 func _on_impact(_area :Area2D) -> void:
 	
-	if not active:
+	if not clash_active:
 		return
 	
 	if _area!= null:
 		
 		if _area.is_in_group("hitbox"):
-			
+			active=false
+			print_debug(get_parent())
 			if "heavy_attack" in _area:
 				if _area.heavy_attack:
 					if _area.global_position.x > global_position.x:
@@ -72,6 +77,7 @@ func _on_impact(_area :Area2D) -> void:
 				
 		elif _area.is_in_group("player_hitbox"):
 			assert(pc_hitbos==false)
+			active=false
 			damage = 0
 			knock_back = false
 			launch = false
@@ -86,10 +92,13 @@ func _on_impact(_area :Area2D) -> void:
 			#active=false
 		elif _area.is_in_group("ParryBox"):
 			#print_debug("parried!")
+			active=false
 			stagger.stagger -= 1
 			parried.emit()
-		elif _area.is_in_group("regular_enemy_hb"):
-			print_debug(_area.get_groups())
+		#elif _area.is_in_group("regular_enemy_hb"):
+			#print_debug(_area.get_groups())
 		else:
-			print_debug(_area.get_groups())
-		active=false
+			pass
+			#print_debug(_area.get_groups())
+		
+		clash_active=false

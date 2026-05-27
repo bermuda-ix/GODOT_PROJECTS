@@ -79,7 +79,7 @@ func atk_resume_helper() -> void:
 
 func heavy_attack_counter() -> bool:
 	var _heavy_atk_chance=randi_range(heavy_atk_min, 100)
-	if _heavy_atk_chance >= 50:
+	if _heavy_atk_chance >= 150:
 		return true
 	else:
 		return false
