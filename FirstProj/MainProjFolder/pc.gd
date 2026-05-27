@@ -2227,6 +2227,7 @@ func _on_hazard_detector_body_exited(body):
 func _on_animation_player_animation_started(anim_name):
 	if state_machine.get_active_state()==attack_state:
 		hit_box.active=true
+		hb_collision.set_deferred("disabled", false)
 	if anim_name=="Attack_Chain":
 		if face_right:
 			forward_thrust.x=200
