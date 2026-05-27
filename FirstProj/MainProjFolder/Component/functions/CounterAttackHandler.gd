@@ -22,9 +22,9 @@ func _physics_process(delta: float) -> void:
 				
 	if actor.player_state == actor.player.flip_state:
 		if actor.player_right:
-			actor.animated_sprite_2d.scale.x = -1
+			actor.scale.x = -1
 		else:
-			actor.animated_sprite_2d.scale.x = 1
+			actor.scale.x = 1
 		bt_player.blackboard.set_var("counter_attack", true)
 		
 	else:

@@ -86,6 +86,8 @@ var immortal = false
 @export var hitbox: HitBox
 @onready var target_lock_node: Node2D = $TargetLock
 @onready var attack_range: AttackRange = $AttackRange
+@onready var bullet_detection: BulletDetection = $BulletDetection
+
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @export var counter_kick_chance : int = 0
 @onready var counter_flag : bool = false

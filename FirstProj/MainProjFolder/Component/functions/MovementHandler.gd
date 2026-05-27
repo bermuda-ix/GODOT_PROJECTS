@@ -10,6 +10,7 @@ extends Node
 @export var move_away_speed_scale : float = .8
 @export var air_turn : bool = true
 
+@export var bullet_detection : BulletDetection
 @export var face_player_active : bool = true
 var direction 
 
@@ -52,14 +53,22 @@ func face_player() -> void:
 		#if state_machine.get_active_state()!=actor.attack:
 		actor.animated_sprite_2d.scale.x = 1
 		actor.hit_box.scale.x = 1
-		actor.attack_range.scale.x = 1
+		
+		if actor.attack_range.position.x>0:
+			actor.attack_range.position.x *= -1
 			
+		if bullet_detection != null:
+			bullet_detection.scale.x =1
 	else:
 		#if state_machine.get_active_state()!=actor.attack:
 		actor.animated_sprite_2d.scale.x = -1
 		actor.hit_box.scale.x = -1
-		actor.attack_range.scale.x = -1
+		
+		if actor.attack_range.position.x<0:
+			actor.attack_range.position.x *= -1
 
+		if bullet_detection != null:
+			bullet_detection.scale.x =-1
 
 
 	

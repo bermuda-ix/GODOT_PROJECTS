@@ -4011,7 +4011,6 @@ target_position = Vector2(52, 0)
 collision_mask = 2
 
 [node name="HitBox" parent="." index="24" node_paths=PackedStringArray("stagger") groups=["hitbox"]]
-position = Vector2(-26, -3)
 stagger = NodePath("../Stagger")
 knock_back_strength = 50.0
 
@@ -4029,9 +4028,9 @@ collision_mask = 2
 shape = SubResource("RectangleShape2D_0c6of")
 
 [node name="BulletDetection" parent="." index="26" unique_id=1193340460 instance=ExtResource("102_sqnmd")]
-position = Vector2(-16, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection" index="0" unique_id=558004549]
+position = Vector2(-20, 0)
 shape = SubResource("CircleShape2D_4yjj7")
 
 [node name="Stagger" parent="." index="27"]
@@ -4066,11 +4065,12 @@ script = ExtResource("105_tnx7y")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="MovementHandler" type="Node" parent="." index="33" unique_id=1422547335 node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
+[node name="MovementHandler" type="Node" parent="." index="33" unique_id=1422547335 node_paths=PackedStringArray("actor", "state_machine", "vision_handler", "bullet_detection")]
 script = ExtResource("106_518fh")
 actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
 vision_handler = NodePath("../VisionHandler")
+bullet_detection = NodePath("../BulletDetection")
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
 
 [node name="JumpHandler" type="Node" parent="." index="34" unique_id=1636225451 node_paths=PackedStringArray("actor", "state_machine")]
