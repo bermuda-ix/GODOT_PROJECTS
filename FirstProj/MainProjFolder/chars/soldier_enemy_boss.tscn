@@ -3834,7 +3834,7 @@ radius = 18.0
 height = 44.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xhp7j"]
-size = Vector2(17, 40)
+size = Vector2(8, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgnw"]
 size = Vector2(33.75, 21.25)
@@ -4011,6 +4011,7 @@ target_position = Vector2(52, 0)
 collision_mask = 2
 
 [node name="HitBox" parent="." index="24" node_paths=PackedStringArray("stagger") groups=["hitbox"]]
+collision_mask = 268436096
 stagger = NodePath("../Stagger")
 knock_back_strength = 50.0
 
@@ -4018,6 +4019,7 @@ knock_back_strength = 50.0
 position = Vector2(-14, -7)
 shape = SubResource("RectangleShape2D_vjgnw")
 disabled = true
+one_way_collision_margin = 0.0
 
 [node name="AttackRange" parent="." index="25"]
 position = Vector2(-20, -12)

@@ -50,6 +50,12 @@ func _on_impact(_area :Area2D) -> void:
 	if not clash_active:
 		return
 	
+	if active and not heavy_attack:
+		if _area.is_in_group("PlayerParryZone"):
+			active=false
+		else:
+			pass
+	
 	if _area!= null:
 		
 		if _area.is_in_group("hitbox"):

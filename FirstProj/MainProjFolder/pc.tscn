@@ -1822,6 +1822,9 @@ size = Vector2(55.579, 3.26311)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_6tjyr"]
 polygon = PackedVector2Array(-7.57895, 2.03884, -7.57895, -38.7379, 10.1053, -38.7379, 10.1053, 2.03884)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_wp57p"]
+radius = 23.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnh6k"]
 size = Vector2(10, 30)
 
@@ -9148,6 +9151,15 @@ disabled = true
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="AnimatedSprite2D" unique_id=243380165]
 occluder = SubResource("OccluderPolygon2D_6tjyr")
+
+[node name="ParryZone" type="Area2D" parent="AnimatedSprite2D" unique_id=688839984 groups=["PlayerParryZone"]]
+collision_layer = 268435456
+collision_mask = 8
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/ParryZone" unique_id=606598509]
+position = Vector2(27, -18)
+shape = SubResource("CircleShape2D_wp57p")
 
 [node name="ParryBox" type="Area2D" parent="AnimatedSprite2D" unique_id=1697600828 groups=["ParryBox"]]
 position = Vector2(6, -18)
