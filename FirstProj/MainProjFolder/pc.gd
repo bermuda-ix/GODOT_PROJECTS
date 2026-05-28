@@ -657,12 +657,19 @@ func _physics_process(delta):
 		if(parry_stance==false) and state_machine.get_active_state()!=attack_state:
 			apply_gravity(delta) 
 		var input_axis = Input.get_axis("walk_left", "walk_right")
-		if input_axis<0:
-			face_right=true
-			face_dir=1
-		elif input_axis>0:
+		
+		#if input_axis<0:
+			#face_right=true
+			#face_dir=1
+		#elif input_axis>0:
+			#face_right=false
+			#face_dir=-1
+		if animated_sprite_2d.scale.x>0:
 			face_right=false
 			face_dir=-1
+		else:
+			face_right=true
+			face_dir=1
 		##Dodge back on success
 
 		
