@@ -2402,8 +2402,10 @@ func _on_clash_timer_timeout() -> void:
 	
 func _on_clash_power_increase_aura(value : int) -> void:
 	clash_aura_fx.visible=true
-	clash_aura_player.play("clash_aura")
+	if not clash_aura_player.is_playing():
+		clash_aura_player.play("clash_aura")
 	clash_timer.start()
+	hit_box.set_damage(hit_box.damage+value)
 	match value:
 		2:
 			clash_aura_player.speed_scale=0.5
@@ -2420,12 +2422,35 @@ func _on_clash_power_increase_aura(value : int) -> void:
 		_:
 			pass
 	
+func _on_clash_power_decrease_aura(value: int) -> void:
+	hit_box.set_damage(hit_box.damage+value)
+	match value:
+		1:
+			clash_power.reset_clash()
+			clash_aura_player.stop()
+		2:
+			clash_aura_player.speed_scale=0.5
+			clash_aura_fx.self_modulate.a=0.4
+		3:
+			clash_aura_player.speed_scale=1
+			clash_aura_fx.self_modulate.a=0.6
+		4:
+			clash_aura_player.speed_scale=1.5
+			clash_aura_fx.self_modulate.a=0.8
+		5:
+			clash_aura_player.speed_scale=2
+			clash_aura_fx.self_modulate.a=1
+		_:
+			pass
+	
+	
 #################
 #Clash Functions#
 #################
 func _on_clash_power_aura_reset() -> void:
 	clash_aura_player.stop()
 	clash_aura_fx.visible=false
+	hit_box.set_damage(1)
 
 func _on_stars_detector_body_entered(body: Node2D) -> void:
 	if body.is_in_group("dropdownplatform"):
@@ -2608,3 +2633,7 @@ func _on_animation_player_current_animation_changed(name: StringName) -> void:
 
 func _on_locked_updated(delta: float) -> void:
 	target_dir()
+
+
+func _on_hit_box_hit_success() -> void:
+	clash_power.reset_clash()

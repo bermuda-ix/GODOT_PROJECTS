@@ -105,7 +105,7 @@ var immortal = false
 @onready var jump_velocity = JUMP_VELOCITY
 @onready var knockback : Vector2 = Vector2.ZERO
 @onready var parried : bool = false 
-@onready var attacking : bool = false
+@onready var attacking : bool = false :set = set_attacking
 @onready var attack_missed : bool = false
 @onready var player_behind : bool = false
 var next_y
@@ -149,6 +149,7 @@ var distance
 @onready var falling: Falling = $LimboHSM/Falling
 @onready var land: Land = $LimboHSM/Land
 
+@onready var states_stack : Array[LimboState] = []
 
 @onready var teleport_helper_raycast: RayCast2D = $RayCast2D
 
@@ -192,6 +193,10 @@ enum CombatStates{
 	MELEE,
 	}
 	
+
+func set_attacking(_value: bool) -> void:
+	attacking=_value
+
 var current_combat_state = CombatStates.RANGED
 var prev_combat_state = CombatStates.RANGED
 var combat_state : String = "RANGED"
@@ -585,7 +590,8 @@ func _on_animation_player_animation_started(anim_name: StringName) -> void:
 		attacking=true
 	elif anim_name== "dodge":
 		state_machine.dispatch(&"dodge_end")
-		
+	elif anim_name=="shoot_run":
+		assert(state_machine.get_active_state()==chasing)
 	elif anim_name=="flashback_lvl_cutscenes/first_mini_boss_kill":
 		print_debug("w0t")
 	else:
@@ -638,10 +644,17 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		state_machine.dispatch(&"hit_recover")
 	elif anim_name=="atk_dash":
 		bt_player.blackboard.set_var("attack_dash", false)
-	#elif "teleport_start":
-			#print_debug(global_position)
-	#elif "teleport_end":
-			#print_debug(global_position)
+	elif anim_name=="bullet_dodge":
+		if states_stack.is_empty():
+			state_machine.dispatch(&"finish_bullet_dodge")
+		elif states_stack[0]==attack:
+			state_machine.dispatch(&"resume_attack")
+			states_stack.pop_back()
+			attacking=false
+		else:
+			state_machine.dispatch(&"finish_bullet_dodge")
+			
+			
 	elif anim_name== "flashback_lvl_cutscenes/miniboss_hallway_death":
 		death_on_cutscene()
 	else:
@@ -944,8 +957,11 @@ func _on_staggered_exited() -> void:
 
 
 func _on_bullet_detection_bullet_detected() -> void:
-	print_debug(state_machine.get_active_state())
+	if state_machine.get_active_state()!=bulletdodge:
+		print_debug(state_machine.get_active_state())
+		states_stack.push_back(state_machine.get_active_state())
 	state_machine.dispatch(&"bullet_dodge")
+
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
@@ -961,6 +977,8 @@ func _on_bullet_detection_body_entered(_body: Node2D) -> void:
 
 func _on_bulletdodge_entered() -> void:
 	bt_player.active=false
+	
+
 
 
 func _on_bulletdodge_exited() -> void:
@@ -1005,6 +1023,9 @@ func _on_phases_handler_next_phase() -> void:
 
 func _on_phasetransition_entered() -> void:
 	
+	hurt_box.active=false
+	hit_box.active=false
+	
 	state_machine.add_transition(attack, teleport_and_shoot, &"teleport_counter")
 	state_machine.add_transition(clashed, teleport_and_shoot, &"teleport_clash")
 	state_machine.add_transition(staggered, teleport_and_shoot, &"teleport_recover")
@@ -1021,7 +1042,10 @@ func _on_phasetransition_exited() -> void:
 	changing_phase=false
 	bt_player.blackboard.set_var("counter_attack", false)
 	hurt_box_collision.disabled=false
+	hurt_box.active=true
+	hit_box.active=true
 	phases.dispatch(&"next_phase")
+	
 
 
 func _on_phasetransition_updated(delta: float) -> void:

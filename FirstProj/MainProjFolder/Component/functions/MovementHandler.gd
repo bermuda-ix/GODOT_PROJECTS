@@ -53,6 +53,7 @@ func face_player() -> void:
 		#if state_machine.get_active_state()!=actor.attack:
 		actor.animated_sprite_2d.scale.x = 1
 		actor.hit_box.scale.x = 1
+		actor.hurt_box.scale.x=1
 		
 		if actor.attack_range.position.x>0:
 			actor.attack_range.position.x *= -1
@@ -63,6 +64,7 @@ func face_player() -> void:
 		#if state_machine.get_active_state()!=actor.attack:
 		actor.animated_sprite_2d.scale.x = -1
 		actor.hit_box.scale.x = -1
+		actor.hurt_box.scale.x=-1
 		
 		if actor.attack_range.position.x<0:
 			actor.attack_range.position.x *= -1

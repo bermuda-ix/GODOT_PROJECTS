@@ -9,6 +9,7 @@ signal health_depleted
 
 @export var max_health: int = 3 : set = set_max_health, get = get_max_health
 @export var immortality: bool = false : set = set_immortality, get = get_immortality
+@export var immortality_debug : bool = false
 
 var immortality_timer: Timer = null
 
@@ -37,6 +38,7 @@ func set_immortality(value: bool):
 	immortality = value
 
 
+
 func get_immortality() -> bool:
 	return immortality
 
@@ -57,7 +59,10 @@ func set_temporary_immortality(time: float):
 
 
 func set_health(value: int):
-	if value < health or immortality:
+	
+	if immortality_debug:
+		return
+	if value < health and immortality:
 		return
 	
 	var clamped_value = clampi(value, 0, max_health)

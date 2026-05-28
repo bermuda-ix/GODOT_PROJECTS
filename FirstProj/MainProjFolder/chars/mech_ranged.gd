@@ -181,6 +181,7 @@ func _init_state_machine():
 	state_machine.add_transition(chasing, attack, &"start_attack")
 	state_machine.add_transition(shooting, shoot_run, &"run_and_shoot")
 	state_machine.add_transition(shoot_run, shooting, &"start_shoot")
+	state_machine.add_transition(shoot_run, attack, &"start_attack")
 	state_machine.add_transition(attack, shooting, &"start_shoot")
 	
 	state_machine.add_transition(jump, slam, &"slam_attack")

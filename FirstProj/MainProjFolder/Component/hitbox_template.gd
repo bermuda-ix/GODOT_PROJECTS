@@ -5,6 +5,7 @@ signal parried()
 signal clashed()
 signal clash_knock_back(_launch: float, _knockback : float, _impact_dir_right : bool)
 signal clash_interrupt(_launch: float, _knockback : float, _impact_dir_right : bool, _damage : int)
+signal hit_success
 
 
 @export var damage: int = 1 : set = set_damage, get = get_damage
@@ -103,6 +104,8 @@ func _on_impact(_area :Area2D) -> void:
 			parried.emit()
 		#elif _area.is_in_group("regular_enemy_hb"):
 			#print_debug(_area.get_groups())
+		elif _area.is_in_group("regular_enemy_hb"):
+			pass
 		else:
 			pass
 			#print_debug(_area.get_groups())

@@ -1858,7 +1858,7 @@ anim_speed_min = 0.7
 anim_speed_max = 0.7
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
-size = Vector2(18.810604, 41.20858)
+size = Vector2(24.453785, 41.20858)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mdoa6"]
 height = 46.0
@@ -8918,7 +8918,7 @@ animation = &"staggered"
 
 [node name="heat_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1522867712]
 visible = false
-self_modulate = Color(1, 1, 1, 0.5)
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 position = Vector2(1.9999998, -23)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_dvd57")
@@ -9238,14 +9238,14 @@ theme_override_fonts/font = ExtResource("220_fixwo")
 text = "EXIT"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=771559977]
-position = Vector2(1.9999998, -9.5000105)
+position = Vector2(1.9999996, -9.5000105)
 scale = Vector2(1.06323, 0.994939)
 shape = SubResource("RectangleShape2D_pmx5o")
 
 [node name="Health" type="Node" parent="." unique_id=994567121]
 script = ExtResource("4_q0gnn")
 max_health = 10
-immortality = true
+immortality_debug = true
 
 [node name="ClashPower" type="Node" parent="." unique_id=2128103427 node_paths=PackedStringArray("health", "stagger")]
 script = ExtResource("82_h0fyw")
@@ -9255,7 +9255,6 @@ metadata/_custom_type_script = "uid://byay512l00w0p"
 
 [node name="ClashTimer" type="Timer" parent="ClashPower" unique_id=948454578]
 wait_time = 10.0
-one_shot = true
 
 [node name="Stagger" type="Node" parent="." unique_id=1993234788]
 script = ExtResource("53_7ax8a")
@@ -9675,6 +9674,7 @@ pc = NodePath("../..")
 [connection signal="clash_interrupt" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_clash_interrupt"]
 [connection signal="clash_knock_back" from="AnimatedSprite2D/HitBox" to="." method="_on_knockback"]
 [connection signal="clashed" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_clashed"]
+[connection signal="hit_success" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_hit_success"]
 [connection signal="parried" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_parried"]
 [connection signal="parried_success" from="AnimatedSprite2D/ParryBox" to="." method="_on_parry_box_parried_success"]
 [connection signal="pressed" from="AnimatedSprite2D/InteractUI/PanelContainer/TextureButton" to="." method="_on_texture_button_pressed"]
@@ -9682,6 +9682,7 @@ pc = NodePath("../..")
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="max_health_changed" from="Health" to="." method="_on_health_max_health_changed"]
 [connection signal="aura_reset" from="ClashPower" to="." method="_on_clash_power_aura_reset"]
+[connection signal="decrease_aura" from="ClashPower" to="." method="_on_clash_power_decrease_aura"]
 [connection signal="increase_aura" from="ClashPower" to="." method="_on_clash_power_increase_aura"]
 [connection signal="timeout" from="ClashPower/ClashTimer" to="." method="_on_clash_timer_timeout"]
 [connection signal="stagger_decreased" from="Stagger" to="." method="_on_stagger_stagger_decreased"]

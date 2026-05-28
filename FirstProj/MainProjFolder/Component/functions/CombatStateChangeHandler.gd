@@ -15,7 +15,7 @@ func _physics_process(delta: float) -> void:
 		return
 	elif sm.get_active_state()==actor.staggered or sm.get_active_state()==actor.idle:
 		return
-	elif actor.attacking:
+	elif actor.attacking and sm.get_active_state()==actor.chasing:
 		return
 	else:
 		actor.distance=abs(actor.global_position.x-actor.player.global_position.x)
@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 			
 #		MELEE ATTACK
 		else:
-			#print_debug("melee")
+			print_debug(sm.get_active_state())
 			actor.turret.shoot_timer.paused=true
 			combat_state_machine.dispatch(&"melee_mode")
 			if not bt_player.blackboard.get_var("within_range"):

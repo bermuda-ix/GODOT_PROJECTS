@@ -10,6 +10,7 @@ extends Node
 
 signal clashed
 signal increase_aura(value : int)
+signal decrease_aura(value : int)
 signal aura_reset
 
 func _ready() -> void:
@@ -18,6 +19,10 @@ func _ready() -> void:
 func increase_clash() -> void:
 	clash_power+=1
 	increase_aura.emit(clash_power)
+
+func decrease_clash() -> void:
+	clash_power-=1
+	decrease_aura.emit(clash_power)
 
 func reset_clash() -> void:
 	clash_power=1

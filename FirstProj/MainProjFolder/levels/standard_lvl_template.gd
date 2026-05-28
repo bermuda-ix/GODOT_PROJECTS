@@ -56,9 +56,9 @@ var qte_options : Array[String]  = ["1", "2", "3", "4", "0"]
 
 
 ###MiniBoss1Nodes
-@onready var mini_boss_right_boundery_col: CollisionShape2D = $Bounderies3/MiniBoss1Bounderies/MiniBossRightBoundery/MiniBossRightBounderyCol
-@onready var mini_boss_1_start_pos: Node2D = $Enemy/MiniBosses/MinoBossGroup1/MiniBoss1StartPos
-@onready var soldier_enemy_boss: SoldierEnemyBoss = $Enemy/MiniBosses/MinoBossGroup1/soldier_enemy_boss
+#@onready var mini_boss_right_boundery_col: CollisionShape2D = $Bounderies3/MiniBoss1Bounderies/MiniBossRightBoundery/MiniBossRightBounderyCol
+#@onready var mini_boss_1_start_pos: Node2D = $Enemy/MiniBosses/MinoBossGroup1/MiniBoss1StartPos
+#@onready var soldier_enemy_boss: SoldierEnemyBoss = $Enemy/MiniBosses/MinoBossGroup1/soldier_enemy_boss
 
 
 
@@ -343,7 +343,7 @@ func reload_scene():
 	var _bosses = get_tree().get_nodes_in_group("Boss")
 	for boss in _bosses:
 		boss.boss_reset()
-		boss.global_position=mini_boss_1_start_pos.global_position
+		#boss.global_position=mini_boss_1_start_pos.global_position
 	var _boss_boundaries = get_tree().get_nodes_in_group("boss_boundary")
 	for _boss_boundary in _boss_boundaries:
 		_boss_boundary.call_deferred("set_disabled", true)
@@ -356,12 +356,12 @@ func reload_scene():
 		
 
 func _on_mini_boss_1_flag_flag_triggered() -> void:
-	mini_boss_right_boundery_col.call_deferred("set_disabled", true)
+	#mini_boss_right_boundery_col.call_deferred("set_disabled", true)
 	#mini_boss_right_boundery_col.disabled=false
 	cutscene_player.play("Mini_Boss_Start")
-	soldier_enemy_boss.boss_ui.visible=true
-	soldier_enemy_boss.global_position=mini_boss_1_start_pos.global_position
-	soldier_enemy_boss.boss_activate()
+	#soldier_enemy_boss.boss_ui.visible=true
+	#soldier_enemy_boss.global_position=mini_boss_1_start_pos.global_position
+	#soldier_enemy_boss.boss_activate()
 	#camera_pos.stationary=true
 	
 func boss_start() -> void:
