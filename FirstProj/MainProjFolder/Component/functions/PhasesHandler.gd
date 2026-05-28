@@ -20,6 +20,7 @@ func phase_change(health : int):
 	elif health<=phases.get(cur_phase-1):
 		#actor.stagger_recover()
 		#phases.pop_front()
+		health=phases.get(cur_phase-1)
 		cur_phase+=1
 		next_phase.emit()
 		

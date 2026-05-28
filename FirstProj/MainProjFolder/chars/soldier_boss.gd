@@ -709,6 +709,8 @@ func _on_navigation_timer_timeout() -> void:
 
 
 func _on_stagger_staggered() -> void:
+	if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
+		return
 	#set_state(current_state, States.STAGGERED)
 	#bt_player.blackboard.set_var("staggered", true)
 	bt_player.restart()
@@ -727,9 +729,10 @@ func _on_parry_timer_timeout() -> void:
 		print_debug(phases.get_active_state())
 		if phases.get_active_state()==phase_1:
 			state_machine.dispatch(&"stagger_recover")
+			phases_handler.phase_change(health.health)
 		elif phases.get_active_state()==phase_2:
 			state_machine.dispatch(&"teleport_recover")
-		phases_handler.phase_change(health.health)
+		
 	elif state_machine.get_active_state()==hit:
 		state_machine.dispatch(&"hit_recover")
 	movement_handler.active=true
@@ -778,13 +781,17 @@ func alerted() -> void :
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	
-	if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
-		hit_stop.hit_stop(0.2, 2)
+	if phases_handler.cur_phase-1<phases_handler.phases.size():
+		if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
+			hit_stop.hit_stop(0.2, 2)
+			phases_handler.phase_change(health.health)
 	
-	if state_machine.get_active_state()!=staggered and\
-	 state_machine.get_active_state()!=launch and\
-	 state_machine.get_active_state()!=falling:
-		phases_handler.phase_change(health.health)
+	#if state_machine.get_active_state()!=staggered and\
+	 #state_machine.get_active_state()!=launch and\
+	 #state_machine.get_active_state()!=falling:
+		#
+		#
+		#phases_handler.phase_change(health.health)
 	if changing_phase:
 		
 		return
@@ -949,7 +956,10 @@ func _on_counter_updated(_delta: float) -> void:
 func _on_staggered_exited() -> void:
 	bt_player.blackboard.set_var("staggered", false)
 	bt_player.active=true
-	phases_handler.phase_change(health.health)
+	if phases_handler.cur_phase-1>=phases_handler.phases.size():
+		pass
+	else:
+		phases_handler.phase_change(health.health)
 
 
 
