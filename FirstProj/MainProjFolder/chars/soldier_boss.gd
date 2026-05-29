@@ -718,13 +718,14 @@ func _on_stagger_staggered() -> void:
 		if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
 			return
 	#set_state(current_state, States.STAGGERED)
-	#bt_player.blackboard.set_var("staggered", true)
+	bt_player.blackboard.set_var("staggered", true)
 	bt_player.restart()
 	parry_timer.start(3)
 	hit_stop.hit_stop(0.01, 0.5)
 	#hb_collision.disabled=true
 	hb_collision.call_deferred("set_disabled", true)
 	hurt_box_collision.set_deferred("disabled", false)
+	hit_box.active=false
 	hurt_box.active=true
 	state_machine.dispatch(&"staggered")
 	Events.camera_shake.emit(2,20)
@@ -896,7 +897,7 @@ func _on_attack_entered() -> void:
 
 func _on_attack_updated(delta: float) -> void:
 
-	if hit_box.active:
+	if hit_box.active and state_machine.get_active_state()!=staggered:
 		player_behind_check()
 		if player_behind:
 			hurt_box.active=true
@@ -909,7 +910,7 @@ func _on_hit_box_area_entered(_area: Area2D) -> void:
 	print_debug(_area.get_groups())
 	if dash_attacking:
 		animation_player.play_section_with_markers(&"atk_dash", &"atk_dash_hit")
-		hit_stop.hit_stop(0.1,3)
+		hit_stop.hit_stop(0.1,1)
 		
 
 
@@ -1189,7 +1190,7 @@ func _on_launch_timer_timeout() -> void:
 
 
 func _on_hit_box_clashed() -> void:
-	hit_stop.hit_stop(0.01, 1)
+	hit_stop.hit_stop(0.01, 0.5)
 	print_debug("clashed!")
 	if hit_box.heavy_attack:
 		return

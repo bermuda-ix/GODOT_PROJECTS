@@ -11,7 +11,7 @@ extends LimboState
 
 func _enter() -> void:
 	#actor.animation_player.stop()
-	actor.animation_player.call_deferred("stop")
+	#actor.animation_player.call_deferred("stop")
 	actor.animation_player.play("staggered")
 	vfx_player.play("staggered_entered")
 	#actor.hb_collision.disabled=true

@@ -7,7 +7,7 @@ extends Node
 @onready var combo : String = "atk_"+str(combo_int)
 @onready var atk_type := "atk_1" : set = set_atk_type
 
-@export var heavy_atk_min := clampi(0, 0, 50) : set = set_heavy_atk_min
+@export var heavy_atk_min := clampi(0, 0, 100) : set = set_heavy_atk_min
 signal heavy_attack
 
 func melee_attack():
@@ -79,7 +79,7 @@ func atk_resume_helper() -> void:
 
 func heavy_attack_counter() -> bool:
 	var _heavy_atk_chance=randi_range(heavy_atk_min, 50)
-	if _heavy_atk_chance >= 150:
+	if _heavy_atk_chance >= 50:
 		return true
 	else:
 		return false
