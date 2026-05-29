@@ -26,3 +26,9 @@ func phase_change(health : int):
 		
 func reset_phases() -> void:
 	phases=default_phases
+
+func is_final_phase() -> bool:
+	if cur_phase==phases[phases.size()-1]:
+		return true
+	else:
+		return false

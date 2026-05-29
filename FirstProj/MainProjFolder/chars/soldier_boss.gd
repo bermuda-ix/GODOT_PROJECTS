@@ -709,8 +709,10 @@ func _on_navigation_timer_timeout() -> void:
 
 
 func _on_stagger_staggered() -> void:
-	if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
-		return
+	
+	if phases_handler.is_final_phase():
+		if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
+			return
 	#set_state(current_state, States.STAGGERED)
 	#bt_player.blackboard.set_var("staggered", true)
 	bt_player.restart()
@@ -781,7 +783,7 @@ func alerted() -> void :
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	
-	if phases_handler.cur_phase-1<phases_handler.phases.size():
+	if phases_handler.is_final_phase():
 		if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
 			hit_stop.hit_stop(0.2, 2)
 			phases_handler.phase_change(health.health)
@@ -956,7 +958,7 @@ func _on_counter_updated(_delta: float) -> void:
 func _on_staggered_exited() -> void:
 	bt_player.blackboard.set_var("staggered", false)
 	bt_player.active=true
-	if phases_handler.cur_phase-1>=phases_handler.phases.size():
+	if phases_handler.is_final_phase():
 		pass
 	else:
 		phases_handler.phase_change(health.health)
@@ -1077,6 +1079,7 @@ func _on_teleport_and_shoot_exited() -> void:
 	hurt_box.set_collision_layer_value(7, true)
 	hurt_box.active=true
 	teleport_helper_raycast.target_position=Vector2(0,50)
+	attacking=false
 
 func death_on_cutscene() -> void:
 	state_machine.change_active_state(death)

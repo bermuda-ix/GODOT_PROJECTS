@@ -664,12 +664,20 @@ func _physics_process(delta):
 		#elif input_axis>0:
 			#face_right=false
 			#face_dir=-1
-		if animated_sprite_2d.scale.x>0:
-			face_right=false
-			face_dir=-1
+		if combat_states.get_active_state()==locked:
+			if target_right:
+				face_right=false
+				face_dir=-1
+			else:
+				face_right=true
+				face_dir=1
 		else:
-			face_right=true
-			face_dir=1
+			if animated_sprite_2d.scale.x>0:
+				face_right=false
+				face_dir=-1
+			else:
+				face_right=true
+				face_dir=1
 		##Dodge back on success
 
 		
