@@ -32,14 +32,17 @@ func _ready():
 
 func set_active(_value:bool)->void:
 	active=_value
+	#if _value==true:
+		#print_debug("attack_activate")
+	#elif _value==false:
+		#print_debug("attack_deactivate")
+
+func set_clash_active(_value: bool) -> void:
+	clash_active=_value
 	if _value==true:
 		print_debug("attack_activate")
 	elif _value==false:
 		print_debug("attack_deactivate")
-
-func set_clash_active(_value: bool) -> void:
-	clash_active=_value
-
 func set_damage(value: int):
 	damage = value
 	
@@ -49,19 +52,17 @@ func get_damage() -> int:
 func _on_impact(_area :Area2D) -> void:
 	
 	if not clash_active:
+		print_debug(get_parent())
 		return
 	
 	if active and not heavy_attack:
 		if _area.is_in_group("PlayerParryZone"):
 			active=false
-		else:
-			pass
 	
 	if _area!= null:
 		
 		if _area.is_in_group("hitbox"):
-			active=false
-			print_debug(get_parent())
+			print_debug("ERGH")
 			if "heavy_attack" in _area:
 				if _area.heavy_attack:
 					if _area.global_position.x > global_position.x:
@@ -83,8 +84,8 @@ func _on_impact(_area :Area2D) -> void:
 				#active=false
 				
 		elif _area.is_in_group("player_hitbox"):
+			print_debug("DERGH")
 			assert(pc_hitbos==false)
-			active=false
 			damage = 0
 			knock_back = false
 			launch = false
@@ -99,7 +100,6 @@ func _on_impact(_area :Area2D) -> void:
 			#active=false
 		elif _area.is_in_group("ParryBox"):
 			#print_debug("parried!")
-			active=false
 			stagger.stagger -= 1
 			parried.emit()
 		#elif _area.is_in_group("regular_enemy_hb"):
@@ -107,7 +107,7 @@ func _on_impact(_area :Area2D) -> void:
 		elif _area.is_in_group("regular_enemy_hb"):
 			pass
 		else:
+			print_debug(_area.get_groups())
 			pass
-			#print_debug(_area.get_groups())
-		
+		active=false
 		clash_active=false

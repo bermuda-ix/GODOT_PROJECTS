@@ -264,6 +264,8 @@ func _ready():
 	vision_handler.always_on=vision_always_on
 	state_machine.change_active_state(idle)
 	bt_player.active=false
+	hit_box.set_collision_mask_value(7, true)
+	
 	
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 	if health.health<=0:
@@ -590,12 +592,14 @@ func _on_animation_player_animation_started(anim_name: StringName) -> void:
 		attacking=true
 	elif anim_name== "dodge":
 		state_machine.dispatch(&"dodge_end")
+	elif anim_name=="shoot" or anim_name=="reload":
+		attacking=false
 	elif anim_name=="shoot_run":
 		assert(state_machine.get_active_state()==chasing)
 	elif anim_name=="flashback_lvl_cutscenes/first_mini_boss_kill":
 		print_debug("w0t")
 	else:
-		pass
+		attacking=false
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
@@ -902,11 +906,12 @@ func _on_attack_updated(delta: float) -> void:
 	
 		
 func _on_hit_box_area_entered(_area: Area2D) -> void:
-	hit_stop.hit_stop(0.05,0.1)
+	print_debug(_area.get_groups())
 	if dash_attacking:
 		animation_player.play_section_with_markers(&"atk_dash", &"atk_dash_hit")
 		hit_stop.hit_stop(0.1,3)
 		
+
 
 
 func _on_hit_box_parried() -> void:
@@ -969,6 +974,8 @@ func _on_staggered_exited() -> void:
 
 
 func _on_bullet_detection_bullet_detected() -> void:
+	if attacking and hit_box.heavy_attack:
+		return
 	if state_machine.get_active_state()!=bulletdodge:
 		print_debug(state_machine.get_active_state())
 		states_stack.push_back(state_machine.get_active_state())

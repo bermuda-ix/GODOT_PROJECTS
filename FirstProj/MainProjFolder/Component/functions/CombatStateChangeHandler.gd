@@ -36,7 +36,6 @@ func _physics_process(delta: float) -> void:
 			
 #		MELEE ATTACK
 		else:
-			print_debug(sm.get_active_state())
 			actor.turret.shoot_timer.paused=true
 			combat_state_machine.dispatch(&"melee_mode")
 			if not bt_player.blackboard.get_var("within_range"):

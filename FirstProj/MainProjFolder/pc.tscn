@@ -787,6 +787,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wp57p"]
+shader = ExtResource("73_dxewg")
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_dvd57"]
 animations = [{
 "frames": [{
@@ -1858,7 +1861,7 @@ anim_speed_min = 0.7
 anim_speed_max = 0.7
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
-size = Vector2(24.453785, 41.20858)
+size = Vector2(27.275377, 41.20858)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mdoa6"]
 height = 46.0
@@ -1883,10 +1886,10 @@ tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.099999994, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [true, false, true]
+"values": [false, true]
 }
 tracks/1/type = "audio"
 tracks/1/imported = false
@@ -1921,7 +1924,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(19, -8.689301)]
+"values": [Vector2(15, -9)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -1933,7 +1936,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(37.8948, 53.5486)]
+"values": [Vector2(45, 53.549)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -2065,10 +2068,10 @@ tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [true, false, true]
+"values": [false, true]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -2092,7 +2095,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(37.8948, 36.699)]
+"values": [Vector2(55, 40)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -2116,7 +2119,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(25.2632, -24.466)]
+"values": [Vector2(20, -24.466)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -2250,10 +2253,10 @@ tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [true, false, true]
+"values": [false, true]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -2289,7 +2292,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(17.6842, -2.03884)]
+"values": [Vector2(10, -2.039)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -8919,6 +8922,10 @@ animation = &"staggered"
 [node name="heat_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1522867712]
 visible = false
 self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
+material = SubResource("ShaderMaterial_wp57p")
+instance_shader_parameters/FloatParameter = 0.002000000095
+instance_shader_parameters/GlowColor = Color(0, 1.8501925, 3.2695158, 1)
+instance_shader_parameters/MaskColor = Color(0.32586667, 0.68065643, 0.6753548, 1)
 position = Vector2(1.9999998, -23)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_dvd57")
@@ -9143,6 +9150,7 @@ pc_hitbos = true
 light_mask = 0
 position = Vector2(9, -5)
 shape = SubResource("RectangleShape2D_0g83a")
+disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/HitBox" unique_id=840144418]
 position = Vector2(6.02321e-07, 20.7956)
@@ -9238,7 +9246,7 @@ theme_override_fonts/font = ExtResource("220_fixwo")
 text = "EXIT"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=771559977]
-position = Vector2(1.9999996, -9.5000105)
+position = Vector2(1.4999993, -9.5000105)
 scale = Vector2(1.06323, 0.994939)
 shape = SubResource("RectangleShape2D_pmx5o")
 
@@ -9681,9 +9689,8 @@ pc = NodePath("../..")
 [connection signal="health_changed" from="Health" to="." method="_on_health_health_changed"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="max_health_changed" from="Health" to="." method="_on_health_max_health_changed"]
+[connection signal="aura_change" from="ClashPower" to="." method="_on_clash_power_aura_change"]
 [connection signal="aura_reset" from="ClashPower" to="." method="_on_clash_power_aura_reset"]
-[connection signal="decrease_aura" from="ClashPower" to="." method="_on_clash_power_decrease_aura"]
-[connection signal="increase_aura" from="ClashPower" to="." method="_on_clash_power_increase_aura"]
 [connection signal="timeout" from="ClashPower/ClashTimer" to="." method="_on_clash_timer_timeout"]
 [connection signal="stagger_decreased" from="Stagger" to="." method="_on_stagger_stagger_decreased"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]

@@ -31,7 +31,7 @@ func _update(delta: float) -> void:
 func _exit() -> void:
 	print_debug("exit")
 	hit_box.active=false
-	hit_box.clash_active=false
+	#hit_box.clash_active=false
 	
 	
 func attack_lunge() -> void:

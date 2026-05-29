@@ -2,7 +2,7 @@ extends LimboState
 @export var pc : PlayerEntity
 @export var anim_player : AnimationPlayer
 @export var shotty_anim_player : AnimationPlayer
-@export var aim_speed_scale=1
+@export var aim_speed_scale := 1.0
 @export var aim_speed_end : int = 50
 @export var clash_power: ClashPower
 

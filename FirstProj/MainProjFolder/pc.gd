@@ -437,6 +437,7 @@ func _init_state_machine():
 	state_machine.add_transition(dodge_state, attack_state, &"heavy_dash_attack")
 	state_machine.add_transition(dodge_state, attack_state, &"combo_resume")
 	state_machine.add_transition(dodge_state, attack_state, &"heavy_counter")
+	state_machine.add_transition(dodge_state, special_attack, &"dodge_shoot")
 	
 	state_machine.add_transition(dodge_state, dodge_state, &"dodge_chain")
 	
@@ -565,9 +566,9 @@ func _process(_delta):
 	dodge(input_axis)
 	label.text=str(clash_power.clash_power)
 	#
-	if Input.is_action_just_pressed("attack"):
-		print_debug(state_machine.get_active_state())
-		
+	#if Input.is_action_just_pressed("attack"):
+		#print_debug(state_machine.get_active_state())
+		#
 		
 	if(state_machine.get_active_state()!=dodge_state\
 	 and state_machine.get_active_state()!=special_attack\
@@ -584,7 +585,7 @@ func _process(_delta):
 		if Input.is_action_just_pressed("attack"):
 			dash_attack_enter()
 		elif Input.is_action_just_pressed("special_attack"):
-			heavy_dash_attack_enter()
+			dash_shoot_attack()
 		else:
 			pass
 	#
@@ -1005,7 +1006,7 @@ func attack_animate():
 		return
 
 	elif Input.is_action_just_pressed("attack"):
-		print_debug(state_machine.get_active_state())
+		#print_debug(state_machine.get_active_state())
 		#hitbox.active=true
 		if combat_states.get_active_state()!=locked:
 			regular_attack()
@@ -1165,6 +1166,8 @@ func dash_attack_enter():
 	#AudioStreamManager.play(swing1)
 	##set_state(state, States.ATTACK) 
 	
+func dash_shoot_attack():
+	state_machine.dispatch(&"dodge_shoot")
 	
 func heavy_dash_attack_enter():
 	if state_machine.get_active_state()==attack_state:
@@ -2045,7 +2048,7 @@ func _on_hit_box_body_entered(body):
 		target = body
 		combat_state=CombatStates.LOCKED
 		combat_states.dispatch(&"locking_on")
-		if clash_power.clash_power>1:
+		if clash_power.clash_power>=1:
 			stagger.stagger+=clash_power.clash_power
 			clash_power.reset_clash()
 			clash_timer.stop()
@@ -2100,12 +2103,12 @@ func _on_flip_state_updated(delta: float) -> void:
 		health.immortality=true
 		hurt_box_detect.disabled=true
 		#position.y, " ",target_size_y+target.position.y)
-		print_debug(global_position)
-		print_debug((target_left_edge-15)," , ",(target_top-25))
+		#print_debug(global_position)
+		#print_debug((target_left_edge-15)," , ",(target_top-25))
 		if global_position.y>target_top-15 and not high_target:
 			if target_right:
-				print_debug(global_position)
-				print_debug((target_left_edge-15)," , ",(target_top-25))
+				#print_debug(global_position)
+				#print_debug((target_left_edge-15)," , ",(target_top-25))
 				if global_position<Vector2((target_left_edge-15),(target_top-25)):
 					global_position=lerp(global_position, Vector2((target_left_edge-5),(target_top-40)), delta*3)
 				else:
@@ -2139,7 +2142,7 @@ func _on_flip_state_updated(delta: float) -> void:
 			state_machine.dispatch(&"flipped_over")
 
 func _on_flip_end_state_entered() -> void:
-	print_debug("flipped over")
+	#print_debug("flipped over")
 	hit_stop.hit_stop(.2, .5)
 
 
@@ -2198,9 +2201,9 @@ func _on_counter_box_area_entered(area):
 	
 		
 	if area.is_in_group("regular_enemy_hb"):
-		print_debug("enemy dodge")
+		#print_debug("enemy dodge")
 		state_machine.dispatch(&"dodge_successful")
-		clash_power.clash_power += 1
+		#clash_power.clash_power += 1
 		
 		
 	clash_power.increase_clash()
@@ -2415,13 +2418,71 @@ func _on_clash_timer_timeout() -> void:
 	#clash_visual.emitting=false
 	
 	
-func _on_clash_power_increase_aura(value : int) -> void:
-	clash_aura_fx.visible=true
-	if not clash_aura_player.is_playing():
-		clash_aura_player.play("clash_aura")
-	clash_timer.start()
+#func _on_clash_power_increase_aura(value : int) -> void:
+	#clash_aura_fx.visible=true
+	#if not clash_aura_player.is_playing():
+		#clash_aura_player.play("clash_aura")
+	#clash_timer.start()
+	#hit_box.set_damage(hit_box.damage+value)
+	#match value:
+		#1:
+			#clash_aura_player.speed_scale=0.25
+			#clash_aura_fx.self_modulate.a=0.2
+		#2:
+			#clash_aura_player.speed_scale=0.5
+			#clash_aura_fx.self_modulate.a=0.4
+		#3:
+			#clash_aura_player.speed_scale=1
+			#clash_aura_fx.self_modulate.a=0.6
+		#4:
+			#clash_aura_player.speed_scale=1.5
+			#clash_aura_fx.self_modulate.a=0.8
+		#5:
+			#clash_aura_player.speed_scale=2
+			#clash_aura_fx.self_modulate.a=1
+		#_:
+			#pass
+	#
+#func _on_clash_power_decrease_aura(value: int) -> void:
+	#hit_box.set_damage(hit_box.damage+value)
+	#match value:
+		#0:
+			#clash_power.reset_clash()
+			#clash_aura_player.stop()
+		#1:
+			#clash_aura_player.speed_scale=0.25
+			#clash_aura_fx.self_modulate.a=0.2
+		#2:
+			#clash_aura_player.speed_scale=0.5
+			#clash_aura_fx.self_modulate.a=0.4
+		#3:
+			#clash_aura_player.speed_scale=1
+			#clash_aura_fx.self_modulate.a=0.6
+		#4:
+			#clash_aura_player.speed_scale=1.5
+			#clash_aura_fx.self_modulate.a=0.8
+		#5:
+			#clash_aura_player.speed_scale=2
+			#clash_aura_fx.self_modulate.a=1
+		#_:
+			#pass
+	
+func _on_clash_power_aura_change(value: int) -> void:
+	
+	if value >=1:
+		clash_aura_fx.visible=true
+		if not clash_aura_player.is_playing():
+			clash_aura_player.play("clash_aura")
+		clash_timer.start()
 	hit_box.set_damage(hit_box.damage+value)
+
 	match value:
+		0:
+			clash_power.reset_clash()
+			clash_aura_player.stop()
+		1:
+			clash_aura_player.speed_scale=0.25
+			clash_aura_fx.self_modulate.a=0.2
 		2:
 			clash_aura_player.speed_scale=0.5
 			clash_aura_fx.self_modulate.a=0.4
@@ -2437,26 +2498,6 @@ func _on_clash_power_increase_aura(value : int) -> void:
 		_:
 			pass
 	
-func _on_clash_power_decrease_aura(value: int) -> void:
-	hit_box.set_damage(hit_box.damage+value)
-	match value:
-		1:
-			clash_power.reset_clash()
-			clash_aura_player.stop()
-		2:
-			clash_aura_player.speed_scale=0.5
-			clash_aura_fx.self_modulate.a=0.4
-		3:
-			clash_aura_player.speed_scale=1
-			clash_aura_fx.self_modulate.a=0.6
-		4:
-			clash_aura_player.speed_scale=1.5
-			clash_aura_fx.self_modulate.a=0.8
-		5:
-			clash_aura_player.speed_scale=2
-			clash_aura_fx.self_modulate.a=1
-		_:
-			pass
 	
 	
 #################
@@ -2626,10 +2667,10 @@ func _on_hit_box_clashed() -> void:
 	var _atk_clash_anim_end : String = _current_atk+"_end"
 	var _atk_connect := anim_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
 	#animation_player.seek(_atk_connect, true, false)
-	print_debug(_atk_clash_anim)
+	#print_debug(_atk_clash_anim)
 	attacking=true
 	anim_player.seek(_atk_connect, true, true)
-	print_debug(_atk_clash_anim)
+	#print_debug(_atk_clash_anim)
 	#anim_player.stop()
 	#anim_player.play_section_with_markers(_current_atk, _atk_clash_anim)
 	attacking=true

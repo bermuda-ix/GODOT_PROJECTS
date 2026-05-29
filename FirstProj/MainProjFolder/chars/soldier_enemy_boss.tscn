@@ -3861,8 +3861,8 @@ stereo = true
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_thomt"]
 
 [node name="soldier_enemy_boss" unique_id=789104702 groups=["Boss", "Enemy_arena", "Persistant", "enemy_arena", "offensive_enemy"] instance=ExtResource("1_33sos")]
-collision_layer = 16384
-collision_mask = 19
+collision_layer = 0
+collision_mask = 17
 safe_margin = 0.2
 script = ExtResource("2_87q8v")
 death_cutscene = true
@@ -4011,7 +4011,7 @@ target_position = Vector2(52, 0)
 collision_mask = 2
 
 [node name="HitBox" parent="." index="24" node_paths=PackedStringArray("stagger") groups=["hitbox"]]
-collision_mask = 268436096
+collision_mask = 704
 stagger = NodePath("../Stagger")
 knock_back_strength = 50.0
 

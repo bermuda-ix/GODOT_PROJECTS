@@ -27,7 +27,7 @@ func _exit() -> void:
 	pc.attack_timer.paused=false
 	#pc.attacking=false
 	hit_box.active=false
-	hit_box.clash_active=false
+	#hit_box.clash_active=false
 
 func attack_lunge() -> void:
 	pc.move_and_slide()
