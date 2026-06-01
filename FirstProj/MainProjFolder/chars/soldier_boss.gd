@@ -692,6 +692,7 @@ func _on_attack_range_body_exited(body: Node2D) -> void:
 		state_machine.dispatch(&"start_chase")
 		
 func _on_hurt_box_area_entered(area: Area2D) -> void:
+	print_debug(area)
 	if area.is_in_group("sp_atk_default"):
 		if player.state_machine.get_active_state()==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 			Events.allied_enemy_hit.emit()
@@ -725,6 +726,8 @@ func _on_stagger_staggered() -> void:
 	#hb_collision.disabled=true
 	hb_collision.call_deferred("set_disabled", true)
 	hurt_box_collision.set_deferred("disabled", false)
+	if hurt_box_collision.disabled==true:
+		print_debug("wot")
 	hit_box.active=false
 	hurt_box.active=true
 	state_machine.dispatch(&"staggered")
@@ -811,17 +814,19 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		bt_player.restart()
 		if state_machine.get_active_state()==death:
 			return
-		health.set_temporary_immortality(0.2)
+		health.set_temporary_immortality(0.1)
 		if damage<=health.health:
 			if state_machine.get_active_state()!=staggered:
-				parry_timer.start(0.5)
-				if player_behind:
-					hit.hit_anim="hit_weakpoint"
-				elif stagger.stagger>1:
-					hit.hit_anim="hit_quick_recover"
+				parry_timer.start(0.2)
+				if stagger.stagger>1:
+					if player_behind:
+						hit.hit_anim="hit_weakpoint"
+					else:
+						hit.hit_anim="hit_quick_recover"
+						state_machine.dispatch(&"hit")
 				else:
 					hit.hit_anim="hit"
-				state_machine.dispatch(&"hit")
+					state_machine.dispatch(&"staggered")
 			hit_stop.hit_stop(0.05,0.25)
 			#set_state(current_state, States.HIT)
 			gpu_particles_2d.emitting=true
@@ -903,7 +908,7 @@ func _on_attack_updated(delta: float) -> void:
 			hurt_box.active=true
 		else:
 			hurt_box.active=false
-		
+	
 	
 		
 func _on_hit_box_area_entered(_area: Area2D) -> void:
@@ -944,12 +949,12 @@ func _on_hit_updated(delta: float) -> void:
 
 func _on_kick_counter_exited() -> void:
 	bt_player.active=true
-	hurt_box_collision.disabled=false
+	#hurt_box_collision.disabled=false
 
 
 func _on_counter_exited() -> void:
 	bt_player.active=true
-	hurt_box_collision.disabled=false
+	#hurt_box_collision.disabled=false
 
 
 func _on_clash_timer_timeout() -> void:
@@ -1061,7 +1066,7 @@ func _on_phasetransition_entered() -> void:
 func _on_phasetransition_exited() -> void:
 	changing_phase=false
 	bt_player.blackboard.set_var("counter_attack", false)
-	hurt_box_collision.disabled=false
+	#hurt_box_collision.disabled=false
 	hurt_box.active=true
 	hit_box.active=true
 	phases.dispatch(&"next_phase")
@@ -1246,4 +1251,5 @@ func _on_land_landed() -> void:
 
 
 func _on_attack_exited() -> void:
+	hurt_box.active=true
 	movement_handler.face_player_active=true

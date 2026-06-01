@@ -58,7 +58,7 @@ func _on_area_entered(hitbox: HitBox) -> void:
 		return
 	else:
 		assert(shielded!=true)
-		#hitbox.active=false
+		hitbox.active=false
 		if hitbox != null:
 			if stagger.stagger<=0:
 				dmg_mult=3
@@ -90,8 +90,9 @@ func _on_area_entered(hitbox: HitBox) -> void:
 				else:
 					if not shielded:
 						health.health -= (hitbox.damage * dmg_mult)
+						print_debug(hitbox.damage)
 						received_damage.emit(hitbox.damage)
-						print_debug(get_parent())
+						
 						got_hit.emit(hitbox)
 						Events.camera_shake.emit(2,20)
 

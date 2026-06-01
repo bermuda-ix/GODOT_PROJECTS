@@ -74,7 +74,7 @@ func _on_impact(_area :Area2D) -> void:
 					_area.heavy_attack=false
 				else:
 					#pass
-					damage = 0
+					#damage = 0
 					knock_back = false
 					launch = false
 					clashed.emit()
@@ -86,7 +86,7 @@ func _on_impact(_area :Area2D) -> void:
 		elif _area.is_in_group("player_hitbox"):
 			print_debug("DERGH")
 			assert(pc_hitbos==false)
-			damage = 0
+			#damage = 0
 			knock_back = false
 			launch = false
 			if _area.knock_back:

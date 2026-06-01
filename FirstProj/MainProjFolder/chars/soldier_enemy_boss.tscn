@@ -3834,7 +3834,7 @@ radius = 18.0
 height = 44.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xhp7j"]
-size = Vector2(8, 40)
+size = Vector2(25, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgnw"]
 size = Vector2(33.75, 21.25)
@@ -4036,7 +4036,7 @@ position = Vector2(-20, 0)
 shape = SubResource("CircleShape2D_4yjj7")
 
 [node name="Stagger" parent="." index="27"]
-max_stagger = 10
+max_stagger = 2
 
 [node name="Turret" parent="." index="28" unique_id=1929477695 instance=ExtResource("103_jr353")]
 position = Vector2(-8, -7)
