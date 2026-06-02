@@ -25,10 +25,12 @@ signal hit_success
 @onready var shield_hit : bool = false
 @onready var impact_dir_right : bool = false
 
+var collision_shape : CollisionShape2D
 
 func _ready():
 	connect("area_entered", _on_impact)
 	print_debug(get_groups())
+	collision_shape=get_tree().get_first_node_in_group("colliding_hitbox_shape")
 
 func set_active(_value:bool)->void:
 	active=_value
@@ -43,11 +45,17 @@ func set_clash_active(_value: bool) -> void:
 		print_debug("attack_activate")
 	elif _value==false:
 		print_debug("attack_deactivate")
+		
 func set_damage(value: int):
 	damage = value
 	
 func get_damage() -> int:
 	return damage
+
+func refresh_collision() -> void:
+	clash_active=false
+	collision_shape.set_deferred("disabled", true)
+	collision_shape.set_deferred("disabled", false)
 
 func _on_impact(_area :Area2D) -> void:
 	

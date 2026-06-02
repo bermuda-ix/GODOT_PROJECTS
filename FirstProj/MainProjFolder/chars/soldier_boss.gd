@@ -17,6 +17,7 @@ signal boss_reloaded
 @onready var player_tracking = $PlayerTrackerPivot/PlayerTracking as RayCast2D
 @onready var player_tracker_pivot = $PlayerTrackerPivot as Node2D
 @onready var vision_handler: VisionHandler = $VisionHandler
+
 var always_active : bool
 
 @onready var chase_timer = $ChaseTimer as Timer
@@ -578,7 +579,7 @@ func dodge_end() -> void:
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	
 	if anim_name.substr(0, 3)=="atk":
-		hit_box.active=true
+		#hit_box.active=true
 		movement_handler.face_player_active=false
 		if anim_name!="atk_dash":
 			return
@@ -1068,7 +1069,7 @@ func _on_phasetransition_exited() -> void:
 	bt_player.blackboard.set_var("counter_attack", false)
 	#hurt_box_collision.disabled=false
 	hurt_box.active=true
-	hit_box.active=true
+	hit_box.active=false
 	phases.dispatch(&"next_phase")
 	
 

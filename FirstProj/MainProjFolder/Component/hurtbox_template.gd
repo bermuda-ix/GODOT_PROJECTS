@@ -37,7 +37,7 @@ func set_active(_value: bool) -> void:
 func _ready():
 	connect("area_entered", _on_area_entered)
 	#connect("area_entered", _on_parried)
-	connect("body_entered", _bullet_hit)
+	#connect("body_entered", _bullet_hit)
 	connect("body_entered", _knocked_back_enemy_collision)
 	
 	add_child(bullet_buffer)
@@ -96,33 +96,8 @@ func _on_area_entered(hitbox: HitBox) -> void:
 						got_hit.emit(hitbox)
 						Events.camera_shake.emit(2,20)
 
-func _bullet_hit(_rigid_body : RigidBody2D) -> void:
-	
+func hitbox_collision():
 	pass
-	
-	#var _damage : int 
-	#if _rigid_body.has_method("get_damage"):
-		#_damage=_rigid_body.get_damage()
-	#else:
-		#_damage=1
-	#if health.health<=0:
-		#return
-#
-	#_rigid_body.hard_impact()
-#
-	#
-	#if stagger.stagger>0:
-		#stagger.stagger-=1
-	#else:
-		##stagger.stagger-=1
-		#health.health-=1
-		#
-		#print_debug(health.health)
-		##received_damage.emit(_damage)
-		#bullet_hit.emit(_damage)
-		#received_damage.emit(_damage)
-	#_rigid_body.impact()
-		
 
 func bullet_impact(_damage : int = 1) -> void:
 	if not active:
