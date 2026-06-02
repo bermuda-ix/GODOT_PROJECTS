@@ -902,7 +902,7 @@ func _on_attack_entered() -> void:
 
 func _on_attack_updated(delta: float) -> void:
 
-	if hit_box.active and state_machine.get_active_state()!=staggered:
+	if attacking and state_machine.get_active_state()!=staggered:
 		player_behind_check()
 		if player_behind:
 			hurt_box.active=true

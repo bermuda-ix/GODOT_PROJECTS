@@ -15,6 +15,7 @@ var dodge_speed : float = 1.0
 @export  var dodge_velocity := Vector2(100.0, 0)
 @export var dodge_pos_start := 0.0
 @export var dodge_distance := 100.0
+@export var dodge_min_dist := 25.0
 
 func _enter() -> void:
 	print_debug("dodging")
@@ -44,7 +45,10 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	#pc.global_position.x=lerpf(pc.global_position.x, dodge_dist, dodge_speed*delta)
-	if abs(pc.global_position.x-dodge_pos_start)>dodge_distance:
+	if abs(pc.global_position.x-dodge_pos_start)>dodge_min_dist and\
+	Input.is_action_just_released("Dodge"):
+		dodge_blend()
+	elif abs(pc.global_position.x-dodge_pos_start)>dodge_distance:
 		pc.state_machine.dispatch(&"return_to_idle")
 	#elif Input.is_action_just_pressed("attack") and dodge_buffer.is_stopped():
 		#pc.state_machine.dispatch(&"dash_attack")
@@ -72,6 +76,11 @@ func _exit() -> void:
 	#hurtbox.disabled=false
 	hurt_box.active=true
 	dodge_buffer.start(0.5)
+	
+func dodge_blend():
+	var _current_dodge=anim_player.current_animation
+	anim_player.play_section_with_markers(_current_dodge, "end")
+
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name==(pc.dodge_anim_run+"_"+str(dodge_chain)):
