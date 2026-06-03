@@ -27,6 +27,8 @@ signal knockback(launch_strength : float, knock_back_strength : float, impact_di
 @onready var bullet_buffer : Timer = Timer.new()
 @onready var bullet_damage : int = 0
 
+@onready var mutex : Mutex = Mutex.new()
+
 func set_active(_value: bool) -> void:
 	active=_value
 	if _value==true:
@@ -49,7 +51,8 @@ func _ready():
 	bullet_buffer.timeout.connect(bullet_buffer_timeout)
 
 func _on_area_entered(hitbox: Area2D) -> void:
-	print_debug("area=", hitbox)
+	mutex.lock()
+	#print_debug("area=", hitbox)
 	if not hitbox.active:
 		return
 	elif not active:
@@ -73,42 +76,47 @@ func _on_area_entered(hitbox: Area2D) -> void:
 			#############################################
 			#Replace with bullet knockback once finished#
 			#############################################
-			if hitbox.is_in_group("bullet"):
-				return
+			if hitbox.is_in_group("bullet") or hitbox.is_in_group("PlayerBullet"):
+				#return
+				if not active:
+					return
+				bullet_buffer.start(0.2)
+				bullet_damage+=1
 			
-			
-			if hitbox.knock_back:
-				if hitbox.global_position.x > global_position.x:
-					impact_dir_right=true
-				else:
-					impact_dir_right=false
-				print_debug(hitbox.launch_strength, ", ", hitbox.knock_back_strength)
-				Events.camera_shake.emit(2,20)
-				knockback.emit(hitbox.launch_strength, hitbox.knock_back_strength, impact_dir_right)
-		
-			if hitbox.is_in_group("spc_atk"):
-				weakpoint_hit.emit()
-			if hitbox.stagger_damage:
-				stagger.stagger -= (hitbox.damage * dmg_mult)
-				### Maybe add minimum health damage to stagger attacks?  
-
-				got_hit.emit(hitbox)
 			else:
-				if weakpoint or back_attack_flag.is_colliding():
-					health.health -= (hitbox.damage * dmg_mult)
-					stagger.stagger -= (hitbox.damage * dmg_mult)
-					received_damage.emit(hitbox.damage)
-					got_hit.emit(hitbox)
+				if hitbox.knock_back:
+					if hitbox.global_position.x > global_position.x:
+						impact_dir_right=true
+					else:
+						impact_dir_right=false
+					#print_debug(hitbox.launch_strength, ", ", hitbox.knock_back_strength)
 					Events.camera_shake.emit(2,20)
+					knockback.emit(hitbox.launch_strength, hitbox.knock_back_strength, impact_dir_right)
+			
+				if hitbox.is_in_group("spc_atk"):
+					weakpoint_hit.emit()
+				if hitbox.stagger_damage:
+					stagger.stagger -= (hitbox.damage * dmg_mult)
+					### Maybe add minimum health damage to stagger attacks?  
+
+					got_hit.emit(hitbox)
 				else:
-					if not shielded:
+					if weakpoint or back_attack_flag.is_colliding():
 						health.health -= (hitbox.damage * dmg_mult)
-						print_debug(hitbox.damage)
+						stagger.stagger -= (hitbox.damage * dmg_mult)
 						received_damage.emit(hitbox.damage)
-						
 						got_hit.emit(hitbox)
 						Events.camera_shake.emit(2,20)
-
+					else:
+						if not shielded:
+							health.health -= (hitbox.damage * dmg_mult)
+							#print_debug(hitbox.damage)
+							received_damage.emit(hitbox.damage)
+							
+							got_hit.emit(hitbox)
+							Events.camera_shake.emit(2,20)
+	
+	mutex.unlock()
 func hitbox_collision():
 	pass
 

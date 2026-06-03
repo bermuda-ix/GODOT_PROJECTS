@@ -43,10 +43,10 @@ func set_active(_value:bool)->void:
 
 func set_clash_active(_value: bool) -> void:
 	clash_active=_value
-	if _value==true:
-		print_debug("attack_activate")
-	elif _value==false:
-		print_debug("attack_deactivate")
+	#if _value==true:
+		#print_debug("attack_activate")
+	#elif _value==false:
+		#print_debug("attack_deactivate")
 		
 func set_damage(value: int):
 	damage = value
@@ -104,7 +104,7 @@ func _on_impact(_area :Area2D) -> void:
 				#active=false
 				
 		elif _area.is_in_group("player_hitbox"):
-			print_debug("DERGH")
+			#print_debug("DERGH")
 			assert(pc_hitbos==false)
 			#damage = 0
 			knock_back = false
@@ -124,7 +124,7 @@ func _on_impact(_area :Area2D) -> void:
 			stagger.stagger -= 1
 			parried.emit()
 		else:
-			print_debug(_area.get_groups())
+			#print_debug(_area.get_groups())
 			pass
 		active=false
 		clash_active=false
