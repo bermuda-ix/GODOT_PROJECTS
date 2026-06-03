@@ -427,8 +427,7 @@ func _physics_process(delta):
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
 		return
-	#melee_range_failsafe()
-	#counter_attack()
+
 	# Add the gravity.
 	if not is_on_floor():
 		if state_machine.get_active_state()==death:
@@ -449,13 +448,14 @@ func _physics_process(delta):
 			velocity.x= knockback.x
 		else:
 			pass
-
-	
 	move_and_slide()
-	#if player_right:
-		#animated_sprite_2d.flip_h=false
-	#else:
-		#animated_sprite_2d.flip_h=true
+
+	#var _overlapping_hitbox := hit_box.get_overlapping_areas()
+	#print_debug(_overlapping_hitbox)
+	#if not _overlapping_hitbox.is_empty():
+		#assert(hitbox.clash_active)
+
+
 
 func teleport_counter():
 	state_machine.dispatch(&"teleport_counter")
@@ -580,6 +580,7 @@ func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	
 	if anim_name.substr(0, 3)=="atk":
 		#hit_box.active=true
+		hb_collision.set_deferred("disabled", false)
 		movement_handler.face_player_active=false
 		if anim_name!="atk_dash":
 			return
@@ -1206,6 +1207,18 @@ func _on_hit_box_clashed() -> void:
 		melee_attack_manager.set_heavy_atk_min(_heavy_atk_min)
 	
 	stagger.stagger-=1
+	var _current_atk : String = animation_player.current_animation
+	var _atk_clash_anim : String = _current_atk+"_connect"
+	var _atk_clash_anim_end : String = _current_atk+"_end"
+	assert(animation_player.has_animation(_current_atk))
+	var _atk_connect := animation_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
+	#animation_player.seek(_atk_connect, true, false)
+	#print_debug(_atk_clash_anim)
+	#attacking=true
+	#animation_player.stop()
+	animation_player.seek(_atk_connect, true)
+	#animation_player.call_deferred("seek", _atk_connect, true, false)
+	var _cur_segment :float = animation_player.current_animation_position
 	if player_right:
 		knockback.x=-200
 	else:
@@ -1216,19 +1229,19 @@ func _on_hit_box_clashed() -> void:
 	state_machine.dispatch(&"clashed")
 
 func _on_clashed_entered() -> void:
-	#bt_player.blackboard.set_var("staggered", true)
-	print_debug(animation_player.current_animation_position)
-	var _current_atk : String = animation_player.current_animation
-	var _atk_clash_anim : String = _current_atk+"_connect"
-	var _atk_clash_anim_end : String = _current_atk+"_end"
-	var _atk_connect := animation_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
-	#animation_player.seek(_atk_connect, true, false)
-	print_debug(_atk_clash_anim)
-	attacking=true
-	#animation_player.seek(_atk_connect, true, false)
-	animation_player.call_deferred("seek", _atk_connect, true, false)
+	hit_box.attack_clashed=true
+	#var _current_atk : String = animation_player.current_animation
+	#assert(_current_atk!=null)
+	#var _atk_clash_anim : String = _current_atk+"_connect"
+	#var _atk_clash_anim_end : String = _current_atk+"_end"
+	#assert(_current_atk!=null)
+	#var _atk_connect := animation_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
+	##animation_player.seek(_atk_connect, true, false)
+	#print_debug(_atk_clash_anim)
+	#attacking=true
+	##animation_player.seek(_atk_connect, true, false)
+	#animation_player.call_deferred("seek", _atk_connect, true, false)
 	#animation_player.play_section_with_markers(_current_atk, _atk_clash_anim, _atk_clash_anim_end)
-	print_debug(animation_player.current_animation_position)
 	AudioStreamManager.play(SoundFx.SOCAPEX_SWORDSMALL_2)
 
 

@@ -35,10 +35,12 @@ func set_active(_value: bool) -> void:
 		pass
 
 func _ready():
-	connect("area_entered", _on_area_entered)
+	#connect("area_entered", _on_area_entered)
+	area_entered.connect( _on_area_entered)
 	#connect("area_entered", _on_parried)
 	#connect("body_entered", _bullet_hit)
-	connect("body_entered", _knocked_back_enemy_collision)
+	#connect("body_entered", _knocked_back_enemy_collision)
+	body_entered.connect(_knocked_back_enemy_collision)
 	
 	add_child(bullet_buffer)
 	bullet_buffer.autostart=false
@@ -46,7 +48,8 @@ func _ready():
 	bullet_buffer.ignore_time_scale=true
 	bullet_buffer.timeout.connect(bullet_buffer_timeout)
 
-func _on_area_entered(hitbox: HitBox) -> void:
+func _on_area_entered(hitbox: Area2D) -> void:
+	print_debug("area=", hitbox)
 	if not hitbox.active:
 		return
 	elif not active:
@@ -56,6 +59,9 @@ func _on_area_entered(hitbox: HitBox) -> void:
 	
 	elif health.health<=0:
 		return
+		
+
+	
 	else:
 		assert(shielded!=true)
 		hitbox.active=false
@@ -64,6 +70,13 @@ func _on_area_entered(hitbox: HitBox) -> void:
 				dmg_mult=3
 			else:
 				dmg_mult=1
+			#############################################
+			#Replace with bullet knockback once finished#
+			#############################################
+			if hitbox.is_in_group("bullet"):
+				return
+			
+			
 			if hitbox.knock_back:
 				if hitbox.global_position.x > global_position.x:
 					impact_dir_right=true
@@ -105,7 +118,7 @@ func bullet_impact(_damage : int = 1) -> void:
 	bullet_buffer.start(0.2)
 	bullet_damage+=1
 
-func _knocked_back_enemy_collision(_body : CharacterBody2D):
+func _knocked_back_enemy_collision(_body : Node2D):
 	var _launch_strength := 0
 	if not knockback_active:
 		return

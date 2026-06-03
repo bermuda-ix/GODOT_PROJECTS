@@ -3873,7 +3873,6 @@ avoidance_enabled = true
 debug_enabled = true
 
 [node name="AnimatedSprite2D" parent="." index="1"]
-modulate = Color(0.454524, 0.454524, 0.454524, 1)
 self_modulate = Color(0.521141, 0.521141, 0.521141, 1)
 texture_filter = 2
 material = SubResource("ShaderMaterial_chkyp")
@@ -3914,7 +3913,7 @@ max_polyphony = 4
 material = SubResource("ShaderMaterial_fliv7")
 instance_shader_parameters/FloatParameter = 0.002000000095
 instance_shader_parameters/GlowColor = Color(3.2944162, 1.6634394, 1.0782797, 1)
-instance_shader_parameters/MaskColor = Color(0.45452422, 0.45452428, 0.45452422, 1)
+instance_shader_parameters/MaskColor = Color(0.21950114, 0.21950099, 0.21950093, 1)
 position = Vector2(-28, 15)
 sprite_frames = SubResource("SpriteFrames_725ad")
 animation = &"atk_1"
@@ -3985,7 +3984,7 @@ position = Vector2(0, -24)
 script = ExtResource("101_6tb62")
 
 [node name="HurtBox" parent="." index="23" node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["regular_enemy_hb"]]
-collision_mask = 8397504
+collision_mask = 8388800
 priority = 1
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
@@ -4018,11 +4017,13 @@ collision_layer = 1024
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" index="0" unique_id=524693305]
+visible = false
 shape = SubResource("RectangleShape2D_0c6of")
 
 [node name="BulletDetection" parent="." index="26" unique_id=1193340460 instance=ExtResource("102_sqnmd")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection" index="0" unique_id=558004549]
+visible = false
 position = Vector2(-20, 0)
 shape = SubResource("CircleShape2D_4yjj7")
 

@@ -3,8 +3,9 @@ extends RigidBody2D
 const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 @export var SPEED : float = 100 : set = set_speed, get = get_speed
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
-@onready var damage : int = 1 : set = set_damage, get = get_damage
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
+
+@onready var projectile_hitbox: ProjectileHitBox = $ProjectileHitbox
 
 
 
@@ -40,10 +41,10 @@ func get_speed() -> float:
 	return SPEED
 
 func set_damage(value : int) -> void:
-	damage=value
+	projectile_hitbox.damage=value
 
 func get_damage() -> int:
-	return damage
+	return projectile_hitbox.damage
 
 func _on_visible_on_screen_enabler_2d_screen_exited():
 	queue_free()

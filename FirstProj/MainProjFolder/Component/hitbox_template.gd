@@ -14,6 +14,7 @@ signal hit_success
 @export var active : bool = false : set = set_active
 @export var clash_active : bool = false : set = set_clash_active
 @export var heavy_attack : bool = false
+@export var attack_clashed : bool = false
 
 @export var launch : bool = false
 @export var knock_back : bool = false
@@ -28,7 +29,8 @@ signal hit_success
 var collision_shape : CollisionShape2D
 
 func _ready():
-	connect("area_entered", _on_impact)
+	#connect("area_entered", _on_impact)
+	area_entered.connect(_on_impact)
 	print_debug(get_groups())
 	collision_shape=get_tree().get_first_node_in_group("colliding_hitbox_shape")
 
@@ -53,14 +55,22 @@ func get_damage() -> int:
 	return damage
 
 func refresh_collision() -> void:
+	if attack_clashed:
+		attack_clashed=false
+		return
 	clash_active=false
 	collision_shape.set_deferred("disabled", true)
 	collision_shape.set_deferred("disabled", false)
 
 func _on_impact(_area :Area2D) -> void:
 	
+	##############################################
+	#Replace with bullet defelction once finished#
+	##############################################
+	if _area.is_in_group("bullet"):
+		return
+	
 	if not clash_active:
-		print_debug(get_parent())
 		return
 	
 	if active and not heavy_attack:
@@ -70,7 +80,7 @@ func _on_impact(_area :Area2D) -> void:
 	if _area!= null:
 		
 		if _area.is_in_group("hitbox"):
-			print_debug("ERGH")
+			_area.attack_clashed=true
 			if "heavy_attack" in _area:
 				if _area.heavy_attack:
 					if _area.global_position.x > global_position.x:
@@ -83,6 +93,8 @@ func _on_impact(_area :Area2D) -> void:
 				else:
 					#pass
 					#damage = 0
+					if not _area.clash_active:
+						return
 					knock_back = false
 					launch = false
 					clashed.emit()
@@ -97,6 +109,7 @@ func _on_impact(_area :Area2D) -> void:
 			#damage = 0
 			knock_back = false
 			launch = false
+			attack_clashed=true
 			if _area.knock_back:
 				clash_knock_back.emit(_area.launch_strength, _area.knock_back_strength)
 				Events.camera_shake.emit(2,20)
@@ -110,10 +123,6 @@ func _on_impact(_area :Area2D) -> void:
 			#print_debug("parried!")
 			stagger.stagger -= 1
 			parried.emit()
-		#elif _area.is_in_group("regular_enemy_hb"):
-			#print_debug(_area.get_groups())
-		elif _area.is_in_group("regular_enemy_hb"):
-			pass
 		else:
 			print_debug(_area.get_groups())
 			pass

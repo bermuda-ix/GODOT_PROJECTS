@@ -4,6 +4,7 @@ const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 @export var SPEED : float = 100 : set = set_speed, get = get_speed
 @onready var damage : int = 1 : set = set_damage, get = get_damage
 
+
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
@@ -69,6 +70,12 @@ func set_damage(value : int) -> void:
 	damage=value
 
 func get_damage() -> int:
+	return damage
+
+func set_stagger_damage(value : int) -> void:
+	damage=value
+
+func get_stagger_damage() -> int:
 	return damage
 
 func _on_body_entered(body: Node) -> void:

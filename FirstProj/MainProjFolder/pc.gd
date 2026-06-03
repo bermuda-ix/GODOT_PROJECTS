@@ -426,6 +426,7 @@ func _init_state_machine():
 	
 	#Hit
 	state_machine.add_transition(parry_success_state, hit, &"got_hit")
+	state_machine.add_transition(attack_state, hit, &"got_hit")
 	
 	#Attack Combos
 	#state_machine.add_transition(attack_state, special_attack, &"attack_to_special")
@@ -1761,7 +1762,7 @@ func _on_hurt_box_got_hit(_hitbox):
 			return
 		elif health.health<=0:
 			return
-		elif _hitbox.is_in_group("regular_enemy_hb"):
+		elif _hitbox.is_in_group("hitbox"):
 			if hit_timer.is_stopped():
 				AudioStreamManager.play(SoundFx.PUNCH_DESIGNED_HEAVY_12)
 			player_hit.emitting=true
@@ -1770,19 +1771,19 @@ func _on_hurt_box_got_hit(_hitbox):
 			hurt_box_detect.call_deferred("set_disabled", true)
 			hit_timer.start(0.2)
 			stagger.stagger-=1
-			if state_machine.get_previous_active_state()!=flip_state and state_machine.get_previous_active_state()!=attack_state:
-				#if parry_success_state.get_previous_active_state()==heavy_riposte:
-					#if target_right:
-						#knockback.x=400
-					#else:
-						#knockback.x=-400
-				#else:
-					#if hb_dir_right:
-						#knockback.x=-15
-					#else:
-						#knockback.x=15
-				hit.hit_anim="hit"
-				state_machine.dispatch(&"got_hit")
+			#if state_machine.get_previous_active_state()!=flip_state and state_machine.get_previous_active_state()!=attack_state:
+				##if parry_success_state.get_previous_active_state()==heavy_riposte:
+					##if target_right:
+						##knockback.x=400
+					##else:
+						##knockback.x=-400
+				##else:
+					##if hb_dir_right:
+						##knockback.x=-15
+					##else:
+						##knockback.x=15
+			hit.hit_anim="hit"
+			state_machine.dispatch(&"got_hit")
 			set_stagger()
 			
 		elif hitbox.is_in_group("heavy_hitbox"):
@@ -1846,10 +1847,8 @@ func _on_animation_player_animation_finished(anim_name):
 		hit_success=false
 		attacking=false
 		hit_box.clash_active=false
-		#if input_axis!=0:
-			#anim_player.play(walk_anim)
-		#else:
-			#anim_player.play("idle")
+		hb_collision.set_deferred("disabled", true)
+		
 		match anim_name:
 			"Attack_Counter":
 				counter_flag=false
@@ -2200,7 +2199,7 @@ func atk_state_debug():
 func _on_counter_box_area_entered(area):
 	
 		
-	if area.is_in_group("regular_enemy_hb"):
+	if area.is_in_group("hitbox"):
 		#print_debug("enemy dodge")
 		state_machine.dispatch(&"dodge_successful")
 		#clash_power.clash_power += 1
@@ -2631,6 +2630,7 @@ func _on_jump_state_entered() -> void:
 
 func _on_attack_state_exited() -> void:
 	set_shotgun_free_rotate(true)
+	hb_collision.set_deferred("disabled", true)
 
 
 func _on_stagger_stagger_decreased(diff: int) -> void:
@@ -2656,6 +2656,7 @@ func _on_knockback(_launch_strength : float, _knockback_strength : float, impact
 		print_debug("team rockets jerking off again")
 
 func _on_hit_box_clashed() -> void:
+	hb_collision.set_deferred("disabled", true)
 	clash_power.increase_clash()
 	if unlocked:
 		lockon()
@@ -2665,11 +2666,12 @@ func _on_hit_box_clashed() -> void:
 	var _current_atk : String = anim_player.current_animation
 	var _atk_clash_anim : String = _current_atk+"_connect"
 	var _atk_clash_anim_end : String = _current_atk+"_end"
+	assert(anim_player.has_animation(_current_atk))
 	var _atk_connect := anim_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
 	#animation_player.seek(_atk_connect, true, false)
 	#print_debug(_atk_clash_anim)
 	attacking=true
-	anim_player.seek(_atk_connect, true, true)
+	#anim_player.seek(_atk_connect, true, true)
 	#print_debug(_atk_clash_anim)
 	#anim_player.stop()
 	#anim_player.play_section_with_markers(_current_atk, _atk_clash_anim)
