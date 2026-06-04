@@ -45,10 +45,10 @@ func set_active(_value:bool)->void:
 
 func set_clash_active(_value: bool) -> void:
 	clash_active=_value
-	#if _value==true:
-		#print_debug("attack_activate")
-	#elif _value==false:
-		#print_debug("attack_deactivate")
+	if _value==true:
+		print_debug("attack_activate")
+	elif _value==false:
+		print_debug("attack_deactivate")
 		
 func set_damage(value: int):
 	damage = value
@@ -128,7 +128,8 @@ func _on_impact(_area :Area2D) -> void:
 		else:
 			#print_debug(_area.get_groups())
 			pass
-		active=false
-		clash_active=false
+		#active=false
+		if active:
+			clash_active=false
 	
 	mutex.unlock()
