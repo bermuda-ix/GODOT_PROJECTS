@@ -1171,6 +1171,7 @@ func dash_shoot_attack():
 	state_machine.dispatch(&"dodge_shoot")
 	
 func heavy_dash_attack_enter():
+	return
 	if state_machine.get_active_state()==attack_state:
 		return
 	attack_timer.paused=true
@@ -1448,12 +1449,13 @@ func _on_dodge_state_entered() -> void:
 	stagger_recover.stop()
 	dodging.emit()
 	hurt_box.active=false
+	set_collision_layer_value(2, false)
 
 func _on_dodge_state_exited() -> void:
 	stagger_recover.start()
 	animated_sprite_2d.position.x=8.0
 	hurt_box.active=true
-
+	set_collision_layer_value(2, true)
 
 func lockon():
 	var target_dist : Vector2 = Vector2.ZERO
@@ -2200,8 +2202,9 @@ func _on_counter_box_area_entered(area):
 	
 		
 	if area.is_in_group("hitbox"):
+		pass
 		#print_debug("enemy dodge")
-		state_machine.dispatch(&"dodge_successful")
+		#state_machine.dispatch(&"dodge_successful")
 		#clash_power.clash_power += 1
 		
 		

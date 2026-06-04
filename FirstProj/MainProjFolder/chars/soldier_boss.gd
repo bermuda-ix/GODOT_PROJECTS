@@ -387,7 +387,7 @@ func _process(_delta):
 		test_function()
 		
 	if player.state_machine.get_active_state()==player.dodge_state:
-		set_collision_mask_value(2, false)
+		set_collision_mask_value(2, true)
 	else:
 		set_collision_mask_value(2, true)
 		

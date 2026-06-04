@@ -26,6 +26,8 @@ signal hit_success
 @onready var shield_hit : bool = false
 @onready var impact_dir_right : bool = false
 
+@onready var mutex : Mutex = Mutex.new()
+
 var collision_shape : CollisionShape2D
 
 func _ready():
@@ -63,7 +65,7 @@ func refresh_collision() -> void:
 	collision_shape.set_deferred("disabled", false)
 
 func _on_impact(_area :Area2D) -> void:
-	
+	mutex.lock()
 	##############################################
 	#Replace with bullet defelction once finished#
 	##############################################
@@ -128,3 +130,5 @@ func _on_impact(_area :Area2D) -> void:
 			pass
 		active=false
 		clash_active=false
+	
+	mutex.unlock()
