@@ -915,7 +915,7 @@ func _on_attack_updated(delta: float) -> void:
 		
 func _on_hit_box_area_entered(_area: Area2D) -> void:
 	#print_debug(_area.get_groups())
-	if dash_attacking:
+	if dash_attacking and not attacking:
 		animation_player.play_section_with_markers(&"atk_dash", &"atk_dash_hit")
 		hit_stop.hit_stop(0.1,1)
 		

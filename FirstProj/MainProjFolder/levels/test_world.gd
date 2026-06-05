@@ -33,7 +33,7 @@ var boss_preload
 @onready var current_heat : int = 0
 
 var player : PlayerEntity
-@onready var camera_pos: camera_position = $CameraPos
+@onready var camera_pos: camera_position = $CameraPos  
 @export var starting_pos: Array[Node2D]
 @onready var init_starting_pos: Node2D = $StartingPos/Default
 signal get_entry_position

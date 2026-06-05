@@ -12,7 +12,7 @@ func _enter() -> void:
 	#print_debug("entering attack")
 	pc.velocity=Vector2.ZERO
 	counter_dist = pc.global_position.x-10*pc.face_dir
-	pc.attacking=true
+	#pc.attacking=true
 	starting = pc.global_position.x
 
 	
