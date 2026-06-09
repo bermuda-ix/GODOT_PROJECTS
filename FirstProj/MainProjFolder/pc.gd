@@ -1033,11 +1033,12 @@ func attack_handler():
 	var anim_player_time : float = anim_player.current_animation_position
 	
 	if Input.is_action_pressed("attack"):
-		if state_machine.get_active_state()==idle and attacking:
+		if state_machine.get_active_state()==idle and (attacking or charging):
+			return
+		elif state_machine.get_active_state()==attack_state and charging:
 			return
 			
-			
-		elif attack_state.get_active_state()==attack_1:
+		if attack_state.get_active_state()==attack_1:
 			if attacking:
 				return
 			else:
@@ -1046,6 +1047,8 @@ func attack_handler():
 		if charge_timer.is_stopped():
 			
 			#attacking=true
+			print_debug(state_machine.get_active_state())
+			assert(not charging)
 			charge_timer.start(0.2)
 			#attack_timer.start(.2)
 			#attack_timer.paused=true
@@ -1057,11 +1060,25 @@ func attack_handler():
 		
 		if not charge_timer.is_stopped():
 			charge_timer.stop()
+			
+		if not charging:
+			#charging=false
+			light_attack()
+		else:
+			charging=false
+			return
+			
+	
+		charging=false
 		
 		if state_machine.get_active_state()==idle and attacking:
 			attacking=false
 			
+			
 		elif state_machine.get_active_state()==attack_state:
+			
+			if state_machine.get_active_state()==charged_attack:
+				return
 			if attacking:
 				attacking=false
 			if not charging:
@@ -1077,15 +1094,8 @@ func attack_handler():
 					attack_timer.start(0.1)
 					attack_timer.paused=false
 				
-		else:
 			
 			
-			if not charging:
-				#charging=false
-				light_attack()
-			else:
-				charging=false
-		
 	
 	
 	
@@ -1101,12 +1111,12 @@ func _on_charge_timer_timeout() -> void:
 			state_machine.dispatch(&"start_attack")
 		attack_state.dispatch(&"charge_attack")
 		assert(state_machine.get_active_state()==attack_state)
-		charging=true
+		
 		charging_attack.anim_second+=0.1
 		
-		if Input.is_action_pressed("attack"):
-			#attacking=false
-			charging=false
+		#if Input.is_action_pressed("attack"):
+			##attacking=false
+			#charging=false
 			
 			
 	
