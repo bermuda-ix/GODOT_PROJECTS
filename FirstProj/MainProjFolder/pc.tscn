@@ -9752,10 +9752,10 @@ speed = 200.0
 script = ExtResource("240_77ty3")
 hit_box = NodePath("../../../AnimatedSprite2D/HitBox")
 
-[node name="ChargingAttack" type="LimboState" parent="StateMachine/AttackState" unique_id=2106634846 node_paths=PackedStringArray("anim_player", "vfx_player", "hit_box", "pc")]
+[node name="ChargingAttack" type="LimboState" parent="StateMachine/AttackState" unique_id=2106634846 node_paths=PackedStringArray("anim_player", "hit_fx_player", "hit_box", "pc")]
 script = ExtResource("240_47q3x")
 anim_player = NodePath("../../../AnimationPlayer")
-vfx_player = NodePath("../../../HitFXPlayer")
+hit_fx_player = NodePath("../../../HitFXPlayer")
 hit_box = NodePath("../../../AnimatedSprite2D/HitBox")
 pc = NodePath("../../..")
 

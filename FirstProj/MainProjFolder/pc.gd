@@ -540,6 +540,7 @@ func _init_attack_states():
 	#attack_state.add_transition(heavy_attack_2, special_combo_2, &"next_attack")
 	
 	attack_state.add_transition(attack_1, charging_attack, &"charge_attack")
+	attack_state.add_transition(charging_attack, charging_attack, &"charge_attack")
 	#attack_state.add_transition(attack_2, charging_attack, &"charge_attack")
 	#attack_state.add_transition(attack_3, charging_attack, &"charge_attack")
 	attack_state.add_transition(heavy_attack_1, charging_attack, &"charge_attack")
@@ -626,14 +627,7 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("DEBUG_KEY"):
 		clash_power.clash_power+=1
-	#if attacking:
-		#if attack_timer.is_stopped():
-			#attacking=false
-	#Input for testing various things
-	#if Input.is_action_just_pressed("DEBUG_KEY"):
-		#slow_down_aim()
-	#elif Input.is_action_just_released("DEBUG_KEY"):
-		#end_slow_down()
+	
 
 signal vel_y_changed
 
@@ -763,7 +757,7 @@ func return_to_idle():
 		#"flip end")
 		state_machine.dispatch(&"return_to_idle")
 		set_collision_mask_value(16384, true)
-		attacking=false
+		#attacking=false
 	
 # Handle jump.
 func jump(input_axis, delta):
@@ -1038,33 +1032,54 @@ func attack_handler():
 	
 	var anim_player_time : float = anim_player.current_animation_position
 	
-	
-	
 	if Input.is_action_pressed("attack"):
-		#attacking=true 
-		
-		if attack_state.get_active_state()==attack_1 and attacking:
+		if state_machine.get_active_state()==idle and attacking:
 			return
+			
+			
+		elif attack_state.get_active_state()==attack_1:
+			if attacking:
+				return
+			else:
+				attacking=true
+	
 		if charge_timer.is_stopped():
 			
 			#attacking=true
 			charge_timer.start(0.2)
-			attack_timer.start(.2)
-			attack_timer.paused=true
+			#attack_timer.start(.2)
+			#attack_timer.paused=true
+		else:
+			return
 
 			
 	elif Input.is_action_just_released("attack"):
 		
+		if not charge_timer.is_stopped():
+			charge_timer.stop()
 		
-		if state_machine.get_active_state()==attack_state:
+		if state_machine.get_active_state()==idle and attacking:
+			attacking=false
+			
+		elif state_machine.get_active_state()==attack_state:
 			if attacking:
 				attacking=false
+			if not charging:
+				#charging=false
+				light_attack()
 			else:
-				attack_timer.start(0.01)
+				charging=false
+				
+				if attack_timer.time_left<0.01:
+					attack_timer.start(0.05)
+					attack_timer.paused=false
+				else:
+					attack_timer.start(0.1)
+					attack_timer.paused=false
+				
 		else:
 			
-			if not charge_timer.is_stopped():
-				charge_timer.stop()
+			
 			if not charging:
 				#charging=false
 				light_attack()
@@ -1077,21 +1092,17 @@ func attack_handler():
 			
 		
 func _on_charge_timer_timeout() -> void:
+	
 	print_debug(hit_box.damage,", ", clash_power.clash_power)
 	if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
 		light_attack()
 	else:
 		if state_machine.get_active_state()!=attack_state:
 			state_machine.dispatch(&"start_attack")
-		else:
-			attack_state.dispatch(&"next_attack")
-		
 		attack_state.dispatch(&"charge_attack")
 		assert(state_machine.get_active_state()==attack_state)
 		charging=true
-		hit_box.heavy_attack=true
-		hit_box.damage+=1
-		hit_fx_player.play("charge_attack")
+		charging_attack.anim_second+=0.1
 		
 		if Input.is_action_pressed("attack"):
 			#attacking=false
@@ -1162,7 +1173,8 @@ func regular_attack() -> void:
 					#if not attacking:
 						#attacking=true
 					attack_state.dispatch(&"charged")
-					
+				else:
+					state_machine.dispatch(&"next_attack")
 					
 				#elif attack_state.get_active_state()==charged_attack:
 					#print_debug(attack_state.get_active_state())
@@ -1951,10 +1963,7 @@ func set_start_pos(checkpoint_position):
 func _on_animation_player_animation_finished(anim_name):
 	cutscene_handler.anim_count_up()
 	if state_machine.get_active_state()==attack_state:
-		#"attack finished")
 		hit_success=false
-		attacking=false
-		#charging=false
 		hit_box.clash_active=false
 		hb_collision.set_deferred("disabled", true)
 		
@@ -2056,25 +2065,26 @@ func _on_animation_player_animation_finished(anim_name):
 
 func _on_attack_timer_timeout():
 	if Input.is_action_pressed("attack"):
-		anim_player.play("idle")
+		state_machine.dispatch(&"return_to_idle")
 		return
 	
 	if state_machine.get_active_state()==parry_success_state or attack_state.get_active_state()==attack_closer:
 		return
 	atk_chain = 0
 	attack_combo = "Attack"
+	attack_1.attack = "Attack"
 	
 	if input_axis!=0:
 		state_machine.dispatch(&"resume_walking")
 	else:
 		#return
 		state_machine.dispatch(&"return_to_idle")
+		assert(state_machine.get_active_state()==idle)
 	#attack_state.dispatch(&"reset_combo")
 	attack_state.initial_state=attack_1
 	sp_atk_chn = 0
 	atk_1_resume=false
 	atk_2_resume=false
-	#attacking=false
 
 func load_player_data():
 	var file = FileAccess.open("user://player_data/stats/player_stats.txt", FileAccess.READ)
@@ -2412,9 +2422,7 @@ func _on_animation_player_animation_started(anim_name):
 		#s_atk=true
 	elif anim_name=="shotgun_finish":
 		print_debug("heavy finisher")
-	#elif anim_name=="idle":
-		#if not Input.is_action_pressed("attack"):
-			#attacking=false
+
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	if health.health<=0:
@@ -2493,7 +2501,6 @@ func _on_hit_stop_hit_stop_finished() -> void:
 func _on_idle_entered() -> void:
 	anim_player.play("idle")
 	attack_timer.paused=false
-	attacking=false
 
 
 func _on_state_machine_active_state_changed(current: LimboState, _previous: LimboState) -> void:
