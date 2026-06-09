@@ -4,8 +4,11 @@ extends LimboState
 @export var vfx_player : AnimationPlayer
 @export var hit_box : HitBox
 @export var pc : PlayerEntity
+@export var attack := "Attack"
+
 
 func _enter() -> void:
+	anim_player.play(attack)
 	anim_player.pause()
 	hit_box.heavy_attack=true
 	

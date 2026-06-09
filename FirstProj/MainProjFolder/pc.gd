@@ -1038,15 +1038,18 @@ func attack_handler():
 	
 	var anim_player_time : float = anim_player.current_animation_position
 	
-	if Input.is_action_pressed("attack") and (attack_state.get_active_state()!=attack_1):
+	if attack_state.get_active_state()==attack_1:
+		return
+	
+	if Input.is_action_pressed("attack"):
 		#attacking=true 
 		
 		
 		if charge_timer.is_stopped():
-			if attack_state.get_active_state()==charged_attack:
-				state_machine.dispatch(&"start_attack")
+			#if attack_state.get_active_state()==charged_attack:
+				#state_machine.dispatch(&"start_attack")
 			#attack_state.dispatch(&"charge_attack")
-			charging=true
+			
 			attacking=true
 			charge_timer.start(0.2)
 			attack_timer.start(.2)
@@ -1060,7 +1063,6 @@ func attack_handler():
 		#else:
 			#attacking=true
 
-		charging=false
 
 		#if state_machine.get_active_state()!=attack_state:
 			#attacking=false
@@ -1071,6 +1073,8 @@ func attack_handler():
 		if not charging:
 			#charging=false
 			light_attack()
+		else:
+			charging=false
 	
 	
 	
@@ -2053,16 +2057,19 @@ func _on_animation_player_animation_finished(anim_name):
 				state_machine.dispatch(&"return_to_idle")
 			"Attack":
 				attack_1.attack=light_attacks[1]
+				charging_attack.attack=light_attacks[1]
 				#attack_state_stack.push_front(attack_1)
 				attack_timer.start(0.1)
 				attack_timer.paused=false
 			"Attack_2":
 				attack_1.attack=light_attacks[2]
+				charging_attack.attack=light_attacks[2]
 				#attack_state_stack.push_front(attack_2)
 				attack_timer.start(0.1)
 				attack_timer.paused=false
 			"Attack_3":
 				attack_1.attack=light_attacks[0]
+				charging_attack.attack=light_attacks[0]
 				#attack_state_stack.push_front(attack_3)
 				attack_timer.start(0.1)
 				attack_timer.paused=false
