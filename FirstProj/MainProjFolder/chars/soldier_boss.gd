@@ -313,6 +313,8 @@ func _init_state_machine():
 	state_machine.add_transition(dying, death, dying.success_event)
 	state_machine.add_transition(state_machine.ANYSTATE, staggered, &"staggered")
 	
+	state_machine.add_transition(attack, hit, &"interrupt_knockback")
+	
 	state_machine.add_transition(attack, clashed, &"clashed")
 	state_machine.add_transition(clashed, attack, &"resume_attack")
 	
@@ -1227,6 +1229,16 @@ func _on_hit_box_clashed() -> void:
 		return
 	#bt_player.blackboard.set_var("staggered", true)
 	state_machine.dispatch(&"clashed")
+
+func _on_hit_box_clash_interrupt(_launch: float, _knockback: float, _impact_dir_right: bool, _damage: int) -> void:
+	hit.hit_anim="knocked_back"
+	if player_right:
+		knockback.x=-_knockback
+	else: 
+		knockback.x=_knockback
+	velocity.y=-_launch
+	state_machine.dispatch(&"interrupt_knockback")
+	stagger.stagger-= _damage
 
 func _on_clashed_entered() -> void:
 	hit_box.attack_clashed=true
