@@ -10,3 +10,7 @@ func _enter() -> void:
 	pc.hit_fx_player.speed_scale=1
 	pc.hit_animation="hit_landed"
 	pc.heavy_attack_flag=false
+	pc.attacking=true
+
+func _exit() -> void:
+	pass

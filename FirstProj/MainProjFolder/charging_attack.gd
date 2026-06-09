@@ -8,7 +8,7 @@ extends LimboState
 
 
 func _enter() -> void:
-	anim_player.play(attack)
+	#anim_player.play(attack)
 	anim_player.pause()
 	hit_box.heavy_attack=true
 	
