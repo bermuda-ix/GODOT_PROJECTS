@@ -12,8 +12,7 @@ func _enter() -> void:
 	#anim_player.play(attack)
 	anim_player.pause()
 	anim_player.seek(anim_second)
-	hit_box.heavy_attack=true
-	hit_box.heavy_attack=true
+
 	hit_box.damage+=1
 	hit_fx_player.play("charge_attack")
 	

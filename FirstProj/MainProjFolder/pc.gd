@@ -1169,6 +1169,8 @@ func _on_charge_timer_timeout() -> void:
 	if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
 		light_attack()
 	else:
+		if  not hit_box.heavy_attack:
+			hit_box.heavy_attack=true
 		if heavy_attacking:
 			attack_state.dispatch(&"heavy_combo")
 			attack_state.dispatch(&"charge_attack")
@@ -1178,13 +1180,7 @@ func _on_charge_timer_timeout() -> void:
 				state_machine.dispatch(&"start_attack")
 			attack_state.dispatch(&"charge_attack")
 			charging_attack.anim_second+=0.1
-		
-		#if Input.is_action_pressed("attack"):
-			##attacking=false
-			#charging=false
-			
-			
-	
+
 
 func start_attack_timer() -> void:
 	attack_timer.start(0.2)
@@ -2160,7 +2156,7 @@ func _on_attack_timer_timeout():
 	else:
 		#return
 		state_machine.dispatch(&"return_to_idle")
-		assert(state_machine.get_active_state()==idle)
+		#assert(state_machine.get_active_state()==idle)
 	#attack_state.dispatch(&"reset_combo")
 	attack_state.initial_state=attack_1
 	sp_atk_chn = 0
@@ -2895,19 +2891,20 @@ func _on_hit_box_clashed() -> void:
 	#hit_fx_player.play("clashed")
 	hit_animation="clashed"
 	hit_sfx()
-	var _current_atk : String = anim_player.current_animation
+	var _current_atk : String
+	if heavy_attacking:
+		_current_atk = heavy_attack_1.attack
+	else:
+		_current_atk = attack_1.attack
 	var _atk_clash_anim : String = _current_atk+"_connect"
 	var _atk_clash_anim_end : String = _current_atk+"_end"
 	assert(anim_player.has_animation(_current_atk))
 	var _atk_connect := anim_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
-	#animation_player.seek(_atk_connect, true, false)
-	#print_debug(_atk_clash_anim)
-	#attacking=true
-	#anim_player.seek(_atk_connect, true, true)
-	#print_debug(_atk_clash_anim)
-	#anim_player.stop()
-	#anim_player.play_section_with_markers(_current_atk, _atk_clash_anim)
-	#attacking=true
+	if attack_state.get_active_state()==charging_attack:
+		charge_timer.stop()
+		charge_timer.timeout.emit()
+		
+	
 	hit_box.active=false
 	
 

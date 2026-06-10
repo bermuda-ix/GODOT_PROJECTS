@@ -3991,7 +3991,7 @@ immortality = false
 [node name="AttackTimer" type="Timer" parent="." index="16" unique_id=1356014824]
 one_shot = true
 
-[node name="StaggerTimer" type="Timer" parent="." index="17" unique_id=240990295]
+[node name="StunTimer" type="Timer" parent="." index="17" unique_id=240990295]
 one_shot = true
 
 [node name="ClashPower" type="Node" parent="." index="18" unique_id=374956815]
@@ -4369,6 +4369,7 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
 [connection signal="timeout" from="ClashTimer" to="." method="_on_clash_timer_timeout"]
 [connection signal="timeout" from="LaunchTimer" to="." method="_on_launch_timer_timeout"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

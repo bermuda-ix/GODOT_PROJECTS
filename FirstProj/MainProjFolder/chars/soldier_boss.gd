@@ -69,7 +69,8 @@ var immortal = false
 @onready var stagger = $Stagger
 #@onready var hurt_box_weak_point = $AnimatedSprite2D/HurtBox_WeakPoint
 @onready var attack_timer: Timer = $AttackTimer
-@onready var stagger_timer: Timer = $StaggerTimer
+@onready var stun_timer: Timer = $StunTimer
+
 @onready var gpu_particles_2d: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
 @onready var dodge_timer: Timer = $DodgeTimer
 @onready var counter_timer: Timer = $CounterTimer
@@ -1239,6 +1240,13 @@ func _on_hit_box_clash_interrupt(_launch: float, _knockback: float, _impact_dir_
 	velocity.y=-_launch
 	state_machine.dispatch(&"interrupt_knockback")
 	stagger.stagger-= _damage
+	bt_player.blackboard.set_var("staggered", true)
+	hurt_box_collision.set_deferred("disabled", false)
+	hurt_box.active=true
+	stun_timer.start(1)
+	
+func _on_stun_timer_timeout() -> void:
+	bt_player.blackboard.set_var("staggered", false)
 
 func _on_clashed_entered() -> void:
 	hit_box.attack_clashed=true

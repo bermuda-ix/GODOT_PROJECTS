@@ -13,7 +13,7 @@ signal hit_success
 @export var stagger_damage : bool = false
 @export var active : bool = false : set = set_active
 @export var clash_active : bool = false : set = set_clash_active
-@export var heavy_attack : bool = false
+@export var heavy_attack : bool = false : set = set_heavy_attack
 @export var attack_clashed : bool = false
 
 @export var launch : bool = false
@@ -50,6 +50,11 @@ func set_clash_active(_value: bool) -> void:
 	elif _value==false:
 		print_debug("attack_deactivate")
 		
+func set_heavy_attack(_value: bool) -> void:
+	heavy_attack=_value
+	if _value==false:
+		print_debug("lower cause warcry")
+
 func set_damage(value: int):
 	damage = value
 	
@@ -85,13 +90,16 @@ func _on_impact(_area :Area2D) -> void:
 			_area.attack_clashed=true
 			if "heavy_attack" in _area:
 				if _area.heavy_attack:
-					if _area.global_position.x > global_position.x:
-						impact_dir_right=true
+					if heavy_attack:
+						clashed.emit()
 					else:
-						impact_dir_right=false
-					clash_interrupt.emit(_area.launch_strength, _area.knock_back_strength, impact_dir_right, _area.stagger_damage)
-					Events.camera_shake.emit(3,20)
-					_area.heavy_attack=false
+						if _area.global_position.x > global_position.x:
+							impact_dir_right=true
+						else:
+							impact_dir_right=false
+						clash_interrupt.emit(_area.launch_strength, _area.knock_back_strength, impact_dir_right, _area.stagger_damage)
+						Events.camera_shake.emit(3,20)
+						_area.heavy_attack=false
 				else:
 					#pass
 					#damage = 0
@@ -109,17 +117,29 @@ func _on_impact(_area :Area2D) -> void:
 			#print_debug("DERGH")
 			assert(pc_hitbos==false)
 			#damage = 0
-			knock_back = false
-			launch = false
-			attack_clashed=true
-			if _area.knock_back:
-				clash_knock_back.emit(_area.launch_strength, _area.knock_back_strength)
-				Events.camera_shake.emit(2,20)
-			#elif _area.launch:
-				#clash_launch.emit(40)
+			if _area.heavy_attack:
+					if heavy_attack:
+						clashed.emit()
+					else:
+						if _area.global_position.x > global_position.x:
+							impact_dir_right=true
+						else:
+							impact_dir_right=false
+						clash_interrupt.emit(_area.launch_strength, _area.knock_back_strength, impact_dir_right, _area.stagger_damage)
+						Events.camera_shake.emit(3,20)
+						_area.heavy_attack=false
 			else:
-				
-				clashed.emit()
+				knock_back = false
+				launch = false
+				attack_clashed=true
+				if _area.knock_back:
+					clash_knock_back.emit(_area.launch_strength, _area.knock_back_strength)
+					Events.camera_shake.emit(2,20)
+				#elif _area.launch:
+					#clash_launch.emit(40)
+				else:
+					
+					clashed.emit()
 			#active=false
 		elif _area.is_in_group("ParryBox"):
 			#print_debug("parried!")

@@ -17,7 +17,9 @@ func _enter() -> void:
 	#actor.hurt_box_collision.disabled=true
 	#hurtbox.set_collision_layer_value(7, false)
 	
-	
+func _update(delta: float) -> void:
+	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.3)
+
 func _exit() -> void:
 	#print_debug("hit recovered")
 	#actor.hurt_box_collision.disabled=false

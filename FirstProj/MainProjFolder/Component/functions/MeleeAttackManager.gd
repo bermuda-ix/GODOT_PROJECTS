@@ -78,7 +78,7 @@ func atk_resume_helper() -> void:
 	actor.attacking=false
 
 func heavy_attack_counter() -> bool:
-	var _heavy_atk_chance=randi_range(heavy_atk_min, 50)
+	var _heavy_atk_chance=randi_range(heavy_atk_min, 40)
 	if _heavy_atk_chance >= 50:
 		return true
 	else:
