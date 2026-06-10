@@ -165,6 +165,8 @@
 [ext_resource type="Texture2D" uid="uid://b3hnd70u34bxd" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Sprint/Sprint05.png" id="157_lhcp8"]
 [ext_resource type="Texture2D" uid="uid://dwxmip1r5mrkv" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Sprint/Sprint06.png" id="158_j7bww"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="165_bw5xo"]
+[ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="166_lhcp8"]
+[ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="167_j7bww"]
 
 [sub_resource type="Gradient" id="Gradient_bw5xo"]
 
@@ -3325,6 +3327,14 @@ update_scale = false
 [node name="HitStop" type="Node" parent="." unique_id=341090980]
 script = ExtResource("165_bw5xo")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
+
+[node name="HeatHandler" type="Node" parent="." unique_id=2020869653]
+script = ExtResource("166_lhcp8")
+metadata/_custom_type_script = "uid://2hjmonf4ss5y"
+
+[node name="PersistentDataHandler" type="Node" parent="." unique_id=376773076]
+script = ExtResource("167_j7bww")
+metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 
 [connection signal="play_cutscene" from="BossArena/BossIntro" to="." method="play_cutscene_segment"]
 [connection signal="play_cutscene_list" from="BossArena/BossIntro" to="." method="play_cutscene_queue"]

@@ -840,6 +840,9 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		else:
 			print_debug("kill shot")
 		
+func _on_hurt_box_weakpoint_hit() -> void:
+	pass # Replace with function body.
+
 
 func _on_hurt_box_bullet_hit(_damage: int) -> void:
 	if state_machine.get_active_state()==staggered:
@@ -1231,7 +1234,10 @@ func _on_hit_box_clashed() -> void:
 	#bt_player.blackboard.set_var("staggered", true)
 	state_machine.dispatch(&"clashed")
 
-func _on_hit_box_clash_interrupt(_launch: float, _knockback: float, _impact_dir_right: bool, _damage: int) -> void:
+
+	
+	
+func stunned_hit(_launch: float = 0, _knockback: float = 0, _impact_dir_right: bool = true, _damage: int = 1) -> void:
 	hit.hit_anim="knocked_back"
 	if player_right:
 		knockback.x=-_knockback
@@ -1247,21 +1253,10 @@ func _on_hit_box_clash_interrupt(_launch: float, _knockback: float, _impact_dir_
 	
 func _on_stun_timer_timeout() -> void:
 	bt_player.blackboard.set_var("staggered", false)
+	hurt_box_collision.set_deferred("disabled", false)
 
 func _on_clashed_entered() -> void:
 	hit_box.attack_clashed=true
-	#var _current_atk : String = animation_player.current_animation
-	#assert(_current_atk!=null)
-	#var _atk_clash_anim : String = _current_atk+"_connect"
-	#var _atk_clash_anim_end : String = _current_atk+"_end"
-	#assert(_current_atk!=null)
-	#var _atk_connect := animation_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
-	##animation_player.seek(_atk_connect, true, false)
-	#print_debug(_atk_clash_anim)
-	#attacking=true
-	##animation_player.seek(_atk_connect, true, false)
-	#animation_player.call_deferred("seek", _atk_connect, true, false)
-	#animation_player.play_section_with_markers(_current_atk, _atk_clash_anim, _atk_clash_anim_end)
 	AudioStreamManager.play(SoundFx.SOCAPEX_SWORDSMALL_2)
 
 

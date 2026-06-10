@@ -1896,11 +1896,11 @@ size = Vector2(7, 12)
 
 [sub_resource type="Animation" id="Animation_1ru25"]
 resource_name = "Attack"
-length = 0.55
+length = 0.3
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"Attack_connect",
-"time": 0.32194254
+"time": 0.13333334
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1932,7 +1932,7 @@ tracks/2/path = NodePath("AnimatedSprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.4, 0.5),
+"times": PackedFloat32Array(0, 0.06666667, 0.09999999, 0.13333333, 0.23333333, 0.26666665),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
@@ -2018,7 +2018,7 @@ tracks/9/path = NodePath(".")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0.55),
+"times": PackedFloat32Array(0.3),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -2032,7 +2032,7 @@ tracks/10/path = NodePath("StateMachine/AttackState")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0.16666667),
+"times": PackedFloat32Array(0.06666667),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [200.0],
@@ -2058,7 +2058,7 @@ tracks/12/path = NodePath("AnimatedSprite2D/HitBox:active")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0.28333333, 0.5416667),
+"times": PackedFloat32Array(0.06666666, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -2070,7 +2070,7 @@ tracks/13/path = NodePath("AnimatedSprite2D/HitBox:clash_active")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.5416667),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -2078,11 +2078,11 @@ tracks/13/keys = {
 
 [sub_resource type="Animation" id="Animation_vtlvl"]
 resource_name = "Attack_2"
-length = 0.45
+length = 0.3
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"Attack_2_connect",
-"time": 0.2424757
+"time": 0.23333333
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -2103,7 +2103,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.26666668, 0.33333334, 0.4, 0.5),
+"times": PackedFloat32Array(0, 0.1, 0.13333333, 0.23333333, 0.26666665, 0.4333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
@@ -2189,7 +2189,7 @@ tracks/8/path = NodePath(".")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0.45),
+"times": PackedFloat32Array(0.3),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -2243,7 +2243,7 @@ tracks/12/path = NodePath("AnimatedSprite2D/HitBox:clash_active")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.44166666),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -2255,7 +2255,7 @@ tracks/13/path = NodePath("AnimatedSprite2D/HitBox:active")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0.1, 0.44166666),
+"times": PackedFloat32Array(0.06666667, 0.36666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -2263,11 +2263,11 @@ tracks/13/keys = {
 
 [sub_resource type="Animation" id="Animation_222nm"]
 resource_name = "Attack_3"
-length = 0.45
+length = 0.3
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"Attack_3_connect",
-"time": 0.29137838
+"time": 0.2
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -2288,7 +2288,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.26666668, 0.33333334, 0.4),
+"times": PackedFloat32Array(0, 0.1, 0.13333333, 0.17500001, 0.26666668),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [5, 1, 2, 3, 4]
@@ -2362,7 +2362,7 @@ tracks/7/path = NodePath(".")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.45),
+"times": PackedFloat32Array(0.3),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -2376,7 +2376,7 @@ tracks/8/path = NodePath("StateMachine/AttackState")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0.1),
+"times": PackedFloat32Array(0.06666667),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [200.0],
@@ -2416,10 +2416,10 @@ tracks/11/path = NodePath("AnimatedSprite2D/HitBox:clash_active")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true]
+"values": [true, false]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
@@ -2428,7 +2428,7 @@ tracks/12/path = NodePath("AnimatedSprite2D/HitBox:active")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0.13333334, 0.44166666),
+"times": PackedFloat32Array(0.06666667, 0.36666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]

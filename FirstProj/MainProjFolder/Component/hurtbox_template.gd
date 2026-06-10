@@ -106,6 +106,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 						stagger.stagger -= (hitbox.damage * dmg_mult)
 						received_damage.emit(hitbox.damage)
 						got_hit.emit(hitbox)
+						weakpoint_hit.emit()
 						Events.camera_shake.emit(2,20)
 					else:
 						if not shielded:
