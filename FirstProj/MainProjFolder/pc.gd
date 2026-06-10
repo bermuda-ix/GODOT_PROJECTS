@@ -97,7 +97,9 @@ FLIP,THRUST, HIT, STAGGERED}
 
 @onready var attack_state_stack : Array[LimboState] = []
 @onready var light_attacks : Array[String] = ["Attack", "Attack_2", "Attack_3"]
+@onready var heavy_attacks : Array[String] = ["Heavy_Combo_1", "Heavy_Combo_2", "shotgun_finish"]
 
+@onready var heavy_attacking : bool = false
 @onready var atk_1_resume : bool = false
 @onready var atk_2_resume : bool = false
 
@@ -534,18 +536,18 @@ func _init_attack_states():
 	
 	#Heavy attack Combos
 	attack_state.add_transition(attack_1, heavy_attack_1, &"heavy_combo")
-	attack_state.add_transition(attack_2, heavy_attack_2, &"heavy_combo")
-	attack_state.add_transition(attack_3, special_combo_2, &"heavy_finisher")
+	attack_state.add_transition(attack_1, special_combo_2, &"heavy_finisher")
 
 	#attack_state.add_transition(heavy_attack_2, special_combo_2, &"next_attack")
 	
 	attack_state.add_transition(attack_1, charging_attack, &"charge_attack")
+	attack_state.add_transition(heavy_attack_1, charging_attack, &"charge_attack")
 	attack_state.add_transition(charging_attack, charging_attack, &"charge_attack")
 	#attack_state.add_transition(attack_2, charging_attack, &"charge_attack")
 	#attack_state.add_transition(attack_3, charging_attack, &"charge_attack")
-	attack_state.add_transition(heavy_attack_1, charging_attack, &"charge_attack")
-	attack_state.add_transition(heavy_attack_2, charging_attack, &"charge_attack")
-	attack_state.add_transition(heavy_attack_3, charging_attack, &"charge_attack")
+	
+	#attack_state.add_transition(heavy_attack_2, charging_attack, &"charge_attack")
+	#attack_state.add_transition(heavy_attack_3, charging_attack, &"charge_attack")
 	
 	attack_state.add_transition(charging_attack, charged_attack, &"charged")
 	
@@ -555,8 +557,8 @@ func _init_attack_states():
 	
 	
 	#Resume Combos
-	attack_state.add_transition(special_combo, attack_2, &"combo_resume")
-	attack_state.add_transition(special_combo, attack_3, &"combo_resume_2")
+	#attack_state.add_transition(special_combo, attack_2, &"combo_resume")
+	#attack_state.add_transition(special_combo, attack_3, &"combo_resume_2")
 	
 	attack_state.add_transition(attack_state.ANYSTATE, attack_1, &"reset_combo")
 
@@ -1061,12 +1063,12 @@ func attack_handler():
 		if not charge_timer.is_stopped():
 			charge_timer.stop()
 			
-		if not charging:
+		if not charging and not attacking:
 			#charging=false
 			light_attack()
 		else:
 			charging=false
-			return
+			#return
 			
 	
 		charging=false
@@ -1097,8 +1099,68 @@ func attack_handler():
 			
 			
 	
+func heavy_combos():
+	if Input.is_action_pressed("special_attack") and not Input.is_action_pressed("attack"):
+		
+		if state_machine.get_active_state()==idle and (attacking or charging):
+			return
+		elif state_machine.get_active_state()==attack_state and charging:
+			return
+			
+		if attack_state.get_active_state()==heavy_attack_1:
+			if attacking:
+				return
+			else:
+				attacking=true
 	
+		if charge_timer.is_stopped():
+			heavy_attacking=true
+			#attacking=true
+			charging_attack.attack=heavy_attack_1.attack
+			print_debug(state_machine.get_active_state())
+			assert(not charging)
+			charge_timer.start(0.2)
+			#attack_timer.start(.2)
+			#attack_timer.paused=true
+		else:
+			return
+	elif Input.is_action_just_released("special_attack") and not Input.is_action_pressed("attack"):
+		
+		if not charge_timer.is_stopped():
+			charge_timer.stop()
+			
+		if not charging and not attacking:
+			#charging=false
+			heavy_attack()
+		else:
+			charging=false
+			#return
+			
 	
+		charging=false
+		
+		if state_machine.get_active_state()==idle and attacking:
+			attacking=false
+			
+			
+		elif state_machine.get_active_state()==attack_state:
+			
+			if state_machine.get_active_state()==charged_attack:
+				return
+			if attacking:
+				attacking=false
+			if not charging:
+				#charging=false
+				heavy_attack()
+			else:
+				charging=false
+				
+				if attack_timer.time_left<0.01:
+					attack_timer.start(0.05)
+					attack_timer.paused=false
+				else:
+					attack_timer.start(0.1)
+					attack_timer.paused=false
 			
 		
 func _on_charge_timer_timeout() -> void:
@@ -1107,12 +1169,15 @@ func _on_charge_timer_timeout() -> void:
 	if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
 		light_attack()
 	else:
-		if state_machine.get_active_state()!=attack_state:
-			state_machine.dispatch(&"start_attack")
-		attack_state.dispatch(&"charge_attack")
-		assert(state_machine.get_active_state()==attack_state)
-		
-		charging_attack.anim_second+=0.1
+		if heavy_attacking:
+			attack_state.dispatch(&"heavy_combo")
+			attack_state.dispatch(&"charge_attack")
+			charging_attack.anim_second+=0.1
+		else:
+			if state_machine.get_active_state()!=attack_state:
+				state_machine.dispatch(&"start_attack")
+			attack_state.dispatch(&"charge_attack")
+			charging_attack.anim_second+=0.1
 		
 		#if Input.is_action_pressed("attack"):
 			##attacking=false
@@ -1356,18 +1421,21 @@ func end_slow_down():
 func get_clash_power() -> int:
 	return clash_power.clash_power
 
-func heavy_combos():
-	if Input.is_action_just_pressed("special_attack") and not Input.is_action_pressed("attack"):
+
+		
+		
+		
+		
 		#if not attacking:
 			#attacking=true
-			match attack_state.get_active_state():
-				attack_1:
-					heavy_attack()
-				attack_2:
-					heavy_attack()
-				attack_3:
-					attack_timer.paused=true
-					finishers()
+			#match attack_state.get_active_state():
+				#attack_1:
+					#heavy_attack()
+				#attack_2:
+					#heavy_attack()
+				#attack_3:
+					#attack_timer.paused=true
+					#finishers()
 					
 func set_attacking(value : bool) -> void:
 	if value==true:
@@ -2013,18 +2081,21 @@ func _on_animation_player_animation_finished(anim_name):
 				state_machine.dispatch(&"return_to_idle")
 			"Attack":
 				attack_1.attack=light_attacks[1]
+				
 				charging_attack.attack=light_attacks[1]
 				#attack_state_stack.push_front(attack_1)
 				attack_timer.start(0.1)
 				attack_timer.paused=false
 			"Attack_2":
 				attack_1.attack=light_attacks[2]
+				
 				charging_attack.attack=light_attacks[2]
 				#attack_state_stack.push_front(attack_2)
 				attack_timer.start(0.1)
 				attack_timer.paused=false
 			"Attack_3":
 				attack_1.attack=light_attacks[0]
+				
 				charging_attack.attack=light_attacks[0]
 				#attack_state_stack.push_front(attack_3)
 				attack_timer.start(0.1)
@@ -2399,16 +2470,13 @@ func _on_animation_player_animation_started(anim_name):
 	if state_machine.get_active_state()==attack_state:
 		hit_box.active=true
 		hb_collision.set_deferred("disabled", false)
-		#if attack_state_stack.is_empty():
-			#match anim_name:
-				#"Attack":
-					#attack_state_stack.push_front(attack_1)
-					#
-				#"Attack_2":
-					#attack_state_stack.push_front(attack_2)
-				#
-				#"Attack_3":
-					#attack_state_stack.push_front(attack_3)
+		match anim_name:
+			"Attack":
+				heavy_attack_1.attack=heavy_attacks[0]
+			"Attack_2":
+				heavy_attack_1.attack=heavy_attacks[1]
+			"Attack_3":
+				heavy_attack_1.attack=heavy_attacks[2]
 					
 
 	if anim_name=="Attack_Chain":

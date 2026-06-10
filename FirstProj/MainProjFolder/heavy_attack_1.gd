@@ -2,10 +2,11 @@ extends LimboState
 
 @export var anim_player : AnimationPlayer
 @export var pc : PlayerEntity
+@export var attack := "Heavy_Combo_1"
 
 func _enter() -> void:
 	anim_player.speed_scale=1
-	anim_player.play("Heavy_Combo_1")
+	anim_player.play(attack)
 	pc.heavy_attack_flag=true
 	pc.reload_gun_amount(2)
 	
