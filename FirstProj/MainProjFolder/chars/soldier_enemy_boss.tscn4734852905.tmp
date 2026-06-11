@@ -117,9 +117,7 @@
 [ext_resource type="Texture2D" uid="uid://bnnsiy40phbex" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunFire2H/GunFire2H04.png" id="82_uud3d"]
 [ext_resource type="Texture2D" uid="uid://chtvg7flnrfq" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunFire2H/GunFire2H05.png" id="83_xgcjp"]
 [ext_resource type="Texture2D" uid="uid://blvnyyl6a83ii" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunRunFire/GunRunFire01.png" id="84_l71wm"]
-[ext_resource type="Texture2D" uid="uid://yxlldbqfjb1q" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Land/Land01.png" id="85_gn0bn"]
 [ext_resource type="Texture2D" uid="uid://mttfbqg126xs" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunRunFire/GunRunFire02.png" id="85_vqxp5"]
-[ext_resource type="Texture2D" uid="uid://xxhrnu0kk1ih" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Land/Land02.png" id="86_6oyq8"]
 [ext_resource type="Texture2D" uid="uid://bgygjajwsuaw6" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunRunFire/GunRunFire03.png" id="86_gncoo"]
 [ext_resource type="Texture2D" uid="uid://6asp5vuy600u" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunRunFire/GunRunFire04.png" id="87_t2jve"]
 [ext_resource type="Texture2D" uid="uid://cjwamry6dthms" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunRunFire/GunRunFire05.png" id="88_l5kwd"]
@@ -609,17 +607,6 @@ animations = [{
 }],
 "loop": true,
 "name": &"knocked_down",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("85_gn0bn")
-}, {
-"duration": 1.0,
-"texture": ExtResource("86_6oyq8")
-}],
-"loop": true,
-"name": &"landed",
 "speed": 5.0
 }, {
 "frames": [{
@@ -4427,8 +4414,6 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="entered" from="LimboHSM/PHASETRANSITION" to="." method="_on_phasetransition_entered"]
 [connection signal="exited" from="LimboHSM/PHASETRANSITION" to="." method="_on_phasetransition_exited"]
 [connection signal="updated" from="LimboHSM/PHASETRANSITION" to="." method="_on_phasetransition_updated"]
-[connection signal="entered" from="LimboHSM/Launch" to="." method="_on_launch_entered"]
-[connection signal="updated" from="LimboHSM/Launch" to="." method="_on_launch_updated"]
 [connection signal="entered" from="LimboHSM/Clashed" to="." method="_on_clashed_entered"]
 [connection signal="exited" from="LimboHSM/Clashed" to="." method="_on_clashed_exited"]
 [connection signal="landed" from="LimboHSM/Land" to="." method="_on_land_landed"]

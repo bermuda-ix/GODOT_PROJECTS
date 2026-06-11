@@ -13,13 +13,19 @@ func _enter() -> void:
 	knocked_back=actor.global_position.x-knock_back_strength
 	actor.velocity.x=knock_back_strength
 	actor.velocity.y=-launch_strength*10
-	#launch_timer.start(air_time)
+	
 
 func _update(delta: float) -> void:
 	
 	actor.velocity.y=lerpf(actor.velocity.y, 0, 0.1)
-	print_debug(actor.velocity.y)
-	actor.velocity.x=lerpf(actor.velocity.x, actor.velocity.x/2, 0.1)
+	
+	actor.velocity.x=lerpf(actor.velocity.x, knock_back_strength/2, 0.1)
+	print_debug(actor.velocity.x)
 	if actor.velocity.y>=-5.0 and launch_timer.is_stopped():
 		launch_timer.start(air_time)
 	
+func start_launch_timer(_value: float = air_time) -> void:
+	launch_timer.start(_value)
+
+func _exit() -> void:
+	pass

@@ -447,7 +447,7 @@ func _physics_process(delta):
 	if state_machine.get_active_state()==chasing:
 		velocity.x = current_speed + knockback.x
 	else:
-		if state_machine.get_active_state()!=attack:
+		if state_machine.get_active_state()!=attack and state_machine.get_active_state()!=launch and state_machine.get_active_state()!=falling:
 			velocity.x= knockback.x
 		else:
 			pass
@@ -629,7 +629,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		bt_player.blackboard.set_var(melee_attack_manager.get_combo(), true)
 		attack_timer.start(0.3)
 		bt_player.active=true
-		bt_player.blackboard.set_var("staggered", false)
+		#bt_player.blackboard.set_var("staggered", false)
 		attacking=false
 		if attack_missed:
 			var _heavy_atk_min := melee_attack_manager.heavy_atk_min
@@ -720,13 +720,12 @@ func _on_navigation_timer_timeout() -> void:
 
 func _on_stagger_staggered() -> void:
 	
-	if phases_handler.is_final_phase():
+	if not phases_handler.is_final_phase():
 		if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
 			return
 	#set_state(current_state, States.STAGGERED)
 	bt_player.blackboard.set_var("staggered", true)
 	bt_player.restart()
-	parry_timer.start(3)
 	hit_stop.hit_stop(0.01, 0.5)
 	#hb_collision.disabled=true
 	hb_collision.call_deferred("set_disabled", true)
@@ -796,7 +795,7 @@ func alerted() -> void :
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	
-	if phases_handler.is_final_phase():
+	if not phases_handler.is_final_phase():
 		if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
 			hit_stop.hit_stop(0.2, 2)
 			phases_handler.phase_change(health.health)
@@ -821,7 +820,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			return
 		health.set_temporary_immortality(0.1)
 		if damage<=health.health:
-			if state_machine.get_active_state()!=staggered:
+			if state_machine.get_active_state()!=staggered and state_machine.get_active_state()!=launch:
 				parry_timer.start(0.2)
 				if stagger.stagger>1:
 					if player_behind:
@@ -846,9 +845,12 @@ func _on_hurt_box_weakpoint_hit() -> void:
 
 func _on_hurt_box_bullet_hit(_damage: int) -> void:
 	if state_machine.get_active_state()==staggered:
-		launch.launch_strength=20.0
-		launch.knock_back_strength=80.0
+		launch.launch_strength=80.0
+		launch.knock_back_strength=500.0
+		#launch.start_launch_timer()
 		state_machine.dispatch(&"launched")
+		
+		
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
@@ -949,7 +951,8 @@ func _on_hit_entered() -> void:
 
 func _on_hit_exited() -> void:
 	#bt_player.blackboard.set_var("hit", false)
-	bt_player.blackboard.set_var("staggered", false)
+	if stun_timer.is_stopped():
+		bt_player.blackboard.set_var("staggered", false)
 
 func _on_hit_updated(delta: float) -> void:
 
@@ -1093,7 +1096,7 @@ func _on_teleport_and_shoot_entered() -> void:
 
 func _on_staggered_entered() -> void:
 	pass
-	#stagger_timer.start(3)
+	parry_timer.start(5)
 
 
 func _on_teleport_and_shoot_exited() -> void:
@@ -1216,14 +1219,10 @@ func _on_hit_box_clashed() -> void:
 	var _current_atk : String = animation_player.current_animation
 	var _atk_clash_anim : String = _current_atk+"_connect"
 	var _atk_clash_anim_end : String = _current_atk+"_end"
-	assert(animation_player.has_animation(_current_atk))
-	var _atk_connect := animation_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
-	#animation_player.seek(_atk_connect, true, false)
-	#print_debug(_atk_clash_anim)
-	#attacking=true
-	#animation_player.stop()
-	animation_player.seek(_atk_connect, true)
-	#animation_player.call_deferred("seek", _atk_connect, true, false)
+	if _current_atk != null:
+		assert(animation_player.has_animation(_current_atk))
+		var _atk_connect := animation_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
+		animation_player.seek(_atk_connect, true)
 	var _cur_segment :float = animation_player.current_animation_position
 	if player_right:
 		knockback.x=-200
@@ -1252,6 +1251,8 @@ func stunned_hit(_launch: float = 0, _knockback: float = 0, _impact_dir_right: b
 	stun_timer.start(1)
 	
 func _on_stun_timer_timeout() -> void:
+	if state_machine.get_active_state()==staggered:
+		return
 	bt_player.blackboard.set_var("staggered", false)
 	hurt_box_collision.set_deferred("disabled", false)
 
@@ -1275,6 +1276,7 @@ func clash_counter() -> void:
 
 
 func _on_land_landed() -> void:
+	bt_player.blackboard.set_var("staggered", false)
 	state_machine.dispatch(&"resume_attack")
 	phases_handler.phase_change(health.health)
 
@@ -1282,3 +1284,12 @@ func _on_land_landed() -> void:
 func _on_attack_exited() -> void:
 	hurt_box.active=true
 	movement_handler.face_player_active=true
+
+
+func _on_launch_updated(delta: float) -> void:
+	assert(bt_player.blackboard.get_var("staggered")==true)
+
+
+func _on_launch_entered() -> void:
+	stun_timer.stop()
+	bt_player.blackboard.set_var("staggered", true)

@@ -8,6 +8,7 @@ extends Node
 @onready var atk_type := "atk_1" : set = set_atk_type
 
 @export var heavy_atk_min := clampi(0, 0, 100) : set = set_heavy_atk_min
+@export var heavy_atk_max := clampi(50, 0, 100) : set = set_heavy_atk_max
 signal heavy_attack
 
 func melee_attack():
@@ -78,7 +79,7 @@ func atk_resume_helper() -> void:
 	actor.attacking=false
 
 func heavy_attack_counter() -> bool:
-	var _heavy_atk_chance=randi_range(heavy_atk_min, 40)
+	var _heavy_atk_chance=randi_range(heavy_atk_min, heavy_atk_max)
 	if _heavy_atk_chance >= 50:
 		return true
 	else:
@@ -86,6 +87,9 @@ func heavy_attack_counter() -> bool:
 		
 func set_heavy_atk_min(_value : int) -> void:
 	heavy_atk_min=_value
+	
+func set_heavy_atk_max(_value : int) -> void:
+	heavy_atk_max=_value
 
 #func slam(value: String):
 	##pass

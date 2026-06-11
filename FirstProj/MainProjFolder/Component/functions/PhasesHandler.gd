@@ -14,13 +14,14 @@ signal next_phase
 func _ready() -> void:
 	default_phases = phases.duplicate()
 
-func phase_change(health : int):
+func phase_change(_health : int):
+	print_debug(_health," ,",phases.get(cur_phase-1))
 	if phases.size()<=0:
 		return
-	elif health<=phases.get(cur_phase-1):
+	elif _health<=phases.get(cur_phase-1):
 		#actor.stagger_recover()
 		#phases.pop_front()
-		health=phases.get(cur_phase-1)
+		_health=phases.get(cur_phase-1)
 		cur_phase+=1
 		next_phase.emit()
 		
@@ -28,7 +29,8 @@ func reset_phases() -> void:
 	phases=default_phases
 
 func is_final_phase() -> bool:
-	if cur_phase==phases.size()-1:
+	print_debug(phases.size())
+	if cur_phase==phases.size()+1:
 		return true
 	else:
 		return false

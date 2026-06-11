@@ -3,6 +3,9 @@ class_name Falling extends LimboState
 @export var actor : Node2D
 @export var state_machine : LimboHSM
 
+func _enter() -> void:
+	pass
+
 func _update(delta: float) -> void:
 	actor.velocity.y += actor.gravity * delta
 	actor.move_and_slide()
