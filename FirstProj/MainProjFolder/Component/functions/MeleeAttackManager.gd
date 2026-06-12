@@ -16,6 +16,7 @@ func melee_attack():
 		pass
 	else:
 		#actor.state_machine.change_active_state(actor.attack)
+		print_debug(actor.state_machine.get_active_state())
 		actor.state_machine.dispatch(&"start_attack")
 		#"melee attack")
 	if not actor.attacking:

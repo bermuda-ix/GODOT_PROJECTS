@@ -23,6 +23,9 @@ func _update(delta: float) -> void:
 	print_debug(actor.velocity.x)
 	if actor.velocity.y>=-5.0 and launch_timer.is_stopped():
 		launch_timer.start(air_time)
+	elif actor.velocity.y>0 or (actor.velocity.y==0 and actor.is_on_floor()):
+		launch_timer.stop()
+		launch_timer.timeout.emit()
 	
 func start_launch_timer(_value: float = air_time) -> void:
 	launch_timer.start(_value)

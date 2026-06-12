@@ -1051,7 +1051,10 @@ func attack_handler():
 			#attacking=true
 			print_debug(state_machine.get_active_state())
 			assert(not charging)
-			charge_timer.start(0.2)
+			if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
+				charge_timer.start(0.1)
+			else:
+				charge_timer.start(0.2)
 			#attack_timer.start(.2)
 			#attack_timer.paused=true
 		else:
@@ -1119,7 +1122,10 @@ func heavy_combos():
 			charging_attack.attack=heavy_attack_1.attack
 			print_debug(state_machine.get_active_state())
 			assert(not charging)
-			charge_timer.start(0.2)
+			if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
+				charge_timer.start(0.1)
+			else:
+				charge_timer.start(0.2)
 			#attack_timer.start(.2)
 			#attack_timer.paused=true
 		else:

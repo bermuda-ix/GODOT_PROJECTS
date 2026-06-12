@@ -8,7 +8,10 @@ signal landed
 func _enter() -> void:
 	animation_player.play(landed_type)
 	
-
+func _update(delta: float) -> void:
+	
+	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.7)
+	actor.move_and_slide()
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="landed" or anim_name=="landed_recover":

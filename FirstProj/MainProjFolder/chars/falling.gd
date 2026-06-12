@@ -8,6 +8,7 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	actor.velocity.y += actor.gravity * delta
+	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.2)
 	actor.move_and_slide()
 	if actor.is_on_floor():
 		state_machine.dispatch(&"landed")

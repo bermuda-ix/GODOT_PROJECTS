@@ -294,6 +294,7 @@ func _init_state_machine():
 	state_machine.add_transition(jump, chasing, &"land")
 	state_machine.add_transition(jump, attack, &"land_attack")
 	state_machine.add_transition(hit, attack, &"hit_recover")
+	#state_machine.add_transition(hit, attack, &"start_attack")
 	state_machine.add_transition(attack, dodge, &"dodge")
 	state_machine.add_transition(dodge, attack, &"dodge_end")
 	state_machine.add_transition(attack, counter_sm, &"counter")
@@ -846,7 +847,10 @@ func _on_hurt_box_weakpoint_hit() -> void:
 func _on_hurt_box_bullet_hit(_damage: int) -> void:
 	if state_machine.get_active_state()==staggered:
 		launch.launch_strength=80.0
-		launch.knock_back_strength=500.0
+		if player_right:
+			launch.knock_back_strength=-500.0
+		else:
+			launch.knock_back_strength=500.0
 		#launch.start_launch_timer()
 		state_machine.dispatch(&"launched")
 		
@@ -909,6 +913,7 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 
 func _on_attack_entered() -> void:
 	bt_player.blackboard.set_var("attack_mode", true)
+	hb_collision.set_deferred("disabled", false)
 
 func _on_attack_updated(delta: float) -> void:
 
@@ -957,6 +962,8 @@ func _on_hit_exited() -> void:
 func _on_hit_updated(delta: float) -> void:
 
 	move_and_slide()
+	if animation_player.current_animation.substr(0,3)!="hit":
+		state_machine.dispatch(&"hit_recover")
 
 func _on_kick_counter_exited() -> void:
 	bt_player.active=true
