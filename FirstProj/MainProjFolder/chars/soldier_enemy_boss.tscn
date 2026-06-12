@@ -3915,6 +3915,7 @@ avoidance_enabled = true
 debug_enabled = true
 
 [node name="AnimatedSprite2D" parent="." index="1"]
+modulate = Color(0.454524, 0.454524, 0.454524, 1)
 self_modulate = Color(0.521141, 0.521141, 0.521141, 1)
 texture_filter = 2
 material = SubResource("ShaderMaterial_chkyp")

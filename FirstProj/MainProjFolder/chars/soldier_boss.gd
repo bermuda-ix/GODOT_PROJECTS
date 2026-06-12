@@ -1192,6 +1192,7 @@ func _on_teleport_and_hit_updated(delta: float) -> void:
 	#teleport_helper_raycast.look_at(Vector2(player.global_position.x, player.global_position.y-100))
 	teleport_helper_raycast.target_position=player.global_position-teleport_helper_raycast.global_position
 	print_debug(player.global_position, " ", teleport_helper_raycast.target_position)
+	animated_sprite_2d.use_parent_material=true
 
 func _on_teleport_and_hit_exited() -> void:
 	hurt_box.active=true
@@ -1300,3 +1301,4 @@ func _on_launch_updated(delta: float) -> void:
 func _on_launch_entered() -> void:
 	stun_timer.stop()
 	bt_player.blackboard.set_var("staggered", true)
+	animation_player.play("launched")
