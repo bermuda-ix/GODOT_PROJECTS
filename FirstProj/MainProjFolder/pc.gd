@@ -1052,7 +1052,7 @@ func attack_handler():
 			print_debug(state_machine.get_active_state())
 			assert(not charging)
 			if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
-				charge_timer.start(0.1)
+				charge_timer.start(0.05)
 			else:
 				charge_timer.start(0.2)
 			#attack_timer.start(.2)
@@ -1088,7 +1088,11 @@ func attack_handler():
 				attacking=false
 			if not charging:
 				#charging=false
-				light_attack()
+				if anim_player.current_animation_position>=anim_player.current_animation_length and\
+				hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
+					pass
+				else:
+					light_attack()
 			else:
 				charging=false
 				
@@ -1123,7 +1127,7 @@ func heavy_combos():
 			print_debug(state_machine.get_active_state())
 			assert(not charging)
 			if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
-				charge_timer.start(0.1)
+				charge_timer.start(0.05)
 			else:
 				charge_timer.start(0.2)
 			#attack_timer.start(.2)
@@ -1131,6 +1135,8 @@ func heavy_combos():
 		else:
 			return
 	elif Input.is_action_just_released("special_attack") and not Input.is_action_pressed("attack"):
+		
+		
 		
 		if not charge_timer.is_stopped():
 			charge_timer.stop()
@@ -1157,7 +1163,11 @@ func heavy_combos():
 				attacking=false
 			if not charging:
 				#charging=false
-				heavy_attack()
+				if anim_player.current_animation_position>=anim_player.current_animation_length and\
+				hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
+					pass
+				else:
+					heavy_attack()
 			else:
 				charging=false
 				
