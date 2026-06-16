@@ -14,6 +14,7 @@ func _enter() -> void:
 	counter_dist = pc.global_position.x-10*pc.face_dir
 	#pc.attacking=true
 	starting = pc.global_position.x
+	hit_box.clash_active=true
 
 	
 func _update(delta: float) -> void:
@@ -22,6 +23,9 @@ func _update(delta: float) -> void:
 	pc.label.text=str(pc.velocity.x)
 	if pc.state_machine.get_previous_active_state()==pc.dodge_state:
 		pc.global_position.x=lerpf(pc.global_position.x, counter_dist, 0.2)
+		
+	#assert(hit_box.clash_active!=hit_box.attack_clashed)
+		
 
 func _exit() -> void:
 	pc.attack_timer.paused=false

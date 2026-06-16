@@ -69,6 +69,9 @@ var immortal = false
 @onready var gpu_particles_2d: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
 @onready var dodge_timer: Timer = $DodgeTimer
 @onready var counter_timer: Timer = $CounterTimer
+@onready var stun_timer: Timer = $StunTimer
+
+
 
 @onready var boss_ui: Control = $CanvasLayer/BossUI
 
@@ -638,6 +641,7 @@ func _on_hit_box_clashed() -> void:
 	hit_stop.hit_stop(0.05, 0.5)
 	print_debug("clashed!")
 	stagger.stagger-=1
+	
 	if player_right:
 		knockback.x=-200
 	else:

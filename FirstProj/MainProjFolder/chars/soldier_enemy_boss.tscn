@@ -3481,6 +3481,34 @@ tracks/0/keys = {
 "values": [Color(0.521141, 0.521141, 0.521141, 1), Color(2.454227, 2.454227, 2.454227, 1), Color(0.521141, 0.521141, 0.521141, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_gn0bn"]
+resource_name = "hit_down"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1.8247963, 0.2596095, 0, 1), Color(0.521141, 0.521141, 0.521141, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D:use_parent_material")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_isax7"]
 resource_name = "knocked_back"
 length = 0.2
@@ -3723,7 +3751,7 @@ tracks/7/keys = {
 }
 tracks/8/type = "value"
 tracks/8/imported = false
-tracks/8/enabled = true
+tracks/8/enabled = false
 tracks/8/path = NodePath("../AnimatedSprite2D/VFXSprite:modulate")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
@@ -3738,6 +3766,7 @@ tracks/8/keys = {
 _data = {
 &"RESET": SubResource("Animation_j070x"),
 &"clashed": SubResource("Animation_gs3hl"),
+&"hit_down": SubResource("Animation_gn0bn"),
 &"knocked_back": SubResource("Animation_isax7"),
 &"staggered": SubResource("Animation_bc731"),
 &"staggered_entered": SubResource("Animation_gmb02")
@@ -3908,6 +3937,7 @@ collision_mask = 17
 safe_margin = 0.2
 script = ExtResource("2_87q8v")
 death_cutscene = true
+queuefree_on_death = true
 
 [node name="NavigationAgent2D" parent="." index="0"]
 navigation_layers = 2
@@ -3915,7 +3945,6 @@ avoidance_enabled = true
 debug_enabled = true
 
 [node name="AnimatedSprite2D" parent="." index="1"]
-modulate = Color(0.454524, 0.454524, 0.454524, 1)
 self_modulate = Color(0.521141, 0.521141, 0.521141, 1)
 texture_filter = 2
 material = SubResource("ShaderMaterial_chkyp")
@@ -4043,10 +4072,11 @@ position = Vector2(0, -17)
 target_position = Vector2(52, 0)
 collision_mask = 2
 
-[node name="HitBox" parent="." index="24" node_paths=PackedStringArray("stagger") groups=["hitbox"]]
+[node name="HitBox" parent="." index="24" node_paths=PackedStringArray("stagger", "collision_shape") groups=["hitbox"]]
 collision_mask = 704
 stagger = NodePath("../Stagger")
 knock_back_strength = 50.0
+collision_shape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0" unique_id=1086028451 groups=["colliding_hitbox_shape"]]
 position = Vector2(-14, -7)
@@ -4378,6 +4408,7 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/COUNTER/KickCounter" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/Clashed" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/Land" method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
@@ -4432,6 +4463,9 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="updated" from="LimboHSM/Launch" to="." method="_on_launch_updated"]
 [connection signal="entered" from="LimboHSM/Clashed" to="." method="_on_clashed_entered"]
 [connection signal="exited" from="LimboHSM/Clashed" to="." method="_on_clashed_exited"]
+[connection signal="updated" from="LimboHSM/Falling" to="." method="_on_falling_updated"]
+[connection signal="exited" from="LimboHSM/Land" to="." method="_on_land_exited"]
 [connection signal="landed" from="LimboHSM/Land" to="." method="_on_land_landed"]
+[connection signal="updated" from="LimboHSM/Land" to="." method="_on_land_updated"]
 [connection signal="entered" from="Phases/Phase2" to="." method="_on_phase_2_entered"]
 [connection signal="next_phase" from="PhasesHandler" to="." method="_on_phases_handler_next_phase"]

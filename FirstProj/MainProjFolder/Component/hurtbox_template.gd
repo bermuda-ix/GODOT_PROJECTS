@@ -172,3 +172,9 @@ func bullet_buffer_timeout() -> void:
 		bullet_hit.emit(bullet_damage)
 		received_damage.emit(bullet_damage)
 		bullet_damage=0
+		
+func hit_sfx() -> void:
+	pass
+	#hit_buffer.start(1)
+	#hit_sound=hit1
+	#AudioStreamManager.play(hit_sound)

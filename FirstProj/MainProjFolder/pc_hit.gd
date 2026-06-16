@@ -10,6 +10,8 @@ func _enter() -> void:
 	anim_player.play(hit_anim)
 	hit_buffer.start(anim_player.current_animation_length)
 	pc.hurt_box_detect.call_deferred("set_disabled", true)
+	pc.attacking=false
+	pc.charging=false
 
 
 func _update(delta: float) -> void:

@@ -36,6 +36,7 @@ var always_active : bool
 @export var drop = preload("res://heart.tscn")
 @onready var death_timer = $DeathTimer
 @export var explode = preload("res://Component/explosion.tscn")
+@export var queuefree_on_death := false
 
 @onready var floor_jump_check_right = $JumpChecks/FloorJumpCheckRight as RayCast2D
 @onready var floor_jump_check_left = $JumpChecks/FloorJumpCheckLeft as RayCast2D
@@ -150,6 +151,8 @@ var distance
 @onready var clashed: Clashed = $LimboHSM/Clashed
 @onready var falling: Falling = $LimboHSM/Falling
 @onready var land: Land = $LimboHSM/Land
+
+
 
 @onready var states_stack : Array[LimboState] = []
 
@@ -309,6 +312,7 @@ func _init_state_machine():
 	state_machine.add_transition(launch, falling, &"falling")
 	state_machine.add_transition(falling, land, &"landed")
 	state_machine.add_transition(land, attack, &"start_attack")
+	state_machine.add_transition(land, chasing, &"start_chase")
 		
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -405,6 +409,8 @@ func _process(_delta):
 			pass
 		elif cutscene_handler.actor_control_active:
 			assert(state_machine.get_active_state()==death)
+		if queuefree_on_death:
+			queue_free()
 		assert(bt_player.active==false)
 		
 func _physics_process(delta):
@@ -482,8 +488,8 @@ func target_lock():
 	
 
 func chase():
-	#set_state(current_state, States.CHASE)
-	state_machine.dispatch(&"start_chase")
+	if state_machine.get_active_state()!=chasing:
+		state_machine.dispatch(&"start_chase")
 	melee_attack_manager.reset_combo()
 	#state_machine.change_active_state(chasing)
 	
@@ -698,7 +704,7 @@ func _on_attack_range_body_exited(body: Node2D) -> void:
 		state_machine.dispatch(&"start_chase")
 		
 func _on_hurt_box_area_entered(area: Area2D) -> void:
-	print_debug(area)
+	#print_debug(area)
 	if area.is_in_group("sp_atk_default"):
 		if player.state_machine.get_active_state()==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 			Events.allied_enemy_hit.emit()
@@ -736,6 +742,7 @@ func _on_stagger_staggered() -> void:
 	hit_box.active=false
 	hurt_box.active=true
 	state_machine.dispatch(&"staggered")
+	assert(state_machine.get_active_state()==staggered)
 	Events.camera_shake.emit(2,20)
 
 
@@ -795,18 +802,14 @@ func alerted() -> void :
 			state_machine.dispatch(&"start_chase")
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	
+	hit_box.clash_active=false
 	if not phases_handler.is_final_phase():
 		if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
 			hit_stop.hit_stop(0.2, 2)
 			phases_handler.phase_change(health.health)
 	
-	#if state_machine.get_active_state()!=staggered and\
-	 #state_machine.get_active_state()!=launch and\
-	 #state_machine.get_active_state()!=falling:
-		#
-		#
-		#phases_handler.phase_change(health.health)
+	if state_machine.get_active_state()==land:
+		pass
 	if changing_phase:
 		
 		return
@@ -835,7 +838,8 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			hit_stop.hit_stop(0.05,0.25)
 			#set_state(current_state, States.HIT)
 			gpu_particles_2d.emitting=true
-			melee_attack_manager.atk_resume_helper()
+			#if state_machine.get_active_state()!=staggered or state_machine.get_active_state()!=launch:
+				#melee_attack_manager.atk_resume_helper()
 			bt_player.active=true
 		else:
 			print_debug("kill shot")
@@ -882,7 +886,7 @@ func _on_health_health_depleted() -> void:
 
 
 func _on_attack_timer_timeout() -> void:
-	#"begin move")
+	#"begin move"
 	if state_machine.get_active_state()==staggered:
 		return
 	if bt_player.blackboard.get_var("within_range")==true:
@@ -904,19 +908,21 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
  
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
-	print_debug(current)
-	if current==jump:
-		if previous==attack:
-			print_debug("down attack")
-	if current==teleport_and_shoot:
-		print_debug(current)
+	pass
+	#print_debug(current)
+	#if current==jump:
+		#if previous==attack:
+			#print_debug("down attack")
+	#if current==teleport_and_shoot:
+		#print_debug(current)
 
 func _on_attack_entered() -> void:
 	bt_player.blackboard.set_var("attack_mode", true)
 	hb_collision.set_deferred("disabled", false)
 
 func _on_attack_updated(delta: float) -> void:
-
+	if bt_player.blackboard.get_var("staggered")==true:
+		bt_player.blackboard.set_var("staggered", false)
 	if attacking and state_machine.get_active_state()!=staggered:
 		player_behind_check()
 		if player_behind:
@@ -1070,6 +1076,7 @@ func _on_phasetransition_entered() -> void:
 	hit_box.active=false
 	
 	state_machine.add_transition(attack, teleport_and_shoot, &"teleport_counter")
+	state_machine.add_transition(launch, teleport_and_shoot, &"teleport_counter")
 	state_machine.add_transition(clashed, teleport_and_shoot, &"teleport_clash")
 	state_machine.add_transition(staggered, teleport_and_shoot, &"teleport_recover")
 	state_machine.add_transition(chasing, teleport_and_hit, &"teleport_atk")
@@ -1107,6 +1114,7 @@ func _on_staggered_entered() -> void:
 
 
 func _on_teleport_and_shoot_exited() -> void:
+	bt_player.blackboard.set_var("staggered", false)
 	hurt_box.set_collision_layer_value(7, true)
 	hurt_box.active=true
 	teleport_helper_raycast.target_position=Vector2(0,50)
@@ -1215,6 +1223,7 @@ func _on_launch_timer_timeout() -> void:
 
 func _on_hit_box_clashed() -> void:
 	hit_stop.hit_stop(0.01, 0.5)
+	stun_timer.start(0.5)
 	print_debug("clashed!")
 	if hit_box.heavy_attack:
 		return
@@ -1227,7 +1236,7 @@ func _on_hit_box_clashed() -> void:
 	var _current_atk : String = animation_player.current_animation
 	var _atk_clash_anim : String = _current_atk+"_connect"
 	var _atk_clash_anim_end : String = _current_atk+"_end"
-	if _current_atk != null:
+	if _current_atk != null and animation_player.has_animation(_current_atk):
 		assert(animation_player.has_animation(_current_atk))
 		var _atk_connect := animation_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
 		animation_player.seek(_atk_connect, true)
@@ -1239,6 +1248,7 @@ func _on_hit_box_clashed() -> void:
 	if dash_attacking:
 		return
 	#bt_player.blackboard.set_var("staggered", true)
+	print_debug(state_machine.get_active_state())
 	state_machine.dispatch(&"clashed")
 
 
@@ -1261,11 +1271,15 @@ func stunned_hit(_launch: float = 0, _knockback: float = 0, _impact_dir_right: b
 func _on_stun_timer_timeout() -> void:
 	if state_machine.get_active_state()==staggered:
 		return
+	elif state_machine.get_active_state()==clashed:
+		state_machine.dispatch(&"resume_attack")
 	bt_player.blackboard.set_var("staggered", false)
 	hurt_box_collision.set_deferred("disabled", false)
 
 func _on_clashed_entered() -> void:
 	hit_box.attack_clashed=true
+	bt_player.blackboard.set_var("staggered", true)
+	
 	AudioStreamManager.play(SoundFx.SOCAPEX_SWORDSMALL_2)
 
 
@@ -1285,8 +1299,14 @@ func clash_counter() -> void:
 
 func _on_land_landed() -> void:
 	bt_player.blackboard.set_var("staggered", false)
+	vision_handler.active=true
+	combat_state_change_handler.active=true
 	state_machine.dispatch(&"resume_attack")
-	phases_handler.phase_change(health.health)
+	#phases_handler.phase_change(health.health)
+	if not phases_handler.is_final_phase():
+		if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
+			hit_stop.hit_stop(0.2, 2)
+			phases_handler.phase_change(health.health)
 
 
 func _on_attack_exited() -> void:
@@ -1295,10 +1315,30 @@ func _on_attack_exited() -> void:
 
 
 func _on_launch_updated(delta: float) -> void:
+	assert(attack_timer.is_stopped())
 	assert(bt_player.blackboard.get_var("staggered")==true)
 
 
 func _on_launch_entered() -> void:
-	stun_timer.stop()
 	bt_player.blackboard.set_var("staggered", true)
+	hb_collision.set_deferred("disabled", true)
+	attack_timer.stop()
+	vision_handler.active=false
+	combat_state_change_handler.active=false
+	stun_timer.stop()
+	
 	animation_player.play("launched")
+
+
+func _on_falling_updated(delta: float) -> void:
+	assert(attack_timer.is_stopped())
+	assert(bt_player.blackboard.get_var("staggered")==true)
+
+
+func _on_land_updated(delta: float) -> void:
+	assert(attack_timer.is_stopped())
+	assert(bt_player.blackboard.get_var("staggered")==true)
+
+
+func _on_land_exited() -> void:
+	pass # Replace with function body.

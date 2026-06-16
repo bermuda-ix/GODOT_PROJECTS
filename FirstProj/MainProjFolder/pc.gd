@@ -1049,10 +1049,10 @@ func attack_handler():
 		if charge_timer.is_stopped():
 			
 			#attacking=true
-			print_debug(state_machine.get_active_state())
+			#print_debug(state_machine.get_active_state())
 			assert(not charging)
 			if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
-				charge_timer.start(0.05)
+				charge_timer.start(0.01)
 			else:
 				charge_timer.start(0.2)
 			#attack_timer.start(.2)
@@ -1127,7 +1127,7 @@ func heavy_combos():
 			print_debug(state_machine.get_active_state())
 			assert(not charging)
 			if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
-				charge_timer.start(0.05)
+				charge_timer.start(0.01)
 			else:
 				charge_timer.start(0.2)
 			#attack_timer.start(.2)
@@ -1450,17 +1450,17 @@ func get_clash_power() -> int:
 					#finishers()
 					
 func set_attacking(value : bool) -> void:
-	if value==true:
-		print_debug("begin_attack")
-	else:
-		print_debug("ending attack")
+	#if value==true:
+		#print_debug("begin_attack")
+	#else:
+		#print_debug("ending attack")
 	attacking=value
 
 func set_charging(value : bool) -> void:
-	if value==true:
-		print_debug("begin_charge")
-	else:
-		print_debug("ending charge")
+	#if value==true:
+		#print_debug("begin_charge")
+	#else:
+		#print_debug("ending charge")
 	charging=value
 
 func finishers() -> void:
@@ -2480,7 +2480,7 @@ func _on_hazard_detector_body_exited(body):
 
 func _on_animation_player_animation_started(anim_name):
 	if state_machine.get_active_state()==attack_state:
-		hit_box.active=true
+		#hit_box.active=true
 		hb_collision.set_deferred("disabled", false)
 		match anim_name:
 			"Attack":
@@ -2515,6 +2515,7 @@ func _on_animation_player_animation_started(anim_name):
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:
+	hit_box.clash_active=false
 	if health.health<=0:
 		return
 	hit_stop.hit_stop(0.05, 0.1)
@@ -2901,6 +2902,7 @@ func _on_knockback(_launch_strength : float, _knockback_strength : float, impact
 
 func _on_hit_box_clashed() -> void:
 	hb_collision.set_deferred("disabled", true)
+	hit_box.active=false
 	clash_power.increase_clash()
 	if unlocked:
 		lockon()

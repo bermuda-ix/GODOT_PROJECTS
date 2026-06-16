@@ -13,6 +13,9 @@ func _update(delta: float) -> void:
 	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.7)
 	actor.move_and_slide()
 
+func _exit() -> void:
+	print_debug("landed")
+
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="landed" or anim_name=="landed_recover":
 		landed.emit()
