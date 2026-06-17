@@ -8,8 +8,8 @@ extends LimboState
 
 func _enter() -> void:
 	pass
-	#if animation_player.has_animation("teleport"):
-		#animation_player.play("teleport")
+	if animation_player.has_animation("teleport"):
+		animation_player.play("teleport")
 
 func _exit() -> void:
 	pass

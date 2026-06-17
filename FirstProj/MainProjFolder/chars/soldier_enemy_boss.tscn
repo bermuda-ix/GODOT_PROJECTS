@@ -867,6 +867,11 @@ animations = [{
 "loop": true,
 "name": &"stunned",
 "speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"teleport",
+"speed": 5.0
 }]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j0qvy"]
@@ -4405,6 +4410,7 @@ phases = Array[int]([20])
 metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="animation_changed" from="AnimationPlayer" to="." method="_on_animation_player_animation_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/COUNTER/KickCounter" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/Clashed" method="_on_animation_player_animation_finished"]

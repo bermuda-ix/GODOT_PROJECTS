@@ -4,7 +4,7 @@ class_name Falling extends LimboState
 @export var state_machine : LimboHSM
 
 func _enter() -> void:
-	pass
+	actor.hb_collision.set_deferred("disabled", false)
 
 func _update(delta: float) -> void:
 	actor.velocity.y += actor.gravity * delta

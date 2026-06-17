@@ -437,6 +437,8 @@ func _init_state_machine():
 	state_machine.add_transition(parry_success_state, hit, &"got_hit")
 	state_machine.add_transition(attack_state, hit, &"got_hit")
 	
+	state_machine.add_transition(hit, attack_state, &"start_attack")
+	
 	#Attack Combos
 	#state_machine.add_transition(attack_state, special_attack, &"attack_to_special")
 	#state_machine.add_transition(special_attack, attack_state, &"special_to_attack")
@@ -1029,7 +1031,7 @@ func update_animation(input_axis):
 		
 		
 func attack_handler():
-	if state_machine.get_active_state()==hit:
+	if state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
 		return
 	
 	var anim_player_time : float = anim_player.current_animation_position

@@ -23,6 +23,7 @@ var always_active : bool
 @onready var chase_timer = $ChaseTimer as Timer
 @onready var animated_sprite_2d = $AnimatedSprite2D as AnimatedSprite2D
 @onready var animation_player = $AnimationPlayer as AnimationPlayer
+@onready var vfx_player: AnimationPlayer = $AnimationPlayer/VFXPlayer
 @onready var nav_agent = $NavigationAgent2D
 @onready var jump_timer = $JumpTimer
 @onready var movement_handler: MovementHandler = $MovementHandler
@@ -676,8 +677,12 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	else:
 		pass
 
+func _on_animation_player_animation_changed(old_name: StringName, new_name: StringName) -> void:
+	print_debug("from ", old_name, " to ",new_name) 
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
+	if bt_player.blackboard.get_var("staggered")==true or state_machine.get_active_state()==attack:
+		return
 	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
 		bt_player.blackboard.set_var("within_range", true)
 		#set_state(current_state, States.ATTACK)
@@ -809,7 +814,10 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			phases_handler.phase_change(health.health)
 	
 	if state_machine.get_active_state()==land:
-		pass
+		Events.camera_shake.emit(2,2)
+		vfx_player.play("hit_down")
+		hit_stop.hit_stop(0.1, 0.01)
+		return
 	if changing_phase:
 		
 		return
@@ -1298,7 +1306,10 @@ func clash_counter() -> void:
 
 
 func _on_land_landed() -> void:
+	hb_collision.set_deferred("disabled", true)
 	bt_player.blackboard.set_var("staggered", false)
+	hurt_box.active=true
+	hurt_box_collision.set_deferred("disabled", false)
 	vision_handler.active=true
 	combat_state_change_handler.active=true
 	state_machine.dispatch(&"resume_attack")
@@ -1322,6 +1333,10 @@ func _on_launch_updated(delta: float) -> void:
 func _on_launch_entered() -> void:
 	bt_player.blackboard.set_var("staggered", true)
 	hb_collision.set_deferred("disabled", true)
+	hit_box.active=false
+	hurt_box.active=true
+	hurt_box_collision.set_deferred("disabled", false)
+	hurt_box.active=true
 	attack_timer.stop()
 	vision_handler.active=false
 	combat_state_change_handler.active=false
@@ -1332,11 +1347,14 @@ func _on_launch_entered() -> void:
 
 func _on_falling_updated(delta: float) -> void:
 	assert(attack_timer.is_stopped())
+	
 	assert(bt_player.blackboard.get_var("staggered")==true)
 
 
 func _on_land_updated(delta: float) -> void:
+	attack_timer.stop()
 	assert(attack_timer.is_stopped())
+	
 	assert(bt_player.blackboard.get_var("staggered")==true)
 
 
