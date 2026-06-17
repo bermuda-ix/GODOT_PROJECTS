@@ -1127,6 +1127,7 @@ func _on_teleport_and_shoot_exited() -> void:
 	hurt_box.active=true
 	teleport_helper_raycast.target_position=Vector2(0,50)
 	attacking=false
+	animated_sprite_2d.use_parent_material=false
 
 func death_on_cutscene() -> void:
 	state_machine.change_active_state(death)
@@ -1212,6 +1213,7 @@ func _on_teleport_and_hit_updated(delta: float) -> void:
 
 func _on_teleport_and_hit_exited() -> void:
 	hurt_box.active=true
+	animated_sprite_2d.use_parent_material=false
 
 func _on_teleport_and_hit_entered() -> void:
 	pass
