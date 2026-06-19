@@ -243,7 +243,6 @@
 [ext_resource type="Texture2D" uid="uid://dj0jspit4kolf" path="res://Art_Components/Effects/AttackEffects/FX006/FX008.png" id="217_73dn8"]
 [ext_resource type="Texture2D" uid="uid://52ipqcs560aq" path="res://Art_Components/UI/ButtonPrompts/Audune Prompts Dark.png" id="218_f2824"]
 [ext_resource type="Texture2D" uid="uid://cvfioykkanedg" path="res://Art_Components/Effects/AttackEffects/FX006/FX009.png" id="218_k4xmx"]
-[ext_resource type="AudioStream" uid="uid://dvgwvhealmujx" path="res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/Ejecting Magazine-SoundBible.com-1801520333.wav" id="218_mesnb"]
 [ext_resource type="Texture2D" uid="uid://benbvfmsymc62" path="res://Art_Components/Effects/AttackEffects/FX006/FX010.png" id="219_d24pd"]
 [ext_resource type="AudioStream" uid="uid://v12pys07aanp" path="res://Art_Components/Effects/sound/designed_series/designed_series/designed_mecha/Gregor Quendel - Designed Mecha - Elements - Impact 01.wav" id="219_i0kkw"]
 [ext_resource type="Texture2D" uid="uid://dc06lykcbclda" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Red/Button01.png" id="219_xxtsl"]
@@ -5618,6 +5617,30 @@ tracks/64/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/65/type = "value"
+tracks/65/imported = false
+tracks/65/enabled = true
+tracks/65/path = NodePath("AudioStreamPlayer2D:volume_db")
+tracks/65/interp = 1
+tracks/65/loop_wrap = true
+tracks/65/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/66/type = "value"
+tracks/66/imported = false
+tracks/66/enabled = true
+tracks/66/path = NodePath("AudioStreamPlayer2D:pitch_scale")
+tracks/66/interp = 1
+tracks/66/loop_wrap = true
+tracks/66/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
 
 [sub_resource type="Animation" id="Animation_oktus"]
 resource_name = "Riposte"
@@ -7012,6 +7035,30 @@ tracks/12/keys = {
 "update": 1,
 "values": [&"GunFire2H"]
 }
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("AudioStreamPlayer2D:volume_db")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("AudioStreamPlayer2D:pitch_scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
 
 [sub_resource type="Animation" id="Animation_okwur"]
 resource_name = "shotgun_attack_fast"
@@ -8157,38 +8204,26 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("../AudioStreamPlayer2D:stream")
+tracks/13/path = NodePath("../AudioStreamPlayer2D:pitch_scale")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("218_mesnb")]
+"update": 0,
+"values": [1.0]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("../AudioStreamPlayer2D:pitch_scale")
+tracks/14/path = NodePath("../AudioStreamPlayer2D:volume_db")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.0]
-}
-tracks/15/type = "value"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("../AudioStreamPlayer2D:volume_db")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-5.0]
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_u66yy"]
@@ -9676,7 +9711,6 @@ one_shot = true
 ignore_time_scale = true
 
 [node name="STATE" type="Label" parent="." unique_id=1506403178]
-visible = false
 z_index = 10
 offset_left = -45.0
 offset_top = -56.0
@@ -9722,8 +9756,6 @@ shape = SubResource("RectangleShape2D_pmx5o")
 debug_color = Color(0, 0.5950001, 0.7, 0)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1347139291]
-stream = ExtResource("218_mesnb")
-volume_db = -5.0
 max_polyphony = 12
 
 [node name="TargetLocking" type="Node2D" parent="." unique_id=159247256]

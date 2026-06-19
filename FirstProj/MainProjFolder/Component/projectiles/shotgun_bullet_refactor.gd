@@ -5,7 +5,9 @@ const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 @onready var damage : int = 1 : set = set_damage, get = get_damage
 
 
-@onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
+
+@onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var gpu_particles_2d: GPUParticles2D = $Sprite2D/GPUParticles2D
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 var dir : Vector2 = Vector2.RIGHT
@@ -20,7 +22,11 @@ func _ready():
 	#shoot_range()
 	gpu_particles_2d.emitting=true
 	global_position = spawnPos
-	global_rotation = spawnRot
+	sprite_2d.rotation_degrees=spawnRot
+	
+	print_debug(sprite_2d.rotation_degrees)
+	print_debug(spawnRot)
+	
 	scale*=scale_size
 
 
@@ -28,7 +34,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	position += dir * SPEED * delta
-	rotation = spawnRot
+	#global_rotation = spawnRot
+
 
 	
 	
@@ -64,7 +71,7 @@ func impact() -> void:
 	get_tree().current_scene.add_child(impact_fx)
 	audio_stream_player_2d.play(0.15)
 	set_physics_process(false)
-	#queue_free()
+	queue_free()
 
 func set_damage(value : int) -> void:
 	damage=value
@@ -81,6 +88,8 @@ func get_stagger_damage() -> int:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("WorldStatic"):
 		hard_impact()
+	else:
+		impact()
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:

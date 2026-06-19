@@ -385,7 +385,12 @@ func _process(_delta):
 		hb_collision.disabled=true
 	vision_handler.handle_vision()
 	if not attack_range.has_overlapping_bodies() and not attacking:
-		bt_player.blackboard.set_var("within_range", false)
+		var _colliding_bodies=attack_range.get_overlapping_areas()
+		for i in range(_colliding_bodies.size()-1, -1, 0):
+			if _colliding_bodies[i].is_in_group("player"):
+				state_machine.dispatch(&"start_attack")
+				bt_player.blackboard.set_var("within_range", false)
+				break
 	#bt_player.blackboard.get_var("attack_mode"))
 	attack_timer.one_shot=true
 	counter_select()
@@ -475,6 +480,7 @@ func teleport_counter():
 	state_machine.dispatch(&"teleport_counter")
 	
 func teleport_atk():
+	print_debug(state_machine.get_active_state())
 	state_machine.dispatch(&"teleport_atk")
 	
 func apply_gravity(delta : float) -> void:
@@ -978,6 +984,7 @@ func _on_hit_exited() -> void:
 	#bt_player.blackboard.set_var("hit", false)
 	if stun_timer.is_stopped():
 		bt_player.blackboard.set_var("staggered", false)
+	var _colliding_bodies=attack_range.get_overlapping_bodies()
 
 func _on_hit_updated(delta: float) -> void:
 
@@ -1094,9 +1101,11 @@ func _on_phasetransition_entered() -> void:
 	state_machine.add_transition(staggered, teleport_and_shoot, &"teleport_recover")
 	state_machine.add_transition(chasing, teleport_and_hit, &"teleport_atk")
 	state_machine.add_transition(clashed, teleport_and_hit, &"teleport_atk")
+	state_machine.add_transition(attack, teleport_and_hit, &"teleport_atk")
 	
 	state_machine.add_transition(teleport_and_shoot, attack, teleport_and_shoot.success_event)
 	state_machine.add_transition(teleport_and_hit, attack, teleport_and_hit.success_event)
+	
 	melee_attack_manager.combo_max=4
 
 
@@ -1133,6 +1142,10 @@ func _on_teleport_and_shoot_exited() -> void:
 	teleport_helper_raycast.target_position=Vector2(0,50)
 	attacking=false
 	animated_sprite_2d.use_parent_material=false
+	var _colliding_bodies=attack_range.get_overlapping_bodies()
+	for i in range(_colliding_bodies.size()-1, -1, 0):
+		if _colliding_bodies[i].is_in_group("player"):
+			state_machine.dispatch(&"start_attack")
 
 func death_on_cutscene() -> void:
 	state_machine.change_active_state(death)
@@ -1219,6 +1232,10 @@ func _on_teleport_and_hit_updated(delta: float) -> void:
 func _on_teleport_and_hit_exited() -> void:
 	hurt_box.active=true
 	animated_sprite_2d.use_parent_material=false
+	var _colliding_bodies=attack_range.get_overlapping_bodies()
+	for i in range(_colliding_bodies.size()-1, -1, 0):
+		if _colliding_bodies[i].is_in_group("player"):
+			state_machine.dispatch(&"start_attack")
 
 func _on_teleport_and_hit_entered() -> void:
 	pass
@@ -1335,6 +1352,8 @@ func _on_attack_exited() -> void:
 func _on_launch_updated(delta: float) -> void:
 	assert(attack_timer.is_stopped())
 	assert(bt_player.blackboard.get_var("staggered")==true)
+	if not hb_collision.disabled:
+		hb_collision.set_deferred("disabled", true)
 
 
 func _on_launch_entered() -> void:
@@ -1356,6 +1375,8 @@ func _on_falling_updated(delta: float) -> void:
 	assert(attack_timer.is_stopped())
 	
 	assert(bt_player.blackboard.get_var("staggered")==true)
+	if not hb_collision.disabled:
+		hb_collision.set_deferred("disabled", true)
 
 
 func _on_land_updated(delta: float) -> void:
@@ -1363,11 +1384,17 @@ func _on_land_updated(delta: float) -> void:
 	assert(attack_timer.is_stopped())
 	
 	assert(bt_player.blackboard.get_var("staggered")==true)
+	if not hb_collision.disabled:
+		hb_collision.set_deferred("disabled", true)
 
 
 func _on_land_exited() -> void:
 	var _colliding_bodies=attack_range.get_overlapping_bodies()
-	for i in range(_colliding_bodies.size()-1, -1, 0):
-		if _colliding_bodies[i].is_in_group("player"):
-			state_machine.dispatch(&"start_attack")
-			break
+	if _colliding_bodies!= null or _colliding_bodies.is_empty():
+		pass
+	else:
+		for i in range(_colliding_bodies.size()-1, -1, 0):
+			if _colliding_bodies[i].is_in_group("player"):
+				bt_player.blackboard.set_var("within_range", false)
+				state_machine.dispatch(&"start_attack")
+				break

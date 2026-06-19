@@ -24,6 +24,7 @@ func _ready():
 	linear_velocity=(dir*SPEED)
 	scale*=scale_size
 	modulate.a=255
+	sleeping=true
 
 
 

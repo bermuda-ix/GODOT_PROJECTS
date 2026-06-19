@@ -4,6 +4,7 @@ extends Node
 @export var actor : Node2D
 @export var player_tracking_active : bool = true
 @export var turret : Turret
+@onready var manuel_rotation : bool = false
 @onready var turret_rel_loc : Vector2 : set = set_turr_rel_loc, get = get_turr_rel_loc
 @export_category("Bullet Specs")
 @export var projectile : PackedScene : set = set_projectile
@@ -13,6 +14,8 @@ extends Node
 @export var bullet_speed : float = 400.0
 
 @export var bullet_damage : int = 1
+
+@export var bullet_rotation : float = 0.0
 
 @export_category("Missile Specs")
 @export var rotation_speed : float = 5.0
@@ -49,7 +52,12 @@ func shoot_bullet():
 	else:
 		if bullet_inst.is_in_group("missile"):
 			bullet_inst.spawnRot = actor.global_rotation_degrees
+		elif manuel_rotation:
+			#print_debug(bullet_rotation)
+			bullet_inst.spawnRot=bullet_rotation
+			#bullet_inst.global_rotation=bullet_rotation
 		else:
+			#print_debug(turret.global_rotation_degrees)
 			bullet_inst.spawnRot = turret.global_rotation_degrees
 		#print_debug(bullet_inst.dir)
 		

@@ -567,22 +567,14 @@ func _init_attack_states():
 
 func _process(_delta):
 	
-	#if anim_player.is_playing():
-		#print_debug("animation playing")
-	#else:
+	label.text=str(spread_boundary_2.rotation_degrees/2+shotty.rotation_degrees, ", ", shotty.rotation_degrees , ", ", shotty.rotation_degrees-spread_boundary_2.rotation_degrees/2)
 	
-	#if clash_power.clash_power>0:
-		#clash_visual.self_modulate.a = (1/clash_power.clash_power) +0.1
-	#else:
-		#clash_visual.self_modulate.a = 0
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	if not cutscene_handler.actor_control_active:
 		
 		if qte_handler.actor_control_active:
 			qte_input()
 		return
-	#elif state==States.STAGGERED:
-		#return
 	elif state_machine.get_active_state()==death or state_machine.get_active_state()==dead:
 		move_and_slide()
 		velocity=Vector2.ZERO
@@ -597,11 +589,7 @@ func _process(_delta):
 	atk_state_debug()
 #
 	dodge(input_axis)
-	label.text=str(clash_power.clash_power)
-	#
-	#if Input.is_action_just_pressed("attack"):
-		#print_debug(state_machine.get_active_state())
-		#
+	
 		
 	if(state_machine.get_active_state()!=dodge_state\
 	 and state_machine.get_active_state()!=special_attack\
@@ -646,7 +634,6 @@ signal vel_y_changed
 func _physics_process(delta):
 	vel_y=velocity.y
 	
-	label.text=str(velocity.x)
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		apply_gravity(delta)
 		cutscene_acceleration(cutscene_handler.cutscene_dir, delta, cutscene_handler.cutscene_speed)
@@ -1492,15 +1479,17 @@ func _on_special_attack_buffer_timer_timeout() -> void:
 	attack_timer.paused = false
 
 func gun_cone(spread : int) -> Array[int]:
-	var _cone_angle :int = round(spread_boundary_2.rotation_degrees - spread_boundary_1.rotation_degrees)
-	var _spread_angle : int = round(_cone_angle/spread)
-	var _bullet_spawn_angle : int =shotty.global_rotation_degrees - _spread_angle
+	var _left_boundary : float = spread_boundary_2.rotation_degrees/2+shotty.rotation_degrees
+	var _right_boundary : float = shotty.rotation_degrees-spread_boundary_2.rotation_degrees/2
+	var _cone_angle :float = (_left_boundary) - (_right_boundary)
+	var _spread_angle : float = _cone_angle/spread
+	var _bullet_spawn_angle : float =shotty.global_rotation_degrees - _spread_angle
 	var _bullet_spawn_angles : Array[int]
 	for i in spread:
+		
 		_bullet_spawn_angles.push_front(_bullet_spawn_angle)
 		_bullet_spawn_angle+=_spread_angle
 	return _bullet_spawn_angles
-	label.text=str(aim_speed)
 
 func _on_special_attack_entered() -> void:
 	pass
@@ -1512,10 +1501,16 @@ func _on_special_attack_entered() -> void:
 func shotgun_shoot() -> void:
 	
 	var _bullet_dirs : Array[int] = gun_cone(spread)
+	#for i in _bullet_dirs:
+		#print_debug(_bullet_dirs[i])
+	#print_debug(spread_boundary_1.rotation_degrees, ", ", spread_boundary_2.rotation_degrees)
 	Events.remove_ammo.emit()
 	ammo-=1
+	shoot_handler.manuel_rotation=true
 	for i in spread:
 		bullet_dir = rotation_to_direction(_bullet_dirs[i])
+		print_debug(_bullet_dirs[i])
+		shoot_handler.bullet_rotation = _bullet_dirs[i]
 		shoot_handler.shoot_bullet()
 		
 
@@ -1549,6 +1544,7 @@ func rotation_to_direction(_rotation_degrees : int) -> Vector2:
 	var direction = Vector2(cos(_rotation_radians), sin(_rotation_radians))
 	# Normalize the vector (optional, but ensures length = 1)
 	direction = direction.normalized()
+	#print_debug(direction)
 	return direction
 
 func shotgun_free_rotate():
