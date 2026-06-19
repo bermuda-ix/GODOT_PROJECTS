@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://bu15hg23253kf"]
-
-[ext_resource type="Script" uid="uid://bcbo2strrrlj5" path="res://levels/level_components/named_boss_spawn.gd" id="1_6mw30"]
-
-[node name="NamedBossSpawn" type="Node2D" unique_id=1896744289]
-script = ExtResource("1_6mw30")

@@ -1,9 +1,0 @@
-[gd_resource type="ShaderMaterial" format=3 uid="uid://dj1nixtcnmqd7"]
-
-[ext_resource type="Shader" uid="uid://d1ksiplmprxb6" path="res://chars/outline_static_v2.gdshader" id="1_bmena"]
-
-[resource]
-shader = ExtResource("1_bmena")
-shader_parameter/color = Color(0.29536697, 1.8170111, 2.2378917, 1)
-shader_parameter/neighbor_pixels = 2
-shader_parameter/center_distance_cap = 2
