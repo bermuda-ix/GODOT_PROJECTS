@@ -867,7 +867,6 @@ func _on_hurt_box_bullet_hit(_damage: int) -> void:
 			launch.knock_back_strength=-500.0
 		else:
 			launch.knock_back_strength=500.0
-		#launch.start_launch_timer()
 		state_machine.dispatch(&"launched")
 		
 		
@@ -892,8 +891,6 @@ func _on_health_health_depleted() -> void:
 		bt_player.active=false
 		Events.unlock_from.emit()
 		Events.boss_died.emit("miniboss_hallway_death")
-		#if queue_free_on_death:
-			#queue_free()
 		set_process(false)
 		set_physics_process(false)
 		Events.global_flag_trigger.emit("miniboss_hallway_death")
