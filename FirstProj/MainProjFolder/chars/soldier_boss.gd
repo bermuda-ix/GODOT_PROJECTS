@@ -1366,4 +1366,8 @@ func _on_land_updated(delta: float) -> void:
 
 
 func _on_land_exited() -> void:
-	pass # Replace with function body.
+	var _colliding_bodies=attack_range.get_overlapping_bodies()
+	for i in range(_colliding_bodies.size()-1, -1, 0):
+		if _colliding_bodies[i].is_in_group("player"):
+			state_machine.dispatch(&"start_attack")
+			break

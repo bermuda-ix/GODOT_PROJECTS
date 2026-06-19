@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4pfomybiepkl"]
+[gd_scene format=3 uid="uid://c4pfomybiepkl"]
 
 [ext_resource type="Script" uid="uid://c14brhmymlgfx" path="res://Component/UI_Rec/boss_ui.gd" id="1_bbtsr"]
 [ext_resource type="PackedScene" uid="uid://jop8ug0vuibf" path="res://Component/UI_Rec/boss_health.tscn" id="2_fet7x"]
 [ext_resource type="PackedScene" uid="uid://cb1sfjiadamc3" path="res://Component/UI_Rec/boss_stamina.tscn" id="3_1kupi"]
 
-[node name="BossUI" type="Control"]
+[node name="BossUI" type="Control" unique_id=1545874622]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bbtsr")
 
-[node name="BossHealth" parent="." instance=ExtResource("2_fet7x")]
+[node name="BossHealth" parent="." unique_id=1983608836 instance=ExtResource("2_fet7x")]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -25,9 +25,11 @@ offset_right = -89.0
 offset_bottom = 18.0
 grow_vertical = 1
 
-[node name="BossStamina" parent="." instance=ExtResource("3_1kupi")]
+[node name="BossStamina" parent="." unique_id=386297522 instance=ExtResource("3_1kupi")]
 layout_mode = 1
 offset_left = 168.0
 offset_top = 40.0
 offset_right = 168.0
 offset_bottom = 40.0
+max_value = 10.0
+value = 10.0

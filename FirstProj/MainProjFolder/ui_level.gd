@@ -1,5 +1,8 @@
 extends Control
 
+const HEALTH_BAR_SPEED := 10.0
+const STAMINA_BAR_SPEED := 20.0
+
 @onready var health_bar = $Health
 @onready var state = $State
 @onready var health_bar_ui := $HealthBar
@@ -10,6 +13,7 @@ extends Control
 signal heat_lvl_raise
 
 var health : int = 3
+var stagger : int = 3
 var cur_state ="IDLE"
 var heat_lvl : int = 0: 
 	set(value) : heat_lvl = clampi(value, 0, 7)
@@ -30,12 +34,19 @@ func _process(delta):
 	
 	set_heat_fill(heat_fill)
 	set_heat_lvl(heat_lvl)
+	
+	set_health_smooth(health, delta)
+	set_stagger_smooth(stagger, delta)
 
 
 func set_health(value: int) -> void:
 	health = value
 	health_bar_ui.value=value
-	
+
+func set_health_smooth(value: int, delta: float) -> void:
+	var _weight = abs(1.0-exp(HEALTH_BAR_SPEED*delta))
+	health_bar_ui.value=lerpf(health_bar_ui.value, value, _weight)
+
 func set_cur_state(value: String) -> void:
 	cur_state = value
 
@@ -43,8 +54,12 @@ func set_max_health(value: int) -> void:
 	health_bar_ui.max_value = value
 
 func set_stagger(value : int) -> void:
-	stagger_bar.value=value
-	
+	stagger=value
+
+func set_stagger_smooth(value: int, delta: float) -> void:
+	var _weight = abs(1.0-exp(STAMINA_BAR_SPEED*delta))
+	stagger_bar.value=lerpf(stagger_bar.value, value, _weight)
+
 func set_max_stagger(value : int) -> void:
 	stagger_bar.max_value=value
 

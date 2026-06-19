@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://jop8ug0vuibf"]
+[gd_scene format=3 uid="uid://jop8ug0vuibf"]
 
 [ext_resource type="Texture2D" uid="uid://c800m2au07hfq" path="res://Art_Components/UI/04.png" id="1_oxqcc"]
 
@@ -14,7 +14,7 @@ region = Rect2(2.8532, 66.1423, 43.1758, 13.3753)
 atlas = ExtResource("1_oxqcc")
 region = Rect2(50.8746, 114.132, 39.3906, 11.4175)
 
-[node name="BossHealth" type="TextureProgressBar"]
+[node name="BossHealth" type="TextureProgressBar" unique_id=1454780474]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -25,6 +25,7 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(6, 3)
+step = 0.01
 value = 100.0
 texture_under = SubResource("AtlasTexture_oxqcc")
 texture_over = SubResource("AtlasTexture_teskf")

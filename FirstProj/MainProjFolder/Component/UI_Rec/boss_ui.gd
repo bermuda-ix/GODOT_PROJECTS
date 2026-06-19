@@ -1,13 +1,18 @@
 extends Control
 
+const HEALTH_BAR_SPEED := 10.0
+const STAMINA_BAR_SPEED := 20.0
+
 @export var health: Health
 @export var stagger: Stagger
 @export var actor : Node2D
 
 @onready var boss_health: TextureProgressBar = $BossHealth
 @onready var boss_stamina: TextureProgressBar = $BossStamina
-
-
+#
+#@export_category("debuging values")
+#@export var health_debug := 100.0
+#@export var stagger_debug := 10
 
 
 var cur_state ="IDLE"
@@ -25,13 +30,16 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	set_boss_health(health.health)
-	set_boss_stagger(stagger.stagger)
+	set_boss_health_smooth(health.health, delta)
+	set_boss_stagger_smooth(stagger.stagger, delta)
 
 
 func set_boss_health(value: int) -> void:
-
 	boss_health.value=value
+	
+func set_boss_health_smooth(value: int, delta: float) -> void:
+	var _weight = abs(1.0-exp(HEALTH_BAR_SPEED*delta))
+	boss_health.value=lerpf(boss_health.value, value, _weight)
 	
 func set_max_boss_health(value: int) -> void:
 	boss_health.max_value = value
@@ -39,8 +47,11 @@ func set_max_boss_health(value: int) -> void:
 
 
 func set_boss_stagger(value: int) -> void:
-
 	boss_stamina.value=value
+	
+func set_boss_stagger_smooth(value: int, delta: float) -> void:
+	var _weight = abs(1.0-exp(STAMINA_BAR_SPEED*delta))
+	boss_stamina.value=lerpf(boss_stamina.value, value, _weight)
 	
 func set_max_boss_stamina(value: int) -> void:
 	boss_stamina.max_value = value
