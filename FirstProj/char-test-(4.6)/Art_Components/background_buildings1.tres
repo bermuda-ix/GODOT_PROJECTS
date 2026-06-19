@@ -1,0 +1,37 @@
+[gd_resource type="TileSet" format=3 uid="uid://otdvivavo56t"]
+
+[ext_resource type="Texture2D" uid="uid://cp27q8n7gwf8r" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factory.png" id="1_ila2t"]
+[ext_resource type="Texture2D" uid="uid://d4ixead72khtg" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding2.png" id="2_m58sn"]
+[ext_resource type="Texture2D" uid="uid://bri4af6o6wyf6" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding2blur.png" id="3_0mhdv"]
+[ext_resource type="Texture2D" uid="uid://clyivendy3q3w" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding.png" id="4_aoud8"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jixef"]
+texture = ExtResource("1_ila2t")
+texture_region_size = Vector2i(32, 32)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4to5g"]
+texture = ExtResource("2_m58sn")
+texture_region_size = Vector2i(32, 32)
+2:3/size_in_atlas = Vector2i(74, 59)
+2:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_scfoj"]
+texture = ExtResource("3_0mhdv")
+texture_region_size = Vector2i(32, 32)
+2:3/size_in_atlas = Vector2i(74, 59)
+2:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rrdqa"]
+texture = ExtResource("4_aoud8")
+texture_region_size = Vector2i(32, 32)
+1:12/size_in_atlas = Vector2i(74, 50)
+1:12/0 = 0
+
+[resource]
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "Background"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+sources/0 = SubResource("TileSetAtlasSource_jixef")
+sources/1 = SubResource("TileSetAtlasSource_4to5g")
+sources/2 = SubResource("TileSetAtlasSource_scfoj")
+sources/3 = SubResource("TileSetAtlasSource_rrdqa")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d54qkf1yhsab"]
+
+[ext_resource type="Script" uid="uid://dler1yevs2jco" path="res://Component/grouped_enemies.gd" id="1_6ctnb"]
+
+[node name="GroupedEnemies" type="Node"]
+script = ExtResource("1_6ctnb")

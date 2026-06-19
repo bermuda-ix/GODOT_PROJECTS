@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_fcew8")
-cutscene_list = Array[String](["SOLDIER1", "SOLDIER2", "JOKER1", "ACE1", "SOLDIER3", "JOKER2", "JOKER3", "SOLDIER4", "ACE2", "SOLDIER5", "JOKER4", "SOLDIER6"])
+cutscene_list = Array[String](["SOLDIER1", "SOLDIER2", "JOKER1", "ACE1", "SOLDIER3", "JOKER2", "SOLDIER4", "ACE2", "SOLDIER5", "JOKER4", "SOLDIER6"])

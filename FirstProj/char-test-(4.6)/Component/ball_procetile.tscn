@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://e8y61qs02r7p"]
+
+[ext_resource type="PackedScene" uid="uid://6w7fy3t1fhcg" path="res://Component/project_template.tscn" id="1_2tfmk"]
+[ext_resource type="Script" uid="uid://ca8e47rujgaxi" path="res://Component/ball_procetile.gd" id="2_4620e"]
+[ext_resource type="Texture2D" uid="uid://23dmp5jsusa6" path="res://Art_Components/OGs/mini_projectile.png" id="2_i2xw0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4crhy"]
+atlas = ExtResource("2_i2xw0")
+region = Rect2(308, 219, 122, 126)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r3xgv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4crhy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fjggm"]
+radius = 49.999996
+
+[node name="ProjectTemplate" groups=["bullet"] instance=ExtResource("1_2tfmk")]
+scale = Vector2(0.1, 0.1)
+collision_layer = 5
+collision_mask = 3
+monitoring = false
+script = ExtResource("2_4620e")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_r3xgv")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_fjggm")
+
+[node name="VisibleOnScreenEnabler2D" parent="." index="2"]
+position = Vector2(0, -1.90735e-06)
+scale = Vector2(5.39999, 5.4)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

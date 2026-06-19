@@ -1,0 +1,300 @@
+[gd_scene load_steps=19 format=3 uid="uid://dy51s6y6y8p08"]
+
+[ext_resource type="Script" uid="uid://dvfweaey15pf3" path="res://Component/functions/PersistentData/highscore_list.gd" id="1_wfq2b"]
+[ext_resource type="Texture2D" uid="uid://1fmns6p332ye" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Panel05.png" id="2_0gft3"]
+[ext_resource type="FontFile" uid="uid://6gqb063p0aaa" path="res://Art_Components/UI/Fonts/Pixica Fonts/Pixica Fonts/Pixica-Regular.ttf" id="2_yjokj"]
+[ext_resource type="Texture2D" uid="uid://cu63xecyubohj" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Button01.png" id="3_6m5uc"]
+[ext_resource type="Texture2D" uid="uid://es8ukh45ffw7" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Button02.png" id="4_0gft3"]
+[ext_resource type="Texture2D" uid="uid://trivk6x3hslt" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Button03.png" id="5_etvb2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_etvb2"]
+texture = ExtResource("2_0gft3")
+
+[sub_resource type="Theme" id="Theme_srgfs"]
+default_font = ExtResource("2_yjokj")
+default_font_size = 48
+
+[sub_resource type="Theme" id="Theme_6m5uc"]
+
+[sub_resource type="Theme" id="Theme_d2tjr"]
+default_font = ExtResource("2_yjokj")
+default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_m2hgp"]
+default_font = ExtResource("2_yjokj")
+default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_ts3jf"]
+default_font = ExtResource("2_yjokj")
+default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_702ol"]
+default_font = ExtResource("2_yjokj")
+default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_tmdc2"]
+default_font = ExtResource("2_yjokj")
+default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_ms577"]
+default_font = ExtResource("2_yjokj")
+default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_exjum"]
+default_font = ExtResource("2_yjokj")
+default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_wfq2b"]
+default_font = ExtResource("2_yjokj")
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_qsahu"]
+default_font = ExtResource("2_yjokj")
+default_font_size = 36
+
+[node name="HighscoreList" type="Control"]
+z_index = 5
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wfq2b")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_right = 512.0
+offset_bottom = 328.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_etvb2")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer"]
+layout_mode = 2
+theme = SubResource("Theme_srgfs")
+text = "HIGHSCORES"
+horizontal_alignment = 1
+
+[node name="NameList" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 40.0
+offset_right = 280.0
+offset_bottom = 275.0
+theme_override_constants/separation = 2
+
+[node name="NamePanelTitle" type="PanelContainer" parent="NameList"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme = SubResource("Theme_6m5uc")
+
+[node name="NameText" type="RichTextLabel" parent="NameList/NamePanelTitle"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme = SubResource("Theme_d2tjr")
+bbcode_enabled = true
+text = "[u]NAME[/u]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NamePanel1" type="PanelContainer" parent="NameList"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="Name1" type="RichTextLabel" parent="NameList/NamePanel1" groups=["name"]]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+theme = SubResource("Theme_m2hgp")
+bbcode_enabled = true
+text = "Empty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NamePanel2" type="PanelContainer" parent="NameList"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="Name2" type="RichTextLabel" parent="NameList/NamePanel2" groups=["name"]]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+theme = SubResource("Theme_m2hgp")
+bbcode_enabled = true
+text = "Empty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NamePanel3" type="PanelContainer" parent="NameList"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="Name3" type="RichTextLabel" parent="NameList/NamePanel3" groups=["name"]]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+theme = SubResource("Theme_m2hgp")
+bbcode_enabled = true
+text = "Empty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NamePanel4" type="PanelContainer" parent="NameList"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="Name4" type="RichTextLabel" parent="NameList/NamePanel4" groups=["name"]]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+theme = SubResource("Theme_m2hgp")
+bbcode_enabled = true
+text = "Empty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NamePanel5" type="PanelContainer" parent="NameList"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="Name5" type="RichTextLabel" parent="NameList/NamePanel5" groups=["name"]]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+theme = SubResource("Theme_m2hgp")
+bbcode_enabled = true
+text = "Empty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreList" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 296.0
+offset_top = 40.0
+offset_right = 448.0
+offset_bottom = 275.0
+theme_override_constants/separation = 2
+
+[node name="ScorePanelTitle" type="PanelContainer" parent="ScoreList"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="ScoreText" type="RichTextLabel" parent="ScoreList/ScorePanelTitle"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme = SubResource("Theme_d2tjr")
+bbcode_enabled = true
+text = "[u]SCORE[/u]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScorePanel1" type="PanelContainer" parent="ScoreList"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="Score1" type="RichTextLabel" parent="ScoreList/ScorePanel1" groups=["score"]]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+theme = SubResource("Theme_ts3jf")
+bbcode_enabled = true
+text = "0000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScorePanel2" type="PanelContainer" parent="ScoreList"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="Score2" type="RichTextLabel" parent="ScoreList/ScorePanel2" groups=["score"]]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+theme = SubResource("Theme_702ol")
+bbcode_enabled = true
+text = "0000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScorePanel3" type="PanelContainer" parent="ScoreList"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="Score3" type="RichTextLabel" parent="ScoreList/ScorePanel3" groups=["score"]]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+theme = SubResource("Theme_tmdc2")
+bbcode_enabled = true
+text = "0000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScorePanel4" type="PanelContainer" parent="ScoreList"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="Score4" type="RichTextLabel" parent="ScoreList/ScorePanel4" groups=["score"]]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+theme = SubResource("Theme_ms577")
+bbcode_enabled = true
+text = "0000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScorePanel5" type="PanelContainer" parent="ScoreList"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+
+[node name="Score5" type="RichTextLabel" parent="ScoreList/ScorePanel5" groups=["score"]]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+theme = SubResource("Theme_exjum")
+bbcode_enabled = true
+text = "0000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RETURN" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 266.0
+offset_right = 464.0
+offset_bottom = 356.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_wfq2b")
+texture_normal = ExtResource("3_6m5uc")
+texture_pressed = ExtResource("4_0gft3")
+texture_hover = ExtResource("5_etvb2")
+stretch_mode = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="RETURN"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 16.0
+offset_right = 320.0
+offset_bottom = 80.0
+theme = SubResource("Theme_qsahu")
+text = "RETURN TO MENU"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QUIT" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 266.0
+offset_right = 532.0
+offset_bottom = 356.0
+scale = Vector2(0.5, 0.5)
+theme = SubResource("Theme_wfq2b")
+texture_normal = ExtResource("3_6m5uc")
+texture_pressed = ExtResource("4_0gft3")
+texture_hover = ExtResource("5_etvb2")
+stretch_mode = 0
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="QUIT"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 192.0
+offset_bottom = 80.0
+theme = SubResource("Theme_qsahu")
+text = "QUIT GAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="RETURN" to="." method="_on_return_pressed"]
+[connection signal="pressed" from="QUIT" to="." method="_on_quit_pressed"]

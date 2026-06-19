@@ -273,7 +273,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_7r4t8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Jump",
 "speed": 5.0
 }, {
@@ -296,7 +296,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("11_8fc12")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_1",
 "speed": 5.0
 }, {
@@ -313,7 +313,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("15_uqkrj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_2",
 "speed": 5.0
 }, {
@@ -345,7 +345,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("25_58mng")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_3",
 "speed": 5.0
 }, {
@@ -380,7 +380,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("26_ggvml")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_4",
 "speed": 5.0
 }, {
@@ -412,7 +412,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("31_ea26c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_counter",
 "speed": 5.0
 }, {
@@ -441,7 +441,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("52_lmcka")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_dash",
 "speed": 5.0
 }, {
@@ -449,7 +449,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("32_jqkr8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"dead",
 "speed": 5.0
 }, {
@@ -481,7 +481,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("41_apghb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -507,7 +507,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("48_r4dbx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -515,7 +515,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_7r4t8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"dodge",
 "speed": 5.0
 }, {
@@ -547,7 +547,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("31_ea26c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"heavy_atk_1",
 "speed": 5.0
 }, {
@@ -561,7 +561,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("51_r3r0e")
 }],
-"loop": true,
+"loop": 1,
 "name": &"hit",
 "speed": 5.0
 }, {
@@ -584,7 +584,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("78_3vbeq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"knocked_back",
 "speed": 5.0
 }, {
@@ -607,7 +607,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("58_bpr6j")
 }],
-"loop": true,
+"loop": 1,
 "name": &"knocked_down",
 "speed": 5.0
 }, {
@@ -618,7 +618,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("86_6oyq8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"landed",
 "speed": 5.0
 }, {
@@ -650,7 +650,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("60_t6q84")
 }],
-"loop": true,
+"loop": 1,
 "name": &"phase_change",
 "speed": 5.0
 }, {
@@ -682,7 +682,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("60_t6q84")
 }],
-"loop": true,
+"loop": 1,
 "name": &"reload",
 "speed": 5.0
 }, {
@@ -717,7 +717,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("70_8xulu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"roll",
 "speed": 5.0
 }, {
@@ -746,7 +746,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("78_igsym")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run",
 "speed": 5.0
 }, {
@@ -769,7 +769,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("103_tnx7y")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run_shoot",
 "speed": 5.0
 }, {
@@ -789,7 +789,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("83_xgcjp")
 }],
-"loop": true,
+"loop": 1,
 "name": &"shoot",
 "speed": 5.0
 }, {
@@ -809,7 +809,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("107_5kjb4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"shoot_crouch",
 "speed": 5.0
 }, {
@@ -838,7 +838,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("91_rb6ko")
 }],
-"loop": true,
+"loop": 1,
 "name": &"shoot_run",
 "speed": 5.0
 }, {
@@ -864,12 +864,12 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("98_0fwx0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"stunned",
 "speed": 5.0
 }, {
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"teleport",
 "speed": 5.0
 }]
@@ -1471,7 +1471,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("113_r4dbx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk",
 "speed": 5.0
 }, {
@@ -1491,7 +1491,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("121_ggvml")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_kick",
 "speed": 5.0
 }, {
@@ -1535,7 +1535,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("126_5yij7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"down_atk",
 "speed": 5.0
 }, {
@@ -1552,7 +1552,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("152_y18n0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"knocked_back",
 "speed": 5.0
 }, {
@@ -1707,7 +1707,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_on0jo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"phase_cange_start",
 "speed": 5.0
 }, {
@@ -1892,12 +1892,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rb6ko")
 }],
-"loop": true,
+"loop": 1,
 "name": &"phase_change",
 "speed": 5.0
 }, {
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"short_teleport",
 "speed": 5.0
 }, {
@@ -1932,7 +1932,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("164_sapcc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"staggered",
 "speed": 5.0
 }, {
@@ -1964,7 +1964,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("173_nykr5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"staggered_entered",
 "speed": 5.0
 }, {
@@ -1999,7 +1999,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ea26c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"teleport_end",
 "speed": 5.0
 }, {
@@ -2064,7 +2064,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pln6j")
 }],
-"loop": true,
+"loop": 1,
 "name": &"teleport_start",
 "speed": 5.0
 }]
@@ -2081,7 +2081,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("149_dl6qc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Shoot",
 "speed": 5.0
 }, {
@@ -2101,7 +2101,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("154_fnbuc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_1",
 "speed": 5.0
 }, {
@@ -2127,7 +2127,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("113_r4dbx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_2",
 "speed": 5.0
 }]
@@ -2845,7 +2845,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ow5pg")
 }],
-"loop": true,
+"loop": 1,
 "name": &"phase_cange_start",
 "speed": 5.0
 }, {
@@ -3030,7 +3030,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_p2ac3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"phase_change",
 "speed": 5.0
 }, {
@@ -3065,7 +3065,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_l6214")
 }],
-"loop": true,
+"loop": 1,
 "name": &"teleport_end",
 "speed": 5.0
 }, {
@@ -3130,7 +3130,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7paxt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"teleport_start",
 "speed": 5.0
 }]
@@ -3942,7 +3942,7 @@ collision_mask = 17
 safe_margin = 0.2
 script = ExtResource("2_87q8v")
 death_cutscene = true
-queuefree_on_death = true
+queue_free_on_death = true
 
 [node name="NavigationAgent2D" parent="." index="0"]
 navigation_layers = 2

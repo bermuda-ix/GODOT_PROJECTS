@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://cr83me6yppmvk"]
+
+[ext_resource type="Script" uid="uid://cn4grp2r3dgju" path="res://Component/UI_Rec/Char_Dialogue/dialogue.gd" id="1_5jlo7"]
+
+[sub_resource type="Animation" id="Animation_5jlo7"]
+resource_name = "Dialogue"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DialogueText:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_c87gw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DialogueText:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qjwrk"]
+_data = {
+&"Dialogue": SubResource("Animation_5jlo7"),
+&"RESET": SubResource("Animation_c87gw")
+}
+
+[node name="Dialogue" type="Control" unique_id=1848131381]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5jlo7")
+
+[node name="DialogueText" type="RichTextLabel" parent="." unique_id=966416643]
+layout_mode = 0
+offset_right = 384.0
+offset_bottom = 80.0
+theme_override_font_sizes/normal_font_size = 14
+text = "This is a test for dialogue"
+fit_content = true
+scroll_active = false
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1483055990]
+libraries/ = SubResource("AnimationLibrary_qjwrk")
+
+[node name="DialogueTimer" type="Timer" parent="." unique_id=329937798]
+wait_time = 0.05
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="DialogueTimer" to="." method="_on_dialogue_timer_timeout"]

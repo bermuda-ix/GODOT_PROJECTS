@@ -1230,7 +1230,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7t5wx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"AirSlash",
 "speed": 15.0
 }, {
@@ -1253,7 +1253,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jnrgk")
 }],
-"loop": true,
+"loop": 1,
 "name": &"AirSlashDown",
 "speed": 15.0
 }, {
@@ -1276,7 +1276,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_oife4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"AirSlashUp",
 "speed": 15.0
 }, {
@@ -1284,7 +1284,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gwqtf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"AttackCloser",
 "speed": 5.0
 }, {
@@ -1298,7 +1298,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gwqtf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"AttackCloserBegin",
 "speed": 5.0
 }, {
@@ -1309,7 +1309,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_uachv")
 }],
-"loop": true,
+"loop": 1,
 "name": &"AttackDash",
 "speed": 5.0
 }, {
@@ -1326,7 +1326,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sfdpl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"BowAim",
 "speed": 15.0
 }, {
@@ -1352,7 +1352,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_japa8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"BowDraw",
 "speed": 15.0
 }, {
@@ -1372,7 +1372,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4604p")
 }],
-"loop": true,
+"loop": 1,
 "name": &"BowFire",
 "speed": 15.0
 }, {
@@ -1395,7 +1395,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("6_o4eq6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Crouch",
 "speed": 5.0
 }, {
@@ -1418,7 +1418,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_us2hh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"CrouchSlash",
 "speed": 15.0
 }, {
@@ -1450,7 +1450,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("17_7nfed")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Dash",
 "speed": 5.0
 }, {
@@ -1497,7 +1497,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("31_65bpn")
 }],
-"loop": true,
+"loop": 1,
 "name": &"FrontFlip",
 "speed": 5.0
 }, {
@@ -1532,7 +1532,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1o5op")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GroundSlam",
 "speed": 10.0
 }, {
@@ -1540,7 +1540,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xxtsl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Guard",
 "speed": 15.0
 }, {
@@ -1554,7 +1554,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_22pp6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GuardImpact",
 "speed": 15.0
 }, {
@@ -1562,7 +1562,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rml44")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GunAim",
 "speed": 15.0
 }, {
@@ -1585,7 +1585,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qyvno")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GunCrouch",
 "speed": 10.0
 }, {
@@ -1605,7 +1605,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d5418")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GunCrouchFire",
 "speed": 17.0
 }, {
@@ -1625,7 +1625,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7tg6v")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GunFire",
 "speed": 15.0
 }, {
@@ -1645,7 +1645,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ljr5c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GunFire2H",
 "speed": 15.0
 }, {
@@ -1677,7 +1677,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0fs2i")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GunReload",
 "speed": 15.0
 }, {
@@ -1706,7 +1706,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vqa48")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GunRun",
 "speed": 13.0
 }, {
@@ -1735,7 +1735,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vqa48")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GunRunFire",
 "speed": 13.0
 }, {
@@ -1758,7 +1758,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5eqfe")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GunSprint",
 "speed": 13.0
 }, {
@@ -1781,7 +1781,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_i42fj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GunSprintFire",
 "speed": 13.0
 }, {
@@ -1810,7 +1810,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_i4fyx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GunWalk",
 "speed": 10.0
 }, {
@@ -1839,7 +1839,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_l1q11")
 }],
-"loop": true,
+"loop": 1,
 "name": &"GunWalkFire",
 "speed": 10.0
 }, {
@@ -1853,7 +1853,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vee8f")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Hit",
 "speed": 15.0
 }, {
@@ -1867,7 +1867,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jd0gu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"HitUp",
 "speed": 15.0
 }, {
@@ -1893,7 +1893,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_h45ie")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Idle",
 "speed": 5.0
 }, {
@@ -1907,7 +1907,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("16_o4eq6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Jump",
 "speed": 5.0
 }, {
@@ -1939,7 +1939,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gt4k4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Kick01",
 "speed": 15.0
 }, {
@@ -1968,7 +1968,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_viai3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Kick02",
 "speed": 15.0
 }, {
@@ -2000,7 +2000,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ehpq7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Kick03",
 "speed": 15.0
 }, {
@@ -2023,7 +2023,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("47_qetor")
 }],
-"loop": true,
+"loop": 1,
 "name": &"KnockedBack",
 "speed": 5.0
 }, {
@@ -2034,7 +2034,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("29_sj3xp")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Land",
 "speed": 5.0
 }, {
@@ -2057,7 +2057,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pe12v")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Punch01",
 "speed": 15.0
 }, {
@@ -2074,7 +2074,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_oib6b")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Punch02",
 "speed": 15.0
 }, {
@@ -2100,7 +2100,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hcl2q")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Punch03",
 "speed": 15.0
 }, {
@@ -2114,7 +2114,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_22hyr")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Recover",
 "speed": 5.0
 }, {
@@ -2149,7 +2149,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("37_qkph8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Roll",
 "speed": 5.0
 }, {
@@ -2166,7 +2166,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_q3j71")
 }],
-"loop": true,
+"loop": 1,
 "name": &"ShockHeavy",
 "speed": 13.0
 }, {
@@ -2183,7 +2183,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lhr4g")
 }],
-"loop": true,
+"loop": 1,
 "name": &"ShockLight",
 "speed": 15.0
 }, {
@@ -2203,7 +2203,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kuuij")
 }],
-"loop": true,
+"loop": 1,
 "name": &"StandingSlash",
 "speed": 15.0
 }, {
@@ -2229,7 +2229,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_31mcs")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Stunned",
 "speed": 7.0
 }, {
@@ -2252,7 +2252,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gdaje")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordCombo01",
 "speed": 13.0
 }, {
@@ -2272,7 +2272,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ex4vx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordCombo02",
 "speed": 13.0
 }, {
@@ -2292,7 +2292,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3e8ac")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordCombo03",
 "speed": 13.0
 }, {
@@ -2321,7 +2321,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gdo4i")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordCombo04",
 "speed": 13.0
 }, {
@@ -2344,7 +2344,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bt8ug")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordCrouch",
 "speed": 10.0
 }, {
@@ -2370,7 +2370,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8d4vf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordIdle",
 "speed": 10.0
 }, {
@@ -2384,7 +2384,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_i506i")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordJump",
 "speed": 10.0
 }, {
@@ -2392,7 +2392,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_i506i")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordJumpFall",
 "speed": 10.0
 }, {
@@ -2400,7 +2400,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ajjay")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordJumpMid",
 "speed": 10.0
 }, {
@@ -2408,7 +2408,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_txhaw")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordJumpRise",
 "speed": 10.0
 }, {
@@ -2437,7 +2437,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fu8f8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordRun",
 "speed": 13.0
 }, {
@@ -2466,7 +2466,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8qr1v")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordRunAlt",
 "speed": 13.0
 }, {
@@ -2495,7 +2495,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2pn6m")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordRunSlash",
 "speed": 13.0
 }, {
@@ -2524,7 +2524,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7bpo8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordSlash01",
 "speed": 13.0
 }, {
@@ -2547,7 +2547,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nsjcu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordSprint",
 "speed": 10.0
 }, {
@@ -2570,7 +2570,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nsjcu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordSprintSlash",
 "speed": 13.0
 }, {
@@ -2599,7 +2599,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_228gh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SwordWalk",
 "speed": 10.0
 }, {
@@ -2619,7 +2619,7 @@ animations = [{
 "duration": 1.4,
 "texture": SubResource("AtlasTexture_amiwx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"ThrowOverarm",
 "speed": 20.0
 }, {
@@ -2642,7 +2642,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wujyn")
 }],
-"loop": true,
+"loop": 1,
 "name": &"ThrowUnderarm",
 "speed": 15.0
 }]

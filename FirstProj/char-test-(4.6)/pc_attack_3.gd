@@ -1,0 +1,12 @@
+extends LimboState
+
+@export var anim_player : AnimationPlayer
+@export var pc : PlayerEntity
+
+func _enter() -> void:
+	anim_player.speed_scale=1.5
+	anim_player.play("Attack_3")
+
+func _exit() -> void:
+	pass
+	#pc.reset_combo_flag=true

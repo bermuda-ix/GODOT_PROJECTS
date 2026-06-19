@@ -37,7 +37,7 @@ var always_active : bool
 @export var drop = preload("res://heart.tscn")
 @onready var death_timer = $DeathTimer
 @export var explode = preload("res://Component/explosion.tscn")
-@export var queuefree_on_death := false
+@export var queue_free_on_death := false
 
 @onready var floor_jump_check_right = $JumpChecks/FloorJumpCheckRight as RayCast2D
 @onready var floor_jump_check_left = $JumpChecks/FloorJumpCheckLeft as RayCast2D
@@ -186,8 +186,8 @@ var spawn_loc : Vector2
 @onready var ammo_count
 
 #DEBUG
-func _set(global_position, value):
-	global_position=value
+#func _set(global_position, value):
+	#global_position=value
 
 #Defaults for reset
 const vision_active = false
@@ -376,6 +376,8 @@ func _process(_delta):
 	dir = to_local(next)
 	#if combat_state_machine.get_active_state()==melee_mode:
 		#force_chase()
+
+	
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collision.disabled=true
 		return
@@ -406,12 +408,13 @@ func _process(_delta):
 		bt_player.blackboard.set_var("attack_mode", false)
 		#bt_player.restart()
 		bt_player.active=false
+		if queue_free_on_death:
+			queue_free()
 		if not death_cutscene:
 			pass
 		elif cutscene_handler.actor_control_active:
 			assert(state_machine.get_active_state()==death)
-		if queuefree_on_death:
-			queue_free()
+		
 		assert(bt_player.active==false)
 		
 func _physics_process(delta):
@@ -591,6 +594,7 @@ func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	
 	if anim_name.substr(0, 3)=="atk":
 		#hit_box.active=true
+		animated_sprite_2d.use_parent_material=false
 		hb_collision.set_deferred("disabled", false)
 		movement_handler.face_player_active=false
 		if anim_name!="atk_dash":
@@ -888,9 +892,14 @@ func _on_health_health_depleted() -> void:
 		bt_player.active=false
 		Events.unlock_from.emit()
 		Events.boss_died.emit("miniboss_hallway_death")
+		#if queue_free_on_death:
+			#queue_free()
+		set_process(false)
+		set_physics_process(false)
 		Events.global_flag_trigger.emit("miniboss_hallway_death")
 		bt_player.active=false
 		set_deferred("visible", false)
+		state_machine.change_active_state(death)
 
 
 func _on_attack_timer_timeout() -> void:
@@ -1015,7 +1024,6 @@ func _on_bullet_detection_bullet_detected() -> void:
 	if attacking and hit_box.heavy_attack:
 		return
 	if state_machine.get_active_state()!=bulletdodge:
-		print_debug(state_machine.get_active_state())
 		states_stack.push_back(state_machine.get_active_state())
 	state_machine.dispatch(&"bullet_dodge")
 

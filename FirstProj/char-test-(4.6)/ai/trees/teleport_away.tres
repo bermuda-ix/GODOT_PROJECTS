@@ -1,0 +1,47 @@
+[gd_resource type="BehaviorTree" format=3 uid="uid://npb87ftkawj"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_h73wo"]
+
+[sub_resource type="BBNode" id="BBNode_3817k"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_n3r87"]
+animation_player = SubResource("BBNode_3817k")
+animation_name = &"teleport_start"
+speed = 2.0
+
+[sub_resource type="BBNode" id="BBNode_8361t"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_f3cub"]
+animation_player = SubResource("BBNode_8361t")
+animation_name = &"teleport_start"
+
+[sub_resource type="BTWait" id="BTWait_aoas6"]
+
+[sub_resource type="BBNode" id="BBNode_gsf22"]
+saved_value = NodePath("TeleportHandler")
+resource_name = "TeleportHandler"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_rulqy"]
+node = SubResource("BBNode_gsf22")
+method = &"teleport_away"
+
+[sub_resource type="BBNode" id="BBNode_y4xea"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_imst2"]
+animation_player = SubResource("BBNode_y4xea")
+animation_name = &"teleport_end"
+speed = 2.0
+
+[sub_resource type="BTSequence" id="BTSequence_n0fwu"]
+custom_name = "Teleport_Away"
+children = [SubResource("BTPlayAnimation_n3r87"), SubResource("BTAwaitAnimation_f3cub"), SubResource("BTWait_aoas6"), SubResource("BTCallMethod_rulqy"), SubResource("BTPlayAnimation_imst2")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_h73wo")
+root_task = SubResource("BTSequence_n0fwu")

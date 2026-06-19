@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CutsceneQueue" format=3 uid="uid://c5bccqpjsv8f"]
+
+[ext_resource type="Script" uid="uid://dq2pnu5gtu78e" path="res://Component/resources/CutsceneQueues/cutscene_queue.gd" id="1_5m6oh"]
+
+[resource]
+script = ExtResource("1_5m6oh")
+cutscene_list = Array[String](["hallway_miniboss_outro/SOLDIER1", "hallway_miniboss_outro/JOKER1", "hallway_miniboss_outro/ACE1", "hallway_miniboss_outro/JOKER2", "hallway_miniboss_outro/QUEEN1", "hallway_miniboss_outro/ACE2", "hallway_miniboss_outro/KNIGHT1", "hallway_miniboss_outro/KING1", "hallway_miniboss_outro/JOKER3", "hallway_miniboss_outro/ACE3", "hallway_miniboss_outro/JOKER4", "hallway_miniboss_outro/JOKER5", "hallway_miniboss_outro/ACE4"])
+metadata/_custom_type_script = "uid://dq2pnu5gtu78e"

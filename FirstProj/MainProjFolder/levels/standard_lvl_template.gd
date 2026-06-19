@@ -371,3 +371,11 @@ func _on_scene_reloaded() -> void:
 	var _boss_boundaries = get_tree().get_nodes_in_group("boss_boundary")
 	for _boss_boundary in _boss_boundaries:
 		assert(_boss_boundary.disabled==true)
+
+
+func _on_cutscene_player_animation_finished(anim_name: StringName) -> void:
+	match anim_name:
+		"flashback_lvl_cutscenes/miniboss_hallway_death":
+			cutscene_queue_index=0
+			load_cutscene_queue(Cutscenes.Cutscenes["MiniBoss1Outro"])
+			play_cutscene_queue()

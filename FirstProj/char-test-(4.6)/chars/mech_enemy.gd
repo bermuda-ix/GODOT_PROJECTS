@@ -1,0 +1,569 @@
+class_name MechEnemy
+extends CharacterBody2D
+
+
+const SPEED = 300.0
+const JUMP_VELOCITY = -400.0
+const MISSILE_TRACKER = preload("res://Component/missiles/missile_tracker.tscn")
+
+#pathfinding
+@onready var wall_check_left = $WallChecks/WallCheckLeft as RayCast2D
+@onready var wall_check_right = $WallChecks/WallCheckRight as RayCast2D
+@onready var floor_checks_left = $FloorChecks/FloorChecksLeft as RayCast2D
+@onready var floor_checks_right = $FloorChecks/FloorChecksRight as RayCast2D
+@onready var player_tracking = $PlayerTrackerPivot/PlayerTracking as RayCast2D
+@onready var player_tracker_pivot = $PlayerTrackerPivot as Node2D
+@onready var chase_timer = $ChaseTimer as Timer
+@onready var animated_sprite_2d = $AnimatedSprite2D as AnimatedSprite2D
+@onready var animation_player = $AnimationPlayer as AnimationPlayer
+@onready var nav_agent = $NavigationAgent2D
+@onready var jump_timer = $JumpTimer
+
+@export var drop = preload("res://heart.tscn")
+@onready var death_timer = $DeathTimer
+@export var explode = preload("res://Component/explosion.tscn")
+
+@onready var floor_jump_check_right = $JumpChecks/FloorJumpCheckRight as RayCast2D
+@onready var floor_jump_check_left = $JumpChecks/FloorJumpCheckLeft as RayCast2D
+@onready var gap_check_left = $JumpChecks/GapCheckLeft as RayCast2D
+@onready var gap_check_right = $JumpChecks/GapCheckRight as RayCast2D
+@onready var leap_up_check_left = $JumpChecks/LeapUpCheckLeft
+@onready var leap_up_check_right = $JumpChecks/LeapUpCheckRight
+
+@onready var turret = $Turret
+@onready var bullet = MISSILE_TRACKER
+@onready var bullet_dir = Vector2.RIGHT
+@onready var shooting_cooldown = $ShootingCooldown
+
+
+@onready var health = $Health
+@onready var hurt_box = $HurtBox
+@onready var hb_collison = $HitBox/CollisionShape2D
+@onready var h_bar = $HBar
+@onready var parry_timer = $ParryTimer as Timer
+var immortal = false
+@onready var stagger = $Stagger
+@onready var hurt_box_weak_point = $AnimatedSprite2D/HurtBox_WeakPoint
+
+@onready var collision_shape_2d = $CollisionShape2D
+
+
+@onready var bt_player = $BTPlayer
+
+@export var wander_speed : float = 40.0
+@export var chase_speed : float = 80.0
+@export var jump_speed : float = 120.0
+@export var hitbox: HitBox
+
+var current_speed : float = 40.0
+var prev_speed : float = 40.0
+var acceleration : float = 800.0
+var player_found : bool = true
+var player : PlayerEntity = null
+var jump_velocity = JUMP_VELOCITY
+var knockback : Vector2 = Vector2.ZERO
+var parried : bool = false 
+var attacking : bool = false
+var next_y
+var state
+var distance
+
+
+enum States{
+	WANDER,
+	CHASE,
+	JUMP,
+	ATTACK,
+	PARRY,
+	DEATH,
+	SHOOTING,
+	STAGGERED
+}
+
+var current_state = States.WANDER
+var prev_state = States.WANDER
+
+
+
+func _ready():
+	chase_timer.timeout.connect(on_timer_timeout)
+	player = get_tree().get_first_node_in_group("player")
+	#set_state(current_state, States.CHASE)
+	animation_player.play("walking")
+	next_y=nav_agent.get_next_path_position().y
+	bt_player.blackboard.set_var("in_range", false)
+	turret.setup(2)
+	turret.shoot_timer.paused=true
+
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+func _process(_delta):
+	health_bar()
+	#if current_state != States.PARRY:
+		#hb_collison.disabled=false
+	player_found=true
+	if current_state != States.ATTACK and current_state != States.STAGGERED:
+		if current_state != States.SHOOTING:
+			handle_vision()
+		track_player()
+		if shooting_cooldown.is_stopped():
+			shooting_range()
+	#match current_state:
+		#States.WANDER:
+			#set_state(current_state, States.WANDER)
+		#States.ATTACK:
+			#set_state(current_state, States.ATTACK)
+
+func _physics_process(delta):
+	# Add the gravity.
+	if not is_on_floor():
+		velocity.y += gravity * delta
+	
+	if not jump_timer.is_stopped():
+		current_state=States.JUMP
+	
+	## Handle jump.
+	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		#velocity.y = JUMP_VELOCITY
+#
+	## Get the input direction and handle the movement/deceleration.
+	## As good practice, you should replace UI actions with custom gameplay actions.
+	#var direction = Input.get_axis("ui_left", "ui_right")
+	#if direction:
+		#velocity.x = direction * SPEED
+	#else:
+		#velocity.x = move_toward(velocity.x, 0, SPEED)
+	if parried==false and attacking==false and current_state!=States.DEATH and current_state!=States.SHOOTING and current_state!=States.STAGGERED:
+		move_and_slide()
+		hb_collison.disabled=false
+	
+	
+	if knockback == Vector2.ZERO or current_state!=States.STAGGERED:
+		handle_movement()
+		if current_state!=States.JUMP:
+			handle_jump()
+		
+	#if is_on_floor() and current_state==States.JUMP:
+		##print_debug("landed")
+		#set_state(current_state,States.CHASE)
+	
+	#if parry_timer.is_stopped() :
+		#current_state=prev_state
+		#knockback = Vector2.ZERO
+		#parried=false
+	
+	#print_debug(state, ": ", current_state, prev_state)	
+	#print_debug(animation_player.current_animation)
+	#print_debug(is_on_floor())
+	#if current_state==States.JUMP:
+		#print_debug("in air")
+	handl_animation()
+
+	velocity.x = current_speed + knockback.x
+	
+	if parried == true:
+		hb_collison.disabled=true
+	
+	
+		
+	knockback = lerp(knockback, Vector2.ZERO, 0.1)
+	
+	
+func handle_movement() -> void:
+	var direction= global_position - player.global_position
+	
+	if current_speed == States.ATTACK:
+		current_speed = 0
+
+	
+	if current_state == States.WANDER:
+		#if is_on_floor() and current_speed==jump_speed:
+			#current_speed = prev_speed
+		if not floor_checks_right.is_colliding() and not wall_check_right.is_colliding():
+			if gap_check_right.is_colliding():
+				
+				set_state(current_state, States.JUMP)
+				#current_state=States.JUMP
+			else:
+				if is_on_floor():
+					current_speed = -wander_speed
+		if not floor_checks_left.is_colliding() and not wall_check_left.is_colliding():
+			if gap_check_left.is_colliding():
+				#velocity.y = jump_velocity
+				set_state(current_state, States.JUMP)
+				#current_state=States.JUMP
+			else:
+				if is_on_floor():
+					current_speed = wander_speed
+					
+					
+		if wall_check_right.is_colliding() and is_on_floor():
+			current_speed = -wander_speed
+		if wall_check_left.is_colliding() and is_on_floor():
+			current_speed = wander_speed
+	
+	elif current_state == States.CHASE:
+		if player_found == true:
+			var dir = to_local(nav_agent.get_next_path_position())
+			
+			#print_debug("moving to player")
+			#if next_y<position.y:
+				#if (not floor_checks_right.is_colliding()) and (floor_jump_check_right.is_colliding()) and is_on_floor(): 
+					#velocity.y = jump_velocity
+					#
+					##current_state=States.JUMP
+					#
+				#if (not floor_checks_left.is_colliding()) and (floor_jump_check_left.is_colliding()) and is_on_floor():
+					#velocity.y = jump_velocity
+					
+				#current_state=States.JUMP
+			
+			#if ( (leap_up_check_right.is_colliding() and current_speed>0 ) or (leap_up_check_left.is_colliding() and current_speed<0 ) ) and position.y-30>next_y:
+				##print_debug("jump")
+				#velocity.y = jump_velocity*1.2
+			
+			#velocity.x = dir.x * chase_speed
+			#print_debug(dir)
+			if dir.x > 0 and is_on_floor():
+				current_speed = chase_speed
+			else:
+				current_speed = -chase_speed
+	
+	if current_state == States.JUMP:
+		
+		#velocity.x = velocity.x
+		if is_on_floor() and jump_timer.is_stopped():
+			#print_debug("landed")
+			makepath()
+			set_state(current_state, States.CHASE)
+			current_speed=prev_speed
+		#velocity.y = jump_velocity
+		#current_speed=0.0
+		#prev_state=States.JUMP
+		
+	velocity.x = current_speed
+
+func handle_jump():
+	if (leap_up_check_left.has_overlapping_bodies() or leap_up_check_right.has_overlapping_bodies()) and is_on_floor():
+		#print_debug("jump check")
+		#set_state(current_state, States.JUMP)
+		if (position.y-50)>next_y:
+			jump_timer.start()
+			#print_debug("jump start")
+			velocity.y = jump_velocity*1.2
+			set_state(current_state, States.JUMP)
+
+
+func handl_animation():
+	var velocity_sign = sign(velocity.x)
+	
+	if velocity_sign < 0:
+		animated_sprite_2d.flip_h = false
+		hurt_box_weak_point.scale.x = -1
+	else:
+		animated_sprite_2d.flip_h = true	
+		hurt_box_weak_point.scale.x = 1
+
+func track_player():
+	
+	
+	var direction_to_player : Vector2 = Vector2(player.position.x, player.position.y)\
+	- player_tracking.position
+	
+	
+	
+	player_tracker_pivot.look_at(direction_to_player)
+
+func shooting_range():
+	if player == null:
+		return
+		
+	var tar_pos = player.global_position
+	var dir = global_position.direction_to(tar_pos)
+	distance =abs(global_position.x - tar_pos.x)
+	if distance<=200 and attacking==false:
+		#print_debug(bt_player.blackboard.get_var("in_range"), " ",distance, " ",attacking)
+		bt_player.blackboard.set_var("in_range", true)
+		set_state(current_state,States.SHOOTING)
+	else:
+		bt_player.blackboard.set_var("in_range", false)
+		set_state(current_state,prev_state)
+	
+
+func handle_vision():
+	if player_tracking.is_colliding():
+		var collision_result = player_tracking.get_collider()
+		
+		if collision_result != player:
+			return
+		else:
+			set_state(current_state, States.CHASE)
+			chase_timer.start(1)
+			player_found = true
+			
+	else:
+		player_found = false
+	#player_found=true
+
+func on_timer_timeout() -> void:
+	if player_found == false:
+		set_state(current_state, States.WANDER)
+		
+func makepath() -> void:
+	nav_agent.target_position = player.global_position
+
+func set_state(cur_state, new_state) -> void:
+
+	if(cur_state == new_state):
+		return
+	elif(cur_state==States.DEATH):
+		return
+	elif(cur_state==States.STAGGERED and not parry_timer.is_stopped()):
+		return
+	#elif new_state==States.ATTACK and cur_state==States.JUMP:
+		#cur_state="AIR_ATTACK"
+		#anim_player.play(attack_combo)
+	else:
+		current_state = new_state
+		prev_state = cur_state
+		#print_debug(current_state, " : ", prev_state)
+		match current_state:
+			States.ATTACK:
+				state="ATTACK"
+				
+				attacking=true
+				#gravity=0
+			States.WANDER:
+				state="WANDER"
+				hb_collison.disabled=false
+				#print_debug(str(prev_speed," ",current_speed))
+				animation_player.speed_scale = 1
+				animation_player.play("walking")
+				if prev_state==States.JUMP:
+					current_speed=prev_speed
+			States.CHASE:
+				player_found=true
+				hb_collison.disabled=false
+				state="CHASE"
+				animation_player.speed_scale =2
+				animation_player.play("walking")
+				if prev_state==States.JUMP:
+					current_speed=prev_speed
+			States.JUMP:
+				prev_speed=current_speed
+				#print_debug("jumping")
+				state="JUMP"
+				if current_speed < 0:
+					current_speed = -jump_speed
+				else:
+					current_speed = jump_speed
+			States.PARRY:
+				hb_collison.disabled=true
+			States.ATTACK:
+				animation_player.speed_scale = 1
+				#animation_player.play("attack")
+				#await animation_player.animation_finished
+			States.DEATH:
+				state="DEATH"
+				hb_collison.disabled=false
+			States.SHOOTING:
+				state="shooting"
+			States.STAGGERED:
+				state="staggered"
+				animation_player.play("Staggered")
+				hb_collison.disabled=false
+				
+		#print_debug(state)
+
+
+func _on_health_health_depleted():
+	death_timer.start()
+	parried=false
+	#current_state==States.DEATH
+	set_state(current_state,States.DEATH)
+	#animation_player.stop()
+	animation_player.play("Death")
+	#var enemies = get_tree().get_nodes_in_group("Enemy")
+	#if enemies.size() <=1:
+		#Events.level_completed.emit()
+		#print_debug("level complete")
+
+func _on_death_timer_timeout():
+	var drop_inst=drop.instantiate()
+	drop_inst.global_position = Vector2(position.x, position.y)
+	get_tree().current_scene.add_child(drop_inst)
+	Events.inc_score.emit()
+	var explode_inst=explode.instantiate()
+	explode_inst.global_position=Vector2(position.x, position.y)
+	get_tree().current_scene.add_child(explode_inst)
+	await get_tree().create_timer(0.1).timeout 
+	queue_free()
+
+func health_bar():
+	h_bar.text=str(health.health, " State: ", state, " : ", parry_timer.time_left)
+
+func _on_hurt_box_got_hit(hitbox):
+	health.set_temporary_immortality(0.2)
+	print_debug("hit")
+	animation_player.play("hit")
+	await animation_player.animation_finished
+	if current_state != States.DEATH:
+		animation_player.play("RESET")
+	
+	if current_state==States.STAGGERED:
+		print_debug("big damage")
+		
+		#health.health-=2
+	else:
+		print_debug("not big damage")
+		
+	#knockback.x = 350
+	#velocity.y=jump_velocity/2
+	#if animated_sprite_2d.flip_h:
+		##velocity.y = jump_velocity/3
+		##position.x = position.x-50
+		#
+	#else:
+		##velocity.y = jump_velocity/3
+		##position.x = position.x+50
+
+
+#func _on_hurt_box_parried():
+	#current_state=States.PARRY
+	#print_debug("PARRIED")
+	#parry_timer.start()
+	#if animated_sprite_2d.flip_h==true:
+		#knockback.x = -450
+	#else:
+		#knockback.x = 450
+	#await get_tree().create_timer(0.3).timeout
+	#set_state(current_state, States.PARRY)
+	##velocity.y=jump_velocity/2
+	#parried = true
+	
+
+
+func _on_hit_box_parried():
+	current_state=States.PARRY
+	#print_debug("PARRIED")
+	parry_timer.start()
+	if animated_sprite_2d.flip_h==true:
+		knockback.x = -450
+	else:
+		knockback.x = 450
+	#await get_tree().create_timer(0.3).timeout
+	set_state(current_state, States.PARRY)
+	#velocity.y=jump_velocity/2
+	parried = true
+
+
+func _on_attack_range_body_entered(_body):
+	if current_state==States.STAGGERED:
+		pass
+	print_debug("attack in range")
+	set_state(current_state, States.ATTACK)
+	animation_player.play("attack")
+	#hb_collison.disabled=true
+	await animation_player.animation_finished
+	set_state(prev_state, States.WANDER)
+	#hb_collison.disabled=false
+	attacking=false
+	
+
+
+
+func _on_navigation_timer_timeout():
+	makepath()
+	next_y=nav_agent.get_next_path_position().y
+	#print_debug(next_y, " : ", position.y)
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name=="attack":
+		#print_debug("attack finished")
+		set_state(current_state, States.CHASE)
+
+
+
+
+func _on_parry_timer_timeout():
+	current_state=prev_state
+	knockback = Vector2.ZERO
+	parried=false
+	hurt_box.set_damage_mulitplyer(1)
+
+func shoot():
+	#turret.shoot()
+	#turret.shoot_timer.paused=false
+	print_debug("shoot")
+	var bullet_inst = bullet.instantiate()
+	bullet_inst.set_speed(300.0)
+	bullet_inst.set_accel(100.0)
+	#bullet_inst.dir =  Vector2.UP
+	bullet_inst.spawnPos = Vector2(turret.global_position.x, turret.global_position.y)
+	if animated_sprite_2d.flip_h==true:
+		bullet_inst.spawnRot = -135
+		bullet_inst.dir =  Vector2.UP + Vector2.LEFT
+	else:
+		bullet_inst.spawnRot = -45
+		bullet_inst.dir =  Vector2.UP + Vector2.RIGHT
+	#audio_stream_player_2d.play()
+	
+	get_tree().current_scene.add_child(bullet_inst)
+
+
+
+func _on_bt_player_behavior_tree_finished(status):
+	if status==3:
+		#print_debug("shooting finished")
+		bt_player.blackboard.set_var("in_range", false)
+		set_state(current_state,prev_state)
+		shooting_cooldown.start()
+
+func _on_bt_player_updated(status):
+	pass
+
+
+func _on_bt_player_tree_exited():
+	pass # Replace with function body.
+	
+	#if status==3:
+		#print_debug("shooting finished")
+		#bt_player.blackboard.set_var("in_range", false)
+		#set_state(current_state,prev_state)
+		#shooting_cooldown.start()
+	#else:
+		#pass
+
+
+func _on_hurt_box_area_entered(area):
+	if area.is_in_group("sp_atk_default"):
+		print_debug("spc_hit")
+		stagger.stagger -= player.sp_atk_dmg
+
+
+func _on_stagger_staggered():
+	animation_player.stop()
+	set_state(current_state, States.STAGGERED)
+	parry_timer.start(5)
+	hurt_box.set_damage_mulitplyer(3)
+	print_debug("staggered")
+
+
+func _on_hurt_box_weak_point_area_entered(area):
+	if area.is_in_group("sp_atk_default"):
+		print_debug("spc_hit_weak")
+		stagger.stagger = 0
+
+func get_width() -> int:
+	return collision_shape_2d.get_shape().size.x
+func get_height() -> int:
+	return collision_shape_2d.get_shape().size.y
+	
+func target_lock():
+	var target_lock_inst
+	const TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
+	target_lock_inst=TARGET_LOCK.instantiate()
+	add_child(target_lock_inst)
+	print_debug(str(position)," ",str(target_lock_inst.global_position))

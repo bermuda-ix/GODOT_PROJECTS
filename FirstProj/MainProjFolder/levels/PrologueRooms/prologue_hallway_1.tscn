@@ -208,7 +208,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Well we got word about an attempt on her life, you happen to know about that?", "Default", false, "ace", "ace_default", "ACE"],
+"args": ["Look, we got word about an attempt on her life, you happen to know about that?", "Default", false, "ace", "ace_default", "ACE"],
 "method": &"play_top"
 }]
 }
@@ -242,7 +242,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Contract’s done when the doctor’s safe, with all due respect this place looks like an absolute mess", "Default", false, "joker", "joker_default", "JOKER"],
+"args": ["Contract’s done when the doctor’s safe and out this mess", "Default", false, "joker", "joker_default", "JOKER"],
 "method": &"play_top"
 }]
 }
@@ -799,6 +799,30 @@ tracks/42/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/43/type = "value"
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/path = NodePath("CameraPos:camera_zoom")
+tracks/43/interp = 1
+tracks/43/loop_wrap = true
+tracks/43/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.5]
+}
+tracks/44/type = "value"
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/path = NodePath("CameraPos/Camera2D:zoom")
+tracks/44/interp = 1
+tracks/44/loop_wrap = true
+tracks/44/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_wbdor"]
 resource_name = "SOLDIER1"
@@ -1091,6 +1115,30 @@ tracks/23/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("CameraPos:camera_zoom")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("CameraPos/Camera2D:zoom")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_2p30m"]
 resource_name = "SOLDIER2"
@@ -1363,6 +1411,18 @@ tracks/15/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("CameraPos:stationary")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ggnol"]
 _data = {
@@ -1379,6 +1439,334 @@ _data = {
 &"SOLDIER4": SubResource("Animation_88gfk"),
 &"SOLDIER5": SubResource("Animation_dolw2"),
 &"SOLDIER6": SubResource("Animation_5vflx")
+}
+
+[sub_resource type="Animation" id="Animation_j7bww"]
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/DialogueBoxController")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Same thing’s The Architect’s boys used.", "Default", false, "ace", "ace_default", "ACE"],
+"method": &"play_top"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_s3eo8"]
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/DialogueBoxController")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["We’re just followin’ our contract to completion, like we always do", "Default", false, "ace", "ace_default", "ACE"],
+"method": &"play_top"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_s1x0g"]
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/DialogueBoxController")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Already got one of those, don’t we?", "Default", false, "ace", "ace_default", "ACE"],
+"method": &"play_top"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_o5w3n"]
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/DialogueBoxController")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Hmm… maybe, best hang on to it.", "Default", false, "ace", "ace_default", "ACE"],
+"method": &"play_top"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_0rjb8"]
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/DialogueBoxController")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["The hell was that?", "Default", false, "joker", "joker_default", "JOKER"],
+"method": &"play_top"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_74y6a"]
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/DialogueBoxController")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Shit, this is bad.", "Default", false, "joker", "joker_default", "JOKER"],
+"method": &"play_top"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_f3qcg"]
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/DialogueBoxController")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Check it out, this guy’s got a card on him too.", "Default", false, "joker", "joker_default", "JOKER"],
+"method": &"play_top"
+}]
+}
+tracks/1/type = "animation"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PC/AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": PackedStringArray("idle"),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PC/AnimatedSprite2D:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_trs53"]
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/DialogueBoxController")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Nah this one’s different, check out it.", "Default", false, "joker", "joker_default", "JOKER"],
+"method": &"play_top"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_inq7e"]
+resource_name = "JOKER5"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/DialogueBoxController")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Think it’ll get us into the top secret stuff?", "Default", false, "joker", "joker_default", "JOKER"],
+"method": &"play_top"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_4jxj7"]
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/DialogueBoxController")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["…I Don’t like this, keep moving.", "Default", false, "king", "king_default", "KING"],
+"method": &"play_bot"
+}]
+}
+tracks/1/type = "animation"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PC/AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": PackedStringArray("run", "Crouch"),
+"times": PackedFloat32Array(0, 0.96666664)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PC:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-2356.344, 281.47818), Vector2(-2221.0002, 281)]
+}
+
+[sub_resource type="Animation" id="Animation_1po5n"]
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/DialogueBoxController")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["South still.", "Default", false, "knight", "knight_default", "KING"],
+"method": &"play_bot"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_wpyu5"]
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/DialogueBoxController")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Hey, I’m seeing  a lot of guards moving North. Ace, Joker, that from you?", "Slow", false, "queen", "queen_default", "QUEEN"],
+"method": &"play_bot"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_6hbcx"]
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/DialogueBoxController")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["Fucking mercs....", "Slow", false, "default", "default", "SOLDIER"],
+"method": &"play_bot"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Ace_Cutscene:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"idle", &"idle"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Ace_Cutscene:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.36666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SoldierBoss_Cutscene:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "animation"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PC/AnimationPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": PackedStringArray("idle"),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Paths/Path2D/PathFollow2D/PlayerTransform:remote_path")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [NodePath("")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_inq7e"]
+_data = {
+&"ACE1": SubResource("Animation_j7bww"),
+&"ACE2": SubResource("Animation_s3eo8"),
+&"ACE3": SubResource("Animation_s1x0g"),
+&"ACE4": SubResource("Animation_o5w3n"),
+&"JOKER1": SubResource("Animation_0rjb8"),
+&"JOKER2": SubResource("Animation_74y6a"),
+&"JOKER3": SubResource("Animation_f3qcg"),
+&"JOKER4": SubResource("Animation_trs53"),
+&"JOKER5": SubResource("Animation_inq7e"),
+&"KING1": SubResource("Animation_4jxj7"),
+&"KNIGHT1": SubResource("Animation_1po5n"),
+&"QUEEN1": SubResource("Animation_wpyu5"),
+&"SOLDIER1": SubResource("Animation_6hbcx")
 }
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_egu0m"]
@@ -1416,7 +1804,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("30_1wagh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_1",
 "speed": 5.0
 }, {
@@ -1433,7 +1821,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("34_w35fc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_2",
 "speed": 5.0
 }, {
@@ -1465,7 +1853,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("43_lhcp8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_3",
 "speed": 5.0
 }, {
@@ -1500,7 +1888,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("34_d2li1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_4",
 "speed": 5.0
 }, {
@@ -1508,7 +1896,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("35_x4j4k")
 }],
-"loop": true,
+"loop": 1,
 "name": &"gun_idle",
 "speed": 5.0
 }, {
@@ -1534,7 +1922,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("42_7yohn")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }, {
@@ -1557,7 +1945,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("67_s1x0g")
 }],
-"loop": true,
+"loop": 1,
 "name": &"knockback",
 "speed": 5.0
 }, {
@@ -1589,7 +1977,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("51_8jonl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"reload",
 "speed": 5.0
 }]
@@ -2189,7 +2577,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("79_trs53")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk",
 "speed": 5.0
 }, {
@@ -2209,7 +2597,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("84_inq7e")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_kick",
 "speed": 5.0
 }, {
@@ -2253,7 +2641,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("97_2j8xw")
 }],
-"loop": true,
+"loop": 1,
 "name": &"down_atk",
 "speed": 5.0
 }, {
@@ -2270,7 +2658,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("101_cx124")
 }],
-"loop": true,
+"loop": 1,
 "name": &"knocked_back",
 "speed": 5.0
 }, {
@@ -2425,7 +2813,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_on0jo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"phase_cange_start",
 "speed": 5.0
 }, {
@@ -2610,12 +2998,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rb6ko")
 }],
-"loop": true,
+"loop": 1,
 "name": &"phase_change",
 "speed": 5.0
 }, {
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"short_teleport",
 "speed": 5.0
 }, {
@@ -2650,7 +3038,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("113_lyoib")
 }],
-"loop": true,
+"loop": 1,
 "name": &"staggered",
 "speed": 5.0
 }, {
@@ -2682,7 +3070,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("122_tau57")
 }],
-"loop": true,
+"loop": 1,
 "name": &"staggered_entered",
 "speed": 5.0
 }, {
@@ -2717,7 +3105,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ea26c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"teleport_end",
 "speed": 5.0
 }, {
@@ -2782,7 +3170,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pln6j")
 }],
-"loop": true,
+"loop": 1,
 "name": &"teleport_start",
 "speed": 5.0
 }]
@@ -2799,7 +3187,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("126_s6f7w")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Shoot",
 "speed": 5.0
 }, {
@@ -2819,7 +3207,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("131_lpx8v")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_1",
 "speed": 5.0
 }, {
@@ -2845,7 +3233,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("79_trs53")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_2",
 "speed": 5.0
 }]
@@ -2883,7 +3271,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("62_qa3vb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"backflip",
 "speed": 5.0
 }, {
@@ -2903,7 +3291,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("67_gry4w")
 }],
-"loop": true,
+"loop": 1,
 "name": &"crouch_gun",
 "speed": 5.0
 }, {
@@ -2911,7 +3299,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("35_x4j4k")
 }],
-"loop": true,
+"loop": 1,
 "name": &"gun_idle",
 "speed": 5.0
 }, {
@@ -2937,7 +3325,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("42_7yohn")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }, {
@@ -2948,7 +3336,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("69_b46wl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"landed",
 "speed": 5.0
 }, {
@@ -2980,7 +3368,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("51_8jonl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"reload",
 "speed": 5.0
 }, {
@@ -2997,7 +3385,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("152_v7egt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"slide",
 "speed": 5.0
 }, {
@@ -3020,7 +3408,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("158_j7bww")
 }],
-"loop": true,
+"loop": 1,
 "name": &"sprint",
 "speed": 5.0
 }]
@@ -3094,6 +3482,7 @@ tile_set = ExtResource("6_5egue")
 callback_mode_method = 1
 libraries/ = SubResource("AnimationLibrary_ggnol")
 libraries/flashback_lvl_cutscenes = ExtResource("9_ggnol")
+libraries/hallway_miniboss_outro = SubResource("AnimationLibrary_inq7e")
 
 [node name="Shadows" type="Node" parent="." unique_id=1733070720]
 
@@ -3201,6 +3590,7 @@ position = Vector2(-33, -66)
 
 [node name="CameraPos" parent="." unique_id=893203730 instance=ExtResource("19_tshqc")]
 position = Vector2(-2350, 202)
+camera_zoom = 1.5
 offset = Vector2(0, -40)
 
 [node name="NavRegions" type="Node" parent="." unique_id=352477175]
@@ -3336,8 +3726,10 @@ metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 script = ExtResource("167_j7bww")
 metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 
+[connection signal="animation_finished" from="CutscenePlayer" to="." method="_on_cutscene_player_animation_finished"]
 [connection signal="play_cutscene" from="BossArena/BossIntro" to="." method="play_cutscene_segment"]
 [connection signal="play_cutscene_list" from="BossArena/BossIntro" to="." method="play_cutscene_queue"]
 
+[editable path="CameraPos"]
 [editable path="DemonStalker"]
 [editable path="PC"]

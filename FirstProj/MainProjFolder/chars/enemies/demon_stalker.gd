@@ -24,3 +24,6 @@ func _on_local_flag_disappear_flag_triggered() -> void:
 
 func _on_global_flag_handler_flag_activate() -> void:
 	local_flag__appear.flag_active=true
+
+func flag_triggered() -> void:
+	pass

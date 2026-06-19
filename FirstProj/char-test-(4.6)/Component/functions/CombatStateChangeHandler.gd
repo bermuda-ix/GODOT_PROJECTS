@@ -1,0 +1,42 @@
+class_name CombatStateChangeHandler
+
+extends Node
+
+@export var actor : Node2D
+@export var sm : LimboHSM
+@export var combat_state_machine: LimboHSM
+@export var bt_player : BTPlayer
+@export var active : bool = true
+@export var ranged_dist : int = 100
+@export var vision_handler : VisionHandler
+
+func _physics_process(delta: float) -> void:
+	if not active:
+		return
+	elif sm.get_active_state()==actor.staggered or sm.get_active_state()==actor.idle:
+		return
+	elif actor.attacking and sm.get_active_state()==actor.chasing:
+		return
+	else:
+		actor.distance=abs(actor.global_position.x-actor.player.global_position.x)
+		#print_debug(actor.distance)
+#		RANGED ATTACK
+
+		if actor.distance>ranged_dist:
+			#print_debug("ranged")
+			if actor.is_on_screen and vision_handler.player_colliding:
+				actor.turret.shoot_timer.paused=false
+				combat_state_machine.dispatch(&"ranged_mode")
+				sm.dispatch(&"start_attack")
+			else:
+				if sm.get_active_state()!=actor.chasing:
+					sm.dispatch(&"start_chase")
+				else:
+					pass
+			
+#		MELEE ATTACK
+		else:
+			actor.turret.shoot_timer.paused=true
+			combat_state_machine.dispatch(&"melee_mode")
+			if not bt_player.blackboard.get_var("within_range"):
+				sm.dispatch(&"start_chase")

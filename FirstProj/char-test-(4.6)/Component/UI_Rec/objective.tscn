@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://c1suq074ttmui"]
+
+[ext_resource type="Script" uid="uid://elhmfrc8jv42" path="res://objective.gd" id="1_klbja"]
+[ext_resource type="FontFile" uid="uid://dl1kk08ojyafw" path="res://Art_Components/UI/Fonts/Pixica Fonts/Pixica Fonts/Pixica-Bold.ttf" id="2_u1fgr"]
+
+[node name="Objective" type="Control" unique_id=1412766018]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -304.0
+offset_bottom = -240.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_klbja")
+
+[node name="ObjectiveType" type="PanelContainer" parent="." unique_id=129673782]
+self_modulate = Color(1, 1, 1, 0.53000003)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+
+[node name="TextureRect" type="TextureRect" parent="ObjectiveType" unique_id=1143205848]
+layout_mode = 2
+expand_mode = 2
+
+[node name="ObjectiveAmount" type="PanelContainer" parent="." unique_id=1843389445]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 128.0
+offset_right = 192.0
+offset_bottom = 64.0
+
+[node name="Label" type="Label" parent="ObjectiveAmount" unique_id=1060838669]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_u1fgr")
+theme_override_font_sizes/font_size = 48
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,9 @@
+[gd_resource type="BlackboardPlan" format=3 uid="uid://clapfjty1ttn3"]
+
+[resource]
+var/landed/name = &"landed"
+var/landed/type = 1
+var/landed/value = false
+var/landed/hint = 0
+var/landed/hint_string = ""
+binding/landed = NodePath(".:landed")

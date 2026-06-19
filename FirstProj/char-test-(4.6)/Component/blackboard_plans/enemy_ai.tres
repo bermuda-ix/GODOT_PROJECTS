@@ -1,0 +1,43 @@
+[gd_resource type="BlackboardPlan" format=3 uid="uid://cn6i86litai7s"]
+
+[resource]
+var/attack_mode/name = &"attack_mode"
+var/attack_mode/type = 1
+var/attack_mode/value = false
+var/attack_mode/hint = 0
+var/attack_mode/hint_string = ""
+var/ranged_mode/name = &"ranged_mode"
+var/ranged_mode/type = 1
+var/ranged_mode/value = false
+var/ranged_mode/hint = 0
+var/ranged_mode/hint_string = ""
+var/melee_mode/name = &"melee_mode"
+var/melee_mode/type = 1
+var/melee_mode/value = false
+var/melee_mode/hint = 0
+var/melee_mode/hint_string = ""
+var/within_range/name = &"within_range"
+var/within_range/type = 1
+var/within_range/value = false
+var/within_range/hint = 0
+var/within_range/hint_string = ""
+var/counter_attack/name = &"counter_attack"
+var/counter_attack/type = 1
+var/counter_attack/value = false
+var/counter_attack/hint = 0
+var/counter_attack/hint_string = ""
+var/counter_kick_flag/name = &"counter_kick_flag"
+var/counter_kick_flag/type = 1
+var/counter_kick_flag/value = false
+var/counter_kick_flag/hint = 0
+var/counter_kick_flag/hint_string = ""
+var/shoot_counter/name = &"shoot_counter"
+var/shoot_counter/type = 2
+var/shoot_counter/value = 0
+var/shoot_counter/hint = 0
+var/shoot_counter/hint_string = ""
+var/staggered/name = &"staggered"
+var/staggered/type = 1
+var/staggered/value = false
+var/staggered/hint = 0
+var/staggered/hint_string = ""

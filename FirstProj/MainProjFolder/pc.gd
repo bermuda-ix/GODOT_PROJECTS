@@ -352,6 +352,7 @@ func _ready():
 	Events.reset_player_data.connect(load_player_data)
 	Events.in_door_way.connect(set_next_room)
 	Events.reload_level_checkpoint.connect(reloaded)
+	Events.boss_died.connect(boss_died)
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
 	_init_state_machine()
@@ -1732,13 +1733,19 @@ func target_dir() -> void:
 		
 		return
 	else:
-		if target.global_position.x>global_position.x:
-			target_right = true
-		else:
-			target_right = false
+		if target!=null:
+			if target.global_position.x>global_position.x:
+				target_right = true
+			else:
+				target_right = false
 
 func set_target_right(_value : bool) -> void:
 	target_right=_value
+
+func boss_died() -> void:
+	target=null
+	set_shotgun_target_look(false)
+	combat_states.dispatch(&"unlocking")
 
 func find_closest_enemy() -> Node2D:
 	enemies.clear()

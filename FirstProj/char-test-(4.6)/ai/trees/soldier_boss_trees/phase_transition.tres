@@ -1,0 +1,46 @@
+[gd_resource type="BehaviorTree" format=3 uid="uid://cryvbc7fjtiqp"]
+
+[ext_resource type="BlackboardPlan" uid="uid://dluo3706kkps5" path="res://Component/resources/bt_blackboards/soldier_ai_boss_plan.tres" id="1_c5jop"]
+
+[sub_resource type="BBVariant" id="BBVariant_5lj57"]
+type = 1
+saved_value = false
+resource_name = "false"
+
+[sub_resource type="BTSetVar" id="BTSetVar_i3sqi"]
+variable = &"attack_mode"
+value = SubResource("BBVariant_5lj57")
+
+[sub_resource type="BBNode" id="BBNode_gjw8g"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_1a455"]
+animation_player = SubResource("BBNode_gjw8g")
+animation_name = &"phase_change"
+
+[sub_resource type="BBNode" id="BBNode_c5jop"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_n2g17"]
+animation_player = SubResource("BBNode_c5jop")
+animation_name = &"phase_change"
+max_time = 2.1
+
+[sub_resource type="BBVariant" id="BBVariant_dpyug"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTSetVar" id="BTSetVar_u75ag"]
+variable = &"Phase2Active"
+value = SubResource("BBVariant_dpyug")
+
+[sub_resource type="BTSequence" id="BTSequence_8uxax"]
+custom_name = "phase_transition"
+children = [SubResource("BTSetVar_i3sqi"), SubResource("BTPlayAnimation_1a455"), SubResource("BTAwaitAnimation_n2g17"), SubResource("BTSetVar_u75ag")]
+
+[resource]
+blackboard_plan = ExtResource("1_c5jop")
+root_task = SubResource("BTSequence_8uxax")

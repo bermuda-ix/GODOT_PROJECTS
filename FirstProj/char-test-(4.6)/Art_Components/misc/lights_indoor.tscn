@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://m5ullq0dey1k"]
+
+[ext_resource type="Texture2D" uid="uid://cjfwyxh8x06qg" path="res://Art_Components/OGs/light_tube.png" id="1_nb4cf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y1rja"]
+size = Vector2(89, 4)
+
+[node name="PointLight2D" type="PointLight2D"]
+energy = 5.0
+texture = ExtResource("1_nb4cf")
+
+[node name="lights_indoors" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="lights_indoors"]
+shape = SubResource("RectangleShape2D_y1rja")

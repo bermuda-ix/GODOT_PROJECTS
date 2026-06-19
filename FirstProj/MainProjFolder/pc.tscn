@@ -243,7 +243,9 @@
 [ext_resource type="Texture2D" uid="uid://dj0jspit4kolf" path="res://Art_Components/Effects/AttackEffects/FX006/FX008.png" id="217_73dn8"]
 [ext_resource type="Texture2D" uid="uid://52ipqcs560aq" path="res://Art_Components/UI/ButtonPrompts/Audune Prompts Dark.png" id="218_f2824"]
 [ext_resource type="Texture2D" uid="uid://cvfioykkanedg" path="res://Art_Components/Effects/AttackEffects/FX006/FX009.png" id="218_k4xmx"]
+[ext_resource type="AudioStream" uid="uid://dvgwvhealmujx" path="res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/Ejecting Magazine-SoundBible.com-1801520333.wav" id="218_mesnb"]
 [ext_resource type="Texture2D" uid="uid://benbvfmsymc62" path="res://Art_Components/Effects/AttackEffects/FX006/FX010.png" id="219_d24pd"]
+[ext_resource type="AudioStream" uid="uid://v12pys07aanp" path="res://Art_Components/Effects/sound/designed_series/designed_series/designed_mecha/Gregor Quendel - Designed Mecha - Elements - Impact 01.wav" id="219_i0kkw"]
 [ext_resource type="Texture2D" uid="uid://dc06lykcbclda" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Red/Button01.png" id="219_xxtsl"]
 [ext_resource type="Texture2D" uid="uid://1pjj47rpw80w" path="res://Art_Components/Effects/AttackEffects/FX006/FX011.png" id="220_3053v"]
 [ext_resource type="FontFile" uid="uid://dl1kk08ojyafw" path="res://Art_Components/UI/Fonts/Pixica Fonts/Pixica Fonts/Pixica-Bold.ttf" id="220_fixwo"]
@@ -276,7 +278,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0dirf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Enter",
 "speed": 5.0
 }, {
@@ -284,7 +286,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f2824")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Interact",
 "speed": 5.0
 }]
@@ -557,7 +559,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("12_8ntwy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"dash_dust",
 "speed": 5.0
 }, {
@@ -577,7 +579,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("17_4jq81")
 }],
-"loop": true,
+"loop": 1,
 "name": &"dash_fx",
 "speed": 5.0
 }, {
@@ -600,7 +602,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("68_7s5mg")
 }],
-"loop": true,
+"loop": 1,
 "name": &"landed",
 "speed": 5.0
 }, {
@@ -788,7 +790,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gj7ya")
 }],
-"loop": true,
+"loop": 1,
 "name": &"staggered",
 "speed": 5.0
 }]
@@ -979,7 +981,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("133_0eycj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"heat_aura",
 "speed": 5.0
 }]
@@ -1005,7 +1007,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("78_mgxb6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack_hit",
 "speed": 5.0
 }, {
@@ -1022,7 +1024,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("82_sfdpl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"clashed",
 "speed": 5.0
 }, {
@@ -1207,7 +1209,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("138_77ty3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"heavy_attack_hit",
 "speed": 5.0
 }]
@@ -1257,7 +1259,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("222_np862")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Heavy_Counter",
 "speed": 5.0
 }, {
@@ -1283,7 +1285,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("80_80ao1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack1",
 "speed": 5.0
 }, {
@@ -1309,7 +1311,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("181_p73v2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attack_dash",
 "speed": 5.0
 }, {
@@ -1326,7 +1328,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("185_pbr83")
 }],
-"loop": true,
+"loop": 1,
 "name": &"charge_attack",
 "speed": 5.0
 }, {
@@ -1355,7 +1357,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("165_k4mcs")
 }],
-"loop": true,
+"loop": 1,
 "name": &"heavy_hit",
 "speed": 5.0
 }]
@@ -1823,7 +1825,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("6_mbdqo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -1864,7 +1866,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f2mgc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -8152,6 +8154,42 @@ tracks/12/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("../AudioStreamPlayer2D:stream")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("218_mesnb")]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("../AudioStreamPlayer2D:pitch_scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("../AudioStreamPlayer2D:volume_db")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-5.0]
+}
 
 [sub_resource type="Animation" id="Animation_u66yy"]
 resource_name = "charge_attack"
@@ -8227,6 +8265,57 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../AudioStreamPlayer2D:stream")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("219_i0kkw")]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../AudioStreamPlayer2D:pitch_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.0]
+}
+tracks/8/type = "audio"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../AudioStreamPlayer2D")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"clips": [{
+"end_offset": 2.0662,
+"start_offset": 0.0,
+"stream": ExtResource("219_i0kkw")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/8/use_blend = true
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../AudioStreamPlayer2D:volume_db")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1.8660669, 0.06037101),
+"update": 0,
+"values": [-5.0, -50.0]
 }
 
 [sub_resource type="Animation" id="Animation_1ddda"]
@@ -9633,7 +9722,8 @@ shape = SubResource("RectangleShape2D_pmx5o")
 debug_color = Color(0, 0.5950001, 0.7, 0)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1347139291]
-stream = ExtResource("7_02w0c")
+stream = ExtResource("218_mesnb")
+volume_db = -5.0
 max_polyphony = 12
 
 [node name="TargetLocking" type="Node2D" parent="." unique_id=159247256]
@@ -9791,10 +9881,11 @@ anim_player = NodePath("../../../AnimationPlayer")
 attack_state = NodePath("..")
 speed = 200.0
 
-[node name="ChargedAttack" type="LimboState" parent="StateMachine/AttackState" unique_id=1430483089 node_paths=PackedStringArray("hit_box", "pc")]
+[node name="ChargedAttack" type="LimboState" parent="StateMachine/AttackState" unique_id=1430483089 node_paths=PackedStringArray("hit_box", "pc", "clash_power")]
 script = ExtResource("240_77ty3")
 hit_box = NodePath("../../../AnimatedSprite2D/HitBox")
 pc = NodePath("../../..")
+clash_power = NodePath("../../../ClashPower")
 
 [node name="ChargingAttack" type="LimboState" parent="StateMachine/AttackState" unique_id=2106634846 node_paths=PackedStringArray("anim_player", "hit_fx_player", "hit_box", "pc")]
 script = ExtResource("240_47q3x")

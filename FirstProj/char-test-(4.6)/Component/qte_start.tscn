@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3jixkbstt3qn"]
+
+[ext_resource type="Script" uid="uid://c5wvtb5iqkbrn" path="res://Component/qte_start.gd" id="1_daqt0"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_oqaml"]
+b = Vector2(0, 184)
+
+[node name="QTE_Start" type="Area2D"]
+collision_layer = 32768
+collision_mask = 2
+script = ExtResource("1_daqt0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("SegmentShape2D_oqaml")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

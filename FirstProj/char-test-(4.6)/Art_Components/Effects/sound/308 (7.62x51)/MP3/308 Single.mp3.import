@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bmixsrton6y2d"
+path="res://.godot/imported/308 Single.mp3-f102b274ab782cf01ec7846f0003872a.mp3str"
+
+[deps]
+
+source_file="res://Art_Components/Effects/sound/308 (7.62x51)/MP3/308 Single.mp3"
+dest_files=["res://.godot/imported/308 Single.mp3-f102b274ab782cf01ec7846f0003872a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

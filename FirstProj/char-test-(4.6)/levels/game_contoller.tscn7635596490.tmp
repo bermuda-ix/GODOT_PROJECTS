@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://j0pkbfaqdg0d"]
+
+[ext_resource type="Script" uid="uid://bh56xedc4u1vv" path="res://game_contoller.gd" id="1_xrdjs"]
+[ext_resource type="PackedScene" uid="uid://bwy4dfs27ji8h" path="res://levels/PrologueRooms/prologue_lvl.tscn" id="2_kht82"]
+[ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="3_e06k0"]
+[ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="4_218mp"]
+[ext_resource type="Script" uid="uid://w6x8ss1mes6y" path="res://levels/level_components/Levels.gd" id="5_oqxtr"]
+
+[node name="GameContoller" type="Node"]
+script = ExtResource("1_xrdjs")
+
+[node name="World2D" type="Node2D" parent="."]
+
+[node name="PrologueLvl" parent="World2D" instance=ExtResource("2_kht82")]
+
+[node name="Player" parent="World2D/PrologueLvl" instance=ExtResource("3_e06k0")]
+position = Vector2(2397, 289)
+
+[node name="GUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="GUI"]
+
+[node name="PauseMenu" parent="GUI/CanvasLayer" instance=ExtResource("4_218mp")]
+visible = false
+
+[node name="Levels" type="Node" parent="."]
+script = ExtResource("5_oqxtr")
+metadata/_custom_type_script = "uid://w6x8ss1mes6y"

@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjcwyc4ncipm"]
+
+[ext_resource type="Texture2D" uid="uid://c800m2au07hfq" path="res://Art_Components/UI/04.png" id="1_fo1yg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wrsav"]
+atlas = ExtResource("1_fo1yg")
+region = Rect2(48, 2.817, 47.14, 12.113)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i2cr0"]
+atlas = ExtResource("1_fo1yg")
+region = Rect2(0, 2.817, 47.14, 12.113)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_quky7"]
+atlas = ExtResource("1_fo1yg")
+region = Rect2(48, 51, 48, 10)
+
+[node name="HealthBar" type="TextureProgressBar"]
+offset_left = -24.0
+offset_right = 24.0
+offset_bottom = 12.0
+value = 100.0
+texture_under = SubResource("AtlasTexture_wrsav")
+texture_over = SubResource("AtlasTexture_i2cr0")
+texture_progress = SubResource("AtlasTexture_quky7")
+tint_progress = Color(0, 1, 0, 1)

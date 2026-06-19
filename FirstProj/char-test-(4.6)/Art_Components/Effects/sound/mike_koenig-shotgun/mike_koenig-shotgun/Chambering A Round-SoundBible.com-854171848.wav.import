@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cw30tdjavhmsg"
+path="res://.godot/imported/Chambering A Round-SoundBible.com-854171848.wav-fd2b2a23010b8020e28d29a044d7ed93.sample"
+
+[deps]
+
+source_file="res://Art_Components/Effects/sound/mike_koenig-shotgun/mike_koenig-shotgun/Chambering A Round-SoundBible.com-854171848.wav"
+dest_files=["res://.godot/imported/Chambering A Round-SoundBible.com-854171848.wav-fd2b2a23010b8020e28d29a044d7ed93.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

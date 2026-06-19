@@ -1,0 +1,260 @@
+[gd_scene format=3 uid="uid://hg63g0t3rx0q"]
+
+[ext_resource type="Script" uid="uid://dqexksc3am4gr" path="res://Component/UI_Rec/Char_Dialogue/dialogue_box.gd" id="1_k0prl"]
+[ext_resource type="Texture2D" uid="uid://dyu3ayrq0ewg0" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Green/Panel03.png" id="1_yknj5"]
+[ext_resource type="Texture2D" uid="uid://xemupsa1wdax" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Green/Panel07.png" id="2_optwx"]
+[ext_resource type="PackedScene" uid="uid://cr83me6yppmvk" path="res://Component/UI_Rec/Char_Dialogue/dialogue.tscn" id="3_2ogq0"]
+[ext_resource type="Texture2D" uid="uid://ckcv7kwk8pxdl" path="res://Art_Components/Portaits/DEFAULT/blank_portrait.png" id="3_rv4bw"]
+[ext_resource type="Texture2D" uid="uid://bjakugmqbbtw7" path="res://demo/assets/arrow_right.png" id="6_ct7ke"]
+[ext_resource type="Theme" uid="uid://boqtjf88xcpu4" path="res://demo/assets/ui.theme" id="7_mcxn6"]
+
+[sub_resource type="Animation" id="Animation_mcxn6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(413, 52)]
+}
+
+[sub_resource type="Animation" id="Animation_s7w2a"]
+resource_name = "wait_for_input"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(415, 52), Vector2(430, 52), Vector2(415, 52)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s1kmm"]
+_data = {
+&"RESET": SubResource("Animation_mcxn6"),
+&"wait_for_input": SubResource("Animation_s7w2a")
+}
+
+[sub_resource type="Animation" id="Animation_1w7tb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-40, 52)]
+}
+
+[sub_resource type="Animation" id="Animation_s1kmm"]
+resource_name = "wait_for_input"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-40, 52), Vector2(-25, 52), Vector2(-40, 52)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1w7tb"]
+_data = {
+&"RESET": SubResource("Animation_1w7tb"),
+&"wait_for_input": SubResource("Animation_s1kmm")
+}
+
+[node name="DialogueBoxController" type="Control" unique_id=1807181331]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k0prl")
+
+[node name="TopDialogue" type="HBoxContainer" parent="." unique_id=1542689781]
+visible = false
+custom_minimum_size = Vector2(448, 64)
+layout_mode = 0
+offset_right = 516.0
+offset_bottom = 64.0
+
+[node name="TextureRect" type="TextureRect" parent="TopDialogue" unique_id=928764771]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("1_yknj5")
+expand_mode = 1
+
+[node name="PortraitContainer" type="PanelContainer" parent="TopDialogue/TextureRect" unique_id=2069804592]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 10.0
+offset_right = 61.0
+offset_bottom = 52.0
+
+[node name="PortraitTop" type="TextureRect" parent="TopDialogue/TextureRect/PortraitContainer" unique_id=2003836208]
+layout_mode = 2
+texture = ExtResource("3_rv4bw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CharNameTop" type="RichTextLabel" parent="TopDialogue/TextureRect" unique_id=2100347674]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 52.0
+offset_right = 63.0
+offset_bottom = 66.0
+theme = ExtResource("7_mcxn6")
+text = "DEFAULT"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="TopDialogue" unique_id=1169709022]
+z_index = 1
+custom_minimum_size = Vector2(448, 64)
+layout_mode = 2
+texture = ExtResource("2_optwx")
+expand_mode = 1
+
+[node name="DialogueContainer" type="PanelContainer" parent="TopDialogue/TextureRect2" unique_id=1992823839]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 29.0
+offset_top = 10.0
+offset_right = 403.0
+offset_bottom = 54.0
+
+[node name="DialogueTextTop" parent="TopDialogue/TextureRect2/DialogueContainer" unique_id=1848131381 instance=ExtResource("3_2ogq0")]
+layout_mode = 2
+
+[node name="WaitForPromptTop" type="Control" parent="TopDialogue/TextureRect2" unique_id=2122371795]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PromptTextTop" type="RichTextLabel" parent="TopDialogue/TextureRect2/WaitForPromptTop" unique_id=1783883553]
+layout_mode = 0
+offset_left = 379.0
+offset_top = 45.0
+offset_right = 435.0
+offset_bottom = 60.0
+theme = ExtResource("7_mcxn6")
+text = "CLICK"
+
+[node name="ClickPromptTop" type="Sprite2D" parent="TopDialogue/TextureRect2/WaitForPromptTop" unique_id=1969884003]
+self_modulate = Color(0.7539839, 0.75398386, 0.75398386, 0.73333335)
+z_index = 1
+position = Vector2(413, 52)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_ct7ke")
+
+[node name="ClickPromptPlayerTop" type="AnimationPlayer" parent="TopDialogue/TextureRect2/WaitForPromptTop/ClickPromptTop" unique_id=19616044]
+libraries/ = SubResource("AnimationLibrary_s1kmm")
+
+[node name="BottomDialogue" type="HBoxContainer" parent="." unique_id=52453852]
+visible = false
+custom_minimum_size = Vector2(448, 64)
+layout_mode = 0
+offset_left = 56.0
+offset_top = 258.0
+offset_right = 572.0
+offset_bottom = 322.0
+
+[node name="TextureRect2" type="TextureRect" parent="BottomDialogue" unique_id=367105758]
+z_index = 1
+custom_minimum_size = Vector2(448, 64)
+layout_mode = 2
+texture = ExtResource("2_optwx")
+expand_mode = 1
+
+[node name="DialogueContainer" type="PanelContainer" parent="BottomDialogue/TextureRect2" unique_id=1715096434]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 29.0
+offset_top = 10.0
+offset_right = 403.0
+offset_bottom = 54.0
+
+[node name="DialogueTextBot" parent="BottomDialogue/TextureRect2/DialogueContainer" unique_id=1092964789 instance=ExtResource("3_2ogq0")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="BottomDialogue" unique_id=268827676]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("1_yknj5")
+expand_mode = 1
+
+[node name="PortraitContainer" type="PanelContainer" parent="BottomDialogue/TextureRect" unique_id=1344171690]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 10.0
+offset_right = 61.0
+offset_bottom = 52.0
+
+[node name="PortraitBot" type="TextureRect" parent="BottomDialogue/TextureRect/PortraitContainer" unique_id=2052236760]
+layout_mode = 2
+texture = ExtResource("3_rv4bw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CharNameBot" type="RichTextLabel" parent="BottomDialogue/TextureRect" unique_id=1520682705]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 52.0
+offset_right = 66.0
+offset_bottom = 65.0
+theme = ExtResource("7_mcxn6")
+text = "DEFAULT"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="WaitForPromptBot" type="Control" parent="BottomDialogue/TextureRect" unique_id=840791382]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PromptTextBot" type="RichTextLabel" parent="BottomDialogue/TextureRect/WaitForPromptBot" unique_id=2078988334]
+z_index = 1
+layout_mode = 0
+offset_left = -73.0
+offset_top = 45.0
+offset_right = -28.0
+offset_bottom = 60.0
+theme = ExtResource("7_mcxn6")
+text = "CLICK"
+scroll_active = false
+
+[node name="ClickPromptBot" type="Sprite2D" parent="BottomDialogue/TextureRect/WaitForPromptBot" unique_id=1284170660]
+self_modulate = Color(0.7539839, 0.75398386, 0.75398386, 0.73333335)
+z_index = 1
+position = Vector2(-40, 52)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_ct7ke")
+
+[node name="ClickPromptPlayerBot" type="AnimationPlayer" parent="BottomDialogue/TextureRect/WaitForPromptBot/ClickPromptBot" unique_id=1702682971]
+libraries/ = SubResource("AnimationLibrary_1w7tb")
+
+[connection signal="text_finished" from="TopDialogue/TextureRect2/DialogueContainer/DialogueTextTop" to="." method="_on_dialogue_text_top_text_finished"]
+[connection signal="text_finished" from="BottomDialogue/TextureRect2/DialogueContainer/DialogueTextBot" to="." method="_on_dialogue_text_bot_text_finished"]

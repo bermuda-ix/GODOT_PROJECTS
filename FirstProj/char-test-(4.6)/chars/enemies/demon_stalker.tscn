@@ -1,0 +1,133 @@
+[gd_scene load_steps=15 format=3 uid="uid://8k6jvhupkwca"]
+
+[ext_resource type="Texture2D" uid="uid://b2io16h6csflu" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/Idle/Idle01.png" id="1_2vpww"]
+[ext_resource type="Script" uid="uid://bithn2do0tmnw" path="res://chars/enemies/demon_stalker.gd" id="1_wjrnr"]
+[ext_resource type="Texture2D" uid="uid://dk8lob0te8r4f" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/Idle/Idle02.png" id="2_wjrnr"]
+[ext_resource type="Texture2D" uid="uid://bq3uup5bohtqv" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/Idle/Idle03.png" id="3_2ccgf"]
+[ext_resource type="Texture2D" uid="uid://bb2yrfleq2r0" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/Idle/Idle04.png" id="4_ayhpl"]
+[ext_resource type="Texture2D" uid="uid://btrhpxy60m2po" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/Idle/Idle05.png" id="5_p18ja"]
+[ext_resource type="Texture2D" uid="uid://yxbo4wpi22kj" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/Idle/Idle06.png" id="6_42q5b"]
+[ext_resource type="Texture2D" uid="uid://nloflhiis8fj" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/Idle/Idle07.png" id="7_r7eji"]
+[ext_resource type="PackedScene" uid="uid://bkr6h5xga8wr" path="res://Component/functions/local_flag.tscn" id="9_2ccgf"]
+[ext_resource type="Script" uid="uid://dg1m7uqm44pm3" path="res://Component/functions/GlobalFlags/GlobalFlagHandler.gd" id="10_ayhpl"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mwvwm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_2vpww")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_wjrnr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_2ccgf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ayhpl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_p18ja")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_42q5b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_r7eji")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_7cei5"]
+resource_name = "idle"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_hbmga"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ief40"]
+_data = {
+&"RESET": SubResource("Animation_hbmga"),
+&"idle": SubResource("Animation_7cei5")
+}
+
+[node name="DemonStalker" type="Node2D"]
+script = ExtResource("1_wjrnr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mwvwm")
+animation = &"Idle"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ief40")
+}
+
+[node name="LocalFlags" type="Node" parent="."]
+
+[node name="LocalFlag->Appear" parent="LocalFlags" node_paths=PackedStringArray("connected_object") instance=ExtResource("9_2ccgf")]
+connected_object = NodePath("../..")
+
+[node name="LocalFlag->Disappear" parent="LocalFlags" node_paths=PackedStringArray("connected_object") instance=ExtResource("9_2ccgf")]
+connected_object = NodePath("../..")
+
+[node name="GlobalFlagHandler" type="Node" parent="."]
+script = ExtResource("10_ayhpl")
+flag_name = "ready_to_start"
+flag_active = true
+metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
+
+[connection signal="flag_triggered" from="LocalFlags/LocalFlag->Appear" to="." method="_on_local_flag_appear_flag_triggered"]
+[connection signal="flag_triggered" from="LocalFlags/LocalFlag->Disappear" to="." method="_on_local_flag_disappear_flag_triggered"]
+[connection signal="flag_activate" from="GlobalFlagHandler" to="." method="_on_global_flag_handler_flag_activate"]

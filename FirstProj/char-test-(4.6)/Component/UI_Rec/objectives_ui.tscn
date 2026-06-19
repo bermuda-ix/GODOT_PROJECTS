@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://boutsrwc1xfnc"]
+
+[ext_resource type="Script" uid="uid://b3k3vjmo8cdci" path="res://objectives_ui.gd" id="1_hvrq0"]
+[ext_resource type="Script" uid="uid://b4w5g1sk6dg37" path="res://Component/functions/PersistentData/objective_item.gd" id="2_uxhq1"]
+[ext_resource type="Resource" uid="uid://cb5r6ux66jxok" path="res://Component/functions/PersistentData/Objectives/PrologueLevel/redmech.tres" id="3_scur1"]
+[ext_resource type="Resource" uid="uid://cecvoeuuahxcj" path="res://Component/functions/PersistentData/Objectives/PrologueLevel/bluemech.tres" id="4_arvwk"]
+[ext_resource type="Resource" uid="uid://7rv0nmyl47s8" path="res://Component/functions/PersistentData/Objectives/PrologueLevel/greenmech.tres" id="5_scur1"]
+[ext_resource type="Resource" uid="uid://bgq5gmpchb2tv" path="res://Component/functions/PersistentData/Objectives/PrologueLevel/truck.tres" id="6_arvwk"]
+
+[node name="GridContainer" type="GridContainer" unique_id=1059520297]
+offset_right = 471.0
+offset_bottom = 323.0
+script = ExtResource("1_hvrq0")
+objective_resources = Array[ExtResource("2_uxhq1")]([ExtResource("4_arvwk"), ExtResource("3_scur1"), ExtResource("5_scur1"), ExtResource("6_arvwk")])
+
+[node name="Objectives" type="VBoxContainer" parent="." unique_id=410212206]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 3

@@ -18,6 +18,11 @@ var immortality_timer: Timer = null
 @onready var thread := Thread.new()
 @onready var mutex := Mutex.new()
 
+#func _process(delta: float) -> void:
+	#if health==max_health:
+		#print_debug("sum ting wong")
+	
+
 func set_max_health(value: int):
 	var clamped_value = 1 if value <= 0 else value
 	
@@ -65,6 +70,7 @@ func set_health(value: int):
 	if value < health and immortality:
 		return
 	
+
 	var clamped_value = clampi(value, 0, max_health)
 	
 	if clamped_value != health:
@@ -73,11 +79,12 @@ func set_health(value: int):
 		health_changed.emit(difference)
 		
 		if health <= 0:
-			health_depleted.emit()
 			Events.camera_shake.emit(3,20)
+			health_depleted.emit()
+			
 	
-	#else:
-		#print_debug("No change in health")
+	else:
+		print_debug("No change in health")
 	#print_debug(health)
 
 func get_health():

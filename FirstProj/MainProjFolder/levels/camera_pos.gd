@@ -8,17 +8,26 @@ extends Node2D
 @onready var camera_2d: Camera2D = $Camera2D
 
 @export_category("Camera Positions/Zoom")
+##Higher values = More zoomed in
 @export var camera_zoom : float = 1.0
+##Keeps camera from moving via character
 @export var stationary : bool = false
+##Offsets camera from parent node
 @export var offset : Vector2 = Vector2.ZERO
+##Camera movement speed
 @export var camera_speed_default = 5.0
 
 @export_category("Arena")
+##Determines if arena is a boss arena or not
 @export var boss_active := false : set = set_boss_active
 @onready var player := get_tree().get_first_node_in_group("player")
+##Connected boss, if available
 @export var boss : Node2D
+##Camera movement speed
 @export var camera_speed := 5.0
+##Limit of how far camera will move on x-axix
 @export var x_edge_limit := 175.0
+##Limit of how far camera will move on y-axix
 @export var y_edge_limit := 100.0
 @export var x_offset_limit := Vector2(0.0, 200.0)
 @export var y_offset_limit := Vector2(-20.0, -60.0)
@@ -34,6 +43,7 @@ func _ready() -> void:
 	Events.camera_shake.connect(camera_shake)
 	Events.player_death.connect(player_death)
 	Events.reload_level_checkpoint.connect(reset_zoom)
+	Events.boss_died.connect(boss_died)
 	camera_2d.zoom*=camera_zoom
 	zoom_default=camera_2d.zoom
 	camera_2d.position_smoothing_speed=camera_speed_default
@@ -47,7 +57,7 @@ func _process(delta: float) -> void:
 		
 		camera_2d.offset+=randomOffset()
 
-	if boss_active:
+	if boss_active and not stationary:
 		boss_arena_camera()
 
 func camera_shake_fixed():
@@ -118,6 +128,9 @@ func boss_arena_camera() -> void:
 	
 func set_boss_active(_value : bool) -> void:
 	boss_active=_value
+
+func boss_died() -> void:
+	set_boss_active(false)
 
 func setup_arena_camera(_camera_speed: float = 5.0,\
  _x_edge_limit: float = 175.0, _y_edge_limit: float = 100.0,\

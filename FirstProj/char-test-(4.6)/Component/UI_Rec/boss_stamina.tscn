@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cb1sfjiadamc3"]
+
+[ext_resource type="Texture2D" uid="uid://c800m2au07hfq" path="res://Art_Components/UI/04.png" id="1_egqqd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fibb1"]
+atlas = ExtResource("1_egqqd")
+region = Rect2(53.4837, 130.643, 35.5924, 7.98906)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qyupk"]
+atlas = ExtResource("1_egqqd")
+region = Rect2(5.79939, 130.679, 39.0283, 12.0108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dm35u"]
+atlas = ExtResource("1_egqqd")
+region = Rect2(53.9176, 162.728, 35.8946, 9.60481)
+
+[node name="Control" type="TextureProgressBar"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(6, 2.5)
+value = 100.0
+texture_under = SubResource("AtlasTexture_fibb1")
+texture_over = SubResource("AtlasTexture_qyupk")
+texture_progress = SubResource("AtlasTexture_dm35u")

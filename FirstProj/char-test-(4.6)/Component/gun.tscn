@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dr88ya64be2de"]
+
+[ext_resource type="Texture2D" uid="uid://c74d14ub8w3oa" path="res://Art_Components/Shotgun/Escopeta.png" id="1_ad38y"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i4prg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ad38y")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_50jty"]
+size = Vector2(51, 20)
+
+[node name="gun" type="StaticBody2D"]
+collision_layer = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(3, 11)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_i4prg")
+offset = Vector2(-18, -11)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.5, 0)
+shape = SubResource("RectangleShape2D_50jty")

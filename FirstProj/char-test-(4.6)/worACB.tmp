@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://dk70wm05pq01i"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_kulhx"]
+[ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="2_8ey8d"]
+[ext_resource type="PackedScene" uid="uid://cqiybjbg0wei7" path="res://spikes.tscn" id="3_hwj72"]
+[ext_resource type="PackedScene" uid="uid://d05v7tm7kmcj7" path="res://heart.tscn" id="4_xtu5l"]
+[ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://level_completed.tscn" id="5_7c50m"]
+[ext_resource type="PackedScene" uid="uid://cxqapy0tyeigc" path="res://ui_level.tscn" id="6_5jgk5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0okle"]
+size = Vector2(29.0569, 11.9306)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_kulhx")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, 0, 24, 0, 24, 128, 56, 128, 88, 144, 144, 144, 144, 104, 168, 104, 168, 160, 200, 160, 200, 128, 224, 112, 240, 112, 240, 144, 296, 144, 296, 0, 320, 0, 320, 176, 0, 176)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="StaticBody2D"]
+position = Vector2(0, -8)
+scale = Vector2(1.05876, 0.823645)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D/StaticBody2D"]
+position = Vector2(234.236, 77.7034)
+scale = Vector2(1.19689, -6.69031)
+shape = SubResource("RectangleShape2D_0okle")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D/StaticBody2D"]
+offset_left = 219.124
+offset_top = 38.8517
+offset_right = 259.124
+offset_bottom = 78.8517
+scale = Vector2(0.81691, 1.94282)
+
+[node name="PC" parent="." instance=ExtResource("2_8ey8d")]
+position = Vector2(32, 96)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(24, -32)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(122.639, 66.0347)
+rotation = 3.14159
+scale = Vector2(2.95206, -1.33565)
+shape = SubResource("RectangleShape2D_0okle")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D2"]
+offset_left = 80.0
+offset_top = 56.0
+offset_right = 120.0
+offset_bottom = 96.0
+scale = Vector2(2.15854, 0.473809)
+
+[node name="Spikes" parent="." instance=ExtResource("3_hwj72")]
+position = Vector2(168, 160)
+
+[node name="Spikes2" parent="." instance=ExtResource("3_hwj72")]
+position = Vector2(184, 160)
+
+[node name="Heart" parent="." instance=ExtResource("4_xtu5l")]
+position = Vector2(152, 96)
+
+[node name="Heart2" parent="." instance=ExtResource("4_xtu5l")]
+position = Vector2(96, 136)
+
+[node name="Heart3" parent="." instance=ExtResource("4_xtu5l")]
+position = Vector2(280, 64)
+
+[node name="Heart4" parent="." instance=ExtResource("4_xtu5l")]
+position = Vector2(152, 8)
+
+[node name="Heart5" parent="." instance=ExtResource("4_xtu5l")]
+position = Vector2(64, 8)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LevelCompleted" parent="CanvasLayer" instance=ExtResource("5_7c50m")]
+visible = false
+
+[node name="UI_Level" parent="CanvasLayer" instance=ExtResource("6_5jgk5")]
