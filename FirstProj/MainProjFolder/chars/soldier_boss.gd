@@ -727,8 +727,9 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 			knockback.x=50
 		else:
 			knockback.x=-50
-		stagger.stagger -= player.sp_atk_dmg*player.clash_power.clash_power
-		
+		if state_machine.get_active_state()!=land and state_machine.get_active_state()!=staggered:
+			stagger.stagger -= player.sp_atk_dmg*player.clash_power.clash_power
+		boss_ui.set_boss_stagger_smooth(stagger.stagger)
 		
 
 
@@ -818,6 +819,8 @@ func alerted() -> void :
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_box.clash_active=false
+	boss_ui.set_boss_health_smooth(health.health)
+	boss_ui.set_boss_stagger_smooth(stagger.stagger)
 	if not phases_handler.is_final_phase():
 		if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
 			hit_stop.hit_stop(0.2, 2)
@@ -833,7 +836,11 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		return
 	else:
 		if clash_mult>1:
-			stagger.stagger-=(clash_mult-1)
+			if state_machine.get_active_state()!=land and state_machine.get_active_state()!=staggered:
+				stagger.stagger-=(clash_mult-1)
+				boss_ui.set_boss_stagger_smooth(stagger.stagger)
+			else:
+				pass
 		if player.state_machine.get_active_state()==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 			Events.allied_enemy_hit.emit()
 		
@@ -1279,8 +1286,9 @@ func _on_hit_box_clashed() -> void:
 		knockback.x=200
 	if dash_attacking:
 		return
-	#bt_player.blackboard.set_var("staggered", true)
-	print_debug(state_machine.get_active_state())
+	
+	#print_debug(state_machine.get_active_state())
+	boss_ui.set_boss_stagger_smooth(stagger.stagger)
 	state_machine.dispatch(&"clashed")
 
 
@@ -1294,7 +1302,9 @@ func stunned_hit(_launch: float = 0, _knockback: float = 0, _impact_dir_right: b
 		knockback.x=_knockback
 	velocity.y=-_launch
 	state_machine.dispatch(&"interrupt_knockback")
-	stagger.stagger-= _damage
+	if state_machine.get_active_state()!=land and state_machine.get_active_state()!=staggered:
+		stagger.stagger-= _damage
+	boss_ui.set_boss_stagger_smooth(stagger.stagger)
 	bt_player.blackboard.set_var("staggered", true)
 	hurt_box_collision.set_deferred("disabled", false)
 	hurt_box.active=true

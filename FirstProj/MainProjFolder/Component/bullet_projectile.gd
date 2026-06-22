@@ -22,7 +22,8 @@ func _ready():
 	global_position = spawnPos
 	global_rotation = spawnRot
 	linear_velocity=(dir*SPEED)
-	scale*=scale_size
+	scale=Vector2(scale_size, scale_size)
+	print_debug(scale)
 	modulate.a=255
 	sleeping=true
 
@@ -30,7 +31,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	#position += dir * SPEED * delta
+	position += dir * SPEED * delta
+	print_debug(position)
 	rotation = spawnRot
 
 	

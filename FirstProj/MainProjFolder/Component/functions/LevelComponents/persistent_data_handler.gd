@@ -9,6 +9,7 @@ func _ready() -> void:
 	pass
 
 func set_value(state : String) -> void:
+	print_debug(state)
 	GlobalSaveData.add_persistent_value( _get_name(), state )
 
 func get_value() -> void:

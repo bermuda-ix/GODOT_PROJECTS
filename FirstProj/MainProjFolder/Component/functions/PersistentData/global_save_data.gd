@@ -104,9 +104,6 @@ static func sort_ascending(a, b):
 	else:
 		return false
 
-#func find_highscore_name(_highscore,name):
-	#if _highscore.name==name:
-		#return true
 
 #JSONify highscore list
 func highscores_array(_highscores: Array) -> Array:
@@ -115,12 +112,7 @@ func highscores_array(_highscores: Array) -> Array:
 	for _score in _highscores:
 		var _highscore : Array = [_score.name, _score.score]
 		_highscore_table.append(_highscore)
-		#if _highscore_table.has(_score.name):
-			#if _highscore_table[_score.name]<_score.score:
-				#_highscore_table[_score.name] = _score.score
-		#else:
-			#_highscore_table[_score.name] = _score.score
-	
+
 	return _highscore_table
 
 #Save highscores to file

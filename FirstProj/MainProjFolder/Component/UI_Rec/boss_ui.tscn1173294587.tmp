@@ -12,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bbtsr")
+health_debug = null
 
 [node name="BossHealth" parent="." unique_id=1983608836 instance=ExtResource("2_fet7x")]
 layout_mode = 1

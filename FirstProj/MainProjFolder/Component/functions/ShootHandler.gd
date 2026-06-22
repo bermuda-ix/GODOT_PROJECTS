@@ -26,7 +26,7 @@ var turret_order : int =0
 func shoot_bullet():
 	var bullet_inst = projectile.instantiate()
 	bullet_inst.set_speed(bullet_speed)
-	bullet_inst.scale_size*=bullet_scale
+	bullet_inst.scale_size=bullet_scale
 	#bullet_inst.set_accel(50.0)
 	#bullet_inst.tracking_time=0.01
 	if bullet_inst.is_in_group("missile"):

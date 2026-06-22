@@ -96,7 +96,8 @@ func _ready():
 	Events.inc_score.connect(inc_score)
 	#Events.increase_heat_lvl.connect(increase_heat)
 	load_cutscene_queue(Cutscenes.Cutscenes["MiniBoss1"])
-	
+	ui_level.set_max_health(player.health.max_health)
+	ui_level.set_max_stagger(player.stagger.max_stagger)
 	
 	if player == null:
 		player=get_tree().get_first_node_in_group("player")
@@ -188,6 +189,7 @@ func get_health():
 func set_health():
 	ui_level.set_health(cur_health)
 	ui_level.set_max_health(max_health)
+	
 	
 func inc_score(value : int):
 	score += 1

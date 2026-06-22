@@ -7,7 +7,9 @@ class_name CeilingLights extends PointLight2D
 @onready var shut_off_flag: GlobalFlagHandler = $ShutOffFlag
 @onready var flicker_on_player_flag: GlobalFlagHandler = $FlickerOnPlayerFlag
 @onready var persistent_data_handler: PersistentDataHandler = $PersistentDataHandler
-@onready var persistent_data_handler3: PersistentDataHandler = $FlickerOnPlayerFlag/PersistentDataHandler
+@onready var persistent_data_handler__flicker: PersistentDataHandler = $"PersistentDataHandler->Flicker"
+@onready var persistent_data_handler__flicker_on_player: PersistentDataHandler = $"PersistentDataHandler->FlickerOnPlayer"
+
 
 
 
@@ -49,22 +51,34 @@ func _on_shut_off_flag_flag_activate() -> void:
 	enabled=false
 
 
-func _on_persistent_data_handler_data_loaded(value: String) -> void:
-	if value == "true":
-		enabled=true
+func _on_persistent_data_handler_data_loaded(value: bool) -> void:
+	if value:
+		var _enabled=persistent_data_handler.get_state(self.name)
+		if _enabled=="true":
+			enabled=true
+		else:
+			enabled=false
 	else:
-		enabled=true
+		pass
 
 
-func _on_persistent_data_handler_flicker_data_loaded(value: String) -> void:
-	if value == "true":
-		flicker_active=true
+func _on_persistent_data_handler_flicker_data_loaded(value: bool) -> void:
+	if value:
+		var _enabled=persistent_data_handler.get_state(self.name)
+		if _enabled=="true":
+			flicker_active=true
+		else:
+			flicker_active=false
 	else:
-		flicker_active=true
+		pass
 
 
-func _on_persistent_data_handler_flicker_on_player_data_loaded(value: String) -> void:
-	if value == "true":
-		flicker_on_player_flag.flag_active=true
+func _on_persistent_data_handler_flicker_on_player_data_loaded(value: bool) -> void:
+	if value:
+		var _enabled=persistent_data_handler.get_state(self.name)
+		if _enabled=="true":
+			flicker_on_player_flag.flag_active=true
+		else:
+			flicker_on_player_flag.flag_active=false
 	else:
-		flicker_on_player_flag.flag_active=true
+		pass

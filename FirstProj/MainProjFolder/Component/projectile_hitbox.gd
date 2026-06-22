@@ -15,7 +15,9 @@ func _ready():
 	
 func _projectile_impact( _area : Area2D):
 	if _area.is_in_group("shield"):
+		active=false
 		pass
+		
 		#impact()
 		#AudioStreamManager.play(impact_sfx)
 	else:
@@ -32,6 +34,7 @@ func _projectile_impact( _area : Area2D):
 						actor.impact()
 					else:
 						pass
+				active=false
 
 func set_damage(value : int) -> void:
 	damage=value

@@ -21,9 +21,13 @@ signal jump_out_signal
 signal clash_up
 signal dodging
 
+##Signal to update health UI
 signal update_health(value : int)
+##Signal to update max health UI
 signal update_max_health(value : int)
+##Signal to update stagger UI
 signal update_stagger
+##Signal to update max stagger UI
 signal update_max_stagger
 
 #Player Stats
@@ -567,7 +571,6 @@ func _init_attack_states():
 
 func _process(_delta):
 	
-	label.text=str(spread_boundary_2.rotation_degrees/2+shotty.rotation_degrees, ", ", shotty.rotation_degrees , ", ", shotty.rotation_degrees-spread_boundary_2.rotation_degrees/2)
 	
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	if not cutscene_handler.actor_control_active:
@@ -1932,19 +1935,29 @@ func get_max_health() -> int:
 func set_health() -> void:
 	if Global.game_controller!=null:
 		Global.game_controller.call_deferred("update_health",health.health)
+	else:
+		update_health.emit(health.health)
 	#Global.game_controller.update_health(health.health)
 func set_max_health() -> void:
-	#update_max_health.emit(health.max_health)
+	
 	if Global.game_controller!=null:
 		Global.game_controller.call_deferred("update_max_health",health.max_health)
+	else:
+		update_max_health.emit(health.max_health)
 	#Global.game_controller.update_max_health(health.max_health)
 func set_stagger() -> void:
+	
 	if Global.game_controller!=null:
 		Global.game_controller.call_deferred("update_stagger", stagger.stagger)
+	else:
+		update_stagger.emit(stagger.stagger)
 	#Global.game_controller.update_stagger(stagger.stagger)
 func set_max_stagger() -> void:
+	
 	if Global.game_controller!=null:
 		Global.game_controller.call_deferred("update_max_stagger", stagger.max_stagger)
+	else:
+		update_max_stagger.emit(stagger.max_stagger)
 	#Global.game_controller.update_max_stagger(stagger.max_stagger)
 
 

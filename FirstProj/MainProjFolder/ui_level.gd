@@ -9,6 +9,7 @@ const STAMINA_BAR_SPEED := 20.0
 @onready var stagger_bar: TextureProgressBar = $StaggerBar
 @onready var heat_fill_gauge: TextureProgressBar = $HeatFillGauge
 @onready var heat_lvl_gauge: TextureProgressBar = $HeatLvlGauge
+var tween = null
 
 signal heat_lvl_raise
 
@@ -26,7 +27,6 @@ func _ready():
 	Events.increase_heat_gauge.connect(increase_heat_gauge)
 	Events.increase_heat_lvl.connect(increase_heat_lvl)
 	Events.reset_heat.connect(reset_heat)
-	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -35,17 +35,18 @@ func _process(delta):
 	set_heat_fill(heat_fill)
 	set_heat_lvl(heat_lvl)
 	
-	set_health_smooth(health, delta)
-	set_stagger_smooth(stagger, delta)
+	#set_health_smooth(health)
+	#set_stagger_smooth(stagger)
 
 
 func set_health(value: int) -> void:
 	health = value
 	health_bar_ui.value=value
 
-func set_health_smooth(value: int, delta: float) -> void:
-	var _weight = abs(1.0-exp(HEALTH_BAR_SPEED*delta))
-	health_bar_ui.value=lerpf(health_bar_ui.value, value, _weight)
+func set_health_smooth(value: int) -> void:
+	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(health_bar_ui, "value", value, 0.8)
+	tween.connect("finished", tween_done)
 
 func set_cur_state(value: String) -> void:
 	cur_state = value
@@ -56,9 +57,10 @@ func set_max_health(value: int) -> void:
 func set_stagger(value : int) -> void:
 	stagger=value
 
-func set_stagger_smooth(value: int, delta: float) -> void:
-	var _weight = abs(1.0-exp(STAMINA_BAR_SPEED*delta))
-	stagger_bar.value=lerpf(stagger_bar.value, value, _weight)
+func set_stagger_smooth(value: int) -> void:
+	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(health_bar_ui, "value", value, 0.8)
+	tween.connect("finished", tween_done)
 
 func set_max_stagger(value : int) -> void:
 	stagger_bar.max_value=value
@@ -89,3 +91,6 @@ func increase_heat_lvl(value : int) -> void:
 func reset_heat() -> void:
 	heat_fill_gauge.value=0
 	heat_lvl_gauge.value=0
+
+func tween_done():
+	tween = null
