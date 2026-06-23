@@ -1468,7 +1468,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["We’re just followin’ our contract to completion, like we always do", "Default", false, "ace", "ace_default", "ACE"],
+"args": ["Nope, still at east. King, Knight?", "Default", false, "ace", "ace_default", "ACE"],
 "method": &"play_top"
 }]
 }
@@ -1484,7 +1484,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Already got one of those, don’t we?", "Default", false, "ace", "ace_default", "ACE"],
+"args": ["Hm.. looks like a code generator? Like what we use to log in out network?", "Default", false, "ace", "ace_default", "ACE"],
 "method": &"play_top"
 }]
 }
@@ -1500,7 +1500,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Hmm… maybe, best hang on to it.", "Default", false, "ace", "ace_default", "ACE"],
+"args": ["Wouldn’t doubt it, let’s hold on to it.", "Default", false, "ace", "ace_default", "ACE"],
 "method": &"play_top"
 }]
 }
@@ -1548,7 +1548,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Check it out, this guy’s got a card on him too.", "Default", false, "joker", "joker_default", "JOKER"],
+"args": ["Hey, check this thing out.", "Default", false, "joker", "joker_default", "JOKER"],
 "method": &"play_top"
 }]
 }
@@ -1586,7 +1586,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Nah this one’s different, check out it.", "Default", false, "joker", "joker_default", "JOKER"],
+"args": ["*Beep* Bet it is, *Beep* What do you think? Can probably get us into the real top secret shit", "Default", false, "joker", "joker_default", "JOKER"],
 "method": &"play_top"
 }]
 }
@@ -1750,6 +1750,18 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [NodePath("")]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:skippable")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.06666667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_inq7e"]

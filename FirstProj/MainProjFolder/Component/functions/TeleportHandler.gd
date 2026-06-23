@@ -37,8 +37,8 @@ func teleport_to(front : bool, _teleport_loc : Vector2) -> void:
 
 
 
-#Positive x and y moves right and up respectively
-#Pass actor's global position and return result
+##Positive x and y moves right and up respectively
+##Pass actor's global position and return result
 func teleport(x_dir: float, y_dir: float, _global_position: Vector2) -> Vector2:
 
 	teleport_dir_helper_rc.target_position.x=(x_dir)

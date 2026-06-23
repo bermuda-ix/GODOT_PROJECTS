@@ -90,7 +90,9 @@ var immortal = false
 @export var hitbox: HitBox
 @onready var target_lock_node: Node2D = $TargetLock
 @onready var attack_range: AttackRange = $AttackRange
+@onready var target_near : bool = false
 @onready var bullet_detection: BulletDetection = $BulletDetection
+
 
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @export var counter_kick_chance : int = 0
@@ -377,6 +379,8 @@ func _process(_delta):
 	#if combat_state_machine.get_active_state()==melee_mode:
 		#force_chase()
 
+	if state_machine.get_active_state()!=teleport_and_shoot and state_machine.get_active_state()!=teleport_and_hit:
+		animated_sprite_2d.use_parent_material=false
 	
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
 		hb_collision.disabled=true
@@ -558,6 +562,8 @@ func teleport_to(front : bool) -> void:
 		if front: return 10
 		else: return -10
 	
+	teleport_helper_raycast.target_position=player.global_position
+	
 	print_debug(player.global_position)
 	if player_right:
 		print_debug(global_position)
@@ -566,6 +572,7 @@ func teleport_to(front : bool) -> void:
 		 global_position)
 		#global_position.x+offset.call()
 		print_debug(global_position)
+		pass
 	else:
 		print_debug(global_position)
 		global_position=teleport_handler.teleport(teleport_helper_raycast.target_position.x+offset.call(),\
@@ -573,6 +580,7 @@ func teleport_to(front : bool) -> void:
 		 global_position)
 		#global_position.y+offset.call()
 		print_debug(global_position)
+		pass
 
 func dodge_counter() -> void:
 	var _dodge_chance = randi_range(0,1)
@@ -691,6 +699,7 @@ func _on_animation_player_animation_changed(old_name: StringName, new_name: Stri
 	print_debug("from ", old_name, " to ",new_name) 
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
+	target_near=true
 	if bt_player.blackboard.get_var("staggered")==true or state_machine.get_active_state()==attack:
 		return
 	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
@@ -707,6 +716,7 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 		
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
+	target_near=false
 	if changing_phase:
 		return
 	elif attacking:
@@ -946,6 +956,9 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 func _on_attack_entered() -> void:
 	bt_player.blackboard.set_var("attack_mode", true)
 	hb_collision.set_deferred("disabled", false)
+	if phases.get_active_state()==phase_2:
+		if not target_near and state_machine.get_active_state()!=chasing and state_machine.get_active_state()!=shooting:
+			state_machine.dispatch(&"teleport_atk")
 
 func _on_attack_updated(delta: float) -> void:
 	if bt_player.blackboard.get_var("staggered")==true:
@@ -956,7 +969,6 @@ func _on_attack_updated(delta: float) -> void:
 			hurt_box.active=true
 		else:
 			hurt_box.active=false
-	
 	
 		
 func _on_hit_box_area_entered(_area: Area2D) -> void:
@@ -1074,15 +1086,6 @@ func _on_phase_2_entered() -> void:
 	bt_player.blackboard.set_var("melee_mode", true)
 	#bt_player.blackboard.set_var("attack_mode", false)
 	#bt_player.restart()
-	#state_machine.change_active_state(teleport_and_shoot)
-	#assert(state_machine.get_active_state()==teleport_and_shoot)
-	#bt_player.blackboard.set_var("attack_mode", true)
-	#state_machine.change_active_state(idle)
-	#counter_sm.add_transition(begin_counter, teleport_and_shoot, &"teleport_counter")
-	#state_machine.add_transition(counter_sm, attack, teleport_and_shoot.success_event)
-	#changing_phase=false
-	#state_machine.change_active_state(begin_counter)
-	#counter_sm.dispatch(&"teleport_counter")
 
 
 func _on_phases_handler_next_phase() -> void:
@@ -1154,6 +1157,8 @@ func _on_teleport_and_shoot_exited() -> void:
 	var _colliding_bodies=attack_range.get_overlapping_bodies()
 	for i in range(_colliding_bodies.size()-1, -1, 0):
 		if _colliding_bodies[i].is_in_group("player"):
+			state_machine.dispatch(&"start_attack")
+		else:
 			state_machine.dispatch(&"start_attack")
 
 func death_on_cutscene() -> void:

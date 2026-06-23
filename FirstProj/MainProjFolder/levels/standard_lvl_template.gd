@@ -243,7 +243,7 @@ func dialogue_continue():
 				pass
 		elif not cutscene_player.is_playing():
 			
-			if cutscene_queue_index>=cutscene_queue.size():
+			if cutscene_queue_index>=cutscene_queue.size()-1:
 				print_debug("end_of_scene")
 			else:
 				cutscene_queue_index+=1
