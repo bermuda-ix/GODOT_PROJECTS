@@ -1019,6 +1019,7 @@ func _on_counter_updated(_delta: float) -> void:
 
 
 func _on_staggered_exited() -> void:
+	hurt_box.staggered=false
 	bt_player.blackboard.set_var("staggered", false)
 	bt_player.active=true
 	if phases_handler.is_final_phase():
@@ -1139,6 +1140,7 @@ func _on_teleport_and_shoot_entered() -> void:
 
 func _on_staggered_entered() -> void:
 	pass
+	hurt_box.staggered=true
 	parry_timer.start(5)
 
 
@@ -1377,7 +1379,7 @@ func _on_launch_entered() -> void:
 	vision_handler.active=false
 	combat_state_change_handler.active=false
 	stun_timer.stop()
-	
+	hurt_box.staggered=true
 	animation_player.play("launched")
 
 
@@ -1399,6 +1401,7 @@ func _on_land_updated(delta: float) -> void:
 
 
 func _on_land_exited() -> void:
+	hurt_box.staggered=false
 	var _colliding_bodies=attack_range.get_overlapping_bodies()
 	if _colliding_bodies!= null or _colliding_bodies.is_empty():
 		pass

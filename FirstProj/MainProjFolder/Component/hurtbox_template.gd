@@ -20,6 +20,8 @@ signal knockback(launch_strength : float, knock_back_strength : float, impact_di
 @export var weakpoint : bool = false
 @export var active : bool = true : set = set_active
 
+@export var staggered : bool = false
+
 @onready var total_damage : int = 0
 @export var shielded : bool = false
 @export var knockback_active : bool = true
@@ -103,7 +105,8 @@ func _on_area_entered(hitbox: Area2D) -> void:
 				else:
 					if weakpoint or back_attack_flag.is_colliding():
 						health.health -= (hitbox.damage * dmg_mult)
-						stagger.stagger -= (hitbox.damage * dmg_mult)
+						if not staggered:
+							stagger.stagger -= (hitbox.damage * dmg_mult)
 						received_damage.emit(hitbox.damage)
 						got_hit.emit(hitbox)
 						weakpoint_hit.emit()
