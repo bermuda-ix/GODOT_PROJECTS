@@ -4031,7 +4031,7 @@ autostart = true
 one_shot = true
 
 [node name="Health" parent="." index="14"]
-max_health = 50
+max_health = 100
 immortality = false
 
 [node name="DodgeTimer" type="Timer" parent="." index="15" unique_id=70570100]
@@ -4406,7 +4406,7 @@ script = ExtResource("142_qstkj")
 health = NodePath("../Health")
 actor = NodePath("..")
 sm = NodePath("../Phases")
-phases = Array[int]([20])
+phases = Array[int]([35])
 metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]

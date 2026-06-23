@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_5m6oh")
-cutscene_list = Array[String](["hallway_miniboss_outro/SOLDIER1", "hallway_miniboss_outro/JOKER1", "hallway_miniboss_outro/ACE1", "hallway_miniboss_outro/JOKER2", "hallway_miniboss_outro/QUEEN1", "hallway_miniboss_outro/ACE2", "hallway_miniboss_outro/KNIGHT1", "hallway_miniboss_outro/KING1", "hallway_miniboss_outro/JOKER3", "hallway_miniboss_outro/ACE3", "hallway_miniboss_outro/JOKER4", "hallway_miniboss_outro/ACE4"])
+cutscene_list = Array[String](["hallway_miniboss_outro/SOLDIER1", "hallway_miniboss_outro/JOKER1", "hallway_miniboss_outro/ACE1", "hallway_miniboss_outro/JOKER2", "hallway_miniboss_outro/QUEEN1", "hallway_miniboss_outro/ACE2", "hallway_miniboss_outro/KNIGHT1", "hallway_miniboss_oudddddddddddd/KING1", "hallway_miniboss_outro/JOKER3", "hallway_miniboss_outro/ACE3", "hallway_miniboss_outro/JOKER4", "hallway_miniboss_outro/JOKER5", "hallway_miniboss_outro/ACE4"])
 metadata/_custom_type_script = "uid://dq2pnu5gtu78e"
