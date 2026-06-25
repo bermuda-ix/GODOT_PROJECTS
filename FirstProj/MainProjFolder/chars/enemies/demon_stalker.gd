@@ -24,6 +24,19 @@ func _on_local_flag_disappear_flag_triggered() -> void:
 
 func _on_global_flag_handler_flag_activate() -> void:
 	local_flag__appear.flag_active=true
+	visible=true
 
 func flag_triggered() -> void:
 	pass
+
+
+func _on_local_flag_appear_event_flag_triggered() -> void:
+	visible=true
+	local_flag__appear.flag_active=false
+	local_flag__disappear.flag_active=true
+
+
+func _on_local_flag_disappear_event_flag_triggered() -> void:
+	visible=false
+	local_flag__disappear.flag_active=false
+	queue_free()

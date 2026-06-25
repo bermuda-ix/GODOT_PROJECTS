@@ -1415,17 +1415,19 @@ anim_speed_min = 1.0
 anim_speed_max = 1.0
 
 [sub_resource type="Gradient" id="Gradient_mdoa6"]
-offsets = PackedFloat32Array(0, 0.18461539, 0.36923078, 0.51153845, 0.7307692, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.9884981, 0.9884981, 0.9884981, 1, 0.37226278, 0.37226278, 0.37226278, 1, 0.1455643, 0.1455643, 0.1455643, 1, 0.07575284, 0.07575284, 0.07575284, 1, 0, 0, 0, 1)
+interpolation_mode = 2
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.050970875, 0.14563107, 0.50242716, 0.8325243, 0.934466, 1)
+colors = PackedColorArray(0.9884981, 0.9884981, 0.9884981, 1, 0.29954717, 0.29954758, 0.2995473, 1, -0.004567404, -0.0045674024, -0.0045674024, 1, 0, 0, 0, 1, -0.00479058, -0.0047905804, -0.0047905766, 1, 0.29803923, 0.29803923, 0.29803923, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_kd7ms"]
 gradient = SubResource("Gradient_mdoa6")
 use_hdr = true
-fill = 1
+fill = 3
 fill_from = Vector2(0, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
-metadata/_snap_count = 2
+metadata/_snap_count = 16
 
 [sub_resource type="Animation" id="Animation_xxtsl"]
 length = 0.001
@@ -1883,6 +1885,17 @@ scale_min = 1.2
 scale_max = 1.2
 anim_speed_min = 0.7
 anim_speed_max = 0.7
+
+[sub_resource type="Gradient" id="Gradient_mesnb"]
+offsets = PackedFloat32Array(0, 0.7111651)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_c5jop"]
+gradient = SubResource("Gradient_mesnb")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
 size = Vector2(27.275377, 41.20858)
@@ -9413,14 +9426,15 @@ process_material = SubResource("ParticleProcessMaterial_g1hon")
 
 [node name="Flashlight" type="PointLight2D" parent="AnimatedSprite2D/Shotty" unique_id=1965536954]
 light_mask = 3
-position = Vector2(766.86816, -5.2722363)
-scale = Vector2(19.352423, 8.595338)
+position = Vector2(1592.9471, -9.453857)
+scale = Vector2(45.167393, 23.943964)
 enabled = false
 energy = 3.0
 range_layer_max = 2
 range_item_cull_mask = 3
 shadow_enabled = true
 shadow_filter = 2
+shadow_filter_smooth = 1.5
 shadow_item_cull_mask = 2
 texture = SubResource("GradientTexture2D_kd7ms")
 
@@ -9583,6 +9597,11 @@ scale = Vector2(0.4754526, 0.38959828)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("220_fixwo")
 text = "EXIT"
+
+[node name="GlowOutline" type="PointLight2D" parent="AnimatedSprite2D" unique_id=1920291677]
+position = Vector2(0, -17)
+energy = 0.5
+texture = SubResource("GradientTexture2D_c5jop")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=771559977]
 position = Vector2(1.4999993, -9.5000105)

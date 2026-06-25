@@ -167,6 +167,8 @@
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="165_bw5xo"]
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="166_lhcp8"]
 [ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="167_j7bww"]
+[ext_resource type="PackedScene" uid="uid://dc36k2t4gy6xb" path="res://Component/Consumables/keycard.tscn" id="168_s3eo8"]
+[ext_resource type="Script" uid="uid://dg1m7uqm44pm3" path="res://Component/functions/GlobalFlags/GlobalFlagHandler.gd" id="169_s1x0g"]
 
 [sub_resource type="Gradient" id="Gradient_bw5xo"]
 
@@ -341,7 +343,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -353,7 +355,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -381,7 +383,7 @@ tracks/7/keys = {
 }
 tracks/8/type = "value"
 tracks/8/imported = false
-tracks/8/enabled = true
+tracks/8/enabled = false
 tracks/8/path = NodePath("PC:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
@@ -809,7 +811,7 @@ tracks/43/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.5]
+"values": [1.0]
 }
 tracks/44/type = "value"
 tracks/44/imported = false
@@ -822,6 +824,66 @@ tracks/44/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
+}
+tracks/45/type = "value"
+tracks/45/imported = false
+tracks/45/enabled = true
+tracks/45/path = NodePath("Ace_Cutscene/AnimatedSprite2D:position")
+tracks/45/interp = 1
+tracks/45/loop_wrap = true
+tracks/45/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(32, 21)]
+}
+tracks/46/type = "value"
+tracks/46/imported = false
+tracks/46/enabled = true
+tracks/46/path = NodePath("Ace_Cutscene/AnimatedSprite2D:visible")
+tracks/46/interp = 1
+tracks/46/loop_wrap = true
+tracks/46/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/47/type = "value"
+tracks/47/imported = false
+tracks/47/enabled = true
+tracks/47/path = NodePath("Ace_Cutscene/AnimatedSprite2D:animation")
+tracks/47/interp = 1
+tracks/47/loop_wrap = true
+tracks/47/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"muzzle_fire"]
+}
+tracks/48/type = "value"
+tracks/48/imported = false
+tracks/48/enabled = true
+tracks/48/path = NodePath("Ace_Cutscene/AnimatedSprite2D:frame")
+tracks/48/interp = 1
+tracks/48/loop_wrap = true
+tracks/48/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/49/type = "value"
+tracks/49/imported = false
+tracks/49/enabled = true
+tracks/49/path = NodePath("Ace_Cutscene/AnimatedSprite2D:flip_h")
+tracks/49/interp = 1
+tracks/49/loop_wrap = true
+tracks/49/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_wbdor"]
@@ -1529,6 +1591,30 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CameraPos:camera_zoom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.96666664, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.5, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CameraPos:stationary")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.96666664, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_0rjb8"]
@@ -3465,6 +3551,20 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_incat"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("125_de2k3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("126_s6f7w")
+}],
+"loop": 1,
+"name": &"muzzle_fire",
+"speed": 5.0
+}]
+
 [sub_resource type="Curve2D" id="Curve2D_k5twc"]
 _data = {
 "points": PackedVector2Array(24.41798, 30.642172, -24.41798, -30.642172, -2185, 280, 1.1969604, 0, -1.1969604, 0, -2287.586, 241.68951, 1.767786, -38.84556, -1.767786, 38.84556, -2360, 279)
@@ -3642,7 +3742,6 @@ position = Vector2(-33, -66)
 
 [node name="CameraPos" parent="." unique_id=893203730 instance=ExtResource("19_tshqc")]
 position = Vector2(-2350, 202)
-camera_zoom = 1.5
 offset = Vector2(0, -40)
 
 [node name="NavRegions" type="Node" parent="." unique_id=352477175]
@@ -3653,21 +3752,20 @@ navigation_polygon = SubResource("NavigationPolygon_k5twc")
 navigation_layers = 3
 
 [node name="DemonStalker" parent="." unique_id=744585521 instance=ExtResource("16_p7bsn")]
-visible = false
-position = Vector2(-2493, 247)
+position = Vector2(-2337, 252)
 
-[node name="AnimatedSprite2D" parent="DemonStalker" index="0"]
+[node name="AnimatedSprite2D" parent="DemonStalker" index="0" unique_id=994355252]
 position = Vector2(-1, 0)
 flip_h = true
 
-[node name="LocalFlag->Appear" parent="DemonStalker/LocalFlags" index="0"]
+[node name="LocalFlag->Appear" parent="DemonStalker/LocalFlags" parent_id_path=PackedInt32Array(744585521, 761490593) index="0" unique_id=839984177]
 position = Vector2(-2776, 137)
 
-[node name="LocalFlag->Disappear" parent="DemonStalker/LocalFlags" index="1"]
+[node name="LocalFlag->Disappear" parent="DemonStalker/LocalFlags" parent_id_path=PackedInt32Array(744585521, 761490593) index="1" unique_id=162967974]
 position = Vector2(-2565, 142)
 
 [node name="PC" parent="." unique_id=1041091659 instance=ExtResource("17_j8gjg")]
-position = Vector2(-2552, 284)
+position = Vector2(-3735, 284)
 scale = Vector2(1.0760809, 0.94640315)
 
 [node name="BossArena" type="Node" parent="." unique_id=1859008299]
@@ -3675,9 +3773,10 @@ scale = Vector2(1.0760809, 0.94640315)
 [node name="BossIntro" parent="BossArena" unique_id=157589397 instance=ExtResource("18_g5ibn")]
 position = Vector2(-2563, 142)
 cutscene_name = "hallway_miniboss_intro"
-flag_active = true
 dialogue_only = false
 single_cutscene = false
+activate_on_global_flag = true
+global_flag_name = "ShutOff"
 
 [node name="NamedBossSpawn" parent="BossArena" unique_id=1896744289 instance=ExtResource("18_isdh8")]
 position = Vector2(-2302, 260)
@@ -3700,6 +3799,7 @@ affect_navigation_mesh = true
 avoidance_layers = 3
 
 [node name="SoldierBoss_Cutscene" parent="." unique_id=1998686262 instance=ExtResource("21_n0r6o")]
+visible = false
 self_modulate = Color(0.45490196, 0.45490196, 0.45490196, 1)
 material = SubResource("ShaderMaterial_glpjs")
 position = Vector2(-2303, 252)
@@ -3739,6 +3839,7 @@ animation = &"Shoot"
 flip_h = true
 
 [node name="Ace_Cutscene" parent="." unique_id=933460979 instance=ExtResource("21_n0r6o")]
+visible = false
 position = Vector2(-2511, 254)
 sprite_frames = SubResource("SpriteFrames_lhcp8")
 animation = &"idle"
@@ -3748,6 +3849,12 @@ flip_h = true
 root_node = NodePath("../../SoldierBoss_Cutscene")
 
 [node name="Turret" parent="Ace_Cutscene" unique_id=48159437 instance=ExtResource("52_j43pp")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Ace_Cutscene" unique_id=261504708]
+position = Vector2(32, 21)
+sprite_frames = SubResource("SpriteFrames_incat")
+animation = &"muzzle_fire"
+flip_h = true
 
 [node name="Paths" type="Node" parent="." unique_id=1154897587]
 
@@ -3778,10 +3885,21 @@ metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 script = ExtResource("167_j7bww")
 metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 
+[node name="KeyCard" parent="." unique_id=915505049 instance=ExtResource("168_s3eo8")]
+position = Vector2(-3594.9998, 265)
+scale = Vector2(0.1, 0.1)
+collision_layer = 1
+
+[node name="GlobalFlagHandler" type="Node" parent="." unique_id=1520429715]
+script = ExtResource("169_s1x0g")
+flag_name = "ready_to_start"
+metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
+
 [connection signal="animation_finished" from="CutscenePlayer" to="." method="_on_cutscene_player_animation_finished"]
 [connection signal="play_cutscene" from="BossArena/BossIntro" to="." method="play_cutscene_segment"]
 [connection signal="play_cutscene_list" from="BossArena/BossIntro" to="." method="play_cutscene_queue"]
 
+[editable path="Lights/CeilingLight2"]
 [editable path="CameraPos"]
 [editable path="DemonStalker"]
 [editable path="PC"]

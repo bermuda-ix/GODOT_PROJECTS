@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://8k6jvhupkwca"]
+[gd_scene format=3 uid="uid://8k6jvhupkwca"]
 
 [ext_resource type="Texture2D" uid="uid://b2io16h6csflu" path="res://Art_Components/Enemies/Pixel Prototype Enemy/Sprites/Idle/Idle01.png" id="1_2vpww"]
 [ext_resource type="Script" uid="uid://bithn2do0tmnw" path="res://chars/enemies/demon_stalker.gd" id="1_wjrnr"]
@@ -35,10 +35,37 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_r7eji")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Idle",
 "speed": 5.0
 }]
+
+[sub_resource type="Animation" id="Animation_hbmga"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_7cei5"]
 resource_name = "idle"
@@ -69,65 +96,36 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6]
 }
 
-[sub_resource type="Animation" id="Animation_hbmga"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"Idle"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ief40"]
 _data = {
 &"RESET": SubResource("Animation_hbmga"),
 &"idle": SubResource("Animation_7cei5")
 }
 
-[node name="DemonStalker" type="Node2D"]
+[node name="DemonStalker" type="Node2D" unique_id=581886219]
 script = ExtResource("1_wjrnr")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=994355252]
 sprite_frames = SubResource("SpriteFrames_mwvwm")
 animation = &"Idle"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_ief40")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2062517346]
+libraries/ = SubResource("AnimationLibrary_ief40")
 
-[node name="LocalFlags" type="Node" parent="."]
+[node name="LocalFlags" type="Node" parent="." unique_id=761490593]
 
-[node name="LocalFlag->Appear" parent="LocalFlags" node_paths=PackedStringArray("connected_object") instance=ExtResource("9_2ccgf")]
-connected_object = NodePath("../..")
+[node name="LocalFlag->Appear" parent="LocalFlags" unique_id=839984177 instance=ExtResource("9_2ccgf")]
+flag_type = 1
 
-[node name="LocalFlag->Disappear" parent="LocalFlags" node_paths=PackedStringArray("connected_object") instance=ExtResource("9_2ccgf")]
-connected_object = NodePath("../..")
+[node name="LocalFlag->Disappear" parent="LocalFlags" unique_id=162967974 instance=ExtResource("9_2ccgf")]
+flag_type = 1
 
-[node name="GlobalFlagHandler" type="Node" parent="."]
+[node name="GlobalFlagHandler" type="Node" parent="." unique_id=1406087607]
 script = ExtResource("10_ayhpl")
 flag_name = "ready_to_start"
 flag_active = true
 metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
 
-[connection signal="flag_triggered" from="LocalFlags/LocalFlag->Appear" to="." method="_on_local_flag_appear_flag_triggered"]
-[connection signal="flag_triggered" from="LocalFlags/LocalFlag->Disappear" to="." method="_on_local_flag_disappear_flag_triggered"]
+[connection signal="event_flag_triggered" from="LocalFlags/LocalFlag->Appear" to="." method="_on_local_flag_appear_event_flag_triggered"]
+[connection signal="event_flag_triggered" from="LocalFlags/LocalFlag->Disappear" to="." method="_on_local_flag_disappear_event_flag_triggered"]
 [connection signal="flag_activate" from="GlobalFlagHandler" to="." method="_on_global_flag_handler_flag_activate"]
