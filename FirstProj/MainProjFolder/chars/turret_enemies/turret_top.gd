@@ -32,6 +32,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var state_machine: LimboHSM = $LimboHSM
 @onready var idle: LimboState = $LimboHSM/Idle
 @onready var attack: LimboState = $LimboHSM/Attack
+@onready var shooting: Shooting = $LimboHSM/Shooting
 @onready var death: LimboState = $LimboHSM/Death
 @onready var player : PlayerEntity = null
 @onready var stagger: LimboState = $LimboHSM/Stagger
@@ -68,10 +69,10 @@ func _init_state_machine():
 	state_machine.initialize(self)
 	state_machine.set_active(true)
 	
-	state_machine.add_transition(idle, attack, &"attack_mode")
+	state_machine.add_transition(idle, shooting, &"attack_mode")
 	state_machine.add_transition(state_machine.ANYSTATE, death, &"die")
 	state_machine.add_transition(state_machine.ANYSTATE, stagger, &"staggered")
-	state_machine.add_transition(stagger, attack, &"recovery")
+	state_machine.add_transition(stagger, shooting, &"recovery")
 
 
 
@@ -82,7 +83,7 @@ func _on_turret_shoot_bullet() -> void:
 
 
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
-	if current==attack:
+	if current==shooting:
 		print_debug("activate turret")
 		bt_player.blackboard.set_var("attack_mode", true)
 		if previous==idle:

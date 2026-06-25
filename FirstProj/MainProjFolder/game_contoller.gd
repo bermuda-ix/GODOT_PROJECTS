@@ -60,8 +60,8 @@ func _ready() -> void:
 	#toggle_world2d_process(false)
 	#toggle_player(false)
 	
-	#test_start()
-	change_gui_scene(LevelList.MAIN_MENU)
+	test_start()
+	#change_gui_scene(LevelList.MAIN_MENU)
 	level_UI.visible=false
 	
 	
@@ -76,7 +76,7 @@ func test_start() -> void:
 	load_first_room("PrologueLvl")
 	prev_2d_scene=current_2d_scene
 	#current_2d_scene.player=player
-	load_levels(LevelsList.prologue_level_maps)
+	load_levels(LevelsList.level_maps)
 	_init_objectives(ObjectivesByLevel.prologue_init_objectives)
 
 func show_pause():

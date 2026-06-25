@@ -216,7 +216,7 @@ libraries/ = SubResource("AnimationLibrary_wstjc")
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=525706724 node_paths=PackedStringArray("health", "stagger")]
 collision_layer = 16
-collision_mask = 8768
+collision_mask = 8397376
 script = ExtResource("3_sh051")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")

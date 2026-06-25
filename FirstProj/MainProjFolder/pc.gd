@@ -259,6 +259,7 @@ signal no_input_qte
 @onready var prev_starting_pos : int = 0
 @onready var in_door_way : bool = false
 
+var local_door : entry_local = null
 @onready var in_door_way_local : bool = false
 @onready var door_locked : bool = false
 @onready var door_local_exit : Vector2 = Vector2(0,0)
@@ -1833,7 +1834,10 @@ func enter_door() -> void:
 			
 	elif in_door_way_local:
 		if Input.is_action_just_pressed("up"):
-			global_position=door_local_exit
+			if door_locked:
+				local_door.locked_door_attempt()
+			else:
+				global_position=door_local_exit
 			
 
 func climb_stairs() -> void:
@@ -1853,6 +1857,8 @@ func drop_down():
 		set_collision_mask_value(27, true)
 
 func _on_hazard_detector_area_entered(area):
+	
+
 	if health.health<=0:
 		return
 	elif area.is_in_group("hazard"):
@@ -1877,6 +1883,7 @@ func _on_interactable_detector_area_entered(area: Area2D) -> void:
 			
 			if "local" in area:
 				if area.local == true:
+					local_door=area
 					in_door_way_local=true
 					door_local_exit=area.player_next_entry()
 			else:
@@ -1898,6 +1905,8 @@ func _on_interactable_detector_area_entered(area: Area2D) -> void:
 func _on_interactable_detector_area_exited(area: Area2D) -> void:
 	interact_prompt_player.play("RESET")
 	if area.is_in_group("door"):
+		if local_door !=null:
+			local_door=null
 		if area.is_in_group("AnimatedDoor"):
 			in_door_way=false
 			animated_door=false

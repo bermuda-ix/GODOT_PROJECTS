@@ -216,6 +216,9 @@ func dialogue_flag_listener(_dialogue) -> void:
 ###Cutscene Functions###
 ########################
 
+func play_cutscene(_cutscene : String):
+	cutscene_player.play(_cutscene)
+
 func play_cutscene_segment(_cutscene_segment : String):
 	var _cutscene=cutscene_library+"/"+_cutscene_segment
 	Events.play_cutscene_segment.emit(_cutscene)
@@ -377,7 +380,7 @@ func _on_scene_reloaded() -> void:
 
 func _on_cutscene_player_animation_finished(anim_name: StringName) -> void:
 	match anim_name:
-		"flashback_lvl_cutscenes/miniboss_hallway_death":
+		"miniboss_hallway_death":
 			cutscene_queue_index=0
 			load_cutscene_queue(Cutscenes.Cutscenes["MiniBoss1Outro"])
 			play_cutscene_queue()

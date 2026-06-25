@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=16 format=3 uid="uid://dc38s54hrld05"]
+[gd_resource type="BehaviorTree" format=3 uid="uid://dc38s54hrld05"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_23vmn"]
 var/in_range/name = &"in_range"

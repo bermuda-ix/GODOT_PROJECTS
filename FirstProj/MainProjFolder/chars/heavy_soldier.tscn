@@ -402,7 +402,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3df1g")
 }],
-"loop": true,
+"loop": 1,
 "name": &"dead",
 "speed": 5.0
 }, {
@@ -422,7 +422,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3df1g")
 }],
-"loop": true,
+"loop": 1,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -436,7 +436,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1v1d1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"hit",
 "speed": 5.0
 }, {
@@ -459,7 +459,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xrqpt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }, {
@@ -491,7 +491,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rh8ku")
 }],
-"loop": true,
+"loop": 1,
 "name": &"jump",
 "speed": 5.0
 }, {
@@ -499,7 +499,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rf0gu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"parry",
 "speed": 5.0
 }, {
@@ -531,7 +531,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8nnwq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"reload",
 "speed": 5.0
 }, {
@@ -572,7 +572,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pp23k")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run",
 "speed": 5.0
 }, {
@@ -589,7 +589,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ct51r")
 }],
-"loop": true,
+"loop": 1,
 "name": &"shoot",
 "speed": 5.0
 }, {
@@ -606,7 +606,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_eopqg")
 }],
-"loop": true,
+"loop": 1,
 "name": &"shoot_defense",
 "speed": 5.0
 }, {
@@ -647,7 +647,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_oqlwu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk",
 "speed": 5.0
 }]
@@ -782,7 +782,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("52_0u53p")
 }],
-"loop": true,
+"loop": 1,
 "name": &"charge",
 "speed": 5.0
 }, {
@@ -799,7 +799,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("57_g8y6e")
 }],
-"loop": true,
+"loop": 1,
 "name": &"knocked_back",
 "speed": 5.0
 }, {
@@ -825,7 +825,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("20_wdorp")
 }],
-"loop": true,
+"loop": 1,
 "name": &"melee_attack_fx",
 "speed": 5.0
 }, {
@@ -860,7 +860,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("70_qfovh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"staggered",
 "speed": 5.0
 }, {
@@ -892,7 +892,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("79_nyvl3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"staggered_entered",
 "speed": 5.0
 }]
@@ -3056,10 +3056,11 @@ state_machine = NodePath("..")
 jump_handler = NodePath("../../JumpHandler")
 metadata/_custom_type_script = "uid://d2wausty5l457"
 
-[node name="Attack" type="LimboState" parent="StateMachine" unique_id=1761956651 node_paths=PackedStringArray("actor", "bt_player")]
+[node name="Attack" type="LimboState" parent="StateMachine" unique_id=1761956651 node_paths=PackedStringArray("actor", "bt_player", "hit_box")]
 script = ExtResource("29_ct51r")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
+hit_box = NodePath("../../HitBox")
 metadata/_custom_type_script = "uid://b5an13nv6em7m"
 
 [node name="MeleeAttack" type="LimboState" parent="StateMachine" unique_id=1241376327]

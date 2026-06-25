@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://j41r1dqp7vf3" path="res://levels/standard_lvl_template.tscn" id="1_w82j5"]
 [ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_mb6gy"]
+[ext_resource type="PackedScene" uid="uid://hg63g0t3rx0q" path="res://Component/UI_Rec/Char_Dialogue/dialogue_box.tscn" id="3_4koma"]
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="4_7klgn"]
 [ext_resource type="PackedScene" uid="uid://m5ullq0dey1k" path="res://Art_Components/misc/lights_indoor.tscn" id="5_8qkpr"]
 [ext_resource type="PackedScene" uid="uid://2t2be0q7lqvs" path="res://Art_Components/tile_maps/lab_architect.tscn" id="6_drpgx"]
@@ -14,6 +15,7 @@
 [ext_resource type="TileSet" uid="uid://5vc1chccqln4" path="res://levels/level_components/factory_tile_set_main_platform.tres" id="10_658m8"]
 [ext_resource type="PackedScene" uid="uid://2n8eqdqt683t" path="res://Component/spawn_point.tscn" id="10_j2fky"]
 [ext_resource type="Texture2D" uid="uid://d4ixead72khtg" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding2.png" id="10_rfxm3"]
+[ext_resource type="Script" uid="uid://okj762ruf2yb" path="res://Component/functions/event_flag.gd" id="10_vcexo"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="11_52g4u"]
 [ext_resource type="PackedScene" uid="uid://dn0fhusgltn4m" path="res://chars/heavy_soldier.tscn" id="13_rfxm3"]
 [ext_resource type="Texture2D" uid="uid://bri4af6o6wyf6" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding2blur.png" id="14_7qfih"]
@@ -976,6 +978,8 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
+[node name="DialogueBoxController" parent="CanvasLayer" index="6" unique_id=1807181331 instance=ExtResource("3_4koma")]
+
 [node name="CameraPos" parent="." index="1" unique_id=1380543077 instance=ExtResource("4_7klgn")]
 position = Vector2(221, 396)
 
@@ -1083,6 +1087,14 @@ position = Vector2(832, 400)
 position = Vector2(32, 72)
 door = NodePath("../../SecDoorUpper/SecEntryUpper")
 locked = true
+
+[node name="EventFlag" type="Node" parent="Props/SecDoorLower/SecEntryLower" index="3" unique_id=1411494674]
+script = ExtResource("10_vcexo")
+flag_types = 1
+cutscene_name = "flashback_lvl_cutscenes/locked_door_dialogue"
+flag_active = true
+activate_on_global_flag = true
+metadata/_custom_type_script = "uid://okj762ruf2yb"
 
 [node name="SecDoorUpper" parent="Props" index="1" unique_id=531555550 instance=ExtResource("22_relum")]
 z_index = -1
@@ -2092,7 +2104,7 @@ update_scale = false
 [node name="StartingPos" type="Node" parent="." index="35" unique_id=275376811]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" unique_id=794793489 groups=["start_pos"]]
-position = Vector2(7450, 848)
+position = Vector2(343, 405)
 
 [node name="PersistentDataHandler" type="Node" parent="." index="36" unique_id=86022096]
 script = ExtResource("24_w82j5")
@@ -2124,6 +2136,8 @@ z_index = 1
 position = Vector2(2232, 790)
 
 [connection signal="scene_reloaded" from="." to="." method="_on_scene_reloaded"]
+[connection signal="locked_door" from="Props/SecDoorLower/SecEntryLower" to="Props/SecDoorLower/SecEntryLower/EventFlag" method="flag_triggered" flags=3]
+[connection signal="play_cutscene" from="Props/SecDoorLower/SecEntryLower/EventFlag" to="." method="play_cutscene"]
 [connection signal="set_max_heat" from="Spawning/SpawnFlags/HeatSpawnFlag" to="." method="set_max_heat"]
 [connection signal="toggle_spawn" from="Spawning/SpawnFlags/HeatSpawnFlag" to="." method="toggle_spawn"]
 [connection signal="set_max_heat" from="Spawning/SpawnFlags/HeatSpawnFlag2" to="." method="set_max_heat"]

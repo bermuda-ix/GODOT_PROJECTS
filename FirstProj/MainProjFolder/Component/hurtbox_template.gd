@@ -103,7 +103,16 @@ func _on_area_entered(hitbox: Area2D) -> void:
 
 					got_hit.emit(hitbox)
 				else:
-					if weakpoint or back_attack_flag.is_colliding():
+					if back_attack_flag != null:
+						if back_attack_flag.is_colliding():
+							health.health -= (hitbox.damage * dmg_mult)
+							if not staggered:
+								stagger.stagger -= (hitbox.damage * dmg_mult)
+							received_damage.emit(hitbox.damage)
+							got_hit.emit(hitbox)
+							weakpoint_hit.emit()
+							Events.camera_shake.emit(2,20)
+					if weakpoint:
 						health.health -= (hitbox.damage * dmg_mult)
 						if not staggered:
 							stagger.stagger -= (hitbox.damage * dmg_mult)

@@ -1,7 +1,9 @@
-extends Area2D
+class_name entry_local extends Area2D
 
 #signal player_entered_door(door : Door, transition_type : String)
 signal enter_area(room : PackedScene)
+
+signal locked_door
 
 @onready var test := false
 
@@ -46,6 +48,9 @@ func get_player_entry_dir() -> String:
 	
 	return player_dir
 
+func get_lock_state() -> bool:
+	return locked
+
 func player_next_entry() -> Vector2:
 	if door == null:
 		print_debug("the lock is broken")
@@ -57,6 +62,9 @@ func player_next_entry() -> Vector2:
 			return global_position
 		else:
 			return door.global_position
+
+func locked_door_attempt() -> void:
+	locked_door.emit()
 
 func _on_body_exited(body: Node2D) -> void:
 	if not body is PlayerEntity:

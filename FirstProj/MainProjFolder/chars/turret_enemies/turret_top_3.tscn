@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="8_matqd"]
 [ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="9_fl7l4"]
 [ext_resource type="Script" uid="uid://5h8g0n4mebtm" path="res://Component/functions/ShootAttackManager.gd" id="10_j0ghf"]
+[ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="11_fxdsi"]
 [ext_resource type="Script" uid="uid://bj1m6kr4vol6u" path="res://Component/functions/RotationManager.gd" id="11_j0ghf"]
 [ext_resource type="PackedScene" uid="uid://b74ywj4npkesd" path="res://Component/bullet_projectile.tscn" id="14_swbxs"]
 [ext_resource type="Script" uid="uid://cr58jnxs33hft" path="res://Component/functions/deathHandler.gd" id="15_utw6m"]
@@ -26,7 +27,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1_12xbq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -34,7 +35,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1_12xbq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"reload",
 "speed": 5.0
 }]
@@ -424,6 +425,10 @@ actor = NodePath("../..")
 stagger = NodePath("../../Stagger")
 bt_player = NodePath("../../BTPlayer")
 movement_able = false
+
+[node name="Shooting" type="LimboState" parent="LimboHSM" unique_id=336761776]
+script = ExtResource("11_fxdsi")
+metadata/_custom_type_script = "uid://pjji1dxbp6vy"
 
 [node name="ParryTimer" type="Timer" parent="." unique_id=391432651]
 one_shot = true
