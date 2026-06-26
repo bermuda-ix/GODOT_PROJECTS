@@ -1333,7 +1333,7 @@ func heavy_attack():
 	if counter_flag:
 		state_machine.dispatch(&"heavy_counter")
 	else:
-		state_machine.dispatch(&"heavy_combo")
+		attack_state.dispatch(&"heavy_combo")
 	#if not attack_timer.is_stopped():
 		#if atk_chain == 0:
 			##attack_combo = "Attack"
@@ -1483,8 +1483,8 @@ func _on_special_attack_buffer_timer_timeout() -> void:
 	attack_timer.paused = false
 
 func gun_cone(spread : int) -> Array[int]:
-	var _left_boundary : float = spread_boundary_2.rotation_degrees/2+shotty.rotation_degrees
-	var _right_boundary : float = shotty.rotation_degrees-spread_boundary_2.rotation_degrees/2
+	var _left_boundary : float = spread_boundary_2.rotation_degrees
+	var _right_boundary : float = spread_boundary_1.rotation_degrees
 	var _cone_angle :float = (_left_boundary) - (_right_boundary)
 	var _spread_angle : float = _cone_angle/spread
 	var _bullet_spawn_angle : float =shotty.global_rotation_degrees - _spread_angle

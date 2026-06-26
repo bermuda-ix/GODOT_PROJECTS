@@ -18,6 +18,7 @@ signal enter_area(room : PackedScene)
 @export_category("Return position Override")
 @export var location_override : bool = false
 @export var enter_to : String
+##Starting position of next room. Use -1 if next room has no defualt, or only one starting position
 @export var exit : int = 0
 
 func _ready() -> void:
