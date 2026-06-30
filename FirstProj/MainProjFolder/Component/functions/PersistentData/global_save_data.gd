@@ -49,13 +49,11 @@ var level_state : Dictionary = {
 	}
 	
 var heat_stats := {
-		region = {
-			region_name = "ADV_FLASHBACK",
+		region_name = "ADV_FLASHBACK",
 			heat = {
-				current_heat_level=""
-				}
-			},
-		heat_gauge=""
+				current_heat_level="0",
+				heat_gauge="0"
+			}
 		}
 	
 var score : int = 0

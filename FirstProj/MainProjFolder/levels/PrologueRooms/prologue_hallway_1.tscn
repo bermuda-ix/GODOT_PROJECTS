@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://hpw22p1bmgy7" path="res://levels/standard_lvl_template.gd" id="1_8kup7"]
 [ext_resource type="PackedScene" uid="uid://irr6uttnawsg" path="res://LVL_Transitions/level_completed.tscn" id="1_v01ax"]
 [ext_resource type="PackedScene" uid="uid://cxqapy0tyeigc" path="res://ui_level.tscn" id="2_aghnt"]
+[ext_resource type="PackedScene" uid="uid://gbk0wce4k61v" path="res://LVL_Transitions/victory_screen.tscn" id="2_s1x0g"]
 [ext_resource type="PackedScene" uid="uid://dva6hjing4p6o" path="res://LVL_Transitions/game_over.tscn" id="3_puuy3"]
 [ext_resource type="PackedScene" uid="uid://bt0mesljrak83" path="res://LVL_Transitions/pause_menu.tscn" id="4_5egue"]
 [ext_resource type="TileSet" uid="uid://5vc1chccqln4" path="res://levels/level_components/factory_tile_set_main_platform.tres" id="5_xip4b"]
@@ -2087,6 +2088,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_o5w3n"]
+length = 1.2
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -2108,11 +2110,14 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(1, 1.2),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
 "method": &"end_cutscene"
+}, {
+"args": [],
+"method": &"show_level_complete"
 }]
 }
 tracks/2/type = "value"
@@ -4108,6 +4113,7 @@ point_count = 3
 
 [node name="PrologueHallway1" type="Node2D" unique_id=2096370402 node_paths=PackedStringArray("player")]
 script = ExtResource("1_8kup7")
+next_level = ExtResource("2_s1x0g")
 player = NodePath("PC")
 main_room = true
 cutscene_library = "flashback_lvl_cutscenes"
@@ -4424,6 +4430,9 @@ metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 script = ExtResource("169_s1x0g")
 flag_name = "ready_to_start"
 metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
+
+[node name="StartingPos" type="Node2D" parent="." unique_id=1050802919]
+position = Vector2(238, 241)
 
 [connection signal="animation_finished" from="CutscenePlayer" to="." method="_on_cutscene_player_animation_finished"]
 [connection signal="play_cutscene" from="BossArena/BossIntro" to="." method="play_cutscene_segment"]

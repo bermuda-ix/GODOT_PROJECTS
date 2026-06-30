@@ -5,8 +5,10 @@ extends Node2D
 @onready var turret_top_collision: CollisionShape2D = $Sprite2D/turret_top/turret_top_collision
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var turret_top: AnimatableBody2D = $Sprite2D/turret_top
-@onready var hurt_box: HurtBox = $Sprite2D/HurtBox
-@onready var hurt_box_collision: CollisionShape2D = $Sprite2D/HurtBox/turret_top_collision
+
+
+#@onready var hurt_box: HurtBox = $Sprite2D/HurtBox
+#@onready var hurt_box_collision: CollisionShape2D = $Sprite2D/HurtBox/turret_top_collision
 
 
 

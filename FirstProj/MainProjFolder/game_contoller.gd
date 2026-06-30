@@ -15,6 +15,7 @@ signal player_pos_reset_to_checkpoint
 @onready var level_UI: CanvasLayer = $GUI/CanvasLayer
 @onready var game_over: ColorRect = $GUI/CanvasLayer/GameOver
 @onready var dialogue_box_controller: DialogueBoxController = $GUI/CanvasLayer/DialogueBoxController
+@onready var canvas_layer: CanvasLayer = $GUI/CanvasLayer
 
 
 
@@ -24,6 +25,7 @@ signal player_pos_reset_to_checkpoint
 @onready var loaded_rooms_map : Dictionary
 @onready var current_room : int = 0
 @onready var return_room : String = ""
+@onready var prev_starting_point := Vector2(0,0) : set = set_prev_starting_point, get = get_prev_starting_point
 
 #Region of levels to load into memory
 @onready var region : Dictionary
@@ -80,8 +82,11 @@ func test_start() -> void:
 	_init_objectives(ObjectivesByLevel.prologue_init_objectives)
 
 func show_pause():
-	pause_menu.show()
+	
+	gui.visible=true
 	gameui.visible=false
+	canvas_layer.visible=true
+	pause_menu.show()
 	get_tree().paused = true
 	
 func unpause():
@@ -212,6 +217,12 @@ func change_2d_scene (new_scene: String, \
 	_transition_in : String="fade_to_black", \
 	_transition_out : String="fade_from_black") -> void:
 	
+	var _previuos_return : bool = false
+	
+	if new_scene=="RETURN":
+		new_scene=return_room
+		_previuos_return = true
+	
 	if current_2d_scene!=null:
 		if loaded_rooms_map[new_scene].name == current_2d_scene.name:
 			return
@@ -227,21 +238,18 @@ func change_2d_scene (new_scene: String, \
 		else:
 			world_2d.call_deferred("remove_child", current_2d_scene)
 	
-	if new_scene=="RETURN":
-		new_scene=return_room
+	await current_2d_scene.tree_exited
+	
+	
 	
 	if world_2d.get_child_count()==0:
 		world_2d.add_child(loaded_rooms_map[new_scene])
 	#player.reparent(loaded_rooms_map[new_scene])
 	
 	#Starting position is -1 if scene has no starting position
-	if _starting_pos==-1:
-		loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].init_starting_pos.global_position
-	else:
-		#print_debug(loaded_rooms_map[new_scene].starting_pos.size(), " ",_starting_pos)
-		loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].starting_pos[_starting_pos]
+	
 		
-	LevelTransition.transition_out(_transition_out)
+	
 	if current_2d_scene != null:
 		prev_2d_scene=current_2d_scene
 		return_room=prev_2d_scene.name
@@ -251,6 +259,17 @@ func change_2d_scene (new_scene: String, \
 	Events.retrieve_heat_stats.emit()
 
 	load_levels(LevelsList.level_maps)
+	if _previuos_return:
+		loaded_rooms_map[new_scene].player.global_position=get_prev_starting_point()
+	else:
+		if _starting_pos==-1:
+			loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].init_starting_pos.global_position
+		else:
+			#print_debug(loaded_rooms_map[new_scene].starting_pos.size(), " ",_starting_pos)
+			print_debug(loaded_rooms_map[new_scene].starting_pos)
+			loaded_rooms_map[new_scene].player.global_position=loaded_rooms_map[new_scene].starting_pos[_starting_pos]
+	
+	LevelTransition.transition_out(_transition_out)
 
 func _init_objectives(_dict : Dictionary):
 	objectives_ui._init_objectives_list(_dict)
@@ -348,4 +367,10 @@ func retrieve_player_data() -> void:
 	ui_level.set_stagger(GlobalSaveData.current_save["player"]["stagger"])
 	ui_level.set_max_stagger(GlobalSaveData.current_save["player"]["max_stagger"])
 	player_data_retrieved.emit()
+	
+func set_prev_starting_point(_value : Vector2) -> void:
+	prev_starting_point=_value
+	
+func get_prev_starting_point() -> Vector2:
+	return prev_starting_point
 	

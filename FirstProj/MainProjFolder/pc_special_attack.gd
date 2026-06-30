@@ -2,12 +2,20 @@ extends LimboState
 
 @export var anim_player : AnimationPlayer
 @export var shotty_anim_player : AnimationPlayer
+@export var state_machine : LimboHSM
 @export var pc : PlayerEntity
 
 func _enter() -> void:
 	anim_player.play("shotgun_attack")
 	pc.s_atk=true
-	pc.velocity=Vector2.ZERO
+	if state_machine.get_previous_active_state()==pc.flip_state:
+		pc.velocity.x=75*-pc.face_dir
+		pc.velocity.y=-25
+	elif state_machine.get_previous_active_state()==pc.flip_end_state:
+		pc.velocity.x=75*(pc.face_dir)
+		pc.velocity.y=-25
+	else:
+		pc.velocity=Vector2.ZERO
 
 func _exit() -> void:
 	shotty_anim_player.play("shotgun_reset")

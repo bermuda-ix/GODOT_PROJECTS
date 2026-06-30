@@ -1223,6 +1223,18 @@ tracks/26/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("HitBox:clash_active")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_g7jpo"]
 resource_name = "clashed"
@@ -1777,7 +1789,7 @@ tracks/9/keys = {
 }
 tracks/10/type = "value"
 tracks/10/imported = false
-tracks/10/enabled = true
+tracks/10/enabled = false
 tracks/10/path = NodePath("HitBox:collision_mask")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
@@ -1858,6 +1870,32 @@ tracks/16/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("HitBox:clash_active")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0.033333335, 0.46666667, 0.51666665),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/18/type = "method"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("HitBox")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0.53333336),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"refresh_collision"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_2a376"]
@@ -2849,7 +2887,7 @@ shape = SubResource("RectangleShape2D_86qvh")
 disabled = true
 one_way_collision_margin = 0.0
 
-[node name="HitBox" type="Area2D" parent="." unique_id=403153839 node_paths=PackedStringArray("stagger") groups=["hitbox"]]
+[node name="HitBox" type="Area2D" parent="." unique_id=403153839 node_paths=PackedStringArray("stagger", "collision_shape") groups=["hitbox"]]
 position = Vector2(0, -39)
 collision_layer = 8
 collision_mask = 192
@@ -2858,6 +2896,7 @@ script = ExtResource("14_0rfay")
 stagger = NodePath("../Stagger")
 knock_back = true
 knock_back_strength = 55.0
+collision_shape = NodePath("hb_collision")
 metadata/_custom_type_script = "uid://5ijvah6jjgdb"
 
 [node name="hb_collision" type="CollisionShape2D" parent="HitBox" unique_id=1331286408]
@@ -3216,12 +3255,15 @@ hit_from_inside = true
 [connection signal="entered" from="StateMachine/Chasing" to="." method="_on_chasing_entered"]
 [connection signal="entered" from="StateMachine/Attack" to="." method="_on_attack_entered"]
 [connection signal="entered" from="StateMachine/MeleeAttack" to="." method="_on_melee_attack_entered"]
+[connection signal="exited" from="StateMachine/MeleeAttack" to="." method="_on_melee_attack_exited"]
 [connection signal="updated" from="StateMachine/MeleeAttack" to="." method="_on_melee_attack_updated"]
 [connection signal="active_state_changed" from="StateMachine/ShootingStates" to="." method="_on_shooting_states_active_state_changed"]
 [connection signal="entered" from="StateMachine/ShootingStates" to="." method="_on_shooting_states_entered"]
 [connection signal="entered" from="StateMachine/ShootingStates/Shooting" to="." method="_on_shooting_entered"]
 [connection signal="entered" from="StateMachine/ShootingStates/ShootingDefense" to="." method="_on_shooting_defense_entered"]
 [connection signal="exited" from="StateMachine/Parry" to="." method="_on_parry_exited"]
+[connection signal="entered" from="StateMachine/Staggered" to="." method="_on_staggered_entered"]
+[connection signal="exited" from="StateMachine/Staggered" to="." method="_on_staggered_exited"]
 [connection signal="entered" from="StateMachine/Death" to="." method="_on_death_entered"]
 [connection signal="entered" from="StateMachine/Dying" to="." method="_on_dying_entered"]
 [connection signal="entered" from="StateMachine/Launch" to="." method="_on_launch_entered"]

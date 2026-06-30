@@ -857,7 +857,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		bt_player.restart()
 		if state_machine.get_active_state()==death:
 			return
-		health.set_temporary_immortality(0.1)
+		#health.set_temporary_immortality(0.1)
 		if damage<=health.health:
 			if state_machine.get_active_state()!=staggered and state_machine.get_active_state()!=launch:
 				parry_timer.start(0.2)

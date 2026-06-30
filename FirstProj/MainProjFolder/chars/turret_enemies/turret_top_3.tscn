@@ -43,6 +43,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_elma4"]
 size = Vector2(261, 67)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fxdsi"]
+size = Vector2(266.5, 73.5)
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j0ghf"]
 particle_flag_disable_z = true
 emission_shape = 6
@@ -343,6 +346,19 @@ shape = SubResource("RectangleShape2D_elma4")
 
 [node name="PointLight2D" type="PointLight2D" parent="Sprite2D/turret_top" unique_id=1112412612]
 
+[node name="HurtBox" type="Area2D" parent="Sprite2D/turret_top" unique_id=1995514463 node_paths=PackedStringArray("health", "stagger")]
+position = Vector2(4, -1)
+collision_layer = 16
+collision_mask = 8192
+script = ExtResource("18_hnah5")
+health = NodePath("../../../Health")
+stagger = NodePath("../../../Stagger")
+metadata/_custom_type_script = "uid://bet3nodk2voxv"
+
+[node name="turret_top_collision" type="CollisionShape2D" parent="Sprite2D/turret_top/HurtBox" unique_id=1299322876]
+position = Vector2(-2.75, -3.25)
+shape = SubResource("RectangleShape2D_fxdsi")
+
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D" unique_id=1973743075]
 position = Vector2(-184, -32)
 scale = Vector2(-1, -1)
@@ -372,19 +388,6 @@ stream = ExtResource("4_mgwb3")
 max_distance = 500.0
 attenuation = 0.287175
 max_polyphony = 12
-
-[node name="HurtBox" type="Area2D" parent="Sprite2D" unique_id=1995514463 node_paths=PackedStringArray("health", "stagger")]
-rotation = 0.267087
-collision_layer = 16
-collision_mask = 8192
-script = ExtResource("18_hnah5")
-health = NodePath("../../Health")
-stagger = NodePath("../../Stagger")
-metadata/_custom_type_script = "uid://bet3nodk2voxv"
-
-[node name="turret_top_collision" type="CollisionShape2D" parent="Sprite2D/HurtBox" unique_id=1299322876]
-position = Vector2(54, 27)
-shape = SubResource("RectangleShape2D_elma4")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=624894547]
 libraries/ = SubResource("AnimationLibrary_ik7so")

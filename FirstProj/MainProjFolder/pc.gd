@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name PlayerEntity
 
+static var player: PlayerEntity = null
+
 const hit1 = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - Swordsmall_1.wav"
 const hit2 = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - Swordsmall_2.wav"
 const hit3 = "res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - Swordsmall_3.wav"
@@ -342,7 +344,7 @@ var stuck : bool = false
 func _ready():
 	hit_box_pos=hit_box.position
 	#hb_collision.disabled=true
-
+	player = self
 	pb_rot.disabled=true
 	set_start_pos(global_position)
 	sp_atk_type = sp_atk_cone
@@ -456,6 +458,7 @@ func _init_state_machine():
 	state_machine.add_transition(dodge_state, attack_state, &"combo_resume")
 	state_machine.add_transition(dodge_state, attack_state, &"heavy_counter")
 	state_machine.add_transition(dodge_state, special_attack, &"dodge_shoot")
+	state_machine.add_transition(dodge_state, flip_state, &"start_flip")
 	
 	state_machine.add_transition(dodge_state, dodge_state, &"dodge_chain")
 	
@@ -474,7 +477,7 @@ func _init_state_machine():
 	state_machine.add_transition(attack_state, aim, &"aim")
 	state_machine.add_transition(aim, special_attack, &"shoot")
 	
-	state_machine.add_transition(special_attack, jump_state, &"return_from_special")
+	state_machine.add_transition(special_attack, falling_state, &"return_from_special")
 	#state_machine.add_transition(idle, special_attack, &"special_attack")
 	state_machine.add_transition(attack_state, dodge_state, &"start_dodge")
 	
@@ -490,10 +493,12 @@ func _init_state_machine():
 	state_machine.add_transition(flip_state, jump_state, &"jump_out")
 	state_machine.add_transition(flip_state, attack_state, &"flip_attack")
 	state_machine.add_transition(flip_state, wall_stick, &"hit_wall")
+	state_machine.add_transition(flip_state, special_attack, &"flip_shoot")
 	
 	state_machine.add_transition(flip_end_state, jump_state, &"jump_out")
 	state_machine.add_transition(flip_end_state, attack_state, &"flip_attack")
 	state_machine.add_transition(flip_end_state, wall_stick, &"hit_wall")
+	state_machine.add_transition(flip_end_state, special_attack, &"flip_shoot")
 	
 	
 	#Counter Success
@@ -621,6 +626,7 @@ func _process(_delta):
 	drop_down()
 	interact()
 	stick_to_wall()
+	flip_over()
 	
 	if Input.is_action_just_pressed("DEBUG_KEY"):
 		clash_power.clash_power+=1
@@ -1379,7 +1385,7 @@ func closing_attack() -> void:
 func sp_atk():
 	if s_atk:
 		return
-	if state_machine.get_previous_active_state()==flip_state:
+	if state_machine.get_previous_active_state()==flip_state or state_machine.get_active_state()==flip_state:
 		set_shotgun_free_rotate(false)
 		shotty.look_at(target.global_position)
 	#else:
@@ -1402,21 +1408,25 @@ func sp_atk():
 		
 func aim_and_shoot():
 	
-	if (Input.is_action_pressed("special_attack")) and not attacking and not Input.is_action_pressed("attack"):
-		if ammo==0:
-			if not reload_timer.is_stopped():
-				return
+	if state_machine.get_active_state()==flip_state or state_machine.get_active_state()==flip_end_state:
+		if Input.is_action_just_pressed("special_attack"):
+			state_machine.dispatch(&"flip_shoot")
+	else:
+		if (Input.is_action_pressed("special_attack")) and not attacking and not Input.is_action_pressed("attack"):
+			if ammo==0:
+				if not reload_timer.is_stopped():
+					return
+				else:
+					reload_gun()
 			else:
-				reload_gun()
-		else:
-			state_machine.dispatch(&"aim")
-			if not is_on_floor():
-				slow_down_aim()
-			else:
-				end_slow_down()
-	elif Input.is_action_just_released("special_attack"):
-		state_machine.dispatch(&"shoot")
-		end_slow_down()
+				state_machine.dispatch(&"aim")
+				if not is_on_floor():
+					slow_down_aim()
+				else:
+					end_slow_down()
+		elif Input.is_action_just_released("special_attack"):
+			state_machine.dispatch(&"shoot")
+			end_slow_down()
 
 func slow_down_aim():
 	Engine.time_scale=0.5
@@ -1801,12 +1811,12 @@ func locked_combat():
 		else:
 			var dist_to_edge=round(abs(global_position.x-target_left_edge))
 			
-		if abs(direction_to_target.x) >(50+target_size_x) or abs(direction_to_target.y)>(10+target_size_y):
-			pass
-		else:
-			if Input.is_action_just_pressed("jump") and Input.is_action_pressed("sprint"):
-				#set_state(state, States.FLIP)
-				flip.emit()
+		#if abs(direction_to_target.x) >(50+target_size_x) or abs(direction_to_target.y)>(10+target_size_y):
+			#pass
+		#else:
+			#if Input.is_action_just_pressed("jump") and Input.is_action_pressed("sprint"):
+				##set_state(state, States.FLIP)
+				#flip_over()
 
 func set_next_room(value : String):
 	next_room=value
@@ -1815,11 +1825,14 @@ func enter_door() -> void:
 	if in_door_way:
 		if Input.is_action_just_pressed("up"):
 			store_player_data()
+			
 			if next_room=="RETURN":
 				var temp : String = cur_room
 				cur_room=prev_room
 				prev_room=temp
 			else:
+				print_debug(global_position)
+				Global.game_controller.set_prev_starting_point(global_position)
 				assert(next_room!="RETURN")
 				prev_room=cur_room
 				cur_room=next_room
@@ -1879,6 +1892,7 @@ func _on_hazard_detector_area_entered(area):
 func _on_interactable_detector_area_entered(area: Area2D) -> void:
 	if area.is_in_group("door"):
 		interact_prompt_player.play("Enter")
+		
 		if area.is_in_group("AnimatedDoor") or area.is_in_group("door"):
 			
 			if "local" in area:
@@ -1904,6 +1918,10 @@ func _on_interactable_detector_area_entered(area: Area2D) -> void:
 		
 func _on_interactable_detector_area_exited(area: Area2D) -> void:
 	interact_prompt_player.play("RESET")
+	in_door_way=false
+	animated_door=false
+	in_door_way_local=false
+	door_locked=false
 	if area.is_in_group("door"):
 		if local_door !=null:
 			local_door=null
@@ -2320,10 +2338,16 @@ func _on_hit_box_body_entered(body):
 	
 	
 func flip_over():
-	
-	flip_speed=movement_data.speed * 80
-	
-	state_machine.dispatch(&"start_flip")
+	if combat_states.get_active_state()==unlocked:
+		return
+	else:
+		var direction_to_target : Vector2 = Vector2(target.position.x, target.position.y) - global_position
+		var _dist_to_target_x = abs(direction_to_target.x) >(50+target_size_x) or abs(direction_to_target.y)>(10+target_size_y)
+		if state_machine.get_active_state()==dodge_state:
+			if Input.is_action_just_pressed("jump"):
+				flip_speed=movement_data.speed * 80
+				state_machine.dispatch(&"start_flip")
+				flip.emit()
 	#state=States.FLIP
 #
 func flipping(delta):

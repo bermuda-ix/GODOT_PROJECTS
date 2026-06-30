@@ -122,8 +122,11 @@ func _on_area_entered(hitbox: Area2D) -> void:
 						Events.camera_shake.emit(2,20)
 					else:
 						if not shielded:
+							print_debug(health.health)
+							print_debug(hitbox.damage * dmg_mult)
 							health.health -= (hitbox.damage * dmg_mult)
-							#print_debug(hitbox.damage)
+							print_debug(health.health)
+							print_debug(hitbox.damage)
 							received_damage.emit(hitbox.damage)
 							
 							got_hit.emit(hitbox)

@@ -53,8 +53,10 @@ func heat_lvl_spawn():
 			#pass
 
 func update_spawn():
+	if get_tree()==null:
+		return
 	var _spawn_points := get_tree().get_nodes_in_group("SpawnPoint")
-	for i in range(_spawn_points.size(), 0, -1):
+	for i in range(_spawn_points.size()-1, 0, -1):
 		_spawn_points[i].max_enemy=heat_spawn_max[current_heat]
 		_spawn_points[i].spawn_timer_update(heat_spawn_rate[current_heat])
 
@@ -72,7 +74,10 @@ func increase_heat(value : int) -> void:
 
 func load_heat(_region : String = "ADV_FLASHBACK") -> void:
 	if _region == region_name:
-		current_heat=GlobalSaveData.heat_stats[region_name]["current_heat_level"]
+		if GlobalSaveData.heat_stats.has(_region):
+			current_heat=GlobalSaveData.heat_stats["ADV_FLASHBACK"]["current_heat_level"]
+		else:
+			print_debug("som ting wong")
 		update_spawn()
 
 func set_max_heat(_value : int) -> void:

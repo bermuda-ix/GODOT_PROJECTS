@@ -42,6 +42,8 @@ var always_active : bool
 @onready var hit_stop_dur = 0.0
 @onready var parry_box: ParryBox = $ParryBox
 @onready var parry_box_collision: CollisionShape2D = $ParryBox/CollisionShape2D
+@onready var shield: Area2D = $Shield
+@onready var shield_collision: CollisionShape2D = $Shield/CollisionShape2D
 
 
 #Timers
@@ -453,8 +455,10 @@ func _on_attack_entered() -> void:
 
 
 func being_flipped() -> void:
-	if player_state==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
+	if player_state==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state or\
+	 player.state_machine.get_active_state()==player.flip_end_state:
 		movement_handler.active=false
+		movement_handler.face_player_active=false
 	else:
 		if state_machine.get_active_state()!=melee_attack:
 			movement_handler.active=true
@@ -533,13 +537,20 @@ func _on_hurt_box_weakpoint_weakpoint_hit() -> void:
 func _on_stagger_staggered() -> void:
 	hurt_box.shielded=false
 	stagger_timer.start(3)
-	hb_collision.disabled=true
+	hb_collision.set_deferred("disabled", true)
 	current_speed=0
 	velocity.x=0
 	if (state_machine.get_active_state()!= dying and state_machine.get_active_state()!=death and state_machine.get_active_state()!=launch):
 		if health.health>0:
 			state_machine.dispatch(&"staggered")
 
+func _on_staggered_entered() -> void:
+	shield_collision.set_deferred("disabled",true)
+	hurt_box.active=true
+	hurt_box_collision.set_deferred("disabled", false)
+	
+func _on_staggered_exited() -> void:
+	shield_collision.set_deferred("disabled",false)
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05,0.25)
@@ -549,7 +560,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	#bt_player.restart()
 	if state_machine.get_active_state()==death:
 		return
-	health.set_temporary_immortality(0.2)
+	#health.set_temporary_immortality(0.2)
 	if damage<=health.health:
 		if state_machine.get_active_state()!=staggered:
 			parry_timer.start(0.5)
@@ -672,6 +683,7 @@ func chase():
 
 
 func _on_melee_attack_entered() -> void:
+	movement_handler.face_player_active=false
 	movement_handler.active=false
 	velocity.x=0
 	current_speed=0
@@ -788,3 +800,7 @@ func _on_vfx_player_animation_started(anim_name: StringName) -> void:
 func _on_vfx_player_animation_changed(old_name: StringName, new_name: StringName) -> void:
 	if old_name=="knocked_back":
 		print_debug(new_name)
+
+
+func _on_melee_attack_exited() -> void:
+	movement_handler.face_player_active=true

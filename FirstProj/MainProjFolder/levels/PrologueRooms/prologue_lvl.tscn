@@ -1603,7 +1603,6 @@ position = Vector2(2199, 244)
 position = Vector2(2199, 273)
 scale = Vector2(2, 2)
 room = ExtResource("21_7klgn")
-exit = -1
 
 [node name="DoorSprite2" parent="Entries/Entry" index="1" unique_id=519586328 instance=ExtResource("22_relum")]
 z_index = -1
@@ -1615,7 +1614,6 @@ position = Vector2(3030, 279)
 scale = Vector2(2, 2)
 entry = 1
 room = ExtResource("22_drpgx")
-exit = -1
 
 [node name="DoorSprite3" parent="Entries/Entry2" index="1" unique_id=449609095 instance=ExtResource("22_relum")]
 z_index = -1
@@ -1627,7 +1625,6 @@ position = Vector2(3030, 66)
 scale = Vector2(2, 2)
 entry = 2
 room = ExtResource("23_veiog")
-exit = -1
 
 [node name="DoorSprite4" parent="Entries/Entry3" index="1" unique_id=1853905123 instance=ExtResource("22_relum")]
 z_index = -1
@@ -1639,7 +1636,6 @@ position = Vector2(3513, 1161)
 scale = Vector2(2, 2)
 entry = 3
 room = ExtResource("22_drpgx")
-exit = -1
 
 [node name="DoorSprite5" parent="Entries/Entry4" index="1" unique_id=474015401 instance=ExtResource("22_relum")]
 z_index = -1
@@ -1651,7 +1647,6 @@ position = Vector2(4216, 1161)
 scale = Vector2(2, 2)
 entry = 4
 room = ExtResource("23_veiog")
-exit = -1
 
 [node name="DoorSprite6" parent="Entries/Entry5" index="1" unique_id=726552057 instance=ExtResource("22_relum")]
 z_index = -1
@@ -1663,7 +1658,6 @@ position = Vector2(4793, 1162)
 scale = Vector2(2, 2)
 entry = 5
 room = ExtResource("21_7klgn")
-exit = -1
 
 [node name="DoorSprite7" parent="Entries/Entry6" index="1" unique_id=378852219 instance=ExtResource("22_relum")]
 z_index = -1
@@ -1684,7 +1678,6 @@ position = Vector2(-32, -72)
 position = Vector2(4512, 866)
 entry = 7
 room = ExtResource("22_drpgx")
-exit = -1
 
 [node name="DoorSprite2" parent="Entries/Entry7" index="1" unique_id=339718409 instance=ExtResource("22_relum")]
 position = Vector2(-32, -58)
@@ -2111,7 +2104,7 @@ update_scale = false
 [node name="StartingPos" type="Node" parent="." index="35" unique_id=275376811]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" unique_id=794793489 groups=["start_pos"]]
-position = Vector2(343, 405)
+position = Vector2(260, 392)
 
 [node name="PersistentDataHandler" type="Node" parent="." index="36" unique_id=86022096]
 script = ExtResource("24_w82j5")

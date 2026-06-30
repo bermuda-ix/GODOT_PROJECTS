@@ -86,6 +86,9 @@ func _ready():
 		
 	if lvl_type=="adv":
 		Events.level_completed.connect(show_level_complete)
+		
+	if player == null:
+		player=get_tree().get_first_node_in_group("player")
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	#polygon_2d.polygon = collision_polygon_2d.polygon
 	Events.level_completed.connect(show_level_complete)
@@ -99,8 +102,7 @@ func _ready():
 	ui_level.set_max_health(player.health.max_health)
 	ui_level.set_max_stagger(player.stagger.max_stagger)
 	
-	if player == null:
-		player=get_tree().get_first_node_in_group("player")
+	
 	
 	player.attack_qte.connect(_pc_attack_qte)
 	player.block_qte.connect(_pc_block_qte)

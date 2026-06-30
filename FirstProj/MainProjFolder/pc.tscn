@@ -3689,7 +3689,7 @@ tracks/2/keys = {
 }
 tracks/3/type = "value"
 tracks/3/imported = false
-tracks/3/enabled = false
+tracks/3/enabled = true
 tracks/3/path = NodePath("AnimatedSprite2D/HitBox:launch")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
@@ -3851,7 +3851,7 @@ tracks/15/keys = {
 }
 tracks/16/type = "method"
 tracks/16/imported = false
-tracks/16/enabled = true
+tracks/16/enabled = false
 tracks/16/path = NodePath("AnimatedSprite2D/HitBox")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
@@ -3865,7 +3865,7 @@ tracks/16/keys = {
 }
 tracks/17/type = "value"
 tracks/17/imported = false
-tracks/17/enabled = true
+tracks/17/enabled = false
 tracks/17/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
@@ -3922,6 +3922,68 @@ tracks/21/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(26, -33.3481)]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/MaskColor")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.41170982, 0.5971451, 1, 1)]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/GlowColor")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.2250466, 0.79400057, 2.454227, 1)]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("AnimatedSprite2D/HitBox:clash_active")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("AnimatedSprite2D/HitBox:active")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0.1, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/26/type = "method"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("AnimatedSprite2D/HitBox")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0.13333334),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"refresh_collision"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_cdmbu"]
@@ -4066,7 +4128,7 @@ tracks/11/path = NodePath("AnimatedSprite2D/HitBox:stagger_damage")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.29611284, 0.31576332),
+"times": PackedFloat32Array(0, 0.33333334, 0.35298383),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, true, false]
@@ -4114,7 +4176,7 @@ tracks/15/path = NodePath("AnimatedSprite2D/HitBox:knock_back")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0, 0.36834225, 0.4),
+"times": PackedFloat32Array(0, 0.40556276, 0.4372205),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, true, false]
@@ -4147,7 +4209,7 @@ tracks/17/keys = {
 }
 tracks/18/type = "method"
 tracks/18/imported = false
-tracks/18/enabled = true
+tracks/18/enabled = false
 tracks/18/path = NodePath("AnimatedSprite2D/HitBox")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
@@ -4161,7 +4223,7 @@ tracks/18/keys = {
 }
 tracks/19/type = "value"
 tracks/19/imported = false
-tracks/19/enabled = true
+tracks/19/enabled = false
 tracks/19/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
@@ -4194,6 +4256,68 @@ tracks/21/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [500.0]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/GlowColor")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.25302795, 0.9991971, 2.454227, 1)]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/MaskColor")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.079250805, 0.9999996, 1)]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("AnimatedSprite2D/HitBox:clash_active")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("AnimatedSprite2D/HitBox:active")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0.06666667, 0.36666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/26/type = "method"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("AnimatedSprite2D/HitBox")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"refresh_collision"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_83noc"]
@@ -5653,6 +5777,30 @@ tracks/66/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
+}
+tracks/67/type = "value"
+tracks/67/imported = false
+tracks/67/enabled = true
+tracks/67/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/MaskColor")
+tracks/67/interp = 1
+tracks/67/loop_wrap = true
+tracks/67/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.41170982, 0.5971451, 1, 1)]
+}
+tracks/68/type = "value"
+tracks/68/imported = false
+tracks/68/enabled = true
+tracks/68/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/GlowColor")
+tracks/68/interp = 1
+tracks/68/loop_wrap = true
+tracks/68/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.2250466, 0.79400057, 2.454227, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_oktus"]
@@ -9306,8 +9454,8 @@ flip_h = true
 self_modulate = Color(0.48067, 0, 1.8875431, 1)
 material = SubResource("ShaderMaterial_mesnb")
 instance_shader_parameters/FloatParameter = 0.002000000095
-instance_shader_parameters/GlowColor = Color(0.34590444, 0.98675764, 1.8247963, 1)
-instance_shader_parameters/MaskColor = Color(0.047058824, 0, 0.3137255, 1)
+instance_shader_parameters/GlowColor = Color(0.2250466, 0.79400057, 2.454227, 1)
+instance_shader_parameters/MaskColor = Color(0.41170982, 0.5971451, 1, 1)
 position = Vector2(0, 0.9999962)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_ve5vy")
@@ -9952,10 +10100,11 @@ anim_player = NodePath("../../AnimationPlayer")
 shotty_anim_player = NodePath("../../AnimatedSprite2D/Shotty/ShottyAnimationPlayer")
 clash_power = NodePath("../../ClashPower")
 
-[node name="SpecialAttack" type="LimboState" parent="StateMachine" unique_id=1245630320 node_paths=PackedStringArray("anim_player", "shotty_anim_player", "pc")]
+[node name="SpecialAttack" type="LimboState" parent="StateMachine" unique_id=1245630320 node_paths=PackedStringArray("anim_player", "shotty_anim_player", "state_machine", "pc")]
 script = ExtResource("104_ctchq")
 anim_player = NodePath("../../AnimationPlayer")
 shotty_anim_player = NodePath("../../AnimatedSprite2D/Shotty/ShottyAnimationPlayer")
+state_machine = NodePath("..")
 pc = NodePath("../..")
 
 [node name="ParryState" type="LimboState" parent="StateMachine" unique_id=928161267 node_paths=PackedStringArray("anim_player", "pc")]
