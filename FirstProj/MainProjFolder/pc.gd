@@ -586,6 +586,7 @@ func _process(_delta):
 		return
 	elif state_machine.get_active_state()==death or state_machine.get_active_state()==dead:
 		move_and_slide()
+		
 		velocity=Vector2.ZERO
 		apply_gravity(_delta)
 		return
@@ -650,6 +651,7 @@ func _physics_process(delta):
 		if (cutscene_handler.cutscene_dir<0 and velocity.x>0) or (cutscene_handler.cutscene_dir>0 and velocity.x<0):
 			push_error("something wrong")
 		move_and_slide()
+		
 
 		return
 	
@@ -743,7 +745,6 @@ func _physics_process(delta):
 		forward_thrust = lerp(forward_thrust, Vector2.ZERO, 0.6)
 		#wall hold check
 		wall_sticking(wall_hold)
-	
 
 # Add the gravity.
 func apply_gravity(delta):

@@ -2838,7 +2838,6 @@ metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=1742492050]
 script = ExtResource("12_6gh4x")
-max_stagger = 5
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=162841846]
