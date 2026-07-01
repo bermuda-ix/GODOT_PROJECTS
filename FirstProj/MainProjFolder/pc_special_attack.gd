@@ -4,6 +4,7 @@ extends LimboState
 @export var shotty_anim_player : AnimationPlayer
 @export var state_machine : LimboHSM
 @export var pc : PlayerEntity
+@export var shoot_anim : StringName = "shotgun_attack"
 
 func _enter() -> void:
 	anim_player.play("shotgun_attack")
@@ -23,7 +24,7 @@ func _exit() -> void:
 	pc.heavy_attack_flag=false
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name=="shotgun_attack":
+	if anim_name=="shotgun_attack" or anim_name==shoot_anim:
 		if pc.is_on_floor():
 			pc.state_machine.dispatch(&"return_to_idle")
 		else:

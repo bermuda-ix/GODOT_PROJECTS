@@ -307,6 +307,7 @@ var target_string_test : String = "NONE"
 var target_direction
 var movement
 var flip_speed
+@onready var flip_vel := Vector2.ZERO
 @onready var target_right : bool = false : set = set_target_right
 var vector_away : Vector2 = Vector2.ZERO
 var target_below : bool = false
@@ -1411,7 +1412,9 @@ func aim_and_shoot():
 	
 	if state_machine.get_active_state()==flip_state or state_machine.get_active_state()==flip_end_state:
 		if Input.is_action_just_pressed("special_attack"):
+			special_attack.shoot_anim="shotgun_attack_flip"
 			state_machine.dispatch(&"flip_shoot")
+			hit_stop.end_hit_stop()
 	else:
 		if (Input.is_action_pressed("special_attack")) and not attacking and not Input.is_action_pressed("attack"):
 			if ammo==0:
@@ -1426,6 +1429,7 @@ func aim_and_shoot():
 				else:
 					end_slow_down()
 		elif Input.is_action_just_released("special_attack"):
+			special_attack.shoot_anim="shotgun_attack"
 			state_machine.dispatch(&"shoot")
 			end_slow_down()
 
@@ -2346,7 +2350,12 @@ func flip_over():
 		var _dist_to_target_x = abs(direction_to_target.x) >(50+target_size_x) or abs(direction_to_target.y)>(10+target_size_y)
 		if state_machine.get_active_state()==dodge_state:
 			if Input.is_action_just_pressed("jump"):
-				flip_speed=movement_data.speed * 80
+				if target_right:
+					flip_speed=movement_data.speed * 5
+				else:
+					flip_speed=movement_data.speed * -5
+				flip_vel=Vector2(flip_speed, movement_data.jump_velocity*.75)
+				print_debug(flip_vel)
 				state_machine.dispatch(&"start_flip")
 				flip.emit()
 	#state=States.FLIP
@@ -2365,11 +2374,13 @@ func flipping(delta):
 func _on_flip_state_entered() -> void:
 	#	variables set and declared
 	print_debug("entering flip")
+	velocity=flip_vel
 	target_pos_y=(target.global_position.y)
 	var pos_above_y=target.global_position.y-global_position.y
 	target_pos_x=(target.global_position.x)
 	var pos_above_x=target.global_position.x-global_position.x
 	flip_buffer.start()
+	hit_stop.hit_stop_ease(0.5, 2, 0.5)
 
 
 func _on_flip_state_updated(delta: float) -> void:
@@ -2393,23 +2404,29 @@ func _on_flip_state_updated(delta: float) -> void:
 		#print_debug(global_position)
 		#print_debug((target_left_edge-15)," , ",(target_top-25))
 		if global_position.y>target_top-15 and not high_target:
-			if target_right:
-				#print_debug(global_position)
-				#print_debug((target_left_edge-15)," , ",(target_top-25))
-				if global_position<Vector2((target_left_edge-15),(target_top-25)):
-					global_position=lerp(global_position, Vector2((target_left_edge-5),(target_top-40)), delta*3)
-				else:
-					velocity.y=movement_data.jump_velocity
-			else:
-				if global_position>Vector2((target_right_edge+15),(target_top-25)):
-					global_position=lerp(global_position, Vector2((target_right_edge+5),(target_top-40)), delta*3)
-				else:
-					velocity.y=movement_data.jump_velocity
+			velocity=lerp(velocity, Vector2.ZERO, 0.8*delta)
+			
+			#if target_right:
+				##print_debug(global_position)
+				##print_debug((target_left_edge-15)," , ",(target_top-25))
+				#velocity=lerp(velocity, Vector2.ZERO, 0.5)
+				#if global_position<Vector2((target_left_edge-15),(target_top-25)):
+					#global_position=lerp(global_position, Vector2((target_left_edge-5),(target_top-40)), delta*3)
+				#else:
+					#velocity.y=movement_data.jump_velocity
+			#else:
+				#if global_position>Vector2((target_right_edge+15),(target_top-25)):
+					#global_position=lerp(global_position, Vector2((target_right_edge+5),(target_top-40)), delta*3)
+				#else:
+					#velocity.y=movement_data.jump_velocity
 							
 		elif global_position.y>(high_target_jump_height-15) and high_target:
+			
+			
+			
 			if target_right:
 				if global_position<Vector2((target_left_edge-15),(high_target_jump_height)):
-					global_position=lerp(global_position, Vector2((target_left_edge-5),(high_target_jump_height*0.7)), delta*3)
+					velocity=lerp(velocity, Vector2.ZERO, 0.8*delta)
 				else:
 					wall_hold = true
 					state_machine.dispatch(&"hit_wall")
@@ -2417,7 +2434,7 @@ func _on_flip_state_updated(delta: float) -> void:
 			else:
 				
 				if global_position>Vector2((target_right_edge+15),(high_target_jump_height)):
-					global_position=lerp(global_position, Vector2((target_right_edge+5),(high_target_jump_height*0.7)), delta*3)
+					velocity=lerp(velocity, Vector2.ZERO, 0.8*delta)
 				else:
 					wall_hold = true
 					state_machine.dispatch(&"hit_wall")
@@ -2430,7 +2447,8 @@ func _on_flip_state_updated(delta: float) -> void:
 
 func _on_flip_end_state_entered() -> void:
 	#print_debug("flipped over")
-	hit_stop.hit_stop(.2, .5)
+	#hit_stop.hit_stop(.2, .5)
+	hit_stop.end_hit_stop()
 
 
 func _on_flip_end_state_updated(delta: float) -> void:

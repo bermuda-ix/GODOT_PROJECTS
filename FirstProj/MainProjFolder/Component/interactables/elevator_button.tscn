@@ -20,7 +20,6 @@ grow_vertical = 2
 rotation = -8.329104e-05
 size_flags_horizontal = 6
 size_flags_vertical = 6
-mouse_filter = 1
 texture_normal = ExtResource("1_bi1pi")
 texture_pressed = ExtResource("2_jamce")
 texture_hover = ExtResource("3_1j1wh")

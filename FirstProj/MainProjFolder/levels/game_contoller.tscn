@@ -20,6 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="GUI" unique_id=2080445590]
 
@@ -28,15 +29,18 @@ layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -287.0
-offset_right = 287.0
-offset_bottom = 40.0
+offset_left = -285.0
+offset_top = -3.0
+offset_right = 289.0
+offset_bottom = 37.0
 grow_horizontal = 2
+mouse_filter = 2
 
 [node name="InventoryUI" parent="GUI/CanvasLayer/GAMEUI" unique_id=1489700306 instance=ExtResource("4_oqxtr")]
 layout_mode = 1
 offset_top = 33.0
 offset_bottom = 33.0
+mouse_filter = 2
 
 [node name="UI_Level" parent="GUI/CanvasLayer/GAMEUI" unique_id=375739189 instance=ExtResource("5_oqxtr")]
 layout_mode = 1
