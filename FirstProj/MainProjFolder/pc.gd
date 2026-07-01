@@ -2405,7 +2405,7 @@ func _on_flip_state_updated(delta: float) -> void:
 		#print_debug(global_position)
 		#print_debug((target_left_edge-15)," , ",(target_top-25))
 		if global_position.y>target_top-15 and not high_target:
-			velocity=lerp(velocity, Vector2.ZERO, 0.8*delta)
+			velocity=lerp(velocity, Vector2(flip_speed/5,0), 0.8*delta)
 			
 			#if target_right:
 				##print_debug(global_position)
@@ -2427,7 +2427,7 @@ func _on_flip_state_updated(delta: float) -> void:
 			
 			if target_right:
 				if global_position<Vector2((target_left_edge-15),(high_target_jump_height)):
-					velocity=lerp(velocity, Vector2.ZERO, 0.8*delta)
+					velocity=lerp(velocity, Vector2(flip_speed/5,0), 0.8*delta)
 				else:
 					wall_hold = true
 					state_machine.dispatch(&"hit_wall")
@@ -2435,7 +2435,7 @@ func _on_flip_state_updated(delta: float) -> void:
 			else:
 				
 				if global_position>Vector2((target_right_edge+15),(high_target_jump_height)):
-					velocity=lerp(velocity, Vector2.ZERO, 0.8*delta)
+					velocity=lerp(velocity, Vector2(flip_speed/5,0), 0.8*delta)
 				else:
 					wall_hold = true
 					state_machine.dispatch(&"hit_wall")
