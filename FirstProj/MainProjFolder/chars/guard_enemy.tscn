@@ -189,7 +189,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_hul05")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_1",
 "speed": 5.0
 }, {
@@ -218,7 +218,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("15_f2377")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_2",
 "speed": 5.0
 }, {
@@ -250,7 +250,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("24_ufpfy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_3",
 "speed": 5.0
 }, {
@@ -258,7 +258,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("25_es3xv")
 }],
-"loop": true,
+"loop": 1,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -284,7 +284,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_3nf0a")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -316,7 +316,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("40_jseaa")
 }],
-"loop": true,
+"loop": 1,
 "name": &"dying",
 "speed": 5.0
 }, {
@@ -330,7 +330,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("44_m3s8r")
 }],
-"loop": true,
+"loop": 1,
 "name": &"hit",
 "speed": 5.0
 }, {
@@ -347,7 +347,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("48_gxq5f")
 }],
-"loop": true,
+"loop": 1,
 "name": &"landed",
 "speed": 5.0
 }, {
@@ -370,7 +370,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("46_1kl2o")
 }],
-"loop": true,
+"loop": 1,
 "name": &"launched",
 "speed": 5.0
 }, {
@@ -402,12 +402,12 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("40_ufpfy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"reload",
 "speed": 5.0
 }, {
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"reload_crouch",
 "speed": 5.0
 }, {
@@ -442,7 +442,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("71_4sxct")
 }],
-"loop": true,
+"loop": 1,
 "name": &"roll",
 "speed": 5.0
 }, {
@@ -471,7 +471,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("57_1kl2o")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run",
 "speed": 5.0
 }, {
@@ -491,7 +491,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("45_tc6fw")
 }],
-"loop": true,
+"loop": 1,
 "name": &"shoot",
 "speed": 5.0
 }, {
@@ -511,12 +511,12 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("90_d0jhl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"shoot_crouch",
 "speed": 5.0
 }, {
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"staggered",
 "speed": 5.0
 }]
@@ -543,7 +543,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("86_g6e5q")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Shoot",
 "speed": 5.0
 }, {
@@ -563,7 +563,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("91_h1t3e")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_1",
 "speed": 5.0
 }]
@@ -586,7 +586,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("97_s3oor")
 }],
-"loop": true,
+"loop": 1,
 "name": &"knocked_back",
 "speed": 5.0
 }, {
@@ -621,7 +621,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("103_jajog")
 }],
-"loop": true,
+"loop": 1,
 "name": &"staggered",
 "speed": 5.0
 }, {
@@ -653,7 +653,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("112_56c4f")
 }],
-"loop": true,
+"loop": 1,
 "name": &"staggered_entered",
 "speed": 5.0
 }]
@@ -3200,7 +3200,7 @@ script = ExtResource("24_yw64w")
 actor = NodePath("..")
 turret = NodePath("../Turret")
 projectile = ExtResource("79_m3s8r")
-bullet_scale = 0.05
+bullet_scale = 0.2
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
 [node name="VisionHandler" type="Node" parent="." unique_id=1565027634 node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking")]

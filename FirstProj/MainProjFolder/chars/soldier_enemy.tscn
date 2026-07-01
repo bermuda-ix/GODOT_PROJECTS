@@ -247,7 +247,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("46_qi2yi")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Jump",
 "speed": 5.0
 }, {
@@ -270,7 +270,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_8xw1a")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_1",
 "speed": 5.0
 }, {
@@ -287,7 +287,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("11_pmfpb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_2",
 "speed": 5.0
 }, {
@@ -313,7 +313,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("18_iqp2q")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_3",
 "speed": 5.0
 }, {
@@ -348,7 +348,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("32_exxvn")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_4",
 "speed": 5.0
 }, {
@@ -380,7 +380,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("34_mdrp4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_counter",
 "speed": 5.0
 }, {
@@ -388,7 +388,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("20_lpixj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"dead",
 "speed": 5.0
 }, {
@@ -420,7 +420,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("28_fuv86")
 }],
-"loop": true,
+"loop": 1,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -446,7 +446,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("25_w6a07")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -454,7 +454,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("46_qi2yi")
 }],
-"loop": true,
+"loop": 1,
 "name": &"dodge",
 "speed": 5.0
 }, {
@@ -486,7 +486,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("34_mdrp4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"heavy_atk_1",
 "speed": 5.0
 }, {
@@ -500,7 +500,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("48_t0kud")
 }],
-"loop": true,
+"loop": 1,
 "name": &"hit",
 "speed": 5.0
 }, {
@@ -517,7 +517,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("55_37wjj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"landed",
 "speed": 5.0
 }, {
@@ -540,7 +540,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("53_b20gw")
 }],
-"loop": true,
+"loop": 1,
 "name": &"launched",
 "speed": 5.0
 }, {
@@ -572,7 +572,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("58_qew73")
 }],
-"loop": true,
+"loop": 1,
 "name": &"reload",
 "speed": 5.0
 }, {
@@ -607,7 +607,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("70_b20gw")
 }],
-"loop": true,
+"loop": 1,
 "name": &"roll",
 "speed": 5.0
 }, {
@@ -636,7 +636,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("42_oe8c8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run",
 "speed": 5.0
 }, {
@@ -656,7 +656,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("47_121ms")
 }],
-"loop": true,
+"loop": 1,
 "name": &"shoot",
 "speed": 5.0
 }, {
@@ -676,7 +676,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("107_wwx6s")
 }],
-"loop": true,
+"loop": 1,
 "name": &"shoot_crouch",
 "speed": 5.0
 }, {
@@ -705,7 +705,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("55_fktqp")
 }],
-"loop": true,
+"loop": 1,
 "name": &"shoot_run",
 "speed": 5.0
 }, {
@@ -731,7 +731,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("72_g25us")
 }],
-"loop": true,
+"loop": 1,
 "name": &"stunned",
 "speed": 5.0
 }]
@@ -1333,7 +1333,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("114_riffg")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk",
 "speed": 5.0
 }, {
@@ -1353,7 +1353,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("119_5wlso")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_kick",
 "speed": 5.0
 }, {
@@ -1397,7 +1397,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("132_srvoq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"down_atk",
 "speed": 5.0
 }, {
@@ -1414,7 +1414,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("147_y0e6h")
 }],
-"loop": true,
+"loop": 1,
 "name": &"knocked_back",
 "speed": 5.0
 }, {
@@ -1569,7 +1569,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_on0jo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"phase_cange_start",
 "speed": 5.0
 }, {
@@ -1754,12 +1754,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rb6ko")
 }],
-"loop": true,
+"loop": 1,
 "name": &"phase_change",
 "speed": 5.0
 }, {
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"short_teleport",
 "speed": 5.0
 }, {
@@ -1794,7 +1794,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("155_1sqeb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"staggered",
 "speed": 5.0
 }, {
@@ -1826,7 +1826,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("154_sxist")
 }],
-"loop": true,
+"loop": 1,
 "name": &"staggered_entered",
 "speed": 5.0
 }, {
@@ -1861,7 +1861,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ea26c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"teleport_end",
 "speed": 5.0
 }, {
@@ -1926,7 +1926,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pln6j")
 }],
-"loop": true,
+"loop": 1,
 "name": &"teleport_start",
 "speed": 5.0
 }]
@@ -1943,7 +1943,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("168_bc731")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Shoot",
 "speed": 5.0
 }, {
@@ -1963,7 +1963,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("173_isax7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_1",
 "speed": 5.0
 }, {
@@ -1989,7 +1989,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("114_riffg")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_2",
 "speed": 5.0
 }, {
@@ -2033,7 +2033,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("132_srvoq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"dwn_atk",
 "speed": 5.0
 }]
@@ -5399,9 +5399,8 @@ radius = 34.0
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_r1f6l"]
 
 [node name="soldier_enemy" unique_id=1345590317 groups=["Persistant", "offensive_enemy"] instance=ExtResource("1_ojqla")]
-position = Vector2(1, 0)
 collision_layer = 16384
-collision_mask = 19
+collision_mask = 17
 script = ExtResource("2_bmgxt")
 
 [node name="NavigationAgent2D" parent="." index="0"]
@@ -5716,7 +5715,7 @@ script = ExtResource("83_ue1j6")
 actor = NodePath("..")
 turret = NodePath("../Turret")
 projectile = ExtResource("110_bmgxt")
-bullet_scale = 0.05
+bullet_scale = 0.2
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
 [node name="VisionHandler" type="Node" parent="." index="37" unique_id=1760852267 node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking")]
