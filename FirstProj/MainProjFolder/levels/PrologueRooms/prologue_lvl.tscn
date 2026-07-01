@@ -920,6 +920,12 @@ _data = {
 &"mini_boss_kill": SubResource("Animation_cxkws")
 }
 
+[sub_resource type="Curve2D" id="Curve2D_4koma"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 24, 3, 0, 0, 0, 0, 23, -410)
+}
+point_count = 2
+
 [sub_resource type="Curve2D" id="Curve2D_658m8"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 23, -2021)
@@ -1833,10 +1839,18 @@ position = Vector2(-33, -53)
 
 [node name="Elevator" parent="DoorsAndSwitches" index="0" unique_id=20094444 instance=ExtResource("21_7qfih")]
 position = Vector2(3627, 525)
-floors = Array[float]([0.0, 0.5, 1.0])
+top_floor = -408.0
+floors = Array[float]([0.0, 0.48, 1.0])
 locked_floors = Array[int]([0])
 key_required = true
 key_type = "ElevatorKey"
+
+[node name="Path2D" parent="DoorsAndSwitches/Elevator" index="0" unique_id=580301802]
+curve = SubResource("Curve2D_4koma")
+
+[node name="PathFollow2D" parent="DoorsAndSwitches/Elevator/Path2D" index="0" unique_id=1430594686]
+position = Vector2(23.00719, -407.03046)
+progress = 410.0
 
 [node name="Elevator1CallButton" parent="DoorsAndSwitches" index="1" unique_id=1025863354 node_paths=PackedStringArray("connected_elevator") instance=ExtResource("33_e156f")]
 position = Vector2(3539.0002, 289)
@@ -2146,5 +2160,6 @@ position = Vector2(2232, 790)
 [connection signal="toggle_spawn" from="Spawning/SpawnFlags/HeatSpawnFlag3" to="." method="toggle_spawn"]
 
 [editable path="Enemy/Guards/GuardEnemy"]
+[editable path="DoorsAndSwitches/Elevator"]
 [editable path="DoorsAndSwitches/Elevators/Elevator"]
 [editable path="PC"]
