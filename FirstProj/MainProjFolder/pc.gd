@@ -2556,6 +2556,7 @@ func _on_animation_player_animation_started(anim_name):
 	if state_machine.get_active_state()==attack_state:
 		#hit_box.active=true
 		hb_collision.set_deferred("disabled", false)
+		
 		if attack_state.get_active_state()==attack_1:
 			charge_timer.stop()
 			match anim_name:
@@ -2567,6 +2568,9 @@ func _on_animation_player_animation_started(anim_name):
 					heavy_attack_1.attack=heavy_attacks[2]
 				"_":
 					pass
+		elif attack_state.get_active_state()==dash_attack:
+			if anim_name=="Attack_Dash":
+				heavy_attack_1.attack=heavy_attacks[0]
 
 	if anim_name=="Attack_Chain":
 		if face_right:
