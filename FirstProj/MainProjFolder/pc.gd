@@ -1793,6 +1793,8 @@ func get_target_info():
 	if target==null:
 		return
 	else:
+		if target.health.get_health()==0:
+			Events.unlock_from.emit()
 		target_size_x = target.get_width()
 		target_size_y = target.get_height()
 		target_top = target.global_position.y-(target_size_y/2-5)

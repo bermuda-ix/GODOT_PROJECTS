@@ -9,7 +9,7 @@ extends Node2D
 
 #@onready var hurt_box: HurtBox = $Sprite2D/HurtBox
 #@onready var hurt_box_collision: CollisionShape2D = $Sprite2D/HurtBox/turret_top_collision
-
+signal health_change
 
 
 const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
@@ -43,6 +43,8 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @export var base : TurretBase
 
 @onready var linked_turrets : Array[TurretBase]
+
+
 
 #debug var
 var state : String
@@ -178,3 +180,7 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	health.health=base.health.health
 	if player_tracking!=null:
 		player_tracking.target_position.x=player.global_position.x
+
+
+func _on_health_health_changed(diff: int) -> void:
+	health_change.emit(health.get_health())

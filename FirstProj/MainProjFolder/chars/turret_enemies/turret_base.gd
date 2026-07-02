@@ -118,3 +118,7 @@ func stagger_recover()->void:
 
 func _on_turret_top_shoot() -> void:
 	animation_player.play("Firing")
+
+
+func _on_turret_top_health_change(_new_health: int) -> void:
+	health.set_health(_new_health)

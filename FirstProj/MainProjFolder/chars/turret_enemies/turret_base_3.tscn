@@ -223,7 +223,7 @@ stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
 [node name="HurtBoxCollision" type="CollisionPolygon2D" parent="HurtBox" unique_id=639604306]
-polygon = PackedVector2Array(-122, 95, 82, 95, 123, 57, 122, 17, 78, 17, 72, -93, 36, -93, 32, 17, -30, 18, -66, 56, -102, 56, -122, 75)
+polygon = PackedVector2Array(-131, 96, 130, 96, 130, 17, 94, 7, 72, -93, 36, -93, 19, 2, -30, 18, -102, 56, -129, 75)
 
 [node name="HitStop" type="Node" parent="." unique_id=644311718]
 script = ExtResource("5_nis5d")
@@ -290,8 +290,11 @@ tree_active = false
 
 [node name="Alive" type="LimboState" parent="StateMachine" unique_id=837795707]
 
+[connection signal="health_change" from="turret_top" to="." method="_on_turret_top_health_change"]
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+
+[editable path="turret_top"]
