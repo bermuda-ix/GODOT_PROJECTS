@@ -2556,14 +2556,17 @@ func _on_animation_player_animation_started(anim_name):
 	if state_machine.get_active_state()==attack_state:
 		#hit_box.active=true
 		hb_collision.set_deferred("disabled", false)
-		match anim_name:
-			"Attack":
-				heavy_attack_1.attack=heavy_attacks[0]
-			"Attack_2":
-				heavy_attack_1.attack=heavy_attacks[1]
-			"Attack_3":
-				heavy_attack_1.attack=heavy_attacks[2]
-					
+		if attack_state.get_active_state()==attack_1:
+			charge_timer.stop()
+			match anim_name:
+				"Attack":
+					heavy_attack_1.attack=heavy_attacks[0]
+				"Attack_2":
+					heavy_attack_1.attack=heavy_attacks[1]
+				"Attack_3":
+					heavy_attack_1.attack=heavy_attacks[2]
+				"_":
+					pass
 
 	if anim_name=="Attack_Chain":
 		if face_right:
