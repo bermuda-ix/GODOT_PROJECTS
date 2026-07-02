@@ -593,7 +593,7 @@ disabled = true
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=502235081]
 position = Vector2(9, 6)
-polygon = PackedVector2Array(-14, -9, -14, -52, 83, -52, 83, 63, -14, 63, -17, 53, -14, 52, 73, 52, 73, -41, -1.99999, -41, -1.99999, -9)
+polygon = PackedVector2Array(-14, -9, -14, -52, 83, -52, 83, 63, -14, 63, -36, 56, -14, 52, 73, 52, 73, -41, -1.99999, -41, -1.99999, -9)
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=1128329308]
 
