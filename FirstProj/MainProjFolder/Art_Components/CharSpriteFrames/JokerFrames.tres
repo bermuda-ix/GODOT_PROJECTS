@@ -59,6 +59,7 @@
 [ext_resource type="Texture2D" uid="uid://bjnfgcf24kup1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback04.png" id="45_jcv2r"]
 [ext_resource type="Texture2D" uid="uid://bww2o6jkad7nf" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback05.png" id="46_pb5gt"]
 [ext_resource type="Texture2D" uid="uid://uyrqxa0qabyo" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Knockback/Knockback06.png" id="47_qetor"]
+[ext_resource type="Texture2D" uid="uid://c32wkmqtx7ht2" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/WallSlide/WallSlide01.png" id="60_6luyt"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cgbvk"]
 load_path = "res://.godot/imported/mc_combat_test.png-b2d036d0dffbe6befd548462c9612a3b.ctex"
@@ -2645,4 +2646,12 @@ animations = [{
 "loop": 1,
 "name": &"ThrowUnderarm",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("60_6luyt")
+}],
+"loop": 1,
+"name": &"WallStick",
+"speed": 5.0
 }]

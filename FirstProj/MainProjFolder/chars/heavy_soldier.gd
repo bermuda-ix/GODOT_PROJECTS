@@ -249,7 +249,7 @@ func _physics_process(delta: float) -> void:
 		#velocity.x=knockback.x
 		move_and_slide()
 		return
-	elif state_machine.get_active_state()==dying:
+	elif state_machine.get_active_state()==dying and state_machine.get_active_state()!=death:
 		death_handler.dying()
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
@@ -582,7 +582,9 @@ func _on_stagger_timer_timeout() -> void:
 		state_machine.dispatch(&"stagger_recover")
 		hurt_box.set_deferred("shielded", true)
 	else:
-		state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
+		print_debug(state_machine.get_active_state())
+		if state_machine.get_active_state()!=death and state_machine.get_active_state()!=dying:
+			state_machine.change_active_state(dying)
 
 
 func _on_parry_timer_timeout() -> void:
@@ -599,7 +601,7 @@ func _on_health_health_depleted() -> void:
 	movement_handler.active=false
 	knockback.x=250
 	jump_handler.handle_jump(0.2)
-	if linked_enemies!=null or not linked_enemies.is_empty():
+	if linked_enemies!=null or not linked_enemies.is_empty() or linked_enemies.size()==0:
 		linked_enemies.remove_at(group_link_order)
 	death_handler.death()
 
@@ -750,6 +752,7 @@ func _on_hurt_box_launched(launch_strength : float) -> void:
 func _on_death_entered() -> void:
 	hb_collision.set_deferred("disabled", true)
 	hurt_box_collision.set_deferred("disabled", true)
+	collision_shape_2d.set_deferred("disabled", true)
 	set_collision_mask_value(15, true)
 
 

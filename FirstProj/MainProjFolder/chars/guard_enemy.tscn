@@ -3105,12 +3105,13 @@ one_shot = true
 [node name="LaunchTimer" type="Timer" parent="." unique_id=813462658]
 one_shot = true
 
-[node name="HitBox" type="Area2D" parent="." unique_id=1236886276 node_paths=PackedStringArray("stagger") groups=["hitbox"]]
+[node name="HitBox" type="Area2D" parent="." unique_id=1236886276 node_paths=PackedStringArray("stagger", "collision_shape") groups=["hitbox"]]
 position = Vector2(29, 19)
 collision_layer = 8
 collision_mask = 128
 script = ExtResource("10_bwuha")
 stagger = NodePath("../Stagger")
+collision_shape = NodePath("hb_collision")
 metadata/_custom_type_script = "uid://5ijvah6jjgdb"
 
 [node name="hb_collision" type="CollisionShape2D" parent="HitBox" unique_id=236756315]
