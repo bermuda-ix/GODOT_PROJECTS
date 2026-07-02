@@ -1325,29 +1325,24 @@ scale = Vector2(0.75, 0.75)
 position = Vector2(3312, 88)
 scale = Vector2(0.75, 0.75)
 
-[node name="GuardEnemy9" parent="Enemy/Guards" index="8" unique_id=111701090 instance=ExtResource("16_vw32t")]
-position = Vector2(3368.0002, 488)
-scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy10" parent="Enemy/Guards" index="9" unique_id=1803125766 instance=ExtResource("16_vw32t")]
-position = Vector2(3224, 488)
-scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy11" parent="Enemy/Guards" index="10" unique_id=2147202976 instance=ExtResource("16_vw32t")]
-position = Vector2(3120.0002, 480)
-scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy12" parent="Enemy/Guards" index="11" unique_id=758035523 instance=ExtResource("16_vw32t")]
-position = Vector2(2128, 776)
-scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy13" parent="Enemy/Guards" index="12" unique_id=1643444086 instance=ExtResource("16_vw32t")]
-position = Vector2(2104, 776)
-scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy14" parent="Enemy/Guards" index="13" unique_id=605474709 instance=ExtResource("16_vw32t")]
+[node name="GuardEnemy14" parent="Enemy/Guards" index="8" unique_id=605474709 instance=ExtResource("16_vw32t")]
 position = Vector2(3152, 1184)
 scale = Vector2(0.75, 0.75)
+
+[node name="GuardEnemy9" parent="Enemy/Guards" index="9" unique_id=557461842 instance=ExtResource("16_vw32t")]
+position = Vector2(3391, 489)
+
+[node name="GuardEnemy12" parent="Enemy/Guards" index="10" unique_id=1634369670 instance=ExtResource("16_vw32t")]
+position = Vector2(2103, 768)
+
+[node name="GuardEnemy13" parent="Enemy/Guards" index="11" unique_id=1168491010 instance=ExtResource("16_vw32t")]
+position = Vector2(2041, 762)
+
+[node name="GuardEnemy10" parent="Enemy/Guards" index="12" unique_id=748741190 instance=ExtResource("16_vw32t")]
+position = Vector2(3150, 488)
+
+[node name="GuardEnemy11" parent="Enemy/Guards" index="13" unique_id=1566056918 instance=ExtResource("16_vw32t")]
+position = Vector2(3036, 486)
 
 [node name="SleepingGuard" parent="Enemy" index="4" unique_id=2088524183 instance=ExtResource("17_61h8j")]
 position = Vector2(656, 457)
@@ -2118,7 +2113,7 @@ update_scale = false
 [node name="StartingPos" type="Node" parent="." index="35" unique_id=275376811]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" unique_id=794793489 groups=["start_pos"]]
-position = Vector2(2587, 268)
+position = Vector2(3478, 492)
 
 [node name="PersistentDataHandler" type="Node" parent="." index="36" unique_id=86022096]
 script = ExtResource("24_w82j5")

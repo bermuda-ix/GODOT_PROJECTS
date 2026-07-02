@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="6_82t0r"]
 [ext_resource type="PackedScene" uid="uid://bpfhslfhbjfti" path="res://chars/TEST_CHARS/training_dummy.tscn" id="7_t1ldw"]
 [ext_resource type="PackedScene" uid="uid://msi33x3r5d1d" path="res://chars/TEST_CHARS/test_dummy_v2.tscn" id="9_dqkb5"]
+[ext_resource type="PackedScene" uid="uid://dn0fhusgltn4m" path="res://chars/heavy_soldier.tscn" id="10_0atxr"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="10_gem31"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="11_fof0c"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="12_dqkb5"]
@@ -473,7 +474,11 @@ shape = SubResource("RectangleShape2D_01tlq")
 position = Vector2(1325, 86)
 
 [node name="TestDummyV2" parent="Enemies" index="1" unique_id=2043234278 groups=["Enemy"] instance=ExtResource("9_dqkb5")]
-position = Vector2(872, 75.99998)
+position = Vector2(1227, 60)
+
+[node name="HeavySoldier" parent="Enemies" index="2" unique_id=1955221828 instance=ExtResource("10_0atxr")]
+position = Vector2(875, 76)
+scale = Vector2(0.6, 0.6)
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]
 position = Vector2(1260, 1)
