@@ -148,6 +148,8 @@ func _on_impact(_area :Area2D) -> void:
 			#print_debug("parried!")
 			stagger.stagger -= 1
 			parried.emit()
+		elif _area.is_in_group("shield"):
+			active=false
 		else:
 			#print_debug(_area.get_groups())
 			pass
