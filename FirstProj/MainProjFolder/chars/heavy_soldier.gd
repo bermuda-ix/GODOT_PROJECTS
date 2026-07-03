@@ -704,7 +704,7 @@ func _on_hit_box_clashed() -> void:
 
 
 func _on_shield_area_entered(area: Area2D) -> void:
-	health.set_temporary_immortality(0.5)
+	hurt_box.set_active(false)
 
 
 func _on_hit_box_clash_knock_back(_launch : float, _knockback : float, _impact_dir_right : bool) -> void:
