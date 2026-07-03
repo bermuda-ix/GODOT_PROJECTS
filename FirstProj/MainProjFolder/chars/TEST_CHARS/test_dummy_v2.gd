@@ -37,6 +37,7 @@ var is_on_screen : bool
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D2
 
 
+
 func _ready() -> void:
 	pass
 	_init_state_machine()
@@ -45,7 +46,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	label.text="H: " + str(health.health) + " S: " + str(stagger.stagger)
+	pass
+	#label.text="H: " + str(health.health) + " S: " + str(stagger.stagger)
 	
 
 		
@@ -92,3 +94,12 @@ func _on_hurt_box_launched() -> void:
 
 func _on_launch_timer_timeout() -> void:
 	state_machine.change_active_state(idle)
+
+
+func _on_hurt_box_received_damage(damage: int) -> void:
+	label.visible=true
+	teleport_timer.start()
+
+
+func _on_teleport_timer_timeout() -> void:
+	label.visible=false

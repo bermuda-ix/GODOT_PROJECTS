@@ -30,13 +30,15 @@ signal knockback(launch_strength : float, knock_back_strength : float, impact_di
 @onready var bullet_damage : int = 0
 
 @onready var mutex : Mutex = Mutex.new()
+@onready var hit_dur : Timer = Timer.new()
+
 
 func set_active(_value: bool) -> void:
 	active=_value
 	if _value==true:
 		pass
 	else:
-		pass
+		hit_dur.start(0.3)
 
 func _ready():
 	#connect("area_entered", _on_area_entered)
@@ -45,6 +47,11 @@ func _ready():
 	#connect("body_entered", _bullet_hit)
 	#connect("body_entered", _knocked_back_enemy_collision)
 	body_entered.connect(_knocked_back_enemy_collision)
+	add_child(hit_dur)
+	hit_dur.autostart=false
+	hit_dur.one_shot=true
+	hit_dur.ignore_time_scale=true
+	hit_dur.timeout.connect(reactivate_hurtbox)
 	
 	add_child(bullet_buffer)
 	bullet_buffer.autostart=false
@@ -69,7 +76,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 	
 	else:
 		assert(shielded!=true)
-		hitbox.active=false
+		#hitbox.active=false
 		if hitbox != null:
 			if staggered:
 				dmg_mult=3
@@ -193,3 +200,6 @@ func hit_sfx() -> void:
 	#hit_buffer.start(1)
 	#hit_sound=hit1
 	#AudioStreamManager.play(hit_sound)
+	
+func reactivate_hurtbox() -> void:
+	active=true

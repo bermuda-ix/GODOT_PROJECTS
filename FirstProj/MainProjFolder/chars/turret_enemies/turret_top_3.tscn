@@ -462,7 +462,7 @@ script = ExtResource("10_j0ghf")
 actor = NodePath("..")
 animation_player = NodePath("../AnimationPlayer")
 turret = NodePath("../Sprite2D/Turret")
-reload_timer = 3
+reload_timer = 10
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
 [node name="RotationManager" type="Node" parent="." unique_id=541584281 node_paths=PackedStringArray("actor", "state_machine")]

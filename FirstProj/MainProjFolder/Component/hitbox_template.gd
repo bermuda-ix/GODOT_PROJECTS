@@ -28,6 +28,7 @@ signal hit_success
 
 @onready var mutex : Mutex = Mutex.new()
 
+
 @export var collision_shape : CollisionShape2D
 
 func _ready():
@@ -35,13 +36,14 @@ func _ready():
 	area_entered.connect(_on_impact)
 	#print_debug(get_groups())
 	#collision_shape=get_tree().get_first_node_in_group("colliding_hitbox_shape")
+	
 
 func set_active(_value:bool)->void:
 	active=_value
-	#if _value==true:
-		#print_debug("attack_activate")
-	#elif _value==false:
-		#print_debug("attack_deactivate")
+	if _value==true:
+		pass
+	elif _value==false:
+		pass
 
 func set_clash_active(_value: bool) -> void:
 	clash_active=_value
@@ -84,6 +86,7 @@ func _on_impact(_area :Area2D) -> void:
 	if active and not heavy_attack:
 		if _area.is_in_group("PlayerParryZone"):
 			active=false
+			#hit_dur.start(0.5)
 	
 	if _area!= null:
 		
@@ -148,15 +151,13 @@ func _on_impact(_area :Area2D) -> void:
 			#print_debug("parried!")
 			stagger.stagger -= 1
 			parried.emit()
-		elif _area.is_in_group("shield"):
-			active=false
 		else:
 			#print_debug(_area.get_groups())
 			pass
 		#active=false
 		if active:
 			clash_active=false
-			active=false
+			#active=false
 			#if _area.is_in_group("regular_enemy_hb") or _area.is_in_group("player_hurtbox"):
 				#active=false
 	
