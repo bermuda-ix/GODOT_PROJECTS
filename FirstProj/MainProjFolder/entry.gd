@@ -3,7 +3,7 @@ class_name entry_way extends Area2D
 #signal player_entered_door(door : Door, transition_type : String)
 signal enter_area(room : PackedScene)
 
-@onready var test := false
+@export var test := false
 
 @export_enum("left", "right") var entry_dir
 @export var entry_loc : Vector2 = Vector2(0,0)
@@ -31,6 +31,8 @@ func _process(delta: float) -> void:
 	if test:
 		print_debug("testing")
 		assert(player.next_room==enter_to)
+	else:
+		pass
 
 
 func _on_body_entered(body: Node2D) -> void:
@@ -40,11 +42,11 @@ func _on_body_entered(body: Node2D) -> void:
 	#player_entered_door.emit(self)
 	if location_override:
 		test=true
-		player.next_room=enter_to
+		player.set_next_room(enter_to)
 		Events.in_door_way.emit(enter_to)
 		print_debug(player.next_room)
 	else:
-		player.next_room=entry_name
+		player.set_next_room(enter_to)
 		
 	player.in_door_way=true
 	player.prev_starting_pos=exit

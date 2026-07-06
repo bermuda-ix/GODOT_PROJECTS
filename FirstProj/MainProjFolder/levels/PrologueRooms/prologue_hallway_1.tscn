@@ -4230,6 +4230,7 @@ color = Color(0, 0, 0, 1)
 
 [node name="Entrance" parent="Entries" unique_id=1747332782 instance=ExtResource("10_egu0m")]
 visible = false
+z_index = 2
 position = Vector2(234, 262)
 locked = true
 location_override = true
@@ -4241,6 +4242,7 @@ z_index = -1
 position = Vector2(-32, -62)
 
 [node name="Entry" parent="Entries" unique_id=449931674 instance=ExtResource("10_egu0m")]
+z_index = 2
 position = Vector2(-2986, 262)
 entry = 3
 locked = true
@@ -4252,6 +4254,7 @@ z_index = -1
 position = Vector2(-32, -64)
 
 [node name="Entry2" parent="Entries" unique_id=1858350691 instance=ExtResource("10_egu0m")]
+z_index = 2
 position = Vector2(-960, 269)
 entry = 1
 room = ExtResource("16_g5ibn")
@@ -4262,6 +4265,7 @@ z_index = -1
 position = Vector2(-32, -68)
 
 [node name="Entry3" parent="Entries" unique_id=202451068 instance=ExtResource("10_egu0m")]
+z_index = 2
 position = Vector2(-2044, 269)
 entry = 2
 room = ExtResource("17_n0r6o")
@@ -4272,6 +4276,7 @@ z_index = -1
 position = Vector2(-32, -66)
 
 [node name="Entry4" parent="Entries" unique_id=1029398201 instance=ExtResource("10_egu0m")]
+z_index = 2
 position = Vector2(-3901, 267)
 entry = 4
 room = ExtResource("17_n0r6o")
