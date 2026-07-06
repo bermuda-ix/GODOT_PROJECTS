@@ -2446,14 +2446,18 @@ func _on_flip_state_updated(delta: float) -> void:
 		else:
 			#flipped_over=true
 			#hit_stop.hit_stop(.2, .5)
-			state_machine.dispatch(&"flipped_over")
+			flip_end()
 
 func _on_flip_end_state_entered() -> void:
 	#print_debug("flipped over")
 	#hit_stop.hit_stop(.2, .5)
+	velocity=velocity/10
 	hit_stop.end_hit_stop()
 	set_collision_mask_value(15, true)
 
+func flip_end() -> void:
+	flipped_over=true
+	state_machine.dispatch(&"flipped_over")
 
 func _on_flip_end_state_updated(delta: float) -> void:
 	if is_on_wall():
@@ -2473,24 +2477,24 @@ func _on_flip_end_state_updated(delta: float) -> void:
 		health.immortality=false
 		hurt_box_detect.disabled=false
 		flipped_over=true
-		if not high_target:
-			
-			if not flip_state.flipping_right:
-				movement = target_direction.rotated(CLOCKWISE)
-				
-				#"flip_right")
-			else:
-				movement = target_direction.rotated(COUNTER_CLOCKWISE)
-				#"flip_left"
-			if global_position.y<target_top:
-				velocity = movement * flip_speed * delta
-				
-			else:
-				velocity.y += gravity * movement_data.gravity_scale * delta
-		else:
-			#hit_stop.hit_stop(.1, .5)
-			jump_out_timer.start(0.05)
-			velocity.y=0
+		#if not high_target:
+			#
+			#if not flip_state.flipping_right:
+				#movement = target_direction.rotated(CLOCKWISE)
+				#
+				##"flip_right")
+			#else:
+				#movement = target_direction.rotated(COUNTER_CLOCKWISE)
+				##"flip_left"
+			#if global_position.y<target_top:
+				#velocity = movement * flip_speed * delta
+				#
+			#else:
+				#velocity.y += gravity * movement_data.gravity_scale * delta
+		#else:
+			##hit_stop.hit_stop(.1, .5)
+			#jump_out_timer.start(0.05)
+			#velocity.y=0
 
 func _on_jump_out_timer_timeout():
 	jump_out(200)

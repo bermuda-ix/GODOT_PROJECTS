@@ -10060,6 +10060,10 @@ wait_time = 0.2
 one_shot = true
 ignore_time_scale = true
 
+[node name="FlipTimer" type="Timer" parent="." unique_id=2140912848]
+wait_time = 0.2
+one_shot = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1853999065]
 libraries/ = SubResource("AnimationLibrary_qyq63")
 libraries/Cutscene = SubResource("AnimationLibrary_7nr8h")
@@ -10366,12 +10370,13 @@ dodge_velocity = Vector2(300, 0)
 [node name="DodgeBuffer" type="Timer" parent="StateMachine/DodgeState" unique_id=34708469]
 one_shot = true
 
-[node name="FlipState" type="LimboState" parent="StateMachine" unique_id=1796314275 node_paths=PackedStringArray("anim_player", "pc", "state_machine", "hit_stop")]
+[node name="FlipState" type="LimboState" parent="StateMachine" unique_id=1796314275 node_paths=PackedStringArray("anim_player", "pc", "state_machine", "hit_stop", "flip_timer")]
 script = ExtResource("108_mj1xc")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 state_machine = NodePath("..")
 hit_stop = NodePath("../../HitStop")
+flip_timer = NodePath("../../FlipTimer")
 
 [node name="FlipEndState" type="LimboState" parent="StateMachine" unique_id=64997339]
 
@@ -10444,6 +10449,7 @@ pc = NodePath("../..")
 [connection signal="timeout" from="CounterTimer" to="." method="_on_counter_timer_timeout"]
 [connection signal="timeout" from="HitBuffer" to="." method="_on_hit_buffer_timeout"]
 [connection signal="timeout" from="ChargeTimer" to="." method="_on_charge_timer_timeout"]
+[connection signal="timeout" from="FlipTimer" to="." method="flip_end"]
 [connection signal="animation_changed" from="AnimationPlayer" to="." method="_on_animation_player_animation_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Landed" method="_on_animation_player_animation_finished"]

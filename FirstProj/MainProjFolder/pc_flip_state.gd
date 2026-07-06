@@ -5,9 +5,11 @@ extends LimboState
 @export var state_machine : LimboHSM
 @export var hit_stop : HitStop
 @onready var flipping_right:= false
+@export var flip_timer : Timer
 
 func _enter() -> void:
 	anim_player.play("flip")
+	flip_timer.start()
 	pc.set_collision_mask_value(15, false)
 	pc.high_target_jump_height = (pc.global_position.y-pc.collision_shape_2d.get_shape().size.y)
 	if state_machine.get_active_state()==pc.special_attack:
@@ -27,5 +29,5 @@ func _enter() -> void:
 
 func _exit() -> void:
 	print_debug("done flipping")
-	pc.flipped_over=false
+	pc.flipped_over=true
 	pc.set_shotgun_free_rotate(true)
