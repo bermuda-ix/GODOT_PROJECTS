@@ -4229,7 +4229,6 @@ color = Color(0, 0, 0, 1)
 [node name="Entries" type="Node" parent="." unique_id=1760022496]
 
 [node name="Entrance" parent="Entries" unique_id=1747332782 instance=ExtResource("10_egu0m")]
-visible = false
 z_index = 2
 position = Vector2(234, 262)
 locked = true

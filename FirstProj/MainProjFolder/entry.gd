@@ -28,11 +28,12 @@ func _ready() -> void:
 		LevelsList.level_maps[entry_name] = room.resource_path
 
 func _process(delta: float) -> void:
-	if test:
-		print_debug("testing")
-		assert(player.next_room==enter_to)
-	else:
-		pass
+	#if test:
+		#print_debug("testing")
+		#assert(player.next_room==enter_to)
+	#else:
+		#pass
+	pass
 
 
 func _on_body_entered(body: Node2D) -> void:
@@ -46,7 +47,7 @@ func _on_body_entered(body: Node2D) -> void:
 		Events.in_door_way.emit(enter_to)
 		print_debug(player.next_room)
 	else:
-		player.set_next_room(enter_to)
+		player.set_next_room(entry_name)
 		
 	player.in_door_way=true
 	player.prev_starting_pos=exit
