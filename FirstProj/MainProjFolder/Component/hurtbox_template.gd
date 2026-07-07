@@ -75,7 +75,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 
 	
 	else:
-		assert(shielded!=true)
+		#assert(shielded!=true)
 		#hitbox.active=false
 		if hitbox != null:
 			if staggered:
@@ -85,6 +85,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 			#############################################
 			#Replace with bullet knockback once finished#
 			#############################################
+			Events.camera_shake.emit(2,20)
 			if hitbox.is_in_group("bullet") or hitbox.is_in_group("PlayerBullet"):
 				#return
 				if not active:
@@ -93,13 +94,14 @@ func _on_area_entered(hitbox: Area2D) -> void:
 				bullet_damage+=1
 			
 			elif hitbox.is_in_group("hitbox") or hitbox.is_in_group("player_hitbox"):
+				Events.hit_stop.emit(0.01,0.01)
 				if hitbox.knock_back:
 					if hitbox.global_position.x > global_position.x:
 						impact_dir_right=true
 					else:
 						impact_dir_right=false
 					#print_debug(hitbox.launch_strength, ", ", hitbox.knock_back_strength)
-					Events.camera_shake.emit(2,20)
+					#Events.camera_shake.emit(2,20)
 					knockback.emit(hitbox.launch_strength, hitbox.knock_back_strength, impact_dir_right)
 			
 				if hitbox.is_in_group("spc_atk"):
@@ -118,7 +120,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 							received_damage.emit(hitbox.damage)
 							got_hit.emit(hitbox)
 							weakpoint_hit.emit()
-							Events.camera_shake.emit(2,20)
+							#Events.camera_shake.emit(2,20)
 					if weakpoint:
 						health.health -= (hitbox.damage * dmg_mult)
 						if not staggered:
@@ -126,7 +128,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 						received_damage.emit(hitbox.damage)
 						got_hit.emit(hitbox)
 						weakpoint_hit.emit()
-						Events.camera_shake.emit(2,20)
+						#Events.camera_shake.emit(2,20)
 					else:
 						if not shielded:
 							print_debug(health.health)
@@ -137,7 +139,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 							received_damage.emit(hitbox.damage)
 							
 							got_hit.emit(hitbox)
-							Events.camera_shake.emit(2,20)
+							#Events.camera_shake.emit(2,20)
 	
 	mutex.unlock()
 func hitbox_collision():
@@ -148,6 +150,7 @@ func bullet_impact(_damage : int = 1) -> void:
 		return
 	bullet_buffer.start(0.2)
 	bullet_damage+=1
+	
 
 func _knocked_back_enemy_collision(_body : Node2D):
 	var _launch_strength := 0
@@ -175,6 +178,8 @@ func get_damage_mulitplyer() -> int:
 
 
 func bullet_buffer_timeout() -> void:
+	Events.hit_stop.emit(0.01,0.01)
+	Events.camera_shake.emit(2,20)
 	if stagger.stagger>0:
 		if bullet_damage<=stagger.stagger:
 			stagger.stagger-=bullet_damage

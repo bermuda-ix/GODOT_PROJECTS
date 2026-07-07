@@ -292,6 +292,7 @@ func _process(_delta):
 	attack_timer.one_shot=true
 	counter_select()
 	bt_player.blackboard.set_var("ammo",ammo_count)
+	is_on_screen=on_screen.is_on_screen()
 	#get_player_state(player)
 	#on_screen.is_on_screen()
 		#print_debug(parry_timer.time_left)
@@ -632,13 +633,13 @@ func _on_attack_entered() -> void:
 
 func _on_hit_box_area_entered(_area: Area2D) -> void:
 	print_debug(_area)
-	hit_stop.hit_stop(0.05,0.1)
+	#hit_stop.hit_stop(0.05,0.1)
 	#hit_box.active=false
 
 func _on_hit_box_clashed() -> void:
 	#animation_player.stop()
 	#hit_box.active=false
-	hit_stop.hit_stop(0.05, 0.5)
+	#hit_stop.hit_stop(0.05, 0.5)
 	print_debug("clashed!")
 	stagger.stagger-=1
 	

@@ -43,7 +43,14 @@ signal boss_died
 signal prepare_next_boss
 
 #Camera Effects
+##(Strength, Fade Weight)
 signal camera_shake
+
+#Hitstop
+##(time_scale : float, duration : float)
+signal hit_stop(time_scale : float, duration : float)
+##(time_scale_end: float, duration: float, _weight: float)
+signal hit_stop_ease(time_scale_end: float, duration: float, _weight: float)
 
 #Spawn control
 signal activate

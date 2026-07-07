@@ -204,6 +204,7 @@ func _process(delta: float) -> void:
 		#print_debug(state_machine.get_active_state())
 		#state_machine.dispatch(&"die")
 	#even_order(group_link_order)
+	is_on_screen=on_screen.is_on_screen()
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	ammo_count=turret.ammo_count

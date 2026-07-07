@@ -63,10 +63,14 @@ func _process(delta: float) -> void:
 func camera_shake_fixed():
 	shake_strength=rand_strength
 	
-func camera_shake(str : float, fade : float):
+func camera_shake(str : float, fade : float) -> void:
+	camera_offset_reset()
 	shake_strength=str
 	shake_fade=fade
-	
+
+func camera_offset_reset() -> void:
+	camera_2d.offset=offset
+
 func randomOffset() -> Vector2:
 	return Vector2(rng.randf_range(-shake_strength, shake_strength), rng.randf_range(-shake_strength, shake_strength))
 

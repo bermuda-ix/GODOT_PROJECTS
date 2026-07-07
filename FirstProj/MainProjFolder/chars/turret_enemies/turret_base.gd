@@ -26,6 +26,8 @@ extends StaticBody2D
 @onready var health: Health = $Health
 @onready var stagger: Stagger = $Stagger
 
+@onready var is_on_screen: bool = false
+
 @onready var ammo_count
 
 @onready var linked_turrets : Array[TurretBase]
@@ -50,6 +52,7 @@ func _ready() -> void:
 			turret_link_order=linked_turrets.find(self)
 
 func _process(delta: float) -> void:
+	is_on_screen=turret_top.is_on_screen
 	ammo_count=turret_top.turret.ammo_count
 	if turret_top.state_machine.get_active_state()==turret_top.idle:
 		npc_stats.visible=false

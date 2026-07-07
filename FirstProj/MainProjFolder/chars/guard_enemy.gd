@@ -487,9 +487,12 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		
 		if state_machine.get_active_state()!=staggered:
 			parry_timer.start(0.1)
+			#hit_stop.hit_stop(0.01,0.01)
+			Events.camera_shake.emit(2,20)
 			state_machine.dispatch(&"hit")
 		else:
 			animation_player.play("hit")
+			#hit_stop.hit_stop(0.01,0.01)
 			AudioStreamManager.play(SoundFx.SOCAPEX_NEW_HITS_2)
 		gpu_particles_2d.restart()
 		gpu_particles_2d.emitting=true
@@ -644,7 +647,7 @@ func _on_hit_exited() -> void:
 
 func _on_hit_box_clashed() -> void:
 	animation_player.stop()
-	hit_stop.hit_stop(0.05, 0.5)
+	#hit_stop.hit_stop(0.05, 0.5)
 	print_debug("clashed!")
 	stagger.stagger-=1
 	state_machine.dispatch(&"clashed")

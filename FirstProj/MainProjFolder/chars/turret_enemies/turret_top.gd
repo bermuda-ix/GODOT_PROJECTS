@@ -19,6 +19,9 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var player_tracker_pivot: Node2D = $PlayerTrackerPivot
 @onready var player_tracking: RayCast2D = $PlayerTrackerPivot/PlayerTracking
 @onready var vision_handler: VisionHandler = $VisionHandler
+@onready var is_on_screen : bool = false
+@onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+
 
 @onready var turret: Turret = $Sprite2D/Turret
 @onready var shoot_attack_manager: ShootAttackManager = $ShootAttackManager
@@ -58,9 +61,11 @@ func _ready():
 	_init_state_machine()
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 	
+	
 
 func _process(_delta):
 	vision_handler.handle_vision()
+	is_on_screen=visible_on_screen_notifier_2d.is_on_screen()
 	#shoot_attack_manager.shoot()
 	var player_track_angle_wrap=wrapf(player_tracker_pivot.rotation, 0, 2*PI)
 	debug.text=str(rad_to_deg(player_track_angle_wrap), " ",sprite_2d.rotation_degrees)
