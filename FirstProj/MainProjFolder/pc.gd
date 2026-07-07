@@ -361,6 +361,7 @@ func _ready():
 	Events.in_door_way.connect(set_next_room)
 	Events.reload_level_checkpoint.connect(reloaded)
 	Events.boss_died.connect(boss_died)
+	Events.unlock_from.connect(unlock_from_target)
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
 	_init_state_machine()
@@ -1698,7 +1699,7 @@ func lockon():
 		
 		
 
-		if not target.on_screen.is_on_screen() or target.state_machine.get_active_state()==target.death:
+		if not target.is_on_screen or target.state_machine.get_active_state()==target.death:
 			
 			target=null
 			set_shotgun_target_look(false)
@@ -1740,7 +1741,12 @@ func lockon():
 			#elif arc_vector>Vector2.LEFT and Vector2.UP>arc_vector:
 				##"on left")
 				#target_right = true
-			
+
+func unlock_from_target() -> void:
+	combat_states.dispatch(&"unlocking")
+	set_shotgun_target_look(false)
+	set_shotgun_free_rotate(true)
+
 func target_dir() -> void:
 	if state_machine.get_active_state()==flip_state or \
 	state_machine.get_active_state()==jump_state or \
@@ -1776,7 +1782,8 @@ func find_closest_enemy() -> Node2D:
 	for enemy in enemies:
 		if is_instance_valid(enemy):
 			if (enemy.global_position.distance_to(global_position) < closest_enemy.global_position.distance_to(global_position))\
-			and (enemy.state_machine.get_active_state()!=enemy.death):
+			and (enemy.state_machine.get_active_state()!=enemy.death)\
+			and enemy.is_on_screen:
 				
 				closest_enemy=enemy
 
@@ -1793,8 +1800,9 @@ func get_target_info():
 	if target==null:
 		return
 	else:
-		if target.health.get_health()==0:
+		if target.health.get_health()<=0:
 			Events.unlock_from.emit()
+			unlock_from_target()
 		target_size_x = target.get_width()
 		target_size_y = target.get_height()
 		target_top = target.global_position.y-(target_size_y/2-5)
@@ -2382,7 +2390,7 @@ func _on_flip_state_entered() -> void:
 	target_pos_x=(target.global_position.x)
 	var pos_above_x=target.global_position.x-global_position.x
 	flip_buffer.start()
-	hit_stop.hit_stop_ease(0.5, 2, 0.5)
+	hit_stop.hit_stop_ease(0.5, 1, 0.5)
 	set_collision_mask_value(15, false)
 
 
