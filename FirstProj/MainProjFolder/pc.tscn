@@ -261,6 +261,7 @@
 [ext_resource type="Script" uid="uid://dc4c4jxhc2ky" path="res://heavy_dash_attack.gd" id="243_4jq81"]
 [ext_resource type="Script" uid="uid://dm8ejawcmedfr" path="res://heavy_attack_3.gd" id="244_m743w"]
 [ext_resource type="Script" uid="uid://dmttp4slbll7c" path="res://aim.gd" id="246_p73v2"]
+[ext_resource type="Script" uid="uid://ddysmm2s885h4" path="res://air_dash.gd" id="257_i0kkw"]
 [ext_resource type="Script" uid="uid://5nuxraficihm" path="res://heavy_counter.gd" id="267_gt6j3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dirf"]
@@ -5914,6 +5915,35 @@ tracks/7/keys = {
 "values": [Vector2(16.5, 41)]
 }
 
+[sub_resource type="Animation" id="Animation_cg1np"]
+resource_name = "air_dash"
+length = 0.13333334
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Dash"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.06666666),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [2, 3, 4]
+}
+
 [sub_resource type="Animation" id="Animation_67eo0"]
 resource_name = "check_equipment"
 length = 3.5
@@ -8041,6 +8071,7 @@ _data = {
 &"Parry_Success": SubResource("Animation_irs7o"),
 &"RESET": SubResource("Animation_13dif"),
 &"Riposte": SubResource("Animation_oktus"),
+&"air_dash": SubResource("Animation_cg1np"),
 &"check_equipment": SubResource("Animation_67eo0"),
 &"death": SubResource("Animation_wyy57"),
 &"dodge_1": SubResource("Animation_pskkv"),
@@ -10370,6 +10401,19 @@ dodge_velocity = Vector2(300, 0)
 [node name="DodgeBuffer" type="Timer" parent="StateMachine/DodgeState" unique_id=34708469]
 one_shot = true
 
+[node name="AirDash" type="LimboState" parent="StateMachine" unique_id=1537131707 node_paths=PackedStringArray("anim_player", "pc", "hurt_box", "stagger", "state_machine", "dodge_buffer")]
+script = ExtResource("257_i0kkw")
+anim_player = NodePath("../../AnimationPlayer")
+pc = NodePath("../..")
+hurt_box = NodePath("../../HurtBox")
+stagger = NodePath("../../Stagger")
+state_machine = NodePath("..")
+dodge_buffer = NodePath("AirDashBuffer")
+dodge_velocity = Vector2(300, 0)
+
+[node name="AirDashBuffer" type="Timer" parent="StateMachine/AirDash" unique_id=863394944]
+one_shot = true
+
 [node name="FlipState" type="LimboState" parent="StateMachine" unique_id=1796314275 node_paths=PackedStringArray("anim_player", "pc", "state_machine", "hit_stop", "flip_timer")]
 script = ExtResource("108_mj1xc")
 anim_player = NodePath("../../AnimationPlayer")
@@ -10490,6 +10534,9 @@ pc = NodePath("../..")
 [connection signal="entered" from="StateMachine/DodgeState" to="." method="_on_dodge_state_entered"]
 [connection signal="exited" from="StateMachine/DodgeState" to="." method="_on_dodge_state_exited"]
 [connection signal="timeout" from="StateMachine/DodgeState/DodgeBuffer" to="StateMachine/DodgeState" method="_on_dodge_buffer_timeout"]
+[connection signal="entered" from="StateMachine/AirDash" to="." method="_on_air_dash_entered"]
+[connection signal="exited" from="StateMachine/AirDash" to="." method="_on_air_dash_exited"]
+[connection signal="timeout" from="StateMachine/AirDash/AirDashBuffer" to="StateMachine/AirDash" method="_on_air_dash_buffer_timeout"]
 [connection signal="entered" from="StateMachine/FlipState" to="." method="_on_flip_state_entered"]
 [connection signal="updated" from="StateMachine/FlipState" to="." method="_on_flip_state_updated"]
 [connection signal="entered" from="StateMachine/FlipEndState" to="." method="_on_flip_end_state_entered"]

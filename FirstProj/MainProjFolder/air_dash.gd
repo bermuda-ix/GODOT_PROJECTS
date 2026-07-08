@@ -7,7 +7,6 @@ extends LimboState
 @export var stagger : Stagger
 @export var state_machine : LimboHSM
 @export var dodge_buffer : Timer
-@onready var dodge_chain : int = clampi(1, 1, 3)
 var dodge_dist : float = 0.0
 var counter_dist : float = 0.0
 var dodge_speed : float = 1.0
@@ -20,7 +19,7 @@ var dodge_speed : float = 1.0
 func _enter() -> void:
 	print_debug("dodging")
 	
-	anim_player.play(pc.dodge_anim_run+"_"+str(dodge_chain))
+	anim_player.play("air_dash")
 	pc.set_collision_mask_value(15, false)
 	#pc.set_collision_layer_value(2, false)
 	pc.counter_box_collision.disabled=false
@@ -36,12 +35,12 @@ func _enter() -> void:
 	
 
 func _update(delta: float) -> void:
-	#pc.global_position.x=lerpf(pc.global_position.x, dodge_dist, dodge_speed*delta)
+	pc.velocity.y=0
 	if abs(pc.global_position.x-dodge_pos_start)>dodge_min_dist and\
 	Input.is_action_just_released("Dodge"):
-		dodge_blend()
+		pc.state_machine.dispatch(&"falling")
 	elif abs(pc.global_position.x-dodge_pos_start)>dodge_distance:
-		pc.state_machine.dispatch(&"return_to_idle")
+		pc.state_machine.dispatch(&"falling")
 
 
 func _exit() -> void:
@@ -56,15 +55,5 @@ func dodge_blend():
 	anim_player.play_section_with_markers(_current_dodge, "end")
 
 
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name==(pc.dodge_anim_run+"_"+str(dodge_chain)):
-		pc.state_machine.dispatch(&"return_to_idle")
-		pc.set_collision_mask_value(15, true)
-		#pc.set_collision_layer_value(2, true)
-
-
-func _on_dodge_buffer_timeout() -> void:
-	if pc.state_machine.get_active_state()==pc.dodge_state:
-		return
-	else:
-		dodge_chain=1
+func _on_air_dash_buffer_timeout() -> void:
+	pass # Replace with function body.

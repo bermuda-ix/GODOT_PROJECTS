@@ -66,6 +66,7 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var special_attack: LimboState = $StateMachine/SpecialAttack
 @onready var parry_state: LimboState = $StateMachine/ParryState
 @onready var dodge_state: LimboState = $StateMachine/DodgeState
+@onready var air_dash: LimboState = $StateMachine/AirDash
 @onready var flip_state: LimboState = $StateMachine/FlipState
 @onready var flip_end_state: LimboState = $StateMachine/FlipEndState
 @onready var staggered: LimboState = $StateMachine/Staggered
@@ -129,6 +130,7 @@ var combo_state: ComboStates = ComboStates.ATK_1
 var double_jump_flag = false
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+@onready var gravity_active := true
 #wall jump state
 var just_wall_jump = false
 #parry state
@@ -395,6 +397,7 @@ func _init_state_machine():
 	
 	#Landing
 	state_machine.add_transition(jump_state, landed, &"landing")
+	state_machine.add_transition(jump_state, falling_state, &"falling")
 	state_machine.add_transition(falling_state, landed, &"landing")
 	state_machine.add_transition(dodge_state, landed, &"landing")
 	state_machine.add_transition(flip_state, landed, &"landing")
@@ -511,6 +514,11 @@ func _init_state_machine():
 	state_machine.add_transition(jump_state, wall_stick, &"stick_to_wall")
 	state_machine.add_transition(wall_stick, jump_state, &"jump_off_wall")
 	state_machine.add_transition(wall_stick, falling_state, &"fall_off_wall")
+	
+	#Air States
+	state_machine.add_transition(jump_state, air_dash, &"air_dodge")
+	state_machine.add_transition(falling_state, air_dash, &"air_dodge")
+	state_machine.add_transition(air_dash, falling_state, &"falling")
 	
 	#Player death
 	state_machine.add_transition(state_machine.ANYSTATE, death, &"die")
@@ -750,6 +758,8 @@ func _physics_process(delta):
 
 # Add the gravity.
 func apply_gravity(delta):
+	if not gravity_active:
+		return
 	if not is_on_floor():
 		if s_atk:
 			velocity.y += gravity/3 * movement_data.gravity_scale * delta
@@ -1636,30 +1646,33 @@ func call_audioplayer(sound : String) -> void:
 func dodge(input_axis):
 
 	if Input.is_action_just_pressed("Dodge") and state_machine.get_active_state()!=dodge_state:
-		if dodge_buffer.is_stopped():
-			dodge_timer.start()
-			if not is_on_floor():
-				velocity.y=0
-			if input_axis == 0:
-				dodge_anim_run=dodge_anim
-				if attack_state.get_active_state()!=attack_closer:
-					pass
+		if is_on_floor():
+			if dodge_buffer.is_stopped():
+				dodge_timer.start()
+				if not is_on_floor():
+					velocity.y=0
+				if input_axis == 0:
+					dodge_anim_run=dodge_anim
+					if attack_state.get_active_state()!=attack_closer:
+						pass
+					else:
+						velocity.x=0
+					state_machine.dispatch(&"start_dodge")
 				else:
-					velocity.x=0
-				state_machine.dispatch(&"start_dodge")
+					dodge_anim_run=dodge_anim+"_roll"
+					state_machine.dispatch(&"start_dodge")
 			else:
-				dodge_anim_run=dodge_anim+"_roll"
+				if stagger.stagger>1:
+					stagger.stagger-=1
+					set_stagger()
+				if dodge_state.dodge_chain==3:
+					dodge_state.dodge_chain=1
+				else:
+					dodge_state.dodge_chain+=1
 				state_machine.dispatch(&"start_dodge")
+				#dodge_pos_start=pc.global_position.x
 		else:
-			if stagger.stagger>1:
-				stagger.stagger-=1
-				set_stagger()
-			if dodge_state.dodge_chain==3:
-				dodge_state.dodge_chain=1
-			else:
-				dodge_state.dodge_chain+=1
-			state_machine.dispatch(&"start_dodge")
-			#dodge_pos_start=pc.global_position.x
+			state_machine.dispatch(&"air_dodge")
 	
 		
 	
@@ -1683,6 +1696,22 @@ func _on_dodge_state_exited() -> void:
 	animated_sprite_2d.position.x=8.0
 	hurt_box.active=true
 	set_collision_layer_value(2, true)
+
+
+func _on_air_dash_entered() -> void:
+	gravity_active=false
+	stagger_recover.stop()
+	dodging.emit()
+	hurt_box.active=false
+	set_collision_layer_value(2, false)
+
+func _on_air_dash_exited() -> void:
+	gravity_active=true
+	stagger_recover.start()
+	animated_sprite_2d.position.x=8.0
+	hurt_box.active=true
+	set_collision_layer_value(2, true)
+
 
 func lockon():
 	var target_dist : Vector2 = Vector2.ZERO
@@ -2953,7 +2982,8 @@ func _on_health_max_health_changed(diff: int) -> void:
 
 
 func _on_jump_state_updated(delta: float) -> void:
-	pass
+	if velocity.y>0.1:
+		state_machine.dispatch(&"falling")
 	#assert(velocity.y!=0.0)
 	#if state_machine.get_previous_active_state()==wall_stick:
 		#assert(velocity.x!=0)
