@@ -15,6 +15,9 @@ func _enter() -> void:
 
 	hit_box.damage+=1
 	hit_fx_player.play("charge_attack")
+
+func _update(delta: float) -> void:
+	pc.velocity=lerp(pc.velocity, Vector2.ZERO, 0.3)
 	
 func _exit() -> void:
 	anim_player.play()

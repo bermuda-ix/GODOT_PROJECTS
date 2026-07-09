@@ -33,8 +33,9 @@ extends CharacterBody2D
 @onready var launch_height : float = 40
 @onready var launch_strength : float = 40
 
-var is_on_screen : bool
-@onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D2
+@onready var is_on_screen : bool =false
+@onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+
 
 
 
@@ -46,7 +47,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	pass
+	is_on_screen=on_screen.is_on_screen()
+	
 	#label.text="H: " + str(health.health) + " S: " + str(stagger.stagger)
 	
 

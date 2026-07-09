@@ -100,6 +100,10 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var attack_closer: LimboState = $StateMachine/AttackState/AttackCloser
 @onready var charged_attack: LimboState = $StateMachine/AttackState/ChargedAttack
 @onready var charging_attack: LimboState = $StateMachine/AttackState/ChargingAttack
+@onready var down_air_attack: LimboState = $StateMachine/AttackState/DownAirAttack
+@onready var slam_attack: LimboState = $StateMachine/AttackState/SlamAttack
+@onready var slam_start: LimboState = $StateMachine/AttackState/SlamStart
+
 
 
 @onready var attack_state_stack : Array[LimboState] = []
@@ -497,11 +501,13 @@ func _init_state_machine():
 	#Flipping State
 	state_machine.add_transition(flip_state, jump_state, &"jump_out")
 	state_machine.add_transition(flip_state, attack_state, &"flip_attack")
+	state_machine.add_transition(flip_state, attack_state, &"attack_slam")
 	state_machine.add_transition(flip_state, wall_stick, &"hit_wall")
 	state_machine.add_transition(flip_state, special_attack, &"flip_shoot")
 	
 	state_machine.add_transition(flip_end_state, jump_state, &"jump_out")
 	state_machine.add_transition(flip_end_state, attack_state, &"flip_attack")
+	state_machine.add_transition(flip_end_state, attack_state, &"attack_slam")
 	state_machine.add_transition(flip_end_state, wall_stick, &"hit_wall")
 	state_machine.add_transition(flip_end_state, special_attack, &"flip_shoot")
 	
@@ -519,6 +525,9 @@ func _init_state_machine():
 	state_machine.add_transition(jump_state, air_dash, &"air_dodge")
 	state_machine.add_transition(falling_state, air_dash, &"air_dodge")
 	state_machine.add_transition(air_dash, falling_state, &"falling")
+	state_machine.add_transition(jump_state, attack_state, &"attack_slam")
+	state_machine.add_transition(falling_state, attack_state, &"attack_slam")
+	state_machine.add_transition(special_attack, attack_state, &"attack_slam")
 	
 	#Player death
 	state_machine.add_transition(state_machine.ANYSTATE, death, &"die")
@@ -556,6 +565,8 @@ func _init_attack_states():
 	attack_state.add_transition(attack_state.ANYSTATE, heavy_dash_attack, &"heavy_dash_attack")
 	attack_state.add_transition(attack_state.ANYSTATE, heavy_counter, &"heavy_counter")
 	attack_state.add_transition(attack_state.ANYSTATE, attack_closer, &"attack_closer")
+	attack_state.add_transition(attack_state.ANYSTATE, slam_start, &"attack_slam")
+	attack_state.add_transition(slam_start, slam_attack, &"slam_end")
 	
 	#Heavy attack Combos
 	attack_state.add_transition(attack_1, heavy_attack_1, &"heavy_combo")
@@ -693,6 +704,8 @@ func _physics_process(delta):
 		## Add the gravity.
 		if(parry_stance==false) and state_machine.get_active_state()!=attack_state:
 			apply_gravity(delta) 
+		elif state_machine.get_active_state()==attack_state and attack_state.get_active_state()==slam_start:
+			apply_gravity(delta)
 		var input_axis = Input.get_axis("walk_left", "walk_right")
 		
 		#if input_axis<0:
@@ -1035,7 +1048,7 @@ func update_animation(input_axis):
 		
 	if is_on_floor():
 		jumping=false
-		if state_machine.get_previous_active_state()==jump_state:
+		if state_machine.get_active_state()==jump_state or state_machine.get_active_state()==falling_state:
 			falling=false
 			state_machine.dispatch(&"return_to_idle")
 	
@@ -1048,6 +1061,7 @@ func attack_handler():
 	var anim_player_time : float = anim_player.current_animation_position
 	
 	if Input.is_action_pressed("attack"):
+		
 		if state_machine.get_active_state()==idle and (attacking or charging):
 			return
 		elif state_machine.get_active_state()==attack_state and charging:
@@ -1257,6 +1271,10 @@ func regular_attack() -> void:
 			hit_sound = hit1
 			AudioStreamManager.play(swing1)
 			velocity.y=movement_data.jump_velocity/2
+		elif not is_on_floor() and Input.is_action_pressed("down"):
+			state_machine.dispatch(&"start_attack")
+			attack_state.dispatch(&"attack_slam")
+			
 		else:
 			hit_box.set_damage(1)
 			
@@ -2203,6 +2221,9 @@ func _on_animation_player_animation_finished(anim_name):
 				attack_timer.paused=false
 				#reset_combo_flag=true
 				#attacking=false
+			"Attack_Slam":
+				if is_on_floor():
+					state_machine.dispatch(&"return_to_idle")
 			_:
 				attack_1.attack=light_attacks[0]
 				attack_timer.start(0.1)
@@ -2612,7 +2633,8 @@ func _on_animation_player_animation_started(anim_name):
 		elif attack_state.get_active_state()==dash_attack:
 			if anim_name=="Attack_Dash":
 				heavy_attack_1.attack=heavy_attacks[0]
-
+		elif anim_name=="Attack_Slam":
+			pass
 	if anim_name=="Attack_Chain":
 		if face_right:
 			forward_thrust.x=200
@@ -2982,7 +3004,7 @@ func _on_health_max_health_changed(diff: int) -> void:
 
 
 func _on_jump_state_updated(delta: float) -> void:
-	if velocity.y>0.1:
+	if velocity.y>0.1 and attack_state.get_active_state()!=slam_start:
 		state_machine.dispatch(&"falling")
 	#assert(velocity.y!=0.0)
 	#if state_machine.get_previous_active_state()==wall_stick:
@@ -3054,9 +3076,7 @@ func _on_animation_player_animation_changed(old_name: StringName, new_name: Stri
 	pass
 
 func _on_animation_player_current_animation_changed(name: StringName) -> void:
-	#pass
-	if name == "Walk":
-		print_debug("where")
+	print_debug(name)
 
 
 func _on_locked_updated(delta: float) -> void:
@@ -3065,3 +3085,23 @@ func _on_locked_updated(delta: float) -> void:
 
 func _on_hit_box_hit_success() -> void:
 	clash_power.reset_clash()
+
+
+func _on_slam_start_entered() -> void:
+	pass # Replace with function body.
+
+
+func _on_slam_start_exited() -> void:
+	pass # Replace with function body.
+
+
+func _on_slam_attack_exited() -> void:
+	pass # Replace with function body.
+
+
+func _on_slam_attack_updated(delta: float) -> void:
+	print_debug(velocity.y)
+
+
+func _on_falling_state_entered() -> void:
+	pass # Replace with function body.

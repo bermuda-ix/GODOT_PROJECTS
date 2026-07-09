@@ -111,8 +111,6 @@ one_shot = true
 [node name="LaunchTimer" type="Timer" parent="." unique_id=477796289]
 one_shot = true
 
-[node name="VisibleOnScreenNotifier2D2" type="VisibleOnScreenNotifier2D" parent="." unique_id=1654590034]
-
 [connection signal="launched" from="HurtBox" to="." method="_on_hurt_box_launched"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="timeout" from="TeleportTimer" to="." method="_on_teleport_timer_timeout"]

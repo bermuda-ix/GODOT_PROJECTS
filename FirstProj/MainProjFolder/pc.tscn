@@ -261,6 +261,9 @@
 [ext_resource type="Script" uid="uid://dc4c4jxhc2ky" path="res://heavy_dash_attack.gd" id="243_4jq81"]
 [ext_resource type="Script" uid="uid://dm8ejawcmedfr" path="res://heavy_attack_3.gd" id="244_m743w"]
 [ext_resource type="Script" uid="uid://dmttp4slbll7c" path="res://aim.gd" id="246_p73v2"]
+[ext_resource type="Script" uid="uid://bdqmxfqxyho1k" path="res://down_air_attack.gd" id="247_pbr83"]
+[ext_resource type="Script" uid="uid://r2oos1mk14ds" path="res://slam_attack.gd" id="248_ymji2"]
+[ext_resource type="Script" uid="uid://dqska7qmsu8it" path="res://slam_start.gd" id="249_1o5op"]
 [ext_resource type="Script" uid="uid://ddysmm2s885h4" path="res://air_dash.gd" id="257_i0kkw"]
 [ext_resource type="Script" uid="uid://5nuxraficihm" path="res://heavy_counter.gd" id="267_gt6j3"]
 
@@ -3160,7 +3163,7 @@ tracks/21/keys = {
 
 [sub_resource type="Animation" id="Animation_704ig"]
 resource_name = "Attack_Down"
-length = 0.5
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -3168,7 +3171,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.16666667, 0.26666668),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [5, 1, 2, 3, 4]
@@ -3187,12 +3190,12 @@ tracks/1/keys = {
 }
 tracks/2/type = "value"
 tracks/2/imported = false
-tracks/2/enabled = true
+tracks/2/enabled = false
 tracks/2/path = NodePath("AnimatedSprite2D/HitBox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.5),
+"times": PackedFloat32Array(0, 0.23333333, 0.26666668),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, false, true]
@@ -3254,7 +3257,7 @@ tracks/7/path = NodePath(".")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.5),
+"times": PackedFloat32Array(0.3),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -3296,7 +3299,7 @@ tracks/10/path = NodePath(".:attacking")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0.5),
+"times": PackedFloat32Array(0.3),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -3308,7 +3311,7 @@ tracks/11/path = NodePath("AnimatedSprite2D/HitBox:clash_active")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0.033333335, 0.5),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -3320,10 +3323,140 @@ tracks/12/path = NodePath("AnimatedSprite2D/HitBox:active")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0.13333334, 0.5),
+"times": PackedFloat32Array(0.033333335, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_wb1et"]
+resource_name = "Attack_Slam"
+length = 0.56666666
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"end",
+"time": 0.24166666
+}, {
+"color": Color(1, 1, 1, 1),
+"name": &"start",
+"time": 0.0
+}]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"GroundSlam"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.03333333, 0.2, 0.26666668, 0.33333334, 0.4, 0.43333334, 0.46666667, 0.5, 0.5333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.46751776, 0.56666666),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.5707964, 1.5707964, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.30590668),
+"transitions": PackedFloat32Array(8.282105, 1),
+"update": 0,
+"values": [Vector2(0, -14.689301), Vector2(0, 15.310699)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2000899, 0.46666667, 0.56666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [SubResource("RectangleShape2D_0g83a"), SubResource("RectangleShape2D_0g83a"), SubResource("RectangleShape2D_0g83a"), SubResource("RectangleShape2D_0g83a")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D/HitBox:active")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AnimatedSprite2D/HitBox")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.26666668),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"refresh_collision"
+}]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("StateMachine/AttackState")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"attack_lunge_setup"
+}]
+}
+tracks/8/type = "method"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("StateMachine/AttackState")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [-25],
+"method": &"attack_launch"
+}, {
+"args": [150],
+"method": &"attack_launch"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_8w5mx"]
@@ -8059,6 +8192,7 @@ _data = {
 &"Attack_Counter": SubResource("Animation_urihx"),
 &"Attack_Dash": SubResource("Animation_yuc35"),
 &"Attack_Down": SubResource("Animation_704ig"),
+&"Attack_Slam": SubResource("Animation_wb1et"),
 &"Crouch": SubResource("Animation_8w5mx"),
 &"Flip_Attack": SubResource("Animation_l6eg2"),
 &"Heavy_Cancel": SubResource("Animation_2dddn"),
@@ -9893,6 +10027,7 @@ collision_shape = NodePath("HBCollision")
 light_mask = 0
 position = Vector2(9, -5)
 shape = SubResource("RectangleShape2D_0g83a")
+disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/HitBox" unique_id=840144418]
 position = Vector2(6.02321e-07, 20.7956)
@@ -10339,6 +10474,21 @@ hit_fx_player = NodePath("../../../HitFXPlayer")
 hit_box = NodePath("../../../AnimatedSprite2D/HitBox")
 pc = NodePath("../../..")
 
+[node name="DownAirAttack" type="LimboState" parent="StateMachine/AttackState" unique_id=798829169 node_paths=PackedStringArray("anim_player", "pc")]
+script = ExtResource("247_pbr83")
+anim_player = NodePath("../../../AnimationPlayer")
+pc = NodePath("../../..")
+
+[node name="SlamAttack" type="LimboState" parent="StateMachine/AttackState" unique_id=323254429 node_paths=PackedStringArray("anim_player", "pc")]
+script = ExtResource("248_ymji2")
+anim_player = NodePath("../../../AnimationPlayer")
+pc = NodePath("../../..")
+
+[node name="SlamStart" type="LimboState" parent="StateMachine/AttackState" unique_id=292927455 node_paths=PackedStringArray("anim_player", "pc")]
+script = ExtResource("249_1o5op")
+anim_player = NodePath("../../../AnimationPlayer")
+pc = NodePath("../../..")
+
 [node name="Aim" type="LimboState" parent="StateMachine" unique_id=1244651801 node_paths=PackedStringArray("pc", "anim_player", "shotty_anim_player", "clash_power")]
 script = ExtResource("246_p73v2")
 pc = NodePath("../..")
@@ -10524,11 +10674,16 @@ pc = NodePath("../..")
 [connection signal="entered" from="StateMachine/Idle" to="." method="_on_idle_entered"]
 [connection signal="entered" from="StateMachine/JumpState" to="." method="_on_jump_state_entered"]
 [connection signal="updated" from="StateMachine/JumpState" to="." method="_on_jump_state_updated"]
+[connection signal="entered" from="StateMachine/FallingState" to="." method="_on_falling_state_entered"]
 [connection signal="active_state_changed" from="StateMachine/AttackState" to="." method="_on_attack_state_active_state_changed"]
 [connection signal="exited" from="StateMachine/AttackState" to="." method="_on_attack_state_exited"]
 [connection signal="exited" from="StateMachine/AttackState/SpecialCombo" to="." method="_on_special_combo_exited"]
 [connection signal="exited" from="StateMachine/AttackState/SpecialCombo2" to="." method="_on_special_combo_2_exited"]
 [connection signal="dur_timeout" from="StateMachine/AttackState/AttackCloser" to="StateMachine/AttackState/AttackCloser" method="_on_dur_timeout"]
+[connection signal="exited" from="StateMachine/AttackState/SlamAttack" to="." method="_on_slam_attack_exited"]
+[connection signal="updated" from="StateMachine/AttackState/SlamAttack" to="." method="_on_slam_attack_updated"]
+[connection signal="entered" from="StateMachine/AttackState/SlamStart" to="." method="_on_slam_start_entered"]
+[connection signal="exited" from="StateMachine/AttackState/SlamStart" to="." method="_on_slam_start_exited"]
 [connection signal="entered" from="StateMachine/SpecialAttack" to="." method="_on_special_attack_entered"]
 [connection signal="dur_timeout" from="StateMachine/ParrySuccessState" to="StateMachine/ParrySuccessState" method="_on_dur_timeout"]
 [connection signal="entered" from="StateMachine/DodgeState" to="." method="_on_dodge_state_entered"]
