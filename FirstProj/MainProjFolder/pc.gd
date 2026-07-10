@@ -2440,7 +2440,7 @@ func _on_flip_state_entered() -> void:
 	target_pos_x=(target.global_position.x)
 	var pos_above_x=target.global_position.x-global_position.x
 	flip_buffer.start()
-	hit_stop.hit_stop_ease(0.5, 1, 0.5)
+	hit_stop.hit_stop_ease(0.1, 2, 0.75)
 	set_collision_mask_value(15, false)
 
 
@@ -2511,6 +2511,7 @@ func _on_flip_end_state_entered() -> void:
 	#hit_stop.hit_stop(.2, .5)
 	velocity=velocity/10
 	hit_stop.end_hit_stop()
+	hit_stop.hit_stop(0.1, 1)
 	set_collision_mask_value(15, true)
 
 func flip_end() -> void:

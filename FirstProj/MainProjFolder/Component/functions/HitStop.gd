@@ -14,12 +14,15 @@ func _ready() -> void:
 	dur.autostart=false
 	dur.one_shot=true
 	dur.ignore_time_scale=true
+	dur.timeout.connect(dur_debug)
 	
 func _process(delta: float) -> void:
 	if not dur.is_stopped() and slow_down_ease:
 		print_debug(Engine.time_scale)
 		
 	###If Engine.time_scale doesn't return to 1.0
+	#if Input.is_action_just_pressed("DEBUG_KEY"):
+		#hit_stop_ease(0.01, 2, 0.9)
 	#elif dur.is_stopped():
 		#if Engine.time_scale!=1.0:
 			#print_debug("ruh roh, ",Engine.time_scale)
@@ -49,4 +52,9 @@ func get_time_left()->float:
 	return dur.time_left
 	
 func end_hit_stop():
+	if tween != null:
+		tween.kill()
 	Engine.time_scale = 1.0
+
+func dur_debug():
+	print_debug("hit_Stop_ending")
