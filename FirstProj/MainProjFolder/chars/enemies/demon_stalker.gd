@@ -39,4 +39,5 @@ func _on_local_flag_appear_event_flag_triggered() -> void:
 func _on_local_flag_disappear_event_flag_triggered() -> void:
 	visible=false
 	local_flag__disappear.flag_active=false
+	Events.global_flag_trigger.emit("TurnOn")
 	queue_free()
