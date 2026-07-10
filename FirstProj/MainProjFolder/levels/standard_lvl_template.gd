@@ -141,7 +141,7 @@ func _ready():
 func _process(_delta):
 	
 	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size())
-	
+	assert(hit_stop!=null)
 	if cutscene_active:
 		dialogue_continue()
 	
@@ -275,8 +275,13 @@ func toggle_skip(value : bool) -> void:
 
 func boss_died(cutscene: String):
 	Events.start_cutscene.emit()
-	var _cutscene=cutscene_library+"/"+cutscene
+	var _cutscene
+	if cutscene_library==null or cutscene_library=="":
+		_cutscene=cutscene
+	else:
+		_cutscene=cutscene_library+"/"+cutscene
 	cutscene_player.play(_cutscene)
+	camera_pos.boss_active=false
 	hit_stop.hit_stop(0.5,0.5)
 	cutscene_active=true
 

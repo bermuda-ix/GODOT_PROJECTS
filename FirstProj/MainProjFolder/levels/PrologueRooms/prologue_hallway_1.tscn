@@ -1005,7 +1005,7 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-2303, 252)]
+"values": [Vector2(-1544, 252)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
@@ -1017,7 +1017,7 @@ tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-2575, 253)]
+"values": [Vector2(-1816, 253)]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
@@ -1029,7 +1029,7 @@ tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-2552, 284)]
+"values": [Vector2(-1793, 284)]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
@@ -1053,7 +1053,7 @@ tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-2350, 270)]
+"values": [Vector2(-1641, 282)]
 }
 tracks/14/type = "method"
 tracks/14/imported = false
@@ -1946,7 +1946,7 @@ tracks/36/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [Vector2(-2350, 270)]
+"values": [Vector2(-2299, 292)]
 }
 tracks/37/type = "value"
 tracks/37/imported = false
@@ -4116,7 +4116,6 @@ script = ExtResource("1_8kup7")
 next_level = ExtResource("2_s1x0g")
 player = NodePath("PC")
 main_room = true
-cutscene_library = "flashback_lvl_cutscenes"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1759089609]
 environment = SubResource("Environment_bw5xo")
@@ -4229,7 +4228,6 @@ color = Color(0, 0, 0, 1)
 [node name="Entries" type="Node" parent="." unique_id=1760022496]
 
 [node name="Entrance" parent="Entries" unique_id=1747332782 instance=ExtResource("10_egu0m")]
-z_index = 2
 position = Vector2(234, 262)
 locked = true
 location_override = true
@@ -4241,7 +4239,6 @@ z_index = -1
 position = Vector2(-32, -62)
 
 [node name="Entry" parent="Entries" unique_id=449931674 instance=ExtResource("10_egu0m")]
-z_index = 2
 position = Vector2(-2986, 260)
 entry = 3
 locked = true
@@ -4253,7 +4250,6 @@ z_index = -1
 position = Vector2(-32, -64)
 
 [node name="Entry2" parent="Entries" unique_id=1858350691 instance=ExtResource("10_egu0m")]
-z_index = 2
 position = Vector2(-960, 269)
 entry = 1
 room = ExtResource("16_g5ibn")
@@ -4264,7 +4260,6 @@ z_index = -1
 position = Vector2(-32, -68)
 
 [node name="Entry3" parent="Entries" unique_id=202451068 instance=ExtResource("10_egu0m")]
-z_index = 2
 position = Vector2(-2044, 269)
 entry = 2
 room = ExtResource("17_n0r6o")
@@ -4275,7 +4270,6 @@ z_index = -1
 position = Vector2(-32, -66)
 
 [node name="Entry4" parent="Entries" unique_id=1029398201 instance=ExtResource("10_egu0m")]
-z_index = 2
 position = Vector2(-3901, 267)
 entry = 4
 room = ExtResource("17_n0r6o")
@@ -4287,7 +4281,7 @@ position = Vector2(-33, -66)
 
 [node name="CameraPos" parent="." unique_id=893203730 instance=ExtResource("19_tshqc")]
 position = Vector2(-2350, 202)
-offset = Vector2(0, -40)
+offset = Vector2(0, -80)
 
 [node name="NavRegions" type="Node" parent="." unique_id=352477175]
 
@@ -4298,7 +4292,7 @@ navigation_layers = 3
 
 [node name="DemonStalker" parent="." unique_id=744585521 instance=ExtResource("16_p7bsn")]
 visible = false
-position = Vector2(-2336, 253)
+position = Vector2(-1604, 254)
 
 [node name="AnimatedSprite2D" parent="DemonStalker" index="0" unique_id=994355252]
 position = Vector2(-1, 0)
@@ -4308,7 +4302,8 @@ flip_h = true
 position = Vector2(-2776, 137)
 
 [node name="LocalFlag->Disappear" parent="DemonStalker/LocalFlags" parent_id_path=PackedInt32Array(744585521, 761490593) index="1" unique_id=162967974]
-position = Vector2(-2565, 142)
+position = Vector2(-1794, 142)
+flag_active = false
 
 [node name="PC" parent="." unique_id=1041091659 instance=ExtResource("17_j8gjg")]
 position = Vector2(-2317, 284)
@@ -4317,7 +4312,7 @@ scale = Vector2(1.0760809, 0.94640315)
 [node name="BossArena" type="Node" parent="." unique_id=1859008299]
 
 [node name="BossIntro" parent="BossArena" unique_id=157589397 instance=ExtResource("18_g5ibn")]
-position = Vector2(-2563, 142)
+position = Vector2(-1794, 142)
 cutscene_name = "hallway_miniboss_intro"
 dialogue_only = false
 single_cutscene = false
@@ -4325,12 +4320,12 @@ activate_on_global_flag = true
 global_flag_name = "ShutOff"
 
 [node name="NamedBossSpawn" parent="BossArena" unique_id=1896744289 instance=ExtResource("18_isdh8")]
-position = Vector2(-2302, 260)
+position = Vector2(-1533, 260)
 boss = ExtResource("21_k5twc")
 active = false
 
 [node name="CameraAnchor" type="Node2D" parent="BossArena" unique_id=309757154]
-position = Vector2(-2203, 207)
+position = Vector2(-1434, 207)
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="BossArena" unique_id=1694875066]
 position = Vector2(-2056, 248)
@@ -4405,7 +4400,7 @@ flip_h = true
 [node name="Paths" type="Node" parent="." unique_id=1154897587]
 
 [node name="Path2D" type="Path2D" parent="Paths" unique_id=765633217]
-position = Vector2(-792, -73)
+position = Vector2(-24, -74)
 scale = Vector2(0.6628577, 1.2705309)
 curve = SubResource("Curve2D_k5twc")
 
