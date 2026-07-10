@@ -30,6 +30,8 @@ func _process(delta: float) -> void:
 
 func hit_stop(time_scale : float, duration : float):
 	Engine.time_scale = time_scale
+	if not dur.is_inside_tree():
+		add_timer()
 	dur.start(duration)
 	await(dur.timeout)
 	Engine.time_scale = 1.0
@@ -38,6 +40,8 @@ func hit_stop(time_scale : float, duration : float):
 func hit_stop_ease(time_scale_end: float, duration: float, _weight: float):
 	tween = get_tree().create_tween().set_ease(Tween.EASE_OUT)
 	tween.tween_property(Engine, "time_scale", time_scale_end, _weight)
+	if not dur.is_inside_tree():
+		add_timer()
 	dur.start(duration)
 	await(dur.timeout)
 	tween.kill()
@@ -58,3 +62,9 @@ func end_hit_stop():
 
 func dur_debug():
 	print_debug("hit_Stop_ending")
+	
+func add_timer() -> void:
+	add_child(dur)
+	dur.autostart=false
+	dur.one_shot=true
+	dur.ignore_time_scale=true
