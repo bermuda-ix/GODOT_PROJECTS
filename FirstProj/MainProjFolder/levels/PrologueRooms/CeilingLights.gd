@@ -82,3 +82,8 @@ func _on_persistent_data_handler_flicker_on_player_data_loaded(value: bool) -> v
 			flicker_on_player_flag.flag_active=false
 	else:
 		pass
+
+
+func _on_turn_on_flag_flag_activate() -> void:
+	enabled=true
+	flicker_on_player_flag.flag_active=false

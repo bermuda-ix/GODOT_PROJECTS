@@ -25,6 +25,12 @@ flag_name = "ShutOff"
 flag_active = true
 metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
 
+[node name="TurnOnFlag" type="Node" parent="." unique_id=1536388395]
+script = ExtResource("3_18c7c")
+flag_name = "TurnOn"
+flag_active = true
+metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
+
 [node name="FlickerOnPlayerFlag" type="Node" parent="." unique_id=768956235]
 script = ExtResource("3_18c7c")
 flag_name = "FlickerOnPlayer"
@@ -51,6 +57,7 @@ script = ExtResource("4_18c7c")
 metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 
 [connection signal="flag_activate" from="ShutOffFlag" to="." method="_on_shut_off_flag_flag_activate"]
+[connection signal="flag_activate" from="TurnOnFlag" to="." method="_on_turn_on_flag_flag_activate"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
 [connection signal="data_loaded" from="PersistentDataHandler" to="." method="_on_persistent_data_handler_data_loaded"]
