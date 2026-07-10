@@ -119,6 +119,7 @@ flag_type = 1
 
 [node name="LocalFlag->Disappear" parent="LocalFlags" unique_id=162967974 instance=ExtResource("9_2ccgf")]
 flag_type = 1
+flag_active = true
 
 [node name="GlobalFlagHandler" type="Node" parent="." unique_id=1406087607]
 script = ExtResource("10_ayhpl")
