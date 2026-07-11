@@ -1722,7 +1722,7 @@ tracks/4/path = NodePath("AnimatedSprite2D/VFXSprite:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.1, 0.12499999, 0.14999998, 0.17499998, 0.19999999, 0.54660714, 0.5799405, 0.61327386, 0.64660716, 0.67994046, 0.7132739, 0.7466072),
+"times": PackedFloat32Array(0, 0.016666668, 0.041666668, 0.06666667, 0.09166667, 0.11666667, 0.15, 0.175, 0.54660714, 0.5799405, 0.61327386, 0.64660716, 0.67994046, 0.7132739, 0.7466072),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [17, 14, 11, 8, 7, 6, 5, 4, 0, 1, 2, 3, 4, 5, 6]
@@ -1746,10 +1746,10 @@ tracks/6/path = NodePath("HitBox/hb_collision:disabled")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.03333333, 0.8132739, 0.8466072),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true, false, false, true]
+"values": [false]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -1770,10 +1770,10 @@ tracks/8/path = NodePath("AnimatedSprite2D/VFXSprite:self_modulate")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.51327384, 0.54660714),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.13333334, 0.51327384, 0.54660714, 0.8505988, 0.888572),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(0, 2.2734995, 1.1654314, 1), Color(0.22075704, 0.6738064, 1.92523e-07, 1), Color(1, 1, 1, 1)]
+"values": [Color(2.454227, 2.454227, 2.454227, 1), Color(0, 2.454227, 1.2603562, 1), Color(0.81682545, 2.2610493, 0, 1), Color(2.454227, 2.454227, 2.454227, 1), Color(2.454227, 2.454227, 2.454227, 1), Color(1, 1, 1, 1)]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
@@ -2750,7 +2750,7 @@ size = Vector2(25, 77)
 size = Vector2(9, 51)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a5flw"]
-size = Vector2(52, 82)
+size = Vector2(60, 82)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_uhne8"]
 
@@ -2811,7 +2811,6 @@ process_material = SubResource("ParticleProcessMaterial_2a376")
 
 [node name="VFXSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=374116599]
 visible = false
-modulate = Color(2.454227, 2.454227, 2.454227, 1)
 material = SubResource("ShaderMaterial_s1lrb")
 instance_shader_parameters/FloatParameter = 0.002000000095
 instance_shader_parameters/GlowColor = Color(0, 0, 0, 1)
@@ -2948,7 +2947,7 @@ script = ExtResource("18_n5mdn")
 metadata/_custom_type_script = "uid://cf3jqneer6g2o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" unique_id=1223872206]
-position = Vector2(0, 26)
+position = Vector2(-1, 26)
 shape = SubResource("RectangleShape2D_a5flw")
 
 [node name="NavigationTimer" type="Timer" parent="." unique_id=1927431750]
