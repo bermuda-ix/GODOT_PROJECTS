@@ -318,6 +318,8 @@ func _init_state_machine():
 	state_machine.add_transition(landed, attack, &"resume_attack")
 	state_machine.add_transition(melee_attack, clashed, &"clashed")
 	state_machine.add_transition(clashed, melee_attack, &"resume_melee")
+	state_machine.add_transition(melee_attack, melee_attack, &"resume_melee")
+	state_machine.add_transition(clashed, shooting_states, &"start_shoot")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -495,7 +497,12 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="reload":
 		shooting_states.dispatch(&"return_shooting")
 	elif anim_name=="melee_attack":
-		state_machine.dispatch(&"resume_chase")
+		print_debug(state_machine.get_active_state())
+		var _melee_ranged_colliding := attack_range.get_overlapping_bodies()
+		if _melee_ranged_colliding.is_empty():
+			state_machine.dispatch(&"start_shoot")
+		else:
+			state_machine.dispatch(&"resume_melee")
 	elif anim_name=="landed":
 		state_machine.dispatch(&"resume_attack")
 	elif anim_name=="clashed":
@@ -504,7 +511,6 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="staggered_entered":
 		vfx_player.play("staggered")
-	
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if state_machine.get_active_state()==parry and player_state!=player.flip_state:
@@ -808,3 +814,18 @@ func _on_vfx_player_animation_changed(old_name: StringName, new_name: StringName
 
 func _on_melee_attack_exited() -> void:
 	movement_handler.face_player_active=true
+	#var _melee_ranged_colliding := attack_range.get_overlapping_bodies()
+	#if _melee_ranged_colliding.is_empty():
+		#state_machine.dispatch(&"start_shoot")
+	#else:
+		#state_machine.dispatch(&"resume_attack")
+
+
+
+
+func _on_clashed_entered() -> void:
+	animation_player.play_section_with_markers("melee_attack", "attack_hit")
+	
+
+func _on_clashed_exited() -> void:
+	pass # Replace with function body.
