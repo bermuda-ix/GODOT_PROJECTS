@@ -320,6 +320,7 @@ func _init_state_machine():
 	state_machine.add_transition(clashed, melee_attack, &"resume_melee")
 	state_machine.add_transition(melee_attack, melee_attack, &"resume_melee")
 	state_machine.add_transition(clashed, shooting_states, &"start_shoot")
+	state_machine.add_transition(melee_attack, shooting_states, &"start_shoot")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -706,6 +707,7 @@ func _on_hit_box_clashed() -> void:
 	vfx_sprite.set_deferred("visible", false)
 	hit_stop.hit_stop(0.05, 0.5)
 	state_machine.dispatch(&"clashed")
+	stagger.set_stagger(stagger.stagger-1)
 	#animation_player.play("melee_attack")
 	#print_debug("clashed!")
 

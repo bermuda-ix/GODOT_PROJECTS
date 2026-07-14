@@ -100,7 +100,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 						impact_dir_right=true
 					else:
 						impact_dir_right=false
-					#print_debug(hitbox.launch_strength, ", ", hitbox.knock_back_strength)
+					print_debug(hitbox.launch_strength, ", ", hitbox.knock_back_strength)
 					#Events.camera_shake.emit(2,20)
 					knockback.emit(hitbox.launch_strength, hitbox.knock_back_strength, impact_dir_right)
 			

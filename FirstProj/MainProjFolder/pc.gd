@@ -3035,11 +3035,11 @@ func _on_clash_up() -> void:
 	
 func _on_knockback(_launch_strength : float, _knockback_strength : float, impact_dir_right : bool) -> void:
 	if stagger.stagger>0:
-		_launch_strength=roundf(_launch_strength/stagger.stagger)
-		_knockback_strength=roundf(_knockback_strength/stagger.stagger)
+		_launch_strength=roundf(_launch_strength/2)
+		_knockback_strength=roundf(_knockback_strength/2)
 	if impact_dir_right:
 		_knockback_strength*=-1
-	knockback.x=_knockback_strength*(face_dir)
+	knockback.x=_knockback_strength
 	if round(_launch_strength)!=0:
 		velocity.y= -(_launch_strength)
 	###### TBD LATTER #####
