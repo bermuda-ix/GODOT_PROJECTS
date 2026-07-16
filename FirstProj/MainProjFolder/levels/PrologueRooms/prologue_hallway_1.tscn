@@ -1203,6 +1203,18 @@ tracks/25/keys = {
 "update": 0,
 "values": [Vector2(1, 1)]
 }
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath(".:skippable")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_2p30m"]
 resource_name = "SOLDIER2"
@@ -1335,7 +1347,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-2303, 252)]
+"values": [Vector2(-1544, 252)]
 }
 tracks/5/type = "method"
 tracks/5/imported = false
@@ -4309,10 +4321,10 @@ position = Vector2(-2776, 137)
 position = Vector2(-1794, 142)
 flag_active = false
 
-[node name="GlobalFlagHandler" parent="DemonStalker" index="3" unique_id=1406087607 groups=["flags"]]
+[node name="GlobalFlagHandler" parent="DemonStalker" index="3" unique_id=1406087607 groups=["global_flag"]]
 
 [node name="PC" parent="." unique_id=1041091659 instance=ExtResource("17_j8gjg")]
-position = Vector2(-2317, 284)
+position = Vector2(-1793, 284)
 scale = Vector2(1.0760809, 0.94640315)
 
 [node name="BossArena" type="Node" parent="." unique_id=1859008299]
@@ -4432,7 +4444,7 @@ metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 script = ExtResource("167_j7bww")
 metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 
-[node name="GlobalFlagHandler" type="Node" parent="." unique_id=1520429715 groups=["flags"]]
+[node name="GlobalFlagHandler" type="Node" parent="." unique_id=1520429715 groups=["global_flag"]]
 script = ExtResource("169_s1x0g")
 flag_name = "ready_to_start"
 metadata/_custom_type_script = "uid://dg1m7uqm44pm3"

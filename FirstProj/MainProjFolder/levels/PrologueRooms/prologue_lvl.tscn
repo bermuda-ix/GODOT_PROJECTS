@@ -2121,7 +2121,7 @@ update_scale = false
 [node name="StartingPos" type="Node" parent="." index="35" unique_id=275376811]
 
 [node name="Default" type="Node2D" parent="StartingPos" index="0" unique_id=794793489 groups=["start_pos"]]
-position = Vector2(4095, 831)
+position = Vector2(190, 425)
 
 [node name="PersistentDataHandler" type="Node" parent="." index="36" unique_id=86022096]
 script = ExtResource("24_w82j5")
@@ -2151,23 +2151,6 @@ metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 [node name="PC" parent="." index="40" unique_id=1041091659 instance=ExtResource("143_ncaf0")]
 z_index = 1
 position = Vector2(2232, 790)
-
-[node name="SpAtkHitBox" parent="PC/AnimatedSprite2D/Shotty" parent_id_path=PackedInt32Array(1041091659, 868320843) index="5" unique_id=1612925221]
-damage = 1
-active = false
-clash_active = false
-heavy_attack = false
-attack_clashed = false
-launch = false
-knock_back = false
-launch_strength = 0.0
-knock_back_strength = 100.0
-pc_hitbos = false
-
-[node name="HitBox" parent="PC/AnimatedSprite2D" parent_id_path=PackedInt32Array(1041091659, 1997899952) index="7" unique_id=101478943]
-damage = 1
-heavy_attack = false
-attack_clashed = false
 
 [connection signal="scene_reloaded" from="." to="." method="_on_scene_reloaded"]
 [connection signal="locked_door" from="Props/SecDoorLower/SecEntryLower" to="Props/SecDoorLower/SecEntryLower/EventFlag" method="flag_triggered" flags=3]

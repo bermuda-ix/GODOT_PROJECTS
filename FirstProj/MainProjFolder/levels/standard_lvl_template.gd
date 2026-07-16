@@ -110,8 +110,11 @@ func _ready():
 	player.dodge_qte.connect(_pc_dodge_qte)
 	player.special_atk_qte.connect(_pc_special_atk_qte)
 	player.no_input_qte.connect(_pc_no_input_qte)
-	
 	player.scale = Vector2(pc_scale, pc_scale)
+	
+	camera_offset=camera_pos.offset
+	camera_zoom=camera_pos.camera_zoom
+	camera_stationary=camera_pos.stationary
 	
 	if init_starting_pos!=null:
 		player.global_position=init_starting_pos.global_position
@@ -242,6 +245,7 @@ func load_cutscene_queue(_cutscene_list_rec : String):
 	cutscene_queue.assign(_cutscene_list.cutscene_list)
 
 func play_cutscene_queue():
+	cutscene_queue_index=0
 	Events.start_cutscene.emit()
 	cutscene_active=true
 	cutscene_player.play(cutscene_queue[cutscene_queue_index])
@@ -387,13 +391,9 @@ func reload_scene():
 		
 
 func _on_mini_boss_1_flag_flag_triggered() -> void:
-	#mini_boss_right_boundery_col.call_deferred("set_disabled", true)
-	#mini_boss_right_boundery_col.disabled=false
+	
 	cutscene_player.play("Mini_Boss_Start")
-	#soldier_enemy_boss.boss_ui.visible=true
-	#soldier_enemy_boss.global_position=mini_boss_1_start_pos.global_position
-	#soldier_enemy_boss.boss_activate()
-	#camera_pos.stationary=true
+
 	
 func boss_start() -> void:
 	pass

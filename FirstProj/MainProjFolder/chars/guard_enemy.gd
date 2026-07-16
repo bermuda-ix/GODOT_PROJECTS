@@ -132,6 +132,8 @@ var attacking : bool = false
 @onready var death_handler: DeathHandler = $DeathHandler
 @export var death_time_scale: float = 1.0
 @onready var norm_delta
+@export var death_knockback := 100.0
+@export var death_launch := -30
 
 #Grouping enemies
 @onready var linked_enemies : Array[Node2D]
@@ -630,12 +632,12 @@ func _on_hurt_box_knockback(_launch_strength : float, _knock_back_strength : flo
 
 func _on_hurt_box_body_entered(body: Node2D) -> void:
 	pass
-	#if "knocked_back" in body:
-		#if body.knocked_back == true:
-			#knockback.x=body.velocity.x/2
-			#hit_stop.hit_stop(0.5, 0.5)
-			#stagger.staggered.emit()
-			#Events.camera_shake.emit(2,20)
+	if "knocked_back" in body:
+		if body.knocked_back == true:
+			knockback.x=body.velocity.x/2
+			hit_stop.hit_stop(0.01, 0.1)
+			stagger.staggered.emit()
+			Events.camera_shake.emit(2,20)
 
 
 func _on_hit_entered() -> void:
@@ -710,3 +712,12 @@ func _on_animation_player_animation_changed(old_name: StringName, new_name: Stri
 
 func _on_dodge_entered() -> void:
 	movement_handler.active=false
+
+
+func _on_dying_entered() -> void:
+	knocked_back=true
+	if player_right:
+		knockback.x=-death_knockback
+	else:
+		knockback.x=death_knockback
+	knockback.y=death_launch

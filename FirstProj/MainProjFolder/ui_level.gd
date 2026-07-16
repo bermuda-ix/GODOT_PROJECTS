@@ -39,11 +39,11 @@ func _process(delta):
 	#set_stagger_smooth(stagger)
 
 
-func set_health(value: int) -> void:
-	health = value
-	health_bar_ui.value=value
+#func set_health(value: int) -> void:
+	#health = value
+	#health_bar_ui.value=value
 
-func set_health_smooth(value: int) -> void:
+func set_health(value: int) -> void:
 	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween.tween_property(health_bar_ui, "value", value, 0.8)
 	tween.connect("finished", tween_done)
@@ -54,10 +54,10 @@ func set_cur_state(value: String) -> void:
 func set_max_health(value: int) -> void:
 	health_bar_ui.max_value = value
 
-func set_stagger(value : int) -> void:
-	stagger=value
+#func set_stagger(value : int) -> void:
+	#stagger=value
 
-func set_stagger_smooth(value: int) -> void:
+func set_stagger(value: int) -> void:
 	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween.tween_property(health_bar_ui, "value", value, 0.8)
 	tween.connect("finished", tween_done)
