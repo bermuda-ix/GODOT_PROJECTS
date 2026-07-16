@@ -617,7 +617,7 @@ func _on_hurt_box_launched(launch_strength: float) -> void:
 func _on_hurt_box_knockback(_launch_strength : float, _knock_back_strength : float, _impact_dir_right : bool) -> void:
 	player.clash_up.emit()
 	vfx_player.play("knocked_back")
-	hit_stop.hit_stop(0.5, 0.5)
+	hit_stop.hit_stop(0.01, 0.1)
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
 		if player_right:
@@ -632,12 +632,12 @@ func _on_hurt_box_knockback(_launch_strength : float, _knock_back_strength : flo
 
 func _on_hurt_box_body_entered(body: Node2D) -> void:
 	pass
-	if "knocked_back" in body:
-		if body.knocked_back == true:
-			knockback.x=body.velocity.x/2
-			hit_stop.hit_stop(0.01, 0.1)
-			stagger.staggered.emit()
-			Events.camera_shake.emit(2,20)
+	#if "knocked_back" in body:
+		#if body.knocked_back == true:
+			#knockback.x=body.velocity.x/2
+			#hit_stop.hit_stop(0.01, 0.1)
+			#stagger.staggered.emit()
+			#Events.camera_shake.emit(2,20)
 
 
 func _on_hit_entered() -> void:
