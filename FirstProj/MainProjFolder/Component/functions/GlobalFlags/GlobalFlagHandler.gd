@@ -2,7 +2,7 @@ class_name GlobalFlagHandler extends Node
 
 @export_category("Flag Settings")
 @export var flag_name : String = "No Flag"
-@export var flag_active : bool
+@export var flag_active : bool : set = flag_toggle, get = get_active
 @export_category("Flag trigger")
 @export var flag_triggered : bool = false
 
@@ -20,3 +20,8 @@ func trigger_flag(_flag : String) -> void:
 	else:
 		pass
 		
+func get_active() -> bool:
+	return flag_active
+
+func flag_toggle(_value: bool) -> void:
+	flag_active=_value

@@ -25,6 +25,7 @@ polygon = PackedVector2Array(38, 89, 274, 88, 273, 99, 262, 100, 262, 106, 358, 
 script = ExtResource("1_xnekh")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1607433444]
+visible = false
 
 [node name="LevelCompleted" parent="CanvasLayer" unique_id=2104205232 instance=ExtResource("2_rsvcx")]
 visible = false

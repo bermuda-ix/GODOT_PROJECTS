@@ -30,7 +30,8 @@ var current_save : Dictionary = {
 		max_stagger=5,
 		pos_x = 0,
 		pos_y=0
-	}
+	},
+	flags={},
 }
 
 func reset_player_data() -> void:

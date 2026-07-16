@@ -5,7 +5,7 @@
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_p530q"]
 b = Vector2(0, 160)
 
-[node name="CutsceneFlag" type="Node2D" unique_id=157589397]
+[node name="CutsceneFlag" type="Node2D" unique_id=157589397 groups=["flags"]]
 script = ExtResource("1_lghqt")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=446219285]

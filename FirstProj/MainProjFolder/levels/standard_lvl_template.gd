@@ -97,6 +97,7 @@ func _ready():
 	#Events.pause.connect(show_pause)
 	#Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
+	Events.load_checkpoint.connect(reload_scene)
 	#Events.increase_heat_lvl.connect(increase_heat)
 	load_cutscene_queue(Cutscenes.Cutscenes["MiniBoss1"])
 	ui_level.set_max_health(player.health.max_health)
@@ -127,6 +128,7 @@ func _ready():
 	if not cutscene_active and not camera_pos.stationary:
 		camera_pos.global_position=Vector2(player.global_position.x, player.global_position.y-40)
 		camera_pos.set_cam_smooth(true)
+
 	
 	#Ready up spawns
 	if get_tree().get_nodes_in_group("SpawnPoints").is_empty():
@@ -150,6 +152,12 @@ func _process(_delta):
 func _physics_process(delta: float) -> void:
 	if not cutscene_active and not camera_pos.stationary:
 		camera_pos.global_position=Vector2(player.global_position.x, player.global_position.y-camera_offset_y)
+	#else:
+		#assert(cutscene_active==true or camera_pos.stationary==true)
+		#
+	#print_debug(camera_pos.global_position, " , ", Vector2(player.global_position.x, player.global_position.y-camera_offset_y))
+	#if camera_pos.global_position!=Vector2(player.global_position.x, player.global_position.y-camera_offset_y):
+		#pass
 
 func show_level_complete():
 
@@ -164,8 +172,10 @@ func show_level_complete():
 	LevelTransition.fade_from_black()
 
 func show_game_over():
+	camera_pos.boss_active=false
+	camera_pos.stationary=false
 	Global.game_controller.show_game_over(name)
-	get_tree().paused = true
+	#get_tree().paused = true
 
 #func show_pause():
 	#pause_menu.show()
@@ -352,6 +362,7 @@ func reload_scene():
 	assert(camera_pos.camera_zoom==camera_zoom)
 	camera_pos.offset=camera_offset
 	camera_pos.stationary=camera_stationary
+	cutscene_active=false
 	var _bosses = get_tree().get_nodes_in_group("Boss")
 	for boss in _bosses:
 		boss.boss_reset()
@@ -359,11 +370,19 @@ func reload_scene():
 	var _boss_boundaries = get_tree().get_nodes_in_group("boss_boundary")
 	for _boss_boundary in _boss_boundaries:
 		_boss_boundary.call_deferred("set_disabled", true)
-	var _flags = get_tree().get_nodes_in_group("group_1_flags")
+	var _flags = get_tree().get_nodes_in_group("flags")
 	for _flag in _flags:
-		_flag.flag_active=true
-		_flag.collision_shape_2d.call_deferred("set_disabled", false)
-		_flag.flag_reset()
+		if "flag_active" in _flag:
+			if GlobalSaveData.current_save.has(_flag.name):
+				_flag.flag_toggle(GlobalSaveData.current_save["flags"][_flag.name])
+				if !_flag.is_in_group("global_flag"):
+					_flag.collision_shape_2d.call_deferred("set_disabled", false)
+			else:
+				_flag.flag_active=true
+				if !_flag.is_in_group("global_flag"): 
+					_flag.collision_shape_2d.call_deferred("set_disabled", false)
+				if "flag_reset" in _flag:
+					_flag.flag_reset()
 	scene_reloaded.emit()
 		
 

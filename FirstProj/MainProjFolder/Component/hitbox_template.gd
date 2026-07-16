@@ -72,6 +72,9 @@ func refresh_collision() -> void:
 		collision_shape.set_deferred("disabled", true)
 		collision_shape.set_deferred("disabled", false)
 
+func set_collision() -> void:
+	collision_shape.set_deferred("disabled", false)
+
 func _on_impact(_area :Area2D) -> void:
 	mutex.lock()
 	##############################################

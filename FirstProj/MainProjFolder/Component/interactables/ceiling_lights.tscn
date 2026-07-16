@@ -19,19 +19,19 @@ script = ExtResource("2_hj4ck")
 flicker_active = false
 relight_delay = 0.3
 
-[node name="ShutOffFlag" type="Node" parent="." unique_id=199266055]
+[node name="ShutOffFlag" type="Node" parent="." unique_id=199266055 groups=["flags", "global_flag"]]
 script = ExtResource("3_18c7c")
 flag_name = "ShutOff"
 flag_active = true
 metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
 
-[node name="TurnOnFlag" type="Node" parent="." unique_id=1536388395]
+[node name="TurnOnFlag" type="Node" parent="." unique_id=1536388395 groups=["flags", "global_flag"]]
 script = ExtResource("3_18c7c")
 flag_name = "TurnOn"
 flag_active = true
 metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
 
-[node name="FlickerOnPlayerFlag" type="Node" parent="." unique_id=768956235]
+[node name="FlickerOnPlayerFlag" type="Node" parent="." unique_id=768956235 groups=["flags", "global_flag"]]
 script = ExtResource("3_18c7c")
 flag_name = "FlickerOnPlayer"
 metadata/_custom_type_script = "uid://dg1m7uqm44pm3"

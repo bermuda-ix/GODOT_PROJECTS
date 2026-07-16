@@ -9910,17 +9910,7 @@ position = Vector2(0, 3.5762787e-07)
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("6_y7jp7")
-damage = null
 stagger_damage = true
-active = null
-clash_active = null
-heavy_attack = null
-attack_clashed = null
-launch = null
-knock_back = null
-launch_strength = null
-knock_back_strength = null
-pc_hitbos = null
 metadata/_custom_type_script = "uid://5ijvah6jjgdb"
 
 [node name="SpAtkCone" type="CollisionPolygon2D" parent="AnimatedSprite2D/Shotty/SpAtkHitBox" unique_id=2132034108]
@@ -10050,10 +10040,7 @@ position = Vector2(0, -16.3107)
 collision_layer = 64
 collision_mask = 268435737
 script = ExtResource("6_y7jp7")
-damage = null
 stagger = NodePath("../../Stagger")
-heavy_attack = null
-attack_clashed = null
 launch_strength = 40.0
 knock_back_strength = 500.0
 pc_hitbos = true
@@ -10171,7 +10158,6 @@ shape = SubResource("RectangleShape2D_pmx5o")
 [node name="Health" type="Node" parent="." unique_id=994567121]
 script = ExtResource("4_q0gnn")
 max_health = 10
-immortality_debug = true
 
 [node name="ClashPower" type="Node" parent="." unique_id=2128103427 node_paths=PackedStringArray("health", "stagger")]
 script = ExtResource("82_h0fyw")
@@ -10185,7 +10171,6 @@ wait_time = 10.0
 [node name="Stagger" type="Node" parent="." unique_id=1993234788]
 script = ExtResource("53_7ax8a")
 max_stagger = 5
-stagger_immortality = true
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="StaggerRecover" type="Timer" parent="." unique_id=45084604]

@@ -64,7 +64,7 @@ func _ready() -> void:
 	
 	test_start()
 	#change_gui_scene(LevelList.MAIN_MENU)
-	level_UI.visible=false
+	#level_UI.visible=false
 	
 	
 func _process(delta: float) -> void:
@@ -78,6 +78,7 @@ func test_start() -> void:
 	load_first_room("PrologueLvl")
 	prev_2d_scene=current_2d_scene
 	#current_2d_scene.player=player
+	canvas_layer.visible=true
 	load_levels(LevelsList.level_maps)
 	_init_objectives(ObjectivesByLevel.prologue_init_objectives)
 
@@ -96,6 +97,8 @@ func unpause():
 	
 func show_game_over(value: String):
 	current_2d_scene.set_process(false)
+	current_2d_scene.set_physics_process(false)
+	get_tree().paused=true
 	game_over.show()
 	
 
@@ -128,6 +131,7 @@ func call_preload_levels(_dict : Dictionary):
 
 func reload_game() -> void:
 	get_tree().reload_current_scene()
+	
 		
 func reload_from_checkpoint(_transition_in : String="fade_to_black", \
 	_transition_out : String="fade_from_black") -> void:
@@ -135,6 +139,7 @@ func reload_from_checkpoint(_transition_in : String="fade_to_black", \
 	world_2d.call_deferred("remove_child", current_2d_scene) #removes_node
 	await current_2d_scene.tree_exited
 	world_2d.add_child(current_2d_scene)
+	
 	GlobalSaveData.load_persistant_data()
 	
 	#current_2d_scene=_reload_scene
@@ -142,8 +147,11 @@ func reload_from_checkpoint(_transition_in : String="fade_to_black", \
 	reset_player_pos_checkpoint()
 	#await self.player_pos_reset_to_checkpoint
 	retrieve_player_data()
-	#await self.player_data_retrieved
-	#current_2d_scene.reload_scene()
+	current_2d_scene.set_process(true)
+	current_2d_scene.set_physics_process(true)
+	
+	#await self.player_data_retrievedf
+	current_2d_scene.reload_scene()
 	##await current_2d_scene.scene_reloaded
 	#LevelTransition.transition_out(_transition_out)
 	#game_over.hide()

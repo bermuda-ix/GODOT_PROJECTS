@@ -185,6 +185,9 @@ var distance
 
 var spawn_loc : Vector2
 
+##If spawned on event
+@export var spawned := true
+
 @onready var ammo_count
 
 #DEBUG
@@ -266,7 +269,7 @@ func _ready():
 	hurt_box.set_damage_mulitplyer(1)
 	Events.allied_enemy_hit.connect(adjust_counter)
 	Events.game_over.connect(game_over)
-	#Events.reload_level_checkpoint.connect(boss_reset)
+	Events.reload_level_checkpoint.connect(boss_reset)
 	vision_handler.active=vision_active
 	vision_handler.stay_on=vision_stay_on
 	vision_handler.always_on=vision_always_on
@@ -1174,46 +1177,50 @@ func _on_death_updated(delta: float) -> void:
 	animation_player.play("dead")
 
 func boss_reset() -> void:
-	process_mode=Node.PROCESS_MODE_INHERIT
-	vision_handler.active=vision_active
-	vision_handler.stay_on=vision_stay_on
-	vision_handler.always_on=vision_always_on
-	combat_state_change_handler.ranged_dist=100
-	bt_player.blackboard.set_var("attack_mode", false)
-	bt_player.blackboard.set_var("melee_mode", false)
-	bt_player.blackboard.set_var("ranged_mode", true)
-	bt_player.blackboard.set_var("within_range", false)
-	bt_player.blackboard.set_var("counter_attack", false)
-	bt_player.blackboard.set_var("counter_kick_flag", false)
-	bt_player.blackboard.set_var("staggered", false)
-	bt_player.blackboard.set_var("Phase2Active", false)
-	dying.blackboard.set_var("hit_the_floor", false)
-	bt_player.restart()
-	is_on_screen=false
-	bt_player.active=false
-	animation_player.stop()
-	state_machine.change_active_state(idle)
-	state_machine.restart()
-	combat_state_machine.change_active_state(ranged_mode)
-	combat_state_machine.restart()
-	phases.change_active_state(phase_1)
-	phases.restart()
-	health.health=health.max_health
-	stagger.stagger=stagger.max_stagger
-	movement_handler.active=false
-	phases_handler.reset_phases()
-	#process_mode=Node.PROCESS_MODE_DISABLED
-	set_process(false)
-	set_physics_process(false)
-	state_machine.remove_transition(attack, &"teleport_counter")
-	state_machine.remove_transition(staggered, &"teleport_recover")
-	state_machine.remove_transition(chasing, &"teleport_atk")
-	state_machine.remove_transition(teleport_and_shoot, teleport_and_shoot.success_event)
-	state_machine.remove_transition(teleport_and_hit, teleport_and_hit.success_event)
-	teleport_handler.teleport_dir_helper_rc.global_position=global_position
-	teleport_handler.teleport_dir_helper_rc.top_level=false
-	boss_reloaded.emit()
-	#_ready()
+	if spawned:
+		queue_free()
+	else:
+			
+		process_mode=Node.PROCESS_MODE_INHERIT
+		vision_handler.active=vision_active
+		vision_handler.stay_on=vision_stay_on
+		vision_handler.always_on=vision_always_on
+		combat_state_change_handler.ranged_dist=100
+		bt_player.blackboard.set_var("attack_mode", false)
+		bt_player.blackboard.set_var("melee_mode", false)
+		bt_player.blackboard.set_var("ranged_mode", true)
+		bt_player.blackboard.set_var("within_range", false)
+		bt_player.blackboard.set_var("counter_attack", false)
+		bt_player.blackboard.set_var("counter_kick_flag", false)
+		bt_player.blackboard.set_var("staggered", false)
+		bt_player.blackboard.set_var("Phase2Active", false)
+		dying.blackboard.set_var("hit_the_floor", false)
+		bt_player.restart()
+		is_on_screen=false
+		bt_player.active=false
+		animation_player.stop()
+		state_machine.change_active_state(idle)
+		state_machine.restart()
+		combat_state_machine.change_active_state(ranged_mode)
+		combat_state_machine.restart()
+		phases.change_active_state(phase_1)
+		phases.restart()
+		health.health=health.max_health
+		stagger.stagger=stagger.max_stagger
+		movement_handler.active=false
+		phases_handler.reset_phases()
+		#process_mode=Node.PROCESS_MODE_DISABLED
+		set_process(false)
+		set_physics_process(false)
+		state_machine.remove_transition(attack, &"teleport_counter")
+		state_machine.remove_transition(staggered, &"teleport_recover")
+		state_machine.remove_transition(chasing, &"teleport_atk")
+		state_machine.remove_transition(teleport_and_shoot, teleport_and_shoot.success_event)
+		state_machine.remove_transition(teleport_and_hit, teleport_and_hit.success_event)
+		teleport_handler.teleport_dir_helper_rc.global_position=global_position
+		teleport_handler.teleport_dir_helper_rc.top_level=false
+		boss_reloaded.emit()
+		#_ready()
 	
 func game_over() -> void:
 	#boss_ui.visible=false

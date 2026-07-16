@@ -6,7 +6,7 @@ class_name EventFlag extends Node
 @export_flags("Cutscene", "Event", "Other", "Cutscene and Event:3") var flag_types = 0
 @export var trigger_once : bool = true
 @export var cutscene_name : String
-@export var flag_active : bool = false
+@export var flag_active : bool = false : set = flag_toggle, get = get_active
 @export var dialogue_only : bool = true
 @export var single_cutscene : bool = true
 
@@ -37,6 +37,9 @@ func _ready() -> void:
 
 func flag_toggle(_value: bool):
 	flag_active=_value
+
+func get_active() -> bool:
+	return flag_active
 
 func flag_activate_on_global(_flag_name : String):
 	flag_active=true

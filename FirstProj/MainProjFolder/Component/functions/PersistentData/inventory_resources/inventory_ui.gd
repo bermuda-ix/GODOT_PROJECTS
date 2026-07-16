@@ -34,5 +34,5 @@ func remove_inv_item(name : String) -> void:
 	
 func update_inv_amount(name : String, value : int) -> void:
 	var inv_update : inv_item = grid_container.find_child(name)
-	print_debug(inv_update.name, " is updating")
-	inv_update.amount_text.text=str(value)
+	#print_debug(inv_update.name, " is updating")
+	#inv_update.amount_text.text=str(value)

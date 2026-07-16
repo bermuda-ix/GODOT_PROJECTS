@@ -3,7 +3,7 @@ class_name LocalFlag extends Node2D
 
 @export_enum("Cutscene", "Event", "Other") var flag_type : int
 @export var cutscene_name : String
-@export var flag_active : bool = false
+@export var flag_active : bool = false  : set = flag_toggle, get = get_active
 @export var dialogue_only : bool = true
 @export var single_cutscene : bool = true
 @onready var collision_shape_2d: CollisionShape2D = $Area2D/CollisionShape2D
@@ -34,14 +34,17 @@ func _ready() -> void:
 	collision_shape_2d.disabled=false
 	Events.global_flag_trigger.connect(flag_activate_on_global)
 
-func flag_toggle():
-	flag_active!=flag_active
+func flag_toggle(_value: bool) -> void:
+	flag_active=_value
 
 func flag_reset():
 	collision_shape_2d.call_deferred("set_disabled", false)
 
 func flag_activate():
 	flag_active=true
+	
+func get_active() -> bool:
+	return flag_active
 
 func flag_activate_on_global(_flag_name : String):
 	flag_active=true

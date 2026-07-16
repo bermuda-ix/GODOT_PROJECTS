@@ -169,6 +169,8 @@
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="166_lhcp8"]
 [ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="167_j7bww"]
 [ext_resource type="Script" uid="uid://dg1m7uqm44pm3" path="res://Component/functions/GlobalFlags/GlobalFlagHandler.gd" id="169_s1x0g"]
+[ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="170_0rjb8"]
+[ext_resource type="PackedScene" uid="uid://bkr6h5xga8wr" path="res://Component/functions/local_flag.tscn" id="171_74y6a"]
 
 [sub_resource type="Gradient" id="Gradient_bw5xo"]
 
@@ -4126,6 +4128,7 @@ environment = SubResource("Environment_bw5xo")
 visible = false
 
 [node name="UI_Level" parent="CanvasLayer" unique_id=781999026 instance=ExtResource("2_aghnt")]
+visible = false
 
 [node name="GameOver" parent="CanvasLayer" unique_id=33262358 instance=ExtResource("3_puuy3")]
 visible = false
@@ -4299,11 +4302,14 @@ position = Vector2(-1, 0)
 flip_h = true
 
 [node name="LocalFlag->Appear" parent="DemonStalker/LocalFlags" parent_id_path=PackedInt32Array(744585521, 761490593) index="0" unique_id=839984177]
+visible = false
 position = Vector2(-2776, 137)
 
 [node name="LocalFlag->Disappear" parent="DemonStalker/LocalFlags" parent_id_path=PackedInt32Array(744585521, 761490593) index="1" unique_id=162967974]
 position = Vector2(-1794, 142)
 flag_active = false
+
+[node name="GlobalFlagHandler" parent="DemonStalker" index="3" unique_id=1406087607 groups=["flags"]]
 
 [node name="PC" parent="." unique_id=1041091659 instance=ExtResource("17_j8gjg")]
 position = Vector2(-2317, 284)
@@ -4426,7 +4432,7 @@ metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 script = ExtResource("167_j7bww")
 metadata/_custom_type_script = "uid://bv1k14bnql5dy"
 
-[node name="GlobalFlagHandler" type="Node" parent="." unique_id=1520429715]
+[node name="GlobalFlagHandler" type="Node" parent="." unique_id=1520429715 groups=["flags"]]
 script = ExtResource("169_s1x0g")
 flag_name = "ready_to_start"
 metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
@@ -4434,9 +4440,22 @@ metadata/_custom_type_script = "uid://dg1m7uqm44pm3"
 [node name="StartingPos" type="Node2D" parent="." unique_id=1050802919]
 position = Vector2(238, 241)
 
+[node name="Checkpoint" parent="." unique_id=2035831753 node_paths=PackedStringArray("player") instance=ExtResource("170_0rjb8")]
+position = Vector2(-1834, 260)
+player = NodePath("../PC")
+
+[node name="LocalFlag" parent="." unique_id=2076195119 instance=ExtResource("171_74y6a")]
+position = Vector2(-1927, 138)
+flag_type = 1
+dialogue_only = false
+single_cutscene = false
+activate_on_global_flag = true
+global_flag_name = "ShutOff"
+
 [connection signal="animation_finished" from="CutscenePlayer" to="." method="_on_cutscene_player_animation_finished"]
 [connection signal="play_cutscene" from="BossArena/BossIntro" to="." method="play_cutscene_segment"]
 [connection signal="play_cutscene_list" from="BossArena/BossIntro" to="." method="play_cutscene_queue"]
+[connection signal="event_flag_triggered" from="LocalFlag" to="Checkpoint" method="_activate_checkpoint"]
 
 [editable path="Lights/CeilingLight2"]
 [editable path="CameraPos"]
