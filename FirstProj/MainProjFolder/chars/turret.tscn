@@ -1,14 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://0ug6bp2pmux4"]
+[gd_scene format=3 uid="uid://0ug6bp2pmux4"]
 
 [ext_resource type="Script" uid="uid://tifgdq27rt6g" path="res://chars/turret.gd" id="1_tt2xe"]
 
-[node name="Turret" type="Node2D"]
+[node name="Turret" type="Node2D" unique_id=2099287433]
 script = ExtResource("1_tt2xe")
 
-[node name="PlayerTracking" type="RayCast2D" parent="."]
+[node name="PlayerTracking" type="RayCast2D" parent="." unique_id=561774983]
 target_position = Vector2(48, 0)
 
-[node name="ShootTimer" type="Timer" parent="."]
+[node name="ShootTimer" type="Timer" parent="." unique_id=46007201]
+wait_time = 0.2
 one_shot = true
 
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

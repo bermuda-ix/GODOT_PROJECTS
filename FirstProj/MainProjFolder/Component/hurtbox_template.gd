@@ -148,7 +148,7 @@ func hitbox_collision():
 func bullet_impact(_damage : int = 1) -> void:
 	if not active:
 		return
-	bullet_buffer.start(0.2)
+	bullet_buffer.start(0.1)
 	bullet_damage+=1
 	
 

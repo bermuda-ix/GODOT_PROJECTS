@@ -505,4 +505,6 @@ environment = SubResource("Environment_dqkb5")
 position = Vector2(908, 91)
 scale = Vector2(0.6, 0.6)
 
+[connection signal="update_health" from="PC" to="CanvasLayer/UI_Level" method="set_health"]
+
 [editable path="CameraPos"]

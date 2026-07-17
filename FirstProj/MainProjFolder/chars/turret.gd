@@ -1,3 +1,4 @@
+@tool
 extends Node2D
 class_name Turret
 
@@ -21,8 +22,15 @@ var pos = position
 @export var infinite_ammo : bool
 @export var slow_track : bool = false
 @export var shoot_speed : float = 0.2
+@export var instant_tracking := false
+##Faster tracking closer to 1.0
+@export var tracking_speed := 0.4
 
 var dist_to_player : get = get_dist_to_player
+
+func _validate_property(property: Dictionary) -> void:
+	if property.name == "tracking_speed" and instant_tracking:
+		property.usage |= PROPERTY_USAGE_READ_ONLY
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -53,7 +61,10 @@ func track_player():
 		if player == null or player.flipped_over:
 			return
 		
-		player_tracker.target_position = to_local(player.global_position)
+		if instant_tracking:
+			player_tracker.target_position = to_local(player.global_position)
+		else:
+			player_tracker.target_position = lerp(player_tracker.target_position, to_local(player.global_position), 0.4)
 		
 		direction_to_player = player.global_position - pos
 		#turret_body.rotation=direction_to_player.angle()
