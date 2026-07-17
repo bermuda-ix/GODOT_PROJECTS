@@ -303,6 +303,7 @@ func _init_state_machine():
 	state_machine.add_transition(chasing, jump, &"jump")
 	state_machine.add_transition(jump, chasing, &"land")
 	state_machine.add_transition(hit, attack, &"hit_recover")
+	state_machine.add_transition(hit, shooting, &"hit_recover_shoot")
 	state_machine.add_transition(attack, parry, &"parry")
 	state_machine.add_transition(chasing, parry, &"parry")
 	state_machine.add_transition(shooting_states, parry, &"parry")
@@ -576,6 +577,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			animation_player.play("hit")
 			AudioStreamManager.play(SoundFx.SOCAPEX_NEW_HITS_2)
 		if (state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death and state_machine.get_active_state()!=staggered):
+			parry_timer.wait_time=1
 			state_machine.dispatch(&"hit")
 		
 		#set_state(current_state, States.HIT)
@@ -596,7 +598,13 @@ func _on_stagger_timer_timeout() -> void:
 
 
 func _on_parry_timer_timeout() -> void:
-	state_machine.dispatch(&"hit_recover")
+	var prev_state
+	if state_machine.get_previous_active_state()!=hit:
+		prev_state=state_machine.get_previous_active_state()
+	if prev_state==melee_attack:
+		state_machine.dispatch(&"hit_recover")
+	else:
+		state_machine.dispatch(&"hit_recover_shoot")
 	
 
 
@@ -794,6 +802,13 @@ func _on_hurt_box_knockback(_launch_strength: float, _knock_back_strength: float
 		launch.air_time=1.0
 		if state_machine.get_active_state()!=staggered:
 			state_machine.change_active_state(launch)
+	else:
+		parry_timer.wait_time=2
+		state_machine.dispatch(&"hit")
+		if player_right:
+			launch.knock_back_strength = -_knock_back_strength/2
+		else:
+			launch.knock_back_strength =_knock_back_strength/2
 		
 
 
@@ -801,7 +816,7 @@ func _on_hurt_box_body_entered(body: Node2D) -> void:
 	if "knocked_back" in body:
 		if body.knocked_back == true:
 			hit_stop.hit_stop(0.2, 0.3)
-			stagger.staggered.emit()
+			#stagger.staggered.emit()
 			Events.camera_shake.emit(2,20)
 
 

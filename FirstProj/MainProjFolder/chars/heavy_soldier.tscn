@@ -2816,7 +2816,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8fd3j"]
-size = Vector2(13, 65)
+size = Vector2(17, 65)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_86qvh"]
 size = Vector2(20, 81)
@@ -2950,7 +2950,7 @@ collision_mask = 8388672
 priority = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shield" unique_id=1636982715]
-position = Vector2(3.5, 38.5)
+position = Vector2(1.5, 38.5)
 shape = SubResource("RectangleShape2D_8fd3j")
 
 [node name="ParryBox" type="Area2D" parent="." unique_id=2025508034 groups=["shield"]]
@@ -3242,10 +3242,12 @@ animation_player = NodePath("../../AnimationPlayer")
 tree_active = false
 metadata/_custom_type_script = "uid://c4yno8xy5erif"
 
-[node name="Dying" type="BTState" parent="StateMachine" unique_id=1270935107]
+[node name="Dying" type="BTState" parent="StateMachine" unique_id=1270935107 node_paths=PackedStringArray("actor")]
 behavior_tree = ExtResource("45_jdney")
 blackboard_plan = SubResource("BlackboardPlan_vtt0c")
 script = ExtResource("47_cl2c2")
+actor = NodePath("../..")
+death_knockback = 400
 
 [node name="Launch" type="LimboState" parent="StateMachine" unique_id=1511695115 node_paths=PackedStringArray("actor", "launch_timer")]
 script = ExtResource("100_8h24x")

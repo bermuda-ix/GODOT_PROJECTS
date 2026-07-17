@@ -2978,7 +2978,7 @@ func _on_texture_button_pressed() -> void:
 
 
 func _on_health_health_changed(diff: int) -> void:
-	pass # Replace with function body.
+	set_health()
 
 
 func _on_death_entered() -> void:

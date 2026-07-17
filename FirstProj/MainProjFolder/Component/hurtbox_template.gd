@@ -164,7 +164,7 @@ func _knocked_back_enemy_collision(_body : Node2D):
 				impact_dir_right=false
 			else:
 				impact_dir_right=true
-			stagger.staggered.emit()
+			stagger.set_stagger(stagger.stagger-3)
 			knockback.emit(_launch_strength, _body.velocity.x/2, impact_dir_right)
 			#knockback.x=_rigid_body.velocity.x/2
 			
