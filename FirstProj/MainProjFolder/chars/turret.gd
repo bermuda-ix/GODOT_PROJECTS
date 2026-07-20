@@ -1,4 +1,3 @@
-@tool
 extends Node2D
 class_name Turret
 
@@ -56,9 +55,11 @@ func setup(time : float):
 func track_player():
 	if slow_track:
 		return
+	elif player==null:
+		return
 	else:
 		
-		if player == null or player.flipped_over:
+		if player.flipped_over:
 			return
 		
 		if instant_tracking:
