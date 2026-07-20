@@ -18,7 +18,7 @@ anim_speed_min = 1.0
 anim_speed_max = 1.0
 
 [node name="BulletImpact" type="GPUParticles2D" unique_id=1807428247]
-modulate = Color(1, 0.94952685, 0.74125385, 1)
+modulate = Color(2.454227, 2.3329747, 1.8386375, 1)
 material = SubResource("CanvasItemMaterial_f12bh")
 emitting = false
 amount = 1
