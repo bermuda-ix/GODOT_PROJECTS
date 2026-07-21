@@ -8,6 +8,7 @@ extends Node2D
 @onready var blue_modulate := 255
 @onready var green_modulate := 255
 @onready var intensity_modulate := 1.0
+@onready var gpu_particles_2d: GPUParticles2D = $Sprite2D/GPUParticles2D
 
 
 #@onready var hurt_box: HurtBox = $Sprite2D/HurtBox
@@ -63,6 +64,7 @@ func _ready():
 	bt_player.blackboard.set_var("shoot_active", false)
 	_init_state_machine()
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
+	gpu_particles_2d.process_material.scale
 	
 	
 
@@ -143,11 +145,17 @@ func staggered()->void:
 	state_machine.dispatch(&"staggered")
 
 func heating_up_visual() -> void:
-	sprite_2d.self_modulate.g=lerp(sprite_2d.self_modulate.g, heating_up_value(), 0.3)
-	sprite_2d.self_modulate.b=lerp(sprite_2d.self_modulate.b, heating_up_value(), 0.3)
+	if turret.ammo_count!=turret.max_ammo:
+		sprite_2d.self_modulate.r=0.1+(1/heating_up_value())
+		sprite_2d.self_modulate.g=lerp(sprite_2d.self_modulate.g, heating_up_value()+0.5, 0.8)
+		sprite_2d.self_modulate.b=lerp(sprite_2d.self_modulate.b, heating_up_value(), 0.8)
+		#sprite_2d.self_modulate.srgb_to_linear()
+	else:
+		sprite_2d.self_modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 func heating_up_value() -> float:
-	return remap(turret.ammo_count, 0, turret.max_ammo, 0, 255)
+	var _value_debug = remap(turret.ammo_count, 0, turret.max_ammo, 0.1, 1)
+	return remap(turret.ammo_count, 0, turret.max_ammo, 0.1, 1)
 
 func _on_stagger_staggered() -> void:
 	parry_timer.start(3)
