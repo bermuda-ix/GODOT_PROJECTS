@@ -5,6 +5,9 @@ extends Node2D
 @onready var turret_top_collision: CollisionShape2D = $Sprite2D/turret_top/turret_top_collision
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var turret_top: AnimatableBody2D = $Sprite2D/turret_top
+@onready var blue_modulate := 255
+@onready var green_modulate := 255
+@onready var intensity_modulate := 1.0
 
 
 #@onready var hurt_box: HurtBox = $Sprite2D/HurtBox
@@ -69,6 +72,7 @@ func _process(_delta):
 	#shoot_attack_manager.shoot()
 	var player_track_angle_wrap=wrapf(player_tracker_pivot.rotation, 0, 2*PI)
 	debug.text=str(rad_to_deg(player_track_angle_wrap), " ",sprite_2d.rotation_degrees)
+	heating_up_visual()
 	#
 	#if not shoot_attack_manager.shooting:
 		#stagger_shooting()
@@ -138,6 +142,12 @@ func staggered()->void:
 	rotation_manager.active=false
 	state_machine.dispatch(&"staggered")
 
+func heating_up_visual() -> void:
+	sprite_2d.self_modulate.g=lerp(sprite_2d.self_modulate.g, heating_up_value(), 0.3)
+	sprite_2d.self_modulate.b=lerp(sprite_2d.self_modulate.b, heating_up_value(), 0.3)
+
+func heating_up_value() -> float:
+	return remap(turret.ammo_count, 0, turret.max_ammo, 0, 255)
 
 func _on_stagger_staggered() -> void:
 	parry_timer.start(3)
