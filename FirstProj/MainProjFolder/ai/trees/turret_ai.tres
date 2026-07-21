@@ -56,7 +56,7 @@ method = &"shoot"
 resource_local_to_scene = true
 
 [sub_resource type="BTCooldown" id="BTCooldown_l7px2"]
-duration = 0.05
+duration = 0.1
 start_cooled = true
 children = [SubResource("BTCallMethod_n0ccg")]
 
