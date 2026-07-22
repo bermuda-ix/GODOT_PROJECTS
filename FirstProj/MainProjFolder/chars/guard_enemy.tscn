@@ -118,7 +118,6 @@
 [ext_resource type="Texture2D" uid="uid://65jgwhqlfphj" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll09.png" id="70_g6e5q"]
 [ext_resource type="Texture2D" uid="uid://cj6pqrvsga70n" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Roll/Roll10.png" id="71_4sxct"]
 [ext_resource type="Script" uid="uid://dpg0824supe1e" path="res://Component/functions/drop_handler.gd" id="75_id1bf"]
-[ext_resource type="PackedScene" uid="uid://b74ywj4npkesd" path="res://Component/bullet_projectile.tscn" id="79_m3s8r"]
 [ext_resource type="Shader" uid="uid://c0lvqekkgl8f8" path="res://chars/AFXGlowVisual.tres" id="85_g6e5q"]
 [ext_resource type="Texture2D" uid="uid://dyjyc3cyn746a" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Shoot/shoot01.png" id="85_y0u4g"]
 [ext_resource type="Texture2D" uid="uid://pqg4g00kit6" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Shoot/shoot02.png" id="86_g6e5q"]
@@ -160,6 +159,7 @@
 [ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="110_gxq5f"]
 [ext_resource type="Texture2D" uid="uid://dpiavufx84ssj" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00217.png" id="111_wwao7"]
 [ext_resource type="Texture2D" uid="uid://tldys6blkcg8" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00218.png" id="112_56c4f"]
+[ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="135_hsppp"]
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="153_q58od"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7w5gj"]
@@ -3201,7 +3201,7 @@ metadata/_custom_type_script = "uid://cr58jnxs33hft"
 script = ExtResource("24_yw64w")
 actor = NodePath("..")
 turret = NodePath("../Turret")
-projectile = ExtResource("79_m3s8r")
+projectile = ExtResource("135_hsppp")
 bullet_scale = 0.2
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 

@@ -52,7 +52,10 @@ func shoot():
 				reloading_done.emit()
 				turret.ammo_count=turret.max_ammo
 			else:
-				pass
+				animation_player.play("reload")
+				await animation_player.animation_finished
+				reloading_done.emit()
+				turret.ammo_count=turret.max_ammo
 				
 
 func fire_missile():

@@ -163,7 +163,6 @@
 [ext_resource type="Texture2D" uid="uid://djjpd2r5bwkbg" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0221/S0222.png" id="108_tagbv"]
 [ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="109_01e1m"]
 [ext_resource type="Texture2D" uid="uid://b3p261ct68key" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0221/S0223.png" id="109_oordo"]
-[ext_resource type="PackedScene" uid="uid://b74ywj4npkesd" path="res://Component/bullet_projectile.tscn" id="110_lvekc"]
 [ext_resource type="Texture2D" uid="uid://bo7ermm02j0aq" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0221/S0224.png" id="110_tmkua"]
 [ext_resource type="AudioStream" uid="uid://cgiw2u0o17s6t" path="res://Art_Components/Effects/sound/designed_series/designed_series/designed_scifi/02_Effects/Gregor Quendel - Designed Sci-Fi - Tuner_Chaoswhip_02.wav" id="111_11qey"]
 [ext_resource type="Texture2D" uid="uid://2sm41pwo6ws7" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0221/S0225.png" id="111_avobk"]
@@ -252,6 +251,7 @@
 [ext_resource type="Texture2D" uid="uid://dpiavufx84ssj" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00217.png" id="172_lmcka"]
 [ext_resource type="Texture2D" uid="uid://tldys6blkcg8" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00218.png" id="173_nykr5"]
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="189_ia0g3"]
+[ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="218_gn0bn"]
 [ext_resource type="Script" uid="uid://dly3pw0jr2gav" path="res://chars/falling.gd" id="239_lvekc"]
 [ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="240_c7cuv"]
 
@@ -4166,7 +4166,7 @@ metadata/_custom_type_script = "uid://cr58jnxs33hft"
 script = ExtResource("109_01e1m")
 actor = NodePath("..")
 turret = NodePath("../Turret")
-projectile = ExtResource("110_lvekc")
+projectile = ExtResource("218_gn0bn")
 bullet_scale = 0.5
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 

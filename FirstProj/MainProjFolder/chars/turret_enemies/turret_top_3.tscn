@@ -17,9 +17,9 @@
 [ext_resource type="Script" uid="uid://5h8g0n4mebtm" path="res://Component/functions/ShootAttackManager.gd" id="10_j0ghf"]
 [ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="11_fxdsi"]
 [ext_resource type="Script" uid="uid://bj1m6kr4vol6u" path="res://Component/functions/RotationManager.gd" id="11_j0ghf"]
-[ext_resource type="PackedScene" uid="uid://b74ywj4npkesd" path="res://Component/bullet_projectile.tscn" id="14_swbxs"]
 [ext_resource type="Script" uid="uid://cr58jnxs33hft" path="res://Component/functions/deathHandler.gd" id="15_utw6m"]
 [ext_resource type="Script" uid="uid://ba6pwl0vfuyp" path="res://Component/stagger.gd" id="17_7vnq2"]
+[ext_resource type="PackedScene" uid="uid://camahbbiy05xp" path="res://Component/heavy_bullet_projectile.tscn" id="17_tfipp"]
 [ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="18_hnah5"]
 [ext_resource type="Script" uid="uid://cnxm24jqclb68" path="res://Component/health.gd" id="19_swbxs"]
 
@@ -756,7 +756,7 @@ metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 script = ExtResource("9_fl7l4")
 actor = NodePath("..")
 turret = NodePath("../Sprite2D/Turret")
-projectile = ExtResource("14_swbxs")
+projectile = ExtResource("17_tfipp")
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
 [node name="ShootAttackManager" type="Node" parent="." unique_id=308917637 node_paths=PackedStringArray("actor", "animation_player", "turret")]
@@ -765,6 +765,7 @@ actor = NodePath("..")
 animation_player = NodePath("../AnimationPlayer")
 turret = NodePath("../Sprite2D/Turret")
 reload_timer = 3
+refactored_reloading = true
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
 [node name="RotationManager" type="Node" parent="." unique_id=541584281 node_paths=PackedStringArray("actor", "state_machine")]

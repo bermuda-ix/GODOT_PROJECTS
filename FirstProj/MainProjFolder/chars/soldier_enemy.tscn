@@ -155,7 +155,6 @@
 [ext_resource type="Texture2D" uid="uid://dqmwsu55fxh47" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GunCrouchFire/GunCrouchFire05.png" id="107_wwx6s"]
 [ext_resource type="Texture2D" uid="uid://ipkcr82ii051" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0221/S0221.png" id="108_nm53y"]
 [ext_resource type="Texture2D" uid="uid://djjpd2r5bwkbg" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0221/S0222.png" id="109_t7lyk"]
-[ext_resource type="PackedScene" uid="uid://b74ywj4npkesd" path="res://Component/bullet_projectile.tscn" id="110_bmgxt"]
 [ext_resource type="Texture2D" uid="uid://b3p261ct68key" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0221/S0223.png" id="110_wajpw"]
 [ext_resource type="Texture2D" uid="uid://bo7ermm02j0aq" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Slash and Swing/S0221/S0224.png" id="111_bu400"]
 [ext_resource type="Script" uid="uid://f087f5u1rlb7" path="res://chars/counter_sm.gd" id="112_qew73"]
@@ -228,6 +227,7 @@
 [ext_resource type="AudioStream" uid="uid://c8p4rf87lk6gh" path="res://Art_Components/Effects/sound/designed_series/designed_series/designed_fire/Gregor Quendel - Designed Fire - Short - Swoosh Burst Sizzling 01.wav" id="175_r1f6l"]
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="190_gmb02"]
 [ext_resource type="Script" uid="uid://c4uno006dp70c" path="res://Component/functions/TeleportHandler.gd" id="208_4ys4l"]
+[ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="214_gf86h"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5wlso"]
 shader = ExtResource("3_eqop3")
@@ -5719,7 +5719,7 @@ metadata/_custom_type_script = "uid://cr58jnxs33hft"
 script = ExtResource("83_ue1j6")
 actor = NodePath("..")
 turret = NodePath("../Turret")
-projectile = ExtResource("110_bmgxt")
+projectile = ExtResource("214_gf86h")
 bullet_scale = 0.2
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 

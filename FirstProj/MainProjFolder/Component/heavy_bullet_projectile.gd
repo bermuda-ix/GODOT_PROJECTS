@@ -6,7 +6,7 @@ const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 @onready var projectile_hitbox: ProjectileHitBox = $ProjectileHitbox
-
+@onready var gpu_particles_2d: GPUParticles2D = $Sprite2D/GPUParticles2D
 
 
 var dir : Vector2 = Vector2.RIGHT
@@ -109,3 +109,8 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 
 func _on_audio_stream_player_2d_finished() -> void:
 	queue_free()
+
+
+func _on_timer_timeout() -> void:
+	pass
+ 	#gpu_particles_2d.emitting=true
