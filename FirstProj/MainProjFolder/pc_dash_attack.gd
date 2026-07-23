@@ -4,6 +4,7 @@ extends LimboState
 @export var pc : PlayerEntity
 
 func _enter() -> void:
+	pc.hb_collision.set_deferred("disabled", false)
 	anim_player.speed_scale=1.5
 	anim_player.play("Attack_Dash")
 	pc.hit_fx_player.speed_scale=1

@@ -1963,7 +1963,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Anything particular you want us to blow up?", "Default", false, "joker", "joker_default", "JOKER"],
+"args": ["After that, Joker and Ace will move towards the back generators and knock them out", "Default", false, "king", "king_default", "KING"],
 "method": &"play_bot"
 }]
 }
@@ -2017,7 +2017,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Huhm, if remember right, should be a garage close by. ", "Default", false, "page", "page_default", "PAGE"],
+"args": ["You’re gonna want to take the elevator to the basement, keep down that hallway past the garage.", "Default", false, "page", "page_default", "PAGE"],
 "method": &"play_top"
 }]
 }
@@ -2049,7 +2049,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Grab some explosives and start popping any trucks you see.", "Default", false, "page", "page_default", "PAGE"],
+"args": ["Backup generator should be around there.", "Default", false, "page", "page_default", "PAGE"],
 "method": &"play_top"
 }]
 }
@@ -2067,7 +2067,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Make it look like we’re sabotaging the base.", "Default", false, "page", "page_default", "PAGE"],
+"args": ["Blow up the trucks if you find them there, too", "Default", false, "page", "page_default", "PAGE"],
 "method": &"play_top"
 }]
 }
@@ -2085,7 +2085,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["If I find anything valuable to blow up, I’ll send that your way too.", "Default", false, "page", "page_default", "PAGE"],
+"args": ["Hopefully it can give us more time when we make our exit", "Default", false, "page", "page_default", "PAGE"],
 "method": &"play_top"
 }]
 }
@@ -2103,7 +2103,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": ["Beyond that just break anything that looks expensive.", "Default", false, "page", "page_default", "PAGE"],
+"args": ["Once all power is down, start looking for the doctor. Start with the R&D offices right above the garages.", "Default", false, "page", "page_default", "PAGE"],
 "method": &"play_top"
 }]
 }

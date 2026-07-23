@@ -7,7 +7,7 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.is_in_group("player"):
-		player.health.health +=1
+		player.health.set_health(player.health.health+1)
 		queue_free()
 		var hearts = get_tree().get_nodes_in_group("Hearts")
 		#if hearts.size() <=1:

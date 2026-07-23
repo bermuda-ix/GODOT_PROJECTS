@@ -303,7 +303,7 @@ func _init_state_machine():
 	state_machine.add_transition(chasing, jump, &"jump")
 	state_machine.add_transition(jump, chasing, &"land")
 	state_machine.add_transition(hit, attack, &"hit_recover")
-	state_machine.add_transition(hit, shooting, &"hit_recover_shoot")
+	state_machine.add_transition(hit, shooting_states, &"hit_recover_shoot")
 	state_machine.add_transition(attack, parry, &"parry")
 	state_machine.add_transition(chasing, parry, &"parry")
 	state_machine.add_transition(shooting_states, parry, &"parry")

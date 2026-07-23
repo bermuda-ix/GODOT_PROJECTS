@@ -27,7 +27,7 @@ var camera_stationary : bool = false
 @onready var game_over = $CanvasLayer/GameOver
 @onready var PC = $PC
 @onready var ui_level = $CanvasLayer/UI_Level
-@onready var label = $CanvasLayer/Label
+#@onready var label = $CanvasLayer/Label
 @onready var pause_menu = $CanvasLayer/PauseMenu
 @onready var score : int = 0
 @onready var starting_pos: Array[Vector2]
@@ -89,6 +89,8 @@ func _ready():
 		
 	if player == null:
 		player=get_tree().get_first_node_in_group("player")
+		
+		
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	#polygon_2d.polygon = collision_polygon_2d.polygon
 	Events.level_completed.connect(show_level_complete)

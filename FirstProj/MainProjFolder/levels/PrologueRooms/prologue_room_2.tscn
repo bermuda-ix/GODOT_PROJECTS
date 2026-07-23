@@ -15,9 +15,16 @@
 [ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="14_tvvjw"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="14_ucmmp"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="15_ucmmp"]
+[ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="16_2wjnv"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_5m8to"]
 polygon = PackedVector2Array(38, 89, 274, 88, 273, 99, 262, 100, 262, 106, 358, 106, 358, 100, 349, 100, 349, 86, 650, 87, 673, 87, 673, 61, 11, 64, 11, 349, 664, 344, 675, 87, 649, 88, 649, 99, 642, 98, 627, 109, 635, 112, 647, 102, 651, 315, 425, 315, 425, 246, 372, 246, 372.024, 315, 345, 315, 345, 245, 291, 245, 291.409, 315.927, 263, 316, 263, 247, 211, 247, 200, 248, 200, 317, 176, 317, 176, 246, 123, 246, 125, 284, 46, 284, 49, 290, 49, 318, 36, 318)
+
+[sub_resource type="Curve2D" id="Curve2D_2wjnv"]
+_data = {
+"points": PackedVector2Array(24.41798, 30.642172, -24.41798, -30.642172, -2185, 280, 1.1969604, 0, -1.1969604, 0, -2287.586, 241.68951, 1.767786, -38.84556, -1.767786, 38.84556, -2360, 279)
+}
+point_count = 3
 
 [node name="PrologueRoom2" type="Node2D" unique_id=1405400792]
 script = ExtResource("1_re5jx")
@@ -28,6 +35,7 @@ script = ExtResource("1_re5jx")
 visible = false
 
 [node name="UI_Level" parent="CanvasLayer" unique_id=335634124 instance=ExtResource("2_66hiq")]
+visible = false
 
 [node name="GameOver" parent="CanvasLayer" unique_id=964563335 instance=ExtResource("3_uofa6")]
 visible = false
@@ -107,5 +115,26 @@ position = Vector2(561, 287)
 [node name="HitStop" type="Node" parent="." unique_id=1607768491]
 script = ExtResource("15_ucmmp")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
+
+[node name="HeatHandler" type="Node" parent="." unique_id=1909471282]
+script = ExtResource("16_2wjnv")
+metadata/_custom_type_script = "uid://2hjmonf4ss5y"
+
+[node name="Paths" type="Node" parent="." unique_id=878431867]
+
+[node name="Path2D" type="Path2D" parent="Paths" unique_id=1782267938]
+position = Vector2(-24, -74)
+scale = Vector2(0.6628577, 1.2705309)
+curve = SubResource("Curve2D_2wjnv")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Paths/Path2D" unique_id=342570132]
+position = Vector2(-2185, 280)
+rotation = -2.2436287
+rotates = false
+loop = false
+
+[node name="PlayerTransform" type="RemoteTransform2D" parent="Paths/Path2D/PathFollow2D" unique_id=814672656]
+update_rotation = false
+update_scale = false
 
 [editable path="CameraPos"]

@@ -15,9 +15,16 @@
 [ext_resource type="Script" uid="uid://bv1k14bnql5dy" path="res://Component/functions/LevelComponents/persistent_data_handler.gd" id="13_2evft"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="14_uf1fl"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="15_qi74o"]
+[ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="16_kbi1w"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_uf1fl"]
 polygon = PackedVector2Array(38, 89, 274, 88, 273, 99, 262, 100, 262, 106, 358, 106, 358, 100, 349, 100, 349, 86, 650, 87, 673, 87, 673, 61, 11, 64, 11, 349, 664, 344, 675, 87, 649, 88, 649, 99, 642, 98, 627, 109, 635, 112, 647, 102, 651, 315, 367, 316, 370, 289, 370, 284, 335, 284, 332, 276, 324, 276, 322, 284, 289, 284, 288, 268, 265, 268, 265, 284, 261, 284, 259, 276, 248, 275, 244, 286, 244, 315, 174, 314, 174, 245, 113, 247, 113, 317, 36, 318)
+
+[sub_resource type="Curve2D" id="Curve2D_t23a5"]
+_data = {
+"points": PackedVector2Array(24.41798, 30.642172, -24.41798, -30.642172, -2185, 280, 1.1969604, 0, -1.1969604, 0, -2287.586, 241.68951, 1.767786, -38.84556, -1.767786, 38.84556, -2360, 279)
+}
+point_count = 3
 
 [node name="PrologueRoomOne" type="Node2D" unique_id=1766466537]
 script = ExtResource("1_2evft")
@@ -102,3 +109,24 @@ position = Vector2(464, 280)
 [node name="HitStop" type="Node" parent="." unique_id=1509114591]
 script = ExtResource("15_qi74o")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
+
+[node name="HeatHandler" type="Node" parent="." unique_id=1493105610]
+script = ExtResource("16_kbi1w")
+metadata/_custom_type_script = "uid://2hjmonf4ss5y"
+
+[node name="Paths" type="Node" parent="." unique_id=466364776]
+
+[node name="Path2D" type="Path2D" parent="Paths" unique_id=828146206]
+position = Vector2(-24, -74)
+scale = Vector2(0.6628577, 1.2705309)
+curve = SubResource("Curve2D_t23a5")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Paths/Path2D" unique_id=1754024603]
+position = Vector2(-2185, 280)
+rotation = -2.2436287
+rotates = false
+loop = false
+
+[node name="PlayerTransform" type="RemoteTransform2D" parent="Paths/Path2D/PathFollow2D" unique_id=525979288]
+update_rotation = false
+update_scale = false

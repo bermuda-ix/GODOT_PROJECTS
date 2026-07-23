@@ -94,7 +94,8 @@ func _on_health_health_depleted() -> void:
 	death_sparks1.emitting=true
 	death_sparks2.emitting=true
 	death_sparks3.emitting=true
-	linked_turrets.remove_at(turret_link_order)
+	if linked_turrets.size()>1:
+		linked_turrets.remove_at(turret_link_order)
 	print_debug("despawning")
 	despawn_handler.despawn()
 	turret_death.emit()
