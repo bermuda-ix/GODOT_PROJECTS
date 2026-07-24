@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="15_3qbo2"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="16_ow5uo"]
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="17_55yil"]
+[ext_resource type="Script" uid="uid://do6ard48q2bhx" path="res://Component/functions/PersistentData/alert_handler.gd" id="18_kgng6"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_kgng6"]
 polygon = PackedVector2Array(38, 89, 274, 88, 273, 99, 262, 100, 262, 106, 358, 106, 358, 100, 349, 100, 349, 86, 650, 87, 673, 87, 673, 61, 11, 64, 11, 349, 664, 344, 675, 87, 649, 88, 649, 99, 642, 98, 627, 109, 635, 112, 647, 102, 651, 315, 392, 315, 390, 289, 384, 267, 387, 290, 333, 291, 322, 267, 321, 314, 315, 314, 310, 287, 266, 287, 266, 306, 263, 306, 210, 310, 201, 169, 187, 148, 190, 163, 198, 167, 202, 190, 194, 195, 198, 250, 195, 282, 184.417, 317.276, 36, 318)
@@ -136,3 +137,7 @@ loop = false
 [node name="PlayerTransform" type="RemoteTransform2D" parent="Paths/Path2D/PathFollow2D" unique_id=664000813]
 update_rotation = false
 update_scale = false
+
+[node name="AlertHandler" type="Node" parent="." unique_id=1531917535]
+script = ExtResource("18_kgng6")
+metadata/_custom_type_script = "uid://do6ard48q2bhx"

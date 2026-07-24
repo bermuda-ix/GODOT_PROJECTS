@@ -171,6 +171,7 @@
 [ext_resource type="Script" uid="uid://dg1m7uqm44pm3" path="res://Component/functions/GlobalFlags/GlobalFlagHandler.gd" id="169_s1x0g"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="170_0rjb8"]
 [ext_resource type="PackedScene" uid="uid://bkr6h5xga8wr" path="res://Component/functions/local_flag.tscn" id="171_74y6a"]
+[ext_resource type="Script" uid="uid://do6ard48q2bhx" path="res://Component/functions/PersistentData/alert_handler.gd" id="172_74y6a"]
 
 [sub_resource type="Gradient" id="Gradient_bw5xo"]
 
@@ -4463,6 +4464,10 @@ dialogue_only = false
 single_cutscene = false
 activate_on_global_flag = true
 global_flag_name = "ShutOff"
+
+[node name="AlertHandler" type="Node" parent="." unique_id=1018370909]
+script = ExtResource("172_74y6a")
+metadata/_custom_type_script = "uid://do6ard48q2bhx"
 
 [connection signal="animation_finished" from="CutscenePlayer" to="." method="_on_cutscene_player_animation_finished"]
 [connection signal="play_cutscene" from="BossArena/BossIntro" to="." method="play_cutscene_segment"]

@@ -64,6 +64,8 @@ var always_active : bool
 @export var chase_speed : float = 40.0
 @onready var launch_timer: Timer = $LaunchTimer
 @onready var knocked_back : bool = false
+@onready var navigation_handler: NavigationHandler = $NavigationHandler
+
 
 var current_speed : float = 0.0
 var prev_speed : float = 00.0
@@ -357,6 +359,7 @@ func _init_shooting_states():
 #Navigation
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
+	
 	
 func _on_navigation_timer_timeout() -> void:
 	makepath()
@@ -659,6 +662,8 @@ func _on_vision_handler_player_sighted() -> void:
 func alerted() -> void :
 	#print_debug("alerted!")
 	vision_handler.always_on=true
+	if not navigation_handler.path_valid():
+		return
 	if on_screen.is_on_screen():
 		state_machine.dispatch(&"attack_mode")
 		bt_player.blackboard.set_var("attack_mode", true)

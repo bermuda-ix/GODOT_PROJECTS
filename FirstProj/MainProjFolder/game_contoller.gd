@@ -265,6 +265,7 @@ func change_2d_scene (new_scene: String, \
 	Events.get_player_data.emit()
 	retrieve_player_data()
 	Events.retrieve_heat_stats.emit()
+	Events.load_level_states.emit()
 
 	load_levels(LevelsList.level_maps)
 	if _previuos_return:

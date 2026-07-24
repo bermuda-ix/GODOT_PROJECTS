@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://dc36k2t4gy6xb" path="res://Component/Consumables/keycard.tscn" id="14_0rkmb"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="15_0rkmb"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="17_oqnxn"]
+[ext_resource type="Script" uid="uid://do6ard48q2bhx" path="res://Component/functions/PersistentData/alert_handler.gd" id="18_qy7pe"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_uf1fl"]
 polygon = PackedVector2Array(38, 89, 274, 88, 273, 99, 262, 100, 262, 106, 358, 106, 358, 100, 349, 100, 349, 86, 650, 87, 673, 87, 673, 61, 11, 64, 11, 349, 664, 344, 675, 87, 649, 88, 649, 99, 642, 98, 627, 109, 635, 112, 647, 102, 651, 315, 367, 316, 370, 289, 370, 284, 335, 284, 332, 276, 324, 276, 322, 284, 289, 284, 288, 268, 265, 268, 265, 284, 261, 284, 259, 276, 248, 275, 244, 286, 244, 315, 229, 314, 199, 208, 160, 199, 157, 250, 157, 313, 144, 289, 115, 288, 101, 314, 77, 184, 36, 318)
@@ -130,5 +131,9 @@ metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=222905582]
 light_mask = 3
 color = Color(0.23753911, 0.23753914, 0.23753911, 1)
+
+[node name="AlertHandler" type="Node" parent="." unique_id=202758789]
+script = ExtResource("18_qy7pe")
+metadata/_custom_type_script = "uid://do6ard48q2bhx"
 
 [editable path="Lights/CeilingLight"]

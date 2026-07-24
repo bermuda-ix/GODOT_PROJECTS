@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c3dcauqm122mo" path="res://Art_Components/Enemies/SWAT_2/Hurt.png" id="2_m8rmk"]
 [ext_resource type="Texture2D" uid="uid://bjvq70xvlg4t1" path="res://Art_Components/Enemies/SWAT_2/Idle_2.png" id="2_pt8o7"]
 [ext_resource type="Shader" uid="uid://38ktkg87cgya" path="res://Art_Components/Effects/CustomRes/outline_effect_static.gdshader" id="3_fw847"]
+[ext_resource type="Script" uid="uid://7qyekh3c2p7r" path="res://Component/functions/Pathfinding/navigation_handler.gd" id="3_g8y6e"]
 [ext_resource type="Texture2D" uid="uid://iiqdoj5g56tc" path="res://Art_Components/Enemies/SWAT_2/Recharge.png" id="3_xrqpt"]
 [ext_resource type="Texture2D" uid="uid://bkbkryvxfkypc" path="res://Art_Components/Enemies/SWAT_2/Run.png" id="4_64nx0"]
 [ext_resource type="Texture2D" uid="uid://cqlocfol5bn1j" path="res://Art_Components/Enemies/SWAT_2/Jump.png" id="4_nvjmq"]
@@ -2861,6 +2862,12 @@ shape = SubResource("RectangleShape2D_cv57o")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=50796865]
 navigation_layers = 2
 
+[node name="NavigationHandler" type="Node" parent="." unique_id=1988248700 node_paths=PackedStringArray("navigation_agent", "actor")]
+script = ExtResource("3_g8y6e")
+navigation_agent = NodePath("../NavigationAgent2D")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://7qyekh3c2p7r"
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=902741220]
 texture_filter = 2
 material = SubResource("ShaderMaterial_lvmp0")
@@ -3071,7 +3078,7 @@ script = ExtResource("20_eopqg")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="VisionHandler" type="Node" parent="." unique_id=967942652 node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking")]
+[node name="VisionHandler" type="Node" parent="." unique_id=967942652 node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking", "nav_agent")]
 script = ExtResource("16_pk3h2")
 actor = NodePath("..")
 sm = NodePath("../StateMachine")
@@ -3080,6 +3087,7 @@ vision_range = 400
 player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 bt_active = false
 stay_on = true
+nav_agent = NodePath("../NavigationAgent2D")
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
 [node name="AllyVisionHandler" type="Node" parent="." unique_id=1330613628 node_paths=PackedStringArray("actor", "ally_vision", "state_machine")]

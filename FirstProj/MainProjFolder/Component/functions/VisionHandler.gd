@@ -11,6 +11,7 @@ extends Node
 @export var player_tracking : RayCast2D
 @export var bt_active : bool = true
 @export var stay_on : bool = false
+@export var nav_agent : NavigationAgent2D
 
 @onready var player : PlayerEntity
 @onready var player_colliding := false
@@ -37,6 +38,8 @@ func handle_vision():
 	if always_on:
 		player_found=true
 		#sm.dispatch(&"start_chase")
+	elif not path_valid():
+		player_found=false
 	else:
 		#actor.player_colliding=player_tracking.is_colliding()
 		if player_tracking.is_colliding():
@@ -92,3 +95,8 @@ func handle_vision():
 			else:
 				pass
 	#player_found = true
+
+func path_valid() -> bool:
+	if nav_agent==null:
+		return false
+	return nav_agent.is_target_reachable()

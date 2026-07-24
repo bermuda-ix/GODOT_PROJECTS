@@ -53,6 +53,8 @@ var qte_options : Array[String]  = ["1", "2", "3", "4", "0"]
 @onready var cutscene_queue_index : int = 0
 @onready var dialogue_box_controller: DialogueBoxController = $CanvasLayer/DialogueBoxController
 
+@onready var alert_handler: AlertHandler = $AlertHandler
+
 
 
 ###MiniBoss1Nodes
@@ -100,11 +102,14 @@ func _ready():
 	#Events.unpause.connect(unpause)
 	Events.inc_score.connect(inc_score)
 	Events.load_checkpoint.connect(reload_scene)
+	Events.load_level_states.connect(load_scene_states)
 	#Events.increase_heat_lvl.connect(increase_heat)
 	load_cutscene_queue(Cutscenes.Cutscenes["MiniBoss1"])
 	ui_level.set_max_health(player.health.max_health)
 	ui_level.set_max_stagger(player.stagger.max_stagger)
 	
+	if alert_handler.all_enemies_alerted:
+		alert_handler.alert_enemies() 
 	
 	
 	player.attack_qte.connect(_pc_attack_qte)
@@ -363,12 +368,17 @@ func _on_external_door_switch_unlock_door() -> void:
 func toggle_ui(_value : bool) -> void:
 	Global.game_controller.toggle_game_ui(_value)
 
+func load_scene_states() -> void:
+	if alert_handler.all_enemies_alerted:
+		alert_handler.alert_enemies() 
+
 func reload_scene():
 	camera_pos.camera_zoom=camera_zoom
 	assert(camera_pos.camera_zoom==camera_zoom)
 	camera_pos.offset=camera_offset
 	camera_pos.stationary=camera_stationary
 	cutscene_active=false
+	
 	var _bosses = get_tree().get_nodes_in_group("Boss")
 	for boss in _bosses:
 		boss.boss_reset()
@@ -391,6 +401,7 @@ func reload_scene():
 					_flag.flag_reset()
 	scene_reloaded.emit()
 		
+
 
 func _on_mini_boss_1_flag_flag_triggered() -> void:
 	

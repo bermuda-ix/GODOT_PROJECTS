@@ -317,6 +317,9 @@ func _physics_process(delta):
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
 	
+func path_valid() -> bool:
+	return nav_agent.is_target_reachable()
+	
 func handle_vision():
 	vision_handler.handle_vision()
 		
@@ -562,13 +565,16 @@ func _on_vision_handler_player_sighted() -> void:
 func alerted() -> void :
 	print_debug("alerted!")
 	vision_handler.always_on=true
-	if visible_on_screen_notifier_2d.is_on_screen():
-		state_machine.dispatch(&"attack_mode")
-		bt_player.blackboard.set_var("attack_mode", true)
+	if not path_valid():
+		return
 	else:
-		bt_player.blackboard.set_var("attack_mode", false)
-		state_machine.dispatch(&"start_chase")
-	
+		if visible_on_screen_notifier_2d.is_on_screen():
+			state_machine.dispatch(&"attack_mode")
+			bt_player.blackboard.set_var("attack_mode", true)
+		else:
+			bt_player.blackboard.set_var("attack_mode", false)
+			state_machine.dispatch(&"start_chase")
+		
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:

@@ -19,6 +19,7 @@ signal load_objectives
 signal load_menu_scene
 signal reload_level
 signal reload_level_checkpoint
+signal load_level_states
 
 signal in_door_way
 

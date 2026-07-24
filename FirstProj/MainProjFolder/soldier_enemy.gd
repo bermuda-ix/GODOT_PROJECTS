@@ -516,6 +516,8 @@ func rapid_shoot(value : bool)->void:
 func alerted() -> void :
 	print_debug("alerted!")
 	vision_handler.always_on=true
+	if not nav_agent.is_target_reachable():
+		return
 	if on_screen.is_on_screen():
 		state_machine.dispatch(&"attack_mode")
 		bt_player.blackboard.set_var("attack_mode", true)
