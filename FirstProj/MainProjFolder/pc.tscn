@@ -242,6 +242,7 @@
 [ext_resource type="Texture2D" uid="uid://dh05updwkgv8m" path="res://Art_Components/Effects/AttackEffects/FX006/FX003.png" id="212_rviac"]
 [ext_resource type="Texture2D" uid="uid://cpepdbfrlqwgv" path="res://Art_Components/Effects/AttackEffects/FX006/FX004.png" id="213_lpb6m"]
 [ext_resource type="Texture2D" uid="uid://c22pc2igaqi2g" path="res://Art_Components/Effects/AttackEffects/FX006/FX005.png" id="214_nlcxh"]
+[ext_resource type="FontFile" uid="uid://6gqb063p0aaa" path="res://Art_Components/UI/Fonts/Pixica Fonts/Pixica Fonts/Pixica-Regular.ttf" id="214_oxl1f"]
 [ext_resource type="Texture2D" uid="uid://pw68vc1o7yno" path="res://Art_Components/Effects/AttackEffects/FX006/FX006.png" id="215_ysphg"]
 [ext_resource type="Texture2D" uid="uid://b4yf6bjyqn1r7" path="res://Art_Components/Effects/AttackEffects/FX006/FX007.png" id="216_d5ae8"]
 [ext_resource type="Texture2D" uid="uid://dj0jspit4kolf" path="res://Art_Components/Effects/AttackEffects/FX006/FX008.png" id="217_73dn8"]
@@ -2544,7 +2545,7 @@ tracks/20/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [0.002000000095]
 }
 tracks/21/type = "value"
 tracks/21/imported = false
@@ -2556,7 +2557,7 @@ tracks/21/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.56082267, 2.454227, 2.454227, 1)]
+"values": [Color(0.7670247, 3.2944162, 3.2944162, 1)]
 }
 tracks/22/type = "value"
 tracks/22/imported = false
@@ -2827,7 +2828,7 @@ tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.56082267, 2.454227, 2.454227, 1)]
+"values": [Color(0.7670247, 3.2944162, 3.2944162, 1)]
 }
 tracks/16/type = "value"
 tracks/16/imported = false
@@ -2899,7 +2900,7 @@ tracks/21/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [0.002000000095]
 }
 tracks/22/type = "value"
 tracks/22/imported = false
@@ -3243,6 +3244,54 @@ tracks/21/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [&"sword_hit_1"]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("AnimatedSprite2D/attack_fx:self_modulate")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.7670247, 3.2944162, 3.2944162, 1)]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/MaskColor")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/GlowColor")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/FloatParameter")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.002000000095]
 }
 
 [sub_resource type="Animation" id="Animation_euoq7"]
@@ -10888,86 +10937,6 @@ _data = {
 &"first_mini_boss_kill": SubResource("Animation_qyvno")
 }
 
-[sub_resource type="Animation" id="Animation_22pp6"]
-resource_name = "Enter"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("InteractPromptSprite:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.3535535, 1),
-"update": 0,
-"values": [Vector2(2, -40), Vector2(2, -44)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("InteractPromptSprite:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.63728076, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("InteractPromptSprite:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"Enter"]
-}
-
-[sub_resource type="Animation" id="Animation_rml44"]
-resource_name = "Interact"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("InteractPromptSprite:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.3535535, 1),
-"update": 0,
-"values": [Vector2(2, -40), Vector2(2, -44)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("InteractPromptSprite:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.63728076, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("InteractPromptSprite:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"Interact"]
-}
-
 [sub_resource type="Animation" id="Animation_oxl1f"]
 resource_name = "RESET"
 tracks/0/type = "value"
@@ -11030,86 +10999,200 @@ tracks/4/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:self_modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(6, 38)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:size")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(29, 14)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:text")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["HP +1"]
+}
 
-[sub_resource type="Animation" id="Animation_dxewg"]
-resource_name = "call_elevator"
-length = 0.5
+[sub_resource type="Animation" id="Animation_a4jbf"]
+resource_name = "health_up"
+step = 0.016666668
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("InteractPromptSprite:position")
+tracks/0/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.3535535, 1),
+"times": PackedFloat32Array(0, 0.3, 0.95, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(2, -40), Vector2(2, -44)]
+"values": [Color(0, 1, 0, 0), Color(0, 1, 0, 1), Color(0, 1, 0, 1), Color(0, 1, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("InteractPromptSprite:self_modulate")
+tracks/1/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.63728076, 1),
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.2871746, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Vector2(6, 38), Vector2(6, 27)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("InteractPromptSprite:animation")
+tracks/2/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:size")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"Interact"]
+"update": 0,
+"values": [Vector2(29, 14)]
 }
-
-[sub_resource type="Animation" id="Animation_g2ube"]
-resource_name = "exit_popup"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/InteractUI/PanelContainer:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:text")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": ["HP +1"]
+}
+
+[sub_resource type="Animation" id="Animation_22pp6"]
+resource_name = "locked"
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.95, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 0), Color(1, 0, 0, 1), Color(1, 0, 0, 1), Color(1, 0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D/InteractUI/PanelContainer:modulate")
+tracks/1/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.2871746, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Vector2(6, 38), Vector2(6, 27)]
 }
-
-[sub_resource type="Animation" id="Animation_a4jbf"]
-resource_name = "new_animation"
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(29, 14)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:text")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["LOCKED"]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rml44"]
 _data = {
-&"Enter": SubResource("Animation_22pp6"),
-&"Interact": SubResource("Animation_rml44"),
 &"RESET": SubResource("Animation_oxl1f"),
-&"call_elevator": SubResource("Animation_dxewg"),
-&"exit_popup": SubResource("Animation_g2ube"),
-&"new_animation": SubResource("Animation_a4jbf")
+&"health_up": SubResource("Animation_a4jbf"),
+&"locked": SubResource("Animation_22pp6")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oupih"]
@@ -11490,6 +11573,7 @@ offset_right = -9.0
 offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="TextureButton" type="TextureButton" parent="AnimatedSprite2D/InteractUI/PanelContainer" unique_id=1559762494]
 custom_minimum_size = Vector2(20, 5)
@@ -11514,8 +11598,17 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("220_fixwo")
 text = "EXIT"
 
-[node name="TextPopup" type="RichTextLabel" parent="AnimatedSprite2D/InteractUI/PanelContainer" unique_id=2123023238]
-layout_mode = 2
+[node name="TextPopup" type="RichTextLabel" parent="AnimatedSprite2D/InteractUI" unique_id=2123023238]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 6.0
+offset_top = 38.0
+offset_right = 35.0
+offset_bottom = 52.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("214_oxl1f")
+text = "HP +1"
 
 [node name="GlowOutline" type="PointLight2D" parent="AnimatedSprite2D" unique_id=1920291677]
 position = Vector2(0, -17)
@@ -11640,6 +11733,9 @@ libraries/ = SubResource("AnimationLibrary_8p2jh")
 libraries/flashback_lvl_cutscenes = SubResource("AnimationLibrary_8w5mx")
 
 [node name="InteractPromptPlayer" type="AnimationPlayer" parent="." unique_id=1168233831]
+libraries/ = SubResource("AnimationLibrary_rml44")
+
+[node name="TextPopupPlayer" type="AnimationPlayer" parent="." unique_id=1898713153]
 libraries/ = SubResource("AnimationLibrary_rml44")
 
 [node name="HitTimer" type="Timer" parent="." unique_id=941373129]

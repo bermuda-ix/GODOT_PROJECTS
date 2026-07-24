@@ -81,5 +81,9 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if current==death:
 		animation_player.play("dead")
-		collision_shape_2d.disabled=true
-		set_process(false)
+		
+
+
+func _on_dying_entered() -> void:
+	collision_shape_2d.set_deferred("disabled", true)
+	set_process(false)

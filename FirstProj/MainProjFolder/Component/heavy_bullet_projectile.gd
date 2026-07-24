@@ -6,7 +6,7 @@ const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 @onready var projectile_hitbox: ProjectileHitBox = $ProjectileHitbox
-@onready var gpu_particles_2d: GPUParticles2D = $Sprite2D/GPUParticles2D
+#@onready var gpu_particles_2d: GPUParticles2D = $Sprite2D/GPUParticles2D
 
 
 var dir : Vector2 = Vector2.RIGHT

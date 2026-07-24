@@ -2002,6 +2002,14 @@ func interact() -> void:
 		elif elevator_door:
 			Events.call_elevator.emit()
 
+func picked_up(_value : String = "") -> void:
+	match _value:
+		"health":
+			interact_prompt_player.play("health_up")
+		"":
+			pass
+		_:
+			pass
 
 func open_interact_menu():
 	interact_menu_open=true
