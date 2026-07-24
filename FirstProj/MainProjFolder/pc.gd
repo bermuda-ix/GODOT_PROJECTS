@@ -621,7 +621,9 @@ func _process(_delta):
 #
 	dodge(input_axis)
 	
-		
+	if not reload_timer.is_stopped():
+		print_debug(reload_timer.time_left)
+	
 	if(state_machine.get_active_state()!=dodge_state\
 	 and state_machine.get_active_state()!=special_attack\
 	 and state_machine.get_active_state()!=flip_state):
@@ -641,6 +643,9 @@ func _process(_delta):
 		else:
 			pass
 	#
+	if Input.is_action_just_pressed("Reload"):
+		reload_gun()
+		
 	lockon()
 	shotgun_unlock()
 	enter_door()
@@ -649,6 +654,7 @@ func _process(_delta):
 	interact()
 	stick_to_wall()
 	flip_over()
+	
 	
 	if Input.is_action_just_pressed("DEBUG_KEY"):
 		clash_power.clash_power+=1
@@ -795,18 +801,22 @@ func jump(input_axis, delta):
 	if is_on_floor() or coyote_jump_timer.time_left>0.0:
 		if Input.is_action_just_pressed("jump"):
 			#state = States.JUMP
+			if not reload_timer.is_stopped():
+				reload_timer.stop()
 			state_machine.dispatch(&"start_jumping")
 			velocity.y = movement_data.jump_velocity
 			
 	elif not is_on_floor() and parry_stance==false and state_machine.get_previous_active_state()!=flip_state and state_machine.get_active_state()!=wall_stick:
 		#state = States.JUMP
 		if Input.is_action_just_released("jump") and velocity.y<movement_data.jump_velocity/2:
-			
+			if not reload_timer.is_stopped():
+				reload_timer.stop()
 			#velocity.y = movement_data.jump_velocity/2
 			#state = States.JUMP
 			state_machine.dispatch(&"start_jumping")
 		if Input.is_action_just_pressed("jump") and double_jump_flag == true and just_wall_jump == false:
-			
+			if not reload_timer.is_stopped():
+				reload_timer.stop()
 			velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.acceleration*10 * delta)
 			velocity.y = movement_data.jump_velocity *0.8
 			double_jump_flag = false
@@ -1061,7 +1071,8 @@ func attack_handler():
 	var anim_player_time : float = anim_player.current_animation_position
 	
 	if Input.is_action_pressed("attack"):
-		
+		if not reload_timer.is_stopped():
+			reload_timer.stop()
 		if state_machine.get_active_state()==idle and (attacking or charging):
 			return
 		elif state_machine.get_active_state()==attack_state and charging:
@@ -1089,7 +1100,8 @@ func attack_handler():
 
 			
 	elif Input.is_action_just_released("attack"):
-		
+		if not reload_timer.is_stopped():
+			reload_timer.stop()
 		if not charge_timer.is_stopped():
 			charge_timer.stop()
 			
@@ -1293,22 +1305,7 @@ func regular_attack() -> void:
 					attack_state.dispatch(&"charged")
 				else:
 					state_machine.dispatch(&"next_attack")
-					
-				#elif attack_state.get_active_state()==charged_attack:
-					#print_debug(attack_state.get_active_state())
-					#attack_state.dispatch(&"next_attack")
-				#
-				#else:
-					#attack_state.dispatch(&"charge_attack")
-					#if atk_1_resume:
-						#attack_state.dispatch(&"combo_resume")
-					#elif atk_2_resume:
-						#attack_state.dispatch(&"combo_resume_2")
-					
-						
-					
-					
-				
+		
 			else:
 				#attack_state.initial_state=attack_1
 				state_machine.dispatch(&"start_attack")
@@ -1446,6 +1443,8 @@ func aim_and_shoot():
 			hit_stop.end_hit_stop()
 	else:
 		if (Input.is_action_pressed("special_attack")) and not attacking and not Input.is_action_pressed("attack"):
+			if not reload_timer.is_stopped():
+				reload_timer.stop()
 			if ammo==0:
 				if not reload_timer.is_stopped():
 					return
@@ -2433,6 +2432,8 @@ func flip_over():
 					flip_speed=movement_data.speed * -5
 				flip_vel=Vector2(flip_speed, movement_data.jump_velocity*.75)
 				print_debug(flip_vel)
+				if not reload_timer.is_stopped():
+					reload_timer.stop()
 				state_machine.dispatch(&"start_flip")
 				flip.emit()
 	#state=States.FLIP
