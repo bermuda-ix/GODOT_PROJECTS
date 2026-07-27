@@ -61,7 +61,6 @@
 [ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="27_okbgj"]
 [ext_resource type="Texture2D" uid="uid://cffkpopv0qksc" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_014.png" id="27_qltt5"]
 [ext_resource type="Texture2D" uid="uid://v1k5prwx2c5m" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_015.png" id="28_17sh8"]
-[ext_resource type="PackedScene" uid="uid://b74ywj4npkesd" path="res://Component/bullet_projectile.tscn" id="28_86qvh"]
 [ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="28_xp1ci"]
 [ext_resource type="Script" uid="uid://b5an13nv6em7m" path="res://chars/attack.gd" id="29_ct51r"]
 [ext_resource type="Texture2D" uid="uid://brv6aehcyf62u" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_016.png" id="29_uqtsu"]
@@ -129,6 +128,7 @@
 [ext_resource type="Texture2D" uid="uid://tldys6blkcg8" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00218.png" id="79_nyvl3"]
 [ext_resource type="AudioStream" uid="uid://bkjje5hbliijj" path="res://Art_Components/Effects/sound/hits/PUNCH_DESIGNED_HEAVY_14.wav" id="84_4pxgm"]
 [ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="100_8h24x"]
+[ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="104_g8y6e"]
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="125_4cgwk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv57o"]
@@ -2178,7 +2178,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_ypkgb"]
 resource_name = "shoot"
-length = 0.16666667
+length = 0.75
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -2199,10 +2199,10 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.0333333, 0.099999994, 0.1333333, 0.16666667, 0.19999997, 0.26666668),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 0]
+"values": [0, 1, 2, 3, 2, 3, 0]
 }
 tracks/2/type = "method"
 tracks/2/imported = false
@@ -2211,9 +2211,12 @@ tracks/2/path = NodePath("ShootAttackManager")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.0666667),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.1, 0.17246151),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
+"args": [],
+"method": &"shoot_refactor"
+}, {
 "args": [],
 "method": &"shoot_refactor"
 }]
@@ -2265,7 +2268,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.26666668, 0.33333367, 0.4, 0.466667, 0.53333336),
+"times": PackedFloat32Array(0, 0.0666667, 0.19999936, 0.23333333, 0.33333305, 0.36666667, 0.46666637, 0.5, 0.7),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 2, 3, 2, 3, 0]
@@ -2277,7 +2280,7 @@ tracks/2/path = NodePath("ShootAttackManager")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.133333, 0.26666668, 0.3983991),
+"times": PackedFloat32Array(0.19999936, 0.33333305, 0.46506548),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [],
@@ -3131,7 +3134,7 @@ metadata/_custom_type_script = "uid://dgyx4da7oymh2"
 script = ExtResource("17_tlhl2")
 actor = NodePath("..")
 turret = NodePath("../Turret")
-projectile = ExtResource("28_86qvh")
+projectile = ExtResource("104_g8y6e")
 bullet_scale = 0.5
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 

@@ -18,6 +18,8 @@ extends Node
 
 @onready var player_found : bool = false
 
+@export var ground_enemy := true
+
 signal player_sighted
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
@@ -38,12 +40,12 @@ func handle_vision():
 	if always_on:
 		player_found=true
 		#sm.dispatch(&"start_chase")
-	elif not path_valid():
+	elif not path_valid() and ground_enemy:
 		player_found=false
 	else:
 		#actor.player_colliding=player_tracking.is_colliding()
 		if player_tracking.is_colliding():
-			#print_debug(player_tracking.get_collider())
+			print_debug(player_tracking.get_collider())
 			
 			var collision_result = player_tracking.get_collider()
 			if collision_result != player:

@@ -38,6 +38,7 @@ max_contacts_reported = 5
 script = ExtResource("1_u0xst")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1609644407]
+modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 self_modulate = Color(0, 0, 0, 1)
 material = SubResource("ShaderMaterial_jeokm")
 texture = ExtResource("2_oy31j")

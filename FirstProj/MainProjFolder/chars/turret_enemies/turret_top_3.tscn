@@ -750,6 +750,7 @@ sm = NodePath("../LimboHSM")
 combat_state_active = false
 vision_range = 500
 player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
+ground_enemy = false
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
 [node name="ShootHandler" type="Node" parent="." unique_id=715339673 node_paths=PackedStringArray("actor", "turret")]
