@@ -11562,6 +11562,7 @@ mouse_filter = 2
 [node name="PanelContainer" type="PanelContainer" parent="AnimatedSprite2D/InteractUI" unique_id=262489011]
 visible = false
 modulate = Color(1, 1, 1, 0)
+z_index = 5
 custom_minimum_size = Vector2(20, 5)
 layout_mode = 1
 anchors_preset = 15

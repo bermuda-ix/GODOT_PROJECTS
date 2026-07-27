@@ -24,7 +24,6 @@
 [ext_resource type="PackedScene" uid="uid://idc8e7mjacdd" path="res://Component/turret_link.tscn" id="15_ffcw5"]
 [ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="16_vw32t"]
 [ext_resource type="PackedScene" uid="uid://dak3j323lms0s" path="res://chars/sleeping_guard.tscn" id="17_61h8j"]
-[ext_resource type="PackedScene" uid="uid://b7ppm0ysps4q6" path="res://Component/resources/enemy_group.tscn" id="19_658m8"]
 [ext_resource type="AudioStream" uid="uid://dxedk74ivrhne" path="res://Art_Components/Effects/sound/Socapex - Evol Online SFX - Punches and hits/Socapex - Evol Online SFX - Punches and hits/Socapex - small knock.wav" id="20_lt1cf"]
 [ext_resource type="PackedScene" uid="uid://b2ll7yf0xbexn" path="res://levels/PrologueRooms/prologue_room_one.tscn" id="21_7klgn"]
 [ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="21_7qfih"]
@@ -1235,21 +1234,49 @@ position = Vector2(5, 14)
 
 [node name="soldiers" type="Node" parent="Enemy" index="0" unique_id=968911607]
 
-[node name="HeavySoldier" parent="Enemy/soldiers" index="0" unique_id=358019937 instance=ExtResource("13_rfxm3")]
-position = Vector2(2168, 784)
-scale = Vector2(0.5, 0.5)
+[node name="HeavySoldier" parent="Enemy/soldiers" index="0" unique_id=1955221828 instance=ExtResource("13_rfxm3")]
+position = Vector2(2366, 300)
+scale = Vector2(0.55, 0.55)
 
-[node name="HeavySoldier2" parent="Enemy/soldiers" index="1" unique_id=498514818 instance=ExtResource("13_rfxm3")]
-position = Vector2(3962, 1188)
-scale = Vector2(0.5, 0.5)
+[node name="HeavySoldier2" parent="Enemy/soldiers" index="1" unique_id=847656459 instance=ExtResource("13_rfxm3")]
+position = Vector2(3189, 285)
+scale = Vector2(0.55, 0.55)
 
-[node name="HeavySoldier3" parent="Enemy/soldiers" index="2" unique_id=1955221828 instance=ExtResource("13_rfxm3")]
-position = Vector2(2760, 88)
-scale = Vector2(0.5, 0.5)
+[node name="HeavySoldier3" parent="Enemy/soldiers" index="2" unique_id=215207604 instance=ExtResource("13_rfxm3")]
+position = Vector2(2475, 101)
+scale = Vector2(0.55, 0.55)
 
-[node name="HeavySoldier4" parent="Enemy/soldiers" index="3" unique_id=360813325 instance=ExtResource("13_rfxm3")]
-position = Vector2(2392, 304)
-scale = Vector2(0.5, 0.5)
+[node name="HeavySoldier4" parent="Enemy/soldiers" index="3" unique_id=1736104239 instance=ExtResource("13_rfxm3")]
+position = Vector2(3252, 489)
+scale = Vector2(0.55, 0.55)
+
+[node name="HeavySoldier5" parent="Enemy/soldiers" index="4" unique_id=1432080119 instance=ExtResource("13_rfxm3")]
+position = Vector2(2314, 772)
+scale = Vector2(0.55, 0.55)
+
+[node name="GuardEnemy" parent="Enemy/soldiers" index="5" unique_id=2034909694 instance=ExtResource("16_vw32t")]
+position = Vector2(2781, 294)
+
+[node name="GuardEnemy2" parent="Enemy/soldiers" index="6" unique_id=221874173 instance=ExtResource("16_vw32t")]
+position = Vector2(3410, 293)
+
+[node name="GuardEnemy3" parent="Enemy/soldiers" index="7" unique_id=966873668 instance=ExtResource("16_vw32t")]
+position = Vector2(3249, 97)
+
+[node name="GuardEnemy4" parent="Enemy/soldiers" index="8" unique_id=787053982 instance=ExtResource("16_vw32t")]
+position = Vector2(3114, 95)
+
+[node name="GuardEnemy5" parent="Enemy/soldiers" index="9" unique_id=295118763 instance=ExtResource("16_vw32t")]
+position = Vector2(2218, 60)
+
+[node name="GuardEnemy6" parent="Enemy/soldiers" index="10" unique_id=1555455097 instance=ExtResource("16_vw32t")]
+position = Vector2(3123, 503)
+
+[node name="GuardEnemy7" parent="Enemy/soldiers" index="11" unique_id=1920613660 instance=ExtResource("16_vw32t")]
+position = Vector2(2097, 776)
+
+[node name="GuardEnemy8" parent="Enemy/soldiers" index="12" unique_id=8732292 instance=ExtResource("16_vw32t")]
+position = Vector2(2038, 783)
 
 [node name="flying" type="Node" parent="Enemy" index="1" unique_id=1634263824]
 
@@ -1271,83 +1298,38 @@ rotation = 1.57333
 scale = Vector2(-0.1, 0.1)
 turret_link_control = NodePath("../TurretLink")
 
-[node name="turret_base_6" parent="Enemy/turrets" index="3" unique_id=1778297531 node_paths=PackedStringArray("turret_link_control") instance=ExtResource("14_r2uf8")]
-position = Vector2(2100, -9)
-rotation = 3.14159
-scale = Vector2(0.1, 0.1)
-turret_link_control = NodePath("../TurretLink2")
-
-[node name="turret_base_7" parent="Enemy/turrets" index="4" unique_id=457223955 node_paths=PackedStringArray("turret_link_control") instance=ExtResource("14_r2uf8")]
-position = Vector2(2373, -9)
-rotation = 3.14159
-scale = Vector2(0.1, 0.1)
-turret_link_control = NodePath("../TurretLink2")
-
-[node name="turret_base_9" parent="Enemy/turrets" index="5" unique_id=1685043563 instance=ExtResource("14_r2uf8")]
-position = Vector2(3448, -8)
-rotation = 3.14159
-scale = Vector2(0.1, 0.1)
-
-[node name="TurretLink" parent="Enemy/turrets" index="6" unique_id=5195140 node_paths=PackedStringArray("turrets") instance=ExtResource("15_ffcw5")]
+[node name="TurretLink" parent="Enemy/turrets" index="3" unique_id=5195140 node_paths=PackedStringArray("turrets") instance=ExtResource("15_ffcw5")]
 position = Vector2(850, 98)
 turrets = [NodePath("../turret_base_4"), NodePath("../turret_base_5")]
 
-[node name="TurretLink2" parent="Enemy/turrets" index="7" unique_id=1501420257 node_paths=PackedStringArray("turrets") instance=ExtResource("15_ffcw5")]
+[node name="TurretLink2" parent="Enemy/turrets" index="4" unique_id=1501420257 node_paths=PackedStringArray("turrets") instance=ExtResource("15_ffcw5")]
 position = Vector2(2221, -6)
-turrets = [NodePath("../turret_base_6"), NodePath("../turret_base_7")]
+turrets = [NodePath(""), NodePath("")]
+
+[node name="turret_base_6" parent="Enemy/turrets" index="5" unique_id=1981155838 instance=ExtResource("14_r2uf8")]
+position = Vector2(3357, -9.999985)
+scale = Vector2(-0.1, -0.1)
+
+[node name="turret_base_7" parent="Enemy/turrets" index="6" unique_id=403649667 instance=ExtResource("14_r2uf8")]
+position = Vector2(2918, -11)
+rotation = -3.1415927
+scale = Vector2(0.1, 0.1)
+
+[node name="turret_base_8" parent="Enemy/turrets" index="7" unique_id=1025115888 instance=ExtResource("14_r2uf8")]
+position = Vector2(2357, -9)
+rotation = 3.1415925
+scale = Vector2(0.1, 0.1)
+
+[node name="turret_base_9" parent="Enemy/turrets" index="8" unique_id=813278052 instance=ExtResource("14_r2uf8")]
+position = Vector2(2090, -10)
+rotation = 3.1415925
+scale = Vector2(0.1, 0.1)
 
 [node name="Guards" type="Node" parent="Enemy" index="3" unique_id=357421241]
 
 [node name="GuardEnemy" parent="Enemy/Guards" index="0" unique_id=936746486 instance=ExtResource("16_vw32t")]
 position = Vector2(1378, 465)
 scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy2" parent="Enemy/Guards" index="1" unique_id=599796577 instance=ExtResource("16_vw32t")]
-position = Vector2(2828, 301)
-scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy3" parent="Enemy/Guards" index="2" unique_id=966706161 instance=ExtResource("16_vw32t")]
-position = Vector2(3299, 302)
-scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy4" parent="Enemy/Guards" index="3" unique_id=400292656 instance=ExtResource("16_vw32t")]
-position = Vector2(3404, 90)
-scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy5" parent="Enemy/Guards" index="4" unique_id=1583467490 instance=ExtResource("16_vw32t")]
-position = Vector2(3485, 302)
-scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy6" parent="Enemy/Guards" index="5" unique_id=2034909694 instance=ExtResource("16_vw32t")]
-position = Vector2(2272, 48)
-scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy7" parent="Enemy/Guards" index="6" unique_id=348154536 instance=ExtResource("16_vw32t")]
-position = Vector2(2400, 96)
-scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy8" parent="Enemy/Guards" index="7" unique_id=1373452543 instance=ExtResource("16_vw32t")]
-position = Vector2(3312, 88)
-scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy14" parent="Enemy/Guards" index="8" unique_id=605474709 instance=ExtResource("16_vw32t")]
-position = Vector2(3152, 1184)
-scale = Vector2(0.75, 0.75)
-
-[node name="GuardEnemy9" parent="Enemy/Guards" index="9" unique_id=557461842 instance=ExtResource("16_vw32t")]
-position = Vector2(3391, 489)
-
-[node name="GuardEnemy12" parent="Enemy/Guards" index="10" unique_id=1634369670 instance=ExtResource("16_vw32t")]
-position = Vector2(2103, 768)
-
-[node name="GuardEnemy13" parent="Enemy/Guards" index="11" unique_id=1168491010 instance=ExtResource("16_vw32t")]
-position = Vector2(2041, 762)
-
-[node name="GuardEnemy10" parent="Enemy/Guards" index="12" unique_id=748741190 instance=ExtResource("16_vw32t")]
-position = Vector2(3150, 488)
-
-[node name="GuardEnemy11" parent="Enemy/Guards" index="13" unique_id=1566056918 instance=ExtResource("16_vw32t")]
-position = Vector2(3036, 486)
 
 [node name="SleepingGuard" parent="Enemy" index="4" unique_id=2088524183 instance=ExtResource("17_61h8j")]
 position = Vector2(656, 457)
@@ -1358,50 +1340,11 @@ position = Vector2(656, 457)
 
 [node name="Underground" type="Node" parent="Enemy" index="6" unique_id=598079795]
 
-[node name="EnemyGroup" parent="Enemy/Underground" index="0" unique_id=217070939 node_paths=PackedStringArray("heavy_soldier_enemies", "guard_enemies") instance=ExtResource("19_658m8")]
-heavy_soldier_enemies = [NodePath("../HeavySoldier5"), NodePath("../HeavySoldier6")]
-guard_enemies = [NodePath("../GuardEnemy6")]
+[node name="Turrets" type="Node" parent="Enemy/Underground" index="0" unique_id=1096692305]
 
-[node name="HeavySoldier5" parent="Enemy/Underground" index="1" unique_id=1834093229 node_paths=PackedStringArray("group_link_control") instance=ExtResource("13_rfxm3")]
-position = Vector2(2520, 1192)
-scale = Vector2(0.5, 0.5)
-group_link_control = NodePath("../EnemyGroup")
-
-[node name="HeavySoldier6" parent="Enemy/Underground" index="2" unique_id=217312310 node_paths=PackedStringArray("group_link_control") instance=ExtResource("13_rfxm3")]
-position = Vector2(3104, 1192)
-scale = Vector2(0.5, 0.5)
-group_link_control = NodePath("../EnemyGroup")
-
-[node name="GuardEnemy6" parent="Enemy/Underground" index="3" unique_id=216217353 node_paths=PackedStringArray("group_link_control") instance=ExtResource("16_vw32t")]
-position = Vector2(2578, 1187)
-scale = Vector2(0.75, 0.75)
-group_link_control = NodePath("../EnemyGroup")
-
-[node name="Turrets" type="Node" parent="Enemy/Underground" index="4" unique_id=1096692305]
-
-[node name="turret_base_3" parent="Enemy/Underground/Turrets" index="0" unique_id=385641151 instance=ExtResource("14_r2uf8")]
-position = Vector2(2885, 1096)
-scale = Vector2(-0.15, -0.15)
-
-[node name="turret_base_6" parent="Enemy/Underground/Turrets" index="1" unique_id=1981155838 instance=ExtResource("14_r2uf8")]
-position = Vector2(2798, 1096)
-scale = Vector2(0.15, -0.15)
-
-[node name="turret_base_7" parent="Enemy/Underground/Turrets" index="2" unique_id=1740863719 instance=ExtResource("14_r2uf8")]
-position = Vector2(3277, 1096)
-scale = Vector2(0.15, -0.15)
-
-[node name="turret_base_4" parent="Enemy/Underground/Turrets" index="3" unique_id=1816447384 instance=ExtResource("14_r2uf8")]
-position = Vector2(3653.0002, 1097)
-scale = Vector2(-0.15, -0.15)
-
-[node name="turret_base_5" parent="Enemy/Underground/Turrets" index="4" unique_id=1134855068 instance=ExtResource("14_r2uf8")]
-position = Vector2(3365, 1097)
-scale = Vector2(-0.15, -0.15)
-
-[node name="TurretLink" parent="Enemy/Underground/Turrets" index="5" unique_id=1557337183 node_paths=PackedStringArray("turrets") instance=ExtResource("15_ffcw5")]
+[node name="TurretLink" parent="Enemy/Underground/Turrets" index="0" unique_id=1557337183 node_paths=PackedStringArray("turrets") instance=ExtResource("15_ffcw5")]
 position = Vector2(2453, 1049)
-turrets = [NodePath("../turret_base_3"), NodePath("../turret_base_4"), NodePath("../turret_base_5")]
+turrets = [NodePath(""), NodePath(""), NodePath("")]
 
 [node name="AirNavs" type="Node2D" parent="." index="13" unique_id=985340265]
 

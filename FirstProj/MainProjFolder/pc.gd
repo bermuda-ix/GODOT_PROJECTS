@@ -2419,6 +2419,11 @@ func _on_hit_box_body_entered(body):
 	
 	
 func flip_over():
+	
+	if (state_machine.get_active_state()!=flip_end_state or state_machine.get_active_state()!=flip_state) and flipped_over:
+		flipped_over=false
+	
+	
 	if combat_states.get_active_state()==unlocked:
 		return
 	else:

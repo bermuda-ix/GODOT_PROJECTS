@@ -27,8 +27,8 @@ radius = 2.0
 height = 13.0
 
 [node name="ShotgunBullet" type="RigidBody2D" unique_id=1517323149 groups=["PlayerBullet"]]
-collision_layer = 8388672
-collision_mask = 285229329
+collision_layer = 4096
+collision_mask = 129
 mass = 0.001
 gravity_scale = 0.0
 custom_integrator = true
