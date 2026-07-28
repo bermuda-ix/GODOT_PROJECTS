@@ -2282,7 +2282,7 @@ size = Vector2(7, 12)
 
 [sub_resource type="Animation" id="Animation_1ru25"]
 resource_name = "Attack"
-length = 0.36666667
+length = 0.46666667
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"Attack_connect",
@@ -2318,7 +2318,7 @@ tracks/2/path = NodePath("AnimatedSprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.06666667, 0.09999999, 0.13333333, 0.28333333, 0.3166667),
+"times": PackedFloat32Array(0, 0.06666667, 0.09999999, 0.13333333, 0.3, 0.33333337),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
@@ -2404,7 +2404,7 @@ tracks/9/path = NodePath(".")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0.26666668),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -2566,7 +2566,7 @@ tracks/22/path = NodePath("AnimatedSprite2D/attack_fx:frame")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
-"times": PackedFloat32Array(0.125, 0.13333334, 0.15, 0.275, 0.3, 0.325, 0.3416667),
+"times": PackedFloat32Array(0.125, 0.13333334, 0.15, 0.33333334, 0.36666667, 0.4, 0.43333334),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6]
@@ -2619,10 +2619,22 @@ tracks/26/keys = {
 "update": 0,
 "values": [false]
 }
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath(".:attacking")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.28333333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
 
 [sub_resource type="Animation" id="Animation_vtlvl"]
 resource_name = "Attack_2"
-length = 0.36666667
+length = 0.46666667
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"Attack_2_connect",
@@ -2733,7 +2745,7 @@ tracks/8/path = NodePath(".")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0.26666668),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -2933,7 +2945,7 @@ tracks/24/path = NodePath("AnimatedSprite2D/attack_fx:frame")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0.14166667, 0.15189567, 0.16856235, 0.29166666, 0.31666666, 0.33333334, 0.34166667),
+"times": PackedFloat32Array(0.14166667, 0.15189567, 0.16856235, 0.33333334, 0.36666667, 0.4, 0.43333334),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6]
@@ -2962,10 +2974,22 @@ tracks/26/keys = {
 "update": 0,
 "values": [false]
 }
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath(".:attacking")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.28333333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
 
 [sub_resource type="Animation" id="Animation_222nm"]
 resource_name = "Attack_3"
-length = 0.36666667
+length = 0.46666667
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"Attack_3_connect",
@@ -3064,7 +3088,7 @@ tracks/7/path = NodePath(".")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0.26666668),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -3228,7 +3252,7 @@ tracks/20/path = NodePath("AnimatedSprite2D/attack_fx:frame")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0.099999994, 0.11666667, 0.275, 0.3, 0.31666666, 0.33333334, 0.34166667),
+"times": PackedFloat32Array(0.099999994, 0.11666667, 0.16666667, 0.33333334, 0.36666667, 0.4, 0.43333334),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6]
@@ -3292,6 +3316,18 @@ tracks/25/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.002000000095]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath(".:attacking")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.28333333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
 }
 
 [sub_resource type="Animation" id="Animation_euoq7"]
@@ -5003,6 +5039,18 @@ tracks/27/keys = {
 "update": 0,
 "values": [Color(0.56082267, 2.454227, 2.454227, 1)]
 }
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath(".:attacking")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.53333336),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
 
 [sub_resource type="Animation" id="Animation_cdmbu"]
 resource_name = "Heavy_Combo_2"
@@ -5248,10 +5296,10 @@ tracks/19/path = NodePath("AnimatedSprite2D/attack_fx:flip_h")
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
-"times": PackedFloat32Array(0.23794585),
+"times": PackedFloat32Array(0.23333333),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [false]
+"values": [true]
 }
 tracks/20/type = "value"
 tracks/20/imported = false
@@ -5260,10 +5308,10 @@ tracks/20/path = NodePath("AnimatedSprite2D/attack_fx:flip_v")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0.23794585),
+"times": PackedFloat32Array(0.23333333),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 tracks/21/type = "value"
 tracks/21/imported = false
@@ -5284,10 +5332,10 @@ tracks/22/path = NodePath("AnimatedSprite2D/attack_fx:visible")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
-"times": PackedFloat32Array(0.23257867),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.225, 0.26666668),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [true]
+"values": [false, true]
 }
 tracks/23/type = "value"
 tracks/23/imported = false
@@ -5308,10 +5356,10 @@ tracks/24/path = NodePath("AnimatedSprite2D/attack_fx:frame")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0.23257867, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.40000004, 0.43333337, 0.4666667, 0.5, 0.53333336, 0.5666667, 0.6, 0.6333334, 0.6666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0.26666668, 0.28333333, 0.3, 0.46666667, 0.49166667, 0.51666665, 0.5416667, 0.56666666, 0.59166664, 0.6166667, 0.64166665, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+"values": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 }
 tracks/25/type = "value"
 tracks/25/imported = false
@@ -5324,6 +5372,18 @@ tracks/25/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath(".:attacking")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.6166667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
 }
 
 [sub_resource type="Animation" id="Animation_83noc"]
@@ -6235,19 +6295,19 @@ tracks/20/keys = {
 tracks/21/type = "value"
 tracks/21/imported = false
 tracks/21/enabled = true
-tracks/21/path = NodePath("AnimatedSprite2D/Shotty/GPUParticles2D2:lifetime")
+tracks/21/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast5:visible")
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [2.0]
+"values": [false]
 }
 tracks/22/type = "value"
 tracks/22/imported = false
 tracks/22/enabled = true
-tracks/22/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast5:visible")
+tracks/22/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast4:visible")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
@@ -6259,31 +6319,31 @@ tracks/22/keys = {
 tracks/23/type = "value"
 tracks/23/imported = false
 tracks/23/enabled = true
-tracks/23/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast4:visible")
+tracks/23/path = NodePath("AnimatedSprite2D/Shotty:scale")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [false]
+"values": [Vector2(0.0885122, 0.0871019)]
 }
 tracks/24/type = "value"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath("AnimatedSprite2D/Shotty:scale")
+tracks/24/path = NodePath("AnimatedSprite2D/Shotty/ShotgunSmoke:emitting")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0.0885122, 0.0871019)]
+"values": [false]
 }
 tracks/25/type = "value"
 tracks/25/imported = false
 tracks/25/enabled = true
-tracks/25/path = NodePath("AnimatedSprite2D/Shotty/ShotgunSmoke:emitting")
+tracks/25/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast3:visible")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
@@ -6295,7 +6355,7 @@ tracks/25/keys = {
 tracks/26/type = "value"
 tracks/26/imported = false
 tracks/26/enabled = true
-tracks/26/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast3:visible")
+tracks/26/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast2:visible")
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
 tracks/26/keys = {
@@ -6307,67 +6367,67 @@ tracks/26/keys = {
 tracks/27/type = "value"
 tracks/27/imported = false
 tracks/27/enabled = true
-tracks/27/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast2:visible")
+tracks/27/path = NodePath("AnimatedSprite2D/Shotty/SpreadBoundary1:rotation")
 tracks/27/interp = 1
 tracks/27/loop_wrap = true
 tracks/27/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [false]
+"values": [0.0]
 }
 tracks/28/type = "value"
 tracks/28/imported = false
 tracks/28/enabled = true
-tracks/28/path = NodePath("AnimatedSprite2D/Shotty/SpreadBoundary1:rotation")
+tracks/28/path = NodePath("AnimatedSprite2D/Shotty/SpreadBoundary2:rotation")
 tracks/28/interp = 1
 tracks/28/loop_wrap = true
 tracks/28/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [0.5934119]
 }
 tracks/29/type = "value"
 tracks/29/imported = false
 tracks/29/enabled = true
-tracks/29/path = NodePath("AnimatedSprite2D/Shotty/SpreadBoundary2:rotation")
+tracks/29/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:polygon")
 tracks/29/interp = 1
 tracks/29/loop_wrap = true
 tracks/29/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.5934119]
+"values": [PackedVector2Array(0, 0, 36, 11, 36, -11)]
 }
 tracks/30/type = "value"
 tracks/30/imported = false
 tracks/30/enabled = true
-tracks/30/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:polygon")
+tracks/30/path = NodePath("AnimatedSprite2D/Shotty:offset")
 tracks/30/interp = 1
 tracks/30/loop_wrap = true
 tracks/30/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [PackedVector2Array(0, 0, 36, 11, 36, -11)]
+"values": [Vector2(10.6825, 104.176)]
 }
 tracks/31/type = "value"
 tracks/31/imported = false
 tracks/31/enabled = true
-tracks/31/path = NodePath("AnimatedSprite2D/Shotty:offset")
+tracks/31/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast:visible")
 tracks/31/interp = 1
 tracks/31/loop_wrap = true
 tracks/31/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(10.6825, 104.176)]
+"values": [false]
 }
 tracks/32/type = "value"
 tracks/32/imported = false
 tracks/32/enabled = true
-tracks/32/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast:visible")
+tracks/32/path = NodePath("AnimatedSprite2D/Shotty/GPUParticles2D:emitting")
 tracks/32/interp = 1
 tracks/32/loop_wrap = true
 tracks/32/keys = {
@@ -6379,31 +6439,31 @@ tracks/32/keys = {
 tracks/33/type = "value"
 tracks/33/imported = false
 tracks/33/enabled = true
-tracks/33/path = NodePath("AnimatedSprite2D/Shotty/GPUParticles2D:emitting")
+tracks/33/path = NodePath("AnimatedSprite2D/Shotty:position")
 tracks/33/interp = 1
 tracks/33/loop_wrap = true
 tracks/33/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [false]
+"values": [Vector2(-1.0757e-09, -16.3107)]
 }
 tracks/34/type = "value"
 tracks/34/imported = false
 tracks/34/enabled = true
-tracks/34/path = NodePath("AnimatedSprite2D/Shotty:position")
+tracks/34/path = NodePath("Speech:visible")
 tracks/34/interp = 1
 tracks/34/loop_wrap = true
 tracks/34/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-1.0757e-09, -16.3107)]
+"update": 1,
+"values": [false]
 }
 tracks/35/type = "value"
 tracks/35/imported = false
 tracks/35/enabled = true
-tracks/35/path = NodePath("Speech:visible")
+tracks/35/path = NodePath("AnimatedSprite2D/sprite_fx:visible")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
@@ -6415,331 +6475,331 @@ tracks/35/keys = {
 tracks/36/type = "value"
 tracks/36/imported = false
 tracks/36/enabled = true
-tracks/36/path = NodePath("AnimatedSprite2D/sprite_fx:visible")
+tracks/36/path = NodePath("AnimatedSprite2D:position")
 tracks/36/interp = 1
 tracks/36/loop_wrap = true
 tracks/36/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2(0, 8)]
 }
 tracks/37/type = "value"
 tracks/37/imported = false
 tracks/37/enabled = true
-tracks/37/path = NodePath("AnimatedSprite2D:position")
+tracks/37/path = NodePath("HurtBox/CollisionShape2D:disabled")
 tracks/37/interp = 1
 tracks/37/loop_wrap = true
 tracks/37/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 8)]
+"update": 1,
+"values": [false]
 }
 tracks/38/type = "value"
 tracks/38/imported = false
 tracks/38/enabled = true
-tracks/38/path = NodePath("HurtBox/CollisionShape2D:disabled")
+tracks/38/path = NodePath("HurtBox/CollisionShape2D:shape:size")
 tracks/38/interp = 1
 tracks/38/loop_wrap = true
 tracks/38/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2(18, 41)]
 }
 tracks/39/type = "value"
 tracks/39/imported = false
 tracks/39/enabled = true
-tracks/39/path = NodePath("HurtBox/CollisionShape2D:shape:size")
+tracks/39/path = NodePath("HurtBox/CollisionShape2D:position")
 tracks/39/interp = 1
 tracks/39/loop_wrap = true
 tracks/39/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(18, 41)]
+"values": [Vector2(1, -10)]
 }
 tracks/40/type = "value"
 tracks/40/imported = false
 tracks/40/enabled = true
-tracks/40/path = NodePath("HurtBox/CollisionShape2D:position")
+tracks/40/path = NodePath("AnimatedSprite2D/attack_fx:animation")
 tracks/40/interp = 1
 tracks/40/loop_wrap = true
 tracks/40/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, -10)]
+"values": [&"attack1"]
 }
 tracks/41/type = "value"
 tracks/41/imported = false
 tracks/41/enabled = true
-tracks/41/path = NodePath("AnimatedSprite2D/attack_fx:animation")
+tracks/41/path = NodePath("AnimatedSprite2D/attack_fx:frame")
 tracks/41/interp = 1
 tracks/41/loop_wrap = true
 tracks/41/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [&"attack1"]
+"values": [0]
 }
 tracks/42/type = "value"
 tracks/42/imported = false
 tracks/42/enabled = true
-tracks/42/path = NodePath("AnimatedSprite2D/attack_fx:frame")
+tracks/42/path = NodePath("AnimatedSprite2D/attack_fx:flip_h")
 tracks/42/interp = 1
 tracks/42/loop_wrap = true
 tracks/42/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0]
+"values": [true]
 }
 tracks/43/type = "value"
 tracks/43/imported = false
 tracks/43/enabled = true
-tracks/43/path = NodePath("AnimatedSprite2D/attack_fx:flip_h")
+tracks/43/path = NodePath("AnimatedSprite2D/attack_fx:scale")
 tracks/43/interp = 1
 tracks/43/loop_wrap = true
 tracks/43/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [true]
+"values": [Vector2(1.5, 1.5)]
 }
 tracks/44/type = "value"
 tracks/44/imported = false
 tracks/44/enabled = true
-tracks/44/path = NodePath("AnimatedSprite2D/attack_fx:scale")
+tracks/44/path = NodePath("AnimatedSprite2D/attack_fx:position")
 tracks/44/interp = 1
 tracks/44/loop_wrap = true
 tracks/44/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1.5, 1.5)]
+"values": [Vector2(29, -33)]
 }
 tracks/45/type = "value"
 tracks/45/imported = false
 tracks/45/enabled = true
-tracks/45/path = NodePath("AnimatedSprite2D/attack_fx:position")
+tracks/45/path = NodePath("AnimatedSprite2D/attack_fx:visible")
 tracks/45/interp = 1
 tracks/45/loop_wrap = true
 tracks/45/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(29, -33)]
+"values": [false]
 }
 tracks/46/type = "value"
 tracks/46/imported = false
 tracks/46/enabled = true
-tracks/46/path = NodePath("AnimatedSprite2D/attack_fx:visible")
+tracks/46/path = NodePath("AnimatedSprite2D/hit_fx:position")
 tracks/46/interp = 1
 tracks/46/loop_wrap = true
 tracks/46/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [false]
+"values": [Vector2(39, -28)]
 }
 tracks/47/type = "value"
 tracks/47/imported = false
 tracks/47/enabled = true
-tracks/47/path = NodePath("AnimatedSprite2D/hit_fx:position")
+tracks/47/path = NodePath("AnimatedSprite2D/HitBox:stagger_damage")
 tracks/47/interp = 1
 tracks/47/loop_wrap = true
 tracks/47/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(39, -28)]
+"update": 1,
+"values": [false]
 }
 tracks/48/type = "value"
 tracks/48/imported = false
 tracks/48/enabled = true
-tracks/48/path = NodePath("AnimatedSprite2D/HitBox:stagger_damage")
+tracks/48/path = NodePath("AnimatedSprite2D/sprite_fx:scale")
 tracks/48/interp = 1
 tracks/48/loop_wrap = true
 tracks/48/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2(1, 1)]
 }
 tracks/49/type = "value"
 tracks/49/imported = false
 tracks/49/enabled = true
-tracks/49/path = NodePath("AnimatedSprite2D/sprite_fx:scale")
+tracks/49/path = NodePath("AnimatedSprite2D/attack_fx:rotation")
 tracks/49/interp = 1
 tracks/49/loop_wrap = true
 tracks/49/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [-2.094392]
 }
 tracks/50/type = "value"
 tracks/50/imported = false
 tracks/50/enabled = true
-tracks/50/path = NodePath("AnimatedSprite2D/attack_fx:rotation")
+tracks/50/path = NodePath("AnimatedSprite2D/sprite_fx:animation")
 tracks/50/interp = 1
 tracks/50/loop_wrap = true
 tracks/50/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-2.094392]
+"update": 1,
+"values": [&"staggered"]
 }
 tracks/51/type = "value"
 tracks/51/imported = false
 tracks/51/enabled = true
-tracks/51/path = NodePath("AnimatedSprite2D/sprite_fx:animation")
+tracks/51/path = NodePath("AnimatedSprite2D/sprite_fx:frame")
 tracks/51/interp = 1
 tracks/51/loop_wrap = true
 tracks/51/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"staggered"]
+"values": [0]
 }
 tracks/52/type = "value"
 tracks/52/imported = false
 tracks/52/enabled = true
-tracks/52/path = NodePath("AnimatedSprite2D/sprite_fx:frame")
+tracks/52/path = NodePath("AnimatedSprite2D/HitBox:launch")
 tracks/52/interp = 1
 tracks/52/loop_wrap = true
 tracks/52/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [false]
 }
 tracks/53/type = "value"
 tracks/53/imported = false
 tracks/53/enabled = true
-tracks/53/path = NodePath("AnimatedSprite2D/HitBox:launch")
+tracks/53/path = NodePath("StateMachine/Aim:aim_speed_scale")
 tracks/53/interp = 1
 tracks/53/loop_wrap = true
 tracks/53/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [1]
 }
 tracks/54/type = "value"
 tracks/54/imported = false
 tracks/54/enabled = true
-tracks/54/path = NodePath("StateMachine/Aim:aim_speed_scale")
+tracks/54/path = NodePath("AnimatedSprite2D/HitBox:knock_back")
 tracks/54/interp = 1
 tracks/54/loop_wrap = true
 tracks/54/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [1]
+"values": [false]
 }
 tracks/55/type = "value"
 tracks/55/imported = false
 tracks/55/enabled = true
-tracks/55/path = NodePath("AnimatedSprite2D/HitBox:knock_back")
+tracks/55/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape")
 tracks/55/interp = 1
 tracks/55/loop_wrap = true
 tracks/55/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [SubResource("RectangleShape2D_0g83a")]
 }
 tracks/56/type = "value"
 tracks/56/imported = false
 tracks/56/enabled = true
-tracks/56/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:shape")
+tracks/56/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
 tracks/56/interp = 1
 tracks/56/loop_wrap = true
 tracks/56/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [SubResource("RectangleShape2D_0g83a")]
+"values": [268435737]
 }
 tracks/57/type = "value"
 tracks/57/imported = false
 tracks/57/enabled = true
-tracks/57/path = NodePath("AnimatedSprite2D/HitBox:collision_mask")
+tracks/57/path = NodePath("AnimatedSprite2D/HitBox:launch_strength")
 tracks/57/interp = 1
 tracks/57/loop_wrap = true
 tracks/57/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [268435737]
+"update": 0,
+"values": [40.0]
 }
 tracks/58/type = "value"
 tracks/58/imported = false
 tracks/58/enabled = true
-tracks/58/path = NodePath("AnimatedSprite2D/HitBox:launch_strength")
+tracks/58/path = NodePath("AnimatedSprite2D/HitBox:knock_back_strength")
 tracks/58/interp = 1
 tracks/58/loop_wrap = true
 tracks/58/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [40.0]
+"values": [500.0]
 }
 tracks/59/type = "value"
 tracks/59/imported = false
 tracks/59/enabled = true
-tracks/59/path = NodePath("AnimatedSprite2D/HitBox:knock_back_strength")
+tracks/59/path = NodePath(".:attacking")
 tracks/59/interp = 1
 tracks/59/loop_wrap = true
 tracks/59/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [500.0]
+"update": 1,
+"values": [false]
 }
 tracks/60/type = "value"
 tracks/60/imported = false
 tracks/60/enabled = true
-tracks/60/path = NodePath(".:attacking")
+tracks/60/path = NodePath("AnimatedSprite2D/sprite_fx:position")
 tracks/60/interp = 1
 tracks/60/loop_wrap = true
 tracks/60/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2(-26, -19)]
 }
 tracks/61/type = "value"
 tracks/61/imported = false
 tracks/61/enabled = true
-tracks/61/path = NodePath("AnimatedSprite2D/sprite_fx:position")
+tracks/61/path = NodePath("HurtBox:active")
 tracks/61/interp = 1
 tracks/61/loop_wrap = true
 tracks/61/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-26, -19)]
+"update": 1,
+"values": [true]
 }
 tracks/62/type = "value"
 tracks/62/imported = false
 tracks/62/enabled = true
-tracks/62/path = NodePath("HurtBox:active")
+tracks/62/path = NodePath("AnimatedSprite2D/HitBox:active")
 tracks/62/interp = 1
 tracks/62/loop_wrap = true
 tracks/62/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/63/type = "value"
 tracks/63/imported = false
 tracks/63/enabled = true
-tracks/63/path = NodePath("AnimatedSprite2D/HitBox:active")
+tracks/63/path = NodePath("AnimatedSprite2D/HitBox:clash_active")
 tracks/63/interp = 1
 tracks/63/loop_wrap = true
 tracks/63/keys = {
@@ -6751,202 +6811,190 @@ tracks/63/keys = {
 tracks/64/type = "value"
 tracks/64/imported = false
 tracks/64/enabled = true
-tracks/64/path = NodePath("AnimatedSprite2D/HitBox:clash_active")
+tracks/64/path = NodePath("AudioStreamPlayer2D:volume_db")
 tracks/64/interp = 1
 tracks/64/loop_wrap = true
 tracks/64/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [0.0]
 }
 tracks/65/type = "value"
 tracks/65/imported = false
 tracks/65/enabled = true
-tracks/65/path = NodePath("AudioStreamPlayer2D:volume_db")
+tracks/65/path = NodePath("AudioStreamPlayer2D:pitch_scale")
 tracks/65/interp = 1
 tracks/65/loop_wrap = true
 tracks/65/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [1.0]
 }
 tracks/66/type = "value"
 tracks/66/imported = false
 tracks/66/enabled = true
-tracks/66/path = NodePath("AudioStreamPlayer2D:pitch_scale")
+tracks/66/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/MaskColor")
 tracks/66/interp = 1
 tracks/66/loop_wrap = true
 tracks/66/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.0]
+"values": [Color(0.41170982, 0.5971451, 1, 1)]
 }
 tracks/67/type = "value"
 tracks/67/imported = false
 tracks/67/enabled = true
-tracks/67/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/MaskColor")
+tracks/67/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/GlowColor")
 tracks/67/interp = 1
 tracks/67/loop_wrap = true
 tracks/67/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.41170982, 0.5971451, 1, 1)]
+"values": [Color(0.2250466, 0.79400057, 2.454227, 1)]
 }
 tracks/68/type = "value"
 tracks/68/imported = false
 tracks/68/enabled = true
-tracks/68/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/GlowColor")
+tracks/68/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/FloatParameter")
 tracks/68/interp = 1
 tracks/68/loop_wrap = true
 tracks/68/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.2250466, 0.79400057, 2.454227, 1)]
+"values": [0.0]
 }
 tracks/69/type = "value"
 tracks/69/imported = false
 tracks/69/enabled = true
-tracks/69/path = NodePath("AnimatedSprite2D/attack_fx:instance_shader_parameters/FloatParameter")
+tracks/69/path = NodePath("AnimatedSprite2D/attack_fx:self_modulate")
 tracks/69/interp = 1
 tracks/69/loop_wrap = true
 tracks/69/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [Color(0.56082267, 2.454227, 2.454227, 1)]
 }
 tracks/70/type = "value"
 tracks/70/imported = false
 tracks/70/enabled = true
-tracks/70/path = NodePath("AnimatedSprite2D/attack_fx:self_modulate")
+tracks/70/path = NodePath("AnimatedSprite2D/attack_fx:flip_v")
 tracks/70/interp = 1
 tracks/70/loop_wrap = true
 tracks/70/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.56082267, 2.454227, 2.454227, 1)]
+"update": 1,
+"values": [true]
 }
 tracks/71/type = "value"
 tracks/71/imported = false
 tracks/71/enabled = true
-tracks/71/path = NodePath("AnimatedSprite2D/attack_fx:flip_v")
+tracks/71/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:rotation")
 tracks/71/interp = 1
 tracks/71/loop_wrap = true
 tracks/71/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"update": 0,
+"values": [0.90931654]
 }
 tracks/72/type = "value"
 tracks/72/imported = false
 tracks/72/enabled = true
-tracks/72/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:rotation")
+tracks/72/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:position")
 tracks/72/interp = 1
 tracks/72/loop_wrap = true
 tracks/72/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.90931654]
+"values": [Vector2(361.4631, -10.683511)]
 }
 tracks/73/type = "value"
 tracks/73/imported = false
 tracks/73/enabled = true
-tracks/73/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:position")
+tracks/73/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:scale")
 tracks/73/interp = 1
 tracks/73/loop_wrap = true
 tracks/73/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(361.4631, -10.683511)]
+"values": [Vector2(3, 3)]
 }
 tracks/74/type = "value"
 tracks/74/imported = false
 tracks/74/enabled = true
-tracks/74/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:scale")
+tracks/74/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:self_modulate")
 tracks/74/interp = 1
 tracks/74/loop_wrap = true
 tracks/74/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(3, 3)]
+"values": [Color(1.8247963, 1.8247963, 1.8247963, 1)]
 }
 tracks/75/type = "value"
 tracks/75/imported = false
 tracks/75/enabled = true
-tracks/75/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:self_modulate")
+tracks/75/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:z_index")
 tracks/75/interp = 1
 tracks/75/loop_wrap = true
 tracks/75/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1.8247963, 1.8247963, 1.8247963, 1)]
+"update": 1,
+"values": [-1]
 }
 tracks/76/type = "value"
 tracks/76/imported = false
 tracks/76/enabled = true
-tracks/76/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:z_index")
+tracks/76/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:flip_h")
 tracks/76/interp = 1
 tracks/76/loop_wrap = true
 tracks/76/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [-1]
+"values": [true]
 }
 tracks/77/type = "value"
 tracks/77/imported = false
 tracks/77/enabled = true
-tracks/77/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:flip_h")
+tracks/77/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:animation")
 tracks/77/interp = 1
 tracks/77/loop_wrap = true
 tracks/77/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [&"shotgun_fire"]
 }
 tracks/78/type = "value"
 tracks/78/imported = false
 tracks/78/enabled = true
-tracks/78/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:animation")
+tracks/78/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:frame")
 tracks/78/interp = 1
 tracks/78/loop_wrap = true
 tracks/78/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"shotgun_fire"]
+"values": [0]
 }
 tracks/79/type = "value"
 tracks/79/imported = false
 tracks/79/enabled = true
-tracks/79/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:frame")
+tracks/79/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:visible")
 tracks/79/interp = 1
 tracks/79/loop_wrap = true
 tracks/79/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/80/type = "value"
-tracks/80/imported = false
-tracks/80/enabled = true
-tracks/80/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:visible")
-tracks/80/interp = 1
-tracks/80/loop_wrap = true
-tracks/80/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -8206,7 +8254,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_on8rs"]
 resource_name = "shotgun_attack"
-length = 0.7
+length = 0.53333336
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -8221,119 +8269,35 @@ tracks/0/keys = {
 }
 tracks/1/type = "value"
 tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/path = NodePath("AnimatedSprite2D/Shotty/GPUParticles2D:emitting")
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D/Shotty:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [false, true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D/Shotty:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-1.0757e-09, -16.3107)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/Shotty/ShotgunSmoke:emitting")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/Shotty/ShotgunSmoke:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.16666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [false, true]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = false
-tracks/4/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.166667, 0.633333),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [true, false, true]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = false
-tracks/5/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast5:visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.266667, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = false
-tracks/6/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast2:visible")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.266667, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = false
-tracks/7/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast4:visible")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.233333, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = false
-tracks/8/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast3:visible")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = false
-tracks/9/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast:visible")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.166667, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/10/type = "audio"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("AudioStreamPlayer2D")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/path = NodePath("AudioStreamPlayer2D")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
@@ -8345,14 +8309,14 @@ tracks/10/keys = {
 }],
 "times": PackedFloat32Array(0, 0.16666667)
 }
-tracks/10/use_blend = true
-tracks/11/type = "method"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath(".")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
+tracks/3/use_blend = true
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0.2, 0.23333333),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
@@ -8363,154 +8327,168 @@ tracks/11/keys = {
 "method": &"shotgun_recoil"
 }]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D:animation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"GunFire2H"]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = false
+tracks/6/path = NodePath("AudioStreamPlayer2D:volume_db")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = false
+tracks/7/path = NodePath("AudioStreamPlayer2D:pitch_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.3596852]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(447.2103, -20.026266)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5, 5)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:self_modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2.1168277, 2.1168277, 2.1168277, 1)]
+}
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("AnimatedSprite2D:animation")
+tracks/12/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:z_index")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"GunFire2H"]
+"values": [-1]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("AudioStreamPlayer2D:volume_db")
+tracks/13/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:flip_h")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [true]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("AudioStreamPlayer2D:pitch_scale")
+tracks/14/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:animation")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
+"update": 1,
+"values": [&"shotgun_fire"]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:rotation")
+tracks/15/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:frame")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [2.3596852]
-}
-tracks/16/type = "value"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:position")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(447.2103, -20.026266)]
-}
-tracks/17/type = "value"
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:scale")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(5, 5)]
-}
-tracks/18/type = "value"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:self_modulate")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(2.1168277, 2.1168277, 2.1168277, 1)]
-}
-tracks/19/type = "value"
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:z_index")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [-1]
-}
-tracks/20/type = "value"
-tracks/20/imported = false
-tracks/20/enabled = true
-tracks/20/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:flip_h")
-tracks/20/interp = 1
-tracks/20/loop_wrap = true
-tracks/20/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/21/type = "value"
-tracks/21/imported = false
-tracks/21/enabled = true
-tracks/21/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:animation")
-tracks/21/interp = 1
-tracks/21/loop_wrap = true
-tracks/21/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"shotgun_fire"]
-}
-tracks/22/type = "value"
-tracks/22/imported = false
-tracks/22/enabled = true
-tracks/22/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:frame")
-tracks/22/interp = 1
-tracks/22/loop_wrap = true
-tracks/22/keys = {
-"times": PackedFloat32Array(0.16666667, 0.2, 0.23333335, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.40000004, 0.43333334, 0.4666667),
+"times": PackedFloat32Array(0.16666667, 0.18333334, 0.2, 0.21666667, 0.23333333, 0.25, 0.28333333, 0.325, 0.375, 0.41666666),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 }
-tracks/23/type = "value"
-tracks/23/imported = false
-tracks/23/enabled = true
-tracks/23/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:visible")
-tracks/23/interp = 1
-tracks/23/loop_wrap = true
-tracks/23/keys = {
-"times": PackedFloat32Array(0.16666667, 0.5949879),
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0.16666667, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
 }
+tracks/17/type = "method"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath(".")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_sound"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_okwur"]
 resource_name = "shotgun_attack_fast"
-length = 0.2
+length = 0.23333333
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -8525,107 +8503,23 @@ tracks/0/keys = {
 }
 tracks/1/type = "value"
 tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/path = NodePath("AnimatedSprite2D/Shotty/GPUParticles2D2:lifetime")
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.0333333),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.5]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = false
-tracks/2/path = NodePath("AnimatedSprite2D/Shotty/GPUParticles2D:emitting")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.0346945),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [false, true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.0333333, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [true, false, true]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = false
-tracks/4/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast5:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = false
-tracks/5/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast2:visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = false
-tracks/6/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast4:visible")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = false
-tracks/7/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast3:visible")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = false
-tracks/8/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast:visible")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/9/type = "audio"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("AudioStreamPlayer2D")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
@@ -8633,119 +8527,150 @@ tracks/9/keys = {
 }],
 "times": PackedFloat32Array(0)
 }
-tracks/9/use_blend = true
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:rotation")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
+tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [2.3596852]
 }
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:position")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(447.2103, -20.026266)]
 }
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:scale")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(5, 5)]
 }
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:self_modulate")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:self_modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1.8247963, 1.8247963, 1.8247963, 1)]
 }
-tracks/14/type = "value"
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:z_index")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:z_index")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [-1]
 }
-tracks/15/type = "value"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:flip_h")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:flip_h")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
-tracks/16/type = "value"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:animation")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/keys = {
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:animation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"shotgun_fire"]
 }
-tracks/17/type = "value"
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:frame")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/keys = {
-"times": PackedFloat32Array(0, 0.03333333, 0.06666668, 0.10000001, 0.13333334, 0.16666667, 0.2, 0.23333336, 0.26666665, 0.3),
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:frame")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.016666668, 0.033333335, 0.05, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.19166666, 0.21666667),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 }
-tracks/18/type = "value"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:visible")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
 }
+tracks/12/type = "method"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath(".")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_sound"
+}]
+}
+tracks/13/type = "method"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath(".")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.033333335),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"shotgun_shoot"
+}, {
+"args": [],
+"method": &"shotgun_recoil"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_ai7hj"]
 resource_name = "shotgun_attack_flip"
-length = 0.7
+length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -8760,119 +8685,35 @@ tracks/0/keys = {
 }
 tracks/1/type = "value"
 tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/path = NodePath("AnimatedSprite2D/Shotty/GPUParticles2D:emitting")
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D/Shotty:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [false, true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D/Shotty:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-1.0757e-09, -16.3107)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/Shotty/ShotgunSmoke:emitting")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/Shotty/ShotgunSmoke:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.16666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [false, true]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = false
-tracks/4/path = NodePath("AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.166667, 0.633333),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [true, false, true]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = false
-tracks/5/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast5:visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.266667, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = false
-tracks/6/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast2:visible")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.266667, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = false
-tracks/7/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast4:visible")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.233333, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = false
-tracks/8/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast3:visible")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = false
-tracks/9/path = NodePath("AnimatedSprite2D/Shotty/ShottyBlast:visible")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.166667, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [false, true, false]
-}
-tracks/10/type = "audio"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("AudioStreamPlayer2D")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/path = NodePath("AudioStreamPlayer2D")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
@@ -8884,14 +8725,14 @@ tracks/10/keys = {
 }],
 "times": PackedFloat32Array(0, 0.16666667)
 }
-tracks/10/use_blend = true
-tracks/11/type = "method"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath(".")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
+tracks/3/use_blend = true
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0.2, 0.23333333),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
@@ -8902,149 +8743,163 @@ tracks/11/keys = {
 "method": &"shotgun_recoil"
 }]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D:animation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"GunCrouchFire"]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = false
+tracks/6/path = NodePath("AudioStreamPlayer2D:volume_db")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = false
+tracks/7/path = NodePath("AudioStreamPlayer2D:pitch_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.3596852]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(447.2103, -20.026266)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5, 5)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:self_modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1.8247963, 1.8247963, 1.8247963, 1)]
+}
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("AnimatedSprite2D:animation")
+tracks/12/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:z_index")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"GunCrouchFire"]
+"values": [-1]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("AudioStreamPlayer2D:volume_db")
+tracks/13/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:flip_h")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [true]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("AudioStreamPlayer2D:pitch_scale")
+tracks/14/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:animation")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
+"update": 1,
+"values": [&"shotgun_fire"]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:rotation")
+tracks/15/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:frame")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [2.3596852]
-}
-tracks/16/type = "value"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:position")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(447.2103, -20.026266)]
-}
-tracks/17/type = "value"
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:scale")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(5, 5)]
-}
-tracks/18/type = "value"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:self_modulate")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1.8247963, 1.8247963, 1.8247963, 1)]
-}
-tracks/19/type = "value"
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:z_index")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [-1]
-}
-tracks/20/type = "value"
-tracks/20/imported = false
-tracks/20/enabled = true
-tracks/20/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:flip_h")
-tracks/20/interp = 1
-tracks/20/loop_wrap = true
-tracks/20/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/21/type = "value"
-tracks/21/imported = false
-tracks/21/enabled = true
-tracks/21/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:animation")
-tracks/21/interp = 1
-tracks/21/loop_wrap = true
-tracks/21/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"shotgun_fire"]
-}
-tracks/22/type = "value"
-tracks/22/imported = false
-tracks/22/enabled = true
-tracks/22/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:frame")
-tracks/22/interp = 1
-tracks/22/loop_wrap = true
-tracks/22/keys = {
-"times": PackedFloat32Array(0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.4, 0.43333337, 0.46666667, 0.5),
+"times": PackedFloat32Array(0.2, 0.21666667, 0.23333333, 0.25, 0.26666668, 0.28333333, 0.325, 0.36666667, 0.41666666, 0.46666667),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 }
-tracks/23/type = "value"
-tracks/23/imported = false
-tracks/23/enabled = true
-tracks/23/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:visible")
-tracks/23/interp = 1
-tracks/23/loop_wrap = true
-tracks/23/keys = {
-"times": PackedFloat32Array(0.2, 0.6283213),
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0.2, 0.56666666),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
+}
+tracks/17/type = "method"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath(".")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_sound"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_dr66y"]
@@ -11501,7 +11356,6 @@ collision_shape = NodePath("HBCollision")
 light_mask = 0
 position = Vector2(9, -5)
 shape = SubResource("RectangleShape2D_0g83a")
-disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/HitBox" unique_id=840144418]
 position = Vector2(6.02321e-07, 20.7956)
@@ -12167,6 +12021,7 @@ pc = NodePath("../..")
 [connection signal="entered" from="StateMachine/FallingState" to="." method="_on_falling_state_entered"]
 [connection signal="active_state_changed" from="StateMachine/AttackState" to="." method="_on_attack_state_active_state_changed"]
 [connection signal="exited" from="StateMachine/AttackState" to="." method="_on_attack_state_exited"]
+[connection signal="updated" from="StateMachine/AttackState" to="." method="_on_attack_state_updated"]
 [connection signal="exited" from="StateMachine/AttackState/SpecialCombo" to="." method="_on_special_combo_exited"]
 [connection signal="exited" from="StateMachine/AttackState/SpecialCombo2" to="." method="_on_special_combo_2_exited"]
 [connection signal="dur_timeout" from="StateMachine/AttackState/AttackCloser" to="StateMachine/AttackState/AttackCloser" method="_on_dur_timeout"]
