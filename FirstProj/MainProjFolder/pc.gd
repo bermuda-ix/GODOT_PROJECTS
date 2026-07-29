@@ -1402,6 +1402,7 @@ func _on_special_combo_2_exited() -> void:
 
 func _on_special_combo_exited() -> void:
 	shotty_animation_player.play("shotgun_reset")
+	charging=false
 
 	
 	
@@ -2271,6 +2272,10 @@ func _on_animation_player_animation_finished(anim_name):
 			"Attack_Slam":
 				if is_on_floor():
 					state_machine.dispatch(&"return_to_idle")
+			"shotgun_attack_fast":
+				attack_1.attack=light_attacks[0]
+				attack_timer.start(0.1)
+				attack_timer.paused=false
 			_:
 				#attack_1.attack=light_attacks[0]
 				#attack_timer.start(0.1)
@@ -2320,9 +2325,12 @@ func _on_attack_timer_timeout():
 	
 	if state_machine.get_active_state()==parry_success_state or attack_state.get_active_state()==attack_closer:
 		return
+	elif attack_state.get_active_state()==special_combo:
+		state_machine.dispatch(&"return_to_idle")
 	atk_chain = 0
 	attack_combo = "Attack"
 	attack_1.attack = "Attack"
+
 	
 	if input_axis!=0:
 		state_machine.dispatch(&"resume_walking")

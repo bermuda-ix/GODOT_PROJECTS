@@ -8667,6 +8667,18 @@ tracks/13/keys = {
 "method": &"shotgun_recoil"
 }]
 }
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("AnimatedSprite2D:animation")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"GunCrouch"]
+}
 
 [sub_resource type="Animation" id="Animation_ai7hj"]
 resource_name = "shotgun_attack_flip"
