@@ -12,8 +12,8 @@ func _enter() -> void:
 	pc.heavy_attack_flag=false
 	#pc.attacking=true
 
-func _update(delta: float) -> void:
-	assert(not Input.is_action_pressed("special_attack"))
+#func _update(delta: float) -> void:
+	#assert(not Input.is_action_pressed("special_attack"))
 
 func _exit() -> void:
 	pass

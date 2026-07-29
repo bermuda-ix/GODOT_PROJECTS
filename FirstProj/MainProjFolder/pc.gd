@@ -107,6 +107,7 @@ FLIP,THRUST, HIT, STAGGERED}
 
 @onready var attack_state_stack : Array[LimboState] = []
 @onready var light_attacks : Array[String] = ["Attack", "Attack_2", "Attack_3"]
+@onready var light_attack_index : int = clampi(0, 0 , 2)
 @onready var heavy_attacks : Array[String] = ["Heavy_Combo_1", "Heavy_Combo_2", "shotgun_finish"]
 
 @onready var heavy_attacking : bool = false
@@ -1106,6 +1107,8 @@ func attack_handler():
 
 			
 	elif Input.is_action_just_released("attack"):
+		if attacking:
+			return
 		if not reload_timer.is_stopped():
 			reload_timer.stop()
 		if not charge_timer.is_stopped():
@@ -1176,7 +1179,7 @@ func heavy_combos():
 			#attacking=true
 			charging_attack.attack=heavy_attack_1.attack
 			print_debug(state_machine.get_active_state())
-			assert(not charging)
+			#assert(not charging)
 			charging=true
 			if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
 				charge_timer.start(0.01)
@@ -1313,17 +1316,19 @@ func regular_attack() -> void:
 			attack_sfx()
 			print_debug(attack_state.get_active_state())
 			if state_machine.get_active_state()==attack_state:
-				var _prev_attack : LimboState
-				if not attack_state_stack.is_empty():
-					_prev_attack=attack_state_stack.pop_front()
-				else:
-					_prev_attack=attack_1
+				#var _prev_attack : LimboState
+				#if not attack_state_stack.is_empty():
+					#_prev_attack=attack_state_stack.pop_front()
+				#else:
+					#_prev_attack=attack_1
 					
 				if attack_state.get_active_state()==charging_attack:
 					#if not attacking:
 						#attacking=true
 					attack_state.dispatch(&"charged")
 				else:
+					light_attack_index=wrapi(light_attack_index+1, 0, 3)
+					attack_1.attack=light_attacks[light_attack_index]
 					state_machine.dispatch(&"next_attack")
 		
 			else:
@@ -1518,12 +1523,12 @@ func get_clash_power() -> int:
 					#finishers()
 					
 func set_attacking(value : bool) -> void:
-	if Input.is_action_pressed("attack") and value==false:
-		return
-	#if value==true:
-		#print_debug("begin_attack")
-	#else:
-		#print_debug("ending attack")
+	#if Input.is_action_pressed("attack") and value==false:
+		#return
+	if value==true:
+		print_debug("begin_attack")
+	else:
+		print_debug("ending attack")
 	attacking=value
 
 func set_charging(value : bool) -> void:
@@ -2689,15 +2694,16 @@ func _on_animation_player_animation_started(anim_name):
 		
 		if attack_state.get_active_state()==attack_1:
 			charge_timer.stop()
-			#match anim_name:
-				#"Attack":
-					#heavy_attack_1.attack=heavy_attacks[0]
-				#"Attack_2":
-					#heavy_attack_1.attack=heavy_attacks[1]
-				#"Attack_3":
-					#heavy_attack_1.attack=heavy_attacks[2]
-				#"_":
-					#pass
+			match anim_name:
+				"Attack":
+					light_attack_index=0
+				"Attack_2":
+					light_attack_index=1
+				"Attack_3":
+					light_attack_index=2
+				"_":
+					pass
+			heavy_attack_1.attack=heavy_attacks[light_attack_index]
 		elif attack_state.get_active_state()==dash_attack:
 			if anim_name=="Attack_Dash":
 				heavy_attack_1.attack=heavy_attacks[0]
