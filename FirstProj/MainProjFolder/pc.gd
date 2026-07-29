@@ -570,6 +570,7 @@ func _init_attack_states():
 	#Heavy attack Combos
 	attack_state.add_transition(attack_1, heavy_attack_1, &"heavy_combo")
 	attack_state.add_transition(heavy_attack_1, special_combo, &"shotgun_combo")
+	attack_state.add_transition(special_combo, special_combo, &"shotgun_combo_chain")
 	attack_state.add_transition(attack_1, special_combo_2, &"heavy_finisher")
 
 	#attack_state.add_transition(heavy_attack_2, special_combo_2, &"next_attack")
@@ -1156,6 +1157,10 @@ func heavy_combos():
 			return
 		
 		if state_machine.get_active_state()==idle and (attacking or charging):
+			return
+		elif attack_state.get_active_state()==special_combo:
+			attack_state.dispatch(&"shotgun_combo_chain")
+			attack_timer.start(0.2)
 			return
 		#elif charging:
 			#return
