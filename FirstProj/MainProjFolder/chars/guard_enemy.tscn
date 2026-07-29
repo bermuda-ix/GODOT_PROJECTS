@@ -1486,7 +1486,7 @@ tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-23, 25)]
+"values": [Vector2(-18.000002, 25.000002)]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
@@ -1502,7 +1502,7 @@ tracks/11/keys = {
 }
 tracks/12/type = "value"
 tracks/12/imported = false
-tracks/12/enabled = true
+tracks/12/enabled = false
 tracks/12/path = NodePath("HitBox:collision_mask")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
@@ -1633,10 +1633,10 @@ tracks/2/path = NodePath("HitBox:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.2588446),
+"transitions": PackedFloat32Array(2.5491211, 1),
 "update": 0,
-"values": [Vector2(-25, -15)]
+"values": [Vector2(-15, -15), Vector2(-23, -15)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -1762,7 +1762,7 @@ tracks/12/keys = {
 }
 tracks/13/type = "value"
 tracks/13/imported = false
-tracks/13/enabled = true
+tracks/13/enabled = false
 tracks/13/path = NodePath("HitBox:collision_mask")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
@@ -1819,6 +1819,44 @@ tracks/17/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0.5, 0.5)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("HitBox:clash_active")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("HitBox:active")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 0.23333333, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, true]
+}
+tracks/20/type = "method"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("HitBox")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0.25833333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"refresh_collision"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_oos3y"]
@@ -3306,7 +3344,7 @@ animation = &"atk_1"
 
 [node name="VFXSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=777207694]
 visible = false
-modulate = Color(2.454227, 2.454227, 2.454227, 1)
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 material = SubResource("ShaderMaterial_qd8om")
 instance_shader_parameters/FloatParameter = 0.002000000095
 instance_shader_parameters/GlowColor = Color(0, 0, 0, 1)
