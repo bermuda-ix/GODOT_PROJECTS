@@ -4772,10 +4772,10 @@ tracks/6/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(6.062863, 1),
 "update": 0,
-"values": [Vector2(20.131575, -9.433226)]
+"values": [Vector2(2, -9.689301), Vector2(21, -9.689301)]
 }
 tracks/7/type = "method"
 tracks/7/imported = false
@@ -5081,7 +5081,7 @@ resource_name = "Heavy_Combo_2"
 length = 0.9
 tracks/0/type = "value"
 tracks/0/imported = false
-tracks/0/enabled = true
+tracks/0/enabled = false
 tracks/0/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
@@ -5158,10 +5158,10 @@ tracks/6/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2(29.631575, -14.939301)]
+"times": PackedFloat32Array(0, 0.23333333),
+"transitions": PackedFloat32Array(3.3635848, 1),
+"update": 0,
+"values": [Vector2(2, -14.689301), Vector2(32, -14.689301)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -11406,6 +11406,7 @@ collision_shape = NodePath("HBCollision")
 light_mask = 0
 position = Vector2(9, -5)
 shape = SubResource("RectangleShape2D_0g83a")
+disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/HitBox" unique_id=840144418]
 position = Vector2(6.02321e-07, 20.7956)
