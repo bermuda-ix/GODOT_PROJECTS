@@ -234,7 +234,6 @@
 [ext_resource type="Texture2D" uid="uid://mqxpobqkwakn" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Explosion/EX021/EX024.png" id="185_pbr83"]
 [ext_resource type="Texture2D" uid="uid://brrrq8dfsrtr5" path="res://Art_Components/Effects/AttackFX/Combat FX 1.1/Combat-Sheet.png" id="194_f2824"]
 [ext_resource type="Texture2D" uid="uid://bm0o50djq4a4a" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 9/437.png" id="194_xxtsl"]
-[ext_resource type="Texture2D" uid="uid://bpaassrhe6uc2" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 1/04.png" id="195_fixwo"]
 [ext_resource type="Texture2D" uid="uid://c4blaoo1s3kmp" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 9/448.png" id="203_0dirf"]
 [ext_resource type="Texture2D" uid="uid://chsu5308ytyr5" path="res://Art_Components/Effects/AttackEffects/FX006/FX001.png" id="210_pwps4"]
 [ext_resource type="Texture2D" uid="uid://fsmgdjv4piqf" path="res://Art_Components/Effects/AttackEffects/FX006/FX002.png" id="211_gt6j3"]
@@ -1266,60 +1265,32 @@ atlas = ExtResource("194_xxtsl")
 region = Rect2(576, 128, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ubvax"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(0, 128, 64, 64)
+atlas = ExtResource("194_f2824")
+region = Rect2(0, 704, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bmb2i"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(64, 128, 64, 64)
+atlas = ExtResource("194_f2824")
+region = Rect2(64, 704, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_63jai"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(128, 128, 64, 64)
+atlas = ExtResource("194_f2824")
+region = Rect2(128, 704, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_murt7"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(192, 128, 64, 64)
+atlas = ExtResource("194_f2824")
+region = Rect2(192, 704, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iqju7"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(256, 128, 64, 64)
+atlas = ExtResource("194_f2824")
+region = Rect2(256, 704, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6masv"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(320, 128, 64, 64)
+atlas = ExtResource("194_f2824")
+region = Rect2(320, 704, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0fs2i"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(384, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cbr30"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(448, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ie8vj"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(512, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cjnlc"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(576, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3jqnl"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(640, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_txijb"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(704, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_upspr"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(768, 128, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5iq83"]
-atlas = ExtResource("195_fixwo")
-region = Rect2(832, 128, 64, 64)
+atlas = ExtResource("194_f2824")
+region = Rect2(384, 704, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xxtsl"]
 atlas = ExtResource("194_f2824")
@@ -1549,27 +1520,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0fs2i")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cbr30")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ie8vj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cjnlc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3jqnl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_txijb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_upspr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5iq83")
 }],
 "loop": 1,
 "name": &"knockback_hit",
@@ -5075,6 +5025,18 @@ tracks/30/keys = {
 "update": 0,
 "values": [false]
 }
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("AnimatedSprite2D/HitBox:heavy_attack")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0, 0.8666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="Animation" id="Animation_cdmbu"]
 resource_name = "Heavy_Combo_2"
@@ -5320,10 +5282,10 @@ tracks/19/path = NodePath("AnimatedSprite2D/attack_fx:flip_h")
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
-"times": PackedFloat32Array(0.23333333),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.23333333, 0.23891133),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [true]
+"values": [true, false]
 }
 tracks/20/type = "value"
 tracks/20/imported = false
@@ -5332,10 +5294,10 @@ tracks/20/path = NodePath("AnimatedSprite2D/attack_fx:flip_v")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0.23333333),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.23333333, 0.23891133),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true]
+"values": [true, false]
 }
 tracks/21/type = "value"
 tracks/21/imported = false
@@ -5344,10 +5306,10 @@ tracks/21/path = NodePath("AnimatedSprite2D/attack_fx:self_modulate")
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
-"times": PackedFloat32Array(0.23794585),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.23794585, 0.43333334, 0.6, 0.62925994),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Color(1.8247963, 1.8247963, 1.8247963, 1)]
+"values": [Color(1.8247963, 1.8247963, 1.8247963, 1), Color(1.8247964, 1.8247963, 1.8247963, 1), Color(1.8247963, 1.8247963, 1.8247963, 0), Color(1.8247964, 1.8247963, 1.8247963, 1)]
 }
 tracks/22/type = "value"
 tracks/22/imported = false
@@ -5356,10 +5318,10 @@ tracks/22/path = NodePath("AnimatedSprite2D/attack_fx:visible")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
-"times": PackedFloat32Array(0.225, 0.26666668),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.19166665, 0.23333333, 0.61681974),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [false, true]
+"values": [false, true, false]
 }
 tracks/23/type = "value"
 tracks/23/imported = false
@@ -5380,22 +5342,22 @@ tracks/24/path = NodePath("AnimatedSprite2D/attack_fx:frame")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0.26666668, 0.28333333, 0.3, 0.46666667, 0.49166667, 0.51666665, 0.5416667, 0.56666666, 0.59166664, 0.6166667, 0.64166665, 0.6666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0.23891133, 0.26666668, 0.3, 0.43333334, 0.46666667, 0.5, 0.53333336),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+"values": [0, 1, 2, 3, 4, 5, 6]
 }
 tracks/25/type = "value"
 tracks/25/imported = false
-tracks/25/enabled = false
+tracks/25/enabled = true
 tracks/25/path = NodePath("AnimatedSprite2D/attack_fx:rotation")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
-"times": PackedFloat32Array(0.03333333),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.2, 0.4),
+"transitions": PackedFloat32Array(3.3635798, 1),
 "update": 0,
-"values": [0.0]
+"values": [0.0, -0.39269908169872414]
 }
 tracks/26/type = "value"
 tracks/26/imported = false
@@ -5422,6 +5384,18 @@ tracks/27/keys = {
 "args": [],
 "method": &"start_attack_timer"
 }]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("AnimatedSprite2D/HitBox:heavy_attack")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 0.8666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_83noc"]
@@ -7037,6 +7011,18 @@ tracks/79/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/80/type = "value"
+tracks/80/imported = false
+tracks/80/enabled = true
+tracks/80/path = NodePath("AnimatedSprite2D/HitBox:heavy_attack")
+tracks/80/interp = 1
+tracks/80/loop_wrap = true
+tracks/80/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_oktus"]
