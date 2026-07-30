@@ -9,6 +9,7 @@ extends LimboState
 
 
 func _enter() -> void:
+	pc.charging=true
 	anim_player.play(attack)
 	anim_player.pause()
 	anim_player.seek(anim_second)

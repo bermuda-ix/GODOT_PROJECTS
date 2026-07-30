@@ -4692,7 +4692,7 @@ tracks/13/keys = {
 
 [sub_resource type="Animation" id="Animation_i0kkw"]
 resource_name = "Heavy_Combo_1"
-length = 0.7
+length = 0.9
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -4700,7 +4700,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.06666667, 0.14166667, 0.24166666, 0.3416667, 0.40833336, 0.45, 0.49166667, 0.5333333, 0.575, 0.6333333),
+"times": PackedFloat32Array(0.06666667, 0.14166667, 0.24166666, 0.3416667, 0.6, 0.64166665, 0.68333334, 0.72499996, 0.76666665, 0.825),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 0]
@@ -4712,14 +4712,14 @@ tracks/1/path = NodePath("AnimatedSprite2D:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.6333333),
+"times": PackedFloat32Array(0, 0.825),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [&"Kick01", &"Idle"]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
-tracks/2/enabled = true
+tracks/2/enabled = false
 tracks/2/path = NodePath("AnimatedSprite2D/HitBox/HBCollision:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
@@ -4798,7 +4798,7 @@ tracks/8/path = NodePath(".")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0.7),
+"times": PackedFloat32Array(0.6333333),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -4886,7 +4886,7 @@ tracks/15/path = NodePath("AnimatedSprite2D/attack_fx:frame")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0.23333333, 0.27137613, 0.30470946, 0.3380428, 0.37137613, 0.4, 0.43333337, 0.4666667),
+"times": PackedFloat32Array(0.23333333, 0.27137613, 0.36666667, 0.4, 0.43333334, 0.46195722, 0.49529058, 0.52862394),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
@@ -5008,10 +5008,10 @@ tracks/25/path = NodePath("AnimatedSprite2D/HitBox:active")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
-"times": PackedFloat32Array(0.1, 0.5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.1, 0.6, 0.6333333),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [true, false]
+"values": [true, true, false]
 }
 tracks/26/type = "method"
 tracks/26/imported = false
@@ -5046,15 +5046,39 @@ tracks/28/path = NodePath(".:attacking")
 tracks/28/interp = 1
 tracks/28/loop_wrap = true
 tracks/28/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.53333336),
+"times": PackedFloat32Array(0, 0.6, 0.6333334),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, true, false]
 }
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("AnimatedSprite2D/attack_fx:flip_v")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("AnimatedSprite2D/attack_fx:flip_h")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_cdmbu"]
 resource_name = "Heavy_Combo_2"
-length = 0.7
+length = 0.9
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -5110,7 +5134,7 @@ tracks/4/path = NodePath("AnimatedSprite2D/Shotty:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.1486378, 0.23333332, 0.26666668, 0.30704013, 0.33333334, 0.41897857, 0.5),
+"times": PackedFloat32Array(0, 0.1486378, 0.23333332, 0.26666668, 0.30704013, 0.4, 0.5523119, 0.6333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [-1.5643, -1.5643, -3.034761, -3.034761, -4.2286563, -4.2286563, -6.481402, -6.481402]
@@ -5122,7 +5146,7 @@ tracks/5/path = NodePath("AnimatedSprite2D/Shotty:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.1486378, 0.21666665, 0.225, 0.26666668, 0.30704013, 0.33333334, 0.41837364, 0.5),
+"times": PackedFloat32Array(0, 0.1486378, 0.21666665, 0.225, 0.26666668, 0.30704013, 0.4, 0.55170697, 0.6333333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 5.8563395, 5.8563395, 1, 1),
 "update": 0,
 "values": [Vector2(-1.0757e-09, -16.3107), Vector2(-1.0757e-09, -16.3107), Vector2(15, -17), Vector2(29, -26), Vector2(29, -26), Vector2(17.344528, -46.69183), Vector2(17.344528, -46.69183), Vector2(3.9999962, -20), Vector2(3.9999962, -20)]
@@ -5380,10 +5404,24 @@ tracks/26/path = NodePath(".:attacking")
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
 tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.6, 0.6166667),
+"times": PackedFloat32Array(0, 0.6, 0.6666667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, true, false]
+}
+tracks/27/type = "method"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath(".")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0.6666667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start_attack_timer"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_83noc"]

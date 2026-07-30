@@ -1075,51 +1075,39 @@ func attack_handler():
 	var anim_player_time : float = anim_player.current_animation_position
 	
 	if Input.is_action_pressed("attack"):
-		if attacking:
-			return
+
 		if not reload_timer.is_stopped():
 			reload_timer.stop()
 		if state_machine.get_active_state()==idle and (attacking or charging):
-			return
-		elif charging:
 			return
 			
 		if attack_state.get_active_state()==attack_1:
 			if attacking:
 				return
-			else:
-				attacking=true
-	
+
 		if charge_timer.is_stopped():
-			
-			#attacking=true
-			#print_debug(state_machine.get_active_state())
-			assert(not charging)
 			if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
 				charge_timer.start(0.01)
 			else:
 				charge_timer.start(0.2)
 				charging_attack.attack=attack_1.attack
-			#attack_timer.start(.2)
-			#attack_timer.paused=true
 		else:
 			return
 
 			
 	elif Input.is_action_just_released("attack"):
 		if attacking:
-			return
-		if not reload_timer.is_stopped():
-			reload_timer.stop()
+			if charging:
+				light_attack()
+			else:
+				return
+		#if not reload_timer.is_stopped():
+			#reload_timer.stop()
 		if not charge_timer.is_stopped():
 			charge_timer.stop()
 			
 		if not charging and not attacking:
-			#charging=false
 			light_attack()
-		else:
-			charging=false
-			#return
 			
 	
 		charging=false
@@ -1132,8 +1120,8 @@ func attack_handler():
 			
 			if state_machine.get_active_state()==charged_attack:
 				return
-			if attacking:
-				attacking=false
+			#if attacking:
+				#attacking=false
 			if not charging:
 				#charging=false
 				if anim_player.current_animation_position>=anim_player.current_animation_length and\
@@ -1156,27 +1144,17 @@ func attack_handler():
 	
 func heavy_combos():
 	if Input.is_action_pressed("special_attack") and not Input.is_action_pressed("attack"):
-		if attacking and attack_timer.is_stopped():
+		if attack_timer.is_stopped():
 			return
-		
 		if state_machine.get_active_state()==idle and (attacking or charging):
 			return
 		elif attack_state.get_active_state()==special_combo:
-			attack_state.dispatch(&"shotgun_combo_chain")
+			shotgun_combo()
 			attack_timer.start(0.2)
 			return
-		#elif charging:
-			#return
-			
-		#if attack_state.get_active_state()==heavy_attack_1:
-			#if attacking:
-				#return
-			#else:
-				#attacking=true
 	
 		if charge_timer.is_stopped():
 			heavy_attacking=true
-			#attacking=true
 			charging_attack.attack=heavy_attack_1.attack
 			print_debug(state_machine.get_active_state())
 			#assert(not charging)
@@ -1186,37 +1164,27 @@ func heavy_combos():
 			else:
 				charge_timer.start(0.2)
 				charging_attack.attack=heavy_attack_1.attack
-			#attack_timer.start(.2)
-			#attack_timer.paused=true
 		else:
 			return
 	elif Input.is_action_just_released("special_attack") and not Input.is_action_pressed("attack"):
-		
-		
-		
+
 		if not charge_timer.is_stopped():
 			charge_timer.stop()
 			
-		if not charging and not attacking:
-			#charging=false
-			heavy_attack()
-		else:
-			charging=false
-			#return
-			
-	
+		if attacking:
+			if charging:
+				heavy_attack()
+			else:
+				return
+		
 		charging=false
 		
 		if state_machine.get_active_state()==idle and attacking:
 			attacking=false
 			
-			
 		elif state_machine.get_active_state()==attack_state:
-			
 			if state_machine.get_active_state()==charged_attack:
 				heavy_attack()
-			#if attacking:
-				#attacking=false
 			if not charging:
 				#charging=false
 				if anim_player.current_animation_position>=anim_player.current_animation_length and\
@@ -1226,7 +1194,6 @@ func heavy_combos():
 					heavy_attack()
 			else:
 				charging=false
-				
 				if attack_timer.time_left<0.01:
 					#attack_timer.start(0.05)
 					attack_timer.paused=false
@@ -1285,8 +1252,8 @@ func light_attack() -> void:
 	
 
 func regular_attack() -> void:
-	#if attacking and not charging:
-		#return
+	if attacking and not charging:
+		return
 	if state_machine.get_active_state()==parry_success_state:
 		return
 	
@@ -1339,7 +1306,11 @@ func regular_attack() -> void:
 			
 
 func shotgun_combo() -> void:
-	attack_state.dispatch(&"shotgun_combo")
+	if attack_state.get_active_state()==special_combo:
+		attack_timer.start(0.2)
+		attack_state.dispatch(&"shotgun_combo_chain")
+	else:
+		attack_state.dispatch(&"shotgun_combo")
 
 func attack_sfx() -> void:
 	if not attack_timer.is_stopped():
@@ -1385,6 +1356,9 @@ func _on_heavy_attack_buffer_timer_timeout() -> void:
 	#attack_timer.paused=false
 	
 func heavy_attack():
+	if attacking and not charging:
+		return
+		
 	heavy_attack_buffer_timer.stop()
 	hit_buffer.stop()
 	if state_machine.get_active_state()!=attack_state:
@@ -1397,15 +1371,11 @@ func heavy_attack():
 		state_machine.dispatch(&"heavy_counter")
 	elif attack_state.get_active_state()==charging_attack:
 		attack_state.dispatch(&"charged")
+	elif attack_state.get_active_state()==heavy_attack_1:
+		shotgun_combo()
 	else:
 		attack_state.dispatch(&"heavy_combo")
-	#if not attack_timer.is_stopped():
-		#if atk_chain == 0:
-			##attack_combo = "Attack"
-			##hit_sound = hit1
-			#AudioStreamManager.play(swing1)
-	#attack_state.initial_state=heavy_attack_1
-	#state_machine.dispatch(&"start_attack")
+
 
 func _on_special_combo_2_exited() -> void:
 	shotty_animation_player.play("shotgun_reset")
@@ -1525,10 +1495,10 @@ func get_clash_power() -> int:
 func set_attacking(value : bool) -> void:
 	#if Input.is_action_pressed("attack") and value==false:
 		#return
-	if value==true:
-		print_debug("begin_attack")
-	else:
-		print_debug("ending attack")
+	#if value==true:
+		#print_debug("begin_attack")
+	#else:
+		#print_debug("ending attack")
 	attacking=value
 
 func set_charging(value : bool) -> void:
@@ -1594,7 +1564,7 @@ func shotgun_shoot() -> void:
 	shoot_handler.manuel_rotation=true
 	for i in spread:
 		bullet_dir = rotation_to_direction(_bullet_dirs[i])
-		print_debug(_bullet_dirs[i])
+		#print_debug(_bullet_dirs[i])
 		shoot_handler.bullet_rotation = _bullet_dirs[i]
 		shoot_handler.shoot_bullet()
 		
@@ -3153,7 +3123,8 @@ func _on_animation_player_animation_changed(old_name: StringName, new_name: Stri
 	pass
 
 func _on_animation_player_current_animation_changed(name: StringName) -> void:
-	print_debug(name)
+	pass
+	#print_debug(name)
 
 
 func _on_locked_updated(delta: float) -> void:

@@ -24,8 +24,8 @@ func _ready():
 	global_position = spawnPos
 	sprite_2d.rotation_degrees=spawnRot
 	
-	print_debug(sprite_2d.rotation_degrees)
-	print_debug(spawnRot)
+	#print_debug(sprite_2d.rotation_degrees)
+	#print_debug(spawnRot)
 	
 	scale*=scale_size
 
