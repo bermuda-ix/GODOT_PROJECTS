@@ -45,7 +45,6 @@ func handle_vision():
 	else:
 		#actor.player_colliding=player_tracking.is_colliding()
 		if player_tracking.is_colliding():
-			print_debug(player_tracking.get_collider())
 			
 			var collision_result = player_tracking.get_collider()
 			if collision_result != player:

@@ -2332,7 +2332,6 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_ypkgb"]
 resource_name = "shoot"
-length = 1.5
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -2353,7 +2352,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.03333334, 0.06666667, 0.09999997, 0.13333334, 0.26666668, 0.29999998, 0.3333333),
+"times": PackedFloat32Array(0, 0.03333334, 0.06666667, 0.09999997, 0.13333334, 0.2, 0.2333333, 0.26666665),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 1, 2, 3, 0]
@@ -2365,7 +2364,7 @@ tracks/2/path = NodePath("ShootAttackManager")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.066666685, 0.2724615),
+"times": PackedFloat32Array(0.066666685, 0.20579483),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -3514,6 +3513,8 @@ hit_from_inside = true
 [connection signal="entered" from="StateMachine/ShootingStates" to="." method="_on_shooting_states_entered"]
 [connection signal="entered" from="StateMachine/ShootingStates/Shooting" to="." method="_on_shooting_entered"]
 [connection signal="entered" from="StateMachine/ShootingStates/ShootingDefense" to="." method="_on_shooting_defense_entered"]
+[connection signal="entered" from="StateMachine/Hit" to="." method="_on_hit_entered"]
+[connection signal="exited" from="StateMachine/Hit" to="." method="_on_hit_exited"]
 [connection signal="exited" from="StateMachine/Parry" to="." method="_on_parry_exited"]
 [connection signal="entered" from="StateMachine/Staggered" to="." method="_on_staggered_entered"]
 [connection signal="exited" from="StateMachine/Staggered" to="." method="_on_staggered_exited"]
@@ -3526,4 +3527,5 @@ hit_from_inside = true
 [connection signal="entered" from="StateMachine/Landed" to="." method="_on_landed_entered"]
 [connection signal="entered" from="StateMachine/Clashed" to="." method="_on_clashed_entered"]
 [connection signal="exited" from="StateMachine/Clashed" to="." method="_on_clashed_exited"]
+[connection signal="updated" from="StateMachine/Clashed" to="." method="_on_clashed_updated"]
 [connection signal="active_state_changed" from="CombatStateMachine" to="." method="_on_combat_state_machine_active_state_changed"]

@@ -82,6 +82,7 @@ regular_enemy_hb=""
 Enemy_arena=""
 flags=""
 global_flag=""
+bullet=""
 
 [input]
 

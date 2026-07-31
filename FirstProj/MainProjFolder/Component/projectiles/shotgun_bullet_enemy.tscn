@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bbjg0xw2unq4s"]
 
-[ext_resource type="Script" uid="uid://c5v52j4rejetd" path="res://Component/projectiles/shotgun_bullet_refactor.gd" id="1_u0xst"]
+[ext_resource type="Script" uid="uid://cx1vurt7d6pk" path="res://shotgun_bullet_enemy.gd" id="1_oy31j"]
 [ext_resource type="Shader" uid="uid://d1ksiplmprxb6" path="res://chars/outline_static_v2.gdshader" id="2_m02cv"]
 [ext_resource type="Texture2D" uid="uid://cyehj3lll483b" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Weapons/Bullet/Bullet02.png" id="2_oy31j"]
 [ext_resource type="Script" uid="uid://oh43vctkhpbh" path="res://Component/projectile_hitbox.gd" id="3_m02cv"]
@@ -26,7 +26,7 @@ gravity = Vector3(0, 0, 0)
 radius = 2.0
 height = 13.0
 
-[node name="ShotgunBullet" type="RigidBody2D" unique_id=1517323149 groups=["PlayerBullet"]]
+[node name="ShotgunBullet" type="RigidBody2D" unique_id=1517323149 groups=["bullet"]]
 collision_layer = 4096
 collision_mask = 129
 mass = 0.001
@@ -35,7 +35,7 @@ custom_integrator = true
 continuous_cd = 2
 contact_monitor = true
 max_contacts_reported = 5
-script = ExtResource("1_u0xst")
+script = ExtResource("1_oy31j")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1609644407]
 modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
@@ -74,5 +74,6 @@ rotation = -1.5707964
 shape = SubResource("CapsuleShape2D_jeokm")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="area_entered" from="Sprite2D/ProjectileHitBox" to="." method="_on_projectile_hit_box_area_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]
 [connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_audio_stream_player_2d_finished"]

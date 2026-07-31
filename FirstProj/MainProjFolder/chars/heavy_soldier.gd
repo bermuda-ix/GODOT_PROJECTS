@@ -230,7 +230,7 @@ func _process(delta: float) -> void:
 		if state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death:
 			state_machine.dispatch(&"die")
 	
-	#print_debug(current_speed)
+	print_debug(state_machine.get_active_state())
 
 func _physics_process(delta: float) -> void:
 	if state_machine.get_active_state()==death:
@@ -419,6 +419,9 @@ func _on_state_machine_active_state_changed(current: LimboState, previous: Limbo
 		shooting_states.dispatch(&"begin_shooting")
 	elif current==shooting_states:
 		assert(state_machine.get_previous_active_state()!=attack)
+	
+	if previous==clashed:
+		print_debug("clash recover")
 
 
 
@@ -578,8 +581,10 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		return
 	#health.set_temporary_immortality(0.2)
 	if damage<=health.health:
-		if state_machine.get_active_state()!=staggered:
+		if state_machine.get_active_state()!=staggered and state_machine.get_active_state()!=clashed:
 			parry_timer.start(0.5)
+		elif state_machine.get_active_state()==clashed:
+			stagger.set_stagger(stagger.stagger-damage)
 		else:
 			animation_player.play("hit")
 			AudioStreamManager.play(SoundFx.SOCAPEX_NEW_HITS_2)
@@ -612,6 +617,8 @@ func _on_parry_timer_timeout() -> void:
 		state_machine.dispatch(&"hit_recover")
 	else:
 		state_machine.dispatch(&"hit_recover_shoot")
+	if state_machine.get_active_state()==clashed:
+		state_machine.dispatch(&"resume_melee")
 	
 
 
@@ -721,7 +728,7 @@ func _on_melee_attack_updated(delta: float) -> void:
 
 func _on_hit_box_clashed() -> void:
 	velocity.x=0
-	animation_player.stop()
+	#animation_player.stop()
 	vfx_sprite.set_deferred("visible", false)
 	hit_stop.hit_stop(0.05, 0.1)
 	state_machine.dispatch(&"clashed")
@@ -858,8 +865,22 @@ func _on_melee_attack_exited() -> void:
 
 
 func _on_clashed_entered() -> void:
+	current_speed=0
 	animation_player.play("clashed")
+	shield_collision.set_deferred("disabled", true)
 	
 
 func _on_clashed_exited() -> void:
+	shield_collision.set_deferred("disabled", false)
+
+
+func _on_hit_entered() -> void:
+	current_speed=0
+
+
+func _on_hit_exited() -> void:
 	pass # Replace with function body.
+
+
+func _on_clashed_updated(delta: float) -> void:
+	assert(animation_player.is_playing())
