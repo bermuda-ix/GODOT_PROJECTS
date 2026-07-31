@@ -3520,6 +3520,7 @@ hit_from_inside = true
 [connection signal="exited" from="StateMachine/Staggered" to="." method="_on_staggered_exited"]
 [connection signal="entered" from="StateMachine/Death" to="." method="_on_death_entered"]
 [connection signal="entered" from="StateMachine/Dying" to="." method="_on_dying_entered"]
+[connection signal="updated" from="StateMachine/Dying" to="." method="_on_dying_updated"]
 [connection signal="entered" from="StateMachine/Launch" to="." method="_on_launch_entered"]
 [connection signal="entered" from="StateMachine/Falling" to="." method="_on_falling_entered"]
 [connection signal="exited" from="StateMachine/Falling" to="." method="_on_falling_exited"]

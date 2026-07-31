@@ -149,7 +149,7 @@ var attacking : bool = false
 @onready var death_handler: DeathHandler = $DeathHandler
 @export var death_time_scale: float = 1.0
 @onready var norm_delta
-@export var death_knockback := 100.0
+@export var death_knockback := 400.0
 @export var death_launch := -30
 
 #Grouping enemies
@@ -210,7 +210,11 @@ func _process(delta: float) -> void:
 	#even_order(group_link_order)
 	is_on_screen=on_screen.is_on_screen()
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
-	knockback = lerp(knockback, Vector2.ZERO, 0.1)
+	if state_machine.get_active_state()==dying:
+		knockback.x=lerpf(knockback.x, death_knockback/3, 0.1)
+		knockback.y=lerpf(knockback.y, 0, 0.3)
+	else:
+		knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
 	vision_handler.handle_vision()
@@ -230,7 +234,8 @@ func _process(delta: float) -> void:
 		if state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death:
 			state_machine.dispatch(&"die")
 	
-	print_debug(state_machine.get_active_state())
+	if state_machine.get_active_state()==dying or state_machine.get_active_state()==death:
+		print_debug(knockback.x)
 
 func _physics_process(delta: float) -> void:
 	if state_machine.get_active_state()==death:
@@ -523,7 +528,7 @@ func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 		vfx_player.play("staggered")
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
-	death_knockback=100.0
+	death_knockback=400.0
 	death_launch=-30.0
 	if state_machine.get_active_state()==parry and player_state!=player.flip_state:
 		return
@@ -624,11 +629,9 @@ func _on_parry_timer_timeout() -> void:
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
-	#hb_collision.disabled=true
 	hb_collision.call_deferred("set_disabled", true)
 	movement_handler.active=false
 	animated_sprite_2d.scale.x = 1
-	movement_handler.active=false
 	knockback.x=250
 	jump_handler.handle_jump(0.2)
 	if linked_enemies!=null or not linked_enemies.is_empty() or linked_enemies.size()==0:
@@ -637,8 +640,13 @@ func _on_health_health_depleted() -> void:
 
 
 func _on_dying_entered() -> void:
-	movement_handler.active=false
+	#movement_handler.active=false
 	hit_stop.hit_stop(0.1, 0.3)
+	if player_right:
+		knockback.x=-death_knockback
+	else:
+		knockback.x=death_knockback
+	knockback.y=death_launch
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
@@ -866,6 +874,7 @@ func _on_melee_attack_exited() -> void:
 
 func _on_clashed_entered() -> void:
 	current_speed=0
+	hurt_box.shielded=false
 	animation_player.play("clashed")
 	shield_collision.set_deferred("disabled", true)
 	
@@ -884,3 +893,7 @@ func _on_hit_exited() -> void:
 
 func _on_clashed_updated(delta: float) -> void:
 	assert(animation_player.is_playing())
+
+
+func _on_dying_updated(delta: float) -> void:
+	pass # Replace with function body.
