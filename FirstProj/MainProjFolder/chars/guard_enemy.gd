@@ -440,6 +440,8 @@ func _on_attack_range_body_exited(body: Node2D) -> void:
 		state_machine.dispatch(&"start_chase")
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
+	death_knockback=100.0
+	death_launch=-30.0
 	if area.is_in_group("sp_atk_default"):
 		if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 			Events.allied_enemy_hit.emit()
@@ -637,7 +639,8 @@ func _on_hurt_box_knockback(_launch_strength : float, _knock_back_strength : flo
 
 
 func _on_hurt_box_body_entered(body: Node2D) -> void:
-	pass
+	death_knockback=10.0
+	death_launch=0
 	#if "knocked_back" in body:
 		#if body.knocked_back == true:
 			#knockback.x=body.velocity.x/2

@@ -149,6 +149,8 @@ var attacking : bool = false
 @onready var death_handler: DeathHandler = $DeathHandler
 @export var death_time_scale: float = 1.0
 @onready var norm_delta
+@export var death_knockback := 100.0
+@export var death_launch := -30
 
 #Grouping enemies
 @onready var linked_enemies : Array[Node2D]
@@ -518,6 +520,8 @@ func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 		vfx_player.play("staggered")
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
+	death_knockback=100.0
+	death_launch=-30.0
 	if state_machine.get_active_state()==parry and player_state!=player.flip_state:
 		return
 	if area.is_in_group("sp_atk_default"):
@@ -716,9 +720,10 @@ func _on_melee_attack_updated(delta: float) -> void:
 	assert(movement_handler.active==false)
 
 func _on_hit_box_clashed() -> void:
+	velocity.x=0
 	animation_player.stop()
 	vfx_sprite.set_deferred("visible", false)
-	hit_stop.hit_stop(0.05, 0.5)
+	hit_stop.hit_stop(0.05, 0.1)
 	state_machine.dispatch(&"clashed")
 	stagger.set_stagger(stagger.stagger-1)
 	#animation_player.play("melee_attack")
@@ -822,6 +827,8 @@ func _on_hurt_box_knockback(_launch_strength: float, _knock_back_strength: float
 
 
 func _on_hurt_box_body_entered(body: Node2D) -> void:
+	death_knockback=10.0
+	death_launch=0.0
 	if "knocked_back" in body:
 		if body.knocked_back == true:
 			hit_stop.hit_stop(0.2, 0.3)
@@ -851,7 +858,7 @@ func _on_melee_attack_exited() -> void:
 
 
 func _on_clashed_entered() -> void:
-	animation_player.play_section_with_markers("melee_attack", "attack_hit")
+	animation_player.play("clashed")
 	
 
 func _on_clashed_exited() -> void:
