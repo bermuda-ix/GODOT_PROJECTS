@@ -192,6 +192,8 @@ func _ready():
 	hurt_box.set_damage_mulitplyer(1)
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 	
+	hit.set_guard(health.health_above_zero)
+	
 	_init_group_link()
 	if always_active:
 		alerted()
@@ -237,6 +239,8 @@ func _process(delta: float) -> void:
 	if state_machine.get_active_state()==dying or state_machine.get_active_state()==death:
 		print_debug(knockback.x)
 
+	print_debug(state_machine.get_active_state())
+
 func _physics_process(delta: float) -> void:
 	if state_machine.get_active_state()==death:
 		return
@@ -273,6 +277,10 @@ func _physics_process(delta: float) -> void:
 		velocity.y += gravity * delta
 		if is_on_floor():
 			state_machine.dispatch(&"landed")
+	
+	elif state_machine.get_active_state()==chasing:
+		if melee_range_check():
+			state_machine.dispatch(&"melee_attack")
 	
 	if player_right:
 		hurt_box_weakpoint_collision.set_deferred("disabled", false)
@@ -443,13 +451,17 @@ func _on_combat_state_machine_active_state_changed(current: LimboState, previous
 		elif current==melee_mode:
 			if state_machine.get_active_state()!=melee_attack:
 				movement_handler.active=true
-				state_machine.dispatch(&"start_chase")
+				if melee_range_check():
+					state_machine.dispatch(&"melee_attack")
+				else:
+					state_machine.dispatch(&"start_chase")
 		
 
 func _on_chasing_entered() -> void:
 	animation_player.play("run")
 	chase_speed=40
-
+	if melee_range_check():
+		state_machine.dispatch(&"melee_attack")
 
 
 func _on_shooting_entered() -> void:
@@ -467,9 +479,19 @@ func _on_attack_entered() -> void:
 		if combat_state_machine.get_active_state()==ranged_mode:
 			state_machine.dispatch(&"start_shoot")
 		elif combat_state_machine.get_active_state()==melee_mode:
-			state_machine.dispatch(&"start_chase")
+			if melee_range_check():
+				state_machine.dispatch(&"melee_attack")
+			else:
+				state_machine.dispatch(&"start_chase")
 	else:
 		return
+
+func melee_range_check() -> bool:
+	var _melee_ranged_colliding := attack_range.get_overlapping_bodies()
+	if _melee_ranged_colliding.is_empty():
+		return false
+	else:
+		return true
 
 
 func being_flipped() -> void:
@@ -522,6 +544,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		state_machine.dispatch(&"resume_attack")
 	elif anim_name=="clashed":
 		state_machine.dispatch(&"resume_melee")
+	elif anim_name=="hit":
+		state_machine.dispatch(&"hit_recover")
 
 func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="staggered_entered":
@@ -577,7 +601,7 @@ func _on_staggered_exited() -> void:
 	shield_collision.set_deferred("disabled",false)
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	hit_stop.hit_stop(0.05,0.25)
+	hit_stop.hit_stop(0.05,0.1)
 	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 		Events.allied_enemy_hit.emit()
 	
@@ -737,8 +761,9 @@ func _on_melee_attack_updated(delta: float) -> void:
 func _on_hit_box_clashed() -> void:
 	velocity.x=0
 	#animation_player.stop()
+	hb_collision.set_deferred("disabled",true)
 	vfx_sprite.set_deferred("visible", false)
-	hit_stop.hit_stop(0.05, 0.1)
+	hit_stop.hit_stop(0.05, 0.5)
 	state_machine.dispatch(&"clashed")
 	stagger.set_stagger(stagger.stagger-1)
 	#animation_player.play("melee_attack")

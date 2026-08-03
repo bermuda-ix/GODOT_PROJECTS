@@ -89,3 +89,9 @@ func set_health(value: int):
 
 func get_health():
 	return health
+
+func health_above_zero() -> bool:
+	if health>0:
+		return true
+	else:
+		return false

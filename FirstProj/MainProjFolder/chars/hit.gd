@@ -16,6 +16,7 @@ func _enter() -> void:
 	
 func _update(delta: float) -> void:
 	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.3)
+	
 
 func _exit() -> void:
 	#print_debug("hit recovered")
@@ -24,3 +25,4 @@ func _exit() -> void:
 	hurtbox.set_collision_layer_value(7, true)
 	
 	animation_player.play("RESET")
+	

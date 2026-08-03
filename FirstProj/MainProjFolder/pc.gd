@@ -2615,7 +2615,9 @@ func _on_counter_box_area_entered(area):
 	
 		
 	if area.is_in_group("hitbox"):
-		pass
+		hit_stop.hit_stop(0.3, 1)
+	elif area.is_in_group("bullet"):
+		hit_stop.hit_stop(0.5, 0.25)
 		#print_debug("enemy dodge")
 		#state_machine.dispatch(&"dodge_successful")
 		#clash_power.clash_power += 1
