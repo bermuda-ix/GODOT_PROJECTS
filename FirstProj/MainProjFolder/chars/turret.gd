@@ -22,6 +22,7 @@ var pos = position
 @export var slow_track : bool = false
 @export var shoot_speed : float = 0.2
 @export var instant_tracking := false
+@export var track := true
 ##Faster tracking closer to 1.0
 @export var tracking_speed := 0.4
 
@@ -56,6 +57,8 @@ func track_player():
 	if slow_track:
 		return
 	elif player==null:
+		return
+	elif not track:
 		return
 	else:
 		
