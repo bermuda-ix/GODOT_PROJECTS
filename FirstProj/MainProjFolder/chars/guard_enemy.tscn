@@ -973,130 +973,94 @@ tracks/19/keys = {
 tracks/20/type = "value"
 tracks/20/imported = false
 tracks/20/enabled = true
-tracks/20/path = NodePath("HitBox:collision_mask")
+tracks/20/path = NodePath("AnimatedSprite2D/AttackVFX:instance_shader_parameters/GlowColor")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [128]
+"update": 0,
+"values": [Color(0.76270527, 1.8247963, 0.67885596, 1)]
 }
 tracks/21/type = "value"
 tracks/21/imported = false
 tracks/21/enabled = true
-tracks/21/path = NodePath("AnimatedSprite2D/AttackVFX:instance_shader_parameters/GlowColor")
+tracks/21/path = NodePath("HurtBox/hurt_box_collision:shape")
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.76270527, 1.8247963, 0.67885596, 1)]
+"update": 1,
+"values": [SubResource("RectangleShape2D_g6e5q")]
 }
 tracks/22/type = "value"
 tracks/22/imported = false
 tracks/22/enabled = true
-tracks/22/path = NodePath("HurtBox/hurt_box_collision:shape")
+tracks/22/path = NodePath("HurtBox/hurt_box_collision:position")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [SubResource("RectangleShape2D_g6e5q")]
+"update": 0,
+"values": [Vector2(0, 22)]
 }
 tracks/23/type = "value"
 tracks/23/imported = false
 tracks/23/enabled = true
-tracks/23/path = NodePath("HurtBox/hurt_box_collision:position")
+tracks/23/path = NodePath("LimboHSM/DODGE:_velocity_x")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 22)]
+"values": [-50.0]
 }
 tracks/24/type = "value"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath("LimboHSM/DODGE:_velocity_x")
+tracks/24/path = NodePath("AnimatedSprite2D/AttackVFX:scale")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-50.0]
+"values": [Vector2(0.5, 0.5)]
 }
 tracks/25/type = "value"
 tracks/25/imported = false
 tracks/25/enabled = true
-tracks/25/path = NodePath(".:collision_mask")
+tracks/25/path = NodePath("AnimatedSprite2D/AttackVFX:rotation")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [17]
+"update": 0,
+"values": [-0.7853982]
 }
 tracks/26/type = "value"
 tracks/26/imported = false
 tracks/26/enabled = true
-tracks/26/path = NodePath(".:collision_layer")
+tracks/26/path = NodePath("HitBox:clash_active")
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
 tracks/26/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [16384]
+"values": [false]
 }
 tracks/27/type = "value"
 tracks/27/imported = false
 tracks/27/enabled = true
-tracks/27/path = NodePath("AnimatedSprite2D/AttackVFX:scale")
+tracks/27/path = NodePath("HitBox:active")
 tracks/27/interp = 1
 tracks/27/loop_wrap = true
 tracks/27/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.5, 0.5)]
-}
-tracks/28/type = "value"
-tracks/28/imported = false
-tracks/28/enabled = true
-tracks/28/path = NodePath("AnimatedSprite2D/AttackVFX:rotation")
-tracks/28/interp = 1
-tracks/28/loop_wrap = true
-tracks/28/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-0.7853982]
-}
-tracks/29/type = "value"
-tracks/29/imported = false
-tracks/29/enabled = true
-tracks/29/path = NodePath("HitBox:clash_active")
-tracks/29/interp = 1
-tracks/29/loop_wrap = true
-tracks/29/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/30/type = "value"
-tracks/30/imported = false
-tracks/30/enabled = true
-tracks/30/path = NodePath("HitBox:active")
-tracks/30/interp = 1
-tracks/30/loop_wrap = true
-tracks/30/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -1105,7 +1069,7 @@ tracks/30/keys = {
 
 [sub_resource type="Animation" id="Animation_uutj5"]
 resource_name = "atk_1"
-length = 0.56666666
+length = 0.76666665
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1125,7 +1089,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.2, 0.4, 0.46666667, 0.53333336),
+"times": PackedFloat32Array(0, 0.06666667, 0.3, 0.56666666, 0.6333333, 0.70000005),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
@@ -1137,10 +1101,10 @@ tracks/2/path = NodePath("HitBox:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.36666667),
 "transitions": PackedFloat32Array(4.141059, 1),
 "update": 0,
-"values": [Vector2(-17, -3), Vector2(-27, -3)]
+"values": [Vector2(-10, -3), Vector2(-27, -3)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -1149,7 +1113,7 @@ tracks/3/path = NodePath("HitBox/hb_collision:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.43333334, 0.46666735),
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.63333404),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [true, false, false, true]
@@ -1185,7 +1149,7 @@ tracks/6/path = NodePath("LimboHSM/ATTACK")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.26666668),
+"times": PackedFloat32Array(0.43333334),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [200.0],
@@ -1199,7 +1163,7 @@ tracks/7/path = NodePath("AnimatedSprite2D/AttackVFX:frame")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.15, 0.16666667, 0.18333334, 0.2, 0.3, 0.36666667, 0.43333334, 0.46666667, 0.5, 0.5333333),
+"times": PackedFloat32Array(0, 0.3, 0.31666666, 0.33333334, 0.35000002, 0.36666667, 0.4666667, 0.53333336, 0.5416667, 0.55, 0.55833334, 0.56666666),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -1223,7 +1187,7 @@ tracks/9/path = NodePath("AnimatedSprite2D/AttackVFX:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0.033333335, 0.06666667, 0.1, 0.4, 0.41666666, 0.56666666),
+"times": PackedFloat32Array(0.033333335, 0.06666667, 0.26666668, 0.6, 0.6166667, 0.73333335),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [false, false, true, true, false, false]
@@ -1242,109 +1206,97 @@ tracks/10/keys = {
 }
 tracks/11/type = "value"
 tracks/11/imported = false
-tracks/11/enabled = false
-tracks/11/path = NodePath("HitBox:collision_mask")
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimatedSprite2D/AttackVFX:flip_h")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.13333334, 0.33333334, 0.51666665, 0.56666666),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [128, 64, 192, 192, 128]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("AnimatedSprite2D/AttackVFX:flip_h")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("HurtBox/hurt_box_collision:position")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("HurtBox/hurt_box_collision:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
 "times": PackedFloat32Array(0, 0.56666666),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2(8, 22), Vector2(0, 22)]
 }
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("AnimatedSprite2D/AttackVFX:scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("AnimatedSprite2D/AttackVFX:scale")
+tracks/14/path = NodePath("AnimatedSprite2D/AttackVFX:rotation")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0.5, 0.5)]
+"values": [-0.7853982]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("AnimatedSprite2D/AttackVFX:rotation")
+tracks/15/path = NodePath("HitBox:clash_active")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-0.7853982]
+"update": 1,
+"values": [true]
 }
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("HitBox:clash_active")
+tracks/16/path = NodePath("HitBox:active")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/17/type = "value"
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/path = NodePath("HitBox:active")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.18333334),
+"times": PackedFloat32Array(0, 0.33333334, 0.35000002),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, false, true]
 }
-tracks/18/type = "method"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("HitBox")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
-"times": PackedFloat32Array(0.19166666),
+tracks/17/type = "method"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("HitBox")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0.35833335),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
 "method": &"refresh_collision"
 }]
 }
-tracks/19/type = "value"
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/path = NodePath("AnimatedSprite2D/AttackVFX:flip_v")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/keys = {
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("AnimatedSprite2D/AttackVFX:flip_v")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -1353,7 +1305,7 @@ tracks/19/keys = {
 
 [sub_resource type="Animation" id="Animation_631s8"]
 resource_name = "atk_2"
-length = 0.8
+length = 0.9
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1373,7 +1325,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.23333333, 0.3, 0.33333334, 0.40000004, 0.6666667, 0.76666695),
+"times": PackedFloat32Array(0, 0.06666667, 0.16666667, 0.3, 0.33333334, 0.36666667, 0.6666667, 0.76666695),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
@@ -1447,7 +1399,7 @@ tracks/7/path = NodePath("AnimatedSprite2D/AttackVFX:frame")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.2, 0.23333333, 0.26666668, 0.3, 0.33333334, 0.46666667, 0.5083333, 0.55, 0.57500005, 0.5916667, 0.60833335),
+"times": PackedFloat32Array(0.3, 0.33333334, 0.36666667, 0.40000004, 0.43333334, 0.56666666, 0.60833335, 0.65000004, 0.6750001, 0.6916667, 0.7083334),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -1471,7 +1423,7 @@ tracks/9/path = NodePath("AnimatedSprite2D/AttackVFX:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0.033333335, 0.13333334, 0.16666666, 0.6333333, 0.6666667, 0.74568295),
+"times": PackedFloat32Array(0.033333335, 0.13333334, 0.16666666, 0.73333335, 0.7666667, 0.845683),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [false, false, true, true, false, false]
@@ -1502,95 +1454,83 @@ tracks/11/keys = {
 }
 tracks/12/type = "value"
 tracks/12/imported = false
-tracks/12/enabled = false
-tracks/12/path = NodePath("HitBox:collision_mask")
+tracks/12/enabled = true
+tracks/12/path = NodePath("AnimatedSprite2D/AttackVFX:flip_h")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.2053913, 0.46666667, 0.62333333, 0.67333335),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [128, 64, 192, 192, 128]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("AnimatedSprite2D/AttackVFX:flip_h")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
-tracks/14/type = "value"
-tracks/14/imported = false
-tracks/14/enabled = false
-tracks/14/path = NodePath("AnimatedSprite2D/AttackVFX:instance_shader_parameters/GlowColor")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = false
+tracks/13/path = NodePath("AnimatedSprite2D/AttackVFX:instance_shader_parameters/GlowColor")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
 "times": PackedFloat32Array(0, 0.33333334, 0.4436885),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1.401985, 3.2944162, 1.2525827, 1), Color(1.401985, 3.2944162, 1.2525827, 1), Color(0.76270527, 1.8247963, 0.67885596, 1)]
 }
-tracks/15/type = "value"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("HurtBox/hurt_box_collision:position")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("HurtBox/hurt_box_collision:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
 "times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2(8, 22), Vector2(0, 22)]
 }
-tracks/16/type = "value"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("AnimatedSprite2D/AttackVFX:rotation")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/keys = {
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("AnimatedSprite2D/AttackVFX:rotation")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.7853982]
 }
-tracks/17/type = "value"
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/path = NodePath("HitBox:clash_active")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/keys = {
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("HitBox:clash_active")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
-tracks/18/type = "value"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("HitBox:active")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("HitBox:active")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
 "times": PackedFloat32Array(0, 0.26666668, 0.28333336),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, false, true]
 }
-tracks/19/type = "method"
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/path = NodePath("HitBox")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/keys = {
+tracks/18/type = "method"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("HitBox")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
 "times": PackedFloat32Array(0.2916667),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -1636,7 +1576,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.2588446),
 "transitions": PackedFloat32Array(2.5491211, 1),
 "update": 0,
-"values": [Vector2(-15, -15), Vector2(-23, -15)]
+"values": [Vector2(-10, -15), Vector2(-23, -15)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -1763,94 +1703,82 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = false
-tracks/13/path = NodePath("HitBox:collision_mask")
+tracks/13/path = NodePath("AnimatedSprite2D/AttackVFX:instance_shader_parameters/GlowColor")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.19984019, 0.4, 0.65666664, 0.7066667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [128, 64, 192, 192, 128]
-}
-tracks/14/type = "value"
-tracks/14/imported = false
-tracks/14/enabled = false
-tracks/14/path = NodePath("AnimatedSprite2D/AttackVFX:instance_shader_parameters/GlowColor")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
 "times": PackedFloat32Array(0, 0.26666668, 0.42579785),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1.401985, 3.2944162, 1.2525827, 1), Color(1.401985, 3.2944162, 1.2525827, 1), Color(0.76270527, 1.8247963, 0.67885596, 1)]
 }
-tracks/15/type = "value"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("HurtBox/hurt_box_collision:position")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("HurtBox/hurt_box_collision:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
 "times": PackedFloat32Array(0, 0.76666665),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2(8, 22), Vector2(0, 22)]
 }
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("AnimatedSprite2D/AttackVFX:rotation")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.5707964]
+}
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("AnimatedSprite2D/AttackVFX:rotation")
+tracks/16/path = NodePath("AnimatedSprite2D/AttackVFX:scale")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.5707964]
+"values": [Vector2(0.5, 0.5)]
 }
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("AnimatedSprite2D/AttackVFX:scale")
+tracks/17/path = NodePath("HitBox:clash_active")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.5, 0.5)]
+"update": 1,
+"values": [true]
 }
 tracks/18/type = "value"
 tracks/18/imported = false
 tracks/18/enabled = true
-tracks/18/path = NodePath("HitBox:clash_active")
+tracks/18/path = NodePath("HitBox:active")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/19/type = "value"
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/path = NodePath("HitBox:active")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/keys = {
 "times": PackedFloat32Array(0, 0.23333333, 0.25),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, false, true]
 }
-tracks/20/type = "method"
-tracks/20/imported = false
-tracks/20/enabled = true
-tracks/20/path = NodePath("HitBox")
-tracks/20/interp = 1
-tracks/20/loop_wrap = true
-tracks/20/keys = {
+tracks/19/type = "method"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("HitBox")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
 "times": PackedFloat32Array(0.25833333),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -3408,7 +3336,7 @@ one_shot = true
 [node name="HitBox" type="Area2D" parent="." unique_id=1236886276 node_paths=PackedStringArray("stagger", "collision_shape") groups=["hitbox"]]
 position = Vector2(29, 19)
 collision_layer = 8
-collision_mask = 128
+collision_mask = 192
 script = ExtResource("10_bwuha")
 stagger = NodePath("../Stagger")
 collision_shape = NodePath("hb_collision")
@@ -3696,6 +3624,8 @@ metadata/_edit_use_anchors_ = true
 [connection signal="player_sighted" from="VisionHandler" to="." method="_on_vision_handler_player_sighted"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
 [connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]
+[connection signal="entered" from="LimboHSM/CHASING" to="." method="_on_chasing_entered"]
+[connection signal="entered" from="LimboHSM/ATTACK" to="." method="_on_attack_entered"]
 [connection signal="entered" from="LimboHSM/DODGE" to="." method="_on_dodge_entered"]
 [connection signal="entered" from="LimboHSM/HIT" to="." method="_on_hit_entered"]
 [connection signal="exited" from="LimboHSM/HIT" to="." method="_on_hit_exited"]

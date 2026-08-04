@@ -93,6 +93,8 @@ func _on_impact(_area :Area2D) -> void:
 	
 	if _area!= null:
 		
+		print_debug(_area.get_groups())
+		
 		if _area.is_in_group("hitbox"):
 			_area.attack_clashed=true
 			clash_active=false

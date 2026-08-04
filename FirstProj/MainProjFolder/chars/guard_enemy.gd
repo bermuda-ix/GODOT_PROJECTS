@@ -245,16 +245,16 @@ func _process(_delta):
 		state_machine.change_active_state(chasing)
 	
 	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
-		hb_collision.disabled=true
+		hb_collision.set_deferred("disabled", true)
 		return
 	elif state_machine.get_active_state()==idle:
-		hb_collision.disabled=true
+		hb_collision.set_deferred("disabled", true)
 	elif (state_machine.get_active_state()!=death or state_machine.get_active_state()==dying) and health.health<=0:
 		state_machine.dispatch(&"die")
 	
 			
 	handle_vision()
-	if not attack_range.has_overlapping_bodies():
+	if not attack_range.has_overlapping_bodies() and state_machine.get_active_state()==chasing:
 		bt_player.blackboard.set_var("within_range", false)
 	#bt_player.blackboard.get_var("attack_mode"))
 	attack_timer.one_shot=true
@@ -288,7 +288,7 @@ func _physics_process(delta):
 				velocity.y=lerpf(velocity.y,0,0.2)
 		velocity.x=knockback.x
 	elif state_machine.get_active_state()==death :
-		hb_collision.disabled=true
+		hb_collision.set_deferred("disabled", true)
 		return
 	
 	elif state_machine.get_active_state()!=launch:
@@ -373,6 +373,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		
 		
 	elif anim_name=="clashed":
+		bt_player.blackboard.set_var("staggered", false)
 		dodge_counter()
 		
 	elif anim_name==dodge.dodge_anim:
@@ -414,6 +415,7 @@ func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	if anim_name.substr(0, 3)=="atk":
 		bt_player.active=false
 		attacking=true
+		hb_collision.set_deferred("disabled", false)
 	elif anim_name== "dodge":
 		state_machine.dispatch(&"dodge_end")
 
@@ -553,7 +555,8 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 	#print_debug(current)
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
-	
+	if area.is_in_group("player_hitbox"):
+		print_debug("clash success")
 	if state_machine.get_active_state()!=dying or state_machine.get_active_state()!=death:
 		hit_stop.hit_stop(0.05,0.1)
 
@@ -657,6 +660,7 @@ func _on_hit_exited() -> void:
 
 
 func _on_hit_box_clashed() -> void:
+	bt_player.blackboard.set_var("staggered", true)
 	animation_player.stop()
 	#hit_stop.hit_stop(0.05, 0.5)
 	print_debug("clashed!")
@@ -730,3 +734,12 @@ func _on_dying_entered() -> void:
 	else:
 		knockback.x=death_knockback
 	knockback.y=death_launch
+
+
+func _on_chasing_entered() -> void:
+	attacking=false
+	bt_player.blackboard.set_var("atk_1", true)
+	
+
+func _on_attack_entered() -> void:
+	hb_collision.set_deferred("disabled", false)
