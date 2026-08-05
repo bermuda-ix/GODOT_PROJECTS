@@ -664,8 +664,9 @@ func _on_hit_exited() -> void:
 
 func _on_hit_box_clashed() -> void:
 	bt_player.blackboard.set_var("staggered", true)
-	animation_player.stop()
-	#hit_stop.hit_stop(0.05, 0.5)
+	#animation_player.stop()
+	hit_stop.hit_stop(0.01, 0.25)
+	vfx_player.speed_scale=1/Engine.time_scale
 	print_debug("clashed!")
 	stagger.stagger-=1
 	attacking=false
@@ -763,3 +764,7 @@ func _on_clash_timer_timeout() -> void:
 	bt_player.blackboard.set_var("staggered", false)
 	state_machine.dispatch(&"counter_attack")
 	melee_attack_manager.melee_attack()
+
+
+func _on_hit_stop_hit_stop_finished() -> void:
+	vfx_player.speed_scale=1

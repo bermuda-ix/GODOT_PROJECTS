@@ -2416,9 +2416,9 @@ func hit_sfx() -> void:
 	hit_buffer.start(1)
 	hit_sound=hit1
 	AudioStreamManager.play(hit_sound)
-	hit_fx.visible=true
-	hit_fx_player.stop()
-	hit_fx_player.play(hit_animation)
+	#hit_fx.visible=true
+	#hit_fx_player.stop()
+	#hit_fx_player.play(hit_animation)
 
 
 func _on_hit_box_body_entered(body):
