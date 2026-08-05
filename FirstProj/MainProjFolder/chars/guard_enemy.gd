@@ -46,6 +46,7 @@ const JUMP_VELOCITY = -400.0
 @onready var attack_timer: Timer = $AttackTimer
 @onready var stagger_timer: Timer = $StaggerTimer
 @onready var launch_timer: Timer = $LaunchTimer
+@onready var clash_timer: Timer = $ClashTimer
 
 
 #movement
@@ -382,6 +383,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="staggered_entered":
 		vfx_player.play("staggered")
+	elif anim_name=="clased":
+		state_machine.dispatch(&"counter_attack")
 	
 
 	
@@ -665,6 +668,7 @@ func _on_hit_box_clashed() -> void:
 	#hit_stop.hit_stop(0.05, 0.5)
 	print_debug("clashed!")
 	stagger.stagger-=1
+	attacking=false
 	state_machine.dispatch(&"clashed")
 	
 	
@@ -743,3 +747,19 @@ func _on_chasing_entered() -> void:
 
 func _on_attack_entered() -> void:
 	hb_collision.set_deferred("disabled", false)
+
+
+func _on_clashed_entered() -> void:
+	clash_timer.start(0.1)
+	#hit_stop.hit_stop(0.01, 0.2)
+	#var _current_anim = animation_player.current_animation
+	#animation_player.play_section_with_markers(_current_anim, "clashed")
+	#animation_player.pause()
+	#clash_timer.start(0.2)
+
+
+func _on_clash_timer_timeout() -> void:
+	print_debug(state_machine.get_active_state())
+	bt_player.blackboard.set_var("staggered", false)
+	state_machine.dispatch(&"counter_attack")
+	melee_attack_manager.melee_attack()

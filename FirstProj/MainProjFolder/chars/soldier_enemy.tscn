@@ -5675,10 +5675,12 @@ script = ExtResource("144_37wjj")
 animation_player = NodePath("../../AnimationPlayer")
 actor = NodePath("../..")
 
-[node name="Clashed" type="LimboState" parent="LimboHSM" index="15" unique_id=1151451137 node_paths=PackedStringArray("anim_player", "state_machine")]
+[node name="Clashed" type="LimboState" parent="LimboHSM" index="15" unique_id=1151451137 node_paths=PackedStringArray("anim_player", "vfx_player", "state_machine", "hit_stop")]
 script = ExtResource("190_gmb02")
 anim_player = NodePath("../../AnimationPlayer")
+vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
 state_machine = NodePath("..")
+hit_stop = NodePath("../../HitStop")
 
 [node name="Teleport" type="LimboState" parent="LimboHSM" index="16" unique_id=1290106477]
 blackboard_plan = SubResource("BlackboardPlan_r1f6l")

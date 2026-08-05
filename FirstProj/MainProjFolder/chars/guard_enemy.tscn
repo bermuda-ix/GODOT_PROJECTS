@@ -132,6 +132,7 @@
 [ext_resource type="Texture2D" uid="uid://c5hfiyj42h84j" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I131.png" id="94_xyblf"]
 [ext_resource type="Texture2D" uid="uid://c54rv6q7h1puq" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun02.png" id="95_2j271"]
 [ext_resource type="Texture2D" uid="uid://vyynpmgk4ux1" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I132.png" id="95_q58od"]
+[ext_resource type="Texture2D" uid="uid://brrrq8dfsrtr5" path="res://Art_Components/Effects/AttackFX/Combat FX 1.1/Combat-Sheet.png" id="95_s3oor"]
 [ext_resource type="Texture2D" uid="uid://diym71cn5dbuu" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun03.png" id="96_iysbu"]
 [ext_resource type="Texture2D" uid="uid://cq8t28b0vcbgb" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I133.png" id="96_lur8h"]
 [ext_resource type="Texture2D" uid="uid://dtcstmlvkk56n" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun04.png" id="97_b4d3i"]
@@ -634,8 +635,62 @@ animations = [{
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qd8om"]
 shader = ExtResource("85_g6e5q")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_56c4f"]
+atlas = ExtResource("95_s3oor")
+region = Rect2(0, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mfkv"]
+atlas = ExtResource("95_s3oor")
+region = Rect2(64, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rg8ef"]
+atlas = ExtResource("95_s3oor")
+region = Rect2(128, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_leydn"]
+atlas = ExtResource("95_s3oor")
+region = Rect2(192, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ah3jc"]
+atlas = ExtResource("95_s3oor")
+region = Rect2(256, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6gxa"]
+atlas = ExtResource("95_s3oor")
+region = Rect2(320, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ked5a"]
+atlas = ExtResource("95_s3oor")
+region = Rect2(384, 1344, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_2j271"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_56c4f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mfkv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rg8ef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_leydn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ah3jc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6gxa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ked5a")
+}],
+"loop": 1,
+"name": &"clashed",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("94_xyblf")
@@ -1070,6 +1125,11 @@ tracks/27/keys = {
 [sub_resource type="Animation" id="Animation_uutj5"]
 resource_name = "atk_1"
 length = 0.76666665
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"clashed",
+"time": 0.4
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1306,6 +1366,11 @@ tracks/18/keys = {
 [sub_resource type="Animation" id="Animation_631s8"]
 resource_name = "atk_2"
 length = 0.9
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"clashed",
+"time": 0.40079117
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1542,6 +1607,11 @@ tracks/18/keys = {
 [sub_resource type="Animation" id="Animation_ksmfd"]
 resource_name = "atk_3"
 length = 0.76666665
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"clashed",
+"time": 0.4
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -2933,6 +3003,82 @@ tracks/3/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../AnimatedSprite2D/VFXSprite:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_tt14u"]
+resource_name = "clashed"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D/VFXSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"clashed"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D/VFXSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.008333335, 0.016666668, 0.025000002, 0.033333335, 0.041666668, 0.05, 0.058333334, 0.06666666, 0.075, 0.08333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 2, 3, 2, 3, 4, 5, 6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D/VFXSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../AnimatedSprite2D/VFXSprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-17, 17)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../AnimatedSprite2D/VFXSprite:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
 
 [sub_resource type="Animation" id="Animation_jajog"]
 resource_name = "knocked_back"
@@ -3214,6 +3360,7 @@ tracks/9/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iysbu"]
 _data = {
 &"RESET": SubResource("Animation_74fqe"),
+&"clashed": SubResource("Animation_tt14u"),
 &"knocked_back": SubResource("Animation_jajog"),
 &"staggered": SubResource("Animation_qd8om"),
 &"staggered_entered": SubResource("Animation_2j271")
@@ -3273,11 +3420,13 @@ animation = &"atk_1"
 [node name="VFXSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=777207694]
 visible = false
 self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
+z_index = 5
 material = SubResource("ShaderMaterial_qd8om")
 instance_shader_parameters/FloatParameter = 0.002000000095
 instance_shader_parameters/GlowColor = Color(0, 0, 0, 1)
 instance_shader_parameters/MaskColor = Color(0, 0, 0, 1)
 position = Vector2(0, 5)
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_2j271")
 animation = &"knocked_back"
 
@@ -3331,6 +3480,9 @@ one_shot = true
 [node name="StaggerTimer" type="Timer" parent="." unique_id=1678317936]
 
 [node name="LaunchTimer" type="Timer" parent="." unique_id=813462658]
+one_shot = true
+
+[node name="ClashTimer" type="Timer" parent="." unique_id=1635158808]
 one_shot = true
 
 [node name="HitBox" type="Area2D" parent="." unique_id=1236886276 node_paths=PackedStringArray("stagger", "collision_shape") groups=["hitbox"]]
@@ -3566,10 +3718,12 @@ script = ExtResource("110_gxq5f")
 animation_player = NodePath("../../AnimationPlayer")
 actor = NodePath("../..")
 
-[node name="Clashed" type="LimboState" parent="LimboHSM" unique_id=1901555582 node_paths=PackedStringArray("anim_player", "state_machine")]
+[node name="Clashed" type="LimboState" parent="LimboHSM" unique_id=1901555582 node_paths=PackedStringArray("anim_player", "vfx_player", "state_machine", "hit_stop")]
 script = ExtResource("153_q58od")
 anim_player = NodePath("../../AnimationPlayer")
+vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
 state_machine = NodePath("..")
+hit_stop = NodePath("../../HitStop")
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=1758670167]
 
@@ -3609,6 +3763,7 @@ metadata/_edit_use_anchors_ = true
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="LaunchTimer" to="." method="_on_launch_timer_timeout"]
+[connection signal="timeout" from="ClashTimer" to="." method="_on_clash_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="clash_knock_back" from="HitBox" to="." method="_on_hit_box_clash_knock_back"]
 [connection signal="clashed" from="HitBox" to="." method="_on_hit_box_clashed"]
@@ -3635,3 +3790,4 @@ metadata/_edit_use_anchors_ = true
 [connection signal="updated" from="LimboHSM/FALLING" to="." method="_on_falling_updated"]
 [connection signal="entered" from="LimboHSM/Landed" to="." method="_on_landed_entered"]
 [connection signal="landed" from="LimboHSM/Landed" to="." method="_on_landed_landed"]
+[connection signal="entered" from="LimboHSM/Clashed" to="." method="_on_clashed_entered"]

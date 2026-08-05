@@ -3458,10 +3458,12 @@ metadata/_custom_type_script = "uid://dscn2ndlewuut"
 
 [node name="Landed" type="LimboState" parent="StateMachine" unique_id=1214387260]
 
-[node name="Clashed" type="LimboState" parent="StateMachine" unique_id=1880104669 node_paths=PackedStringArray("anim_player", "state_machine")]
+[node name="Clashed" type="LimboState" parent="StateMachine" unique_id=1880104669 node_paths=PackedStringArray("anim_player", "vfx_player", "state_machine", "hit_stop")]
 script = ExtResource("125_4cgwk")
 anim_player = NodePath("../../AnimationPlayer")
+vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
 state_machine = NodePath("..")
+hit_stop = NodePath("../../HitStop")
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=455656030]
 
