@@ -23,7 +23,7 @@ func _enter() -> void:
 	anim_player.play(pc.dodge_anim_run+"_"+str(dodge_chain))
 	pc.set_collision_mask_value(15, false)
 	#pc.set_collision_layer_value(2, false)
-	pc.counter_box_collision.disabled=false
+	pc.counter_box_collision.set_deferred("disabled", false)
 	hurt_box.active=false
 	
 	if pc.input_axis==0:

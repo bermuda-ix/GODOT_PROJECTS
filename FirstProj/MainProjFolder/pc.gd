@@ -171,6 +171,9 @@ var atk_state="ATK_1"
 @onready var clash_aura_player: AnimationPlayer = $ClashAuraPlayer
 @onready var clash_aura_fx: AnimatedSprite2D = $AnimatedSprite2D/heat_fx
 
+@onready var attack_fx: AnimatedSprite2D = $AnimatedSprite2D/attack_fx
+@onready var charge_attack_fx: AnimatedSprite2D = $AnimatedSprite2D/charge_attack_fx
+
 @onready var hit_animation : String = "hit_landed"
 
 @onready var interact_prompt_player: AnimationPlayer = $InteractPromptPlayer
@@ -1076,8 +1079,6 @@ func attack_handler():
 	if state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
 		return
 	
-	if not charge_timer.is_stopped():
-		return
 	
 	var anim_player_time : float = anim_player.current_animation_position
 	
@@ -1122,6 +1123,8 @@ func attack_handler():
 	
 		charging=false
 		
+		print_debug(state_machine.get_active_state())
+		
 		if state_machine.get_active_state()==idle and attacking:
 			attacking=false
 			
@@ -1149,7 +1152,8 @@ func attack_handler():
 					#attack_timer.start(0.1)
 					attack_timer.paused=false
 				
-			
+		else:
+			light_attack()
 			
 	
 func heavy_combos():
@@ -1216,6 +1220,7 @@ func heavy_combos():
 func _on_charge_timer_timeout() -> void:
 	
 	#print_debug(hit_box.damage,", ", clash_power.clash_power)
+	assert(charge_timer.time_left<=0)
 	if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
 		if attack_state.get_active_state()==heavy_attack_1:
 			shotgun_combo()
@@ -1232,6 +1237,7 @@ func _on_charge_timer_timeout() -> void:
 			attack_state.dispatch(&"charge_attack")
 			#charging_attack.anim_second+=0.1
 		else:
+			charging=true
 			if state_machine.get_active_state()!=attack_state:
 				state_machine.dispatch(&"start_attack")
 			attack_state.dispatch(&"charge_attack")
@@ -1323,6 +1329,7 @@ func shotgun_combo() -> void:
 	else:
 		attack_state.dispatch(&"shotgun_combo")
 
+
 func attack_sfx() -> void:
 	if not attack_timer.is_stopped():
 		if atk_chain == 0:
@@ -1344,6 +1351,15 @@ func attack_sfx() -> void:
 			hit_sound = hit2
 			AudioStreamManager.play(swing2)
 #Buffer Timeout, Regular Attack
+
+func attack_vfx(_charged_vfx := false) -> void:
+	if _charged_vfx:
+		charge_attack_fx.set_deferred("visible", true)
+		attack_fx.set_deferred("visible", false)
+	else:
+		attack_fx.set_deferred("visible", true)
+		charge_attack_fx.set_deferred("visible", false)
+
 func _on_heavy_attack_buffer_timer_timeout() -> void:
 	pass
 	#regular_attack()
@@ -1930,7 +1946,7 @@ func enter_door() -> void:
 				cur_room=prev_room
 				prev_room=temp
 			else:
-				print_debug(global_position)
+				#print_debug(global_position)
 				Global.game_controller.set_prev_starting_point(global_position)
 				assert(next_room!="RETURN")
 				prev_room=cur_room
@@ -2481,7 +2497,7 @@ func flip_over():
 				else:
 					flip_speed=movement_data.speed * -5
 				flip_vel=Vector2(flip_speed, movement_data.jump_velocity*.75)
-				print_debug(flip_vel)
+				#print_debug(flip_vel)
 				if not reload_timer.is_stopped():
 					reload_timer.stop()
 				state_machine.dispatch(&"start_flip")
@@ -2641,9 +2657,11 @@ func _on_counter_box_area_entered(area):
 	
 		
 	if area.is_in_group("hitbox"):
-		hit_stop.hit_stop(0.3, 1)
+		hit_stop.hit_stop(0.5, 2)
+		counter_flag = true
 	elif area.is_in_group("bullet"):
 		hit_stop.hit_stop(0.5, 0.25)
+		counter_flag = true
 		#print_debug("enemy dodge")
 		#state_machine.dispatch(&"dodge_successful")
 		#clash_power.clash_power += 1
