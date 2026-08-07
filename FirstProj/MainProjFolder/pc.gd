@@ -623,8 +623,8 @@ func _process(_delta):
 #
 	dodge(input_axis)
 	
-	if not reload_timer.is_stopped():
-		print_debug(reload_timer.time_left)
+	#if not reload_timer.is_stopped():
+		#print_debug(reload_timer.time_left)
 	
 	if(state_machine.get_active_state()!=dodge_state\
 	 and state_machine.get_active_state()!=special_attack\
@@ -1460,7 +1460,7 @@ func aim_and_shoot():
 			hit_stop.end_hit_stop()
 	else:
 		if (Input.is_action_pressed("special_attack")) and not attacking and not Input.is_action_pressed("attack"):
-			if not reload_timer.is_stopped():
+			if not reload_timer.is_stopped() and ammo>0:
 				reload_timer.stop()
 			if ammo==0:
 				if not reload_timer.is_stopped():
@@ -1512,12 +1512,12 @@ func set_attacking(value : bool) -> void:
 		#print_debug("ending attack")
 	attacking=value
 
-func set_charging(value : bool) -> void:
-	if value==true:
-		print_debug("begin_charge")
-	else:
-		print_debug("ending charge")
-	charging=value
+func set_charging(_value : bool) -> void:
+	#if value==true:
+		#print_debug("begin_charge")
+	#else:
+		#print_debug("ending charge")
+	charging=_value
 
 func finishers() -> void:
 	heavy_attack_buffer_timer.stop()
@@ -1559,6 +1559,9 @@ func gun_cone(spread : int) -> Array[int]:
 
 func _on_special_attack_entered() -> void:
 	pass
+	#audio_stream_player_2d.volume_db=0.0
+	#audio_stream_player_2d.pitch_scale=1.0
+	#audio_stream_player_2d.stream=load(shotgun_fire)
 	#var _bullet_dirs : Array[int] = gun_cone(spread)
 	#for i in spread:
 		#bullet_dir = rotation_to_direction(_bullet_dirs[i])
@@ -1584,7 +1587,12 @@ func shotgun_recoil() -> void:
 	Events.camera_shake.emit(1,20)
 
 func reload_gun() -> void:
-	reload_timer.start()
+	if not reload_timer.is_stopped():
+		return
+	else:
+		reload_timer.start()
+
+
 
 func _on_reload_timer_timeout() -> void:
 	if ammo>=max_ammo:
@@ -1666,9 +1674,16 @@ func parry():
 		velocity.x=0
 		velocity.y=0
 
-func play_sound() -> void:
+func play_sound(_sound : AudioStream, _volume_db := 0.0, _pitch_scale := 1.0) -> void:
+	if _sound==null:
+		print_debug("No sound to play")
+		return
+	audio_stream_player_2d.volume_db=_volume_db
+	audio_stream_player_2d.pitch_scale=_pitch_scale
 	audio_stream_player_2d.stream = load(shotgun_fire)
 	audio_stream_player_2d.play()
+
+
 
 func toggle_light():
 	if Input.is_action_just_pressed("toggle_light"):
