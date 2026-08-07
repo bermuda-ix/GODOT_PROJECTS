@@ -3200,25 +3200,6 @@ func _on_slam_attack_updated(delta: float) -> void:
 func _on_falling_state_entered() -> void:
 	pass # Replace with function body.
 
-
-func _on_hit_fx_player_animation_changed(old_name: StringName, new_name: StringName) -> void:
-	print_debug("ruh roh")
-
-
-func _on_hit_fx_player_current_animation_changed(anim_name: StringName) -> void:
-	pass # Replace with function body.
-
-
-func _on_hit_fx_player_animation_started(anim_name: StringName) -> void:
-	print_debug("ruh roh")
-
-
-func _on_clash_aura_player_animation_finished(anim_name: StringName) -> void:
-	print_debug("ruh roh")
-
-
-func _on_clash_aura_player_animation_started(anim_name: StringName) -> void:
-	print_debug("ruh roh")
 	
 func print_anim_debug(_value := "if this plays it works") -> void:
 	print_debug(_value)
