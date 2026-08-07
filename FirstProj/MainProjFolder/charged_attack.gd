@@ -10,6 +10,7 @@ func _enter() -> void:
 	hit_box.knock_back_strength=100
 	if Input.is_action_pressed("attack"):
 		pc.charging=true
+		
 
 func _exit() -> void:
 	hit_box.heavy_attack=false

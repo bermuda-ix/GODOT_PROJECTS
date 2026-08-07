@@ -762,6 +762,7 @@ func _on_hit_box_clashed() -> void:
 	velocity.x=0
 	#animation_player.stop()
 	hb_collision.set_deferred("disabled",true)
+	hit_box.active=false
 	vfx_sprite.set_deferred("visible", false)
 	hit_stop.hit_stop(0.05, 0.5)
 	state_machine.dispatch(&"clashed")

@@ -234,6 +234,7 @@
 [ext_resource type="Texture2D" uid="uid://iwrv518dufut" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun01.png" id="155_0fwx0"]
 [ext_resource type="Texture2D" uid="uid://c54rv6q7h1puq" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun02.png" id="156_jsy0f"]
 [ext_resource type="Texture2D" uid="uid://diym71cn5dbuu" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun03.png" id="157_7eb78"]
+[ext_resource type="Texture2D" uid="uid://brrrq8dfsrtr5" path="res://Art_Components/Effects/AttackFX/Combat FX 1.1/Combat-Sheet.png" id="158_6oyq8"]
 [ext_resource type="Texture2D" uid="uid://dtcstmlvkk56n" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun04.png" id="158_6tb62"]
 [ext_resource type="Texture2D" uid="uid://qihlcxyjmmwc" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun05.png" id="159_sqnmd"]
 [ext_resource type="Texture2D" uid="uid://q3dr0lr5qwk6" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun06.png" id="160_jr353"]
@@ -887,6 +888,34 @@ damping_max = 30.46
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y174x"]
 shader = ExtResource("106_apghb")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_56c4f"]
+atlas = ExtResource("158_6oyq8")
+region = Rect2(0, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mfkv"]
+atlas = ExtResource("158_6oyq8")
+region = Rect2(64, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rg8ef"]
+atlas = ExtResource("158_6oyq8")
+region = Rect2(128, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_leydn"]
+atlas = ExtResource("158_6oyq8")
+region = Rect2(192, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ah3jc"]
+atlas = ExtResource("158_6oyq8")
+region = Rect2(256, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6gxa"]
+atlas = ExtResource("158_6oyq8")
+region = Rect2(320, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ked5a"]
+atlas = ExtResource("158_6oyq8")
+region = Rect2(384, 1344, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_6arcu"]
 atlas = ExtResource("99_thomt")
 region = Rect2(0, 0, 273, 273)
@@ -1493,6 +1522,32 @@ animations = [{
 }],
 "loop": 1,
 "name": &"atk_kick",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_56c4f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mfkv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rg8ef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_leydn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ah3jc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6gxa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ked5a")
+}],
+"loop": 1,
+"name": &"clashed",
 "speed": 5.0
 }, {
 "frames": [{
@@ -3468,22 +3523,94 @@ tracks/8/keys = {
 "update": 0,
 "values": [Color(3.4265816, 3.4265816, 3.4265816, 1)]
 }
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../AnimatedSprite2D/VFXSprite:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_gs3hl"]
 resource_name = "clashed"
-length = 0.1
+length = 0.25
 step = 0.016666668
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../AnimatedSprite2D:self_modulate")
+tracks/0/path = NodePath("../AnimatedSprite2D/VFXSprite:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"clashed"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D/VFXSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.24166666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 2, 3, 2, 3, 4, 5, 6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D/VFXSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../AnimatedSprite2D/VFXSprite:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.521141, 0.521141, 0.521141, 1), Color(2.454227, 2.454227, 2.454227, 1), Color(0.521141, 0.521141, 0.521141, 1)]
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../AnimatedSprite2D/VFXSprite:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../AnimatedSprite2D/VFXSprite:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-16, 23)]
 }
 
 [sub_resource type="Animation" id="Animation_gn0bn"]
@@ -3976,7 +4103,6 @@ instance_shader_parameters/FloatParameter = 0.002000000095
 instance_shader_parameters/GlowColor = Color(0, 0, 0, 1)
 instance_shader_parameters/MaskColor = Color(0, 0, 0, 1)
 position = Vector2(0, 6)
-rotation = 1.1582785
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_bpr6j")
 animation = &"staggered_entered"

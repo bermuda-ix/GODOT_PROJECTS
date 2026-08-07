@@ -84,7 +84,8 @@ func set_health(value: int):
 			
 	
 	else:
-		print_debug("No change in health")
+		pass
+		#print_debug("No change in health")
 	#print_debug(health)
 
 func get_health():

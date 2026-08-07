@@ -10,15 +10,22 @@ extends LimboState
 
 func _enter() -> void:
 	pc.charging=true
-	anim_player.play(attack)
-	anim_player.pause()
-	anim_player.seek(anim_second)
+	hit_fx_player.play("charge_attack")
+	assert(hit_fx_player.is_playing())
+	anim_player.speed_scale=0.1
+	#anim_player.play(attack)
+	#anim_player.pause()
+	#anim_player.seek(anim_second)
 
 	hit_box.damage+=1
-	hit_fx_player.play("charge_attack")
+	
 
 func _update(delta: float) -> void:
 	pc.velocity=lerp(pc.velocity, Vector2.ZERO, 0.3)
+	if anim_player.current_animation_position>=0.1 and anim_player.is_playing():
+		anim_player.pause()
+	#assert(hit_fx_player.is_playing())
 	
 func _exit() -> void:
-	anim_player.play()
+	anim_player.speed_scale=1
+	#anim_player.play()

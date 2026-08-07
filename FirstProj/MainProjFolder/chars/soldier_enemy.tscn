@@ -190,6 +190,7 @@
 [ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="134_4yjj7"]
 [ext_resource type="Texture2D" uid="uid://d08mxgaqvsvya" path="res://Art_Components/Effects/VFX Free Pack/Effect_EldenRing/60fps/Spritesheets/Effect_EldenRing_1_421x425.png" id="134_27n6q"]
 [ext_resource type="Texture2D" uid="uid://jx34jgnqncbn" path="res://Art_Components/Effects/Spritesheets/Eletric Expansion.png" id="135_sxist"]
+[ext_resource type="Texture2D" uid="uid://brrrq8dfsrtr5" path="res://Art_Components/Effects/AttackFX/Combat FX 1.1/Combat-Sheet.png" id="136_gt172"]
 [ext_resource type="Texture2D" uid="uid://dlfj8ycunyumx" path="res://Art_Components/Effects/Spritesheets/Gravity-Sheet.png" id="136_swwb7"]
 [ext_resource type="Script" uid="uid://dly3pw0jr2gav" path="res://chars/falling.gd" id="143_51rru"]
 [ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="144_37wjj"]
@@ -748,6 +749,34 @@ damping_max = 30.46
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_swwb7"]
 shader = ExtResource("107_8hjwg")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_56c4f"]
+atlas = ExtResource("136_gt172")
+region = Rect2(0, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mfkv"]
+atlas = ExtResource("136_gt172")
+region = Rect2(64, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rg8ef"]
+atlas = ExtResource("136_gt172")
+region = Rect2(128, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_leydn"]
+atlas = ExtResource("136_gt172")
+region = Rect2(192, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ah3jc"]
+atlas = ExtResource("136_gt172")
+region = Rect2(256, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6gxa"]
+atlas = ExtResource("136_gt172")
+region = Rect2(320, 1344, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ked5a"]
+atlas = ExtResource("136_gt172")
+region = Rect2(384, 1344, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6arcu"]
 atlas = ExtResource("133_4tj68")
@@ -1355,6 +1384,32 @@ animations = [{
 }],
 "loop": 1,
 "name": &"atk_kick",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_56c4f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mfkv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rg8ef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_leydn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ah3jc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6gxa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ked5a")
+}],
+"loop": 1,
+"name": &"clashed",
 "speed": 5.0
 }, {
 "frames": [{

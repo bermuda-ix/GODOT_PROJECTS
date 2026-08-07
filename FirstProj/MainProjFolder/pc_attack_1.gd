@@ -13,7 +13,7 @@ func _enter() -> void:
 	#pc.attacking=true
 
 #func _update(delta: float) -> void:
-	#assert(not Input.is_action_pressed("special_attack"))
+	#assert(not Input.is_action_pressed("attack") and (not pc.charging))
 
 func _exit() -> void:
 	pass

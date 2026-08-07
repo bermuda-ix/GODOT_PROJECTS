@@ -664,9 +664,6 @@ func _on_hit_exited() -> void:
 
 func _on_hit_box_clashed() -> void:
 	bt_player.blackboard.set_var("staggered", true)
-	#animation_player.stop()
-	hit_stop.hit_stop(0.01, 0.25)
-	vfx_player.speed_scale=1/Engine.time_scale
 	print_debug("clashed!")
 	stagger.stagger-=1
 	attacking=false

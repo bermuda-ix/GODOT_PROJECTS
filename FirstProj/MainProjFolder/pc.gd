@@ -303,7 +303,7 @@ var sp_atk_dmg :int = 1
 var thrust : bool = false
 
 @export var attacking : bool = false : set = set_attacking
-@onready var charging := false : set = set_charging
+@export var charging := false : set = set_charging
 
 var counter_flag : bool = false
 @onready var counter_timer = $CounterTimer
@@ -660,9 +660,13 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("DEBUG_KEY"):
 		clash_power.clash_power+=1
-	#if Input.is_action_just_released("special_attack"):
-		#print_debug(state_machine.get_active_state())
-
+		hit_fx_player.play("charge_attack")
+	
+	
+	#if Input.is_action_just_released("attack"):
+		#light_attack()
+	
+	
 signal vel_y_changed
 
 #func set_velocity(_value : Vector2) -> void:
@@ -1072,6 +1076,9 @@ func attack_handler():
 	if state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
 		return
 	
+	if not charge_timer.is_stopped():
+		return
+	
 	var anim_player_time : float = anim_player.current_animation_position
 	
 	if Input.is_action_pressed("attack"):
@@ -1085,14 +1092,17 @@ func attack_handler():
 			if attacking:
 				return
 
-		if charge_timer.is_stopped():
+		if not charge_timer.is_stopped():
+			return
+		else:
+			assert(charge_timer.is_stopped())
 			if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
 				charge_timer.start(0.01)
 			else:
 				charge_timer.start(0.2)
+				charging=true
 				charging_attack.attack=attack_1.attack
-		else:
-			return
+
 
 			
 	elif Input.is_action_just_released("attack"):
@@ -1153,7 +1163,9 @@ func heavy_combos():
 			attack_timer.start(0.2)
 			return
 	
-		if charge_timer.is_stopped():
+		if not charge_timer.is_stopped():
+			return
+		else:
 			heavy_attacking=true
 			charging_attack.attack=heavy_attack_1.attack
 			print_debug(state_machine.get_active_state())
@@ -1164,8 +1176,7 @@ func heavy_combos():
 			else:
 				charge_timer.start(0.2)
 				charging_attack.attack=heavy_attack_1.attack
-		else:
-			return
+
 	elif Input.is_action_just_released("special_attack") and not Input.is_action_pressed("attack"):
 
 		if not charge_timer.is_stopped():
@@ -1204,7 +1215,7 @@ func heavy_combos():
 		
 func _on_charge_timer_timeout() -> void:
 	
-	print_debug(hit_box.damage,", ", clash_power.clash_power)
+	#print_debug(hit_box.damage,", ", clash_power.clash_power)
 	if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
 		if attack_state.get_active_state()==heavy_attack_1:
 			shotgun_combo()
@@ -1219,12 +1230,12 @@ func _on_charge_timer_timeout() -> void:
 		if heavy_attacking:
 			attack_state.dispatch(&"heavy_combo")
 			attack_state.dispatch(&"charge_attack")
-			charging_attack.anim_second+=0.1
+			#charging_attack.anim_second+=0.1
 		else:
 			if state_machine.get_active_state()!=attack_state:
 				state_machine.dispatch(&"start_attack")
 			attack_state.dispatch(&"charge_attack")
-			charging_attack.anim_second+=0.1
+			#charging_attack.anim_second+=0.1
 
 
 func start_attack_timer() -> void:
@@ -1281,7 +1292,7 @@ func regular_attack() -> void:
 			hit_box.set_damage(1)
 			
 			attack_sfx()
-			print_debug(attack_state.get_active_state())
+			#print_debug(attack_state.get_active_state())
 			if state_machine.get_active_state()==attack_state:
 				#var _prev_attack : LimboState
 				#if not attack_state_stack.is_empty():
@@ -2665,7 +2676,7 @@ func _on_animation_player_animation_started(anim_name):
 		hb_collision.set_deferred("disabled", false)
 		
 		if attack_state.get_active_state()==attack_1:
-			charge_timer.stop()
+			#charge_timer.stop()
 			match anim_name:
 				"Attack":
 					light_attack_index=0
@@ -3155,3 +3166,31 @@ func _on_slam_attack_updated(delta: float) -> void:
 
 func _on_falling_state_entered() -> void:
 	pass # Replace with function body.
+
+
+func _on_hit_fx_player_animation_changed(old_name: StringName, new_name: StringName) -> void:
+	print_debug("ruh roh")
+
+
+func _on_hit_fx_player_current_animation_changed(anim_name: StringName) -> void:
+	pass # Replace with function body.
+
+
+func _on_hit_fx_player_animation_started(anim_name: StringName) -> void:
+	print_debug("ruh roh")
+
+
+func _on_clash_aura_player_animation_finished(anim_name: StringName) -> void:
+	print_debug("ruh roh")
+
+
+func _on_clash_aura_player_animation_started(anim_name: StringName) -> void:
+	print_debug("ruh roh")
+	
+func print_anim_debug(_value := "if this plays it works") -> void:
+	print_debug(_value)
+
+
+func _on_charged_attack_entered() -> void:
+	if not anim_player.is_playing():
+		anim_player.play()

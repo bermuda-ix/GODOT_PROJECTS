@@ -1275,7 +1275,7 @@ func _on_launch_timer_timeout() -> void:
 
 
 func _on_hit_box_clashed() -> void:
-	hit_stop.hit_stop(0.01, 0.5)
+	#hit_stop.hit_stop(0.01, 0.5)
 	stun_timer.start(0.5)
 	print_debug("clashed!")
 	if hit_box.heavy_attack:
