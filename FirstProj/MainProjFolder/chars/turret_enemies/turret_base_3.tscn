@@ -173,6 +173,7 @@ _data = {
 size = Vector2(576, 352)
 
 [node name="turret_base_3" type="StaticBody2D" unique_id=1981155838 groups=["Enemy", "Persistant"]]
+collision_layer = 8388609
 script = ExtResource("1_61vfk")
 
 [node name="AnimatedSprite2D" type="Sprite2D" parent="." unique_id=446172145]
@@ -223,7 +224,7 @@ stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
 [node name="HurtBoxCollision" type="CollisionPolygon2D" parent="HurtBox" unique_id=639604306]
-polygon = PackedVector2Array(-131, 96, 130, 96, 130, 17, 94, 7, 72, -93, 36, -93, 19, 2, -30, 18, -102, 56, -129, 75)
+polygon = PackedVector2Array(-136, 96, 136, 96, 136, 16, 104, 0, 80, -96, 32, -96, 16, -8, -32, 8, -104, 48, -135, 62)
 
 [node name="HitStop" type="Node" parent="." unique_id=644311718]
 script = ExtResource("5_nis5d")
