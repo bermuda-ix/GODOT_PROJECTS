@@ -206,6 +206,7 @@ func _init_state_machine():
 	state_machine.add_transition(hit, falling, &"falling")
 	state_machine.add_transition(falling, landed, &"landed")
 	state_machine.add_transition(landed, attack, &"resume_attack")
+	state_machine.add_transition(landed, staggered, &"stagger_land")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -681,13 +682,14 @@ func _on_hit_box_clash_knock_back(_launch : float, _knockback : float, _impact_d
 			launch.knock_back_strength = -_knockback
 		else:
 			launch.knock_back_strength = _knockback
-		launch.launch_strength=_launch
-		state_machine.change_active_state(launch)
 	else:
 		if player_right:
-			knockback.x=-_knockback*2
+			launch.knock_back_strength = -_knockback/2
 		else:
-			knockback.x=_knockback*2
+			launch.knock_back_strength = _knockback/2
+	launch.launch_strength=_launch
+	state_machine.change_active_state(launch)
+	stagger.stagger-=_total_stagger_damage
 
 
 func _on_hit_box_clash_launch(_launch: float) -> void:
@@ -701,17 +703,20 @@ func _on_falling_updated(delta: float) -> void:
 		#state_machine.dispatch(&"landed")
 
 func _on_landed_landed() -> void:
-	bt_player.blackboard.set_var("falling", false)
-	if counter_flag:
-		atk_chain="_counter"
-		bt_player.blackboard.set_var("atk_counter", true)
-		bt_player.blackboard.set_var("melee_mode", true)
-		bt_player.blackboard.set_var("within_range", true)
-		#state_machine.dispatch(&"resume_attack")
-		melee_attack_manager.melee_counter()
-		counter_flag=false
+	if stagger.stagger<=0:
+		state_machine.dispatch(&"stagger_land")
 	else:
-		state_machine.dispatch(&"resume_attack")
+		bt_player.blackboard.set_var("falling", false)
+		if counter_flag:
+			atk_chain="_counter"
+			bt_player.blackboard.set_var("atk_counter", true)
+			bt_player.blackboard.set_var("melee_mode", true)
+			bt_player.blackboard.set_var("within_range", true)
+			#state_machine.dispatch(&"resume_attack")
+			melee_attack_manager.melee_counter()
+			counter_flag=false
+		else:
+			state_machine.dispatch(&"resume_attack")
 
 func launch_recover() -> void:
 	launch_timer.stop()

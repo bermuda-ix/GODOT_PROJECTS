@@ -239,7 +239,7 @@ func _process(delta: float) -> void:
 	if state_machine.get_active_state()==dying or state_machine.get_active_state()==death:
 		print_debug(knockback.x)
 
-	print_debug(state_machine.get_active_state())
+	#print_debug(state_machine.get_active_state())
 
 func _physics_process(delta: float) -> void:
 	if state_machine.get_active_state()==death:
