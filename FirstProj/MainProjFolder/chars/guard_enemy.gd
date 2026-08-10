@@ -255,7 +255,7 @@ func _process(_delta):
 		state_machine.dispatch(&"die")
 	
 			
-	handle_vision()
+	
 	if not attack_range.has_overlapping_bodies() and state_machine.get_active_state()==chasing:
 		bt_player.blackboard.set_var("within_range", false)
 	#bt_player.blackboard.get_var("attack_mode"))
@@ -263,7 +263,7 @@ func _process(_delta):
 	
 	
 func _physics_process(delta):
-	# standard delta
+	handle_vision()
 #	knockback return to zero
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 #	stop movement when hit, staggered, or dead

@@ -11984,6 +11984,9 @@ _data = {
 &"locked": SubResource("Animation_22pp6")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f2824"]
+size = Vector2(31.97803, 41.20858)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qebxi"]
 size = Vector2(48, 41)
 
@@ -12551,6 +12554,15 @@ offset_bottom = -33.0
 scale = Vector2(0.463877, 0.379525)
 text = "State"
 metadata/_edit_use_anchors_ = true
+
+[node name="VisionDetection" type="Area2D" parent="." unique_id=1456971327 groups=["player_detect"]]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VisionDetection" unique_id=649000945]
+position = Vector2(2, -9.5000105)
+scale = Vector2(1.06323, 0.994939)
+shape = SubResource("RectangleShape2D_f2824")
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=263329233 node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["player_hurtbox"]]
 collision_layer = 128

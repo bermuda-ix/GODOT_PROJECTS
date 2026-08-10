@@ -14,6 +14,7 @@ extends Node
 @export var nav_agent : NavigationAgent2D
 
 @onready var player : PlayerEntity
+@onready var player_detect : Area2D
 @onready var player_colliding := false
 
 @onready var player_found : bool = false
@@ -23,6 +24,7 @@ extends Node
 signal player_sighted
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
+	player_detect = get_tree().get_first_node_in_group("player_detect")
 	player_tracking.target_position = Vector2(vision_range, 0)
 	
 
@@ -47,7 +49,8 @@ func handle_vision():
 		if player_tracking.is_colliding():
 			
 			var collision_result = player_tracking.get_collider()
-			if collision_result != player:
+			if collision_result != player and collision_result != player_detect:
+				print_debug(collision_result)
 				#set_state(current_state, States.GUARD)
 				return
 			else:
