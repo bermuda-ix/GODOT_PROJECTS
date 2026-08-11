@@ -138,10 +138,10 @@ func _process(_delta):
 		show_pause()
 	
 	##	DEBUGING INPUT
-	if Input.is_action_just_pressed("DEBUG_KEY"):
-		var heart_inst=heart_drop.instantiate()
-		heart_inst.global_position=Vector2(player.global_position.x, player.global_position.y-50)
-		get_tree().current_scene.add_child(heart_inst)
+	#if Input.is_action_just_pressed("DEBUG_KEY"):
+		#var heart_inst=heart_drop.instantiate()
+		#heart_inst.global_position=Vector2(player.global_position.x, player.global_position.y-50)
+		#get_tree().current_scene.add_child(heart_inst)
 	
 func _physics_process(delta: float) -> void:
 	if not cutscene_active and not camera_pos.stationary:

@@ -13,6 +13,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var vfx_sprite: AnimatedSprite2D = $AnimatedSprite2D/VFXSprite
+@onready var drop_handler: DropHandler = $DropHandler
 
 #Animation Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -534,7 +535,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="reload":
 		shooting_states.dispatch(&"return_shooting")
 	elif anim_name=="melee_attack":
-		print_debug(state_machine.get_active_state())
+		#print_debug(state_machine.get_active_state())
 		var _melee_ranged_colliding := attack_range.get_overlapping_bodies()
 		if _melee_ranged_colliding.is_empty():
 			state_machine.dispatch(&"start_shoot")
@@ -559,7 +560,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("sp_atk_default"):
 		if player_state==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
 			Events.allied_enemy_hit.emit()
-		print_debug("spc_hit")
+		#print_debug("spc_hit")
 		if animated_sprite_2d.flip_h:
 			knockback.x=50
 		else:
@@ -573,7 +574,7 @@ func _on_hurt_box_weakpoint_weakpoint_hit() -> void:
 	else:
 		if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 			Events.allied_enemy_hit.emit()
-		print_debug("spc_hit")
+		#print_debug("spc_hit")
 		if animated_sprite_2d.flip_h:
 			knockback.x=50
 		else:
@@ -633,7 +634,7 @@ func _on_stagger_timer_timeout() -> void:
 		state_machine.dispatch(&"stagger_recover")
 		hurt_box.set_deferred("shielded", true)
 	else:
-		print_debug(state_machine.get_active_state())
+		#print_debug(state_machine.get_active_state())
 		if state_machine.get_active_state()!=death and state_machine.get_active_state()!=dying:
 			state_machine.change_active_state(dying)
 
@@ -665,6 +666,7 @@ func _on_health_health_depleted() -> void:
 
 func _on_dying_entered() -> void:
 	#movement_handler.active=false
+	drop_handler.spawn_drop()
 	hit_stop.hit_stop(0.1, 0.3)
 	if player_right:
 		knockback.x=-death_knockback
@@ -825,7 +827,9 @@ func _on_death_entered() -> void:
 	hb_collision.set_deferred("disabled", true)
 	hurt_box_collision.set_deferred("disabled", true)
 	collision_shape_2d.set_deferred("disabled", true)
+	
 	set_collision_mask_value(15, true)
+	
 
 
 func _on_falling_entered() -> void:

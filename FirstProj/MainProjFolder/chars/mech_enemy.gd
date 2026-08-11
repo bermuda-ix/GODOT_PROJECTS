@@ -539,7 +539,7 @@ func _on_bt_player_tree_exited():
 
 func _on_hurt_box_area_entered(area):
 	if area.is_in_group("sp_atk_default"):
-		print_debug("spc_hit")
+		#print_debug("spc_hit")
 		stagger.stagger -= player.sp_atk_dmg
 
 
@@ -548,12 +548,12 @@ func _on_stagger_staggered():
 	set_state(current_state, States.STAGGERED)
 	parry_timer.start(5)
 	hurt_box.set_damage_mulitplyer(3)
-	print_debug("staggered")
+	#print_debug("staggered")
 
 
 func _on_hurt_box_weak_point_area_entered(area):
 	if area.is_in_group("sp_atk_default"):
-		print_debug("spc_hit_weak")
+		#print_debug("spc_hit_weak")
 		stagger.stagger = 0
 
 func get_width() -> int:
@@ -566,4 +566,4 @@ func target_lock():
 	const TARGET_LOCK = preload("res://Component/effects/target_lock.tscn")
 	target_lock_inst=TARGET_LOCK.instantiate()
 	add_child(target_lock_inst)
-	print_debug(str(position)," ",str(target_lock_inst.global_position))
+	#print_debug(str(position)," ",str(target_lock_inst.global_position))

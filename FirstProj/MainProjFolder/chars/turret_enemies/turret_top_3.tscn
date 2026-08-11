@@ -813,3 +813,4 @@ theme_override_font_sizes/font_size = 128
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="health_changed" from="Health" to="." method="_on_health_health_changed"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

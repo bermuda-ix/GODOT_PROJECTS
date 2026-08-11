@@ -132,6 +132,7 @@ var attacking : bool = false
 @export var drop : PackedScene
 @onready var death_handler: DeathHandler = $DeathHandler
 @export var death_time_scale: float = 1.0
+@onready var drop_handler: DropHandler = $DropHandler
 @onready var norm_delta
 @export var death_knockback := 100.0
 @export var death_launch := -30
@@ -231,7 +232,7 @@ func _init_group_link():
 		for i in range(linked_enemies.size()):
 			#print_debug(linked_enemies[i].name, " linked")
 			group_link_order=linked_enemies.find(self)
-			print_debug(group_link_order)
+			#print_debug(group_link_order)
 	group_enemy_manager.set_leader(group_link_order)
 	group_enemy_manager.set_even_order(group_link_order)
 
@@ -451,7 +452,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("sp_atk_default"):
 		if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 			Events.allied_enemy_hit.emit()
-		print_debug("spc_hit")
+		#print_debug("spc_hit")
 		if animated_sprite_2d.flip_h:
 			knockback.x=50
 		else:
@@ -572,7 +573,7 @@ func _on_vision_handler_player_sighted() -> void:
 			linked_enemies[i].alerted()
 			
 func alerted() -> void :
-	print_debug("alerted!")
+	#print_debug("alerted!")
 	vision_handler.always_on=true
 	if not path_valid():
 		return
@@ -665,7 +666,7 @@ func _on_hit_exited() -> void:
 
 func _on_hit_box_clashed() -> void:
 	bt_player.blackboard.set_var("staggered", true)
-	print_debug("clashed!")
+	#print_debug("clashed!")
 	stagger.stagger-=1
 	attacking=false
 	state_machine.dispatch(&"clashed")
@@ -770,3 +771,7 @@ func _on_clash_timer_timeout() -> void:
 
 func _on_hit_stop_hit_stop_finished() -> void:
 	vfx_player.speed_scale=1
+
+
+func _on_death_entered() -> void:
+	drop_handler.spawn_drop()

@@ -1495,9 +1495,11 @@ func aim_and_shoot():
 			end_slow_down()
 
 func slow_down_aim():
+	shotty_animation_player.speed_scale=(1/Engine.time_scale)*0.8
 	Engine.time_scale=0.5
 
 func end_slow_down():
+	shotty_animation_player.speed_scale=1
 	Engine.time_scale=1
 
 func get_clash_power() -> int:
@@ -1843,6 +1845,7 @@ func lockon():
 				#target_right = true
 
 func unlock_from_target() -> void:
+	target=null
 	combat_states.dispatch(&"unlocking")
 	set_shotgun_target_look(false)
 	set_shotgun_free_rotate(true)
@@ -1884,7 +1887,7 @@ func find_closest_enemy() -> Node2D:
 			if (enemy.global_position.distance_to(global_position) < closest_enemy.global_position.distance_to(global_position))\
 			and (enemy.state_machine.get_active_state()!=enemy.death)\
 			and enemy.is_on_screen:
-				
+				assert(enemy.is_on_screen)
 				closest_enemy=enemy
 
 			else:
@@ -1892,7 +1895,10 @@ func find_closest_enemy() -> Node2D:
 		else:
 			continue
 			
-	return closest_enemy
+	if closest_enemy.is_on_screen:
+		return closest_enemy
+	else:
+		return null
 	
 	
 	

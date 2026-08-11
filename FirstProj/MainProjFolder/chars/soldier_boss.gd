@@ -254,7 +254,7 @@ func _ready():
 	
 	dying.blackboard.set_var("hit_the_floor", false)
 	
-	print_debug(bt_player.blackboard.list_vars())
+	#print_debug(bt_player.blackboard.list_vars())
 	
 	#turret.setup(0.2)
 	boss_ui.activate_boss_ui()
@@ -285,7 +285,7 @@ func _ready():
 		alerted()
 		
 	
-	print_debug(global_position)
+	#print_debug(global_position)
 # initialize state
 func _init_state_machine():
 	state_machine.initial_state=idle
@@ -406,8 +406,8 @@ func _process(_delta):
 	is_on_screen=on_screen.is_on_screen()
 	#if not is_on_screen:
 		#assert(bt_player.blackboard.get_var("attack_mode")==false)
-	if Input.is_action_just_pressed("DEBUG_KEY"):
-		test_function()
+	#if Input.is_action_just_pressed("DEBUG_KEY"):
+		#test_function()
 		
 	if player.state_machine.get_active_state()==player.dodge_state:
 		set_collision_mask_value(2, true)
@@ -487,7 +487,7 @@ func teleport_counter():
 	state_machine.dispatch(&"teleport_counter")
 	
 func teleport_atk():
-	print_debug(state_machine.get_active_state())
+	#print_debug(state_machine.get_active_state())
 	state_machine.dispatch(&"teleport_atk")
 	
 func apply_gravity(delta : float) -> void:
@@ -567,22 +567,22 @@ func teleport_to(front : bool) -> void:
 	
 	teleport_helper_raycast.target_position=player.global_position
 	
-	print_debug(player.global_position)
+	#print_debug(player.global_position)
 	if player_right:
-		print_debug(global_position)
+		#print_debug(global_position)
 		global_position=teleport_handler.teleport(teleport_helper_raycast.target_position.x-offset.call(),\
 		 teleport_helper_raycast.target_position.y,\
 		 global_position)
 		#global_position.x+offset.call()
-		print_debug(global_position)
+		#print_debug(global_position)
 		pass
 	else:
-		print_debug(global_position)
+		#print_debug(global_position)
 		global_position=teleport_handler.teleport(teleport_helper_raycast.target_position.x+offset.call(),\
 		 teleport_helper_raycast.target_position.y,\
 		 global_position)
 		#global_position.y+offset.call()
-		print_debug(global_position)
+		#print_debug(global_position)
 		pass
 
 func dodge_counter() -> void:
@@ -616,8 +616,8 @@ func _on_animation_player_animation_started(anim_name: StringName) -> void:
 		movement_handler.face_player_active=false
 		if anim_name!="atk_dash":
 			return
-			print_debug(anim_name)
-		print_debug(anim_name)
+			#print_debug(anim_name)
+		#print_debug(anim_name)
 		if anim_name=="atk_counter":
 			hit_stop_dur=0.2
 		else:
@@ -777,7 +777,7 @@ func _on_stagger_staggered() -> void:
 
 func _on_parry_timer_timeout() -> void:
 	if state_machine.get_active_state()==staggered:
-		print_debug(phases.get_active_state())
+		#print_debug(phases.get_active_state())
 		if phases.get_active_state()==phase_1:
 			state_machine.dispatch(&"stagger_recover")
 			phases_handler.phase_change(health.health)
@@ -821,7 +821,7 @@ func alerted() -> void :
 	if changing_phase:
 		return
 	else:
-		print_debug("alerted!")
+		#print_debug("alerted!")
 		vision_handler.always_on=true
 		if on_screen.is_on_screen():
 			state_machine.dispatch(&"attack_mode")

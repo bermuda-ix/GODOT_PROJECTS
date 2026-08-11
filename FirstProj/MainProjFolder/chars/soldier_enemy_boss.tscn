@@ -234,7 +234,6 @@
 [ext_resource type="Texture2D" uid="uid://iwrv518dufut" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun01.png" id="155_0fwx0"]
 [ext_resource type="Texture2D" uid="uid://c54rv6q7h1puq" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun02.png" id="156_jsy0f"]
 [ext_resource type="Texture2D" uid="uid://diym71cn5dbuu" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun03.png" id="157_7eb78"]
-[ext_resource type="Texture2D" uid="uid://brrrq8dfsrtr5" path="res://Art_Components/Effects/AttackFX/Combat FX 1.1/Combat-Sheet.png" id="158_6oyq8"]
 [ext_resource type="Texture2D" uid="uid://dtcstmlvkk56n" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun04.png" id="158_6tb62"]
 [ext_resource type="Texture2D" uid="uid://qihlcxyjmmwc" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun05.png" id="159_sqnmd"]
 [ext_resource type="Texture2D" uid="uid://q3dr0lr5qwk6" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun06.png" id="160_jr353"]
@@ -888,34 +887,6 @@ damping_max = 30.46
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y174x"]
 shader = ExtResource("106_apghb")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_56c4f"]
-atlas = ExtResource("158_6oyq8")
-region = Rect2(0, 1344, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1mfkv"]
-atlas = ExtResource("158_6oyq8")
-region = Rect2(64, 1344, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rg8ef"]
-atlas = ExtResource("158_6oyq8")
-region = Rect2(128, 1344, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_leydn"]
-atlas = ExtResource("158_6oyq8")
-region = Rect2(192, 1344, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ah3jc"]
-atlas = ExtResource("158_6oyq8")
-region = Rect2(256, 1344, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_q6gxa"]
-atlas = ExtResource("158_6oyq8")
-region = Rect2(320, 1344, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ked5a"]
-atlas = ExtResource("158_6oyq8")
-region = Rect2(384, 1344, 64, 64)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_6arcu"]
 atlas = ExtResource("99_thomt")
 region = Rect2(0, 0, 273, 273)
@@ -1522,32 +1493,6 @@ animations = [{
 }],
 "loop": 1,
 "name": &"atk_kick",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_56c4f")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1mfkv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rg8ef")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_leydn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ah3jc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_q6gxa")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ked5a")
-}],
-"loop": 1,
-"name": &"clashed",
 "speed": 5.0
 }, {
 "frames": [{

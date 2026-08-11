@@ -219,7 +219,7 @@ libraries/ = SubResource("AnimationLibrary_wstjc")
 collision_layer = 16
 collision_mask = 8397376
 script = ExtResource("3_sh051")
-health = NodePath("../Health")
+health = NodePath("../turret_top/Health")
 stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 

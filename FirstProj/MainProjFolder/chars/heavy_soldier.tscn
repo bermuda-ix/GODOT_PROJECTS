@@ -131,6 +131,7 @@
 [ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="100_8h24x"]
 [ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="104_g8y6e"]
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="125_4cgwk"]
+[ext_resource type="Script" uid="uid://dpg0824supe1e" path="res://Component/functions/drop_handler.gd" id="132_n51gf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv57o"]
 size = Vector2(35, 76)
@@ -2364,7 +2365,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.03333334, 0.06666667, 0.09999997, 0.13333334, 0.2, 0.2333333, 0.26666665, 0.33299783, 0.36633113, 0.3996645),
+"times": PackedFloat32Array(0, 0.03333334, 0.06666667, 0.09999997, 0.13333334, 0.16666667, 0.19999997, 0.23333332, 0.26666668, 0.29999998, 0.33333334),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 1, 2, 3, 0, 2, 3, 1]
@@ -2376,7 +2377,7 @@ tracks/2/path = NodePath("ShootAttackManager")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.066666685, 0.20579483, 0.33299786),
+"times": PackedFloat32Array(0.066666685, 0.1724615, 0.2666667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [],
@@ -2448,7 +2449,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.19999936, 0.23333333, 0.33333305, 0.36666667, 0.46666637, 0.5, 0.7),
+"times": PackedFloat32Array(0, 0.0666667, 0.19999936, 0.23333333, 0.3, 0.33333364, 0.4016009, 0.43493453, 0.7),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 2, 3, 2, 3, 0]
@@ -2460,7 +2461,7 @@ tracks/2/path = NodePath("ShootAttackManager")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.19999936, 0.33333305, 0.46506548),
+"times": PackedFloat32Array(0.19999936, 0.3, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [],
@@ -3034,6 +3035,7 @@ size = Vector2(83, 82)
 [node name="HeavySoldier" type="CharacterBody2D" unique_id=1955221828 node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant", "defensive_enemy"]]
 collision_layer = 16384
 collision_mask = 17
+floor_constant_speed = true
 script = ExtResource("1_ct51r")
 hitbox = NodePath("HitBox")
 drop = ExtResource("2_3df1g")
@@ -3503,6 +3505,14 @@ collision_mask = 16387
 hit_from_inside = true
 
 [node name="DodgeTimer" type="Timer" parent="." unique_id=827337093]
+
+[node name="DropHandler" type="Node" parent="." unique_id=1206550428 node_paths=PackedStringArray("actor")]
+script = ExtResource("132_n51gf")
+chance = 100
+drop = ExtResource("2_3df1g")
+actor = NodePath("..")
+spawn_vel = Vector2(25, -100)
+metadata/_custom_type_script = "uid://dpg0824supe1e"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Clashed" method="_on_animation_player_animation_finished"]

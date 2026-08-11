@@ -2796,7 +2796,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.125, 0.15, 0.21666667, 0.24166666, 0.26666668, 0.53333336),
+"times": PackedFloat32Array(0, 0.1, 0.125, 0.15, 0.18333334, 0.20833333, 0.23333335, 0.53333336),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 1, 2, 3, 4]
@@ -2808,7 +2808,7 @@ tracks/2/path = NodePath("ShootAttackManager")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.1, 0.21666667),
+"times": PackedFloat32Array(0.1, 0.18333334),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -2825,7 +2825,7 @@ tracks/3/path = NodePath("AnimatedSprite2D/AttackVFX:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.14603727, 0.21534151, 0.26137877),
+"times": PackedFloat32Array(0, 0.1, 0.14603727, 0.18200818, 0.22804543),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [false, true, false, true, false]
@@ -2849,7 +2849,7 @@ tracks/5/path = NodePath("AnimatedSprite2D/AttackVFX:frame")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.10415496, 0.13333334, 0.21674532, 0.2459237),
+"times": PackedFloat32Array(0.10415496, 0.13333334, 0.18341199, 0.21259037),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 0, 1]
@@ -3405,6 +3405,7 @@ size = Vector2(48, 68.5)
 [node name="GuardEnemy" type="CharacterBody2D" unique_id=2034909694 node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant", "offensive_enemy"]]
 collision_layer = 16384
 collision_mask = 17
+floor_constant_speed = true
 script = ExtResource("1_4q725")
 hitbox = NodePath("HitBox")
 drop = ExtResource("2_tqjrv")
@@ -3573,7 +3574,9 @@ blackboard_plan = SubResource("BlackboardPlan_q7gmp")
 
 [node name="DropHandler" type="Node" parent="." unique_id=2044196216 node_paths=PackedStringArray("actor")]
 script = ExtResource("75_id1bf")
+chance = 100
 actor = NodePath("..")
+spawn_vel = Vector2(0, -100)
 metadata/_custom_type_script = "uid://dpg0824supe1e"
 
 [node name="PlayerTrackingHandler" type="Node" parent="." unique_id=1415402084 node_paths=PackedStringArray("actor")]
@@ -3808,6 +3811,7 @@ metadata/_edit_use_anchors_ = true
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
 [connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]
 [connection signal="entered" from="LimboHSM/CHASING" to="." method="_on_chasing_entered"]
+[connection signal="entered" from="LimboHSM/DEATH" to="." method="_on_death_entered"]
 [connection signal="entered" from="LimboHSM/ATTACK" to="." method="_on_attack_entered"]
 [connection signal="entered" from="LimboHSM/DODGE" to="." method="_on_dodge_entered"]
 [connection signal="entered" from="LimboHSM/HIT" to="." method="_on_hit_entered"]

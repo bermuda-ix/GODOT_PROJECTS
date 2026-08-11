@@ -207,3 +207,7 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 
 func _on_health_health_changed(diff: int) -> void:
 	health_change.emit(health.get_health())
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	state_machine.change_active_state(idle)
