@@ -3939,7 +3939,7 @@ tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [5.0],
+"args": [350.0],
 "method": &"attack_lunge_setup"
 }]
 }
@@ -3976,10 +3976,10 @@ tracks/10/path = NodePath(".:attacking")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0.43333334),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.4, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [false]
+"values": [true, true, false]
 }
 tracks/11/type = "value"
 tracks/11/imported = false

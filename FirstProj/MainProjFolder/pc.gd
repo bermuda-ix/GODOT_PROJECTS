@@ -603,7 +603,7 @@ func _init_attack_states():
 
 func _process(_delta):
 	
-	
+	assert(state_machine.is_active())
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	if not cutscene_handler.actor_control_active:
 		
@@ -662,8 +662,7 @@ func _process(_delta):
 	
 	
 	if Input.is_action_just_pressed("DEBUG_KEY"):
-		clash_power.clash_power+=1
-		hit_fx_player.play("charge_attack")
+		counter_flag=true
 	
 	
 	#if Input.is_action_just_released("attack"):
@@ -1281,9 +1280,11 @@ func regular_attack() -> void:
 			
 		if counter_flag:
 			attack_combo = "Attack_Counter"
+			attack_1.attack = "Attack_Counter"
 			hit_box.set_damage(3)
 			hit_sound = hit1
 			AudioStreamManager.play(swing1)
+			state_machine.dispatch(&"start_attack")
 		elif target_below:
 			attack_combo = "Attack_Down"
 			hit_box.set_damage(2)
@@ -1298,7 +1299,7 @@ func regular_attack() -> void:
 			hit_box.set_damage(1)
 			
 			attack_sfx()
-			#print_debug(attack_state.get_active_state())
+			print_debug(attack_state.get_active_state())
 			if state_machine.get_active_state()==attack_state:
 				#var _prev_attack : LimboState
 				#if not attack_state_stack.is_empty():
@@ -1313,7 +1314,7 @@ func regular_attack() -> void:
 				else:
 					light_attack_index=wrapi(light_attack_index+1, 0, 3)
 					attack_1.attack=light_attacks[light_attack_index]
-					state_machine.dispatch(&"next_attack")
+					attack_state.dispatch(&"next_attack")
 		
 			else:
 				#attack_state.initial_state=attack_1
@@ -2243,7 +2244,7 @@ func _on_animation_player_animation_finished(anim_name):
 			
 			"Attack_Counter":
 				counter_flag=false
-				
+				anim_player.play("idle")
 				return
 			"Attack_Chain":
 				state_machine.dispatch(&"return_to_idle")
@@ -2665,9 +2666,11 @@ func _on_counter_box_area_entered(area):
 	if area.is_in_group("hitbox"):
 		hit_stop.hit_stop(0.5, 2)
 		counter_flag = true
+		counter_timer.start(1)
 	elif area.is_in_group("bullet"):
 		hit_stop.hit_stop(0.5, 0.25)
 		counter_flag = true
+		counter_timer.start(1)
 		#print_debug("enemy dodge")
 		#state_machine.dispatch(&"dodge_successful")
 		#clash_power.clash_power += 1
