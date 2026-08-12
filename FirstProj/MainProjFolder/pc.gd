@@ -2245,12 +2245,13 @@ func _on_animation_player_animation_finished(anim_name):
 			"Attack_Counter":
 				counter_flag=false
 				anim_player.play("idle")
+				attack_timer.start(0.1)
 				return
 			"Attack_Chain":
 				state_machine.dispatch(&"return_to_idle")
 				sp_atk_chn=0
 				atk_chain=0
-				attack_timer.start(0.2)
+				attack_timer.start(0.1)
 				combo_state=ComboStates.SPC_ATK_BACK
 				return
 		#if atk_chain < 2:

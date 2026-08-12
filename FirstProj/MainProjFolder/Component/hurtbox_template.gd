@@ -94,6 +94,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 				bullet_damage+=1
 			
 			elif hitbox.is_in_group("hitbox") or hitbox.is_in_group("player_hitbox"):
+				hitbox.active=false
 				Events.hit_stop.emit(0.01,0.01)
 				if hitbox.knock_back:
 					if hitbox.global_position.x > global_position.x:
