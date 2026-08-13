@@ -248,6 +248,7 @@
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="189_ia0g3"]
 [ext_resource type="Texture2D" uid="uid://c3ei3kyoroif7" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 12/578.png" id="200_52cq2"]
 [ext_resource type="Texture2D" uid="uid://b5a7amrfjvh6n" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 6/276.png" id="201_lmcka"]
+[ext_resource type="Texture2D" uid="uid://bqwilb7hxob8g" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 5/230.png" id="201_nykr5"]
 [ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="218_gn0bn"]
 [ext_resource type="Script" uid="uid://dly3pw0jr2gav" path="res://chars/falling.gd" id="239_lvekc"]
 [ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="240_c7cuv"]
@@ -2113,6 +2114,26 @@ region = Rect2(576, 448, 64, 64)
 atlas = ExtResource("200_52cq2")
 region = Rect2(640, 448, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysvep"]
+atlas = ExtResource("201_nykr5")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_russv"]
+atlas = ExtResource("201_nykr5")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vij3y"]
+atlas = ExtResource("201_nykr5")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vl6uh"]
+atlas = ExtResource("201_nykr5")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4li5v"]
+atlas = ExtResource("201_nykr5")
+region = Rect2(256, 0, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_g7boo"]
 atlas = ExtResource("201_lmcka")
 region = Rect2(0, 448, 64, 64)
@@ -2196,7 +2217,22 @@ animations = [{
 "name": &"atk_1",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysvep")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_russv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vij3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vl6uh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4li5v")
+}],
 "loop": 1,
 "name": &"heavy_charge",
 "speed": 5.0
@@ -4081,7 +4117,7 @@ radius = 18.0
 height = 44.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xhp7j"]
-size = Vector2(20, 40)
+size = Vector2(25, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgnw"]
 size = Vector2(33.75, 21.25)
