@@ -11,7 +11,6 @@ func _enter() -> void:
 	pc.hit_fx_player.speed_scale=1
 	pc.hit_animation="hit_landed"
 	pc.heavy_attack_flag=false
-	pc.attack_vfx(false)
 	#attack_fx_sprite.animation="sword_hit_1"
 	#pc.attacking=true
 

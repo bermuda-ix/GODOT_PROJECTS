@@ -662,7 +662,7 @@ func _process(_delta):
 	
 	
 	if Input.is_action_just_pressed("DEBUG_KEY"):
-		counter_flag=true
+		clash_power.clash_power+=1
 	
 	
 	#if Input.is_action_just_released("attack"):
@@ -1353,13 +1353,11 @@ func attack_sfx() -> void:
 			AudioStreamManager.play(swing2)
 #Buffer Timeout, Regular Attack
 
-func attack_vfx(_charged_vfx := false) -> void:
-	if _charged_vfx:
+func charge_attack_vfx(_charged := false) -> void:
+	if _charged:
 		charge_attack_fx.set_deferred("visible", true)
-		attack_fx.set_deferred("visible", false)
 	else:
-		attack_fx.set_deferred("visible", true)
-		charge_attack_fx.set_deferred("visible", false)
+		return
 
 func _on_heavy_attack_buffer_timer_timeout() -> void:
 	pass
