@@ -2196,6 +2196,11 @@ animations = [{
 "name": &"atk_1",
 "speed": 5.0
 }, {
+"frames": [],
+"loop": 1,
+"name": &"heavy_charge",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g7boo")
@@ -4076,7 +4081,7 @@ radius = 18.0
 height = 44.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xhp7j"]
-size = Vector2(25, 40)
+size = Vector2(20, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgnw"]
 size = Vector2(33.75, 21.25)
@@ -4246,7 +4251,7 @@ target_position = Vector2(52, 0)
 collision_mask = 2
 
 [node name="HitBox" parent="." index="24" node_paths=PackedStringArray("stagger", "collision_shape") groups=["hitbox"]]
-collision_mask = 704
+collision_mask = 576
 stagger = NodePath("../Stagger")
 knock_back_strength = 50.0
 collision_shape = NodePath("CollisionShape2D")
