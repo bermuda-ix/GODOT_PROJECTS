@@ -224,13 +224,8 @@
 [ext_resource type="Texture2D" uid="uid://c5hfiyj42h84j" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I131.png" id="149_k2x5b"]
 [ext_resource type="Texture2D" uid="uid://vyynpmgk4ux1" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I132.png" id="150_2ay3p"]
 [ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="150_87q8v"]
-[ext_resource type="Texture2D" uid="uid://c5rydbynprxq4" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_01.png" id="150_sr808"]
-[ext_resource type="Texture2D" uid="uid://bb7ulyxk1bcwl" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_02.png" id="151_crmns"]
 [ext_resource type="Texture2D" uid="uid://cq8t28b0vcbgb" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I133.png" id="151_rgiva"]
-[ext_resource type="Texture2D" uid="uid://bkpxhxq6jd3iq" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_03.png" id="152_8xulu"]
 [ext_resource type="Texture2D" uid="uid://5slw7nxxexbj" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I131/I134.png" id="152_y18n0"]
-[ext_resource type="Texture2D" uid="uid://c2safri3xr8y7" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_04.png" id="153_5u5ds"]
-[ext_resource type="Texture2D" uid="uid://cqpelmj4ie8mt" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_05.png" id="154_fnbuc"]
 [ext_resource type="Texture2D" uid="uid://iwrv518dufut" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun01.png" id="155_0fwx0"]
 [ext_resource type="Texture2D" uid="uid://c54rv6q7h1puq" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun02.png" id="156_jsy0f"]
 [ext_resource type="Texture2D" uid="uid://diym71cn5dbuu" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun03.png" id="157_7eb78"]
@@ -251,6 +246,8 @@
 [ext_resource type="Texture2D" uid="uid://dpiavufx84ssj" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00217.png" id="172_lmcka"]
 [ext_resource type="Texture2D" uid="uid://tldys6blkcg8" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00218.png" id="173_nykr5"]
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="189_ia0g3"]
+[ext_resource type="Texture2D" uid="uid://c3ei3kyoroif7" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 12/578.png" id="200_52cq2"]
+[ext_resource type="Texture2D" uid="uid://b5a7amrfjvh6n" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 6/276.png" id="201_lmcka"]
 [ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="218_gn0bn"]
 [ext_resource type="Script" uid="uid://dly3pw0jr2gav" path="res://chars/falling.gd" id="239_lvekc"]
 [ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="240_c7cuv"]
@@ -2072,6 +2069,82 @@ animations = [{
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fliv7"]
 shader = ExtResource("106_apghb")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3oor"]
+atlas = ExtResource("200_52cq2")
+region = Rect2(0, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_74fqe"]
+atlas = ExtResource("200_52cq2")
+region = Rect2(64, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jajog"]
+atlas = ExtResource("200_52cq2")
+region = Rect2(128, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hsppp"]
+atlas = ExtResource("200_52cq2")
+region = Rect2(192, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nf2nc"]
+atlas = ExtResource("200_52cq2")
+region = Rect2(256, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2a41"]
+atlas = ExtResource("200_52cq2")
+region = Rect2(320, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qwl5"]
+atlas = ExtResource("200_52cq2")
+region = Rect2(384, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0jhl"]
+atlas = ExtResource("200_52cq2")
+region = Rect2(448, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hm7aq"]
+atlas = ExtResource("200_52cq2")
+region = Rect2(512, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70b2d"]
+atlas = ExtResource("200_52cq2")
+region = Rect2(576, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwao7"]
+atlas = ExtResource("200_52cq2")
+region = Rect2(640, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7boo"]
+atlas = ExtResource("201_lmcka")
+region = Rect2(0, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0kw6"]
+atlas = ExtResource("201_lmcka")
+region = Rect2(64, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2m5f"]
+atlas = ExtResource("201_lmcka")
+region = Rect2(128, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5imtp"]
+atlas = ExtResource("201_lmcka")
+region = Rect2(192, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qikld"]
+atlas = ExtResource("201_lmcka")
+region = Rect2(256, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2x06"]
+atlas = ExtResource("201_lmcka")
+region = Rect2(320, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_keima"]
+atlas = ExtResource("201_lmcka")
+region = Rect2(384, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_08xwk"]
+atlas = ExtResource("201_lmcka")
+region = Rect2(448, 448, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_725ad"]
 animations = [{
 "frames": [{
@@ -2087,19 +2160,37 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("150_sr808")
+"texture": SubResource("AtlasTexture_s3oor")
 }, {
 "duration": 1.0,
-"texture": ExtResource("151_crmns")
+"texture": SubResource("AtlasTexture_74fqe")
 }, {
 "duration": 1.0,
-"texture": ExtResource("152_8xulu")
+"texture": SubResource("AtlasTexture_jajog")
 }, {
 "duration": 1.0,
-"texture": ExtResource("153_5u5ds")
+"texture": SubResource("AtlasTexture_hsppp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("154_fnbuc")
+"texture": SubResource("AtlasTexture_nf2nc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v2a41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4qwl5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d0jhl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hm7aq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70b2d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wwao7")
 }],
 "loop": 1,
 "name": &"atk_1",
@@ -2107,28 +2198,31 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("107_y3n31")
+"texture": SubResource("AtlasTexture_g7boo")
 }, {
 "duration": 1.0,
-"texture": ExtResource("108_tagbv")
+"texture": SubResource("AtlasTexture_j0kw6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("109_oordo")
+"texture": SubResource("AtlasTexture_v2m5f")
 }, {
 "duration": 1.0,
-"texture": ExtResource("110_tmkua")
+"texture": SubResource("AtlasTexture_5imtp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("111_avobk")
+"texture": SubResource("AtlasTexture_qikld")
 }, {
 "duration": 1.0,
-"texture": ExtResource("112_muatw")
+"texture": SubResource("AtlasTexture_j2x06")
 }, {
 "duration": 1.0,
-"texture": ExtResource("113_r4dbx")
+"texture": SubResource("AtlasTexture_keima")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_08xwk")
 }],
 "loop": 1,
-"name": &"atk_2",
+"name": &"shockwave",
 "speed": 5.0
 }]
 
@@ -3982,7 +4076,7 @@ radius = 18.0
 height = 44.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xhp7j"]
-size = Vector2(20, 40)
+size = Vector2(25, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgnw"]
 size = Vector2(33.75, 21.25)
@@ -4058,11 +4152,14 @@ flip_v = true
 max_polyphony = 4
 
 [node name="AttackVFX" type="AnimatedSprite2D" parent="AnimatedSprite2D" index="2" unique_id=193571614]
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 material = SubResource("ShaderMaterial_fliv7")
 instance_shader_parameters/FloatParameter = 0.002000000095
 instance_shader_parameters/GlowColor = Color(3.2944162, 1.6634394, 1.0782797, 1)
 instance_shader_parameters/MaskColor = Color(0.21950114, 0.21950099, 0.21950093, 1)
 position = Vector2(-28, 15)
+rotation = -0.2617994
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_725ad")
 animation = &"atk_1"
 flip_v = true
