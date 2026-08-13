@@ -1549,7 +1549,7 @@ tracks/5/path = NodePath(".")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(3.9666667),
+"times": PackedFloat32Array(4),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -1563,7 +1563,7 @@ tracks/6/path = NodePath("Ace_Cutscene:visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(3.9666667),
+"times": PackedFloat32Array(4),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -1587,7 +1587,7 @@ tracks/8/path = NodePath("BossArena/NamedBossSpawn")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(3.9666667),
+"times": PackedFloat32Array(4),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -1601,7 +1601,7 @@ tracks/9/path = NodePath("CameraPos:boss_active")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(4),
+"times": PackedFloat32Array(3.9666667),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -1687,7 +1687,7 @@ tracks/16/path = NodePath("CameraPos:stationary")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(4),
+"times": PackedFloat32Array(3.9666667),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
