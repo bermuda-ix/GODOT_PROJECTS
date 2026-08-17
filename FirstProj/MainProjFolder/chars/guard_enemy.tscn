@@ -3046,6 +3046,7 @@ tracks/4/keys = {
 [sub_resource type="Animation" id="Animation_tt14u"]
 resource_name = "clashed"
 length = 0.25
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -3823,3 +3824,4 @@ metadata/_edit_use_anchors_ = true
 [connection signal="entered" from="LimboHSM/Landed" to="." method="_on_landed_entered"]
 [connection signal="landed" from="LimboHSM/Landed" to="." method="_on_landed_landed"]
 [connection signal="entered" from="LimboHSM/Clashed" to="." method="_on_clashed_entered"]
+[connection signal="exited" from="LimboHSM/Clashed" to="." method="_on_clashed_exited"]

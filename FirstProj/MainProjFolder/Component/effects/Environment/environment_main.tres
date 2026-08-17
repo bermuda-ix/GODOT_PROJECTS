@@ -1,0 +1,12 @@
+[gd_resource type="Environment" format=3 uid="uid://cpxkvyngxidgr"]
+
+[sub_resource type="Gradient" id="Gradient_vw32t"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_61h8j"]
+gradient = SubResource("Gradient_vw32t")
+
+[resource]
+background_mode = 3
+glow_enabled = true
+adjustment_enabled = true
+adjustment_color_correction = SubResource("GradientTexture2D_61h8j")

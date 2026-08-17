@@ -6,6 +6,9 @@ extends LimboHSM
 @onready var dur : Timer = Timer.new()
 @onready var success : bool = false
 
+@export var clash_animation := "clashed"
+@export var attack_1 : LimboState
+
 signal dur_timeout
 
 
@@ -18,10 +21,14 @@ func _ready() -> void:
 
 func _enter() -> void:
 	print_debug("successful parry")
-	anim_player.play("Parry_Success")
-	await anim_player.animation_finished
+	pc.attack_timer.stop()
+	var _attack_anim=attack_1.attack
+	var _marker_time=anim_player.get_animation(_attack_anim).get_marker_time("Attack_connect")
+	anim_player.seek(_marker_time, true)
+	assert(anim_player.current_animation_position==_marker_time)
+	anim_player.pause()
 	hit_stop.hit_stop(0.1, 1)
-	dur.start(3)
+	#dur.start(3)
 
 func _update(delta: float) -> void:
 	if Input.is_action_just_pressed("attack"):

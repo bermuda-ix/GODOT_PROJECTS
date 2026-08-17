@@ -1695,7 +1695,7 @@ tracks/16/keys = {
 
 [sub_resource type="Animation" id="Animation_vlsbg"]
 resource_name = "miniboss_hallway_death"
-length = 4.5666666
+length = 5.1666665
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1703,10 +1703,10 @@ tracks/0/path = NodePath("CanvasLayer/ScreenFlash:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.06666667),
-"transitions": PackedFloat32Array(23.425358, 0.091505505),
+"times": PackedFloat32Array(0, 0.525908, 0.59999996),
+"transitions": PackedFloat32Array(23.425358, 23.425358, 0.091505505),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -1715,7 +1715,7 @@ tracks/1/path = NodePath("SoldierBoss_Cutscene:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.204702, 2.0666666, 2.4333334, 2.7333333),
+"times": PackedFloat32Array(0.5333333, 1.7380353, 2.6, 2.9666667, 3.2666664),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [&"atk_4", &"atk_2", &"atk_3", &"knockback", &"knockback"]
@@ -1727,7 +1727,7 @@ tracks/2/path = NodePath("SoldierBoss_Cutscene:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.033333335, 0.1, 0.16666667, 0.23333333, 0.33333334, 0.5, 0.8, 0.8666667, 1.2098671, 1.2666667, 1.295298, 1.3286314, 1.3619647, 1.9666667, 2.0334616, 2.1001282, 2.1667948, 2.2334614, 2.3001285, 2.4333334, 2.5, 2.566667, 2.6333337, 3.0333333, 3.0666666, 3.1, 3.1333332),
+"times": PackedFloat32Array(0.5333333, 0.56666666, 0.6333333, 0.6999999, 0.76666665, 0.8666667, 1.0333333, 1.3333334, 1.4, 1.7432004, 1.7999998, 1.8286313, 1.8619648, 1.8952981, 2.5, 2.5667949, 2.6334615, 2.700128, 2.7667947, 2.8334618, 2.9666667, 3.0333333, 3.1000004, 3.166667, 3.5666666, 3.6, 3.6333332, 3.6666665),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [1, 1, 2, 3, 5, 6, 7, 8, 9, 3, 0, 1, 2, 3, 0, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4]
@@ -1739,7 +1739,7 @@ tracks/3/path = NodePath("PC/AnimatedSprite2D:animation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 1.3326144, 1.3333334, 1.8, 2.0876276, 2.7),
+"times": PackedFloat32Array(0.5333333, 0.6333333, 1.8659478, 1.8666667, 2.333333, 2.6209607, 3.233333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [&"Jump", &"SwordCrouch", &"FrontFlip", &"FrontFlip", &"SwordCrouch", &"SwordCombo04", &"FrontFlip"]
@@ -1751,7 +1751,7 @@ tracks/4/path = NodePath("PC/AnimatedSprite2D:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.1, 1.3326144, 1.3666668, 1.4000001, 1.4333334, 1.4666667, 1.5000001, 1.5333334, 1.5666667, 1.6000001, 1.6333334, 1.6666667, 1.7, 1.8, 2.0876276, 2.1666667, 2.2333333, 2.3, 2.3666666, 2.4333334, 2.4666667, 2.5, 2.6999998, 2.725, 2.75, 2.7749999, 2.8, 2.8249998, 2.85, 2.875),
+"times": PackedFloat32Array(0.5333333, 0.6333333, 1.8659478, 1.9000002, 1.9333335, 1.9666668, 2, 2.0333333, 2.0666666, 2.1, 2.1333332, 2.1666665, 2.1999998, 2.233333, 2.333333, 2.6209607, 2.6999998, 2.7666664, 2.833333, 2.8999996, 2.9666667, 3, 3.0333333, 3.233333, 3.2583332, 3.2833333, 3.308333, 3.333333, 3.358333, 3.3833332, 3.4083333),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [2, 0, 13, 12, 11, 10, 8, 7, 6, 5, 4, 3, 2, 1, 1, 0, 1, 2, 3, 4, 5, 6, 7, 13, 12, 11, 10, 8, 7, 6, 5]
@@ -1763,7 +1763,7 @@ tracks/5/path = NodePath("PC:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.23333333, 0.3, 1.3333334, 1.4916667, 1.6333333, 2.1333334, 2.4333334),
+"times": PackedFloat32Array(0.5333333, 0.76666665, 0.8333334, 1.8666667, 2.025, 2.1666665, 2.6666665, 2.9666667),
 "transitions": PackedFloat32Array(1, 2.143547, 1, 1.1486968, 1, 0.4352762, 3.4821906, 0.09473245),
 "update": 0,
 "values": [Vector2(-2317, 284), Vector2(-2369.8704, 284), Vector2(-2378, 284), Vector2(-2378, 284), Vector2(-2366.372, 260), Vector2(-2354, 284), Vector2(-2354, 284), Vector2(-2240, 284)]
@@ -1775,7 +1775,7 @@ tracks/6/path = NodePath("Ace_Cutscene:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.30372322, 2.1700835, 2.1916666, 2.8666666, 2.9740763),
+"times": PackedFloat32Array(0.5333333, 0.8333334, 0.8370565, 2.7034168, 2.725, 3.3999996, 3.5074096),
 "transitions": PackedFloat32Array(1, 0.27739263, 1, 1.3195075, 0.55478483, 1, 1),
 "update": 0,
 "values": [Vector2(-2295, 253), Vector2(-2260, 253), Vector2(-2260, 253), Vector2(-2260, 253), Vector2(-2277.5166, 253), Vector2(-2409, 253), Vector2(-2409, 253)]
@@ -1787,7 +1787,7 @@ tracks/7/path = NodePath("SoldierBoss_Cutscene:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.17001382, 1.023299, 1.1744682, 2.0333333, 2.1666667, 2.2000003, 3.0678344, 3.2011678, 3.2271476),
+"times": PackedFloat32Array(0.5333333, 0.7033471, 1.5566323, 1.7078015, 2.5666666, 2.6999998, 2.7333336, 3.6011677, 3.734501, 3.7604809),
 "transitions": PackedFloat32Array(12.553334, 1, 1, 0.02816403, 0.02816403, 5.2780294, 1, 0.48296887, 1.5157173, 1),
 "update": 0,
 "values": [Vector2(-2303, 223), Vector2(-2303, 252), Vector2(-2303, 252), Vector2(-2411, 252), Vector2(-2411, 252), Vector2(-2242, 252), Vector2(-2266, 252), Vector2(-2266, 252), Vector2(-2219, 252), Vector2(-2210, 252)]
@@ -1799,7 +1799,7 @@ tracks/8/path = NodePath("Ace_Cutscene:flip_h")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 2.8666666, 2.8829794),
+"times": PackedFloat32Array(0.5333333, 3.3999996, 3.4163127),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, true, false]
@@ -1811,7 +1811,7 @@ tracks/9/path = NodePath("Ace_Cutscene:animation")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.33333334, 0.39303985, 1.1666666, 2.1505547, 2.2333333, 2.8833332),
+"times": PackedFloat32Array(0.5333333, 0.8666667, 0.9263731, 1.6999999, 2.683888, 2.7666664, 3.4166665),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [&"backflip", &"landed", &"reload", &"crouch_gun", &"sprint", &"slide", &"crouch_gun"]
@@ -1823,7 +1823,7 @@ tracks/10/path = NodePath("Ace_Cutscene:frame")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667, 0.20000002, 0.23333335, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.39303985, 0.43333337, 0.4666667, 0.5, 0.53333336, 0.5666667, 0.6, 0.6333334, 1.3, 1.3255318, 1.3588651, 1.3921986, 1.4255319, 2.1583335, 2.2, 2.2666667, 2.3333333, 2.4, 2.4666667, 2.9, 2.9666667, 3.0333333, 3.1, 3.1666665),
+"times": PackedFloat32Array(0.5333333, 0.56666666, 0.59999996, 0.6333333, 0.6666666, 0.6999999, 0.73333335, 0.76666665, 0.79999995, 0.8333334, 0.8666667, 0.9, 0.9263731, 0.9666667, 1, 1.0333333, 1.0666667, 1.1, 1.1333333, 1.1666666, 1.8333331, 1.8588651, 1.8921984, 1.925532, 1.9588653, 2.6916666, 2.733333, 2.7999997, 2.8666663, 2.9333334, 3, 3.4333334, 3.5, 3.5666666, 3.6333332, 3.6999998),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 0, 2, 3, 4, 5, 6, 7, 8, 0, 1, 2, 3, 4, 1, 2, 0, 1, 2, 3, 0, 1, 2, 3, 4]
@@ -1835,7 +1835,7 @@ tracks/11/path = NodePath("SoldierBoss_Cutscene/VFXSprite:animation")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0.36666667, 1.1953993, 1.5233202, 2.1),
+"times": PackedFloat32Array(0.9, 1.7287327, 2.0566535, 2.6333332),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [&"teleport_start", &"teleport_end", &"teleport_start", &"teleport_end"]
@@ -1847,7 +1847,7 @@ tracks/12/path = NodePath("SoldierBoss_Cutscene/VFXSprite:frame")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0.36666667, 0.3898899, 0.42322323, 0.45655653, 0.4898899, 0.5232233, 0.5565566, 0.5898899, 0.6232232, 0.6565566, 0.6898899, 0.72799975, 0.7666667, 0.8000001, 0.8333334, 0.86666673, 0.90000004, 0.9333334, 0.9666667, 1, 1.1953993, 1.2333333, 1.2666668, 1.3000001, 1.3333334, 1.3666668, 1.4000001, 1.4333334, 1.4666667, 1.5233202, 1.5465434, 1.5798768, 1.6132101, 1.6465434, 1.6798768, 1.7132101, 1.7465434, 1.7798767, 1.8132101, 1.8465434, 1.8846533, 1.9233203, 1.9566536, 1.9899869, 2.0233202, 2.0566535, 2.1, 2.137934, 2.1712673, 2.2046006, 2.2379339, 2.2712674, 2.3046007, 2.337934, 2.3712673),
+"times": PackedFloat32Array(0.9, 0.92322314, 0.95655656, 0.98988986, 1.0232232, 1.0565566, 1.0898899, 1.1232232, 1.1565565, 1.1898899, 1.2232232, 1.2613331, 1.3000001, 1.3333334, 1.3666667, 1.4, 1.4333333, 1.4666667, 1.5, 1.5333333, 1.7287327, 1.7666665, 1.8000001, 1.8333334, 1.8666667, 1.9000002, 1.9333335, 1.9666668, 2, 2.0566535, 2.0798764, 2.1132102, 2.1465435, 2.1798768, 2.21321, 2.2465434, 2.2798767, 2.31321, 2.3465433, 2.3798766, 2.4179864, 2.4566536, 2.489987, 2.5233202, 2.5566535, 2.5899868, 2.6333332, 2.671267, 2.7046003, 2.7379336, 2.771267, 2.8046007, 2.837934, 2.8712673, 2.9046006),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 0, 1, 2, 3, 4, 5, 6, 7, 9]
@@ -1859,7 +1859,7 @@ tracks/13/path = NodePath("SoldierBoss_Cutscene/VFXSprite:visible")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.3699215, 1.5265751),
+"times": PackedFloat32Array(0.5333333, 0.90325487, 2.0599084),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, true]
@@ -1871,7 +1871,7 @@ tracks/14/path = NodePath("SoldierBoss_Cutscene:self_modulate")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0, 0.36666667, 0.5),
+"times": PackedFloat32Array(0.5333333, 0.9, 1.0333333),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0.45490196, 0.45490196, 0.45490196, 1), Color(0.45490196, 0.45490196, 0.45490196, 1), Color(0.45, 0.45, 0.45, 0)]
@@ -1883,7 +1883,7 @@ tracks/15/path = NodePath("SoldierBoss_Cutscene:material:shader_parameter/color"
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0, 0.36666667, 0.5, 1.0666667, 1.2666667, 1.4666667, 1.6000001, 2.1045592, 2.3045592),
+"times": PackedFloat32Array(0.5333333, 0.9, 1.0333333, 1.6, 1.7999998, 2, 2.1333332, 2.6378922, 2.8378925),
 "transitions": PackedFloat32Array(1, 1, 1, 6.727188, 13.928783, 1, 1, 13.928783, 1),
 "update": 0,
 "values": [null, null, Color(0, 0, 0, 0), Color(0, 0, 0, 0), null, null, Color(0, 0, 0, 0), null, null]
@@ -1895,7 +1895,7 @@ tracks/16/path = NodePath("SoldierBoss_Cutscene:modulate")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(0, 0.36666667, 0.96666664, 1.2, 1.2666667, 1.5666667, 2.0666666, 2.1045592, 2.4045591),
+"times": PackedFloat32Array(0.5333333, 0.9, 1.4999999, 1.7333332, 1.7999998, 2.1, 2.6, 2.6378922, 2.9378924),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 33.128525, 33.128525, 1, 33.128525, 33.128525),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
@@ -1907,7 +1907,7 @@ tracks/17/path = NodePath("SoldierBoss_Cutscene/VFXSprite:rotation")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.5333333),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
@@ -1919,7 +1919,7 @@ tracks/18/path = NodePath("SoldierBoss_Cutscene:flip_h")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
-"times": PackedFloat32Array(0, 1.2186561, 2.1),
+"times": PackedFloat32Array(0.5333333, 1.7519895, 2.6333332),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -1931,7 +1931,7 @@ tracks/19/path = NodePath("PC/AnimatedSprite2D:flip_h")
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
-"times": PackedFloat32Array(0, 1.3333334, 2.0666666),
+"times": PackedFloat32Array(0.5333333, 1.8666667, 2.6),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -1943,7 +1943,7 @@ tracks/20/path = NodePath("Paths/Path2D/PathFollow2D/PlayerTransform:remote_path
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0, 2.2666667, 2.5333333),
+"times": PackedFloat32Array(0.5333333, 2.7999997, 3.0666666),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [NodePath(""), NodePath(""), NodePath("../../../../PC")]
@@ -1955,7 +1955,7 @@ tracks/21/path = NodePath("Paths/Path2D/PathFollow2D:progress_ratio")
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
-"times": PackedFloat32Array(2.3666666, 2.7, 3.3666666),
+"times": PackedFloat32Array(2.8999996, 3.233333, 3.8999996),
 "transitions": PackedFloat32Array(1, 0.5547851, 0.17075501),
 "update": 0,
 "values": [0.0, 0.0, 1.0]
@@ -1967,7 +1967,7 @@ tracks/22/path = NodePath("PC:skew")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
-"times": PackedFloat32Array(2.2524872),
+"times": PackedFloat32Array(2.7858205),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
@@ -1979,7 +1979,7 @@ tracks/23/path = NodePath("PC:rotation")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = {
-"times": PackedFloat32Array(2.2524872),
+"times": PackedFloat32Array(2.7858205),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
@@ -1991,7 +1991,7 @@ tracks/24/path = NodePath("Paths/Path2D/PathFollow2D:rotates")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(2.274208),
+"times": PackedFloat32Array(2.8075414),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -2003,7 +2003,7 @@ tracks/25/path = NodePath("Paths/Path2D/PathFollow2D:loop")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
-"times": PackedFloat32Array(2.274208),
+"times": PackedFloat32Array(2.8075414),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -2015,7 +2015,7 @@ tracks/26/path = NodePath("Paths/Path2D/PathFollow2D/PlayerTransform:update_scal
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
 tracks/26/keys = {
-"times": PackedFloat32Array(2.274208),
+"times": PackedFloat32Array(2.8075414),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -2027,7 +2027,7 @@ tracks/27/path = NodePath("Paths/Path2D/PathFollow2D/PlayerTransform:update_rota
 tracks/27/interp = 1
 tracks/27/loop_wrap = true
 tracks/27/keys = {
-"times": PackedFloat32Array(2.274208),
+"times": PackedFloat32Array(2.8075414),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -2040,7 +2040,7 @@ tracks/28/interp = 1
 tracks/28/loop_wrap = true
 tracks/28/keys = {
 "clips": PackedStringArray("shotgun_attack"),
-"times": PackedFloat32Array(2.9333334)
+"times": PackedFloat32Array(3.4666667)
 }
 tracks/29/type = "value"
 tracks/29/imported = false
@@ -2049,7 +2049,7 @@ tracks/29/path = NodePath("PC/AnimatedSprite2D/Shotty:rotation")
 tracks/29/interp = 1
 tracks/29/loop_wrap = true
 tracks/29/keys = {
-"times": PackedFloat32Array(2.5226703),
+"times": PackedFloat32Array(3.0560036),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.72082096]
@@ -2061,7 +2061,7 @@ tracks/30/path = NodePath("HitStop")
 tracks/30/interp = 1
 tracks/30/loop_wrap = true
 tracks/30/keys = {
-"times": PackedFloat32Array(0, 0.3, 1.3096613, 2.312901, 2.4467006, 3.0826418),
+"times": PackedFloat32Array(0.5333333, 0.8333334, 1.8429946, 2.8462343, 2.9800339, 3.615975),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "values": [{
 "args": [0.5, 2.0],
@@ -2090,7 +2090,7 @@ tracks/31/path = NodePath("SoldierBoss_Cutscene:flip_v")
 tracks/31/interp = 1
 tracks/31/loop_wrap = true
 tracks/31/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.5333333),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -2102,7 +2102,7 @@ tracks/32/path = NodePath("SoldierBoss_Cutscene:visible")
 tracks/32/interp = 1
 tracks/32/loop_wrap = true
 tracks/32/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.5333333),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -2114,7 +2114,7 @@ tracks/33/path = NodePath("Ace_Cutscene:visible")
 tracks/33/interp = 1
 tracks/33/loop_wrap = true
 tracks/33/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.5333333),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -2126,7 +2126,7 @@ tracks/34/path = NodePath("CameraPos:boss_active")
 tracks/34/interp = 1
 tracks/34/loop_wrap = true
 tracks/34/keys = {
-"times": PackedFloat32Array(0, 4.5666666),
+"times": PackedFloat32Array(0, 5.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, false]
@@ -2138,7 +2138,7 @@ tracks/35/path = NodePath("CameraPos:stationary")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/keys = {
-"times": PackedFloat32Array(0, 4.5666666),
+"times": PackedFloat32Array(0, 5.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, true]
@@ -2174,7 +2174,7 @@ tracks/38/path = NodePath("Ace_Cutscene/AnimatedSprite2D:position")
 tracks/38/interp = 1
 tracks/38/loop_wrap = true
 tracks/38/keys = {
-"times": PackedFloat32Array(1.1592413, 2.924286),
+"times": PackedFloat32Array(1.6925746, 3.4576192),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(-36, 21), Vector2(36, 21)]
@@ -2186,7 +2186,7 @@ tracks/39/path = NodePath("Ace_Cutscene/AnimatedSprite2D:visible")
 tracks/39/interp = 1
 tracks/39/loop_wrap = true
 tracks/39/keys = {
-"times": PackedFloat32Array(1.1592413, 1.3, 2.8, 2.91, 3.0666666),
+"times": PackedFloat32Array(1.6925746, 1.8333331, 3.333333, 3.4433331, 3.6),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [true, false, false, true, false]
@@ -2198,7 +2198,7 @@ tracks/40/path = NodePath("Ace_Cutscene/AnimatedSprite2D:animation")
 tracks/40/interp = 1
 tracks/40/loop_wrap = true
 tracks/40/keys = {
-"times": PackedFloat32Array(0.23333335),
+"times": PackedFloat32Array(0.76666665),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"muzzle_fire"]
@@ -2210,7 +2210,7 @@ tracks/41/path = NodePath("Ace_Cutscene/AnimatedSprite2D:frame")
 tracks/41/interp = 1
 tracks/41/loop_wrap = true
 tracks/41/keys = {
-"times": PackedFloat32Array(1.1592413, 1.2, 2.91, 2.9333334),
+"times": PackedFloat32Array(1.6925746, 1.7333332, 3.4433331, 3.4666667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 0, 1]
@@ -2222,7 +2222,7 @@ tracks/42/path = NodePath("Ace_Cutscene/AnimatedSprite2D:flip_h")
 tracks/42/interp = 1
 tracks/42/loop_wrap = true
 tracks/42/keys = {
-"times": PackedFloat32Array(1.1592413, 2.919048),
+"times": PackedFloat32Array(1.6925746, 3.4523811),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -4709,7 +4709,7 @@ flag_active = false
 [node name="GlobalFlagHandler" parent="DemonStalker" index="3" unique_id=1406087607 groups=["global_flag"]]
 
 [node name="PC" parent="." unique_id=1041091659 instance=ExtResource("17_j8gjg")]
-position = Vector2(-1793, 284)
+position = Vector2(-2317, 284)
 scale = Vector2(1.0760809, 0.94640315)
 
 [node name="BossArena" type="Node" parent="." unique_id=1859008299]

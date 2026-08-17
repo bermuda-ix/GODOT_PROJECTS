@@ -94,6 +94,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 				bullet_damage+=1
 			
 			elif hitbox.is_in_group("hitbox") or hitbox.is_in_group("player_hitbox"):
+				assert(hitbox.active==true)
 				hitbox.active=false
 				Events.hit_stop.emit(0.01,0.01)
 				if hitbox.knock_back:
@@ -137,6 +138,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 							health.health -= (hitbox.damage * dmg_mult)
 							print_debug(health.health)
 							print_debug(hitbox.damage)
+							assert(hitbox.attack_clashed!=true)
 							received_damage.emit(hitbox.damage)
 							
 							got_hit.emit(hitbox)

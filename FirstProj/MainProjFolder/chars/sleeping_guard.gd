@@ -26,6 +26,8 @@ var player : PlayerEntity = null
 
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
+@onready var prop_enemy := true
+
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	#set_state(current_state, States.CHASE)

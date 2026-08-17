@@ -31,6 +31,9 @@ signal update_stagger
 ##Signal to update max stagger UI
 signal update_max_stagger
 
+#Signal to end clash
+signal clash_end
+
 #Player Stats
 @export var movement_data : PlayerMovementData
 @onready var aim_speed=movement_data.speed
@@ -102,6 +105,7 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var down_air_attack: LimboState = $StateMachine/AttackState/DownAirAttack
 @onready var slam_attack: LimboState = $StateMachine/AttackState/SlamAttack
 @onready var slam_start: LimboState = $StateMachine/AttackState/SlamStart
+@onready var clashed: LimboState = $StateMachine/AttackState/Clashed
 
 
 
@@ -382,6 +386,7 @@ func _ready():
 	init_player_data()
 	Events.get_player_data.connect(init_player_data)
 	_new_health=health.health
+	Events.update_ui_data.connect(update_ui)
 	
 	#Connecting knockback signals
 	
@@ -415,6 +420,12 @@ func _init_state_machine():
 	#Recovery
 	state_machine.add_transition(hit, recovery, &"recovering")
 	state_machine.add_transition(staggered, recovery, &"recovering")
+	#From Recovery
+	state_machine.add_transition(recovery, attack_state, &"start_attack")
+	state_machine.add_transition(recovery, jump_state, &"start_jumping")
+	state_machine.add_transition(recovery, dodge_state, &"start_dodge")
+	state_machine.add_transition(recovery, walking, &"start_walking")
+	
 	
 	#From Idle
 	state_machine.add_transition(idle, walking, &"start_walking")
@@ -518,6 +529,7 @@ func _init_state_machine():
 	#Counter Success
 	state_machine.add_transition(parry_state, parry_success_state, &"parry_successful")
 	state_machine.add_transition(dodge_state, parry_success_state, &"dodge_successful")
+	state_machine.add_transition(attack_state, parry_success_state, &"clashed")
 
 	#Wall Stick
 	state_machine.add_transition(jump_state, wall_stick, &"stick_to_wall")
@@ -558,12 +570,10 @@ func _init_attack_states():
 	attack_state.initial_state=attack_1
 
 	attack_state.add_transition(attack_1, attack_1, &"next_attack")
-	#attack_state.add_transition(attack_2, attack_3, &"next_attack")
-	#attack_state.add_transition(attack_3, attack_1, &"next_attack")
-	
-	
-	#attack_state.add_transition(attack_1, special_combo, &"special_combo")
-	#attack_state.add_transition(attack_2, special_combo, &"special_combo")
+	#attack_state.add_transition(attack_1, clashed, &"clashed")
+	#attack_state.add_transition(clashed, attack_1, &"riposte")
+	#attack_state.add_transition(clashed, heavy_attack_1, &"heavy_riposte")
+
 	attack_state.add_transition(attack_state.ANYSTATE, dash_attack, &"dash_attack")
 	attack_state.add_transition(attack_state.ANYSTATE, heavy_dash_attack, &"heavy_dash_attack")
 	attack_state.add_transition(attack_state.ANYSTATE, heavy_counter, &"heavy_counter")
@@ -1905,19 +1915,23 @@ func get_target_info():
 	if target==null:
 		return
 	else:
-		if target.health.get_health()<=0:
-			Events.unlock_from.emit()
-			unlock_from_target()
-		target_size_x = target.get_width()
-		target_size_y = target.get_height()
-		target_top = target.global_position.y-(target_size_y/2-5)
-		target_left_edge=target.global_position.x-(target_size_x/2)
-		target_right_edge=target.global_position.x+(target_size_x/2)
-		
-		if target_size_y > collision_shape_2d.get_shape().size.y*1.5:
-			high_target=true
+		if "prop_enemy" in target:
+			if target.prop_enemy:
+				return
 		else:
-			high_target=false
+			if target.health.get_health()<=0:
+				Events.unlock_from.emit()
+				unlock_from_target()
+			target_size_x = target.get_width()
+			target_size_y = target.get_height()
+			target_top = target.global_position.y-(target_size_y/2-5)
+			target_left_edge=target.global_position.x-(target_size_x/2)
+			target_right_edge=target.global_position.x+(target_size_x/2)
+			
+			if target_size_y > collision_shape_2d.get_shape().size.y*1.5:
+				high_target=true
+			else:
+				high_target=false
 
 func locked_combat():
 	if target==null:
@@ -2115,6 +2129,11 @@ func set_max_stagger() -> void:
 		update_max_stagger.emit(stagger.max_stagger)
 	#Global.game_controller.update_max_stagger(stagger.max_stagger)
 
+func update_ui():
+	set_health()
+	set_max_health()
+	set_stagger()
+	set_max_stagger()
 
 func _on_health_health_depleted():
 	state_machine.dispatch(&"die")
@@ -3155,20 +3174,20 @@ func _on_hit_box_clashed() -> void:
 	#hit_fx_player.play("clashed")
 	hit_animation="clashed"
 	hit_sfx()
-	var _current_atk : String
-	if heavy_attacking:
-		_current_atk = heavy_attack_1.attack
-	else:
-		_current_atk = attack_1.attack
-	var _atk_clash_anim : String = _current_atk+"_connect"
-	var _atk_clash_anim_end : String = _current_atk+"_end"
-	assert(anim_player.has_animation(_current_atk))
-	var _atk_connect := anim_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
+	#var _current_atk : String
+	#if heavy_attacking:
+		#_current_atk = heavy_attack_1.attack
+	#else:
+		#_current_atk = attack_1.attack
+	#var _atk_clash_anim : String = _current_atk+"_connect"
+	#var _atk_clash_anim_end : String = _current_atk+"_end"
+	#assert(anim_player.has_animation(_current_atk))
+	#var _atk_connect := anim_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
 	if attack_state.get_active_state()==charging_attack:
 		charge_timer.stop()
 		charge_timer.timeout.emit()
 		
-	
+	state_machine.dispatch(&"clashed")
 	hit_box.active=false
 	
 
@@ -3214,5 +3233,22 @@ func print_anim_debug(_value := "if this plays it works") -> void:
 
 
 func _on_charged_attack_entered() -> void:
-	if not anim_player.is_playing():
+	if not anim_player.is_playing(): 
 		anim_player.play()
+
+
+func _on_clashed_entered() -> void:
+	attack_timer.stop()
+	var _attack_anim=attack_1.attack
+	var _marker_time=anim_player.get_animation(_attack_anim).get_marker_time("Attack_connect")
+	anim_player.seek(_marker_time, true)
+	assert(anim_player.current_animation_position==_marker_time)
+	anim_player.pause()
+
+
+func _on_clashed_exited() -> void:
+	anim_player.play()
+
+
+func _on_clashed_updated(delta: float) -> void:
+	assert(anim_player.is_playing()!=true)

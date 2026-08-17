@@ -26,6 +26,7 @@ text = "Practice
 (not working)"
 
 [node name="guanlet" type="Button" parent="VBoxContainer" unique_id=1397174453]
+visible = false
 layout_mode = 2
 action_mode = 0
 text = "Survival mode"

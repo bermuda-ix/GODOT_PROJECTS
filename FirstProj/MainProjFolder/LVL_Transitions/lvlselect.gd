@@ -23,9 +23,10 @@ func _on_guanlet_pressed():
 
 
 func _on_boss_pressed():
+	boss.disabled=true
+	mouse_filter=Control.MOUSE_FILTER_IGNORE
 	await LevelTransition.fade_to_black()
 	
-	boss.set_deferred("disabled", true)
 	#Global.game_controller.load_levels(LevelsList.prologue_unique_levels)
 	#Global.game_controller.load_levels(LevelsList.level_maps)
 	#Global.game_controller._init_objectives(ObjectivesByLevel.prologue_init_objectives)

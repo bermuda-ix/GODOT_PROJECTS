@@ -6031,8 +6031,6 @@ position = Vector2(3792, 216)
 
 [connection signal="spawn_boss_signal" from="." to="." method="_on_spawn_boss_signal"]
 [connection signal="timeout" from="BossSpawnTimer" to="." method="_on_boss_spawn_timer_timeout"]
-[connection signal="flag_triggered" from="BossBounderies/LocalFlag" to="." method="_on_local_flag_flag_triggered"]
-[connection signal="flag_triggered" from="BossBounderies/LocalFlag2" to="." method="_on_local_flag_2_flag_triggered"]
 [connection signal="area_entered" from="BossBounderies/BossArena" to="." method="_on_boss_arena_area_entered"]
 [connection signal="area_exited" from="BossBounderies/BossArena" to="." method="_on_boss_arena_area_exited"]
 

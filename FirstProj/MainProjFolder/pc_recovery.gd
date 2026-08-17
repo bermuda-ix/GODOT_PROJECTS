@@ -15,5 +15,6 @@ func _update(delta: float) -> void:
 		state_machine.dispatch(&"return_to_idle")
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	pc.hit_timer.stop()
 	if anim_name==recover_anim:
 		state_machine.dispatch(&"return_to_idle")

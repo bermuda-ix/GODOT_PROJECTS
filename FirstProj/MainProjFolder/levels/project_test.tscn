@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="11_fof0c"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="12_dqkb5"]
 [ext_resource type="Script" uid="uid://klqpph3n6xut" path="res://Component/functions/PersistentData/LevelStateHandler.gd" id="12_v15hm"]
+[ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="13_dqkb5"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ys1t2"]
 vertices = PackedVector2Array(518.367, -227, 691, -227, 691, -213, 493.172, -213, 430.289, -291.047, 478.703, -216.781, 409.883, -277, 388.906, 93, 523, 93, 523, 107, 371.094, 107, 331.094, 27, 348.906, 13, 253.063, 13, 172.609, 27, 140.617, 107, 29, 107, 29, 77, 123.469, 77, 147.469, 13, 223.688, 13, 210.203, -64.1484, 187.25, -69, 13, -69, 13, -91, 169.633, -91, 257.617, -155, 253.227, -133, 445.172, -133, 434.57, -155, 222.563, -299.047, 209.422, -277, 105.422, -341, 126.648, -355, -59, -355, -59, -341)
@@ -499,6 +500,9 @@ shape = SubResource("RectangleShape2D_fof0c")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="36" unique_id=1515680001]
 environment = SubResource("Environment_dqkb5")
+
+[node name="GuardEnemy" parent="." index="37" unique_id=2034909694 instance=ExtResource("13_dqkb5")]
+position = Vector2(856, 86)
 
 [connection signal="update_health" from="PC" to="CanvasLayer/UI_Level" method="set_health"]
 

@@ -39,8 +39,11 @@ func _ready():
 	
 
 func set_active(_value:bool)->void:
+	if attack_clashed:
+		return
 	active=_value
 	if _value==true:
+		assert(attack_clashed==false)
 		pass
 	elif _value==false:
 		pass
@@ -64,6 +67,8 @@ func get_damage() -> int:
 	return damage
 
 func refresh_collision() -> void:
+	if not active:
+		return
 	if attack_clashed:
 		attack_clashed=false
 		return
@@ -97,6 +102,7 @@ func _on_impact(_area :Area2D) -> void:
 		
 		if _area.is_in_group("hitbox"):
 			_area.attack_clashed=true
+			attack_clashed=true
 			clash_active=false
 			Events.hit_stop.emit(0.05, 0.5)
 			if "heavy_attack" in _area:
@@ -114,8 +120,8 @@ func _on_impact(_area :Area2D) -> void:
 				else:
 					#pass
 					#damage = 0
-					if not _area.clash_active:
-						return
+					#if not _area.clash_active:
+						#return
 					knock_back = false
 					launch = false
 					clashed.emit()
@@ -123,7 +129,11 @@ func _on_impact(_area :Area2D) -> void:
 				
 					
 				#active=false
-				
+			else:
+				knock_back = false
+				launch = false
+				clashed.emit()
+				Events.camera_shake.emit(0.5,10)
 		elif _area.is_in_group("player_hitbox"):
 			#print_debug("DERGH")
 			assert(pc_hitbos==false)

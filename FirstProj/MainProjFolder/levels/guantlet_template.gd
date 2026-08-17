@@ -369,11 +369,11 @@ func player_death() -> void:
 	cutscene_player.play("player_death")
 
 
-func _on_local_flag_2_flag_triggered() -> void:
-	Events.activate_arena.emit()
-
-func _on_local_flag_flag_triggered() -> void:
-	Events.activate_arena.emit()
+#func _on_local_flag_2_flag_triggered() -> void:
+	#Events.activate_arena.emit()
+#
+#func _on_local_flag_flag_triggered() -> void:
+	#Events.activate_arena.emit()
 
 
 func _on_boss_arena_area_entered(area: Area2D) -> void:

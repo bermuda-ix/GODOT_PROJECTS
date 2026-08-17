@@ -2362,7 +2362,7 @@ length = 0.53333336
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"Attack_connect",
-"time": 0.13333334
+"time": 0.16666667
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -2785,7 +2785,7 @@ resource_name = "Attack_2"
 length = 0.53333336
 markers = [{
 "color": Color(1, 1, 1, 1),
-"name": &"Attack_2_connect",
+"name": &"Attack_connect",
 "time": 0.23333333
 }]
 tracks/0/type = "value"
@@ -3200,7 +3200,7 @@ resource_name = "Attack_3"
 length = 0.53333336
 markers = [{
 "color": Color(1, 1, 1, 1),
-"name": &"Attack_3_connect",
+"name": &"Attack_connect",
 "time": 0.2
 }]
 tracks/0/type = "value"
@@ -8158,7 +8158,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_162b8"]
 resource_name = "hit_recover"
-length = 0.1
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -8166,10 +8166,10 @@ tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.26666668, 0.36666667),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [3]
+"values": [0, 1, 2]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -11946,7 +11946,6 @@ position = Vector2(16, -25)
 rotation = -1.0471976
 sprite_frames = SubResource("SpriteFrames_m75gd")
 animation = &"sword_hit_charged"
-flip_h = true
 flip_v = true
 
 [node name="Shotty" type="Sprite2D" parent="AnimatedSprite2D" unique_id=868320843]
@@ -12237,6 +12236,7 @@ shape = SubResource("RectangleShape2D_pmx5o")
 [node name="Health" type="Node" parent="." unique_id=994567121]
 script = ExtResource("4_q0gnn")
 max_health = 15
+immortality_debug = true
 
 [node name="ClashPower" type="Node" parent="." unique_id=2128103427 node_paths=PackedStringArray("health", "stagger")]
 script = ExtResource("82_h0fyw")
@@ -12603,6 +12603,8 @@ script = ExtResource("249_1o5op")
 anim_player = NodePath("../../../AnimationPlayer")
 pc = NodePath("../../..")
 
+[node name="Clashed" type="LimboState" parent="StateMachine/AttackState" unique_id=1903361932]
+
 [node name="Aim" type="LimboState" parent="StateMachine" unique_id=1244651801 node_paths=PackedStringArray("pc", "anim_player", "shotty_anim_player", "clash_power")]
 script = ExtResource("246_p73v2")
 pc = NodePath("../..")
@@ -12622,11 +12624,12 @@ script = ExtResource("96_xqicc")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 
-[node name="ParrySuccessState" type="LimboHSM" parent="StateMachine" unique_id=468265256 node_paths=PackedStringArray("anim_player", "pc", "hit_stop")]
+[node name="ParrySuccessState" type="LimboHSM" parent="StateMachine" unique_id=468265256 node_paths=PackedStringArray("anim_player", "pc", "hit_stop", "attack_1")]
 script = ExtResource("97_oktus")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 hit_stop = NodePath("../../HitStop")
+attack_1 = NodePath("../AttackState/Attack1")
 
 [node name="AwaitInput" type="LimboState" parent="StateMachine/ParrySuccessState" unique_id=1731121438]
 script = ExtResource("98_54hn3")
@@ -12805,6 +12808,9 @@ pc = NodePath("../..")
 [connection signal="updated" from="StateMachine/AttackState/SlamAttack" to="." method="_on_slam_attack_updated"]
 [connection signal="entered" from="StateMachine/AttackState/SlamStart" to="." method="_on_slam_start_entered"]
 [connection signal="exited" from="StateMachine/AttackState/SlamStart" to="." method="_on_slam_start_exited"]
+[connection signal="entered" from="StateMachine/AttackState/Clashed" to="." method="_on_clashed_entered"]
+[connection signal="exited" from="StateMachine/AttackState/Clashed" to="." method="_on_clashed_exited"]
+[connection signal="updated" from="StateMachine/AttackState/Clashed" to="." method="_on_clashed_updated"]
 [connection signal="entered" from="StateMachine/SpecialAttack" to="." method="_on_special_attack_entered"]
 [connection signal="dur_timeout" from="StateMachine/ParrySuccessState" to="StateMachine/ParrySuccessState" method="_on_dur_timeout"]
 [connection signal="entered" from="StateMachine/DodgeState" to="." method="_on_dodge_state_entered"]

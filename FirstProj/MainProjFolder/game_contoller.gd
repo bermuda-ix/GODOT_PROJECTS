@@ -14,9 +14,8 @@ signal player_pos_reset_to_checkpoint
 @onready var objectives_ui: objective_ui = $GUI/CanvasLayer/PauseMenuv2/TextureRect/MainPause/ObjectivesUI
 @onready var level_UI: CanvasLayer = $GUI/CanvasLayer
 @onready var game_over: ColorRect = $GUI/CanvasLayer/GameOver
-@onready var dialogue_box_controller: DialogueBoxController = $GUI/CanvasLayer/DialogueBoxController
+#@onready var dialogue_box_controller: DialogueBoxController = $GUI/CanvasLayer/DialogueBoxController
 @onready var canvas_layer: CanvasLayer = $GUI/CanvasLayer
-
 
 
 #@onready var levels: Levels = $Levels
@@ -38,6 +37,9 @@ var current_gui_scene
 var thread: Thread
 var mutex: Mutex
 
+@export_category("DEBUG FUNCTIONS")
+@export var debug_start := false
+
 #@onready var prologue_lvl: adv_level = $World2D/PrologueLvl
 
 func _ready() -> void:	
@@ -58,13 +60,15 @@ func _ready() -> void:
 	Events.unpause.connect(unpause)
 	
 	#Disables game UI and level process when first starting
-	#toggle_game_ui(false)
-	#toggle_world2d_process(false)
+	toggle_game_ui(false)
+	toggle_world2d_process(false)
 	#toggle_player(false)
 	
-	test_start()
-	#change_gui_scene(LevelList.MAIN_MENU)
-	#level_UI.visible=false
+	if debug_start:
+		test_start()
+	else:
+		change_gui_scene(LevelList.MAIN_MENU)
+		level_UI.visible=false
 	
 	
 func _process(delta: float) -> void:
@@ -246,7 +250,7 @@ func change_2d_scene (new_scene: String, \
 		else:
 			world_2d.call_deferred("remove_child", current_2d_scene)
 	
-	await current_2d_scene.tree_exited
+	#await current_2d_scene.tree_exited
 	
 	
 	
@@ -266,6 +270,7 @@ func change_2d_scene (new_scene: String, \
 	retrieve_player_data()
 	Events.retrieve_heat_stats.emit()
 	Events.load_level_states.emit()
+	Events.update_ui_data.emit()
 
 	load_levels(LevelsList.level_maps)
 	if _previuos_return:
@@ -335,8 +340,8 @@ func remove_gui_from_existing(gui_name : String) -> void:
 	if _node!=null:
 		gameui.call_deferred("remove_child", _node)
 	
-func toggle_dialogue(_visible : bool) -> void:
-	dialogue_box_controller.set_deferred("visible", _visible)
+#func toggle_dialogue(_visible : bool) -> void:
+	#dialogue_box_controller.set_deferred("visible", _visible)
 
 #func toggle_player(activate : bool) -> void:
 	#if activate:

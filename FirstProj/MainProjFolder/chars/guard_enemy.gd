@@ -754,7 +754,9 @@ func _on_attack_entered() -> void:
 
 
 func _on_clashed_entered() -> void:
-	clash_timer.start(0.1)
+	#print_debug("clashing")
+	animation_player.pause()
+	#clash_timer.start(0.1)
 	#hit_stop.hit_stop(0.01, 0.2)
 	#var _current_anim = animation_player.current_animation
 	#animation_player.play_section_with_markers(_current_anim, "clashed")
@@ -767,6 +769,12 @@ func _on_clash_timer_timeout() -> void:
 	bt_player.blackboard.set_var("staggered", false)
 	state_machine.dispatch(&"counter_attack")
 	melee_attack_manager.melee_attack()
+	
+func clash_end()-> void:
+	print_debug(state_machine.get_active_state())
+	bt_player.blackboard.set_var("staggered", false)
+	state_machine.dispatch(&"counter_attack")
+	melee_attack_manager.melee_attack()
 
 
 func _on_hit_stop_hit_stop_finished() -> void:
@@ -775,3 +783,7 @@ func _on_hit_stop_hit_stop_finished() -> void:
 
 func _on_death_entered() -> void:
 	drop_handler.spawn_drop()
+
+
+func _on_clashed_exited() -> void:
+	pass # Replace with function body.

@@ -10,6 +10,7 @@
 [ext_resource type="TileSet" uid="uid://d3ogb8uexylqk" path="res://Art_Components/tile_maps/tile_layers/lab_props.tres" id="7_kuq7b"]
 [ext_resource type="PackedScene" uid="uid://blsmgy883jm3a" path="res://levels/level_backgrounds/desert_background.tscn" id="7_veiog"]
 [ext_resource type="PackedScene" uid="uid://bt6url6xt1nqm" path="res://Component/interactables/lab_door_switch.tscn" id="8_2mqv2"]
+[ext_resource type="Environment" uid="uid://cpxkvyngxidgr" path="res://Component/effects/Environment/environment_main.tres" id="8_cgk3p"]
 [ext_resource type="Texture2D" uid="uid://clyivendy3q3w" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryBuilding.png" id="9_f1jjf"]
 [ext_resource type="PackedScene" uid="uid://b8htmq8u3ykss" path="res://Component/interactables/door.tscn" id="9_kuq7b"]
 [ext_resource type="PackedScene" uid="uid://b0qjxcbylpvkv" path="res://levels/level_components/entry_local.tscn" id="9_vw32t"]
@@ -47,17 +48,6 @@
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="36_rfxm3"]
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="37_r2uf8"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="143_ncaf0"]
-
-[sub_resource type="Gradient" id="Gradient_vw32t"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_61h8j"]
-gradient = SubResource("Gradient_vw32t")
-
-[sub_resource type="Environment" id="Environment_vw32t"]
-background_mode = 3
-glow_enabled = true
-adjustment_enabled = true
-adjustment_color_correction = SubResource("GradientTexture2D_61h8j")
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_p4nhw"]
 polygon = PackedVector2Array(699, 393, 758, 393, 1049, 389, 1081, 367, 1081, 358, 1070, 358, 1070, 290, 1426, 290, 1479, 254, 1893, 243, 1894, 202, 1501, 212, 1500, 147, 1382, 76, 766, 78, 761, -20, 728, -21, 729, -120, 725, -22, 698, -21)
@@ -1012,7 +1002,7 @@ shadow_filter = 2
 height = 0.25
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="4" unique_id=1238891230]
-environment = SubResource("Environment_vw32t")
+environment = ExtResource("8_cgk3p")
 
 [node name="Lights" type="Node" parent="." index="5" unique_id=1331290172]
 
@@ -1505,6 +1495,7 @@ navigation_polygon = SubResource("NavigationPolygon_7qfih")
 navigation_layers = 2
 
 [node name="TutorialText" type="RichTextLabel" parent="." index="15" unique_id=1558083282]
+visible = false
 offset_left = 448.0
 offset_top = 336.0
 offset_right = 584.0
@@ -1513,6 +1504,7 @@ text = "LMB: Light Attack
 ALT: Lockon"
 
 [node name="TutorialText2" type="RichTextLabel" parent="." index="16" unique_id=729464537]
+visible = false
 offset_left = 978.0
 offset_top = 396.0
 offset_right = 1101.0
@@ -1521,6 +1513,7 @@ text = "CTRL: Dodge
 SHIFT: Sprint"
 
 [node name="TutorialText3" type="RichTextLabel" parent="." index="17" unique_id=1846010397]
+visible = false
 offset_left = 1599.0
 offset_top = 255.0
 offset_right = 1929.0
@@ -1531,6 +1524,7 @@ Hold Shift: Wall Stick
 "
 
 [node name="TutorialText6" type="RichTextLabel" parent="." index="18" unique_id=1842066695]
+visible = false
 z_index = 2
 offset_left = 1810.0
 offset_top = 136.0
@@ -1542,6 +1536,7 @@ Jump Off Wall
 "
 
 [node name="TutorialText4" type="RichTextLabel" parent="." index="19" unique_id=85099039]
+visible = false
 z_index = 1
 offset_left = 2528.0
 offset_right = 2858.0
@@ -1550,6 +1545,7 @@ text = "Combo: Launch
 LMB (Light Attack) -> RMB (Heavy Attack)"
 
 [node name="TutorialText7" type="RichTextLabel" parent="." index="20" unique_id=1833150113]
+visible = false
 z_index = 1
 offset_left = 2240.0
 offset_top = 640.0
@@ -1559,6 +1555,7 @@ text = "Combo: Knockback
 LMB (Light Attack) -> LMB (Light Attack) -> RMB (Heavy Attack)"
 
 [node name="TutorialText5" type="RichTextLabel" parent="." index="21" unique_id=417695015]
+visible = false
 offset_left = 1112.0
 offset_top = -32.0
 offset_right = 1442.0
@@ -1567,6 +1564,7 @@ text = "Hold RMB: Aim
 Release: Shoot (Higher damage)"
 
 [node name="TutorialText8" type="RichTextLabel" parent="." index="22" unique_id=1469336213]
+visible = false
 offset_left = 2056.0
 offset_top = 208.0
 offset_right = 2386.0

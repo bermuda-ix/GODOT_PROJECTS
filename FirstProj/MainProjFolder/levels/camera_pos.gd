@@ -121,6 +121,8 @@ func boss_arena_camera() -> void:
 	
 	###Get Distance between player and farthest enemy
 	var _furthest = find_furthest_enemy()
+	if _furthest == null:
+		return
 	var _character_distance=clampf(abs(player.global_position.x - _furthest.global_position.x), 0, x_edge_limit)
 	
 	###Map zoom range to camera offset
