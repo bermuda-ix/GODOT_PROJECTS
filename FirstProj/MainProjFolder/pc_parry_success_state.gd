@@ -35,7 +35,7 @@ func _update(delta: float) -> void:
 		success=true
 		pc.parry_stance=false
 		Events.parry_success.emit("riposte counter")
-		pc.state_machine.dispatch(&"riposte")
+		pc.state_machine.dispatch(&"start_attack")
 		hit_stop.end_hit_stop()
 		dur.stop()
 	elif Input.is_action_just_pressed("Dodge"):
