@@ -364,7 +364,7 @@ func _ready():
 	sp_atk_type = sp_atk_cone
 	load_player_data()
 	Events.set_player_data.connect(save_player_data)
-	Events.parried.connect(parry_success)
+	#Events.parried.connect(parry_success)
 	Events.play_cutscene_segment.connect(play_cutscene)
 	Events.checkpoint_reached.connect(save_player_data)
 	Events.load_checkpoint.connect(load_player_data)
@@ -403,7 +403,7 @@ func _init_state_machine():
 	state_machine.add_transition(landed, idle, &"return_to_idle")
 	state_machine.add_transition(parry_state, idle, &"return_to_idle")
 	state_machine.add_transition(dodge_state, idle, &"return_to_idle")
-	state_machine.add_transition(parry_success_state, idle, &"return_from_parry")
+	state_machine.add_transition(parry_success_state, idle, &"return_to_idle")
 	state_machine.add_transition(special_attack, idle, &"return_to_idle")
 	state_machine.add_transition(recovery, idle, &"return_to_idle")
 	
@@ -530,6 +530,7 @@ func _init_state_machine():
 	state_machine.add_transition(parry_state, parry_success_state, &"parry_successful")
 	state_machine.add_transition(dodge_state, parry_success_state, &"dodge_successful")
 	state_machine.add_transition(attack_state, parry_success_state, &"clashed")
+	state_machine.add_transition(parry_success_state, attack_state, &"start_attack")
 
 	#Wall Stick
 	state_machine.add_transition(jump_state, wall_stick, &"stick_to_wall")
@@ -1253,8 +1254,8 @@ func _on_charge_timer_timeout() -> void:
 			#charging_attack.anim_second+=0.1
 
 
-func start_attack_timer() -> void:
-	attack_timer.start(1)
+func start_attack_timer(_value:=1.0) -> void:
+	attack_timer.start(_value)
 		
 func light_attack() -> void:
 	
@@ -2451,12 +2452,17 @@ func _on_parry_timer_timeout():
 	
 	#anim_player.stop()
 	
-func parry_success():
-	parry_timer.stop()
-	anim_player.play("Parry_Success")
-	
-	AudioStreamManager.play(parry_sfx)
-	await anim_player.animation_finished
+func parry_success(_parry_follow_up := "nothing"):
+	match _parry_follow_up:
+		"riposte":
+			anim_player.play()
+			start_attack_timer(0.1)
+		"nothing":
+			pass
+		_:
+			pass
+	hit_fx_player.play(attack_1.attack)
+	#await anim_player.animation_finished
 	#anim_player.stop()
 
 

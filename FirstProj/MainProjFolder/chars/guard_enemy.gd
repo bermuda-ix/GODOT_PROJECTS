@@ -12,6 +12,8 @@ const JUMP_VELOCITY = -400.0
 @onready var always_active : bool
 @onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var is_on_screen : bool = false
+@onready var vfx_sprite: AnimatedSprite2D = $AnimatedSprite2D/VFXSprite
+
 
 #Animation Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -167,6 +169,7 @@ func _ready():
 	bt_player.blackboard.set_var("falling", false)
 	bt_player.blackboard.set_var("dodge", false)
 	dying.blackboard.set_var("hit_the_floor", false)
+	Events.parry_success.connect(clash_follow_up)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 	_init_combat_state_machine()
@@ -200,7 +203,7 @@ func _init_state_machine():
 	state_machine.add_transition(attack, dodge, &"dodge")
 	state_machine.add_transition(dodge, attack, &"dodge_end")
 	state_machine.add_transition(attack, clashed, &"clashed")
-	state_machine.add_transition(clashed, attack, &"counter_attack")
+	state_machine.add_transition(clashed, attack, &"start_attack")
 	state_machine.add_transition(clashed, dodge, &"dodge_back")
 	state_machine.add_transition(launch, hit, &"midair_hit")
 	state_machine.add_transition(launch, falling, &"falling")
@@ -464,6 +467,29 @@ func _on_navigation_timer_timeout() -> void:
 	next_y=nav_agent.get_next_path_position().y
 	next_x=nav_agent.get_next_path_position().x
 	next=nav_agent.get_next_path_position()
+
+func clash_follow_up(_follow_up := "nothing"):
+	match _follow_up:
+		"riposte":
+			animation_player.play()
+			pushed_back(200)
+			if stagger.stagger>0:
+				bt_player.blackboard.set_var("staggered", false)
+			else:
+				state_machine.dispatch(&"stagger")
+		"nothing":
+			animation_player.play()
+		_:
+			animation_player.play()
+
+func pushed_back(_force:=100):
+	var _face_dir
+	if player_right:
+		_face_dir = 1
+	else:
+		_face_dir = -1
+	
+	velocity.x=-_force*_face_dir
 
 func _on_stagger_staggered() -> void:
 	bt_player.restart()
@@ -756,6 +782,7 @@ func _on_attack_entered() -> void:
 func _on_clashed_entered() -> void:
 	#print_debug("clashing")
 	animation_player.pause()
+	movement_handler.active=false
 	#clash_timer.start(0.1)
 	#hit_stop.hit_stop(0.01, 0.2)
 	#var _current_anim = animation_player.current_animation
@@ -786,4 +813,4 @@ func _on_death_entered() -> void:
 
 
 func _on_clashed_exited() -> void:
-	pass # Replace with function body.
+	vfx_sprite.visible=false

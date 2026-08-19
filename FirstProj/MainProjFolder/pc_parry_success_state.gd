@@ -28,15 +28,23 @@ func _enter() -> void:
 	assert(anim_player.current_animation_position==_marker_time)
 	anim_player.pause()
 	hit_stop.hit_stop(0.1, 1)
+	pc.velocity.x=0
 	#dur.start(3)
 
 func _update(delta: float) -> void:
+	pc.velocity.x=0
 	if Input.is_action_just_pressed("attack"):
+		pc.velocity.x=0
 		success=true
 		pc.parry_stance=false
-		Events.parry_success.emit("riposte counter")
-		pc.state_machine.dispatch(&"start_attack")
+		pc.light_attack_index=wrapi(pc.light_attack_index+1, 0, 3)
+		attack_1.attack=pc.light_attacks[pc.light_attack_index]
 		hit_stop.end_hit_stop()
+		Events.parry_success.emit("riposte")
+		pc.parry_success("riposte")
+		#pc.state_machine.dispatch(&"start_attack")
+		#pc.attack_state.dispatch(&"next_attack")
+		
 		dur.stop()
 	elif Input.is_action_just_pressed("Dodge"):
 		success=true

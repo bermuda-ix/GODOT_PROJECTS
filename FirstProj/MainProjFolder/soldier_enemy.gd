@@ -651,7 +651,15 @@ func _on_hit_box_clashed() -> void:
 		knockback.x=200
 	state_machine.dispatch(&"clashed")
 	
-
+func pushed_back():
+	var _face_dir
+	if player_right:
+		_face_dir = 1
+	else:
+		_face_dir = -1
+	
+	knockback.x=50*_face_dir
+	
 
 func _on_hit_box_clash_launch(_launch: float) -> void:
 	pass # Replace with function body.
