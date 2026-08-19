@@ -14,7 +14,7 @@ signal hit_success
 @export var active : bool = false : set = set_active
 @export var clash_active : bool = false : set = set_clash_active
 @export var heavy_attack : bool = false : set = set_heavy_attack
-@export var attack_clashed : bool = false
+@export var attack_clashed : bool = false : set = set_attack_clashed
 
 @export var launch : bool = false
 @export var knock_back : bool = false
@@ -54,6 +54,11 @@ func set_clash_active(_value: bool) -> void:
 		print_debug("attack_activate")
 	elif _value==false:
 		print_debug("attack_deactivate")
+
+func set_attack_clashed(_value: bool) -> void:
+	if _value==attack_clashed:
+		return
+	attack_clashed=_value
 		
 func set_heavy_attack(_value: bool) -> void:
 	heavy_attack=_value

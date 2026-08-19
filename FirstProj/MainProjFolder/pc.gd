@@ -2248,6 +2248,7 @@ func _on_animation_player_animation_finished(anim_name):
 	if state_machine.get_active_state()==attack_state:
 		hit_success=false
 		hit_box.clash_active=false
+		hit_box.attack_clashed=false
 		hb_collision.set_deferred("disabled", true)
 		match anim_name:
 			"Attack":
@@ -2453,10 +2454,11 @@ func _on_parry_timer_timeout():
 	#anim_player.stop()
 	
 func parry_success(_parry_follow_up := "nothing"):
+	hit_box.attack_clashed=false
 	match _parry_follow_up:
 		"riposte":
 			anim_player.play()
-			start_attack_timer(0.1)
+			start_attack_timer(0.01)
 		"nothing":
 			pass
 		_:

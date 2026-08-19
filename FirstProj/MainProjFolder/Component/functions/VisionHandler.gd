@@ -89,6 +89,8 @@ func handle_vision():
 			if bt_active:
 				if actor.bt_player.blackboard.get_var("within_range"):
 					#actor.set_state(actor.current_state, actor.States.ATTACK)
+					if actor.state_machine.get_active_state()==actor.clashed:
+						return
 					sm.dispatch(&"start_attack")
 				else:
 					#actor.set_state(actor.current_state, actor.States.CHASE)

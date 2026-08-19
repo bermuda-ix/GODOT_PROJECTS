@@ -184,7 +184,7 @@ func _ready():
 	bt_player.blackboard.set_var("ranged_mode", true)
 	bt_player.blackboard.set_var("within_range", false)
 	bt_player.blackboard.set_var("staggered", false)
-	Events.enemy_parried.connect(parry_success)
+	Events.enemy_parried.connect(clash_follow_up)
 	#turret.setup(0.2)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
@@ -516,7 +516,7 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 		#state_machine.dispatch(&"melee_attack")
 	state_machine.dispatch(&"melee_attack")
 
-func parry_success() -> void:
+func clash_follow_up() -> void:
 	print_debug("parried")
 	gpu_particles_2d.emitting=true
 	gpu_particles_2d_2.emitting=true
@@ -694,8 +694,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 
 func _on_shooting_states_entered() -> void:
-	pass
-	#print_debug("entering shooting")
+	shield.set_collision_mask_value(7, true)
 
 
 func _on_vision_handler_player_sighted() -> void:
@@ -751,11 +750,13 @@ func chase():
 
 
 func _on_melee_attack_entered() -> void:
+	shield.set_collision_mask_value(7, false)
 	movement_handler.face_player_active=false
 	movement_handler.active=false
 	velocity.x=0
 	current_speed=0
 	animation_player.play("melee_attack")
+	
 	
 func _on_melee_attack_updated(delta: float) -> void:
 	assert(movement_handler.active==false)
@@ -905,8 +906,8 @@ func _on_melee_attack_exited() -> void:
 func _on_clashed_entered() -> void:
 	current_speed=0
 	hurt_box.shielded=false
-	animation_player.play("clashed")
 	shield_collision.set_deferred("disabled", true)
+	animation_player.pause()
 	
 
 func _on_clashed_exited() -> void:
@@ -922,7 +923,8 @@ func _on_hit_exited() -> void:
 
 
 func _on_clashed_updated(delta: float) -> void:
-	assert(animation_player.is_playing())
+	pass
+	#assert(animation_player.is_playing())
 
 
 func _on_dying_updated(delta: float) -> void:

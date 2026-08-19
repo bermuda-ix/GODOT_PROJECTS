@@ -3487,6 +3487,7 @@ metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=1621757423]
 script = ExtResource("9_34xo2")
+max_stagger = 1
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="NavigationTimer" type="Timer" parent="." unique_id=1426565053]
@@ -3825,3 +3826,4 @@ metadata/_edit_use_anchors_ = true
 [connection signal="landed" from="LimboHSM/Landed" to="." method="_on_landed_landed"]
 [connection signal="entered" from="LimboHSM/Clashed" to="." method="_on_clashed_entered"]
 [connection signal="exited" from="LimboHSM/Clashed" to="." method="_on_clashed_exited"]
+[connection signal="updated" from="LimboHSM/Clashed" to="." method="_on_clashed_updated"]

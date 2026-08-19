@@ -473,8 +473,9 @@ func clash_follow_up(_follow_up := "nothing"):
 		"riposte":
 			animation_player.play()
 			pushed_back(200)
+			stagger.stagger-=1
 			if stagger.stagger>0:
-				bt_player.blackboard.set_var("staggered", false)
+				state_machine.dispatch(&"hit")
 			else:
 				state_machine.dispatch(&"stagger")
 		"nothing":
@@ -781,6 +782,7 @@ func _on_attack_entered() -> void:
 
 func _on_clashed_entered() -> void:
 	#print_debug("clashing")
+	vfx_sprite.visible=true
 	animation_player.pause()
 	movement_handler.active=false
 	#clash_timer.start(0.1)
@@ -814,3 +816,7 @@ func _on_death_entered() -> void:
 
 func _on_clashed_exited() -> void:
 	vfx_sprite.visible=false
+
+
+func _on_clashed_updated(delta: float) -> void:
+	assert(vfx_sprite.visible==true)
