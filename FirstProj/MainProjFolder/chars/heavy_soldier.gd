@@ -623,6 +623,10 @@ func _on_staggered_entered() -> void:
 	shield_collision.set_deferred("disabled",true)
 	hurt_box.active=true
 	hurt_box_collision.set_deferred("disabled", false)
+	if player_right:
+		knockback.x=100
+	else:
+		knockback.x=-100
 	
 func _on_staggered_exited() -> void:
 	shield_collision.set_deferred("disabled",false)
@@ -974,8 +978,8 @@ func _on_hit_exited() -> void:
 func _on_clashed_updated(delta: float) -> void:
 	#pass
 	velocity.x=lerpf(velocity.x, 0, 0.8)
-	if state_machine.get_active_state()!=staggered:
-		assert(not animation_player.is_playing())
+	if animation_player.is_playing():
+		animation_player.pause()
 	assert(vfx_player.is_playing())
 
 
