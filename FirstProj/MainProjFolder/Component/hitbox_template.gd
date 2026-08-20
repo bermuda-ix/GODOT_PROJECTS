@@ -110,6 +110,7 @@ func _on_impact(_area :Area2D) -> void:
 			attack_clashed=true
 			clash_active=false
 			Events.hit_stop.emit(0.05, 0.5)
+			active=false
 			if "heavy_attack" in _area:
 				if _area.heavy_attack:
 					if heavy_attack:

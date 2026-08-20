@@ -28,7 +28,7 @@ var always_active : bool
 @onready var jump_timer = $JumpTimer
 @onready var movement_handler: MovementHandler = $MovementHandler
 
-#Cutscene Vars
+#Cutscene Varsom
 @onready var speed: Label = $Speed
 @onready var cutscene_handler: CutsceneHandler = $CutsceneHandler
 @onready var qte_handler: QTEHandler = $QTEHandler
@@ -776,6 +776,8 @@ func _on_stagger_staggered() -> void:
 
 
 func _on_parry_timer_timeout() -> void:
+	if bt_player.active==false:
+		bt_player.active=true
 	if state_machine.get_active_state()==staggered:
 		#print_debug(phases.get_active_state())
 		if phases.get_active_state()==phase_1:
@@ -992,11 +994,14 @@ func _on_hit_box_parried() -> void:
 
 func _on_hit_entered() -> void:
 	#bt_player.blackboard.set_var("hit", true)
-	bt_player.blackboard.set_var("staggered", true)
+	animation_player.pause()
+	bt_player.active=false
+	#bt_player.blackboard.set_var("staggered", true)
 	if hit.hit_anim=="hit":
 		velocity.x=0
 		parry_timer.start(0.1)
 	else:
+		parry_timer.start(0.05)
 		if player_right:
 			velocity.x=-100
 		else:
@@ -1004,6 +1009,8 @@ func _on_hit_entered() -> void:
 
 func _on_hit_exited() -> void:
 	#bt_player.blackboard.set_var("hit", false)
+	bt_player.active=true
+	animation_player.play()
 	if stun_timer.is_stopped():
 		bt_player.blackboard.set_var("staggered", false)
 	var _colliding_bodies=attack_range.get_overlapping_bodies()

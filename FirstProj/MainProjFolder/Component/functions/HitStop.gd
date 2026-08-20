@@ -37,6 +37,10 @@ func hit_stop(time_scale : float, duration : float):
 	Engine.time_scale = 1.0
 	hit_stop_finished.emit()
 
+##WARNING: Make sure to call end_hit_stop when using this function. Consider using hit_stop() whenever possible
+func hit_stop_indefinite(time_scale : float):
+	Engine.time_scale = time_scale
+
 func hit_stop_ease(time_scale_end: float, duration: float, _weight: float):
 	tween = get_tree().create_tween().set_ease(Tween.EASE_OUT)
 	tween.tween_property(Engine, "time_scale", time_scale_end, _weight)

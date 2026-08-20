@@ -138,7 +138,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 							health.health -= (hitbox.damage * dmg_mult)
 							print_debug(health.health)
 							print_debug(hitbox.damage)
-							assert(hitbox.attack_clashed!=true)
+							#assert(hitbox.attack_clashed!=true)
 							received_damage.emit(hitbox.damage)
 							
 							got_hit.emit(hitbox)

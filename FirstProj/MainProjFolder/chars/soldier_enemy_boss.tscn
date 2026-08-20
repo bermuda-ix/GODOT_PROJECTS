@@ -4212,6 +4212,8 @@ libraries/flashback_lvl_cutscenes = SubResource("AnimationLibrary_5sek5")
 [node name="VFXPlayer" type="AnimationPlayer" parent="AnimationPlayer" index="0" unique_id=1552823058]
 libraries/ = SubResource("AnimationLibrary_gi2km")
 
+[node name="HitFXPlayer" type="AnimationPlayer" parent="AnimationPlayer" index="1" unique_id=617115251]
+
 [node name="ShaderAnimation" type="AnimationPlayer" parent="." index="3" unique_id=141259869]
 libraries/ = SubResource("AnimationLibrary_t6q84")
 
@@ -4517,11 +4519,12 @@ actor = NodePath("../..")
 state_machine = NodePath("..")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="HIT" type="LimboState" parent="LimboHSM" index="11" unique_id=1416400760 node_paths=PackedStringArray("actor", "hurtbox", "animation_player")]
+[node name="HIT" type="LimboState" parent="LimboHSM" index="11" unique_id=1416400760 node_paths=PackedStringArray("actor", "hurtbox", "animation_player", "stagger")]
 script = ExtResource("131_hyxc6")
 actor = NodePath("../..")
 hurtbox = NodePath("../../HurtBox")
 animation_player = NodePath("../../AnimationPlayer")
+stagger = NodePath("../../Stagger")
 
 [node name="STAGGERED" type="LimboState" parent="LimboHSM" index="12" unique_id=1474770168 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player", "vfx_player")]
 script = ExtResource("132_ighft")

@@ -25,7 +25,7 @@ func get_max_stagger() -> int:
 	return max_stagger
 	
 func set_stagger(value: int):
-	if value < stagger and stagger_immortality:
+	if (value < stagger and stagger_immortality) or stagger==0:
 		return
 		
 	var clamped_value = clampi(value, 0, max_stagger)

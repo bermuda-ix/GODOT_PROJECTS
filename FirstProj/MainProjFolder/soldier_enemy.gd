@@ -811,3 +811,8 @@ func _on_teleport_away_entered() -> void:
 	animation_player.play("teleport_end")
 	await animation_player.animation_finished
 	state_machine.dispatch(&"resume_attack")
+
+
+func _on_vfx_player_animation_started(anim_name: StringName) -> void:
+	if anim_name!="clashed":
+		pass

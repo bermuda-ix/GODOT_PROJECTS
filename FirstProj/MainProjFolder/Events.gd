@@ -66,9 +66,11 @@ signal increase_heat_lvl
 signal reset_heat
 signal retrieve_heat_stats
 
+#Clash Signals
 signal parried
 signal staggered
 signal enemy_parried
+signal enemy_clash_react
 
 #Handle Player Data
 signal set_player_data

@@ -174,9 +174,11 @@ var atk_state="ATK_1"
 @onready var hit_fx_player: AnimationPlayer = $HitFXPlayer
 @onready var clash_aura_player: AnimationPlayer = $ClashAuraPlayer
 @onready var clash_aura_fx: AnimatedSprite2D = $AnimatedSprite2D/heat_fx
+@onready var clash_aura_fx_2: AnimatedSprite2D = $AnimatedSprite2D/clash_aura_fx2
 
 @onready var attack_fx: AnimatedSprite2D = $AnimatedSprite2D/attack_fx
 @onready var charge_attack_fx: AnimatedSprite2D = $AnimatedSprite2D/charge_attack_fx
+
 
 @onready var hit_animation : String = "hit_landed"
 
@@ -375,6 +377,7 @@ func _ready():
 	Events.reload_level_checkpoint.connect(reloaded)
 	Events.boss_died.connect(boss_died)
 	Events.unlock_from.connect(unlock_from_target)
+	Events.parry_success.connect(parry_success)
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
 	_init_state_machine()
@@ -2459,6 +2462,10 @@ func parry_success(_parry_follow_up := "nothing"):
 		"riposte":
 			anim_player.play()
 			start_attack_timer(0.01)
+		"enemy_light_counter":
+			anim_player.play()
+			start_attack_timer(0.01)
+			knockback.x=50*face_dir
 		"nothing":
 			pass
 		_:
@@ -2986,10 +2993,11 @@ func _on_clash_power_aura_change(value: int) -> void:
 	
 	if value >=1:
 		clash_aura_fx.visible=true
+		clash_aura_fx_2.visible=true
 		if not clash_aura_player.is_playing():
 			clash_aura_player.play("clash_aura")
 		clash_timer.start()
-	hit_box.set_damage(hit_box.damage+value)
+	#hit_box.set_damage(hit_box.damage+value)
 
 	match value:
 		0:

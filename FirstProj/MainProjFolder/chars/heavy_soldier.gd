@@ -56,6 +56,8 @@ var always_active : bool
 @onready var dodge_timer: Timer = $DodgeTimer
 @onready var attack_timer: Timer = $AttackTimer
 @onready var stagger_timer: Timer = $StaggerTimer
+@onready var counter_attack_timer: Timer = $CounterAttackTimer
+
 
 #movement
 @onready var movement_handler: MovementHandler = $MovementHandler
@@ -73,6 +75,7 @@ var prev_speed : float = 00.0
 var acceleration : float = 800.0
 var jump_velocity = JUMP_VELOCITY
 var knockback : Vector2 = Vector2.ZERO
+var pushback := 0.0
 var next_y
 var next_x
 var next
@@ -184,7 +187,7 @@ func _ready():
 	bt_player.blackboard.set_var("ranged_mode", true)
 	bt_player.blackboard.set_var("within_range", false)
 	bt_player.blackboard.set_var("staggered", false)
-	Events.enemy_parried.connect(clash_follow_up)
+	Events.parry_success.connect(clash_follow_up)
 	#turret.setup(0.2)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
@@ -218,6 +221,7 @@ func _process(delta: float) -> void:
 		knockback.y=lerpf(knockback.y, 0, 0.3)
 	else:
 		knockback = lerp(knockback, Vector2.ZERO, 0.1)
+	pushback = lerpf(pushback, 0, 0.8)
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
 	vision_handler.handle_vision()
@@ -288,7 +292,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		hurt_box_weakpoint_collision.set_deferred("disabled", true)
 	
-	velocity.x = current_speed + knockback.x
+	velocity.x = current_speed + knockback.x + pushback
 	move_and_slide()
 	movement_handler.apply_gravity(delta)
 
@@ -336,7 +340,7 @@ func _init_state_machine():
 	state_machine.add_transition(falling, landed, &"landed")
 	state_machine.add_transition(landed, attack, &"resume_attack")
 	state_machine.add_transition(melee_attack, clashed, &"clashed")
-	state_machine.add_transition(clashed, melee_attack, &"resume_melee")
+	state_machine.add_transition(clashed, melee_attack, &"counter_melee")
 	state_machine.add_transition(melee_attack, melee_attack, &"resume_melee")
 	state_machine.add_transition(clashed, shooting_states, &"start_shoot")
 	state_machine.add_transition(melee_attack, shooting_states, &"start_shoot")
@@ -442,6 +446,8 @@ func _on_state_machine_active_state_changed(current: LimboState, previous: Limbo
 func _on_combat_state_machine_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if state_machine.get_active_state()==idle:
 		return
+	elif state_machine.get_active_state()==clashed:
+		return
 	elif current==attack:
 		if current==ranged_mode:
 			state_machine.dispatch(&"start_shoot")
@@ -488,6 +494,7 @@ func _on_attack_entered() -> void:
 		return
 
 func melee_range_check() -> bool:
+
 	var _melee_ranged_colliding := attack_range.get_overlapping_bodies()
 	if _melee_ranged_colliding.is_empty():
 		return false
@@ -516,12 +523,29 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 		#state_machine.dispatch(&"melee_attack")
 	state_machine.dispatch(&"melee_attack")
 
-func clash_follow_up() -> void:
-	print_debug("parried")
-	gpu_particles_2d.emitting=true
-	gpu_particles_2d_2.emitting=true
-	parry.blackboard.set_var("parry_success" , true)
+func clash_follow_up(_follow_up := "nothing"):
+	match _follow_up:
+		"riposte":
+			animation_player.play()
+			pushed_back(200)
+			stagger.stagger-=1
+			if stagger.stagger>0:
+				state_machine.dispatch(&"hit")
+			else:
+				state_machine.dispatch(&"stagger")
+		"nothing":
+			animation_player.play()
+		_:
+			animation_player.play()
 
+func pushed_back(_force:=100):
+	var _face_dir
+	if player_right:
+		_face_dir = 1
+	else:
+		_face_dir = -1
+	
+	velocity.x=-_force*_face_dir
 
 func _on_parry_exited() -> void:
 	print_debug("parry exit")
@@ -539,6 +563,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		var _melee_ranged_colliding := attack_range.get_overlapping_bodies()
 		if _melee_ranged_colliding.is_empty():
 			state_machine.dispatch(&"start_shoot")
+		elif state_machine.get_active_state()==clashed:
+			return
 		else:
 			state_machine.dispatch(&"resume_melee")
 	elif anim_name=="landed":
@@ -762,14 +788,18 @@ func _on_melee_attack_updated(delta: float) -> void:
 	assert(movement_handler.active==false)
 
 func _on_hit_box_clashed() -> void:
+	if state_machine.get_active_state()==staggered:
+		return
 	velocity.x=0
 	#animation_player.stop()
+	bt_player.blackboard.set_var("staggered", true)
 	hb_collision.set_deferred("disabled",true)
 	hit_box.active=false
 	vfx_sprite.set_deferred("visible", false)
 	hit_stop.hit_stop(0.05, 0.5)
 	state_machine.dispatch(&"clashed")
 	stagger.set_stagger(stagger.stagger-1)
+	
 	#animation_player.play("melee_attack")
 	#print_debug("clashed!")
 
@@ -888,7 +918,7 @@ func _on_vfx_player_animation_started(anim_name: StringName) -> void:
 
 
 func _on_vfx_player_animation_changed(old_name: StringName, new_name: StringName) -> void:
-	if old_name=="knocked_back":
+	if new_name=="knocked_back":
 		print_debug(new_name)
 
 
@@ -907,12 +937,29 @@ func _on_clashed_entered() -> void:
 	current_speed=0
 	hurt_box.shielded=false
 	shield_collision.set_deferred("disabled", true)
+	vfx_sprite.visible=true
 	animation_player.pause()
+	movement_handler.active=false
+	knockback=Vector2.ZERO
+	if player_right:
+		velocity.x=-150
+	else:
+		velocity.x=150
+	if stagger.stagger>0:
+		counter_attack_timer.start(0.2)
 	
 
 func _on_clashed_exited() -> void:
+	if stagger.stagger<=0:
+		return
 	shield_collision.set_deferred("disabled", false)
+	if stagger.stagger<=0 and state_machine.get_active_state()!=staggered:
+		state_machine.dispatch(&"staggered")
 
+func _on_counter_attack_timer_timeout() -> void:
+	hit_stop.end_hit_stop()
+	state_machine.dispatch(&"counter_melee")
+	Events.parry_success.emit("enemy_light_counter")
 
 func _on_hit_entered() -> void:
 	current_speed=0
@@ -923,8 +970,11 @@ func _on_hit_exited() -> void:
 
 
 func _on_clashed_updated(delta: float) -> void:
-	pass
-	#assert(animation_player.is_playing())
+	#pass
+	velocity.x=lerpf(velocity.x, 0, 0.8)
+	if state_machine.get_active_state()!=staggered:
+		assert(not animation_player.is_playing())
+	assert(vfx_player.is_playing())
 
 
 func _on_dying_updated(delta: float) -> void:

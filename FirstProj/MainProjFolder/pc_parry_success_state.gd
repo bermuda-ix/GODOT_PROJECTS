@@ -41,7 +41,7 @@ func _update(delta: float) -> void:
 		attack_1.attack=pc.light_attacks[pc.light_attack_index]
 		hit_stop.end_hit_stop()
 		Events.parry_success.emit("riposte")
-		pc.parry_success("riposte")
+		#pc.parry_success("riposte")
 		#pc.state_machine.dispatch(&"start_attack")
 		#pc.attack_state.dispatch(&"next_attack")
 		
