@@ -1310,7 +1310,7 @@ func regular_attack() -> void:
 			attack_state.dispatch(&"attack_slam")
 			
 		else:
-			hit_box.set_damage(1)
+			#hit_box.set_damage(1)
 			
 			attack_sfx()
 			print_debug(attack_state.get_active_state())
@@ -2937,6 +2937,7 @@ func _on_combat_states_active_state_changed(current: LimboState, previous: Limbo
 
 func _on_clash_timer_timeout() -> void:
 	clash_power.reset_clash()
+	hit_box.damage=1
 	#clash_visual.emitting=false
 	
 	
@@ -3029,7 +3030,8 @@ func _on_clash_power_aura_change(value: int) -> void:
 func _on_clash_power_aura_reset() -> void:
 	clash_aura_player.stop()
 	clash_aura_fx.visible=false
-	hit_box.set_damage(1)
+	clash_aura_fx_2.visible=false
+	#hit_box.set_damage(1)
 
 func _on_stars_detector_body_entered(body: Node2D) -> void:
 	if body.is_in_group("dropdownplatform"):

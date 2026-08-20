@@ -777,6 +777,7 @@ func chase():
 
 func _on_melee_attack_entered() -> void:
 	shield.set_collision_mask_value(7, false)
+	hit_box.collision_shape.set_deferred("disabled", false)
 	movement_handler.face_player_active=false
 	movement_handler.active=false
 	velocity.x=0
