@@ -692,6 +692,7 @@ func _on_health_health_depleted() -> void:
 
 func _on_dying_entered() -> void:
 	#movement_handler.active=false
+	Events.enemy_death.emit()
 	drop_handler.spawn_drop()
 	hit_stop.hit_stop(0.1, 0.3)
 	if player_right:

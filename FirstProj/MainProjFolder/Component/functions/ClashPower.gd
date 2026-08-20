@@ -15,6 +15,8 @@ signal aura_reset
 
 func _ready() -> void:
 	clashed.connect(increase_clash)
+	Events.enemy_death.connect(increase_clash)
+
 	
 func increase_clash() -> void:
 	if clash_power>=clash_max:

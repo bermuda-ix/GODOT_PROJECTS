@@ -40,6 +40,7 @@ signal deactivate_boss
 signal activate_regular
 signal deactivate_regular
 signal allied_enemy_hit
+signal enemy_death
 signal boss_died
 signal prepare_next_boss
 

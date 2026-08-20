@@ -763,6 +763,7 @@ func _on_dodge_entered() -> void:
 
 
 func _on_dying_entered() -> void:
+	Events.enemy_death.emit()
 	knocked_back=true
 	if player_right:
 		knockback.x=-death_knockback
