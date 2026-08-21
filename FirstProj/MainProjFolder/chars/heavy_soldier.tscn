@@ -1660,7 +1660,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_a5flw"]
 resource_name = "hit"
-length = 0.3
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1668,7 +1668,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.16666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [&"hit", &"idle"]
@@ -1680,7 +1680,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.133333, 0.2),
+"times": PackedFloat32Array(0, 0.0333333, 0.099999666, 0.16666667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 0]
@@ -1692,10 +1692,10 @@ tracks/2/path = NodePath("AnimatedSprite2D:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.133333),
+"times": PackedFloat32Array(0, 0.0333333, 0.06666667),
 "transitions": PackedFloat32Array(1, 8.00001, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(100, 100, 100, 1), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 1), Color(3.2944162, 3.2944162, 3.2944162, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_ct51r"]
