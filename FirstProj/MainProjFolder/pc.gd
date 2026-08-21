@@ -391,6 +391,10 @@ func _ready():
 	_new_health=health.health
 	Events.update_ui_data.connect(update_ui)
 	
+	clash_aura_fx.visible=false
+	clash_aura_fx_2.visible=false
+	attack_fx.visible=false
+	
 	#Connecting knockback signals
 	
 	

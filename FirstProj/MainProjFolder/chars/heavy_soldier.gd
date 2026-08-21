@@ -624,9 +624,9 @@ func _on_staggered_entered() -> void:
 	hurt_box.active=true
 	hurt_box_collision.set_deferred("disabled", false)
 	if player_right:
-		knockback.x=100
+		knockback.x=-200
 	else:
-		knockback.x=-100
+		knockback.x=200
 	
 func _on_staggered_exited() -> void:
 	shield_collision.set_deferred("disabled",false)

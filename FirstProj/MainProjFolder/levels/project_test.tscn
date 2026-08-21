@@ -486,7 +486,7 @@ metadata/_custom_type_script = "uid://klqpph3n6xut"
 
 [node name="PC" parent="." index="33" unique_id=907789365 instance=ExtResource("12_dqkb5")]
 z_index = 1
-position = Vector2(691, 88)
+position = Vector2(692, 88)
 
 [node name="DROPSTESTSPAWNPOINT" type="Node2D" parent="." index="34" unique_id=1494373708]
 position = Vector2(952, 35)
