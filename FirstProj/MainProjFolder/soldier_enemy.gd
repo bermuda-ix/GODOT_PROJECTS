@@ -643,7 +643,6 @@ func _on_hit_box_clashed() -> void:
 	#hit_box.active=false
 	#hit_stop.hit_stop(0.05, 0.5)
 	print_debug("clashed!")
-	stagger.stagger-=1
 	
 	if player_right:
 		knockback.x=-200

@@ -27,7 +27,7 @@ func _enter() -> void:
 	anim_player.seek(_marker_time, true)
 	assert(anim_player.current_animation_position==_marker_time)
 	anim_player.pause()
-	hit_stop.hit_stop(0.1, 1)
+	hit_stop.hit_stop(0.1, 5)
 	pc.velocity.x=0
 	#dur.start(3)
 

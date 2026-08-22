@@ -241,8 +241,8 @@ func _process(delta: float) -> void:
 		if state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death:
 			state_machine.dispatch(&"die")
 	
-	if state_machine.get_active_state()==dying or state_machine.get_active_state()==death:
-		print_debug(knockback.x)
+	#if state_machine.get_active_state()==dying or state_machine.get_active_state()==death:
+		#print_debug(knockback.x)
 
 	#print_debug(state_machine.get_active_state())
 
@@ -293,7 +293,8 @@ func _physics_process(delta: float) -> void:
 		hurt_box_weakpoint_collision.set_deferred("disabled", true)
 	
 	velocity.x = current_speed + knockback.x + pushback
-	move_and_slide()
+	if state_machine.get_active_state()!=clashed:
+		move_and_slide()
 	movement_handler.apply_gravity(delta)
 
 func _init_group_link():
@@ -448,7 +449,7 @@ func _on_combat_state_machine_active_state_changed(current: LimboState, previous
 		return
 	elif state_machine.get_active_state()==clashed:
 		return
-	elif current==attack:
+	elif state_machine.get_active_state()==attack:
 		if current==ranged_mode:
 			state_machine.dispatch(&"start_shoot")
 			
@@ -477,6 +478,7 @@ func _on_shooting_entered() -> void:
 
 func _on_shooting_defense_entered() -> void:
 	animation_player.play("shoot_defense")
+	hit_box.collision_shape.set_deferred("diabled", false)
 
 
 func _on_attack_entered() -> void:
@@ -532,7 +534,7 @@ func clash_follow_up(_follow_up := "nothing"):
 			if stagger.stagger>0:
 				state_machine.dispatch(&"hit")
 			else:
-				state_machine.dispatch(&"stagger")
+				state_machine.dispatch(&"staggered")
 		"nothing":
 			animation_player.play()
 		_:
@@ -559,12 +561,12 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="reload":
 		shooting_states.dispatch(&"return_shooting")
 	elif anim_name=="melee_attack":
+		if state_machine.get_active_state()==clashed:
+			return
 		#print_debug(state_machine.get_active_state())
 		var _melee_ranged_colliding := attack_range.get_overlapping_bodies()
 		if _melee_ranged_colliding.is_empty():
 			state_machine.dispatch(&"start_shoot")
-		elif state_machine.get_active_state()==clashed:
-			return
 		else:
 			state_machine.dispatch(&"resume_melee")
 	elif anim_name=="landed":
@@ -615,7 +617,8 @@ func _on_stagger_staggered() -> void:
 	hb_collision.set_deferred("disabled", true)
 	current_speed=0
 	velocity.x=0
-	if (state_machine.get_active_state()!= dying and state_machine.get_active_state()!=death and state_machine.get_active_state()!=launch):
+	if (state_machine.get_active_state()!= dying and state_machine.get_active_state()!=death \
+	and state_machine.get_active_state()!=launch and state_machine.get_active_state()!=clashed):
 		if health.health>0:
 			state_machine.dispatch(&"staggered")
 
@@ -802,9 +805,9 @@ func _on_hit_box_clashed() -> void:
 	hb_collision.set_deferred("disabled",true)
 	hit_box.active=false
 	vfx_sprite.set_deferred("visible", false)
-	hit_stop.hit_stop(0.05, 0.5)
+	#hit_stop.hit_stop(0.05, 0.5)
 	state_machine.dispatch(&"clashed")
-	stagger.set_stagger(stagger.stagger-1)
+	
 	
 	#animation_player.play("melee_attack")
 	#print_debug("clashed!")
@@ -947,18 +950,27 @@ func _on_clashed_entered() -> void:
 	animation_player.pause()
 	movement_handler.active=false
 	knockback=Vector2.ZERO
+	stagger.set_stagger(stagger.stagger-1)
+	vfx_player.speed_scale=1/Engine.time_scale
+	var _stagg=stagger.stagger
+	if stagger.stagger>0:
+		counter_attack_timer.start(0.2)
+	else:
+		movement_handler.active=false
+		pass
+	
+
+func _on_clashed_exited() -> void:
+	hit_stop.end_hit_stop()
+	if stagger.stagger<=0:
+		if not movement_handler.active:
+			movement_handler.active=true
+		return
+	shield_collision.set_deferred("disabled", false)
 	if player_right:
 		velocity.x=-150
 	else:
 		velocity.x=150
-	if stagger.stagger>0:
-		counter_attack_timer.start(0.2)
-	
-
-func _on_clashed_exited() -> void:
-	if stagger.stagger<=0:
-		return
-	shield_collision.set_deferred("disabled", false)
 	if stagger.stagger<=0 and state_machine.get_active_state()!=staggered:
 		state_machine.dispatch(&"staggered")
 
@@ -977,7 +989,12 @@ func _on_hit_exited() -> void:
 
 func _on_clashed_updated(delta: float) -> void:
 	#pass
-	velocity.x=lerpf(velocity.x, 0, 0.8)
+	vfx_player.speed_scale=1/Engine.time_scale
+	velocity.x=0
+	velocity.y=0
+	knockback=Vector2.ZERO
+	if velocity.x!=0:
+		print_debug(velocity.x)
 	if animation_player.is_playing():
 		animation_player.pause()
 	assert(vfx_player.is_playing())
@@ -985,3 +1002,11 @@ func _on_clashed_updated(delta: float) -> void:
 
 func _on_dying_updated(delta: float) -> void:
 	pass # Replace with function body.
+
+
+func _on_ranged_entered() -> void:
+	shield.set_collision_mask_value(7, true)
+
+
+func _on_melee_entered() -> void:
+	shield.set_collision_mask_value(7, false)

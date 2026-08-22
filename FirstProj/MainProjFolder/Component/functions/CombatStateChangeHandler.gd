@@ -20,6 +20,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		actor.distance=abs(actor.global_position.x-actor.player.global_position.x)
 		#print_debug(actor.distance)
+		var _distance=actor.distance
 #		RANGED ATTACK
 
 		if actor.distance>ranged_dist:

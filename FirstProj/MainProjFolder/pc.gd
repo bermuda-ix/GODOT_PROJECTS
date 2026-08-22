@@ -174,6 +174,7 @@ var atk_state="ATK_1"
 @onready var hit_fx_player: AnimationPlayer = $HitFXPlayer
 @onready var clash_aura_player: AnimationPlayer = $ClashAuraPlayer
 @onready var clash_aura_fx: AnimatedSprite2D = $AnimatedSprite2D/heat_fx
+@onready var clash_aura_fx_1: AnimatedSprite2D = $AnimatedSprite2D/clash_aura_fx
 @onready var clash_aura_fx_2: AnimatedSprite2D = $AnimatedSprite2D/clash_aura_fx2
 
 @onready var attack_fx: AnimatedSprite2D = $AnimatedSprite2D/attack_fx
@@ -629,7 +630,7 @@ func _process(_delta):
 			qte_input()
 		return
 	elif state_machine.get_active_state()==death or state_machine.get_active_state()==dead:
-		move_and_slide()
+		#move_and_slide()
 		
 		velocity=Vector2.ZERO
 		apply_gravity(_delta)
@@ -784,7 +785,8 @@ func _physics_process(delta):
 		
 		var was_on_floor = is_on_floor()
 		velocity=velocity + knockback
-		move_and_slide()
+		if state_machine.get_active_state()!=clashed:
+			move_and_slide()
 		var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
 		if just_left_ledge:
 			coyote_jump_timer.start()
@@ -2252,7 +2254,7 @@ func set_start_pos(checkpoint_position):
 
 func _on_animation_player_animation_finished(anim_name):
 	cutscene_handler.anim_count_up()
-	if state_machine.get_active_state()==attack_state:
+	if state_machine.get_active_state()==attack_state or state_machine.get_active_state()==clashed:
 		hit_success=false
 		hit_box.clash_active=false
 		hit_box.attack_clashed=false
@@ -2380,6 +2382,7 @@ func _on_attack_timer_timeout():
 		return
 	
 	if state_machine.get_active_state()==parry_success_state or attack_state.get_active_state()==attack_closer:
+		state_machine.dispatch(&"return_to_idle")
 		return
 	elif attack_state.get_active_state()==special_combo:
 		state_machine.dispatch(&"return_to_idle")
@@ -2465,10 +2468,10 @@ func parry_success(_parry_follow_up := "nothing"):
 	match _parry_follow_up:
 		"riposte":
 			anim_player.play()
-			start_attack_timer(0.01)
+			start_attack_timer(0.05)
 		"enemy_light_counter":
 			anim_player.play()
-			start_attack_timer(0.01)
+			start_attack_timer(0.05)
 			knockback.x=50*face_dir
 		"nothing":
 			pass
@@ -2997,7 +3000,7 @@ func _on_clash_timer_timeout() -> void:
 func _on_clash_power_aura_change(value: int) -> void:
 	
 	if value >=1:
-		clash_aura_fx.visible=true
+		clash_aura_fx_1.visible=true
 		clash_aura_fx_2.visible=true
 		if not clash_aura_player.is_playing():
 			clash_aura_player.play("clash_aura")
@@ -3033,7 +3036,7 @@ func _on_clash_power_aura_change(value: int) -> void:
 #################
 func _on_clash_power_aura_reset() -> void:
 	clash_aura_player.stop()
-	clash_aura_fx.visible=false
+	clash_aura_fx_1.visible=false
 	clash_aura_fx_2.visible=false
 	#hit_box.set_damage(1)
 
@@ -3261,6 +3264,8 @@ func _on_charged_attack_entered() -> void:
 
 func _on_clashed_entered() -> void:
 	attack_timer.stop()
+	hit_box.active=false
+	
 	var _attack_anim=attack_1.attack
 	var _marker_time=anim_player.get_animation(_attack_anim).get_marker_time("Attack_connect")
 	anim_player.seek(_marker_time, true)

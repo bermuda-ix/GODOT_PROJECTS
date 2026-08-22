@@ -2148,7 +2148,7 @@ tracks/17/path = NodePath("HitBox:clash_active")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
-"times": PackedFloat32Array(0, 0.43333334, 0.47005948),
+"times": PackedFloat32Array(0, 0.53333336, 0.57005954),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, true, false]
@@ -2582,6 +2582,30 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HitBox:clash_active")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("HitBox:active")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_jdney"]
@@ -3334,6 +3358,7 @@ metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=1742492050]
 script = ExtResource("12_6gh4x")
+max_stagger = 2
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=162841846]
@@ -3360,9 +3385,10 @@ actor = NodePath("..")
 metadata/_custom_type_script = "uid://b0uasmutdnguo"
 
 [node name="Shield" type="Area2D" parent="." unique_id=395439987 groups=["shield"]]
+visible = false
 position = Vector2(-16, -43)
 collision_layer = 268435456
-collision_mask = 8388672
+collision_mask = 8388608
 priority = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shield" unique_id=1636982715]
@@ -3371,6 +3397,7 @@ shape = SubResource("RectangleShape2D_8fd3j")
 one_way_collision_direction = Vector2(0, 0)
 
 [node name="ParryBox" type="Area2D" parent="." unique_id=2025508034 groups=["shield"]]
+visible = false
 position = Vector2(-25, -37)
 collision_layer = 256
 collision_mask = 8388674
@@ -3423,6 +3450,7 @@ target_position = Vector2(92, 0)
 collision_mask = 2
 
 [node name="HurtBox_Weakpoint" type="Area2D" parent="." unique_id=314062531 node_paths=PackedStringArray("health", "stagger", "back_attack_flag")]
+visible = false
 position = Vector2(0, -39)
 collision_layer = 16
 collision_mask = 8256
@@ -3439,6 +3467,7 @@ position = Vector2(17, 32)
 shape = SubResource("RectangleShape2D_ao47q")
 
 [node name="AttackRange" type="Area2D" parent="." unique_id=1169698663]
+visible = false
 position = Vector2(0, -39)
 collision_layer = 1024
 collision_mask = 2
@@ -3566,7 +3595,7 @@ actor = NodePath("..")
 sm = NodePath("../StateMachine")
 combat_state_machine = NodePath("../CombatStateMachine")
 bt_player = NodePath("../BTPlayer")
-ranged_dist = 30
+ranged_dist = 50
 vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
@@ -3799,3 +3828,5 @@ metadata/_custom_type_script = "uid://dpg0824supe1e"
 [connection signal="exited" from="StateMachine/Clashed" to="." method="_on_clashed_exited"]
 [connection signal="updated" from="StateMachine/Clashed" to="." method="_on_clashed_updated"]
 [connection signal="active_state_changed" from="CombatStateMachine" to="." method="_on_combat_state_machine_active_state_changed"]
+[connection signal="entered" from="CombatStateMachine/melee" to="." method="_on_melee_entered"]
+[connection signal="entered" from="CombatStateMachine/ranged" to="." method="_on_ranged_entered"]

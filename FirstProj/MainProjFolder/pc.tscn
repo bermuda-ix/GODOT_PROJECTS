@@ -12617,6 +12617,7 @@ texture = ExtResource("4_2ahp4")
 offset = Vector2(10.6825, 104.176)
 
 [node name="SpAtkHitBox" type="Area2D" parent="AnimatedSprite2D/Shotty" unique_id=1612925221 groups=["sp_atk_default"]]
+visible = false
 position = Vector2(0, 3.5762787e-07)
 collision_layer = 0
 collision_mask = 0
@@ -12784,6 +12785,7 @@ disabled = true
 occluder = SubResource("OccluderPolygon2D_6tjyr")
 
 [node name="ParryZone" type="Area2D" parent="AnimatedSprite2D" unique_id=688839984 groups=["PlayerParryZone"]]
+visible = false
 collision_layer = 268435456
 collision_mask = 8
 monitoring = false
@@ -12794,6 +12796,7 @@ shape = SubResource("CircleShape2D_wp57p")
 disabled = true
 
 [node name="ParryBox" type="Area2D" parent="AnimatedSprite2D" unique_id=1697600828 groups=["ParryBox"]]
+visible = false
 position = Vector2(6, -18)
 collision_layer = 512
 collision_mask = 24
@@ -12924,6 +12927,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="StarsDetector" type="Area2D" parent="." unique_id=843787660]
+visible = false
 position = Vector2(-1, 1)
 collision_layer = 1048576
 collision_mask = 67633152
@@ -12934,6 +12938,7 @@ shape = SubResource("CapsuleShape2D_mdoa6")
 debug_color = Color(0, 0.5950001, 0.7, 0)
 
 [node name="HazardDetector" type="Area2D" parent="." unique_id=1401140940 groups=["player"]]
+visible = false
 collision_layer = 2
 collision_mask = 282636
 
@@ -12942,6 +12947,7 @@ position = Vector2(0.249986, 4)
 shape = SubResource("RectangleShape2D_52hex")
 
 [node name="InteractableDetector" type="Area2D" parent="." unique_id=326123182]
+visible = false
 collision_layer = 4194304
 collision_mask = 35913728
 
@@ -13035,6 +13041,7 @@ text = "State"
 metadata/_edit_use_anchors_ = true
 
 [node name="VisionDetection" type="Area2D" parent="." unique_id=1456971327 groups=["player_detect"]]
+visible = false
 collision_layer = 2
 collision_mask = 0
 
@@ -13060,6 +13067,7 @@ shape = SubResource("RectangleShape2D_oupih")
 target_position = Vector2(-34, 0)
 
 [node name="CounterBox" type="Area2D" parent="." unique_id=811846985]
+visible = false
 collision_layer = 0
 collision_mask = 4104
 
@@ -13069,6 +13077,7 @@ shape = SubResource("RectangleShape2D_qebxi")
 disabled = true
 
 [node name="CollectibleBox" type="Area2D" parent="." unique_id=327698503]
+visible = false
 collision_layer = 2
 collision_mask = 0
 

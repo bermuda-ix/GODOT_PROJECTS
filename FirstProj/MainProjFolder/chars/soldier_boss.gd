@@ -1292,21 +1292,24 @@ func _on_hit_box_clashed() -> void:
 		_heavy_atk_min +=5
 		melee_attack_manager.set_heavy_atk_min(_heavy_atk_min)
 	
+	bt_player.blackboard.set_var("staggered", true)
+	#print_debug("clashed!")
+	attacking=false
+	#if dash_attacking:
+		#return
+	
 	stagger.stagger-=1
 	var _current_atk : String = animation_player.current_animation
-	var _atk_clash_anim : String = _current_atk+"_connect"
-	var _atk_clash_anim_end : String = _current_atk+"_end"
 	if _current_atk != null and animation_player.has_animation(_current_atk):
 		assert(animation_player.has_animation(_current_atk))
-		var _atk_connect := animation_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
+		var _atk_connect := animation_player.get_animation(_current_atk).get_marker_time("connect")
 		animation_player.seek(_atk_connect, true)
 	var _cur_segment :float = animation_player.current_animation_position
 	if player_right:
 		knockback.x=-200
 	else:
 		knockback.x=200
-	if dash_attacking:
-		return
+	
 	
 	#print_debug(state_machine.get_active_state())
 	boss_ui.set_boss_stagger_smooth(stagger.stagger)
