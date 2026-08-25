@@ -1,7 +1,4 @@
-class_name HeavySoldier
-
 extends CharacterBody2D
-
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
@@ -70,7 +67,7 @@ var always_active : bool
 @onready var navigation_handler: NavigationHandler = $NavigationHandler
 
 
-var current_speed : float = 0.0
+var current_speed : float = 0.0 : set = set_current_speed, get = get_current_speed
 var prev_speed : float = 00.0
 var acceleration : float = 800.0
 var jump_velocity = JUMP_VELOCITY
@@ -167,7 +164,11 @@ var attacking : bool = false
 @onready var ally_vision_raycast: RayCast2D = $AllyVisionRaycast
 
 
-
+#Setters and getters
+func set_current_speed(_value : float) -> void:
+	current_speed=_value
+func get_current_speed() -> float:
+	return current_speed
 
 #Debug var
 var combat_state : String = "RANGED"
@@ -697,17 +698,6 @@ func _on_health_health_depleted() -> void:
 	death_handler.death()
 
 
-func _on_dying_entered() -> void:
-	#movement_handler.active=false
-	Events.enemy_death.emit()
-	drop_handler.spawn_drop()
-	hit_stop.hit_stop(0.1, 0.3)
-	if player_right:
-		knockback.x=-death_knockback
-	else:
-		knockback.x=death_knockback
-	knockback.y=death_launch
-
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	if state_machine.get_active_state()==death:
@@ -844,12 +834,6 @@ func _on_hit_box_clash_knock_back(_launch : float, _knockback : float, _impact_d
 	#state_machine.change_active_state(launch)
 
 
-func _on_launch_entered() -> void:
-	#velocity.x=0
-	current_speed=0
-	animation_player.play("launched")
-	#velocity.x=-launch.knock_back_strength
-
 func _on_launch_timer_timeout() -> void:
 	state_machine.dispatch(&"falling")
 
@@ -867,25 +851,9 @@ func _on_death_entered() -> void:
 	hb_collision.set_deferred("disabled", true)
 	hurt_box_collision.set_deferred("disabled", true)
 	collision_shape_2d.set_deferred("disabled", true)
-	
 	set_collision_mask_value(15, true)
 	
 
-
-func _on_falling_entered() -> void:
-	animation_player.play("falling")
-	
-
-
-func _on_falling_updated(delta: float) -> void:
-	if is_on_floor():
-		state_machine.dispatch(&"landed")
-		
-
-
-func _on_landed_entered() -> void:
-	knocked_back=false
-	animation_player.play("landed")
 
 
 func _on_hurt_box_knockback(_launch_strength: float, _knock_back_strength: float, _impact_dir_right: bool) -> void:
@@ -942,37 +910,7 @@ func _on_melee_attack_exited() -> void:
 
 
 
-func _on_clashed_entered() -> void:
-	current_speed=0
-	hurt_box.shielded=false
-	shield_collision.set_deferred("disabled", true)
-	vfx_sprite.visible=true
-	#animation_player.pause()
-	#movement_handler.active=false
-	#knockback=Vector2.ZERO
-	#stagger.set_stagger(stagger.stagger-1)
-	#vfx_player.speed_scale=1/Engine.time_scale
-	#var _stagg=stagger.stagger
-	#if stagger.stagger>0:
-		#counter_attack_timer.start(0.2)
-	#else:
-		#movement_handler.active=false
-		#pass
 	
-
-func _on_clashed_exited() -> void:
-	#hit_stop.end_hit_stop()
-	#if stagger.stagger<=0:
-		#if not movement_handler.active:
-			#movement_handler.active=true
-		#return
-	shield_collision.set_deferred("disabled", false)
-	#if player_right:
-		#velocity.x=-150
-	#else:
-		#velocity.x=150
-	#if stagger.stagger<=0 and state_machine.get_active_state()!=staggered:
-		#state_machine.dispatch(&"staggered")
 
 func _on_counter_attack_timer_timeout() -> void:
 	hit_stop.end_hit_stop()
@@ -983,30 +921,20 @@ func _on_hit_entered() -> void:
 	current_speed=0
 
 
-func _on_hit_exited() -> void:
+
+
+
+#func _on_ranged_entered() -> void:
+	#shield.set_collision_mask_value(7, true)
+#
+#
+#func _on_melee_entered() -> void:
+	#shield.set_collision_mask_value(7, false)
+
+
+func _on_attack_range_area_entered(area: Area2D) -> void:
 	pass # Replace with function body.
 
 
-func _on_clashed_updated(delta: float) -> void:
-	#pass
-	vfx_player.speed_scale=1/Engine.time_scale
-	velocity.x=0
-	velocity.y=0
-	knockback=Vector2.ZERO
-	if velocity.x!=0:
-		print_debug(velocity.x)
-	if animation_player.is_playing():
-		animation_player.pause()
-	assert(vfx_player.is_playing())
-
-
-func _on_dying_updated(delta: float) -> void:
+func _on_hurt_box_weakpoint_hit() -> void:
 	pass # Replace with function body.
-
-
-func _on_ranged_entered() -> void:
-	shield.set_collision_mask_value(7, true)
-
-
-func _on_melee_entered() -> void:
-	shield.set_collision_mask_value(7, false)

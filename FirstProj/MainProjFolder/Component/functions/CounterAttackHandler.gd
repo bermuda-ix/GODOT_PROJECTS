@@ -6,12 +6,15 @@ extends Node
 @export var shoot_attack_manager : ShootAttackManager
 @export var state_machine : LimboHSM
 @export var bt_player : BTPlayer
+@export var counter_attack_timer : Timer
+@export var hit_stop : HitStop
 
 @export var shoot_counter_active : bool = true
 @export var active : bool = true
 
 func _ready() -> void:
 	Events.parry_success.connect(parry_counter)
+	counter_attack_timer.timeout.connect(clash_counter)
 
 func _physics_process(delta: float) -> void:
 	if not active:
@@ -41,7 +44,6 @@ func shoot_counter():
 				if state_machine.get_active_state()==actor.attack:
 					state_machine.dispatch(&"jump")
 
-
 func parry_counter(value: String) -> void:
 	if actor.parried:
 		#if actor.stagger.stagger>=0:
@@ -51,3 +53,8 @@ func parry_counter(value: String) -> void:
 			#pass
 		actor.parried=false
 			
+
+func clash_counter()-> void:
+	hit_stop.end_hit_stop()
+	state_machine.dispatch(&"counter_melee")
+	Events.parry_success.emit("enemy_light_counter")

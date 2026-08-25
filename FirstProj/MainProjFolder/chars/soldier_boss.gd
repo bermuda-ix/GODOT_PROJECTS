@@ -329,6 +329,7 @@ func _init_state_machine():
 	
 	state_machine.add_transition(attack, clashed, &"clashed")
 	state_machine.add_transition(clashed, attack, &"resume_attack")
+	state_machine.add_transition(clashed, attack, &"counter_attack")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, phase_transition, &"begin_next_phase")
 	state_machine.add_transition(phase_transition, teleport_and_shoot, phase_transition.success_event)
@@ -1433,3 +1434,7 @@ func _on_land_exited() -> void:
 				bt_player.blackboard.set_var("within_range", false)
 				state_machine.dispatch(&"start_attack")
 				break
+
+
+func _on_counter_attack_timer_timeout() -> void:
+	pass # Replace with function body.
