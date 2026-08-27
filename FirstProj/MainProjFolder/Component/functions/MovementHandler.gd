@@ -9,6 +9,7 @@ extends Node
 @export var distance_from : int = 150
 @export var move_away_speed_scale : float = .8
 @export var air_turn : bool = true
+@onready var move_dir : int = clampi(0, -1, 1)
 
 @export var bullet_detection : BulletDetection
 @export var face_player_active : bool = true
@@ -30,7 +31,6 @@ func _physics_process(delta: float) -> void:
 			face_player()
 		
 		if vision_handler.player_found == true:
-			
 			if keep_distance:
 				move_away(distance_from)
 			else:
@@ -75,59 +75,41 @@ func face_player() -> void:
 
 	
 func move_away(value : int) -> void:
-	#print_debug("move away")
-		
 	var dir := actor.to_local(actor.nav_agent.get_next_path_position())
-		#actor.h_bar.text=str(actor.health.health, " : ", actor.stagger.stagger, " : vel_x:", actor.velocity.x)
 	if abs(dir.x) < value:
 		state_machine.dispatch(&"run_and_shoot")
 		if abs(dir.x) < value and actor.is_on_floor():
+			move_dir=1
 			actor.current_speed = (actor.chase_speed * move_away_speed_scale)
-			#if state_machine.get_active_state()!=actor.attack:
-				#actor.animated_sprite_2d.scale.x = 1
-			#actor.hit_box.scale.x = 1
-			#actor.attack_range.scale.x = 1
-			print_debug("move away")
 		else:
+			move_dir=-1
 			actor.current_speed = -(actor.chase_speed * move_away_speed_scale)
-			#if state_machine.get_active_state()!=actor.attack:
-				#actor.animated_sprite_2d.scale.x = -1
-			#actor.hit_box.scale.x = -1
-			#actor.attack_range.scale.x = -1
-			print_debug("move away")
-		
 	else:
 		actor.current_speed=0
 		state_machine.dispatch(&"start_shoot")
 
 func move_closer() -> void:
 	var dir := actor.to_local(actor.nav_agent.get_next_path_position())
-	#print_debug(dir.x)
-		#actor.h_bar.text=str(actor.health.health, " : ", actor.stagger.stagger, " : vel_x:", actor.velocity.x)
+
 	if dir.x < 0 and actor.is_on_floor():
-		actor.current_speed = -actor.chase_speed
-		assert(actor.current_speed<0)
-		#if state_machine.get_active_state()!=actor.attack:
-			#actor.animated_sprite_2d.scale.x = -1
-		#actor.hit_box.scale.x = -1
-		#actor.attack_range.scale.x = -1
+		move_dir=-1
+		#if actor.chase_speed > 0:
+			#actor.chase_speed *= -1
+		#assert(actor.current_speed<0)
 	else:
-		actor.current_speed = actor.chase_speed
-		#if state_machine.get_active_state()!=actor.attack:
-			#actor.animated_sprite_2d.scale.x = 1
-		#actor.hit_box.scale.x = 1
-		#actor.attack_range.scale.x = 1
+		move_dir=1
+		#if actor.chase_speed < 0:
+			#actor.chase_speed *= -1
+
 
 func climb_stairs():
 	var dir_y := actor.to_local(actor.nav_agent.get_next_path_position()).y
 	if actor.global_position.y<dir_y or abs(actor.global_position.y-dir_y)>=10:
 		actor.set_collision_mask_value(20, true)
-		#if "climb_stairs" in actor:
-			#actor.climb_stairs=true
+
 	else:
 		actor.set_collision_mask_value(20, false)
-		#if "climb_stairs" in actor:
-			#actor.climb_stairs=false
+
 
 func fall_through_platform():
 	var dir_y := actor.to_local(actor.nav_agent.get_next_path_position()).y

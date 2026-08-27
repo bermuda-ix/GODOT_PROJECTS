@@ -469,7 +469,7 @@ func _physics_process(delta):
 		
 	#handle_movement()
 	if state_machine.get_active_state()==chasing:
-		velocity.x = current_speed + knockback.x
+		velocity.x = (current_speed*movement_handler.move_dir) + knockback.x
 	else:
 		if state_machine.get_active_state()!=attack and state_machine.get_active_state()!=launch and state_machine.get_active_state()!=falling:
 			velocity.x= knockback.x

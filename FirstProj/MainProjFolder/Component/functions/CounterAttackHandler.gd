@@ -28,10 +28,11 @@ func _physics_process(delta: float) -> void:
 			actor.scale.x = -1
 		else:
 			actor.scale.x = 1
-		bt_player.blackboard.set_var("counter_attack", true)
+		#bt_player.blackboard.set_var("counter_attack", true)
 		
 	else:
-		bt_player.blackboard.set_var("counter_attack", false)
+		pass
+		#bt_player.blackboard.set_var("counter_attack", false)
 		
 func shoot_counter():
 	if actor.player_state == actor.player.special_attack:

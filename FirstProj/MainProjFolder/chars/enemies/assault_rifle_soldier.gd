@@ -104,6 +104,7 @@ var player_state : LimboState
 @onready var reload: LimboState = $StateMachine/ShootingStates/Reload
 @onready var shoot_idle: LimboState = $StateMachine/ShootingStates/ShootIdle
 @onready var defend_ally: BTState = $StateMachine/ShootingStates/DefendAlly
+@onready var shooting_bt_state: BTState = $StateMachine/ShootingBTState
 @onready var hit: Hit = $StateMachine/Hit
 @onready var parry: Parry = $StateMachine/Parry
 @onready var staggered: Staggered = $StateMachine/Staggered
@@ -166,6 +167,8 @@ var attacking : bool = false
 
 #Setters and getters
 func set_current_speed(_value : float) -> void:
+	if _value==current_speed:
+		return
 	current_speed=_value
 func get_current_speed() -> float:
 	return current_speed
@@ -183,23 +186,24 @@ func _ready():
 	animation_player.play("idle")
 	state="guard"
 	next=nav_agent.get_next_path_position()
-	bt_player.blackboard.set_var("attack_mode", false)
-	bt_player.blackboard.set_var("melee_mode", false)
-	bt_player.blackboard.set_var("ranged_mode", true)
-	bt_player.blackboard.set_var("within_range", false)
-	bt_player.blackboard.set_var("staggered", false)
+	if bt_player != null:
+		bt_player.blackboard.set_var("attack_mode", false)
+		bt_player.blackboard.set_var("melee_mode", false)
+		bt_player.blackboard.set_var("ranged_mode", true)
+		bt_player.blackboard.set_var("within_range", false)
+		bt_player.blackboard.set_var("staggered", false)
 	Events.parry_success.connect(clash_follow_up)
 	#turret.setup(0.2)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 	_init_combat_state_machine()
-	_init_shooting_states()
+	#_init_shooting_states()
 	hurt_box.set_damage_mulitplyer(1)
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 	
 	hit.set_guard(health.health_above_zero)
 	
-	_init_group_link()
+	#_init_group_link()
 	if always_active:
 		alerted()
 	
@@ -232,9 +236,9 @@ func _process(delta: float) -> void:
 	#if ammo_count<0:
 		#print_debug("RELOAD")
 		#animation_player.stop()
-	if shooting_states.get_active_state()!=reload:
-		defense_shoot()
-	reload_gun()
+	#if shooting_states.get_active_state()!=reload:
+		#defense_shoot()
+	#reload_gun()
 	if is_on_floor():
 		being_flipped()
 	flip_ally_vision()
@@ -253,8 +257,7 @@ func _physics_process(delta: float) -> void:
 	
 	if combat_state_machine.get_active_state()==ranged_mode or state_machine.get_active_state()==parry:
 		if state_machine.get_active_state()!=chasing:
-			if shooting_states.get_active_state()!=defend_ally:
-				current_speed=0
+			current_speed=0
 	#
 	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered or state_machine.get_active_state()==launch:
 		#hb_collison.disabled=true
@@ -288,12 +291,12 @@ func _physics_process(delta: float) -> void:
 		if melee_range_check():
 			state_machine.dispatch(&"melee_attack")
 	
-	if player_right:
-		hurt_box_weakpoint_collision.set_deferred("disabled", false)
-	else:
-		hurt_box_weakpoint_collision.set_deferred("disabled", true)
+	#if player_right:
+		#hurt_box_weakpoint_collision.set_deferred("disabled", false)
+	#else:
+		#hurt_box_weakpoint_collision.set_deferred("disabled", true)
 	
-	velocity.x = current_speed + knockback.x + pushback
+	velocity.x = (current_speed*movement_handler.move_dir) + knockback.x + pushback
 	if state_machine.get_active_state()!=clashed:
 		move_and_slide()
 	movement_handler.apply_gravity(delta)
@@ -320,23 +323,22 @@ func _init_state_machine():
 	state_machine.add_transition(idle, attack, &"attack_mode")
 	state_machine.add_transition(staggered, chasing, &"stagger_recover")
 	state_machine.add_transition(attack, chasing, &"start_chase")
-	state_machine.add_transition(shooting_states, chasing, &"start_chase")
+	state_machine.add_transition(shooting_bt_state, chasing, &"start_chase")
 	state_machine.add_transition(chasing, attack, &"start_attack")
-	#state_machine.add_transition(shooting_states, attack, &"start_attack")
 	state_machine.add_transition(attack, idle, &"idle_mode")
 	state_machine.add_transition(chasing, jump, &"jump")
 	state_machine.add_transition(jump, chasing, &"land")
 	state_machine.add_transition(hit, attack, &"hit_recover")
-	state_machine.add_transition(hit, shooting_states, &"hit_recover_shoot")
+	state_machine.add_transition(hit, shooting_bt_state, &"hit_recover_shoot")
 	state_machine.add_transition(attack, parry, &"parry")
 	state_machine.add_transition(chasing, parry, &"parry")
-	state_machine.add_transition(shooting_states, parry, &"parry")
+	state_machine.add_transition(shooting_bt_state, parry, &"parry")
 	state_machine.add_transition(parry, attack, parry.failure_event)
-	state_machine.add_transition(parry, shooting_states, parry.success_event)
-	state_machine.add_transition(attack, shooting_states, &"start_shoot")
-	state_machine.add_transition(chasing, shooting_states, &"start_shoot")
+	state_machine.add_transition(parry, shooting_bt_state, parry.success_event)
+	state_machine.add_transition(attack, shooting_bt_state, &"start_shoot")
+	state_machine.add_transition(chasing, shooting_bt_state, &"start_shoot")
 	state_machine.add_transition(chasing, melee_attack, &"melee_attack")
-	state_machine.add_transition(shooting_states, melee_attack, &"melee_attack")
+	state_machine.add_transition(shooting_bt_state, melee_attack, &"melee_attack")
 	state_machine.add_transition(melee_attack, chasing, &"resume_chase")
 	state_machine.add_transition(launch, falling, &"falling")
 	state_machine.add_transition(falling, landed, &"landed")
@@ -344,8 +346,9 @@ func _init_state_machine():
 	state_machine.add_transition(melee_attack, clashed, &"clashed")
 	state_machine.add_transition(clashed, melee_attack, &"counter_melee")
 	state_machine.add_transition(melee_attack, melee_attack, &"resume_melee")
-	state_machine.add_transition(clashed, shooting_states, &"start_shoot")
-	state_machine.add_transition(melee_attack, shooting_states, &"start_shoot")
+	state_machine.add_transition(clashed, shooting_bt_state, &"start_shoot")
+	state_machine.add_transition(melee_attack, shooting_bt_state, &"start_shoot")
+	
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
 	state_machine.add_transition(state_machine.ANYSTATE, dying, &"die")
@@ -455,8 +458,8 @@ func _on_combat_state_machine_active_state_changed(current: LimboState, previous
 			state_machine.dispatch(&"start_shoot")
 			
 			movement_handler.active=false
-			if shooting_states.get_active_state()!=defend_ally:
-				current_speed=0
+			#if shooting_states.get_active_state()!=defend_ally:
+				#current_speed=0
 		elif current==melee_mode:
 			if state_machine.get_active_state()!=melee_attack:
 				movement_handler.active=true
@@ -473,13 +476,13 @@ func _on_chasing_entered() -> void:
 		state_machine.dispatch(&"melee_attack")
 
 
-func _on_shooting_entered() -> void:
-	animation_player.play("shoot")
+#func _on_shooting_entered() -> void:
+	#animation_player.play("shoot")
 
 
-func _on_shooting_defense_entered() -> void:
-	animation_player.play("shoot_defense")
-	hit_box.collision_shape.set_deferred("diabled", false)
+#func _on_shooting_defense_entered() -> void:
+	#animation_player.play("shoot_defense")
+	#hit_box.collision_shape.set_deferred("diabled", false)
 
 
 func _on_attack_entered() -> void:
@@ -550,8 +553,8 @@ func pushed_back(_force:=100):
 	
 	velocity.x=-_force*_face_dir
 
-func _on_parry_exited() -> void:
-	print_debug("parry exit")
+#func _on_parry_exited() -> void:
+	#print_debug("parry exit")
 
 
 func _on_turret_shoot_bullet() -> void:
@@ -559,9 +562,7 @@ func _on_turret_shoot_bullet() -> void:
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name=="reload":
-		shooting_states.dispatch(&"return_shooting")
-	elif anim_name=="melee_attack":
+	if anim_name=="melee_attack":
 		if state_machine.get_active_state()==clashed:
 			return
 		#print_debug(state_machine.get_active_state())
@@ -613,27 +614,20 @@ func _on_hurt_box_weakpoint_weakpoint_hit() -> void:
 
 
 func _on_stagger_staggered() -> void:
-	hurt_box.shielded=false
-	stagger_timer.start(3)
-	hb_collision.set_deferred("disabled", true)
-	current_speed=0
-	velocity.x=0
 	if (state_machine.get_active_state()!= dying and state_machine.get_active_state()!=death \
 	and state_machine.get_active_state()!=launch and state_machine.get_active_state()!=clashed):
 		if health.health>0:
 			state_machine.dispatch(&"staggered")
 
-func _on_staggered_entered() -> void:
-	shield_collision.set_deferred("disabled",true)
-	hurt_box.active=true
-	hurt_box_collision.set_deferred("disabled", false)
-	if player_right:
-		knockback.x=-200
-	else:
-		knockback.x=200
-	
-func _on_staggered_exited() -> void:
-	shield_collision.set_deferred("disabled",false)
+#func _on_staggered_entered() -> void:
+	##shield_collision.set_deferred("disabled",true)
+	#hurt_box.active=true
+	#hurt_box_collision.set_deferred("disabled", false)
+	#if player_right:
+		#knockback.x=-200
+	#else:
+		#knockback.x=200
+	#
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05,0.1)
@@ -657,7 +651,7 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			state_machine.dispatch(&"hit")
 		
 		#set_state(current_state, States.HIT)
-		gpu_particles_2d.emitting=true
+		#gpu_particles_2d.emitting=true
 		
 	else:
 		print_debug("kill shot")
@@ -703,23 +697,6 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	if state_machine.get_active_state()==death:
 		queue_free()
 
-#DEBUG
-#func leader():
-	#if group_enemy_manager.leader:
-		#label.text=str("LEADER")
-	#else:
-		#label.text=str("NO")
-#
-#func even_order(value: int):
-	#if value==0 or value % 2 == 0:
-		#label.text=str("EVEN")
-	#else:
-		#label.text=str("ODD")
-
-
-func _on_shooting_states_entered() -> void:
-	shield.set_collision_mask_value(7, true)
-
 
 func _on_vision_handler_player_sighted() -> void:
 	if linked_enemies!=null:
@@ -744,15 +721,16 @@ func force_chase():
 	if not is_on_screen and vision_handler.always_on==true and state_machine.get_active_state()!=chasing and state_machine.get_active_state()!=melee_attack:
 		state_machine.change_active_state(chasing)
 
-func _on_parry_box_bullet_stopped() -> void:
-	print_debug("shieled")
+#func _on_parry_box_bullet_stopped() -> void:
+	#print_debug("shieled")
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	hit_stop.end_hit_stop()
 	if vision_handler.player_found or vision_handler.always_on:
 		state_machine.dispatch(&"attack_mode")
-		bt_player.blackboard.set_var("attack_mode", true)
+		if bt_player != null:
+			bt_player.blackboard.set_var("attack_mode", true)
 		
 	if health.health<=0:
 		queue_free()
@@ -766,21 +744,17 @@ func _on_ally_vision_handler_found_ally() -> void:
 
 
 func _on_ally_vision_handler_ally_gone() -> void:
-	defend_ally.blackboard.set_var("ally_found", false)
+	pass
+	#defend_ally.blackboard.set_var("ally_found", false)
 
-func chase():
-	#set_state(current_state, States.CHASE)
-	state_machine.dispatch(&"start_chase")
-
-
-func _on_melee_attack_entered() -> void:
-	shield.set_collision_mask_value(7, false)
-	hit_box.collision_shape.set_deferred("disabled", false)
-	movement_handler.face_player_active=false
-	movement_handler.active=false
-	velocity.x=0
-	current_speed=0
-	animation_player.play("melee_attack")
+#func _on_melee_attack_entered() -> void:
+	#shield.set_collision_mask_value(7, false)
+	#hit_box.collision_shape.set_deferred("disabled", false)
+	#movement_handler.face_player_active=false
+	#movement_handler.active=false
+	#velocity.x=0
+	#current_speed=0
+	#animation_player.play("melee_attack")
 	
 	
 func _on_melee_attack_updated(delta: float) -> void:
@@ -797,18 +771,6 @@ func _on_hit_box_clashed() -> void:
 	vfx_sprite.set_deferred("visible", false)
 	#hit_stop.hit_stop(0.05, 0.5)
 	state_machine.dispatch(&"clashed")
-	
-	
-	#animation_player.play("melee_attack")
-	#print_debug("clashed!")
-
-
-func _on_shield_area_entered(area: Area2D) -> void:
-	if "heavy_attack" in area:
-		if area.heavy_attack:
-			stagger.set_stagger(stagger.stagger-area.damage)
-		else:
-			hurt_box.set_active(false)
 
 
 func _on_hit_box_clash_knock_back(_launch : float, _knockback : float, _impact_dir_right : bool) -> void:
@@ -847,11 +809,11 @@ func _on_hurt_box_launched(launch_strength : float) -> void:
 		state_machine.change_active_state(launch)
 
 
-func _on_death_entered() -> void:
-	hb_collision.set_deferred("disabled", true)
-	hurt_box_collision.set_deferred("disabled", true)
-	collision_shape_2d.set_deferred("disabled", true)
-	set_collision_mask_value(15, true)
+#func _on_death_entered() -> void:
+	#hb_collision.set_deferred("disabled", true)
+	#hurt_box_collision.set_deferred("disabled", true)
+	#collision_shape_2d.set_deferred("disabled", true)
+	#set_collision_mask_value(15, true)
 	
 
 
@@ -898,9 +860,9 @@ func _on_vfx_player_animation_changed(old_name: StringName, new_name: StringName
 	if new_name=="knocked_back":
 		print_debug(new_name)
 
-
-func _on_melee_attack_exited() -> void:
-	movement_handler.face_player_active=true
+#
+#func _on_melee_attack_exited() -> void:
+	#movement_handler.face_player_active=true
 	#var _melee_ranged_colliding := attack_range.get_overlapping_bodies()
 	#if _melee_ranged_colliding.is_empty():
 		#state_machine.dispatch(&"start_shoot")
@@ -919,17 +881,6 @@ func _on_counter_attack_timer_timeout() -> void:
 
 func _on_hit_entered() -> void:
 	current_speed=0
-
-
-
-
-
-#func _on_ranged_entered() -> void:
-	#shield.set_collision_mask_value(7, true)
-#
-#
-#func _on_melee_entered() -> void:
-	#shield.set_collision_mask_value(7, false)
 
 
 func _on_attack_range_area_entered(area: Area2D) -> void:

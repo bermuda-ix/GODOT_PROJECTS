@@ -1,0 +1,101 @@
+[gd_resource type="BehaviorTree" format=3 uid="uid://bxakb1j8uax5m"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_1mc1m"]
+var/stagger/name = &"stagger"
+var/stagger/type = 2
+var/stagger/value = 0
+var/stagger/hint = 0
+var/stagger/hint_string = ""
+var/ammo/name = &"ammo"
+var/ammo/type = 2
+var/ammo/value = 0
+var/ammo/hint = 0
+var/ammo/hint_string = ""
+
+[sub_resource type="BBVariant" id="BBVariant_buh7y"]
+type = 2
+saved_value = 0
+resource_name = "0"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_00ylt"]
+variable = &"ammo"
+check_type = 2
+value = SubResource("BBVariant_buh7y")
+
+[sub_resource type="BBNode" id="BBNode_5bs0k"]
+saved_value = NodePath("ShootAttackManager")
+resource_name = "ShootAttackManager"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_35kg5"]
+node = SubResource("BBNode_5bs0k")
+method = &"reload"
+
+[sub_resource type="BTSequence" id="BTSequence_drh6u"]
+custom_name = "Reload"
+children = [SubResource("BTCheckVar_00ylt"), SubResource("BTCallMethod_35kg5")]
+
+[sub_resource type="BBNode" id="BBNode_1mc1m"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_b55l8"]
+animation_player = SubResource("BBNode_1mc1m")
+animation_name = &"shoot_crouch"
+
+[sub_resource type="BBVariant" id="BBVariant_yi06b"]
+type = 2
+saved_value = 1
+resource_name = "1"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_em4jx"]
+variable = &"stagger"
+check_type = 2
+value = SubResource("BBVariant_yi06b")
+
+[sub_resource type="BBNode" id="BBNode_buh7y"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_b5oiy"]
+animation_player = SubResource("BBNode_buh7y")
+animation_name = &"shoot_crouch"
+
+[sub_resource type="BTSequence" id="BTSequence_ws26m"]
+custom_name = "RapidShoot"
+children = [SubResource("BTPlayAnimation_b55l8"), SubResource("BTCheckVar_em4jx"), SubResource("BTAwaitAnimation_b5oiy")]
+
+[sub_resource type="BBNode" id="BBNode_00ylt"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_shfor"]
+animation_player = SubResource("BBNode_00ylt")
+animation_name = &"shoot"
+
+[sub_resource type="BBNode" id="BBNode_35kg5"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_b36is"]
+animation_player = SubResource("BBNode_35kg5")
+animation_name = &"shoot"
+
+[sub_resource type="BBNode" id="BBNode_i5v7s"]
+saved_value = NodePath("StateMachine/ShootingBTState")
+resource_name = "StateMachine/ShootingBTState"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_k70j1"]
+node = SubResource("BBNode_i5v7s")
+method = &"_debug_var"
+
+[sub_resource type="BTSequence" id="BTSequence_n33kx"]
+custom_name = "Shoot"
+children = [SubResource("BTPlayAnimation_shfor"), SubResource("BTAwaitAnimation_b36is"), SubResource("BTCallMethod_k70j1")]
+
+[sub_resource type="BTSelector" id="BTSelector_13dlj"]
+custom_name = "Shooting"
+children = [SubResource("BTSequence_drh6u"), SubResource("BTSequence_ws26m"), SubResource("BTSequence_n33kx")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_1mc1m")
+root_task = SubResource("BTSelector_13dlj")

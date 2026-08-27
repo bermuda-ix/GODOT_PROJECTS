@@ -292,7 +292,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		hurt_box_weakpoint_collision.set_deferred("disabled", true)
 	
-	velocity.x = current_speed + knockback.x + pushback
+	velocity.x = (current_speed*movement_handler.move_dir) + knockback.x + pushback
 	if state_machine.get_active_state()!=clashed:
 		move_and_slide()
 	movement_handler.apply_gravity(delta)

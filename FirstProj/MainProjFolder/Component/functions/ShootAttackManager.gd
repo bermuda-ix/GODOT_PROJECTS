@@ -17,6 +17,7 @@ signal reloading_done
 
 #REFACTORED RELOADING. To be added to all actors
 @export var refactored_reloading : bool = false
+@export var reload_anim : StringName ="reload"
 
 func shoot():
 	if turret.infinite_ammo:
@@ -52,21 +53,22 @@ func shoot():
 				reloading_done.emit()
 				turret.ammo_count=turret.max_ammo
 			else:
-				animation_player.play("reload")
-				await animation_player.animation_finished
-				reloading_done.emit()
-				turret.ammo_count=turret.max_ammo
-				
+				reload()
 
 func fire_missile():
 	pass
 
 func shoot_refactor():
+	if turret.ammo_count <= 0:
+		animation_player.stop()
+		return
 	turret.shoot()
 	turret.ammo_count-=1
 
 func reload():
-	animation_player.play("reload")
+	animation_player.play(reload_anim)
+	await animation_player.animation_finished
+	reloading_done.emit()
 	turret.ammo_count=turret.max_ammo
 	
 	
