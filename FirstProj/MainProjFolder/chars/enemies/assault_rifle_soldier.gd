@@ -71,7 +71,7 @@ var current_speed : float = 0.0 : set = set_current_speed, get = get_current_spe
 var prev_speed : float = 00.0
 var acceleration : float = 800.0
 var jump_velocity = JUMP_VELOCITY
-var knockback : Vector2 = Vector2.ZERO
+var knockback : Vector2 = Vector2.ZERO : set = set_knockback
 var pushback := 0.0
 var next_y
 var next_x
@@ -173,6 +173,13 @@ func set_current_speed(_value : float) -> void:
 func get_current_speed() -> float:
 	return current_speed
 
+func set_knockback(_value : Vector2) -> void:
+	knockback=_value
+	if _value.x!=0:
+		print_debug(velocity.x)
+	else:
+		pass
+
 #Debug var
 var combat_state : String = "RANGED"
 @onready var label: Label = $Label
@@ -192,6 +199,7 @@ func _ready():
 		bt_player.blackboard.set_var("ranged_mode", true)
 		bt_player.blackboard.set_var("within_range", false)
 		bt_player.blackboard.set_var("staggered", false)
+	Events.parry_success.connect(clash_follow_up)
 	Events.parry_success.connect(clash_follow_up)
 	#turret.setup(0.2)
 	turret.shoot_timer.paused=true
@@ -297,8 +305,11 @@ func _physics_process(delta: float) -> void:
 		#hurt_box_weakpoint_collision.set_deferred("disabled", true)
 	
 	velocity.x = (current_speed*movement_handler.move_dir) + knockback.x + pushback
-	if state_machine.get_active_state()!=clashed:
-		move_and_slide()
+	if velocity.x==0:
+		print_debug("stopped")
+	else:
+		print_debug(velocity.x)
+	move_and_slide()
 	movement_handler.apply_gravity(delta)
 
 func _init_group_link():
@@ -428,9 +439,9 @@ func target_lock():
 	target_lock_node.target_lock()
 	
 func get_width() -> int:
-	return abs(collision_shape_2d.get_shape().size.x * scale.x)
+	return collision_shape_2d.get_shape().radius
 func get_height() -> int:
-	return abs(collision_shape_2d.get_shape().size.y * scale.y)
+	return collision_shape_2d.get_shape().radius+10
 
 
 
@@ -540,6 +551,10 @@ func clash_follow_up(_follow_up := "nothing"):
 			else:
 				state_machine.dispatch(&"staggered")
 		"nothing":
+			if player_right:
+				knockback.x=-250
+			else:
+				knockback.x=250
 			animation_player.play()
 		_:
 			animation_player.play()
@@ -563,10 +578,14 @@ func _on_turret_shoot_bullet() -> void:
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="melee_attack":
-		if state_machine.get_active_state()==clashed:
-			return
-		#print_debug(state_machine.get_active_state())
 		var _melee_ranged_colliding := attack_range.get_overlapping_bodies()
+		if state_machine.get_active_state()==clashed:
+			if stagger.stagger>0:
+				if _melee_ranged_colliding.is_empty():
+					state_machine.dispatch(&"start_shoot")
+				else:
+					state_machine.dispatch(&"counter_melee")
+		#print_debug(state_machine.get_active_state())
 		if _melee_ranged_colliding.is_empty():
 			state_machine.dispatch(&"start_shoot")
 		else:
@@ -765,7 +784,7 @@ func _on_hit_box_clashed() -> void:
 		return
 	velocity.x=0
 	#animation_player.stop()
-	bt_player.blackboard.set_var("staggered", true)
+	#bt_player.blackboard.set_var("staggered", true)
 	hb_collision.set_deferred("disabled",true)
 	hit_box.active=false
 	vfx_sprite.set_deferred("visible", false)

@@ -2240,7 +2240,7 @@ size = Vector2(61, 71)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_nyk46"]
 
-[node name="AssaultRifleSoldier" type="CharacterBody2D" unique_id=1122506050 node_paths=PackedStringArray("hitbox")]
+[node name="AssaultRifleSoldier" type="CharacterBody2D" unique_id=1122506050 node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant"]]
 script = ExtResource("1_b8vbm")
 hitbox = NodePath("HitBox")
 
@@ -2265,6 +2265,7 @@ flip_h = true
 [node name="VFXSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=339675963]
 visible = false
 self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
+z_index = 2
 position = Vector2(-23.000002, 7.000001)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_j3pel")
@@ -2293,6 +2294,7 @@ metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=1036046665]
 script = ExtResource("13_l650s")
+max_stagger = 1
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2726783]
@@ -2313,9 +2315,9 @@ max_ammo = 20
 script = ExtResource("15_mhsxx")
 metadata/_custom_type_script = "uid://b0uasmutdnguo"
 
-[node name="HitBox" type="Area2D" parent="." unique_id=682387190 node_paths=PackedStringArray("stagger", "collision_shape")]
+[node name="HitBox" type="Area2D" parent="." unique_id=682387190 node_paths=PackedStringArray("stagger", "collision_shape") groups=["hitbox"]]
 collision_layer = 8
-collision_mask = 16
+collision_mask = 80
 script = ExtResource("16_fsmin")
 stagger = NodePath("../Stagger")
 active = true

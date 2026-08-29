@@ -3413,6 +3413,7 @@ flip_v = true
 
 [node name="HitFXSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=919871015]
 visible = false
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 sprite_frames = SubResource("SpriteFrames_incat")
 animation = &"hit"
 

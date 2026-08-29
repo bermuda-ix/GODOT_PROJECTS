@@ -2474,7 +2474,9 @@ func parry_success(_parry_follow_up := "nothing"):
 			start_attack_timer(0.05)
 			knockback.x=50*face_dir
 		"nothing":
-			pass
+			anim_player.play()
+			start_attack_timer(0.05)
+			knockback.x=250*face_dir
 		_:
 			pass
 	hit_fx_player.play(attack_1.attack)

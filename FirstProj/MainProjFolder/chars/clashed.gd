@@ -22,12 +22,23 @@ func _enter() -> void:
 	anim_player.pause()
 	movement_handler.active=false
 	actor.knockback=Vector2.ZERO
-	stagger.set_stagger(stagger.stagger-1)
+	#stagger.set_stagger(stagger.stagger-1)
 	vfx_player.speed_scale=1/Engine.time_scale
-	if stagger.stagger>0:
+	if stagger.stagger>1:
 		counter_attack_timer.start(0.2)
 	else:
 		movement_handler.active=false
+
+func _update(delta: float) -> void:
+	vfx_player.speed_scale=1/Engine.time_scale
+	actor.velocity.x=0+actor.knockback.x
+	if actor.velocity.x!=0:
+		print_debug(actor.velocity.x)
+	actor.velocity.y=0
+	#actor.knockback=Vector2.ZERO
+	#if actor.velocity.x!=0:
+		#print_debug(actor.velocity.x)
+	#assert(vfx_player.is_playing())
 
 func _exit() -> void:
 	vfx_player.stop()
@@ -37,9 +48,9 @@ func _exit() -> void:
 			movement_handler.active=true
 		return
 	if actor.player_right:
-		actor.velocity.x=-150
-	else:
 		actor.velocity.x=150
+	else:
+		actor.velocity.x=-150
 	if stagger.stagger<=0 and state_machine.get_active_state()!= actor.staggered:
 		state_machine.dispatch(&"staggered")
 	

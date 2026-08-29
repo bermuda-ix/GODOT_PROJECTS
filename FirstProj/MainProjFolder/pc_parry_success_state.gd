@@ -17,7 +17,7 @@ func _ready() -> void:
 	dur.autostart=false
 	dur.one_shot=true
 	dur.ignore_time_scale=true
-	
+	dur.timeout.connect(do_nothing)
 
 func _enter() -> void:
 	print_debug("successful parry")
@@ -29,11 +29,14 @@ func _enter() -> void:
 	anim_player.pause()
 	hit_stop.hit_stop(0.1, 5)
 	pc.velocity.x=0
-	#dur.start(3)
+	dur.start(3)
 
 func _update(delta: float) -> void:
-	pc.velocity.x=0
+	pc.velocity.x=0+pc.knockback.x
+	#if pc.velocity.x!=0:
+		#print_debug(pc.velocity.x)
 	if Input.is_action_just_pressed("attack"):
+		dur.stop()
 		pc.velocity.x=0
 		success=true
 		pc.parry_stance=false
@@ -47,6 +50,7 @@ func _update(delta: float) -> void:
 		
 		dur.stop()
 	elif Input.is_action_just_pressed("Dodge"):
+		dur.stop()
 		success=true
 		pc.parry_stance=false
 		Events.parry_success.emit("dodge counter")
@@ -54,13 +58,15 @@ func _update(delta: float) -> void:
 		hit_stop.end_hit_stop()
 		dur.stop()
 	elif Input.is_action_just_pressed("special_attack"):
+		dur.stop()
 		success=true
 		pc.parry_stance=false
 		Events.parry_success.emit("heavy riposte counter")
 		pc.state_machine.dispatch(&"heavy_riposte")
 		hit_stop.end_hit_stop()
 		dur.stop()
-		
+	else:
+		pass
 	
 func _exit() -> void:
 	pc.attack_timer.paused=false
@@ -68,10 +74,10 @@ func _exit() -> void:
 	success=false
 	#pc.hurt_box_detect.disabled=false
 
-func _on_dur_timeout() -> void:
-	if success==true:
-		return
-	Events.parry_failed
+func do_nothing() -> void:
+	Events.parry_success.emit("nothing")
 	pc.state_machine.dispatch(&"no_nothing")
+	
 	hit_stop.end_hit_stop()
 	pc.clash_timer.start()
+	

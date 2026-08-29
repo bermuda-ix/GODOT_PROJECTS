@@ -10,7 +10,7 @@ extends LimboState
 
 func _enter() -> void:
 	#actor.state="DEATH"
-	actor.velocity.y=0
+	
 	actor.hb_collision.set_deferred("disabled", true)
 	actor.hurt_box_collision.set_deferred("disabled", true)
 	actor.collision_shape_2d.set_deferred("disabled", true)
@@ -19,5 +19,6 @@ func _enter() -> void:
 		actor.bt_player.blackboard.set_var("attack_mode", false)
 	
 
-#func _update(delta: float) -> void:
+func _update(delta: float) -> void:
+	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.8)
 	##print_debug("oof i'm dead sadge")
