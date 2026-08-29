@@ -87,6 +87,7 @@
 [ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="52_jpgje"]
 [ext_resource type="Script" uid="uid://cl76g40e3l6a6" path="res://chars/enemies/landed.gd" id="53_bynfm"]
 [ext_resource type="PackedScene" uid="uid://bro4najrj7577" path="res://Component/UI_Rec/npc_stats.tscn" id="53_x24k2"]
+[ext_resource type="Script" uid="uid://ddhk64y60klpg" path="res://Component/functions/MeleeAttackManager.gd" id="54_mni36"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_incat"]
 radius = 16.0
@@ -1569,6 +1570,17 @@ tracks/12/keys = {
 "update": 1,
 "values": [Vector2(-10, 0), Vector2(-23.000002, 7.000001)]
 }
+tracks/13/type = "method"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("StateMachine/MeleeAttack")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
 
 [sub_resource type="Animation" id="Animation_eke2m"]
 resource_name = "reload"
@@ -2184,7 +2196,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_rcq7j"]
 resource_name = "hit"
-length = 0.16666667
+length = 0.26666668
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -2204,7 +2216,7 @@ tracks/1/path = NodePath("../AnimatedSprite2D/HitFXSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334),
+"times": PackedFloat32Array(0, 0.13333334, 0.16666669, 0.20000002, 0.23333332),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4]
@@ -2216,7 +2228,7 @@ tracks/2/path = NodePath("../AnimatedSprite2D/HitFXSprite:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.16666667),
+"times": PackedFloat32Array(0, 0.26666668),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -2241,6 +2253,8 @@ size = Vector2(61, 71)
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_nyk46"]
 
 [node name="AssaultRifleSoldier" type="CharacterBody2D" unique_id=1122506050 node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant"]]
+collision_layer = 16384
+collision_mask = 17
 script = ExtResource("1_b8vbm")
 hitbox = NodePath("HitBox")
 
@@ -2294,7 +2308,7 @@ metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=1036046665]
 script = ExtResource("13_l650s")
-max_stagger = 1
+max_stagger = 2
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2726783]
@@ -2406,6 +2420,11 @@ script = ExtResource("21_mv1br")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
+[node name="MeleeAttackManager" type="Node" parent="." unique_id=560281067 node_paths=PackedStringArray("actor")]
+script = ExtResource("54_mni36")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://ddhk64y60klpg"
+
 [node name="ShootHandler" type="Node" parent="." unique_id=216352673 node_paths=PackedStringArray("actor", "turret")]
 script = ExtResource("22_qcsya")
 actor = NodePath("..")
@@ -2421,7 +2440,7 @@ turret = NodePath("../Turret")
 refactored_reloading = true
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
-[node name="VisionHandler" type="Node" parent="." unique_id=730246600 node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking", "nav_agent")]
+[node name="VisionHandler" type="Node" parent="." unique_id=730246600 node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking", "nav_agent", "turret")]
 script = ExtResource("23_4cjr0")
 actor = NodePath("..")
 sm = NodePath("../StateMachine")
@@ -2430,6 +2449,7 @@ player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 bt_active = false
 stay_on = true
 nav_agent = NodePath("../NavigationAgent2D")
+turret = NodePath("../Turret")
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
 [node name="AllyVisionHandler" type="Node" parent="." unique_id=750604522 node_paths=PackedStringArray("actor", "ally_vision", "state_machine")]
@@ -2517,12 +2537,13 @@ actor = NodePath("../..")
 hit_box = NodePath("../../HitBox")
 metadata/_custom_type_script = "uid://b5an13nv6em7m"
 
-[node name="MeleeAttack" type="LimboState" parent="StateMachine" unique_id=89448626 node_paths=PackedStringArray("actor", "movement_handler", "animation_player")]
+[node name="MeleeAttack" type="LimboState" parent="StateMachine" unique_id=89448626 node_paths=PackedStringArray("actor", "movement_handler", "animation_player", "hit_box")]
 script = ExtResource("39_bynfm")
 actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
 animation_player = NodePath("../../AnimationPlayer")
 anim_name = &"melee_attack"
+hit_box = NodePath("../../HitBox")
 
 [node name="ShootingBTState" type="BTState" parent="StateMachine" unique_id=1512420932 node_paths=PackedStringArray("turret", "stagger")]
 behavior_tree = ExtResource("45_nnekd")
@@ -2538,6 +2559,7 @@ hurtbox = NodePath("../../HurtBox")
 animation_player = NodePath("../../AnimationPlayer")
 hit_fx_player = NodePath("../../AnimationPlayer/HitFXPlayer")
 stagger = NodePath("../../Stagger")
+stagger_threshold = 0
 metadata/_custom_type_script = "uid://cdsger1er8ipk"
 
 [node name="Parry" type="BTState" parent="StateMachine" unique_id=1921918181 node_paths=PackedStringArray("actor", "anim_player", "timer")]

@@ -26,7 +26,8 @@ func _ready() -> void:
 	##Preload adventure level##
 	###########################
 	
-	thread.start(load_next_levels)
+	###uncomment of exe build
+	#thread.start(load_next_levels)
 	
 	Global.game_controller._init_objectives(ObjectivesByLevel.prologue_init_objectives)
 	

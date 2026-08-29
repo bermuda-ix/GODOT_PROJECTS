@@ -731,8 +731,10 @@ stagger = NodePath("../../Stagger")
 bt_player = NodePath("../../BTPlayer")
 movement_able = false
 
-[node name="Shooting" type="LimboState" parent="LimboHSM" unique_id=336761776]
+[node name="Shooting" type="LimboState" parent="LimboHSM" unique_id=336761776 node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("11_fxdsi")
+actor = NodePath("../..")
+animation_player = NodePath("../../AnimationPlayer")
 metadata/_custom_type_script = "uid://pjji1dxbp6vy"
 
 [node name="ParryTimer" type="Timer" parent="." unique_id=391432651]

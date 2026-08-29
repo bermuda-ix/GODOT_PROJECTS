@@ -736,7 +736,7 @@ func _physics_process(delta):
 			##state = States.DODGE
 		
 		## Add the gravity.
-		if(parry_stance==false) and state_machine.get_active_state()!=attack_state:
+		if(parry_stance==false) and not attacking:
 			apply_gravity(delta) 
 		elif state_machine.get_active_state()==attack_state and attack_state.get_active_state()==slam_start:
 			apply_gravity(delta)
@@ -1925,6 +1925,7 @@ func get_target_info():
 	if target==null:
 		return
 	else:
+		assert(target!=null)
 		if "prop_enemy" in target:
 			if target.prop_enemy:
 				return
@@ -1932,13 +1933,14 @@ func get_target_info():
 			if target.health.get_health()<=0:
 				Events.unlock_from.emit()
 				unlock_from_target()
+				return
 			target_size_x = target.get_width()
 			target_size_y = target.get_height()
 			target_top = target.global_position.y-(target_size_y/2-5)
 			target_left_edge=target.global_position.x-(target_size_x/2)
 			target_right_edge=target.global_position.x+(target_size_x/2)
 			
-			if target_size_y > collision_shape_2d.get_shape().size.y*1.5:
+			if target_size_y > collision_shape_2d.get_shape().radius*1.5:
 				high_target=true
 			else:
 				high_target=false
@@ -2758,7 +2760,7 @@ func _on_animation_player_animation_started(anim_name):
 	if state_machine.get_active_state()==attack_state:
 		#hit_box.active=true
 		hb_collision.set_deferred("disabled", false)
-		
+		velocity.y=0
 		if attack_state.get_active_state()==attack_1:
 			#charge_timer.stop()
 			match anim_name:
@@ -3168,6 +3170,7 @@ func _on_attack_state_exited() -> void:
 	charging=false
 	set_shotgun_free_rotate(true)
 	hb_collision.set_deferred("disabled", true)
+	attack_fx.visible=false
 
 
 func _on_stagger_stagger_decreased(diff: int) -> void:

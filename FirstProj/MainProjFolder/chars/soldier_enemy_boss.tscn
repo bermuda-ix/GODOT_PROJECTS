@@ -250,6 +250,11 @@
 [ext_resource type="Texture2D" uid="uid://c3ei3kyoroif7" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 12/578.png" id="200_52cq2"]
 [ext_resource type="Texture2D" uid="uid://b5a7amrfjvh6n" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 6/276.png" id="201_lmcka"]
 [ext_resource type="Texture2D" uid="uid://bqwilb7hxob8g" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 5/230.png" id="201_nykr5"]
+[ext_resource type="Texture2D" uid="uid://blcu07iovyclb" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_01.png" id="204_dumub"]
+[ext_resource type="Texture2D" uid="uid://fbgglf4h7tni" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_02.png" id="205_fme1f"]
+[ext_resource type="Texture2D" uid="uid://dxef33nv5p316" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_03.png" id="206_h1spd"]
+[ext_resource type="Texture2D" uid="uid://8ff0cbeagj4c" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_04.png" id="207_qu73d"]
+[ext_resource type="Texture2D" uid="uid://dchoeftyjo2db" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_05.png" id="208_ae1si"]
 [ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="218_gn0bn"]
 [ext_resource type="Script" uid="uid://dly3pw0jr2gav" path="res://chars/falling.gd" id="239_lvekc"]
 [ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="240_c7cuv"]
@@ -2322,6 +2327,34 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_kme6i"]
+animations = [{
+"frames": [],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("204_dumub")
+}, {
+"duration": 1.0,
+"texture": ExtResource("205_fme1f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("206_h1spd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("207_qu73d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("208_ae1si")
+}],
+"loop": 1,
+"name": &"hit",
+"speed": 5.0
+}]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_lm085"]
 atlas = ExtResource("99_thomt")
 region = Rect2(0, 0, 273, 273)
@@ -4039,6 +4072,51 @@ _data = {
 &"staggered_entered": SubResource("Animation_gmb02")
 }
 
+[sub_resource type="Animation" id="Animation_dnwck"]
+resource_name = "hit"
+length = 0.16666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D/HitFXSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"hit"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D/HitFXSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D/HitFXSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.16666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7v3re"]
+_data = {
+&"hit": SubResource("Animation_dnwck")
+}
+
 [sub_resource type="Animation" id="Animation_2r4bp"]
 length = 0.001
 tracks/0/type = "value"
@@ -4260,6 +4338,12 @@ sprite_frames = SubResource("SpriteFrames_725ad")
 animation = &"atk_1"
 flip_v = true
 
+[node name="HitFXSprite" type="AnimatedSprite2D" parent="AnimatedSprite2D" index="3" unique_id=1662838313]
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
+position = Vector2(0, 17)
+sprite_frames = SubResource("SpriteFrames_kme6i")
+animation = &"hit"
+
 [node name="AnimationPlayer" parent="." index="2"]
 libraries/ = ExtResource("100_ggkva")
 libraries/flashback_lvl_cutscenes = SubResource("AnimationLibrary_5sek5")
@@ -4268,6 +4352,7 @@ libraries/flashback_lvl_cutscenes = SubResource("AnimationLibrary_5sek5")
 libraries/ = SubResource("AnimationLibrary_gi2km")
 
 [node name="HitFXPlayer" type="AnimationPlayer" parent="AnimationPlayer" index="1" unique_id=617115251]
+libraries/ = SubResource("AnimationLibrary_7v3re")
 
 [node name="ShaderAnimation" type="AnimationPlayer" parent="." index="3" unique_id=141259869]
 libraries/ = SubResource("AnimationLibrary_t6q84")
@@ -4607,11 +4692,12 @@ actor = NodePath("../..")
 launch_timer = NodePath("../../LaunchTimer")
 metadata/_custom_type_script = "uid://dscn2ndlewuut"
 
-[node name="Clashed" type="LimboState" parent="LimboHSM" index="16" unique_id=612323006 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "movement_handler", "stagger", "state_machine", "hit_stop", "counter_attack_timer")]
+[node name="Clashed" type="LimboState" parent="LimboHSM" index="16" unique_id=612323006 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "hurt_box", "movement_handler", "stagger", "state_machine", "hit_stop", "counter_attack_timer")]
 script = ExtResource("189_ia0g3")
 actor = NodePath("../..")
 anim_player = NodePath("../../AnimationPlayer")
 vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
+hurt_box = NodePath("../../HurtBox")
 movement_handler = NodePath("../../MovementHandler")
 stagger = NodePath("../../Stagger")
 state_machine = NodePath("..")

@@ -3596,7 +3596,7 @@ script = ExtResource("20_eopqg")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="VisionHandler" type="Node" parent="." unique_id=967942652 node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking", "nav_agent")]
+[node name="VisionHandler" type="Node" parent="." unique_id=967942652 node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking", "nav_agent", "turret")]
 script = ExtResource("16_pk3h2")
 actor = NodePath("..")
 sm = NodePath("../StateMachine")
@@ -3606,6 +3606,7 @@ player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 bt_active = false
 stay_on = true
 nav_agent = NodePath("../NavigationAgent2D")
+turret = NodePath("../Turret")
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
 [node name="AllyVisionHandler" type="Node" parent="." unique_id=1330613628 node_paths=PackedStringArray("actor", "ally_vision", "state_machine")]

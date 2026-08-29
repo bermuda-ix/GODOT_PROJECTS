@@ -2424,8 +2424,9 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
-size = Vector2(27.275377, 41.20858)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1mc1m"]
+radius = 13.63769
+height = 48.244164
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mdoa6"]
 height = 46.0
@@ -12487,6 +12488,9 @@ size = Vector2(31.97803, 41.20858)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qebxi"]
 size = Vector2(48, 41)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
+size = Vector2(27.275377, 41.20858)
+
 [node name="PC" type="CharacterBody2D" unique_id=1041091659 node_paths=PackedStringArray("health", "hitbox") groups=["player"]]
 collision_layer = 2
 collision_mask = 103599113
@@ -12893,9 +12897,9 @@ energy = 0.5
 texture = SubResource("GradientTexture2D_c5jop")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=771559977]
-position = Vector2(1.4999993, -9.5000105)
+position = Vector2(1, -12)
 scale = Vector2(1.06323, 0.994939)
-shape = SubResource("RectangleShape2D_pmx5o")
+shape = SubResource("CapsuleShape2D_1mc1m")
 
 [node name="Health" type="Node" parent="." unique_id=994567121]
 script = ExtResource("4_q0gnn")

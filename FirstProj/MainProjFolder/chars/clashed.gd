@@ -9,7 +9,10 @@ class_name Clashed extends LimboState
 @export var state_machine : LimboHSM
 @export var hit_stop : HitStop
 @export var clash_anim_name : StringName = "clashed"
+@export_category("Counter Attack Properties")
 @export var counter_attack_timer : Timer
+@export var counter_stagger_threshold : int = 1
+@export var counter_enabled : bool = false
 
 func _enter() -> void:
 	if vfx_player != null:
@@ -24,7 +27,7 @@ func _enter() -> void:
 	actor.knockback=Vector2.ZERO
 	#stagger.set_stagger(stagger.stagger-1)
 	vfx_player.speed_scale=1/Engine.time_scale
-	if stagger.stagger>1:
+	if stagger.stagger>counter_stagger_threshold and counter_enabled:
 		counter_attack_timer.start(0.2)
 	else:
 		movement_handler.active=false

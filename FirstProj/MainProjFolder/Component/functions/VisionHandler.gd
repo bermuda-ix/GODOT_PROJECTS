@@ -12,6 +12,7 @@ extends Node
 @export var bt_active : bool = true
 @export var stay_on : bool = false
 @export var nav_agent : NavigationAgent2D
+@export var turret : Turret
 
 @onready var player : PlayerEntity
 @onready var player_detect : Area2D
@@ -27,6 +28,9 @@ func _ready() -> void:
 	player_detect = get_tree().get_first_node_in_group("player_detect")
 	player_tracking.target_position = Vector2(vision_range, 0)
 	
+
+func _process(delta: float) -> void:
+	turret_face_player()
 
 func get_player_relative_loc():
 	if player.global_position.x>actor.global_position.x:
@@ -101,6 +105,16 @@ func handle_vision():
 			else:
 				pass
 	#player_found = true
+
+func turret_face_player() -> void:
+	if turret == null:
+		return
+	if actor.player_right:
+		if turret.position.x<0:
+			turret.position.x*=-1
+	else:
+		if turret.position.x>0:
+			turret.position.x*=-1
 
 func path_valid() -> bool:
 	if nav_agent==null:

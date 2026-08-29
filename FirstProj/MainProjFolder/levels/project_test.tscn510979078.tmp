@@ -502,8 +502,13 @@ shape = SubResource("RectangleShape2D_fof0c")
 environment = SubResource("Environment_dqkb5")
 
 [node name="AssaultRifleSoldier" parent="." index="37" unique_id=1122506050 instance=ExtResource("13_dqkb5")]
-position = Vector2(888, 73)
+position = Vector2(882, 75)
 scale = Vector2(0.75, 0.75)
+jump_speed = 120.0
+chase_speed = 40.0
+death_time_scale = 1.0
+death_knockback = 400.0
+death_launch = -30
 
 [connection signal="update_health" from="PC" to="CanvasLayer/UI_Level" method="set_health"]
 

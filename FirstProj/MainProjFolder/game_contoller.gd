@@ -47,6 +47,7 @@ func _ready() -> void:
 	mutex = Mutex.new()
 	thread = Thread.new()
 	call_preload_scene(LevelsList.LEVEL_SELECT)
+	load_adv_levels_web_test()
 	Global.game_controller = self
 	Events.load_level_map.connect(load_levels)
 	Events.load_first_level.connect(load_first_room)
@@ -121,7 +122,11 @@ func load_levels(dict : Dictionary) -> void:
 		#loaded_rooms.append(load(dict[room]).instantiate())
 		#i+=1
 	mutex.unlock()
-	
+
+func load_adv_levels_web_test() -> void:
+	load_levels(LevelsList.prologue_unique_levels)
+	load_levels(LevelsList.level_maps)
+
 func call_preload_levels(_dict : Dictionary):
 	thread.start(load_levels.bind(_dict))
 	thread.call_deferred("wait_to_finish")

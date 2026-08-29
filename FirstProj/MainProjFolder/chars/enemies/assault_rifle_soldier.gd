@@ -22,9 +22,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 
 #Behaviour Tree Player
 @onready var bt_player: BTPlayer = $BTPlayer
-#Particles
-@onready var gpu_particles_2d: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
-@onready var gpu_particles_2d_2: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D2
+
 #On Screen
 var is_on_screen : bool
 
@@ -34,14 +32,14 @@ var always_active : bool
 @onready var stagger: Stagger = $Stagger
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var hurt_box_collision: CollisionShape2D = $HurtBox/hurt_box_collision
-@onready var hurt_box_weakpoint: HurtBox = $HurtBox_Weakpoint
-@onready var hurt_box_weakpoint_collision: CollisionShape2D = $HurtBox_Weakpoint/CollisionShape2D
+#@onready var hurt_box_weakpoint: HurtBox = $HurtBox_Weakpoint
+#@onready var hurt_box_weakpoint_collision: CollisionShape2D = $HurtBox_Weakpoint/CollisionShape2D
 @onready var hit_stop: HitStop = $HitStop
 @onready var hit_stop_dur = 0.0
-@onready var parry_box: ParryBox = $ParryBox
-@onready var parry_box_collision: CollisionShape2D = $ParryBox/CollisionShape2D
-@onready var shield: Area2D = $Shield
-@onready var shield_collision: CollisionShape2D = $Shield/CollisionShape2D
+#@onready var parry_box: ParryBox = $ParryBox
+#@onready var parry_box_collision: CollisionShape2D = $ParryBox/CollisionShape2D
+#@onready var shield: Area2D = $Shield
+#@onready var shield_collision: CollisionShape2D = $Shield/CollisionShape2D
 
 
 #Timers
@@ -98,12 +96,12 @@ var player_state : LimboState
 @onready var jump: Jump = $StateMachine/Jump
 @onready var attack: Attack = $StateMachine/Attack
 @onready var melee_attack: LimboState = $StateMachine/MeleeAttack
-@onready var shooting_states: LimboHSM = $StateMachine/ShootingStates
-@onready var shooting: Shooting = $StateMachine/ShootingStates/Shooting
-@onready var shooting_defense: LimboState = $StateMachine/ShootingStates/ShootingDefense
-@onready var reload: LimboState = $StateMachine/ShootingStates/Reload
-@onready var shoot_idle: LimboState = $StateMachine/ShootingStates/ShootIdle
-@onready var defend_ally: BTState = $StateMachine/ShootingStates/DefendAlly
+#@onready var shooting_states: LimboHSM = $StateMachine/ShootingStates
+#@onready var shooting: Shooting = $StateMachine/ShootingStates/Shooting
+#@onready var shooting_defense: LimboState = $StateMachine/ShootingStates/ShootingDefense
+#@onready var reload: LimboState = $StateMachine/ShootingStates/Reload
+#@onready var shoot_idle: LimboState = $StateMachine/ShootingStates/ShootIdle
+#@onready var defend_ally: BTState = $StateMachine/ShootingStates/DefendAlly
 @onready var shooting_bt_state: BTState = $StateMachine/ShootingBTState
 @onready var hit: Hit = $StateMachine/Hit
 @onready var parry: Parry = $StateMachine/Parry
@@ -160,7 +158,7 @@ var attacking : bool = false
 @onready var group_link_order : int
 @onready var is_leader : bool = false
 @onready var is_even_order : bool = false
-@onready var group_enemy_manager: GroupEnemyManager = $GroupEnemyManager
+#@onready var group_enemy_manager: GroupEnemyManager = $GroupEnemyManager
 @onready var ally_vision_handler: AllyVisionHandler = $AllyVisionHandler
 @onready var ally_vision_raycast: RayCast2D = $AllyVisionRaycast
 
@@ -175,14 +173,10 @@ func get_current_speed() -> float:
 
 func set_knockback(_value : Vector2) -> void:
 	knockback=_value
-	if _value.x!=0:
-		print_debug(velocity.x)
-	else:
-		pass
 
 #Debug var
 var combat_state : String = "RANGED"
-@onready var label: Label = $Label
+#@onready var label: Label = $Label
 
 	
 func _ready():
@@ -312,19 +306,19 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	movement_handler.apply_gravity(delta)
 
-func _init_group_link():
-	if group_link_control == null:
-		print_debug("no link")
-		if linked_enemies.size()<=1:
-			print_debug("no link")
-	else:
-		linked_enemies=group_link_control.all_grouped_enemies
-		for i in range(linked_enemies.size()):
-			#print_debug(linked_enemies[i].name, " linked")
-			group_link_order=linked_enemies.find(self)
-			print_debug(group_link_order)
-	group_enemy_manager.set_leader(group_link_order)
-	group_enemy_manager.set_even_order(group_link_order)
+#func _init_group_link():
+	#if group_link_control == null:
+		#print_debug("no link")
+		#if linked_enemies.size()<=1:
+			#print_debug("no link")
+	#else:
+		#linked_enemies=group_link_control.all_grouped_enemies
+		#for i in range(linked_enemies.size()):
+			##print_debug(linked_enemies[i].name, " linked")
+			#group_link_order=linked_enemies.find(self)
+			#print_debug(group_link_order)
+	#group_enemy_manager.set_leader(group_link_order)
+	#group_enemy_manager.set_even_order(group_link_order)
 
 func _init_state_machine():
 	state_machine.initial_state=idle
@@ -374,21 +368,6 @@ func _init_combat_state_machine():
 	combat_state_machine.add_transition(ranged_mode, melee_mode, &"melee_mode")
 	combat_state_machine.add_transition(melee_mode, ranged_mode, &"ranged_mode")
 
-func _init_shooting_states():
-	shooting_states.initial_state=shoot_idle
-	#shooting_states.initialize(self)
-	#shooting_states.set_active(false)
-	
-	shooting_states.add_transition(shoot_idle, shooting_defense, &"defensive_shoot")
-	shooting_states.add_transition(shoot_idle, shooting, &"begin_shooting")
-	
-	shooting_states.add_transition(shooting, shooting_defense, &"defensive_shoot")
-	shooting_states.add_transition(shooting_defense, shooting, &"offensive_shoot")
-	shooting_states.add_transition(shooting_states.ANYSTATE, reload, &"reload")
-	shooting_states.add_transition(reload, shooting, &"return_shooting")
-	shooting_states.add_transition(shooting, defend_ally, &"begin_defend")
-	shooting_states.add_transition(shooting_defense, defend_ally, &"begin_defend")
-	shooting_states.add_transition(defend_ally, shooting_defense, defend_ally.success_event)
 	
 	
 	
@@ -407,32 +386,32 @@ func _on_navigation_timer_timeout() -> void:
 func flip_ally_vision():
 	ally_vision_raycast.scale.x=animated_sprite_2d.scale.x
 
-func defense_shoot() -> void:
-	#print_debug(distance)
-	if group_link_control==null:
-		if distance>=50:
-			shooting_states.dispatch(&"offensive_shoot")
-			#print_debug("offensive")
-		elif distance<50:
-			shooting_states.dispatch(&"defensive_shoot")
-			#print_debug("defensive")
-	elif ally_vision_handler.ally_found:
-		return
-	else:
-		if  group_enemy_manager.leader:
-			shooting_states.dispatch(&"offensive_shoot")
-			label.text=str("LEADER")
-		else:
-			shooting_states.dispatch(&"defensive_shoot")
-			label.text=str("NO")
-		#if group_enemy_manager.leader:
+#func defense_shoot() -> void:
+	##print_debug(distance)
+	#if group_link_control==null:
+		#if distance>=50:
+			#shooting_states.dispatch(&"offensive_shoot")
+			##print_debug("offensive")
+		#elif distance<50:
+			#shooting_states.dispatch(&"defensive_shoot")
+			##print_debug("defensive")
+	#elif ally_vision_handler.ally_found:
+		#return
+	#else:
+		#if  group_enemy_manager.leader:
+			#shooting_states.dispatch(&"offensive_shoot")
 			#label.text=str("LEADER")
 		#else:
+			#shooting_states.dispatch(&"defensive_shoot")
 			#label.text=str("NO")
-
-func reload_gun() -> void:
-	if turret.ammo_count<=0:
-		shooting_states.dispatch(&"reload")
+		##if group_enemy_manager.leader:
+			##label.text=str("LEADER")
+		##else:
+			##label.text=str("NO")
+#
+#func reload_gun() -> void:
+	#if turret.ammo_count<=0:
+		#shooting_states.dispatch(&"reload")
 
 func target_lock():
 	Events.unlock_from.emit()
@@ -450,9 +429,9 @@ func _on_state_machine_active_state_changed(current: LimboState, previous: Limbo
 	if current!=idle and current!=chasing and current!=launch and current != falling and current!=landed and current!=melee_attack and current!=clashed\
 	and current!=death:
 		movement_handler.active=true
-		shooting_states.dispatch(&"begin_shooting")
-	elif current==shooting_states:
-		assert(state_machine.get_previous_active_state()!=attack)
+		#shooting_states.dispatch(&"begin_shooting")
+	#elif current==shooting_states:
+		#assert(state_machine.get_previous_active_state()!=attack)
 	
 	if previous==clashed:
 		print_debug("clash recover")
@@ -497,7 +476,7 @@ func _on_chasing_entered() -> void:
 
 
 func _on_attack_entered() -> void:
-	assert(state_machine.get_previous_active_state()!=shooting_states)
+	#assert(state_machine.get_previous_active_state()!=shooting_states)
 	#print_debug(state_machine.get_previous_active_state())
 	if state_machine.get_active_state()!=idle:
 		if combat_state_machine.get_active_state()==ranged_mode:
@@ -566,7 +545,9 @@ func pushed_back(_force:=100):
 	else:
 		_face_dir = -1
 	
-	velocity.x=-_force*_face_dir
+	knockback.x=-(_force*_face_dir)
+	print_debug(velocity.x)
+	pass
 
 #func _on_parry_exited() -> void:
 	#print_debug("parry exit")
@@ -758,8 +739,9 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 func _on_ally_vision_handler_found_ally() -> void:
 	if state_machine.get_active_state()==staggered or state_machine.get_active_state()==launch\
 	or state_machine.get_active_state() == falling:
-		shooting_states.dispatch(&"begin_defend")
-		defend_ally.blackboard.set_var("ally_found", true)
+		pass
+		#shooting_states.dispatch(&"begin_defend")
+		#defend_ally.blackboard.set_var("ally_found", true)
 
 
 func _on_ally_vision_handler_ally_gone() -> void:
