@@ -23,8 +23,8 @@ func _enter() -> void:
 			hit_fx_player.play(hit_fx_anim)
 
 	
-func _update(delta: float) -> void:
-	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.3)
+#func _update(delta: float) -> void:
+	#actor.velocity.x=lerpf(actor.velocity.x, 0, 0.3)
 	
 
 func _exit() -> void:

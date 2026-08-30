@@ -21,7 +21,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 #Behaviour Tree Player
-@onready var bt_player: BTPlayer = $BTPlayer
+#@onready var bt_player: BTPlayer = $BTPlayer
 
 #On Screen
 var is_on_screen : bool
@@ -187,15 +187,9 @@ func _ready():
 	animation_player.play("idle")
 	state="guard"
 	next=nav_agent.get_next_path_position()
-	if bt_player != null:
-		bt_player.blackboard.set_var("attack_mode", false)
-		bt_player.blackboard.set_var("melee_mode", false)
-		bt_player.blackboard.set_var("ranged_mode", true)
-		bt_player.blackboard.set_var("within_range", false)
-		bt_player.blackboard.set_var("staggered", false)
+
 	Events.parry_success.connect(clash_follow_up)
-	Events.parry_success.connect(clash_follow_up)
-	#turret.setup(0.2)
+
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 	_init_combat_state_machine()
@@ -217,30 +211,15 @@ func _process(delta: float) -> void:
 	if state_machine.get_active_state()==death:
 		hb_collision.disabled=true
 		return
-	#if health.health<=0 and (state_machine.get_active_state()!=death and state_machine.get_active_state()!=dying):
-		#print_debug(state_machine.get_active_state())
-		#state_machine.dispatch(&"die")
-	#even_order(group_link_order)
+
 	is_on_screen=on_screen.is_on_screen()
-	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
-	if state_machine.get_active_state()==dying:
-		knockback.x=lerpf(knockback.x, death_knockback/3, 0.1)
-		knockback.y=lerpf(knockback.y, 0, 0.3)
-	else:
-		knockback = lerp(knockback, Vector2.ZERO, 0.1)
-	pushback = lerpf(pushback, 0, 0.8)
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
 	vision_handler.handle_vision()
 	distance = abs(global_position.x-player.global_position.x)
 	force_chase()
 	vision_handler.get_player_relative_loc()
-	#if ammo_count<0:
-		#print_debug("RELOAD")
-		#animation_player.stop()
-	#if shooting_states.get_active_state()!=reload:
-		#defense_shoot()
-	#reload_gun()
+
 	if is_on_floor():
 		being_flipped()
 	flip_ally_vision()
@@ -248,10 +227,7 @@ func _process(delta: float) -> void:
 		if state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death:
 			state_machine.dispatch(&"die")
 	
-	#if state_machine.get_active_state()==dying or state_machine.get_active_state()==death:
-		#print_debug(knockback.x)
 
-	#print_debug(state_machine.get_active_state())
 
 func _physics_process(delta: float) -> void:
 	if state_machine.get_active_state()==death:
@@ -262,11 +238,8 @@ func _physics_process(delta: float) -> void:
 			current_speed=0
 	#
 	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered or state_machine.get_active_state()==launch:
-		#hb_collison.disabled=true
 		if not launch_timer.is_stopped():
 			global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
-			#velocity.x=lerpf(-launch.knock_back_strength, -launch.knock_back_strength/2, 0.5)
-			#global_position.x=lerpf(global_position.x, launch.knocked_back, 0.1)
 			velocity.y=0
 		else:
 			
@@ -279,9 +252,7 @@ func _physics_process(delta: float) -> void:
 	elif state_machine.get_active_state()==death :
 		hb_collision.disabled=true
 		return
-	#elif state_machine.get_active_state()==launch:
-		#global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
-		#velocity.y=0
+
 		
 	elif state_machine.get_active_state()==falling:
 		velocity.x=lerpf(-launch.knock_back_strength/2, 0, 0.9)
@@ -293,32 +264,21 @@ func _physics_process(delta: float) -> void:
 		if melee_range_check():
 			state_machine.dispatch(&"melee_attack")
 	
-	#if player_right:
-		#hurt_box_weakpoint_collision.set_deferred("disabled", false)
-	#else:
-		#hurt_box_weakpoint_collision.set_deferred("disabled", true)
+	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
+	if state_machine.get_active_state()==dying:
+		knockback.x=lerpf(knockback.x, death_knockback/3, 0.1)
+		knockback.y=lerpf(knockback.y, 0, 0.3)
+	else:
+		knockback = lerp(knockback, Vector2.ZERO, 0.1)
+	pushback = lerpf(pushback, 0, 0.8)
 	
 	velocity.x = (current_speed*movement_handler.move_dir) + knockback.x + pushback
-	if velocity.x==0:
-		print_debug("stopped")
-	else:
+	if velocity.x>0:
 		print_debug(velocity.x)
+		pass
+		
 	move_and_slide()
 	movement_handler.apply_gravity(delta)
-
-#func _init_group_link():
-	#if group_link_control == null:
-		#print_debug("no link")
-		#if linked_enemies.size()<=1:
-			#print_debug("no link")
-	#else:
-		#linked_enemies=group_link_control.all_grouped_enemies
-		#for i in range(linked_enemies.size()):
-			##print_debug(linked_enemies[i].name, " linked")
-			#group_link_order=linked_enemies.find(self)
-			#print_debug(group_link_order)
-	#group_enemy_manager.set_leader(group_link_order)
-	#group_enemy_manager.set_even_order(group_link_order)
 
 func _init_state_machine():
 	state_machine.initial_state=idle
@@ -335,11 +295,11 @@ func _init_state_machine():
 	state_machine.add_transition(jump, chasing, &"land")
 	state_machine.add_transition(hit, attack, &"hit_recover")
 	state_machine.add_transition(hit, shooting_bt_state, &"hit_recover_shoot")
-	state_machine.add_transition(attack, parry, &"parry")
-	state_machine.add_transition(chasing, parry, &"parry")
-	state_machine.add_transition(shooting_bt_state, parry, &"parry")
-	state_machine.add_transition(parry, attack, parry.failure_event)
-	state_machine.add_transition(parry, shooting_bt_state, parry.success_event)
+	#state_machine.add_transition(attack, parry, &"parry")
+	#state_machine.add_transition(chasing, parry, &"parry")
+	#state_machine.add_transition(shooting_bt_state, parry, &"parry")
+	#state_machine.add_transition(parry, attack, parry.failure_event)
+	#state_machine.add_transition(parry, shooting_bt_state, parry.success_event)
 	state_machine.add_transition(attack, shooting_bt_state, &"start_shoot")
 	state_machine.add_transition(chasing, shooting_bt_state, &"start_shoot")
 	state_machine.add_transition(chasing, melee_attack, &"melee_attack")
@@ -386,32 +346,6 @@ func _on_navigation_timer_timeout() -> void:
 func flip_ally_vision():
 	ally_vision_raycast.scale.x=animated_sprite_2d.scale.x
 
-#func defense_shoot() -> void:
-	##print_debug(distance)
-	#if group_link_control==null:
-		#if distance>=50:
-			#shooting_states.dispatch(&"offensive_shoot")
-			##print_debug("offensive")
-		#elif distance<50:
-			#shooting_states.dispatch(&"defensive_shoot")
-			##print_debug("defensive")
-	#elif ally_vision_handler.ally_found:
-		#return
-	#else:
-		#if  group_enemy_manager.leader:
-			#shooting_states.dispatch(&"offensive_shoot")
-			#label.text=str("LEADER")
-		#else:
-			#shooting_states.dispatch(&"defensive_shoot")
-			#label.text=str("NO")
-		##if group_enemy_manager.leader:
-			##label.text=str("LEADER")
-		##else:
-			##label.text=str("NO")
-#
-#func reload_gun() -> void:
-	#if turret.ammo_count<=0:
-		#shooting_states.dispatch(&"reload")
 
 func target_lock():
 	Events.unlock_from.emit()
@@ -466,18 +400,9 @@ func _on_chasing_entered() -> void:
 		state_machine.dispatch(&"melee_attack")
 
 
-#func _on_shooting_entered() -> void:
-	#animation_player.play("shoot")
-
-
-#func _on_shooting_defense_entered() -> void:
-	#animation_player.play("shoot_defense")
-	#hit_box.collision_shape.set_deferred("diabled", false)
-
 
 func _on_attack_entered() -> void:
-	#assert(state_machine.get_previous_active_state()!=shooting_states)
-	#print_debug(state_machine.get_previous_active_state())
+
 	if state_machine.get_active_state()!=idle:
 		if combat_state_machine.get_active_state()==ranged_mode:
 			state_machine.dispatch(&"start_shoot")
@@ -523,17 +448,14 @@ func clash_follow_up(_follow_up := "nothing"):
 	match _follow_up:
 		"riposte":
 			animation_player.play()
-			pushed_back(200)
+			pushed_back(250)
 			stagger.stagger-=1
 			if stagger.stagger>0:
 				state_machine.dispatch(&"hit")
 			else:
 				state_machine.dispatch(&"staggered")
 		"nothing":
-			if player_right:
-				knockback.x=-250
-			else:
-				knockback.x=250
+			pushed_back(150)
 			animation_player.play()
 		_:
 			animation_player.play()
@@ -546,8 +468,6 @@ func pushed_back(_force:=100):
 		_face_dir = -1
 	
 	knockback.x=-(_force*_face_dir)
-	print_debug(velocity.x)
-	pass
 
 #func _on_parry_exited() -> void:
 	#print_debug("parry exit")
@@ -575,6 +495,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		state_machine.dispatch(&"resume_attack")
 	elif anim_name=="clashed":
 		state_machine.dispatch(&"resume_melee")
+		velocity.x=0
 	elif anim_name=="hit":
 		state_machine.dispatch(&"hit_recover")
 
@@ -619,15 +540,6 @@ func _on_stagger_staggered() -> void:
 		if health.health>0:
 			state_machine.dispatch(&"staggered")
 
-#func _on_staggered_entered() -> void:
-	##shield_collision.set_deferred("disabled",true)
-	#hurt_box.active=true
-	#hurt_box_collision.set_deferred("disabled", false)
-	#if player_right:
-		#knockback.x=-200
-	#else:
-		#knockback.x=200
-	#
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05,0.1)
@@ -649,9 +561,6 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		if (state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death and state_machine.get_active_state()!=staggered):
 			parry_timer.wait_time=1
 			state_machine.dispatch(&"hit")
-		
-		#set_state(current_state, States.HIT)
-		#gpu_particles_2d.emitting=true
 		
 	else:
 		print_debug("kill shot")
@@ -711,9 +620,9 @@ func alerted() -> void :
 		return
 	if on_screen.is_on_screen():
 		state_machine.dispatch(&"attack_mode")
-		bt_player.blackboard.set_var("attack_mode", true)
+		#bt_player.blackboard.set_var("attack_mode", true)
 	else:
-		bt_player.blackboard.set_var("attack_mode", false)
+		#bt_player.blackboard.set_var("attack_mode", false)
 		state_machine.dispatch(&"start_chase")
 
 func force_chase():
@@ -729,8 +638,8 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	hit_stop.end_hit_stop()
 	if vision_handler.player_found or vision_handler.always_on:
 		state_machine.dispatch(&"attack_mode")
-		if bt_player != null:
-			bt_player.blackboard.set_var("attack_mode", true)
+		#if bt_player != null:
+			#bt_player.blackboard.set_var("attack_mode", true)
 		
 	if health.health<=0:
 		queue_free()
@@ -746,20 +655,6 @@ func _on_ally_vision_handler_found_ally() -> void:
 
 func _on_ally_vision_handler_ally_gone() -> void:
 	pass
-	#defend_ally.blackboard.set_var("ally_found", false)
-
-#func _on_melee_attack_entered() -> void:
-	#shield.set_collision_mask_value(7, false)
-	#hit_box.collision_shape.set_deferred("disabled", false)
-	#movement_handler.face_player_active=false
-	#movement_handler.active=false
-	#velocity.x=0
-	#current_speed=0
-	#animation_player.play("melee_attack")
-	
-	
-func _on_melee_attack_updated(delta: float) -> void:
-	assert(movement_handler.active==false)
 
 func _on_hit_box_clashed() -> void:
 	if state_machine.get_active_state()==staggered:
@@ -792,11 +687,6 @@ func _on_hit_box_clash_knock_back(_launch : float, _knockback : float, _impact_d
 		else:
 			knockback.x=_knockback/2
 
-
-#func _on_hit_box_clash_launch(_launch: float) -> void:
-	#state_machine.change_active_state(launch)
-
-
 func _on_launch_timer_timeout() -> void:
 	state_machine.dispatch(&"falling")
 
@@ -809,13 +699,6 @@ func _on_hurt_box_launched(launch_strength : float) -> void:
 		launch.launch_strength=launch_strength
 		state_machine.change_active_state(launch)
 
-
-#func _on_death_entered() -> void:
-	#hb_collision.set_deferred("disabled", true)
-	#hurt_box_collision.set_deferred("disabled", true)
-	#collision_shape_2d.set_deferred("disabled", true)
-	#set_collision_mask_value(15, true)
-	
 
 
 
@@ -861,19 +744,6 @@ func _on_vfx_player_animation_changed(old_name: StringName, new_name: StringName
 	if new_name=="knocked_back":
 		print_debug(new_name)
 
-#
-#func _on_melee_attack_exited() -> void:
-	#movement_handler.face_player_active=true
-	#var _melee_ranged_colliding := attack_range.get_overlapping_bodies()
-	#if _melee_ranged_colliding.is_empty():
-		#state_machine.dispatch(&"start_shoot")
-	#else:
-		#state_machine.dispatch(&"resume_attack")
-
-
-
-
-	
 
 func _on_counter_attack_timer_timeout() -> void:
 	hit_stop.end_hit_stop()

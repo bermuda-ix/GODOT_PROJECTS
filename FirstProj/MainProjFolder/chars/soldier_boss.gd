@@ -477,10 +477,6 @@ func _physics_process(delta):
 			pass
 	move_and_slide()
 
-	#var _overlapping_hitbox := hit_box.get_overlapping_areas()
-	#print_debug(_overlapping_hitbox)
-	#if not _overlapping_hitbox.is_empty():
-		#assert(hitbox.clash_active)
 
 
 

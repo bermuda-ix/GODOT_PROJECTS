@@ -35,8 +35,8 @@ func _enter() -> void:
 func _update(delta: float) -> void:
 	vfx_player.speed_scale=1/Engine.time_scale
 	actor.velocity.x=0+actor.knockback.x
-	if actor.velocity.x!=0:
-		print_debug(actor.velocity.x)
+	#if actor.velocity.x!=0:
+		#print_debug(actor.velocity.x)
 	actor.velocity.y=0
 	#actor.knockback=Vector2.ZERO
 	#if actor.velocity.x!=0:
@@ -50,10 +50,6 @@ func _exit() -> void:
 		if not movement_handler.active:
 			movement_handler.active=true
 		return
-	if actor.player_right:
-		actor.velocity.x=150
-	else:
-		actor.velocity.x=-150
 	if stagger.stagger<=0 and state_machine.get_active_state()!= actor.staggered:
 		state_machine.dispatch(&"staggered")
 	

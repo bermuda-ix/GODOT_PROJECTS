@@ -3270,7 +3270,7 @@ func _on_charged_attack_entered() -> void:
 func _on_clashed_entered() -> void:
 	attack_timer.stop()
 	hit_box.active=false
-	
+	hb_collision.set_deferred("disabled", true)
 	var _attack_anim=attack_1.attack
 	var _marker_time=anim_player.get_animation(_attack_anim).get_marker_time("Attack_connect")
 	anim_player.seek(_marker_time, true)

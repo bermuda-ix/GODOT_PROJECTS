@@ -3777,12 +3777,14 @@ animation_player = NodePath("../../AnimationPlayer")
 tree_active = false
 metadata/_custom_type_script = "uid://c4yno8xy5erif"
 
-[node name="Dying" type="BTState" parent="StateMachine" unique_id=1270935107 node_paths=PackedStringArray("actor")]
+[node name="Dying" type="BTState" parent="StateMachine" unique_id=1270935107 node_paths=PackedStringArray("actor", "drop_handler", "hit_stop")]
 behavior_tree = ExtResource("45_jdney")
 blackboard_plan = SubResource("BlackboardPlan_vtt0c")
 script = ExtResource("47_cl2c2")
 actor = NodePath("../..")
 death_knockback = 400
+drop_handler = NodePath("../../DropHandler")
+hit_stop = NodePath("../../HitStop")
 
 [node name="Launch" type="LimboState" parent="StateMachine" unique_id=1511695115 node_paths=PackedStringArray("actor", "launch_timer")]
 script = ExtResource("100_8h24x")

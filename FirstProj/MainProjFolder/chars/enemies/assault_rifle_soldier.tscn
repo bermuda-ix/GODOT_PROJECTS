@@ -1156,7 +1156,7 @@ tracks/14/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_7wla2"]
-resource_name = "death"
+resource_name = "dead"
 length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1184,7 +1184,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_rwqoj"]
-resource_name = "dying"
+resource_name = "death"
 length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1812,8 +1812,8 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c5coe"]
 _data = {
 &"RESET": SubResource("Animation_dixgp"),
-&"death": SubResource("Animation_7wla2"),
-&"dying": SubResource("Animation_rwqoj"),
+&"dead": SubResource("Animation_7wla2"),
+&"death": SubResource("Animation_rwqoj"),
 &"falling": SubResource("Animation_11ulj"),
 &"hit": SubResource("Animation_66b7p"),
 &"idle": SubResource("Animation_bynfm"),

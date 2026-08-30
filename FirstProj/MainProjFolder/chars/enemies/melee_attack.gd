@@ -11,7 +11,7 @@ func _enter() -> void:
 	hit_box.collision_shape.set_deferred("disabled", false)
 	movement_handler.face_player_active=false
 	movement_handler.active=false
-	actor.velocity.x=0
+	#actor.velocity.x=0
 	actor.current_speed=0
 	animation_player.play(anim_name)
 	
