@@ -50,10 +50,10 @@ func set_active(_value:bool)->void:
 
 func set_clash_active(_value: bool) -> void:
 	clash_active=_value
-	if _value==true:
-		print_debug("attack_activate")
-	elif _value==false:
-		print_debug("attack_deactivate")
+	#if _value==true:
+		#print_debug("attack_activate")
+	#elif _value==false:
+		#print_debug("attack_deactivate")
 
 func set_attack_clashed(_value: bool) -> void:
 	attack_clashed=_value

@@ -5569,6 +5569,18 @@ tracks/31/keys = {
 "update": 1,
 "values": [true, false]
 }
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath(".:heavy_attacking")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 0.6666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="Animation" id="Animation_cdmbu"]
 resource_name = "Heavy_Combo_2"
@@ -5925,6 +5937,18 @@ tracks/28/interp = 1
 tracks/28/loop_wrap = true
 tracks/28/keys = {
 "times": PackedFloat32Array(0, 0.8666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath(".:heavy_attacking")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0, 0.43333334),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -7579,6 +7603,18 @@ tracks/82/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [-1.0471976]
+}
+tracks/83/type = "value"
+tracks/83/imported = false
+tracks/83/enabled = true
+tracks/83/path = NodePath(".:heavy_attacking")
+tracks/83/interp = 1
+tracks/83/loop_wrap = true
+tracks/83/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_oktus"]
@@ -9268,6 +9304,18 @@ tracks/14/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"GunCrouch"]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath(".:heavy_attacking")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_ai7hj"]
@@ -12966,6 +13014,9 @@ metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
 [node name="AttackTimer" type="Timer" parent="." unique_id=1905929388]
 wait_time = 0.05
+one_shot = true
+
+[node name="ClashSuccessTimer" type="Timer" parent="." unique_id=2019316841]
 one_shot = true
 
 [node name="HeavyAttackBufferTimer" type="Timer" parent="." unique_id=859488619]

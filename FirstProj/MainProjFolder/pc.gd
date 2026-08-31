@@ -114,7 +114,7 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var light_attack_index : int = clampi(0, 0 , 2)
 @onready var heavy_attacks : Array[String] = ["Heavy_Combo_1", "Heavy_Combo_2", "shotgun_finish"]
 
-@onready var heavy_attacking : bool = false
+@export var heavy_attacking : bool = false
 @onready var atk_1_resume : bool = false
 @onready var atk_2_resume : bool = false
 
@@ -644,6 +644,9 @@ func _process(_delta):
 	atk_state_debug()
 #
 	dodge(input_axis)
+	
+	if not attack_timer.is_stopped():
+		print_debug(attack_timer.time_left)
 	
 	#if not reload_timer.is_stopped():
 		#print_debug(reload_timer.time_left)
@@ -1247,7 +1250,7 @@ func _on_charge_timer_timeout() -> void:
 			shotgun_combo()
 		else:
 			if heavy_attacking:
-				heavy_combos()
+				heavy_attack()
 			else:
 				light_attack()
 	else:
@@ -1350,6 +1353,7 @@ func shotgun_combo() -> void:
 		attack_timer.start(0.2)
 		attack_state.dispatch(&"shotgun_combo_chain")
 	else:
+		attack_timer.start(0.5)
 		attack_state.dispatch(&"shotgun_combo")
 
 
@@ -1404,9 +1408,9 @@ func _on_heavy_attack_buffer_timer_timeout() -> void:
 	#attack_timer.paused=false
 	
 func heavy_attack():
-	if attacking and not charging:
+	if (attacking and not charging):
 		return
-		
+	
 	heavy_attack_buffer_timer.stop()
 	hit_buffer.stop()
 	if state_machine.get_active_state()!=attack_state:
@@ -1419,7 +1423,7 @@ func heavy_attack():
 		state_machine.dispatch(&"heavy_counter")
 	elif attack_state.get_active_state()==charging_attack:
 		attack_state.dispatch(&"charged")
-	elif attack_state.get_active_state()==heavy_attack_1:
+	elif attack_state.get_active_state()==heavy_attack_1 or attack_state.get_active_state()==special_combo:
 		shotgun_combo()
 	else:
 		attack_state.dispatch(&"heavy_combo")
@@ -1461,7 +1465,7 @@ func closing_attack() -> void:
 	attack_state.dispatch(&"attack_closer")
 
 func sp_atk():
-	if s_atk:
+	if s_atk or heavy_attacking:
 		return
 	if state_machine.get_previous_active_state()==flip_state or state_machine.get_active_state()==flip_state:
 		set_shotgun_free_rotate(false)
@@ -1476,7 +1480,7 @@ func sp_atk():
 	 and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=attack_state:
 		aim_and_shoot()
 	else:
-		if Input.is_action_pressed("sprint") or state_machine.get_active_state()!=attack_state:
+		if Input.is_action_pressed("sprint") or (state_machine.get_active_state()!=attack_state or heavy_attack_buffer_timer.is_stopped()):
 			aim_and_shoot()
 		else:
 			heavy_combos()
@@ -2277,13 +2281,13 @@ func _on_animation_player_animation_finished(anim_name):
 			"Attack_Counter":
 				counter_flag=false
 				anim_player.play("idle")
-				attack_timer.start(0.1)
+				#attack_timer.start(0.1)
 				return
 			"Attack_Chain":
 				state_machine.dispatch(&"return_to_idle")
 				sp_atk_chn=0
 				atk_chain=0
-				attack_timer.start(0.1)
+				#attack_timer.start(0.1)
 				combo_state=ComboStates.SPC_ATK_BACK
 				return
 		#if atk_chain < 2:
@@ -2298,7 +2302,7 @@ func _on_animation_player_animation_finished(anim_name):
 				#attacking=false
 				
 			"shotgun_finish":
-				attack_timer.start(0.1)
+				#attack_timer.start(0.1)
 				attack_timer.paused=false
 			"Heavy_Combo_1":
 				#reset_combo_flag=true
@@ -2473,6 +2477,7 @@ func parry_success(_parry_follow_up := "nothing"):
 		"riposte":
 			anim_player.play()
 			start_attack_timer(0.2)
+			heavy_attack_buffer_timer.start()
 		"enemy_light_counter":
 			anim_player.play()
 			start_attack_timer(0.2)
