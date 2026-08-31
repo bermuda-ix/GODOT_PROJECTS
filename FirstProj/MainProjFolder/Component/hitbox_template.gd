@@ -56,8 +56,6 @@ func set_clash_active(_value: bool) -> void:
 		print_debug("attack_deactivate")
 
 func set_attack_clashed(_value: bool) -> void:
-	if _value==attack_clashed:
-		return
 	attack_clashed=_value
 		
 func set_heavy_attack(_value: bool) -> void:

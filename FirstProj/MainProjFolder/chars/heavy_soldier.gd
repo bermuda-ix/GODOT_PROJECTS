@@ -215,13 +215,7 @@ func _process(delta: float) -> void:
 		#state_machine.dispatch(&"die")
 	#even_order(group_link_order)
 	is_on_screen=on_screen.is_on_screen()
-	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
-	if state_machine.get_active_state()==dying:
-		knockback.x=lerpf(knockback.x, death_knockback/3, 0.1)
-		knockback.y=lerpf(knockback.y, 0, 0.3)
-	else:
-		knockback = lerp(knockback, Vector2.ZERO, 0.1)
-	pushback = lerpf(pushback, 0, 0.8)
+	
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
 	vision_handler.handle_vision()
@@ -291,6 +285,14 @@ func _physics_process(delta: float) -> void:
 		hurt_box_weakpoint_collision.set_deferred("disabled", false)
 	else:
 		hurt_box_weakpoint_collision.set_deferred("disabled", true)
+	
+	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
+	if state_machine.get_active_state()==dying:
+		knockback.x=lerpf(knockback.x, death_knockback/3, 0.1)
+		knockback.y=lerpf(knockback.y, 0, 0.3)
+	else:
+		knockback = lerp(knockback, Vector2.ZERO, 0.1)
+	pushback = lerpf(pushback, 0, 0.8)
 	
 	velocity.x = (current_speed*movement_handler.move_dir) + knockback.x + pushback
 	if state_machine.get_active_state()!=clashed:

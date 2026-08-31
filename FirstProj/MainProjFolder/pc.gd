@@ -1095,14 +1095,14 @@ func update_animation(input_axis):
 		
 func attack_handler():
 	
-	if state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered:
+	if state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered or state_machine.get_active_state()==parry_success_state:
 		return
 	
 	
 	var anim_player_time : float = anim_player.current_animation_position
 	
 	if Input.is_action_pressed("attack"):
-
+		print_debug(state_machine.get_active_state())
 		if not reload_timer.is_stopped():
 			reload_timer.stop()
 		if state_machine.get_active_state()==idle and (attacking or charging):
@@ -1239,6 +1239,8 @@ func heavy_combos():
 func _on_charge_timer_timeout() -> void:
 	
 	#print_debug(hit_box.damage,", ", clash_power.clash_power)
+	if state_machine.get_active_state()==clashed:
+		return
 	assert(charge_timer.time_left<=0)
 	if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
 		if attack_state.get_active_state()==heavy_attack_1:
@@ -2466,14 +2468,14 @@ func _on_parry_timer_timeout():
 	#anim_player.stop()
 	
 func parry_success(_parry_follow_up := "nothing"):
-	hit_box.attack_clashed=false
+	#hit_box.attack_clashed=false
 	match _parry_follow_up:
 		"riposte":
 			anim_player.play()
-			start_attack_timer(0.05)
+			start_attack_timer(0.2)
 		"enemy_light_counter":
 			anim_player.play()
-			start_attack_timer(0.05)
+			start_attack_timer(0.2)
 			knockback.x=50*face_dir
 		"nothing":
 			anim_player.play()
@@ -2762,6 +2764,7 @@ func _on_animation_player_animation_started(anim_name):
 		hb_collision.set_deferred("disabled", false)
 		velocity.y=0
 		if attack_state.get_active_state()==attack_1:
+			hit_box.attack_clashed=false
 			#charge_timer.stop()
 			match anim_name:
 				"Attack":
@@ -3271,6 +3274,8 @@ func _on_clashed_entered() -> void:
 	attack_timer.stop()
 	hit_box.active=false
 	hb_collision.set_deferred("disabled", true)
+	charge_timer.stop()
+	hit_box.attack_clashed=true
 	var _attack_anim=attack_1.attack
 	var _marker_time=anim_player.get_animation(_attack_anim).get_marker_time("Attack_connect")
 	anim_player.seek(_marker_time, true)
