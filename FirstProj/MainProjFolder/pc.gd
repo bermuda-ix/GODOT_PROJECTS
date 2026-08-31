@@ -644,12 +644,7 @@ func _process(_delta):
 	atk_state_debug()
 #
 	dodge(input_axis)
-	
-	if not attack_timer.is_stopped():
-		print_debug(attack_timer.time_left)
-	
-	#if not reload_timer.is_stopped():
-		#print_debug(reload_timer.time_left)
+
 	
 	if(state_machine.get_active_state()!=dodge_state\
 	 and state_machine.get_active_state()!=special_attack\
@@ -1426,6 +1421,8 @@ func heavy_attack():
 	elif attack_state.get_active_state()==heavy_attack_1 or attack_state.get_active_state()==special_combo:
 		shotgun_combo()
 	else:
+		if state_machine.get_active_state()!=attack_state:
+			state_machine.dispatch(&"start_attack")
 		attack_state.dispatch(&"heavy_combo")
 
 
@@ -1470,7 +1467,7 @@ func sp_atk():
 	if state_machine.get_previous_active_state()==flip_state or state_machine.get_active_state()==flip_state:
 		set_shotgun_free_rotate(false)
 		shotty.look_at(target.global_position)
-	if not attack_timer.is_stopped():
+	if not attack_timer.is_stopped() or not heavy_attack_buffer_timer.is_stopped():
 		heavy_combos()
 	#else:
 		#set_shotgun_free_rotate(true)
@@ -1480,7 +1477,7 @@ func sp_atk():
 	 and state_machine.get_active_state()!=special_attack and state_machine.get_active_state()!=attack_state:
 		aim_and_shoot()
 	else:
-		if Input.is_action_pressed("sprint") or (state_machine.get_active_state()!=attack_state or heavy_attack_buffer_timer.is_stopped()):
+		if Input.is_action_pressed("sprint") or (state_machine.get_active_state()!=attack_state):
 			aim_and_shoot()
 		else:
 			heavy_combos()
