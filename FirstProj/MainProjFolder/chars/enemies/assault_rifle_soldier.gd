@@ -474,7 +474,12 @@ func pushed_back(_force:=100):
 
 
 func _on_turret_shoot_bullet() -> void:
-	shoot_handler.shoot_bullet()
+	if player_right:
+		shoot_handler.face_dir= 1
+	else:
+		shoot_handler.face_dir= -1
+	
+	shoot_handler.spread_shot()
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
@@ -538,6 +543,7 @@ func _on_stagger_staggered() -> void:
 	if (state_machine.get_active_state()!= dying and state_machine.get_active_state()!=death \
 	and state_machine.get_active_state()!=launch and state_machine.get_active_state()!=clashed):
 		if health.health>0:
+			Events.enemy_staggered.emit()
 			state_machine.dispatch(&"staggered")
 
 
@@ -596,8 +602,8 @@ func _on_health_health_depleted() -> void:
 	animated_sprite_2d.scale.x = 1
 	knockback.x=250
 	jump_handler.handle_jump(0.2)
-	if linked_enemies!=null or not linked_enemies.is_empty() or linked_enemies.size()==0:
-		linked_enemies.remove_at(group_link_order)
+	#if linked_enemies!=null or not linked_enemies.is_empty() or linked_enemies.size()==0:
+		#linked_enemies.remove_at(group_link_order)
 	death_handler.death()
 
 
@@ -760,3 +766,15 @@ func _on_attack_range_area_entered(area: Area2D) -> void:
 
 func _on_hurt_box_weakpoint_hit() -> void:
 	pass # Replace with function body.
+
+
+func _on_shooting_bt_state_exited() -> void:
+	animated_sprite_2d.offset.x=0
+
+
+func _on_shoot_attack_manager_reloading() -> void:
+	shooting_bt_state.blackboard.set_var("reloaded", false)
+
+
+func _on_shoot_attack_manager_reloading_done() -> void:
+	shooting_bt_state.blackboard.set_var("reloaded", true)

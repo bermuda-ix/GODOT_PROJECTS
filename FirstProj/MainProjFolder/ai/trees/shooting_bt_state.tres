@@ -11,6 +11,11 @@ var/ammo/type = 2
 var/ammo/value = 0
 var/ammo/hint = 0
 var/ammo/hint_string = ""
+var/reloaded/name = &"reloaded"
+var/reloaded/type = 1
+var/reloaded/value = false
+var/reloaded/hint = 0
+var/reloaded/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_buh7y"]
 type = 2
@@ -30,9 +35,15 @@ resource_name = "ShootAttackManager"
 node = SubResource("BBNode_5bs0k")
 method = &"reload"
 
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_1mc1m"]
+variable = &"reloaded"
+
+[sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_buh7y"]
+children = [SubResource("BTCheckTrigger_1mc1m")]
+
 [sub_resource type="BTSequence" id="BTSequence_drh6u"]
 custom_name = "Reload"
-children = [SubResource("BTCheckVar_00ylt"), SubResource("BTCallMethod_35kg5")]
+children = [SubResource("BTCheckVar_00ylt"), SubResource("BTCallMethod_35kg5"), SubResource("BTRepeatUntilSuccess_buh7y")]
 
 [sub_resource type="BBNode" id="BBNode_1mc1m"]
 saved_value = NodePath("AnimationPlayer")

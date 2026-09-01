@@ -22,6 +22,7 @@ func death():
 	#actor.parry_timer.stop()
 	Events.inc_score.emit(score)
 	Events.increase_heat_gauge.emit(heat_value_inc)
+	
 	if tree_active:
 		actor.bt_player.blackboard.set_var("attack_mode", false)
 		actor.bt_player.restart()

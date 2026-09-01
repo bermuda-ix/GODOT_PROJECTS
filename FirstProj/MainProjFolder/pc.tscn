@@ -5182,7 +5182,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.06666667, 0.14166667, 0.24166666, 0.3416667, 0.6, 0.64166665, 0.68333334, 0.72499996, 0.76666665, 0.825),
+"times": PackedFloat32Array(0.06666667, 0.2, 0.26666668, 0.3416667, 0.6, 0.64166665, 0.68333334, 0.72499996, 0.76666665, 0.825),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 0]
@@ -5308,7 +5308,7 @@ tracks/10/path = NodePath("AnimatedSprite2D/attack_fx:visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4046854, 0.43333334),
+"times": PackedFloat32Array(0, 0.2, 0.76666665, 0.7953146),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [false, true, true, false]
@@ -5320,10 +5320,10 @@ tracks/11/path = NodePath("AnimatedSprite2D/attack_fx:position")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.22132929, 0.3840714),
+"times": PackedFloat32Array(0, 0.33333334, 0.41740474),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(21, -34), Vector2(21, -34), Vector2(23, -36)]
+"values": [Vector2(21, -28), Vector2(21, -28), Vector2(23, -30)]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
@@ -5347,7 +5347,7 @@ tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [Vector2(0.8, 0.8)]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
@@ -5368,7 +5368,7 @@ tracks/15/path = NodePath("AnimatedSprite2D/attack_fx:frame")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0.23333333, 0.27137613, 0.36666667, 0.4, 0.43333334, 0.46195722, 0.49529058, 0.52862394),
+"times": PackedFloat32Array(0.26666668, 0.30000004, 0.6, 0.6333333, 0.6666667, 0.69166666, 0.71666664, 0.7416667),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
@@ -13183,6 +13183,7 @@ script = ExtResource("230_pbr83")
 actor = NodePath("..")
 player_tracking_active = false
 turret = NodePath("../AnimatedSprite2D/Shotty/Turret")
+spread_cone = 30.0
 projectile = ExtResource("231_ymji2")
 bullet_speed = 800.0
 metadata/_custom_type_script = "uid://5gt6g8063rb4"

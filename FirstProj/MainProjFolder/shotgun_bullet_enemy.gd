@@ -3,6 +3,7 @@ extends RigidBody2D
 const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 @export var SPEED : float = 100 : set = set_speed, get = get_speed
 @onready var damage : int = 1 : set = set_damage, get = get_damage
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 
 
 
@@ -34,6 +35,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	position += dir * SPEED * delta
+	collision_shape_2d.global_rotation=sprite_2d.global_rotation
 	#global_rotation = spawnRot
 
 

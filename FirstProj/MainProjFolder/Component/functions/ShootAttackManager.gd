@@ -12,12 +12,15 @@ var turret_order : int =0
 @export var linked : bool = false
 @onready var shooting : bool = false
 
+@export var reload_fast := true
+
 signal reloading
 signal reloading_done
 
 #REFACTORED RELOADING. To be added to all actors
 @export var refactored_reloading : bool = false
 @export var reload_anim : StringName ="reload"
+
 
 func shoot():
 	if turret.infinite_ammo:
@@ -65,11 +68,20 @@ func shoot_refactor():
 	turret.shoot()
 	turret.ammo_count-=1
 
+
 func reload():
-	animation_player.play(reload_anim)
-	await animation_player.animation_finished
-	reloading_done.emit()
-	turret.ammo_count=turret.max_ammo
+	reloading.emit()
+	if reload_fast:
+		animation_player.play(reload_anim)
+		await animation_player.animation_finished
+		reloading_done.emit()
+		turret.ammo_count=turret.max_ammo
+	else:
+		while turret.ammo_count<turret.max_ammo:
+			animation_player.play(reload_anim)
+			await animation_player.animation_finished
+			turret.ammo_count+=1
+		reloading_done.emit()
 	
 	
 func shoot_setup(value : float):
@@ -80,6 +92,7 @@ func rotate_turret():
 		turret.rotation=actor.rotation
 	else:
 		return
+
 
 func staggerd_shoot():
 	if not linked:

@@ -21,7 +21,7 @@ func _enter() -> void:
 		actor.hb_collision.set_deferred("disabled", true)
 	if "hurt_box_collision" in actor:
 		actor.hurt_box_collision.set_deferred("disabled", true)
-	Events.enemy_death.emit()
+	#Events.enemy_death.emit()
 	drop_handler.spawn_drop()
 	hit_stop.hit_stop(0.1, 0.3)
 	if actor.player_right:

@@ -40,6 +40,7 @@ signal deactivate_boss
 signal activate_regular
 signal deactivate_regular
 signal allied_enemy_hit
+signal enemy_staggered
 signal enemy_death
 signal boss_died
 signal prepare_next_boss
@@ -79,6 +80,7 @@ signal get_player_data
 signal reset_player_data
 signal update_ui_data
 
+signal player_staggered
 signal player_death
 
 #Handle GUI Events

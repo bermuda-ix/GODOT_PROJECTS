@@ -80,6 +80,7 @@ func set_health(value: int):
 		
 		if health <= 0:
 			Events.camera_shake.emit(3,20)
+			Events.enemy_death.emit()
 			health_depleted.emit()
 			
 	

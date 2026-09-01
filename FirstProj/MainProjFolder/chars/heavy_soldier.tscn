@@ -133,6 +133,7 @@
 [ext_resource type="Texture2D" uid="uid://dxef33nv5p316" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_03.png" id="88_tk4wc"]
 [ext_resource type="Texture2D" uid="uid://8ff0cbeagj4c" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_04.png" id="89_0u53p"]
 [ext_resource type="Texture2D" uid="uid://dchoeftyjo2db" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_05.png" id="90_oh1oc"]
+[ext_resource type="Script" uid="uid://xtvvtv1f2dfa" path="res://Component/functions/CombatHandlers/MoraleHandler.gd" id="94_oiist"]
 [ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="100_8h24x"]
 [ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="104_g8y6e"]
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="125_4cgwk"]
@@ -3438,6 +3439,13 @@ metadata/_custom_type_script = "uid://cnxm24jqclb68"
 script = ExtResource("12_6gh4x")
 max_stagger = 2
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
+
+[node name="MoraleHandler" type="Node" parent="." unique_id=198596750 node_paths=PackedStringArray("actor", "stagger", "health")]
+script = ExtResource("94_oiist")
+actor = NodePath("..")
+stagger = NodePath("../Stagger")
+health = NodePath("../Health")
+metadata/_custom_type_script = "uid://xtvvtv1f2dfa"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=162841846]
 position = Vector2(20, -9)

@@ -156,6 +156,7 @@
 [ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="110_gxq5f"]
 [ext_resource type="Texture2D" uid="uid://dpiavufx84ssj" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00217.png" id="111_wwao7"]
 [ext_resource type="Texture2D" uid="uid://tldys6blkcg8" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00218.png" id="112_56c4f"]
+[ext_resource type="Script" uid="uid://xtvvtv1f2dfa" path="res://Component/functions/CombatHandlers/MoraleHandler.gd" id="121_74fqe"]
 [ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="135_hsppp"]
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="153_q58od"]
 
@@ -3489,6 +3490,13 @@ metadata/_custom_type_script = "uid://cnxm24jqclb68"
 script = ExtResource("9_34xo2")
 max_stagger = 1
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
+
+[node name="MoraleHandler" type="Node" parent="." unique_id=810578442 node_paths=PackedStringArray("actor", "stagger", "health")]
+script = ExtResource("121_74fqe")
+actor = NodePath("..")
+stagger = NodePath("../Stagger")
+health = NodePath("../Health")
+metadata/_custom_type_script = "uid://xtvvtv1f2dfa"
 
 [node name="NavigationTimer" type="Timer" parent="." unique_id=1426565053]
 wait_time = 0.2

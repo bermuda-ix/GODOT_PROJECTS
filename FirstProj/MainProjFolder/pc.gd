@@ -1599,13 +1599,7 @@ func gun_cone(spread : int) -> Array[int]:
 
 func _on_special_attack_entered() -> void:
 	pass
-	#audio_stream_player_2d.volume_db=0.0
-	#audio_stream_player_2d.pitch_scale=1.0
-	#audio_stream_player_2d.stream=load(shotgun_fire)
-	#var _bullet_dirs : Array[int] = gun_cone(spread)
-	#for i in spread:
-		#bullet_dir = rotation_to_direction(_bullet_dirs[i])
-		#shoot_handler.shoot_bullet()
+
 
 func shotgun_shoot() -> void:
 	
@@ -1658,7 +1652,6 @@ func rotation_to_direction(_rotation_degrees : int) -> Vector2:
 	var direction = Vector2(cos(_rotation_radians), sin(_rotation_radians))
 	# Normalize the vector (optional, but ensures length = 1)
 	direction = direction.normalized()
-	#print_debug(direction)
 	return direction
 
 func shotgun_free_rotate():
@@ -1714,7 +1707,7 @@ func parry():
 		velocity.x=0
 		velocity.y=0
 
-func play_sound(_sound : AudioStream, _volume_db := 0.0, _pitch_scale := 1.0) -> void:
+func play_sound(_sound : AudioStream = load(shotgun_fire), _volume_db := 0.0, _pitch_scale := 1.0) -> void:
 	if _sound==null:
 		print_debug("No sound to play")
 		return

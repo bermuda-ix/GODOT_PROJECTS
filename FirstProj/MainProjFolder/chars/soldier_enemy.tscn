@@ -5517,7 +5517,7 @@ flip_h = true
 libraries/ = SubResource("AnimationLibrary_c6g3t")
 libraries/Cutscene = SubResource("AnimationLibrary_he81y")
 
-[node name="VFXPlayer" type="AnimationPlayer" parent="AnimationPlayer" index="0" unique_id=1452496204]
+[node name="VFXPlayer" type="AnimationPlayer" parent="AnimationPlayer" index="0" unique_id=1452496204 groups=["Enemy"]]
 libraries/ = SubResource("AnimationLibrary_4ys4l")
 
 [node name="CollisionShape2D" parent="." index="3"]
