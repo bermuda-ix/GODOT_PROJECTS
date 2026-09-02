@@ -13,3 +13,11 @@ func _update(delta: float) -> void:
 
 func _debug_var() -> void:
 	print(blackboard.get_var("ammo"))
+
+
+func _on_shoot_attack_manager_reloading_done() -> void:
+	blackboard.set_var("reloaded", true)
+
+
+func _on_shoot_attack_manager_reloading() -> void:
+	blackboard.set_var("reloaded", false)

@@ -169,7 +169,7 @@ func _ready():
 	bt_player.blackboard.set_var("falling", false)
 	bt_player.blackboard.set_var("dodge", false)
 	dying.blackboard.set_var("hit_the_floor", false)
-	Events.parry_success.connect(clash_follow_up)
+	
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 	_init_combat_state_machine()
@@ -203,6 +203,7 @@ func _init_state_machine():
 	state_machine.add_transition(attack, dodge, &"dodge")
 	state_machine.add_transition(dodge, attack, &"dodge_end")
 	state_machine.add_transition(attack, clashed, &"clashed")
+	state_machine.add_transition(clashed, attack, &"counter_attack")
 	state_machine.add_transition(clashed, attack, &"start_attack")
 	state_machine.add_transition(clashed, dodge, &"dodge_back")
 	state_machine.add_transition(launch, hit, &"midair_hit")
@@ -468,20 +469,20 @@ func _on_navigation_timer_timeout() -> void:
 	next_x=nav_agent.get_next_path_position().x
 	next=nav_agent.get_next_path_position()
 
-func clash_follow_up(_follow_up := "nothing"):
-	match _follow_up:
-		"riposte":
-			animation_player.play()
-			pushed_back(200)
-			stagger.stagger-=1
-			if stagger.stagger>0:
-				state_machine.dispatch(&"hit")
-			else:
-				state_machine.dispatch(&"stagger")
-		"nothing":
-			animation_player.play()
-		_:
-			animation_player.play()
+#func clash_follow_up(_follow_up := "nothing"):
+	#match _follow_up:
+		#"riposte":
+			#animation_player.play()
+			#pushed_back(200)
+			#stagger.stagger-=1
+			#if stagger.stagger>0:
+				#state_machine.dispatch(&"hit")
+			#else:
+				#state_machine.dispatch(&"stagger")
+		#"nothing":
+			#animation_player.play()
+		#_:
+			#animation_player.play()
 
 func pushed_back(_force:=100):
 	var _face_dir
@@ -694,7 +695,7 @@ func _on_hit_exited() -> void:
 func _on_hit_box_clashed() -> void:
 	bt_player.blackboard.set_var("staggered", true)
 	#print_debug("clashed!")
-	stagger.stagger-=1
+	#stagger.stagger-=1
 	attacking=false
 	state_machine.dispatch(&"clashed")
 	
