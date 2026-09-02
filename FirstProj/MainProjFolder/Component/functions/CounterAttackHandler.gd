@@ -12,6 +12,8 @@ extends Node
 @export var shoot_counter_active : bool = true
 @export var active : bool = true
 
+signal counter_attack
+
 func _ready() -> void:
 	Events.parry_success.connect(parry_counter)
 	counter_attack_timer.timeout.connect(clash_counter)
@@ -59,3 +61,4 @@ func clash_counter()-> void:
 	hit_stop.end_hit_stop()
 	state_machine.dispatch(&"counter_melee")
 	Events.parry_success.emit("enemy_light_counter")
+	

@@ -9,26 +9,36 @@
 [ext_resource type="Texture2D" uid="uid://bsrw6gsqslsy1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle03.png" id="3_34xo2"]
 [ext_resource type="Texture2D" uid="uid://dv4j3mqle1vq3" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Punch01/Punch0102.png" id="3_xicrs"]
 [ext_resource type="Texture2D" uid="uid://c2eu0v2wn2wt4" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle04.png" id="4_8kxdo"]
+[ext_resource type="Texture2D" uid="uid://rsn1f847nrxi" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GroundSlam/GroundSlam01.png" id="4_fegg8"]
 [ext_resource type="Texture2D" uid="uid://dmnnugtpjbxn4" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Punch01/Punch0103.png" id="4_i33qf"]
 [ext_resource type="Texture2D" uid="uid://d1w1yb7ixukhu" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle05.png" id="5_bwuha"]
 [ext_resource type="Texture2D" uid="uid://kra7rm71vo01" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Punch01/Punch0104.png" id="5_h8k23"]
+[ext_resource type="Texture2D" uid="uid://c2pyh2gbog4lg" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GroundSlam/GroundSlam02.png" id="5_ky20n"]
+[ext_resource type="Texture2D" uid="uid://phxyjo3jcgus" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GroundSlam/GroundSlam03.png" id="6_5ctkf"]
 [ext_resource type="Texture2D" uid="uid://didp24116d82f" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle06.png" id="6_q7gmp"]
 [ext_resource type="Texture2D" uid="uid://mv20bakk3ifj" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Punch01/Punch0105.png" id="6_to13f"]
 [ext_resource type="Texture2D" uid="uid://bwdp8hfv8bdyl" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Idle/Idle07.png" id="7_3nf0a"]
 [ext_resource type="Texture2D" uid="uid://cp6aafww67a7s" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Punch01/Punch0106.png" id="7_hul05"]
+[ext_resource type="Texture2D" uid="uid://kl1jgw57u3a0" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GroundSlam/GroundSlam04.png" id="7_yf1un"]
 [ext_resource type="Texture2D" uid="uid://ovcnxj24y1n8" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Kick02/Kick0201.png" id="8_bm654"]
+[ext_resource type="Texture2D" uid="uid://fletonpc4u5e" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GroundSlam/GroundSlam05.png" id="8_fllyt"]
 [ext_resource type="Script" uid="uid://cnxm24jqclb68" path="res://Component/health.gd" id="8_kbb6k"]
 [ext_resource type="Script" uid="uid://ba6pwl0vfuyp" path="res://Component/stagger.gd" id="9_34xo2"]
+[ext_resource type="Texture2D" uid="uid://bo6l5vm61w5ju" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GroundSlam/GroundSlam06.png" id="9_h7yhu"]
 [ext_resource type="Texture2D" uid="uid://s3x6enjjdcl7" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Kick02/Kick0202.png" id="9_wj10b"]
+[ext_resource type="Texture2D" uid="uid://wrslfxexw0r1" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GroundSlam/GroundSlam07.png" id="10_1j2ay"]
 [ext_resource type="Script" uid="uid://5ijvah6jjgdb" path="res://Component/hitbox_template.gd" id="10_bwuha"]
 [ext_resource type="Texture2D" uid="uid://rgrra288s6hj" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Kick02/Kick0203.png" id="10_yblm1"]
 [ext_resource type="Texture2D" uid="uid://bhvkgg8xu1nnb" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Kick02/Kick0204.png" id="11_bqb27"]
+[ext_resource type="Texture2D" uid="uid://81858kigof20" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GroundSlam/GroundSlam08.png" id="11_pjrnc"]
 [ext_resource type="Script" uid="uid://bet3nodk2voxv" path="res://Component/hurtbox_template.gd" id="11_q7gmp"]
+[ext_resource type="Texture2D" uid="uid://cif2kqhe78fu3" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GroundSlam/GroundSlam09.png" id="12_50drc"]
 [ext_resource type="Texture2D" uid="uid://brqdv6dtyxiyr" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Kick02/Kick0205.png" id="12_fca3m"]
 [ext_resource type="Script" uid="uid://b0uasmutdnguo" path="res://chars/target_lock.gd" id="12_q7gmp"]
 [ext_resource type="Texture2D" uid="uid://cdsp1o3140m8g" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Kick02/Kick0206.png" id="13_5ihr3"]
 [ext_resource type="Script" uid="uid://cf3jqneer6g2o" path="res://Component/attack_range.gd" id="13_8t56l"]
 [ext_resource type="Script" uid="uid://cx8bi64kwoulc" path="res://Component/functions/PlayerTrackingHandler.gd" id="13_72jhu"]
+[ext_resource type="Texture2D" uid="uid://dxirl0rsijxb5" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/GroundSlam/GroundSlam10.png" id="13_cxg8p"]
 [ext_resource type="Script" uid="uid://bsha0mnmfnjww" path="res://Component/functions/MovementHandler.gd" id="14_dc187"]
 [ext_resource type="Texture2D" uid="uid://cix64i68r3qyq" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Combat/Kick02/Kick0207.png" id="14_kiufj"]
 [ext_resource type="Script" uid="uid://dgyx4da7oymh2" path="res://Component/functions/JumpHandler.gd" id="15_6yr1f"]
@@ -147,6 +157,8 @@
 [ext_resource type="Texture2D" uid="uid://c3tt168os4sof" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Other/Stun/stun10.png" id="103_jajog"]
 [ext_resource type="Texture2D" uid="uid://b6ch5wab1hvms" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00210.png" id="104_hsppp"]
 [ext_resource type="Texture2D" uid="uid://cicdijwufr0ug" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00211.png" id="105_nf2nc"]
+[ext_resource type="Texture2D" uid="uid://bqwilb7hxob8g" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 5/230.png" id="105_nsvtk"]
+[ext_resource type="Texture2D" uid="uid://b5a7amrfjvh6n" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 6/276.png" id="106_ht0na"]
 [ext_resource type="Texture2D" uid="uid://byyslxpsi15v2" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00212.png" id="106_v2a41"]
 [ext_resource type="Texture2D" uid="uid://c4aghcsjixkee" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00213.png" id="107_4qwl5"]
 [ext_resource type="Texture2D" uid="uid://s6sshsost6sm" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00214.png" id="108_d0jhl"]
@@ -175,6 +187,41 @@ shader_parameter/center_distance_cap = 2
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ngkqw"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_fegg8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ky20n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_5ctkf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_yf1un")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_fllyt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_h7yhu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_1j2ay")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_pjrnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_50drc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_cxg8p")
+}],
+"loop": 1,
+"name": &"akt_heavy_counter",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_ms5j4")
@@ -583,6 +630,58 @@ region = Rect2(576, 448, 64, 64)
 atlas = ExtResource("94_lur8h")
 region = Rect2(640, 448, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysvep"]
+atlas = ExtResource("105_nsvtk")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_russv"]
+atlas = ExtResource("105_nsvtk")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vij3y"]
+atlas = ExtResource("105_nsvtk")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vl6uh"]
+atlas = ExtResource("105_nsvtk")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4li5v"]
+atlas = ExtResource("105_nsvtk")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7boo"]
+atlas = ExtResource("106_ht0na")
+region = Rect2(0, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0kw6"]
+atlas = ExtResource("106_ht0na")
+region = Rect2(64, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2m5f"]
+atlas = ExtResource("106_ht0na")
+region = Rect2(128, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5imtp"]
+atlas = ExtResource("106_ht0na")
+region = Rect2(192, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qikld"]
+atlas = ExtResource("106_ht0na")
+region = Rect2(256, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2x06"]
+atlas = ExtResource("106_ht0na")
+region = Rect2(320, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_keima"]
+atlas = ExtResource("106_ht0na")
+region = Rect2(384, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_08xwk"]
+atlas = ExtResource("106_ht0na")
+region = Rect2(448, 448, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_686hk"]
 animations = [{
 "frames": [{
@@ -634,9 +733,53 @@ animations = [{
 "name": &"atk_1",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysvep")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_russv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vij3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vl6uh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4li5v")
+}],
 "loop": 1,
-"name": &"new_animation",
+"name": &"heavy_charge",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7boo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j0kw6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v2m5f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5imtp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qikld")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2x06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_keima")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_08xwk")
+}],
+"loop": 1,
+"name": &"shockwave",
 "speed": 5.0
 }]
 
@@ -1985,6 +2128,105 @@ tracks/5/keys = {
 "values": [Vector2(8, 22)]
 }
 
+[sub_resource type="Animation" id="Animation_ycfi6"]
+resource_name = "atk_heavy_counter"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.33333334, 0.36666667, 0.43333334, 0.49999997, 0.6666667, 0.73333335, 0.8, 0.8666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"akt_heavy_counter"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/AttackVFX:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.37510532),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"heavy_charge", &"shockwave"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/AttackVFX:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667, 0.37510532, 0.43333334, 0.5, 0.56666666, 0.6333333, 0.66666675, 0.70000005, 0.73333335),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D/AttackVFX:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.23333333, 0.37254193, 0.76666665),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D/AttackVFX:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AnimatedSprite2D/AttackVFX:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.36666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-23.000002, 19.000002), Vector2(-11, 35)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AnimatedSprite2D/AttackVFX:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.33333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(0.5, 0.5), Vector2(1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_q58od"]
 resource_name = "clashed"
 length = 0.2
@@ -2998,6 +3240,7 @@ _data = {
 &"atk_2": SubResource("Animation_631s8"),
 &"atk_3": SubResource("Animation_ksmfd"),
 &"atk_counter": SubResource("Animation_oos3y"),
+&"atk_heavy_counter": SubResource("Animation_ycfi6"),
 &"clashed": SubResource("Animation_q58od"),
 &"dead": SubResource("Animation_ri8gu"),
 &"death": SubResource("Animation_nm53c"),
@@ -3652,7 +3895,6 @@ one_shot = true
 one_shot = true
 
 [node name="CounterAttackTimer" type="Timer" parent="." unique_id=1186949349]
-wait_time = 0.2
 one_shot = true
 ignore_time_scale = true
 
@@ -3930,6 +4172,7 @@ stagger = NodePath("../../Stagger")
 state_machine = NodePath("..")
 hit_stop = NodePath("../../HitStop")
 counter_attack_timer = NodePath("../../CounterAttackTimer")
+counter_attack_timer_dur = 2.0
 counter_enabled = true
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=1758670167]
@@ -3971,6 +4214,7 @@ metadata/_edit_use_anchors_ = true
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="LaunchTimer" to="." method="_on_launch_timer_timeout"]
 [connection signal="timeout" from="ClashTimer" to="." method="_on_clash_timer_timeout"]
+[connection signal="timeout" from="CounterAttackTimer" to="." method="_on_counter_attack_timer_timeout"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="clash_knock_back" from="HitBox" to="." method="_on_hit_box_clash_knock_back"]
 [connection signal="clashed" from="HitBox" to="." method="_on_hit_box_clashed"]
@@ -3984,6 +4228,8 @@ metadata/_edit_use_anchors_ = true
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="player_sighted" from="VisionHandler" to="." method="_on_vision_handler_player_sighted"]
+[connection signal="riposte_follow_up" from="ClashHandler" to="." method="_on_clash_handler_riposte_follow_up"]
+[connection signal="riposte_heavy_follow_up" from="ClashHandler" to="." method="_on_clash_handler_riposte_heavy_follow_up"]
 [connection signal="hit_stop_finished" from="HitStop" to="." method="_on_hit_stop_hit_stop_finished"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
 [connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]

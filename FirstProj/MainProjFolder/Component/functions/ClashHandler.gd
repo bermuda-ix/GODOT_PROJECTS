@@ -44,6 +44,7 @@ func clash_follow_up(_follow_up := "nothing"):
 			else:
 				state_machine.dispatch(&"staggered")
 		"nothing":
+			nothing_follow_up.emit()
 			actor.pushed_back(150)
 			animation_player.play()
 			nothing_follow_up.emit()

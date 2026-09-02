@@ -49,10 +49,15 @@ var/atk_finished/value = false
 var/atk_finished/hint = 0
 var/atk_finished/hint_string = ""
 var/hit/name = &"hit"
-var/hit/type = 3
-var/hit/value = 0.0
+var/hit/type = 1
+var/hit/value = false
 var/hit/hint = 0
 var/hit/hint_string = ""
+var/atk_heavy/name = &"atk_heavy"
+var/atk_heavy/type = 1
+var/atk_heavy/value = false
+var/atk_heavy/hint = 0
+var/atk_heavy/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_2nsp0"]
 type = 1
@@ -230,9 +235,23 @@ animation_name = &"atk_3"
 [sub_resource type="BTSequence" id="BTSequence_i45wg"]
 children = [SubResource("BTCheckTrigger_exfju"), SubResource("BTAwaitAnimation_wkd5u")]
 
+[sub_resource type="BTCheckTrigger" id="BTCheckTrigger_fopnx"]
+variable = &"atk_heavy"
+
+[sub_resource type="BBNode" id="BBNode_7tj05"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_dy0rb"]
+animation_player = SubResource("BBNode_7tj05")
+animation_name = &"atk_heavy_counter"
+
+[sub_resource type="BTSequence" id="BTSequence_wkd5u"]
+children = [SubResource("BTCheckTrigger_fopnx"), SubResource("BTAwaitAnimation_dy0rb")]
+
 [sub_resource type="BTSelector" id="BTSelector_wkd5u"]
 custom_name = "AttackType"
-children = [SubResource("BTSequence_pquhl"), SubResource("BTSequence_fh6a1"), SubResource("BTSequence_i45wg")]
+children = [SubResource("BTSequence_pquhl"), SubResource("BTSequence_fh6a1"), SubResource("BTSequence_i45wg"), SubResource("BTSequence_wkd5u")]
 
 [sub_resource type="BTSequence" id="BTSequence_virdo"]
 custom_name = "Attack"

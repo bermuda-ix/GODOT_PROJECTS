@@ -162,6 +162,7 @@ func _ready():
 	bt_player.blackboard.set_var("melee_mode", false)
 	bt_player.blackboard.set_var("atk_counter", false)
 	bt_player.blackboard.set_var("atk_1", true)
+	bt_player.blackboard.set_var("atk_heavy", false)
 	bt_player.blackboard.set_var("ranged_mode", true)
 	bt_player.blackboard.set_var("within_range", false)
 	bt_player.blackboard.set_var("staggered", false)
@@ -169,7 +170,7 @@ func _ready():
 	bt_player.blackboard.set_var("falling", false)
 	bt_player.blackboard.set_var("dodge", false)
 	dying.blackboard.set_var("hit_the_floor", false)
-	
+	Events.parry_success.connect(counter_attack)
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 	_init_combat_state_machine()
@@ -394,31 +395,6 @@ func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 	
 
 	
-	#match anim_name:
-		#"atk_1":
-			#bt_player.blackboard.set_var("atk_2", true)
-			#atk_chain="_2"
-			#attack_timer.start(0.3)
-			#bt_player.active=true
-			#attacking=false
-		#"atk_2":
-			#bt_player.blackboard.set_var("atk_3", true)
-			#atk_chain="_3"
-			#attack_timer.start(0.3)
-			#bt_player.active=true
-			#attacking=false
-		#"atk_3":
-			#bt_player.blackboard.set_var("atk_1", true)
-			#atk_chain="_1"
-			#attack_timer.start(0.3)
-			#bt_player.active=true
-			#attacking=false
-		#"atk_counter":
-			#bt_player.blackboard.set_var("atk_counter", false)
-			#atk_chain="_1"
-			#bt_player.blackboard.set_var("atk_1", true)
-			#bt_player.active=true
-			#attacking=false
 
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	if anim_name.substr(0, 3)=="atk":
@@ -468,21 +444,6 @@ func _on_navigation_timer_timeout() -> void:
 	next_y=nav_agent.get_next_path_position().y
 	next_x=nav_agent.get_next_path_position().x
 	next=nav_agent.get_next_path_position()
-
-#func clash_follow_up(_follow_up := "nothing"):
-	#match _follow_up:
-		#"riposte":
-			#animation_player.play()
-			#pushed_back(200)
-			#stagger.stagger-=1
-			#if stagger.stagger>0:
-				#state_machine.dispatch(&"hit")
-			#else:
-				#state_machine.dispatch(&"stagger")
-		#"nothing":
-			#animation_player.play()
-		#_:
-			#animation_player.play()
 
 func pushed_back(_force:=100):
 	var _face_dir
@@ -694,6 +655,7 @@ func _on_hit_exited() -> void:
 
 func _on_hit_box_clashed() -> void:
 	bt_player.blackboard.set_var("staggered", true)
+	bt_player.restart()
 	#print_debug("clashed!")
 	#stagger.stagger-=1
 	attacking=false
@@ -787,6 +749,8 @@ func _on_clashed_entered() -> void:
 	vfx_sprite.visible=true
 	animation_player.pause()
 	movement_handler.active=false
+	bt_player.blackboard.set_var("staggered", true)
+	#bt_player.active=false
 	#clash_timer.start(0.1)
 	#hit_stop.hit_stop(0.01, 0.2)
 	#var _current_anim = animation_player.current_animation
@@ -822,3 +786,29 @@ func _on_clashed_exited() -> void:
 
 func _on_clashed_updated(delta: float) -> void:
 	assert(vfx_sprite.visible==true)
+
+
+func _on_clash_handler_riposte_heavy_follow_up() -> void:
+	bt_player.blackboard.set_var("atk_1", false)
+	bt_player.blackboard.set_var("atk_2", false)
+	bt_player.blackboard.set_var("atk_3", false)
+	bt_player.blackboard.set_var("atk_heavy", true)
+	bt_player.blackboard.set_var("staggered", false)
+
+
+func _on_clash_handler_riposte_follow_up() -> void:
+	bt_player.blackboard.set_var("staggered", false)
+	melee_attack_manager.atk_resume_helper()
+	bt_player.restart()
+	
+
+func _on_counter_attack_timer_timeout() -> void:
+	melee_attack_manager.atk_resume_helper()
+
+func counter_attack(_value:="enemy_light_counter")->void:
+	if _value!="enemy_light_counter":
+		return
+	bt_player.blackboard.set_var("staggered", false)
+	melee_attack_manager.atk_resume_helper()
+	bt_player.restart()
+	

@@ -29,7 +29,7 @@ func _enter() -> void:
 	anim_player.pause()
 	hit_stop.hit_stop(0.1, 5)
 	pc.velocity.x=0
-	dur.start(3)
+	dur.start(10)
 
 func _update(delta: float) -> void:
 	pc.velocity.x=0+pc.knockback.x

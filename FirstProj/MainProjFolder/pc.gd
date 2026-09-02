@@ -1814,8 +1814,9 @@ func lockon():
 		Events.unlock_from.emit()
 		target = find_closest_enemy()
 		
+		if target == null:
+			return
 		
-
 		if not target.is_on_screen or target.state_machine.get_active_state()==target.death:
 			
 			target=null
