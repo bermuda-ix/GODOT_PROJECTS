@@ -36,6 +36,7 @@ func _enter() -> void:
 	#actor.state="STAGGERED"
 	
 func _update(delta: float) -> void:
+	actor.hb_collision.set_deferred("disabled", true)
 	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.5)
 	if movement_able:
 		actor.movement_handler.active=false

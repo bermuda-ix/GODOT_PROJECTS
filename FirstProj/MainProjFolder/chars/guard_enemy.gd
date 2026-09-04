@@ -252,12 +252,13 @@ func _process(_delta):
 	if not is_on_screen and vision_handler.always_on==true and state_machine.get_active_state()!=chasing:
 		state_machine.change_active_state(chasing)
 	
-	if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
-		hb_collision.set_deferred("disabled", true)
-		return
-	elif state_machine.get_active_state()==idle:
-		hb_collision.set_deferred("disabled", true)
-	elif (state_machine.get_active_state()!=death or state_machine.get_active_state()==dying) and health.health<=0:
+	#if state_machine.get_active_state()==death or state_machine.get_active_state()==staggered or state_machine.get_active_state()==hit:
+		#hb_collision.set_deferred("disabled", true)
+		#return
+	#elif state_machine.get_active_state()==idle:
+		#hb_collision.set_deferred("disabled", true)
+	#el
+	if (state_machine.get_active_state()!=death or state_machine.get_active_state()==dying) and health.health<=0:
 		state_machine.dispatch(&"die")
 	
 			
@@ -427,17 +428,18 @@ func _on_attack_range_body_exited(body: Node2D) -> void:
 		state_machine.dispatch(&"start_chase")
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
-	death_knockback=100.0
-	death_launch=-30.0
-	if area.is_in_group("sp_atk_default"):
-		if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
-			Events.allied_enemy_hit.emit()
-		#print_debug("spc_hit")
-		if animated_sprite_2d.flip_h:
-			knockback.x=50
-		else:
-			knockback.x=-50
-		stagger.stagger -= player.sp_atk_dmg
+	pass
+	#death_knockback=100.0
+	#death_launch=-30.0
+	#if area.is_in_group("sp_atk_default"):
+		#if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
+			#Events.allied_enemy_hit.emit()
+		##print_debug("spc_hit")
+		#if animated_sprite_2d.flip_h:
+			#knockback.x=50
+		#else:
+			#knockback.x=-50
+		#stagger.stagger -= player.sp_atk_dmg
 
 func _on_navigation_timer_timeout() -> void:
 	makepath()
@@ -461,6 +463,7 @@ func _on_stagger_staggered() -> void:
 	if state_machine.get_active_state()!=launch:
 		bt_player.blackboard.set_var("staggered", true)
 		state_machine.change_active_state(staggered)
+	state_machine.dispatch(&"staggered")
 	Events.camera_shake.emit(2,20)
 
 func _on_parry_timer_timeout() -> void:
@@ -543,9 +546,9 @@ func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboStat
 	if current==jump:
 		if previous==attack:
 			print_debug("down attack")
-	if not visible_on_screen_notifier_2d.is_on_screen():
-		if current==attack:
-			push_error("ERROR: State changed")
+	#if not visible_on_screen_notifier_2d.is_on_screen():
+		#if current==attack:
+			#push_error("ERROR: State changed")
 	#print_debug(current)
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
@@ -750,6 +753,7 @@ func _on_clashed_entered() -> void:
 	animation_player.pause()
 	movement_handler.active=false
 	bt_player.blackboard.set_var("staggered", true)
+	hb_collision.set_deferred("disabled", true)
 	#bt_player.active=false
 	#clash_timer.start(0.1)
 	#hit_stop.hit_stop(0.01, 0.2)
@@ -761,13 +765,13 @@ func _on_clashed_entered() -> void:
 
 func _on_clash_timer_timeout() -> void:
 	print_debug(state_machine.get_active_state())
-	bt_player.blackboard.set_var("staggered", false)
+	#bt_player.blackboard.set_var("staggered", false)
 	state_machine.dispatch(&"counter_attack")
 	melee_attack_manager.melee_attack()
 	
 func clash_end()-> void:
 	print_debug(state_machine.get_active_state())
-	bt_player.blackboard.set_var("staggered", false)
+	#bt_player.blackboard.set_var("staggered", false)
 	state_machine.dispatch(&"counter_attack")
 	melee_attack_manager.melee_attack()
 
@@ -809,6 +813,11 @@ func counter_attack(_value:="enemy_light_counter")->void:
 	if _value!="enemy_light_counter":
 		return
 	bt_player.blackboard.set_var("staggered", false)
-	melee_attack_manager.atk_resume_helper()
+	#melee_attack_manager.atk_resume_helper()
 	bt_player.restart()
 	
+
+
+func _on_staggered_updated(delta: float) -> void:
+	bt_player.blackboard.set_var("staggered", true)
+	hb_collision.set_deferred("disabled", true)

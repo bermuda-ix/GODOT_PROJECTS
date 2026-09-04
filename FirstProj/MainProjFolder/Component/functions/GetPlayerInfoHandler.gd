@@ -3,6 +3,7 @@ class_name GetPlayerInfoHandler
 extends Node
 
 @export var actor : Node2D
+#@onready var player_behind := false
 var distance
 
 func _ready() -> void:
@@ -32,3 +33,10 @@ func get_player_distance()->float:
 func player_died() -> void:
 	#actor.state_machine
 	actor.set_process(false)
+
+func player_behind() -> bool:
+	if (actor.player_right and actor.animated_sprite_2d.scale.x>0) or\
+	 (not actor.player_right and actor.animated_sprite_2d.scale.x<0):
+		return true
+	else:
+		return false

@@ -13183,7 +13183,6 @@ script = ExtResource("230_pbr83")
 actor = NodePath("..")
 player_tracking_active = false
 turret = NodePath("../AnimatedSprite2D/Shotty/Turret")
-spread_cone = 30.0
 projectile = ExtResource("231_ymji2")
 bullet_speed = 800.0
 metadata/_custom_type_script = "uid://5gt6g8063rb4"

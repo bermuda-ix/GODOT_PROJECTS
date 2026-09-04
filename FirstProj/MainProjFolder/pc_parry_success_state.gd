@@ -5,6 +5,7 @@ extends LimboHSM
 @export var hit_stop : HitStop
 @onready var dur : Timer = Timer.new()
 @onready var success : bool = false
+@onready var enemy_success := false
 
 @export var clash_animation := "clashed"
 @export var attack_1 : LimboState
@@ -13,6 +14,7 @@ signal dur_timeout
 
 
 func _ready() -> void:
+	Events.parry_success.connect(enemy_counter)
 	add_child(dur)
 	dur.autostart=false
 	dur.one_shot=true
@@ -30,11 +32,15 @@ func _enter() -> void:
 	hit_stop.hit_stop(0.1, 5)
 	pc.velocity.x=0
 	dur.start(10)
+	success=false
+	enemy_success=false
 
 func _update(delta: float) -> void:
 	pc.velocity.x=0+pc.knockback.x
 	#if pc.velocity.x!=0:
 		#print_debug(pc.velocity.x)
+	if enemy_success:
+		return
 	if Input.is_action_just_pressed("attack"):
 		dur.stop()
 		pc.velocity.x=0
@@ -72,6 +78,7 @@ func _exit() -> void:
 	pc.attack_timer.paused=false
 	pc.attack_timer.stop()
 	success=false
+	pc.attacking=false
 	#pc.hurt_box_detect.disabled=false
 
 func do_nothing() -> void:
@@ -81,3 +88,9 @@ func do_nothing() -> void:
 	hit_stop.end_hit_stop()
 	pc.clash_timer.start()
 	
+func enemy_counter(_value : String = "") -> void:
+	if _value=="enemy_light_counter":
+		pc.start_attack_timer(0.2)
+		success=true
+		enemy_success=true
+		pc.attacking=false

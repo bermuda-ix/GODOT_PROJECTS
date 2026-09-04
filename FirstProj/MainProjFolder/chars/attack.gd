@@ -5,6 +5,9 @@ extends LimboState
 @export var actor : Node2D
 @export var bt_player : BTPlayer
 @export var hit_box : HitBox
+@export var hurt_box : HurtBox
+@export var get_player_info : GetPlayerInfoHandler
+@export var attacking := false
 var starting : float
 var lunge_distance := 0
 var attack_dir := 1
@@ -26,12 +29,14 @@ func _enter() -> void:
 func _update(delta: float) -> void:
 	
 	attack_lunge()
+	front_hit_disable()
 	
 	
 func _exit() -> void:
 	print_debug("exit")
 	if hit_box != null:
 		hit_box.active=false
+	hurt_box.active=true
 	#hit_box.clash_active=false
 	
 	
@@ -49,3 +54,11 @@ func attack_lunge_setup(_lunge_distance := 200.0) -> void:
 
 func attack_jump_setup(_jump_height := 50) -> void:
 	actor.velocity.y=-_jump_height
+
+func front_hit_disable():
+	if not attacking:
+		return
+	if get_player_info.player_behind():
+		hurt_box.active=true
+	else:
+		hurt_box.active=false

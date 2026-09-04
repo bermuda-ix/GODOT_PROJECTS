@@ -292,7 +292,7 @@ var local_door : entry_local = null
 @onready var enemies : Array =[]
 
 
-var knockback : Vector2
+var knockback : Vector2 : set = set_knockback
 var kb_dir : Vector2 = Vector2.ZERO
 var hit_success : bool = false
 var forward_thrust : Vector2 = Vector2.ZERO
@@ -348,6 +348,8 @@ var high_target_jump_height
 var flipped_over : bool = false
 @onready var flip_buffer: Timer = $FlipBuffer
 
+func set_knockback(_value : Vector2) -> void:
+	_value=knockback
 
 #multithreading
 var thread := Thread.new()
@@ -1093,7 +1095,8 @@ func update_animation(input_axis):
 		
 func attack_handler():
 	
-	if state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered or state_machine.get_active_state()==parry_success_state:
+	if state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered or \
+	(state_machine.get_active_state()==parry_success_state and parry_success_state.success==false):
 		return
 	
 	
@@ -1290,7 +1293,7 @@ func light_attack() -> void:
 func regular_attack() -> void:
 	if attacking and not charging:
 		return
-	if state_machine.get_active_state()==parry_success_state:
+	if (state_machine.get_active_state()==parry_success_state and parry_success_state.success==false):
 		return
 	
 	#attack_timer.start()
@@ -1609,7 +1612,7 @@ func shotgun_shoot() -> void:
 	#print_debug(spread_boundary_1.rotation_degrees, ", ", spread_boundary_2.rotation_degrees)
 	Events.remove_ammo.emit()
 	ammo-=1
-	shoot_handler.manuel_rotation=true
+	shoot_handler.manual_rotation=true
 	for i in spread:
 		bullet_dir = rotation_to_direction(_bullet_dirs[i])
 		#print_debug(_bullet_dirs[i])
@@ -2385,6 +2388,8 @@ func _on_attack_timer_timeout():
 		return
 	elif attack_state.get_active_state()==special_combo:
 		state_machine.dispatch(&"return_to_idle")
+	elif state_machine.get_active_state()==clashed:
+		state_machine.dispatch(&"return_to_idle")
 	atk_chain = 0
 	attack_combo = "Attack"
 	attack_1.attack = "Attack"
@@ -2472,7 +2477,7 @@ func parry_success(_parry_follow_up := "nothing"):
 		"enemy_light_counter":
 			anim_player.play()
 			start_attack_timer(0.2)
-			knockback.x=50*face_dir
+			knockback.x=25*face_dir
 		"nothing":
 			anim_player.play()
 			start_attack_timer(0.05)
@@ -2858,6 +2863,7 @@ func _on_hit_box_parried() -> void:
 
 func _on_hit_box_clash_interrupt(_launch: float, _knockback: float, _impact_dir_right: bool, _damage: int) -> void:
 	hit.hit_anim="knocked_back"
+	hit_stop.hit_stop(0.01, 0.2)
 	if _impact_dir_right:
 		knockback.x=-_knockback
 	else: 

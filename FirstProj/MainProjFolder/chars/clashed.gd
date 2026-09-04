@@ -29,6 +29,7 @@ func _enter() -> void:
 	#stagger.set_stagger(stagger.stagger-1)
 	vfx_player.speed_scale=1/Engine.time_scale
 	if stagger.stagger>counter_stagger_threshold and counter_enabled:
+		stagger.stagger-=1
 		counter_attack_timer.start(counter_attack_timer_dur)
 	else:
 		movement_handler.active=false
