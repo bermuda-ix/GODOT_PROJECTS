@@ -5,7 +5,7 @@ extends StaticBody2D
 @onready var target_lock_node: TargetLock = $TargetLock
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var death_handler: DeathHandler = $DeathHandler
-@onready var turret_top: Node2D = $turret_top
+@onready var turret_top: TurretTop = $turret_top_burst_shot
 @onready var despawn_handler: DespawnHandler = $DespawnHandler
 @onready var hurt_box: HurtBox = $HurtBox
 @onready var hurt_box_collision: CollisionPolygon2D = $HurtBox/HurtBoxCollision
@@ -21,6 +21,8 @@ extends StaticBody2D
 @onready var death_sparks2: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D2
 @onready var death_sparks3: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D3
 
+@onready var activated := false
+@onready var deactivated := true
 
 @onready var npc_stats: Control = $NPCStats
 @onready var health: Health = $Health
@@ -34,6 +36,9 @@ extends StaticBody2D
 
 @export var turret_link_control : TurretLink
 @onready var turret_link_order : int
+
+@onready var debug_angle: Label = $DEBUG_ANGLE
+
 
 signal turret_death
 
@@ -50,6 +55,9 @@ func _ready() -> void:
 		for i in range(linked_turrets.size()):
 			print_debug(linked_turrets[i].name, " linked")
 			turret_link_order=linked_turrets.find(self)
+	
+	#TBR
+	debug_angle.text=str(turret_top.sprite_2d.rotation_degrees)
 
 func _process(delta: float) -> void:
 	is_on_screen=turret_top.is_on_screen
@@ -59,6 +67,7 @@ func _process(delta: float) -> void:
 	else:
 		npc_stats.visible=true
 		
+	debug_angle.text=str(turret_top.rotation_degrees)
 	
 func _init_state_machine():
 	state_machine.initial_state=alive
@@ -89,6 +98,7 @@ func _on_health_health_depleted() -> void:
 	#turret_top.death_handler.death()
 	turret_top.bt_player.active=false
 	turret_top.animation_player.play("death")
+	turret_top.state_machine.dispatch(&"die")
 	state_machine.dispatch(&"die")
 	death_handler.death()
 	death_sparks1.emitting=true
@@ -126,3 +136,9 @@ func _on_turret_top_shoot() -> void:
 
 func _on_turret_top_health_change(_new_health: int) -> void:
 	health.set_health(_new_health)
+
+
+func _on_vision_handler_player_sighted() -> void:
+	animation_player.play("activate")
+	await animation_player.animation_finished
+	turret_top.state_machine.dispatch(&"attack_mode")

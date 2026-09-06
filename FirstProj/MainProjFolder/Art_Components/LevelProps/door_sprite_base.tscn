@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://btm28rexcpdwq"]
+
+[ext_resource type="Texture2D" uid="uid://cp27q8n7gwf8r" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factory.png" id="1_koyfr"]
+[ext_resource type="Script" uid="uid://dvkxp8ilcrpt4" path="res://Art_Components/LevelProps/large_door_side_view_sprite.gd" id="1_txevb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txevb"]
+atlas = ExtResource("1_koyfr")
+region = Rect2(1296, 1000, 117, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5jm7"]
+atlas = ExtResource("1_koyfr")
+region = Rect2(1440, 1000, 116, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5uue"]
+atlas = ExtResource("1_koyfr")
+region = Rect2(1584, 1000, 121, 250)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_incat"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_txevb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5jm7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5uue")
+}],
+"loop": 1,
+"name": &"open_close",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_i4q87"]
+resource_name = "Open"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"open_close"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_3ikqp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"open_close"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_fxd4j"]
+resource_name = "closed"
+length = 0.14166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"open_close"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [2, 1, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xl6o4"]
+_data = {
+&"Open": SubResource("Animation_i4q87"),
+&"RESET": SubResource("Animation_3ikqp"),
+&"closed": SubResource("Animation_fxd4j")
+}
+
+[node name="DoorSpriteBase" type="Node2D" unique_id=686953818]
+script = ExtResource("1_txevb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=22423132]
+sprite_frames = SubResource("SpriteFrames_incat")
+animation = &"open_close"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=56140785]
+libraries/ = SubResource("AnimationLibrary_xl6o4")

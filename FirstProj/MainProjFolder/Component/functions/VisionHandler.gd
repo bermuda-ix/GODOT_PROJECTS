@@ -13,6 +13,7 @@ extends Node
 @export var stay_on : bool = false
 @export var nav_agent : NavigationAgent2D
 @export var turret : Turret
+@export var delayed_attack := false
 
 @onready var player : PlayerEntity
 @onready var player_detect : Area2D
@@ -21,6 +22,7 @@ extends Node
 @onready var player_found : bool = false
 
 @export var ground_enemy := true
+@export var face_player := true
 
 signal player_sighted
 func _ready() -> void:
@@ -30,8 +32,9 @@ func _ready() -> void:
 	
 
 func _process(delta: float) -> void:
-	turret_face_player()
-
+	if face_player:
+		turret_face_player()
+ 
 func get_player_relative_loc():
 	if player.global_position.x>actor.global_position.x:
 		actor.player_right=true
@@ -62,7 +65,10 @@ func handle_vision():
 					return
 				else:
 					#actor.set_state(actor.current_state, actor.States.ATTACK)
-					sm.dispatch(&"attack_mode")
+					if delayed_attack:
+						pass
+					else:
+						sm.dispatch(&"attack_mode")
 					
 					#chase_timer.start(1)
 					if player_found==false:

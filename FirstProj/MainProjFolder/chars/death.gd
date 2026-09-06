@@ -16,7 +16,8 @@ func _enter() -> void:
 	if "hurt_box_collision" in actor:
 		actor.hurt_box_collision.set_deferred("disabled", true)
 	
-	actor.collision_shape_2d.set_deferred("disabled", true)
+	if actor.get_class() != "TurretTop":
+		actor.collision_shape_2d.set_deferred("disabled", true)
 	actor.set_collision_mask_value(15, true)
 	if tree_active:
 		actor.bt_player.blackboard.set_var("attack_mode", false)

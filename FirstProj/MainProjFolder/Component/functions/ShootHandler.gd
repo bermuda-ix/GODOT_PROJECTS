@@ -27,6 +27,9 @@ extends Node
 
 var turret_order : int =0
 
+func _ready() -> void:
+	turret.shoot_bullet.connect(shoot_bullet)
+
 func shoot_bullet():
 	var bullet_inst = projectile.instantiate()
 	bullet_inst.set_speed(bullet_speed)

@@ -3716,11 +3716,13 @@ state_machine = NodePath("..")
 jump_handler = NodePath("../../JumpHandler")
 metadata/_custom_type_script = "uid://d2wausty5l457"
 
-[node name="Attack" type="LimboState" parent="StateMachine" unique_id=1761956651 node_paths=PackedStringArray("actor", "bt_player", "hit_box")]
+[node name="Attack" type="LimboState" parent="StateMachine" unique_id=1761956651 node_paths=PackedStringArray("actor", "bt_player", "hit_box", "hurt_box", "get_player_info")]
 script = ExtResource("29_ct51r")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 hit_box = NodePath("../../HitBox")
+hurt_box = NodePath("../../HurtBox")
+get_player_info = NodePath("../../GetPlayerInfoHandler")
 metadata/_custom_type_script = "uid://b5an13nv6em7m"
 
 [node name="MeleeAttack" type="LimboState" parent="StateMachine" unique_id=1241376327]
@@ -3732,13 +3734,15 @@ player_info = NodePath("../../GetPlayerInfoHandler")
 shoot_attack_handler = NodePath("../../ShootAttackManager")
 turret = NodePath("../../Turret")
 
-[node name="Shooting" type="LimboState" parent="StateMachine/ShootingStates" unique_id=1028762683 node_paths=PackedStringArray("actor")]
+[node name="Shooting" type="LimboState" parent="StateMachine/ShootingStates" unique_id=1028762683 node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("30_vtt0c")
 actor = NodePath("../../..")
+animation_player = NodePath("../../../AnimationPlayer")
 metadata/_custom_type_script = "uid://pjji1dxbp6vy"
 
-[node name="ShootingDefense" type="LimboState" parent="StateMachine/ShootingStates" unique_id=1055991231]
+[node name="ShootingDefense" type="LimboState" parent="StateMachine/ShootingStates" unique_id=1055991231 node_paths=PackedStringArray("shoot_handler")]
 script = ExtResource("39_iqleq")
+shoot_handler = NodePath("../../../ShootHandler")
 
 [node name="Reload" type="LimboState" parent="StateMachine/ShootingStates" unique_id=1951350692 node_paths=PackedStringArray("animation_player", "turret")]
 script = ExtResource("39_i83c4")
@@ -3769,13 +3773,15 @@ actor = NodePath("../..")
 anim_player = NodePath("../../AnimationPlayer")
 timer = NodePath("../../ParryTimer")
 
-[node name="Staggered" type="LimboState" parent="StateMachine" unique_id=369894600 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player", "vfx_player")]
+[node name="Staggered" type="LimboState" parent="StateMachine" unique_id=369894600 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player", "vfx_player", "hurt_box", "stagger_timer")]
 script = ExtResource("33_eopqg")
 actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
 stagger = NodePath("../../Stagger")
 bt_player = NodePath("../../BTPlayer")
 vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
+hurt_box = NodePath("../../HurtBox")
+stagger_timer = NodePath("../../StaggerTimer")
 metadata/_custom_type_script = "uid://bmeh2aawck5wy"
 
 [node name="Death" type="LimboState" parent="StateMachine" unique_id=1478229458 node_paths=PackedStringArray("actor", "animation_player")]
@@ -3794,23 +3800,25 @@ death_knockback = 400
 drop_handler = NodePath("../../DropHandler")
 hit_stop = NodePath("../../HitStop")
 
-[node name="Launch" type="LimboState" parent="StateMachine" unique_id=1511695115 node_paths=PackedStringArray("actor", "launch_timer")]
+[node name="Launch" type="LimboState" parent="StateMachine" unique_id=1511695115 node_paths=PackedStringArray("actor", "launch_timer", "animation_player")]
 script = ExtResource("100_8h24x")
 actor = NodePath("../..")
 launch_timer = NodePath("../../LaunchTimer")
 launch_strength = 0.0
 knock_back_strength = 0.0
+animation_player = NodePath("../../AnimationPlayer")
 metadata/_custom_type_script = "uid://dscn2ndlewuut"
 
 [node name="Falling" type="LimboState" parent="StateMachine" unique_id=822601892]
 
 [node name="Landed" type="LimboState" parent="StateMachine" unique_id=1214387260]
 
-[node name="Clashed" type="LimboState" parent="StateMachine" unique_id=1880104669 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "movement_handler", "stagger", "state_machine", "hit_stop", "counter_attack_timer")]
+[node name="Clashed" type="LimboState" parent="StateMachine" unique_id=1880104669 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "hurt_box", "movement_handler", "stagger", "state_machine", "hit_stop", "counter_attack_timer")]
 script = ExtResource("125_4cgwk")
 actor = NodePath("../..")
 anim_player = NodePath("../../AnimationPlayer")
 vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
+hurt_box = NodePath("../../HurtBox")
 movement_handler = NodePath("../../MovementHandler")
 stagger = NodePath("../../Stagger")
 state_machine = NodePath("..")

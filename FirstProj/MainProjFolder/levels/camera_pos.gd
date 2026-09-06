@@ -47,6 +47,9 @@ func _ready() -> void:
 	camera_2d.zoom*=camera_zoom
 	zoom_default=camera_2d.zoom
 	camera_2d.position_smoothing_speed=camera_speed_default
+	set_cam_smooth(true)
+	
+	
 	
 func _process(delta: float) -> void:
 	
@@ -59,6 +62,9 @@ func _process(delta: float) -> void:
 
 	if boss_active and not stationary:
 		boss_arena_camera()
+	elif not boss_active and not stationary:
+		global_position=player.global_position
+	
 
 func camera_shake_fixed():
 	shake_strength=rand_strength

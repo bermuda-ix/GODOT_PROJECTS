@@ -11,5 +11,5 @@ func _enter() -> void:
 	#print_debug("begin shooting")
 	#actor.hb_collision.disabled=true
 	
-#func _exit() -> void:
-	#print_debug("exit")
+func _exit() -> void:
+	print_debug("exit")

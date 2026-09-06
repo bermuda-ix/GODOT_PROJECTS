@@ -180,7 +180,7 @@ func show_game_over():
 		hit_stop.end_hit_stop()
 		Global.game_controller.call_deferred("remove_gui_from_existing", "Score_UI")
 		Global.game_controller.call_deferred("toggle_world2d_process", false)
-		Global.game_controller.change_gui_scene(LevelsList.HIGHSCORE_ENTRY)
+		Global.game_controller.chwange_gui_scene(LevelsList.HIGHSCORE_ENTRY)
 		
 		#Global.game_controller.toggle_world2d_process(false)
 		#Global.game_controller.remove_gui_from_existing("Score_UI")

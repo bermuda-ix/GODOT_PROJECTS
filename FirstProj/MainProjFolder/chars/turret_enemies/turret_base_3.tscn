@@ -208,18 +208,13 @@ process_material = SubResource("ParticleProcessMaterial_wstjc")
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="." unique_id=224298227]
 polygon = PackedVector2Array(-122, 95, 82, 95, 123, 57, 122, 17, 78, 17, 72, -93, 36, -93, 32, 17, -30, 18, -66, 56, -102, 56, -122, 75)
 
-[node name="turret_top" parent="." unique_id=564710164 node_paths=PackedStringArray("base") instance=ExtResource("2_4s1b6")]
-position = Vector2(56, -78)
-base = NodePath("..")
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=989149592]
 libraries/ = SubResource("AnimationLibrary_wstjc")
 
-[node name="HurtBox" type="Area2D" parent="." unique_id=525706724 node_paths=PackedStringArray("health", "stagger")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=525706724 node_paths=PackedStringArray("stagger")]
 collision_layer = 16
 collision_mask = 8397376
 script = ExtResource("3_sh051")
-health = NodePath("../turret_top/Health")
 stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
@@ -232,6 +227,7 @@ metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
 [node name="Health" type="Node" parent="." unique_id=1983856814]
 script = ExtResource("4_61vfk")
+max_health = 15
 metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=73715911]
@@ -291,11 +287,18 @@ tree_active = false
 
 [node name="Alive" type="LimboState" parent="StateMachine" unique_id=837795707]
 
-[connection signal="health_change" from="turret_top" to="." method="_on_turret_top_health_change"]
+[node name="turret_top_3" parent="." unique_id=734200265 node_paths=PackedStringArray("base") instance=ExtResource("2_4s1b6")]
+position = Vector2(54, -44)
+rotation = -3.0967813
+base = NodePath("..")
+
+[node name="Health" parent="turret_top_3" index="14" unique_id=636166899]
+max_health = 15
+
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 
-[editable path="turret_top"]
+[editable path="turret_top_3"]

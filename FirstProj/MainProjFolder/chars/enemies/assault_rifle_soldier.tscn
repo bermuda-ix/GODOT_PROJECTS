@@ -2539,10 +2539,12 @@ state_machine = NodePath("..")
 jump_handler = NodePath("../../JumpHandler")
 metadata/_custom_type_script = "uid://d2wausty5l457"
 
-[node name="Attack" type="LimboState" parent="StateMachine" unique_id=775442244 node_paths=PackedStringArray("actor", "hit_box")]
+[node name="Attack" type="LimboState" parent="StateMachine" unique_id=775442244 node_paths=PackedStringArray("actor", "hit_box", "hurt_box", "get_player_info")]
 script = ExtResource("36_mni36")
 actor = NodePath("../..")
 hit_box = NodePath("../../HitBox")
+hurt_box = NodePath("../../HurtBox")
+get_player_info = NodePath("../../GetPlayerInfoHandler")
 metadata/_custom_type_script = "uid://b5an13nv6em7m"
 
 [node name="MeleeAttack" type="LimboState" parent="StateMachine" unique_id=89448626 node_paths=PackedStringArray("actor", "movement_handler", "animation_player", "hit_box")]

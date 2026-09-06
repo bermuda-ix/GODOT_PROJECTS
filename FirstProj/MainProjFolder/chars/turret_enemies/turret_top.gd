@@ -3,6 +3,7 @@ class_name TurretTop
 extends Node2D
 
 @onready var turret_top_collision: CollisionShape2D = $Sprite2D/turret_top/turret_top_collision
+
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var turret_top: AnimatableBody2D = $Sprite2D/turret_top
 @onready var blue_modulate := 255
@@ -22,6 +23,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 
 @onready var player_tracker_pivot: Node2D = $PlayerTrackerPivot
 @onready var player_tracking: RayCast2D = $PlayerTrackerPivot/PlayerTracking
+
 @onready var vision_handler: VisionHandler = $VisionHandler
 @onready var is_on_screen : bool = false
 @onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
@@ -42,12 +44,22 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var idle: LimboState = $LimboHSM/Idle
 @onready var attack: LimboState = $LimboHSM/Attack
 @onready var shooting: Shooting = $LimboHSM/Shooting
+@onready var shooting_tree: BTState = $LimboHSM/ShootingTree
 @onready var death: LimboState = $LimboHSM/Death
 @onready var player : PlayerEntity = null
 @onready var stagger: LimboState = $LimboHSM/Stagger
 @onready var health: Health = $Health
 
+@export_group("Turret Behavior")
+@onready var bullet_dir := Vector2.ZERO
 @export var base : TurretBase
+@export_enum("Single Shot", "Burst Fire", "Rapid Shot") var firing_type = 0\
+ : set = set_firing_type, get = get_firing_type
+
+func set_firing_type(_value : int) -> void:
+	firing_type=_value
+func get_firing_type() -> int:
+	return firing_type
 
 @onready var linked_turrets : Array[TurretBase]
 
@@ -61,10 +73,16 @@ func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	turret.setup(0)
 	turret.shoot_timer.paused=true
-	bt_player.blackboard.set_var("shoot_active", false)
+	#bt_player.blackboard.set_var("shoot_active", false)
+	#bt_player.blackboard.set_var("attack_mode", false)
+	shooting_tree.blackboard.set_var("firing_type", get_firing_type())
+	shooting_tree.blackboard.set_var("ammo_amount", turret.ammo_count)
 	_init_state_machine()
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 	gpu_particles_2d.process_material.scale
+	if base!=null:
+		player_tracker_pivot.scale.x*=(1/base.scale.x)
+		player_tracker_pivot.scale.y*=(1/base.scale.y)
 	
 	
 
@@ -75,25 +93,29 @@ func _process(_delta):
 	var player_track_angle_wrap=wrapf(player_tracker_pivot.rotation, 0, 2*PI)
 	debug.text=str(rad_to_deg(player_track_angle_wrap), " ",sprite_2d.rotation_degrees)
 	heating_up_visual()
-	#
+	bt_player.blackboard.set_var("attack_mode", true)
+	debug.text=str(sprite_2d.rotation_degrees)
+	bullet_dir=shoot_handler.rotation_to_direction(sprite_2d.global_rotation_degrees)
 	#if not shoot_attack_manager.shooting:
 		#stagger_shooting()
 	
+	
+
 func _init_state_machine():
 	state_machine.initial_state=idle
 	state_machine.initialize(self)
 	state_machine.set_active(true)
 	
-	state_machine.add_transition(idle, shooting, &"attack_mode")
+	state_machine.add_transition(idle, shooting_tree, &"attack_mode")
 	state_machine.add_transition(state_machine.ANYSTATE, death, &"die")
 	state_machine.add_transition(state_machine.ANYSTATE, stagger, &"staggered")
-	state_machine.add_transition(stagger, shooting, &"recovery")
+	state_machine.add_transition(stagger, shooting_tree, &"recovery")
 
 
 
-func _on_turret_shoot_bullet() -> void:
-	#print_debug("shoot")
-	shoot_handler.shoot_bullet()
+#func _on_turret_shoot_bullet() -> void:
+	##print_debug("shoot")
+	#shoot_handler.shoot_bullet()
 
 
 
@@ -203,6 +225,11 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	health.health=base.health.health
 	if player_tracking!=null:
 		player_tracking.target_position.x=player.global_position.x
+	if vision_handler.stay_on:
+		base.animation_player.play("activate")
+		await base.animation_player.animation_finished
+		state_machine.dispatch(&"attack_mode")
+		#state_machine.dispatch(&"attack_mode")
 
 
 func _on_health_health_changed(diff: int) -> void:
@@ -211,3 +238,41 @@ func _on_health_health_changed(diff: int) -> void:
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	state_machine.change_active_state(idle)
+
+
+func _on_attack_updated(delta: float) -> void:
+	bt_player.blackboard.set_var("ammo_amount", turret.ammo_count)
+
+
+func _on_shooting_updated(delta: float) -> void:
+	bt_player.blackboard.set_var("ammo_amount", turret.ammo_count)
+	bt_player.blackboard.set_var("attack_mode", true)
+	bt_player.blackboard.set_var("shoot_active", true)
+
+
+func _on_shooting_entered() -> void:
+	bt_player.blackboard.set_var("attack_mode", true)
+	bt_player.blackboard.set_var("shoot_active", true)
+	print_debug(bt_player.blackboard.get_var("attack_mode"))
+	print_debug(bt_player.blackboard.get_var("shoot_active"))
+	print_debug(bt_player.blackboard.get_var("attack_mode"))
+	if not base.linked_turrets.is_empty():
+		for i in range(base.linked_turrets.size()):
+			
+			if i == 0:
+				base.linked_turrets[i].turret_top.state_machine.dispatch(&"attack_mode")
+				base.linked_turrets[i].turret_top.bt_player.blackboard.set_var("shoot_active", true)
+				base.linked_turrets[i].turret_top.shoot_attack_manager.shooting=true
+				print_debug(base.linked_turrets[i].name, " activated")
+				
+			else:
+				base.linked_turrets[i].turret_top.state_machine.dispatch(&"attack_mode")
+				base.linked_turrets[i].turret_top.bt_player.blackboard.set_var("shoot_active", false)
+				print_debug(base.linked_turrets[i].name, " waiting")
+				
+	else:
+		bt_player.blackboard.set_var("shoot_active", true)
+
+
+func _on_shooting_tree_exited() -> void:
+	pass # Replace with function body.
