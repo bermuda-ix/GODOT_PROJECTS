@@ -1103,7 +1103,7 @@ func attack_handler():
 	var anim_player_time : float = anim_player.current_animation_position
 	
 	if Input.is_action_pressed("attack"):
-		print_debug(state_machine.get_active_state())
+		#print_debug(state_machine.get_active_state())
 		if not reload_timer.is_stopped():
 			reload_timer.stop()
 		if state_machine.get_active_state()==idle and (attacking or charging):
@@ -1143,7 +1143,7 @@ func attack_handler():
 	
 		charging=false
 		
-		print_debug(state_machine.get_active_state())
+		#print_debug(state_machine.get_active_state())
 		
 		if state_machine.get_active_state()==idle and attacking:
 			attacking=false
@@ -1192,7 +1192,7 @@ func heavy_combos():
 		else:
 			heavy_attacking=true
 			charging_attack.attack=heavy_attack_1.attack
-			print_debug(state_machine.get_active_state())
+			#print_debug(state_machine.get_active_state())
 			#assert(not charging)
 			charging=true
 			if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:

@@ -18,6 +18,8 @@ const JUMP_VELOCITY = -400.0
 #Animation Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var vfx_player: AnimationPlayer = $AnimationPlayer/VFXPlayer
+@onready var hit_fx_player: AnimationPlayer = $AnimationPlayer/HitFXPlayer
+
 #Target lock
 @onready var target_lock_node: TargetLock = $TargetLock
 #Visible on screen
@@ -266,6 +268,9 @@ func _process(_delta):
 	if not attack_range.has_overlapping_bodies() and state_machine.get_active_state()==chasing:
 		bt_player.blackboard.set_var("within_range", false)
 	#bt_player.blackboard.get_var("attack_mode"))
+	if state_machine.get_active_state()!=staggered:
+		assert(stagger.stagger!=0)
+	
 	attack_timer.one_shot=true
 	
 	
@@ -497,8 +502,8 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			Events.camera_shake.emit(2,20)
 			state_machine.dispatch(&"hit")
 		else:
-			animation_player.play("hit")
-			#hit_stop.hit_stop(0.01,0.01)
+			hit_fx_player.play("hit")
+			hit_stop.hit_stop(0.01,0.01)
 			AudioStreamManager.play(SoundFx.SOCAPEX_NEW_HITS_2)
 		gpu_particles_2d.restart()
 		gpu_particles_2d.emitting=true
@@ -745,6 +750,12 @@ func _on_chasing_entered() -> void:
 
 func _on_attack_entered() -> void:
 	hb_collision.set_deferred("disabled", false)
+	#assert(hb_collision.disabled==false)
+
+func _on_attack_updated(delta: float) -> void:
+	pass
+	#assert(hb_collision.disabled==false)
+	#hb_collision.set_deferred("disabled", false)
 
 
 func _on_clashed_entered() -> void:

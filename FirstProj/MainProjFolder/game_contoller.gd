@@ -37,7 +37,7 @@ var current_gui_scene
 var thread: Thread
 var mutex: Mutex
 
-@export_category("DEBUG FUNCTIONS")
+@export_group("DEBUG FUNCTIONS")
 @export var debug_start := false
 
 #@onready var prologue_lvl: adv_level = $World2D/PrologueLvl
@@ -47,7 +47,7 @@ func _ready() -> void:
 	mutex = Mutex.new()
 	thread = Thread.new()
 	call_preload_scene(LevelsList.LEVEL_SELECT)
-	load_adv_levels_web_test()
+	#load_adv_levels_web_test()
 	Global.game_controller = self
 	Events.load_level_map.connect(load_levels)
 	Events.load_first_level.connect(load_first_room)
@@ -61,8 +61,8 @@ func _ready() -> void:
 	Events.unpause.connect(unpause)
 	
 	#Disables game UI and level process when first starting
-	toggle_game_ui(false)
-	toggle_world2d_process(false)
+	#toggle_game_ui(false)
+	#toggle_world2d_process(false)
 	#toggle_player(false)
 	
 	if debug_start:

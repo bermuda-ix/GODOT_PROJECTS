@@ -47,5 +47,7 @@ func _exit() -> void:
 	if movement_able:
 		movement_handler.active=true
 	actor.hurt_box.set_damage_mulitplyer(1)
-	stagger.stagger = stagger.max_stagger
+	print_debug(stagger.max_stagger)
+	await stagger.stagger_recover()
+	assert(stagger.stagger!=0)
 	vfx_player.call_deferred("stop")

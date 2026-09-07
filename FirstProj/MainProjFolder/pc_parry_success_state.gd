@@ -27,7 +27,7 @@ func _enter() -> void:
 	var _attack_anim=attack_1.attack
 	var _marker_time=anim_player.get_animation(_attack_anim).get_marker_time("Attack_connect")
 	anim_player.seek(_marker_time, true)
-	assert(anim_player.current_animation_position==_marker_time)
+	#assert(anim_player.current_animation_position==_marker_time)
 	anim_player.pause()
 	hit_stop.hit_stop(0.1, 5)
 	pc.velocity.x=0

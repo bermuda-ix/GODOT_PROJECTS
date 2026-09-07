@@ -5,7 +5,7 @@ extends LimboState
 @export var actor : Node2D
 @export var bt_player : BTPlayer
 @export var chase_speed : float = 40
-@export var run_anim = "run"
+@export var run_anim : StringName = &"run"
 
 func _enter() -> void:
 	actor.player_found=true

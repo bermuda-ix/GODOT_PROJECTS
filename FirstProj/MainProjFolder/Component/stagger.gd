@@ -25,7 +25,7 @@ func get_max_stagger() -> int:
 	return max_stagger
 	
 func set_stagger(value: int):
-	if (value < stagger and stagger_immortality) or stagger==0:
+	if (value < stagger and stagger_immortality) or (stagger==0 and value!=max_stagger):
 		return
 		
 	var clamped_value = clampi(value, 0, max_stagger)
@@ -38,6 +38,11 @@ func set_stagger(value: int):
 		if stagger <= 0:
 			staggered.emit()
 			Events.camera_shake.emit(2,20)
-	
+	else:
+		print_debug("sum ting wong")
+		
 func get_stagger() -> int:
 	return stagger
+
+func stagger_recover() -> void:
+	stagger=max_stagger

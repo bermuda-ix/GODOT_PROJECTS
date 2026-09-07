@@ -956,7 +956,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_durt0"]
-radius = 12.0
+radius = 17.0
 height = 44.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g6e5q"]
@@ -4177,6 +4177,7 @@ libraries/ = SubResource("AnimationLibrary_1mfkv")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1821212342]
 navigation_layers = 2
 avoidance_enabled = true
+radius = 5.0
 debug_enabled = true
 
 [node name="PlayerTrackerPivot" type="Node2D" parent="." unique_id=1754461318]
@@ -4573,6 +4574,7 @@ metadata/_edit_use_anchors_ = true
 [connection signal="entered" from="LimboHSM/CHASING" to="." method="_on_chasing_entered"]
 [connection signal="entered" from="LimboHSM/DEATH" to="." method="_on_death_entered"]
 [connection signal="entered" from="LimboHSM/ATTACK" to="." method="_on_attack_entered"]
+[connection signal="updated" from="LimboHSM/ATTACK" to="." method="_on_attack_updated"]
 [connection signal="entered" from="LimboHSM/DODGE" to="." method="_on_dodge_entered"]
 [connection signal="entered" from="LimboHSM/HIT" to="." method="_on_hit_entered"]
 [connection signal="exited" from="LimboHSM/HIT" to="." method="_on_hit_exited"]

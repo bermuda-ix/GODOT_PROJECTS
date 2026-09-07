@@ -10,6 +10,7 @@
 [node name="GameContoller" type="Node" unique_id=1916067251 node_paths=PackedStringArray("gui")]
 script = ExtResource("1_xrdjs")
 gui = NodePath("GUI")
+debug_start = true
 
 [node name="World2D" type="Node2D" parent="." unique_id=160945244]
 
