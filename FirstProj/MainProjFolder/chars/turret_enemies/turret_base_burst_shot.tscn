@@ -463,7 +463,6 @@ max_stagger = 1
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="NPCStats" parent="." unique_id=1048303286 node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("7_acil5")]
-visible = false
 z_index = -1
 offset_left = -160.0
 offset_top = -240.0

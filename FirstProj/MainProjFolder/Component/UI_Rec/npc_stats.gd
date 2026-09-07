@@ -23,6 +23,8 @@ func _process(delta: float) -> void:
 	set_health(health.health)
 	set_stagger(stagger.stagger)
 	set_ammo(actor.ammo_count)
+	rotation=get_parent().rotation*-1
+
 
 func set_health(value: int) -> void:
 	health_bar.value=value

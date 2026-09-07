@@ -16,16 +16,16 @@ func _enter() -> void:
 	if "hurt_box_collision" in actor:
 		actor.hurt_box_collision.set_deferred("disabled", true)
 	
-	if actor.get_class() != "TurretTop":
+	if not actor.is_in_group("turret_top"):
 		actor.collision_shape_2d.set_deferred("disabled", true)
-	actor.set_collision_mask_value(15, true)
+		actor.set_collision_mask_value(15, true)
 	if tree_active:
 		actor.bt_player.blackboard.set_var("attack_mode", false)
 	Events.unlock_from.emit()
 	
 
 func _update(delta: float) -> void:
-	if actor.get_class()=="StaticBody2D":
+	if actor.get_class()=="StaticBody2D" or actor.is_in_group("turret_top"):
 		return
 	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.8)
 	##print_debug("oof i'm dead sadge")

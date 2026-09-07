@@ -674,7 +674,7 @@ _data = {
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_mn1co"]
 
-[node name="turret_top_burst_shot" type="Node2D" unique_id=734200265 groups=["TurretLink"]]
+[node name="turret_top_burst_shot" type="Node2D" unique_id=734200265 groups=["TurretLink", "turret_top"]]
 script = ExtResource("1_d30di")
 firing_type = 1
 

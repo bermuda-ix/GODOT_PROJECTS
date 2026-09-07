@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bro4najrj7577"]
+[gd_scene format=3 uid="uid://bro4najrj7577"]
 
 [ext_resource type="PackedScene" uid="uid://bjcwyc4ncipm" path="res://Component/UI_Rec/health_bar.tscn" id="1_kfdb0"]
 [ext_resource type="Script" uid="uid://ba8ctedlk64q7" path="res://Component/UI_Rec/npc_stats.gd" id="1_sly68"]
@@ -16,7 +16,7 @@ region = Rect2(-0.0203705, 35.7828, 48.1896, 10.5333)
 atlas = ExtResource("2_sly68")
 region = Rect2(48.2061, 19.738, 44.614, 7.61702)
 
-[node name="NPCStats" type="Control"]
+[node name="NPCStats" type="Control" unique_id=307613542]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sly68")
 
-[node name="HealthBar" parent="." instance=ExtResource("1_kfdb0")]
+[node name="HealthBar" parent="." unique_id=712215920 instance=ExtResource("1_kfdb0")]
 layout_mode = 0
 offset_left = -2.0
 offset_top = 1.0
@@ -33,7 +33,7 @@ offset_right = 46.0
 offset_bottom = 13.0
 scale = Vector2(2.04851, 1.9269)
 
-[node name="StaggerBar" type="TextureProgressBar" parent="."]
+[node name="StaggerBar" type="TextureProgressBar" parent="." unique_id=1120831121]
 layout_mode = 0
 offset_top = 25.0
 offset_right = 40.0
@@ -44,7 +44,8 @@ texture_under = SubResource("AtlasTexture_ekdya")
 texture_over = SubResource("AtlasTexture_6uqvd")
 texture_progress = SubResource("AtlasTexture_yiy1h")
 
-[node name="Ammo" type="RichTextLabel" parent="."]
+[node name="Ammo" type="RichTextLabel" parent="." unique_id=168244263]
+visible = false
 layout_mode = 0
 offset_left = 96.0
 offset_right = 177.0
@@ -52,7 +53,7 @@ offset_bottom = 25.0
 scale = Vector2(1.58639, 1.68951)
 text = "Ammo:"
 
-[node name="AmmoCount" type="RichTextLabel" parent="Ammo"]
+[node name="AmmoCount" type="RichTextLabel" parent="Ammo" unique_id=875555490]
 layout_mode = 0
 offset_left = 61.0
 offset_top = 1.0
