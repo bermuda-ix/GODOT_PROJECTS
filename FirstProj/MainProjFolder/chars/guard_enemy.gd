@@ -317,7 +317,7 @@ func _physics_process(delta):
 		
 	#handle_movement()
 	if state_machine.get_active_state()==chasing:
-		velocity.x = current_speed + knockback.x
+		velocity.x = (current_speed*movement_handler.move_dir) + knockback.x
 		velocity.y += gravity * delta
 	else:
 		if state_machine.get_active_state()!=attack and state_machine.get_active_state()!=launch and state_machine.get_active_state()!=dodge:
@@ -812,6 +812,11 @@ func _on_clash_handler_riposte_heavy_follow_up() -> void:
 
 
 func _on_clash_handler_riposte_follow_up() -> void:
+	if stagger.stagger==0:
+		if state_machine.get_active_state()==staggered:
+			return
+		else:
+			animation_player.stop()
 	bt_player.blackboard.set_var("staggered", false)
 	melee_attack_manager.atk_resume_helper()
 	bt_player.restart()

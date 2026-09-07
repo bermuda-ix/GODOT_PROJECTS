@@ -53,6 +53,5 @@ func _exit() -> void:
 		if not movement_handler.active:
 			movement_handler.active=true
 		return
-	if stagger.stagger<=0 and state_machine.get_active_state()!= actor.staggered:
-		state_machine.dispatch(&"staggered")
+	
 	

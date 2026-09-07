@@ -3013,7 +3013,6 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_tqjrv"]
 resource_name = "hit"
 length = 0.1
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -4378,7 +4377,6 @@ actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 combat_state_machine = NodePath("../CombatStateMachine")
 bt_player = NodePath("../BTPlayer")
-ranged_dist = 70
 vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
@@ -4427,6 +4425,7 @@ actor = NodePath("../..")
 script = ExtResource("22_4q725")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
+chase_speed = 80.0
 
 [node name="JUMP" type="LimboState" parent="LimboHSM" unique_id=140721954 node_paths=PackedStringArray("actor", "state_machine", "jump_handler")]
 script = ExtResource("23_qiptk")

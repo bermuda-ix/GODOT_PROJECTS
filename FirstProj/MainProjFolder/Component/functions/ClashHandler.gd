@@ -32,6 +32,8 @@ func clashed_helper() -> void:
 func clash_follow_up(_follow_up := "nothing"):
 	match _follow_up:
 		"riposte":
+			if stagger.stagger<=0:
+				return
 			animation_player.play()
 			actor.pushed_back(250)
 			if desperate_attack_enabled and stagger.stagger==1:

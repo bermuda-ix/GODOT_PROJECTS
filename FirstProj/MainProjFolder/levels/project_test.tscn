@@ -45,9 +45,9 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(0, -248, 0, -80, 200, -
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ec6ti"]
-vertices = PackedVector2Array(1514.21, 113, 572, 113, 572, 87, 1514.78, 87)
+vertices = PackedVector2Array(1514.1875, 113, 572, 113, 572, 81.96875, 1514.7969, 80.02344)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(562, 77, 562, 123, 1524, 123, 1525, 77)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(562, 72, 562, 123, 1524, 123, 1525, 70)])
 
 [sub_resource type="Animation" id="Animation_05gy0"]
 resource_name = "QTE_TEST"
@@ -401,12 +401,10 @@ visible = false
 navigation_polygon = SubResource("NavigationPolygon_nxtlr")
 
 [node name="NavigationRegion2D13" type="NavigationRegion2D" parent="." index="20" unique_id=1840139446]
-visible = false
-position = Vector2(567, 171)
+position = Vector2(565, 159)
 navigation_polygon = SubResource("NavigationPolygon_nxtlr")
 
 [node name="NavigationRegion2D12" type="NavigationRegion2D" parent="." index="21" unique_id=1325755171]
-visible = false
 navigation_polygon = SubResource("NavigationPolygon_ec6ti")
 navigation_layers = 3
 
