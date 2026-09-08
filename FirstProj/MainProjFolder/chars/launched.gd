@@ -3,15 +3,15 @@ class_name Launch extends LimboState
 @export var actor : Node2D
 @export var launch_timer : Timer
 @export var air_time : float = 1.0
-@export var launch_height : float = 0
+#@export var launch_height : float = 0
 @export var launch_strength : float = 40
-@export var knocked_back : float = 0
+#@export var knocked_back : float = 0
 @export var knock_back_strength : float = 40
 @export var animation_player : AnimationPlayer
 
 func _enter() -> void:
-	launch_height=actor.global_position.y-launch_strength
-	knocked_back=actor.global_position.x-knock_back_strength
+	#launch_height=actor.global_position.y-launch_strength
+	#knocked_back=actor.global_position.x-knock_back_strength
 	actor.velocity.x=knock_back_strength
 	actor.velocity.y=-launch_strength*10
 	actor.current_speed=0
@@ -25,7 +25,7 @@ func _update(delta: float) -> void:
 	print_debug(actor.velocity.x)
 	if actor.velocity.y>=-5.0 and launch_timer.is_stopped():
 		launch_timer.start(air_time)
-	elif actor.velocity.y>0 or (actor.velocity.y==0 and actor.is_on_floor()):
+	elif actor.velocity.y>0 or ((actor.velocity==Vector2.ZERO) and actor.is_on_floor()):
 		launch_timer.stop()
 		launch_timer.timeout.emit()
 	

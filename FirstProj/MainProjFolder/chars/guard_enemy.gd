@@ -467,8 +467,8 @@ func _on_stagger_staggered() -> void:
 	hb_collision.set_deferred("disabled", true)
 	if state_machine.get_active_state()!=launch:
 		bt_player.blackboard.set_var("staggered", true)
-		state_machine.change_active_state(staggered)
-	state_machine.dispatch(&"staggered")
+		#state_machine.change_active_state(staggered)
+		state_machine.dispatch(&"staggered")
 	Events.camera_shake.emit(2,20)
 
 func _on_parry_timer_timeout() -> void:
@@ -605,6 +605,8 @@ func _on_falling_entered() -> void:
 
 
 func _on_launched_entered() -> void:
+	hurt_box_collision.set_deferred("disabled", false)
+	hurt_box.active=true
 	if stagger.stagger >0:
 		hit_stop.hit_stop(0.2, 0.5)
 		landed.landed_type="landed_recover"
@@ -613,7 +615,7 @@ func _on_launched_entered() -> void:
 		else:
 			velocity.x=750
 			
-		launch.launch_height=launch.launch_height/2
+		#launch.launch_height=launch.launch_height/2
 		animation_player.play("jump_recover")
 		counter_flag=true
 	else:
@@ -634,9 +636,9 @@ func _on_hurt_box_knockback(_launch_strength : float, _knock_back_strength : flo
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger:
 		if player_right:
-			launch.knock_back_strength = _knock_back_strength
-		else:
 			launch.knock_back_strength = -_knock_back_strength
+		else:
+			launch.knock_back_strength = _knock_back_strength
 		launch.launch_strength=_launch_strength
 		launch.air_time=1.0
 		state_machine.change_active_state(launch)

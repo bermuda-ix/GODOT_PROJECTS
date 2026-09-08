@@ -17,7 +17,7 @@ func _enter() -> void:
 	stagger_timer.start(3)
 	actor.hb_collision.set_deferred("disabled", true)
 	actor.current_speed=0
-	actor.velocity.x=0
+	#actor.velocity.x=0
 	
 	actor.animation_player.play("staggered")
 	vfx_player.play("staggered_entered")
