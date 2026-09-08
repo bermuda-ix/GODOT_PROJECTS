@@ -369,6 +369,7 @@ func _ready():
 	sp_atk_type = sp_atk_cone
 	load_player_data()
 	Events.set_player_data.connect(save_player_data)
+	hb_collision.set_deferred("disabled", true)
 	#Events.parried.connect(parry_success)
 	Events.play_cutscene_segment.connect(play_cutscene)
 	Events.checkpoint_reached.connect(save_player_data)
@@ -2776,7 +2777,10 @@ func _on_animation_player_animation_started(anim_name):
 					light_attack_index=2
 				"_":
 					pass
-			heavy_attack_1.attack=heavy_attacks[light_attack_index]
+			if light_attack_index==0:
+				heavy_attack_1.attack=heavy_attacks[0]
+			else:
+				heavy_attack_1.attack=heavy_attacks[light_attack_index-1]
 		elif attack_state.get_active_state()==dash_attack:
 			if anim_name=="Attack_Dash":
 				heavy_attack_1.attack=heavy_attacks[0]
