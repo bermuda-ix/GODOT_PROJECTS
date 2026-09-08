@@ -54,7 +54,6 @@ func _update(delta: float) -> void:
 		#pc.state_machine.dispatch(&"start_attack")
 		#pc.attack_state.dispatch(&"next_attack")
 		
-		dur.stop()
 	elif Input.is_action_just_pressed("Dodge"):
 		dur.stop()
 		success=true

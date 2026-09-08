@@ -2472,7 +2472,7 @@ func parry_success(_parry_follow_up := "nothing"):
 	match _parry_follow_up:
 		"riposte":
 			anim_player.play()
-			start_attack_timer(0.2)
+			#start_attack_timer(0.2)
 			heavy_attack_buffer_timer.start()
 		"enemy_light_counter":
 			anim_player.play()
@@ -2782,6 +2782,9 @@ func _on_animation_player_animation_started(anim_name):
 				heavy_attack_1.attack=heavy_attacks[0]
 		elif anim_name=="Attack_Slam":
 			pass
+	elif state_machine.get_active_state()==parry_state:
+		if not Input.is_action_pressed("attack"):
+			state_machine.dispatch(&"return_to_idle")
 	if anim_name=="Attack_Chain":
 		if face_right:
 			forward_thrust.x=200
