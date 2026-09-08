@@ -31,6 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://2hkcn34ijmdq" path="res://chars/turret_enemies/turret_base_burst_shot.tscn" id="22_4koma"]
 [ext_resource type="PackedScene" uid="uid://dnliwh5g1v8xb" path="res://levels/level_components/entry.tscn" id="22_5m18i"]
 [ext_resource type="PackedScene" uid="uid://fuwvq85f8wwh" path="res://Component/interactables/heat_spawn_flag.tscn" id="22_22var"]
+[ext_resource type="PackedScene" uid="uid://bbkom6a7pabbe" path="res://chars/enemies/assault_rifle_soldier.tscn" id="22_cgk3p"]
 [ext_resource type="PackedScene" uid="uid://bqrvktluv2fur" path="res://levels/PrologueRooms/prologue_room_2.tscn" id="22_drpgx"]
 [ext_resource type="AudioStream" uid="uid://cqhudn01kry8p" path="res://Art_Components/Effects/sound/hits/PUNCH_DESIGNED_HEAVY_12.wav" id="22_e156f"]
 [ext_resource type="PackedScene" uid="uid://bngaepo4ygpkl" path="res://Art_Components/LevelProps/door_sprite2.tscn" id="22_relum"]
@@ -1253,29 +1254,47 @@ scale = Vector2(0.7, 0.7)
 position = Vector2(2314, 772)
 scale = Vector2(0.7, 0.7)
 
-[node name="GuardEnemy" parent="Enemy/soldiers" index="5" unique_id=2034909694 instance=ExtResource("16_vw32t")]
-position = Vector2(2781, 294)
-
-[node name="GuardEnemy2" parent="Enemy/soldiers" index="6" unique_id=221874173 instance=ExtResource("16_vw32t")]
+[node name="GuardEnemy2" parent="Enemy/soldiers" index="5" unique_id=221874173 instance=ExtResource("16_vw32t")]
 position = Vector2(3410, 293)
 
-[node name="GuardEnemy3" parent="Enemy/soldiers" index="7" unique_id=966873668 instance=ExtResource("16_vw32t")]
-position = Vector2(3249, 97)
-
-[node name="GuardEnemy4" parent="Enemy/soldiers" index="8" unique_id=787053982 instance=ExtResource("16_vw32t")]
-position = Vector2(3114, 95)
-
-[node name="GuardEnemy5" parent="Enemy/soldiers" index="9" unique_id=295118763 instance=ExtResource("16_vw32t")]
-position = Vector2(2218, 60)
-
-[node name="GuardEnemy6" parent="Enemy/soldiers" index="10" unique_id=1555455097 instance=ExtResource("16_vw32t")]
+[node name="GuardEnemy6" parent="Enemy/soldiers" index="6" unique_id=1555455097 instance=ExtResource("16_vw32t")]
 position = Vector2(3123, 503)
 
-[node name="GuardEnemy7" parent="Enemy/soldiers" index="11" unique_id=1920613660 instance=ExtResource("16_vw32t")]
-position = Vector2(2097, 776)
+[node name="AssaultRifleSoldier" parent="Enemy/soldiers" index="7" unique_id=1122506050 instance=ExtResource("22_cgk3p")]
+position = Vector2(2538, 288)
+scale = Vector2(0.7, 0.7)
 
-[node name="GuardEnemy8" parent="Enemy/soldiers" index="12" unique_id=8732292 instance=ExtResource("16_vw32t")]
-position = Vector2(2038, 783)
+[node name="AssaultRifleSoldier2" parent="Enemy/soldiers" index="8" unique_id=1350025390 instance=ExtResource("22_cgk3p")]
+position = Vector2(3273, 288.00003)
+scale = Vector2(0.7, 0.7)
+
+[node name="AssaultRifleSoldier3" parent="Enemy/soldiers" index="9" unique_id=22276597 instance=ExtResource("22_cgk3p")]
+position = Vector2(3313, 80.000015)
+scale = Vector2(0.7, 0.7)
+
+[node name="AssaultRifleSoldier4" parent="Enemy/soldiers" index="10" unique_id=498661874 instance=ExtResource("22_cgk3p")]
+position = Vector2(3224, 79)
+scale = Vector2(0.7, 0.7)
+
+[node name="AssaultRifleSoldier5" parent="Enemy/soldiers" index="11" unique_id=1437270440 instance=ExtResource("22_cgk3p")]
+position = Vector2(2162, 766)
+scale = Vector2(0.7, 0.7)
+
+[node name="AssaultRifleSoldier6" parent="Enemy/soldiers" index="12" unique_id=724498072 instance=ExtResource("22_cgk3p")]
+position = Vector2(2071, 766)
+scale = Vector2(0.7, 0.7)
+
+[node name="AssaultRifleSoldier7" parent="Enemy/soldiers" index="13" unique_id=1133529495 instance=ExtResource("22_cgk3p")]
+position = Vector2(2477, 1180)
+scale = Vector2(0.7, 0.7)
+
+[node name="AssaultRifleSoldier8" parent="Enemy/soldiers" index="14" unique_id=521170024 instance=ExtResource("22_cgk3p")]
+position = Vector2(3772, 1184)
+scale = Vector2(0.7, 0.7)
+
+[node name="AssaultRifleSoldier9" parent="Enemy/soldiers" index="15" unique_id=1087861474 instance=ExtResource("22_cgk3p")]
+position = Vector2(3909.9998, 1180)
+scale = Vector2(0.7, 0.7)
 
 [node name="flying" type="Node" parent="Enemy" index="1" unique_id=1634263824]
 

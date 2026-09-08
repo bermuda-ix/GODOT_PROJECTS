@@ -9,7 +9,9 @@
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="6_82t0r"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="10_gem31"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="11_fof0c"]
+[ext_resource type="PackedScene" uid="uid://berbmq4u2lo3s" path="res://chars/guard_enemy.tscn" id="12_0atxr"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="12_dqkb5"]
+[ext_resource type="PackedScene" uid="uid://dn0fhusgltn4m" path="res://chars/heavy_soldier.tscn" id="12_f7lwp"]
 [ext_resource type="Script" uid="uid://klqpph3n6xut" path="res://Component/functions/PersistentData/LevelStateHandler.gd" id="12_v15hm"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ys1t2"]
@@ -464,9 +466,6 @@ position = Vector2(1038, 34)
 position = Vector2(128, -13)
 shape = SubResource("RectangleShape2D_01tlq")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WallTest" index="1" unique_id=1022071668]
-polygon = PackedVector2Array(2, 38, -198, 38, -326, 86, 2, 86)
-
 [node name="Enemies" type="Node" parent="." index="29" unique_id=825398583]
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]
@@ -497,6 +496,11 @@ shape = SubResource("RectangleShape2D_fof0c")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="36" unique_id=1515680001]
 environment = SubResource("Environment_dqkb5")
+
+[node name="HeavySoldier" parent="." index="37" unique_id=1955221828 instance=ExtResource("12_f7lwp")]
+
+[node name="GuardEnemy" parent="." index="38" unique_id=2034909694 instance=ExtResource("12_0atxr")]
+position = Vector2(877, 84)
 
 [connection signal="update_health" from="PC" to="CanvasLayer/UI_Level" method="set_health"]
 

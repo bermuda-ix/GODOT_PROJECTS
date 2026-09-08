@@ -112,7 +112,7 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var attack_state_stack : Array[LimboState] = []
 @onready var light_attacks : Array[String] = ["Attack", "Attack_2", "Attack_3"]
 @onready var light_attack_index : int = clampi(0, 0 , 2)
-@onready var heavy_attacks : Array[String] = ["Heavy_Combo_1", "Heavy_Combo_2", "shotgun_finish"]
+@onready var heavy_attacks : Array[String] = ["Heavy_Combo_2", "Heavy_Combo_1", "shotgun_finish"]
 
 @export var heavy_attacking : bool = false
 @onready var atk_1_resume : bool = false
@@ -640,7 +640,7 @@ func _process(_delta):
 #
 	input_axis = Input.get_axis("walk_left", "walk_right")
 	vel_x=velocity.x
-	label.text=str(velocity.normalized())
+	label.text=str(get_real_velocity().normalized())
 	get_target_info()
 	#previous_state()
 	atk_state_debug()
@@ -1940,7 +1940,7 @@ func get_target_info():
 			target_left_edge=target.global_position.x-(target_size_x/2)
 			target_right_edge=target.global_position.x+(target_size_x/2)
 			
-			if target_size_y > collision_shape_2d.get_shape().y*1.5:
+			if target_size_y > collision_shape_2d.get_shape().size.y * scale.y*1.5:
 				high_target=true
 			else:
 				high_target=false
