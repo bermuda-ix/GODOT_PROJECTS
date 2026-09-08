@@ -640,7 +640,7 @@ func _process(_delta):
 #
 	input_axis = Input.get_axis("walk_left", "walk_right")
 	vel_x=velocity.x
-	#current_state_label()
+	label.text=str(velocity.normalized())
 	get_target_info()
 	#previous_state()
 	atk_state_debug()
@@ -1940,7 +1940,7 @@ func get_target_info():
 			target_left_edge=target.global_position.x-(target_size_x/2)
 			target_right_edge=target.global_position.x+(target_size_x/2)
 			
-			if target_size_y > collision_shape_2d.get_shape().radius*1.5:
+			if target_size_y > collision_shape_2d.get_shape().y*1.5:
 				high_target=true
 			else:
 				high_target=false

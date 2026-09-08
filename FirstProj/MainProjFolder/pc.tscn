@@ -2425,7 +2425,10 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ie0ey"]
-size = Vector2(20, 33.116997)
+size = Vector2(20, 38.1933)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_incat"]
+radius = 11.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mdoa6"]
 height = 46.0
@@ -12946,9 +12949,13 @@ energy = 0.5
 texture = SubResource("GradientTexture2D_c5jop")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=771559977]
-position = Vector2(1, -5.474694)
+position = Vector2(1, -7.999999)
 scale = Vector2(1.06323, 0.994939)
 shape = SubResource("RectangleShape2D_ie0ey")
+
+[node name="DontGoombaStompOnMe" type="CollisionShape2D" parent="." unique_id=1408244517]
+position = Vector2(1, -27)
+shape = SubResource("CircleShape2D_incat")
 
 [node name="Health" type="Node" parent="." unique_id=994567121]
 script = ExtResource("4_q0gnn")
