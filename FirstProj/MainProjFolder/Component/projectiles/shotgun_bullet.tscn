@@ -35,7 +35,7 @@ script = ExtResource("1_fsvgn")
 texture = ExtResource("1_wtcrh")
 offset = Vector2(0.515003, -2.8883033)
 
-[node name="ProjectileHitBox" type="Area2D" parent="Sprite2D" unique_id=311300303 node_paths=PackedStringArray("actor") groups=["player_hitbox"]]
+[node name="ProjectileHitBox" type="Area2D" parent="Sprite2D" unique_id=311300303 node_paths=PackedStringArray("actor") groups=["PlayerBullet"]]
 collision_layer = 8388608
 collision_mask = 16777232
 script = ExtResource("4_fsvgn")
