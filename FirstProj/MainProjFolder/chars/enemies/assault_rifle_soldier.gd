@@ -217,7 +217,7 @@ func _process(delta: float) -> void:
 	dir = to_local(next)
 	vision_handler.handle_vision()
 	distance = abs(global_position.x-player.global_position.x)
-	force_chase()
+	#force_chase()
 	vision_handler.get_player_relative_loc()
 
 	if is_on_floor():
@@ -602,8 +602,6 @@ func _on_health_health_depleted() -> void:
 	animated_sprite_2d.scale.x = 1
 	knockback.x=250
 	jump_handler.handle_jump(0.2)
-	#if linked_enemies!=null or not linked_enemies.is_empty() or linked_enemies.size()==0:
-		#linked_enemies.remove_at(group_link_order)
 	death_handler.death()
 
 
@@ -626,18 +624,13 @@ func alerted() -> void :
 		return
 	if on_screen.is_on_screen():
 		state_machine.dispatch(&"attack_mode")
-		#bt_player.blackboard.set_var("attack_mode", true)
 	else:
-		#bt_player.blackboard.set_var("attack_mode", false)
 		state_machine.dispatch(&"start_chase")
 
 func force_chase():
 	is_on_screen=on_screen.is_on_screen()
 	if not is_on_screen and vision_handler.always_on==true and state_machine.get_active_state()!=chasing and state_machine.get_active_state()!=melee_attack:
 		state_machine.change_active_state(chasing)
-
-#func _on_parry_box_bullet_stopped() -> void:
-	#print_debug("shieled")
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
@@ -758,15 +751,6 @@ func _on_counter_attack_timer_timeout() -> void:
 
 func _on_hit_entered() -> void:
 	current_speed=0
-
-
-func _on_attack_range_area_entered(area: Area2D) -> void:
-	pass # Replace with function body.
-
-
-func _on_hurt_box_weakpoint_hit() -> void:
-	pass # Replace with function body.
-
 
 func _on_shooting_bt_state_exited() -> void:
 	animated_sprite_2d.offset.x=0
