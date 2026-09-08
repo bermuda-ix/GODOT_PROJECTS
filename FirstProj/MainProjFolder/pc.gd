@@ -117,6 +117,7 @@ FLIP,THRUST, HIT, STAGGERED}
 @export var heavy_attacking : bool = false
 @onready var atk_1_resume : bool = false
 @onready var atk_2_resume : bool = false
+@export var shotgun_chain := false
 
 @onready var cur_combo : LimboState = attack_1
 
@@ -1348,7 +1349,9 @@ func regular_attack() -> void:
 			
 
 func shotgun_combo() -> void:
-	if attack_state.get_active_state()==special_combo:
+	if (attack_state.get_active_state()==special_combo or \
+	attack_state.get_active_state()==special_combo_2) \
+	and shotgun_chain:
 		attack_timer.start(0.2)
 		attack_state.dispatch(&"shotgun_combo_chain")
 	else:
