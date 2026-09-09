@@ -770,7 +770,9 @@ func _physics_process(delta):
 
 		#wall_hold = false
 		if(state_machine.get_active_state()!=dodge_state and parry_stance==false \
-		and state_machine.get_active_state()!=flip_state and state_machine.get_active_state()!=attack_state):
+		and state_machine.get_active_state()!=flip_state and\
+		 state_machine.get_active_state()!=attack_state and\
+		 state_machine.get_active_state()!=parry_success_state):
 			if not interact_menu_open:
 				handle_wall_jump(wall_hold, delta)
 				jump(input_axis, delta)

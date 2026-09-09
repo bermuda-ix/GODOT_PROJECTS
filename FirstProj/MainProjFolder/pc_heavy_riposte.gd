@@ -14,5 +14,5 @@ func _enter() -> void:
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name=="Heavy_Riposte":
-		pc.state_machine.dispatch(&"return_from_parry")
+	if anim_name==&"Heavy_Riposte":
+		pc.state_machine.dispatch(&"return_to_idle")

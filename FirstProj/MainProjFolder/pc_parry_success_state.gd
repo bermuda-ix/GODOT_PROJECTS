@@ -66,7 +66,7 @@ func _update(delta: float) -> void:
 		dur.stop()
 		success=true
 		pc.parry_stance=false
-		Events.parry_success.emit("heavy riposte counter")
+		Events.parry_success.emit("heavy_riposte")
 		pc.state_machine.dispatch(&"heavy_riposte")
 		hit_stop.end_hit_stop()
 		dur.stop()
