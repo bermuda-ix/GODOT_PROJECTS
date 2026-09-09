@@ -178,6 +178,9 @@
 [ext_resource type="Script" uid="uid://d04qf1jqrfg1h" path="res://Component/functions/CounterAttackHandler.gd" id="145_d0jhl"]
 [ext_resource type="Script" uid="uid://b1el4upf44w1i" path="res://Component/functions/ClashHandler.gd" id="145_hm7aq"]
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="153_q58od"]
+[ext_resource type="Script" uid="uid://bu2m8cwle1k11" path="res://chars/clashed_state.gd" id="176_5ctkf"]
+[ext_resource type="Script" uid="uid://cvq0ypnvr0iwa" path="res://chars/clash_fail.gd" id="176_ky20n"]
+[ext_resource type="Script" uid="uid://dc5y78lbovoqo" path="res://chars/clash_counter.gd" id="178_yf1un"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7w5gj"]
 shader = ExtResource("3_4sxct")
@@ -1359,6 +1362,18 @@ tracks/32/keys = {
 "transitions": PackedFloat32Array(),
 "update": 1,
 "values": []
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("HurtBox:position")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -22)]
 }
 
 [sub_resource type="Animation" id="Animation_uutj5"]
@@ -2560,6 +2575,58 @@ tracks/17/keys = {
 "values": [true, true, false]
 }
 
+[sub_resource type="Animation" id="Animation_5ctkf"]
+resource_name = "clash_fail"
+length = 0.36666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"launched"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 4, 2, 4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HurtBox:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -22)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HurtBox/hurt_box_collision:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 22)]
+}
+
 [sub_resource type="Animation" id="Animation_q58od"]
 resource_name = "clashed"
 length = 0.2
@@ -3621,6 +3688,7 @@ _data = {
 &"atk_3": SubResource("Animation_ksmfd"),
 &"atk_counter": SubResource("Animation_oos3y"),
 &"atk_heavy_counter": SubResource("Animation_ycfi6"),
+&"clash_fail": SubResource("Animation_5ctkf"),
 &"clashed": SubResource("Animation_q58od"),
 &"dead": SubResource("Animation_ri8gu"),
 &"death": SubResource("Animation_nm53c"),
@@ -4428,11 +4496,12 @@ bt_player = NodePath("../BTPlayer")
 vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
-[node name="ClashHandler" type="Node" parent="." unique_id=1007943020 node_paths=PackedStringArray("actor", "animation_player", "state_machine", "hit_stop", "stagger")]
+[node name="ClashHandler" type="Node" parent="." unique_id=1007943020 node_paths=PackedStringArray("actor", "animation_player", "state_machine", "clashed_state", "hit_stop", "stagger")]
 script = ExtResource("145_hm7aq")
 actor = NodePath("..")
 animation_player = NodePath("../AnimationPlayer")
 state_machine = NodePath("../LimboHSM")
+clashed_state = NodePath("../LimboHSM/ClashedState")
 hit_stop = NodePath("../HitStop")
 stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://b1el4upf44w1i"
@@ -4560,6 +4629,31 @@ hit_stop = NodePath("../../HitStop")
 counter_attack_timer = NodePath("../../CounterAttackTimer")
 counter_enabled = true
 
+[node name="ClashedState" type="LimboHSM" parent="LimboHSM" unique_id=1160212693 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "vfx_sprite", "hurt_box", "movement_handler", "stagger", "hit_stop", "counter_attack_timer")]
+script = ExtResource("176_5ctkf")
+actor = NodePath("../..")
+anim_player = NodePath("../../AnimationPlayer")
+vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
+vfx_sprite = NodePath("../../AnimatedSprite2D/VFXSprite")
+hurt_box = NodePath("../../HurtBox")
+movement_handler = NodePath("../../MovementHandler")
+stagger = NodePath("../../Stagger")
+hit_stop = NodePath("../../HitStop")
+counter_attack_timer = NodePath("../../CounterAttackTimer")
+
+[node name="ClashStart" type="LimboState" parent="LimboHSM/ClashedState" unique_id=439592]
+
+[node name="ClashFail" type="LimboState" parent="LimboHSM/ClashedState" unique_id=1114250572 node_paths=PackedStringArray("actor", "animation_player")]
+script = ExtResource("176_ky20n")
+actor = NodePath("../../..")
+animation_player = NodePath("../../../AnimationPlayer")
+
+[node name="ClashCounter" type="LimboState" parent="LimboHSM/ClashedState" unique_id=1535679402 node_paths=PackedStringArray("actor", "animation_player", "state_machine")]
+script = ExtResource("178_yf1un")
+actor = NodePath("../../..")
+animation_player = NodePath("../../../AnimationPlayer")
+state_machine = NodePath("../..")
+
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=1758670167]
 
 [node name="RANGED" type="LimboState" parent="CombatStateMachine" unique_id=1132427303 node_paths=PackedStringArray("actor", "bt_player")]
@@ -4586,6 +4680,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="VisibleOnScreenNotifier2D2" type="VisibleOnScreenNotifier2D" parent="." unique_id=595900798]
 
+[connection signal="visibility_changed" from="AnimatedSprite2D/VFXSprite" to="." method="_on_vfx_sprite_visibility_changed"]
 [connection signal="animation_changed" from="AnimationPlayer" to="." method="_on_animation_player_animation_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/Landed" method="_on_animation_player_animation_finished"]
@@ -4635,3 +4730,5 @@ metadata/_edit_use_anchors_ = true
 [connection signal="entered" from="LimboHSM/Clashed" to="." method="_on_clashed_entered"]
 [connection signal="exited" from="LimboHSM/Clashed" to="." method="_on_clashed_exited"]
 [connection signal="updated" from="LimboHSM/Clashed" to="." method="_on_clashed_updated"]
+[connection signal="entered" from="LimboHSM/ClashedState/ClashStart" to="." method="_on_clash_start_entered"]
+[connection signal="exited" from="LimboHSM/ClashedState/ClashStart" to="." method="_on_clash_start_exited"]

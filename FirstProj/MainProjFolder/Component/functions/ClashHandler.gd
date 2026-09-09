@@ -3,6 +3,7 @@ class_name ClashHandler extends Node
 @export var actor: Node2D
 @export var animation_player : AnimationPlayer
 @export var state_machine : LimboHSM
+@export var clashed_state : LimboHSM
 @export var hit_stop : HitStop
 @export var stagger : Stagger
 @export var desperate_attack_enabled := false
@@ -45,10 +46,13 @@ func clash_follow_up(_follow_up := "nothing"):
 				state_machine.dispatch(&"hit")
 			else:
 				state_machine.dispatch(&"staggered")
+		"heavy_riposte":
+			riposte_heavy_follow_up.emit()
 		"nothing":
 			nothing_follow_up.emit()
 			actor.pushed_back(150)
 			animation_player.play()
 			nothing_follow_up.emit()
+		
 		_:
 			animation_player.play()

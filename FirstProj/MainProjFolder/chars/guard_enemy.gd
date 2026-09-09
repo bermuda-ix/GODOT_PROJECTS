@@ -101,6 +101,13 @@ var player_state : LimboState
 @onready var landed: LimboState = $LimboHSM/Landed
 @onready var clashed: Clashed = $LimboHSM/Clashed
 
+#ClashStates
+@onready var clashed_state: ClashedState = $LimboHSM/ClashedState
+@onready var clash_start: LimboState = $LimboHSM/ClashedState/ClashStart
+@onready var clash_fail: ClashFail = $LimboHSM/ClashedState/ClashFail
+@onready var clash_counter: ClashCounter = $LimboHSM/ClashedState/ClashCounter
+
+
 
 
 var state
@@ -176,6 +183,7 @@ func _ready():
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 	_init_combat_state_machine()
+	_init_clash_state_machine()
 	hurt_box.set_damage_mulitplyer(1)
 	ammo_count=turret.ammo_count
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
@@ -205,10 +213,18 @@ func _init_state_machine():
 	state_machine.add_transition(hit, attack, &"hit_recover")
 	state_machine.add_transition(attack, dodge, &"dodge")
 	state_machine.add_transition(dodge, attack, &"dodge_end")
-	state_machine.add_transition(attack, clashed, &"clashed")
-	state_machine.add_transition(clashed, attack, &"counter_attack")
-	state_machine.add_transition(clashed, attack, &"start_attack")
-	state_machine.add_transition(clashed, dodge, &"dodge_back")
+	#state_machine.add_transition(attack, clashed, &"clashed")
+	#state_machine.add_transition(clashed, attack, &"counter_attack")
+	#state_machine.add_transition(clashed, attack, &"start_attack")
+	#state_machine.add_transition(clashed, dodge, &"dodge_back")
+	#state_machine.add_transition(clashed, staggered, &"clash_stagger")
+
+	state_machine.add_transition(attack, clashed_state, &"clashed")
+	state_machine.add_transition(clashed_state, attack, &"counter_attack")
+	state_machine.add_transition(clashed_state, attack, &"start_attack")
+	state_machine.add_transition(clashed_state, dodge, &"dodge_back")
+	state_machine.add_transition(clashed_state, staggered, &"clash_stagger")
+
 	state_machine.add_transition(launch, hit, &"midair_hit")
 	state_machine.add_transition(launch, falling, &"falling")
 	state_machine.add_transition(hit, falling, &"falling")
@@ -228,6 +244,13 @@ func _init_combat_state_machine():
 	
 	combat_state_machine.add_transition(ranged_mode, melee_mode, &"melee_mode")
 	combat_state_machine.add_transition(melee_mode, ranged_mode, &"ranged_mode")
+
+func _init_clash_state_machine():
+	clashed_state.initial_state=clash_start
+
+	clashed_state.add_transition(clash_start, clash_fail, &"clash_fail")
+	clashed_state.add_transition(clash_start, clash_counter, &"counter")
+	
 
 func _init_group_link():
 	if group_link_control == null:
@@ -275,7 +298,8 @@ func _process(_delta):
 	
 	
 func _physics_process(delta):
-	handle_vision()
+	if state_machine.get_active_state()!=clashed_state:
+		handle_vision()
 #	knockback return to zero
 	knockback = lerp(knockback, Vector2.ZERO, 0.1)
 #	stop movement when hit, staggered, or dead
@@ -396,7 +420,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="staggered_entered":
 		vfx_player.play("staggered")
-	elif anim_name=="clased":
+	elif anim_name=="clashed":
 		state_machine.dispatch(&"counter_attack")
 	
 
@@ -761,33 +785,28 @@ func _on_attack_updated(delta: float) -> void:
 
 
 func _on_clashed_entered() -> void:
-	#print_debug("clashing")
-	vfx_sprite.visible=true
-	animation_player.pause()
-	movement_handler.active=false
+
 	bt_player.blackboard.set_var("staggered", true)
 	hb_collision.set_deferred("disabled", true)
-	#bt_player.active=false
-	#clash_timer.start(0.1)
-	#hit_stop.hit_stop(0.01, 0.2)
-	#var _current_anim = animation_player.current_animation
-	#animation_player.play_section_with_markers(_current_anim, "clashed")
-	#animation_player.pause()
-	#clash_timer.start(0.2)
 
 
 func _on_clash_timer_timeout() -> void:
 	print_debug(state_machine.get_active_state())
 	#bt_player.blackboard.set_var("staggered", false)
-	state_machine.dispatch(&"counter_attack")
-	melee_attack_manager.melee_attack()
+	clashed_state.dispatch(&"counter")
+	#state_machine.dispatch(&"counter_attack")
+	#melee_attack_manager.melee_attack()
 	
 func clash_end()-> void:
 	print_debug(state_machine.get_active_state())
 	#bt_player.blackboard.set_var("staggered", false)
+	#state_machine.dispatch(&"counter_attack")
+	clashed_state.dispatch(&"counter")
+	#melee_attack_manager.melee_attack()
+
+func counter_clash() -> void:
 	state_machine.dispatch(&"counter_attack")
 	melee_attack_manager.melee_attack()
-
 
 func _on_hit_stop_hit_stop_finished() -> void:
 	vfx_player.speed_scale=1
@@ -806,11 +825,14 @@ func _on_clashed_updated(delta: float) -> void:
 
 
 func _on_clash_handler_riposte_heavy_follow_up() -> void:
-	bt_player.blackboard.set_var("atk_1", false)
-	bt_player.blackboard.set_var("atk_2", false)
-	bt_player.blackboard.set_var("atk_3", false)
-	bt_player.blackboard.set_var("atk_heavy", true)
-	bt_player.blackboard.set_var("staggered", false)
+	if stagger.stagger>1:
+		bt_player.blackboard.set_var("atk_1", false)
+		bt_player.blackboard.set_var("atk_2", false)
+		bt_player.blackboard.set_var("atk_3", false)
+		bt_player.blackboard.set_var("atk_heavy", true)
+		bt_player.blackboard.set_var("staggered", false)
+	else:
+		clashed_state.dispatch(&"clash_fail")
 
 
 func _on_clash_handler_riposte_follow_up() -> void:
@@ -839,3 +861,15 @@ func counter_attack(_value:="enemy_light_counter")->void:
 func _on_staggered_updated(delta: float) -> void:
 	bt_player.blackboard.set_var("staggered", true)
 	hb_collision.set_deferred("disabled", true)
+
+
+func _on_vfx_sprite_visibility_changed() -> void:
+	pass
+
+
+func _on_clash_start_exited() -> void:
+	pass # Replace with function body.
+
+
+func _on_clash_start_entered() -> void:
+	pass # Replace with function body.
