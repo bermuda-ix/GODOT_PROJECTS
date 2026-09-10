@@ -1158,6 +1158,58 @@ tracks/14/keys = {
 "update": 0,
 "values": [Vector2(-23.000002, 7.000001)]
 }
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("AnimatedSprite2D:offset")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_n808b"]
+resource_name = "clash_fail"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"dying"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.36666667, 0.46666667),
+"transitions": PackedFloat32Array(1, 12.996037, 4.594792, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, -15), Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_7wla2"]
 resource_name = "dead"
@@ -1816,6 +1868,7 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c5coe"]
 _data = {
 &"RESET": SubResource("Animation_dixgp"),
+&"clash_fail": SubResource("Animation_n808b"),
 &"dead": SubResource("Animation_7wla2"),
 &"death": SubResource("Animation_rwqoj"),
 &"falling": SubResource("Animation_11ulj"),
@@ -2312,7 +2365,7 @@ metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=1036046665]
 script = ExtResource("13_l650s")
-max_stagger = 2
+max_stagger = 1
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="MoraleHandler" type="Node" parent="." unique_id=1369667191 node_paths=PackedStringArray("actor", "stagger", "health")]
@@ -2641,18 +2694,33 @@ state_machine = NodePath("..")
 hit_stop = NodePath("../../HitStop")
 counter_attack_timer = NodePath("../../CounterAttackTimer")
 
-[node name="ClashedState" type="LimboHSM" parent="StateMachine" unique_id=147737879]
+[node name="ClashedState" type="LimboHSM" parent="StateMachine" unique_id=147737879 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "vfx_sprite", "hurt_box", "movement_handler", "stagger", "hit_stop", "state_machine", "counter_attack_timer")]
 script = ExtResource("87_q1pon")
+actor = NodePath("../..")
+anim_player = NodePath("../../AnimationPlayer")
+vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
+vfx_sprite = NodePath("../../AnimatedSprite2D/VFXSprite")
+hurt_box = NodePath("../../HurtBox")
+movement_handler = NodePath("../../MovementHandler")
+stagger = NodePath("../../Stagger")
+hit_stop = NodePath("../../HitStop")
+state_machine = NodePath("..")
+counter_attack_timer = NodePath("../../CounterAttackTimer")
 metadata/_custom_type_script = "uid://bu2m8cwle1k11"
 
 [node name="ClashStart" type="LimboState" parent="StateMachine/ClashedState" unique_id=1829966966]
 
-[node name="ClashFail" type="LimboState" parent="StateMachine/ClashedState" unique_id=174758818]
+[node name="ClashFail" type="LimboState" parent="StateMachine/ClashedState" unique_id=174758818 node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("88_rcq7j")
+actor = NodePath("../../..")
+animation_player = NodePath("../../../AnimationPlayer")
 metadata/_custom_type_script = "uid://cvq0ypnvr0iwa"
 
-[node name="ClashCounter" type="LimboState" parent="StateMachine/ClashedState" unique_id=995085916]
+[node name="ClashCounter" type="LimboState" parent="StateMachine/ClashedState" unique_id=995085916 node_paths=PackedStringArray("actor", "animation_player", "state_machine")]
 script = ExtResource("89_n808b")
+actor = NodePath("../../..")
+animation_player = NodePath("../../../AnimationPlayer")
+state_machine = NodePath("../..")
 metadata/_custom_type_script = "uid://dc5y78lbovoqo"
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=1654448658]

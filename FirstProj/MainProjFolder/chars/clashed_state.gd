@@ -9,11 +9,20 @@ class_name ClashedState extends LimboHSM
 @export var stagger : Stagger
 @export var hit_stop : HitStop
 @export var clash_anim_name : StringName = "clashed"
+@export var state_machine : LimboHSM
 @export_category("Counter Attack Properties")
 @export var counter_attack_timer : Timer
 @export var counter_attack_timer_dur := 0.2
 @export var counter_stagger_threshold : int = 1
 @export var counter_enabled : bool = false
+@export var desperate_attack_enabled := false
+
+signal riposte_follow_up
+signal riposte_heavy_follow_up
+signal nothing_follow_up
+
+func _ready() -> void:
+	Events.parry_success.connect(clash_follow_up)
 
 func _enter() -> void:
 	vfx_sprite.visible=true
@@ -53,3 +62,32 @@ func _exit() -> void:
 			movement_handler.active=true
 		return
 	
+
+
+func clash_follow_up(_follow_up := "nothing"):
+	match _follow_up:
+		"riposte":
+			if stagger.stagger<=0:
+				return
+			anim_player.play()
+			actor.pushed_back(250)
+			if desperate_attack_enabled and stagger.stagger==1:
+				riposte_heavy_follow_up.emit()
+			else:
+				stagger.stagger-=1
+				riposte_follow_up.emit()
+			if stagger.stagger>0:
+				state_machine.dispatch(&"hit")
+			else:
+				state_machine.dispatch(&"staggered")
+		"heavy_riposte":
+			riposte_heavy_follow_up.emit()
+			if stagger.stagger<=1:
+				dispatch(&"clash_fail")
+		"nothing":
+			nothing_follow_up.emit()
+			actor.pushed_back(150)
+			anim_player.play()
+		
+		_:
+			anim_player.play()
