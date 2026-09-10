@@ -48,6 +48,8 @@ func clash_follow_up(_follow_up := "nothing"):
 				state_machine.dispatch(&"staggered")
 		"heavy_riposte":
 			riposte_heavy_follow_up.emit()
+			if stagger.stagger<=1:
+				clashed_state.dispatch(&"clash_fail")
 		"nothing":
 			nothing_follow_up.emit()
 			actor.pushed_back(150)

@@ -831,8 +831,6 @@ func _on_clash_handler_riposte_heavy_follow_up() -> void:
 		bt_player.blackboard.set_var("atk_3", false)
 		bt_player.blackboard.set_var("atk_heavy", true)
 		bt_player.blackboard.set_var("staggered", false)
-	else:
-		clashed_state.dispatch(&"clash_fail")
 
 
 func _on_clash_handler_riposte_follow_up() -> void:

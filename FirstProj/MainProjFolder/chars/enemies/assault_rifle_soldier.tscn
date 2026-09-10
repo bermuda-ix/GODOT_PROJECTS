@@ -89,6 +89,9 @@
 [ext_resource type="Script" uid="uid://cl76g40e3l6a6" path="res://chars/enemies/landed.gd" id="53_bynfm"]
 [ext_resource type="PackedScene" uid="uid://bro4najrj7577" path="res://Component/UI_Rec/npc_stats.tscn" id="53_x24k2"]
 [ext_resource type="Script" uid="uid://ddhk64y60klpg" path="res://Component/functions/MeleeAttackManager.gd" id="54_mni36"]
+[ext_resource type="Script" uid="uid://bu2m8cwle1k11" path="res://chars/clashed_state.gd" id="87_q1pon"]
+[ext_resource type="Script" uid="uid://cvq0ypnvr0iwa" path="res://chars/clash_fail.gd" id="88_rcq7j"]
+[ext_resource type="Script" uid="uid://dc5y78lbovoqo" path="res://chars/clash_counter.gd" id="89_n808b"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_incat"]
 radius = 16.0
@@ -2637,6 +2640,20 @@ stagger = NodePath("../../Stagger")
 state_machine = NodePath("..")
 hit_stop = NodePath("../../HitStop")
 counter_attack_timer = NodePath("../../CounterAttackTimer")
+
+[node name="ClashedState" type="LimboHSM" parent="StateMachine" unique_id=147737879]
+script = ExtResource("87_q1pon")
+metadata/_custom_type_script = "uid://bu2m8cwle1k11"
+
+[node name="ClashStart" type="LimboState" parent="StateMachine/ClashedState" unique_id=1829966966]
+
+[node name="ClashFail" type="LimboState" parent="StateMachine/ClashedState" unique_id=174758818]
+script = ExtResource("88_rcq7j")
+metadata/_custom_type_script = "uid://cvq0ypnvr0iwa"
+
+[node name="ClashCounter" type="LimboState" parent="StateMachine/ClashedState" unique_id=995085916]
+script = ExtResource("89_n808b")
+metadata/_custom_type_script = "uid://dc5y78lbovoqo"
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=1654448658]
 

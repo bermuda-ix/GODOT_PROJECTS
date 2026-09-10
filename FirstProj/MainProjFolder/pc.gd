@@ -1629,6 +1629,9 @@ func shotgun_shoot() -> void:
 func shotgun_recoil() -> void:
 	Events.camera_shake.emit(1,20)
 
+func call_camera_shake(_weight := 1, _fade := 2.0) -> void:
+	Events.camera_shake.emit(_weight, _fade)
+
 func reload_gun() -> void:
 	if not reload_timer.is_stopped():
 		return
