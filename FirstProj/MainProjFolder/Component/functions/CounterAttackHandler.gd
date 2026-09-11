@@ -5,6 +5,7 @@ extends Node
 @export var jump_handler : JumpHandler
 @export var shoot_attack_manager : ShootAttackManager
 @export var state_machine : LimboHSM
+@export var clash_state : LimboHSM
 @export var bt_player : BTPlayer
 @export var counter_attack_timer : Timer
 @export var hit_stop : HitStop
@@ -58,7 +59,9 @@ func parry_counter(value: String) -> void:
 			
 
 func clash_counter()-> void:
+	if clash_state==null:
+		return
 	hit_stop.end_hit_stop()
-	state_machine.dispatch(&"counter_melee")
+	clash_state.dispatch(&"counter")
 	Events.parry_success.emit("enemy_light_counter")
 	

@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="6_82t0r"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="10_gem31"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="11_fof0c"]
-[ext_resource type="PackedScene" uid="uid://bbkom6a7pabbe" path="res://chars/enemies/assault_rifle_soldier.tscn" id="12_0atxr"]
+[ext_resource type="PackedScene" uid="uid://cu7yn55uf2fn8" path="res://chars/soldier_enemy_boss.tscn" id="12_0atxr"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="12_dqkb5"]
 [ext_resource type="Script" uid="uid://klqpph3n6xut" path="res://Component/functions/PersistentData/LevelStateHandler.gd" id="12_v15hm"]
 
@@ -496,9 +496,8 @@ shape = SubResource("RectangleShape2D_fof0c")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="36" unique_id=1515680001]
 environment = SubResource("Environment_dqkb5")
 
-[node name="AssaultRifleSoldier" parent="." index="37" unique_id=1122506050 instance=ExtResource("12_0atxr")]
-position = Vector2(842, 73)
-scale = Vector2(0.7, 0.7)
+[node name="soldier_enemy_boss" parent="." index="37" unique_id=789104702 instance=ExtResource("12_0atxr")]
+position = Vector2(900, 79)
 
 [connection signal="update_health" from="PC" to="CanvasLayer/UI_Level" method="set_health"]
 

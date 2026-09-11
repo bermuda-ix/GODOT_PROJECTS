@@ -25,6 +25,7 @@ func _ready() -> void:
 	Events.parry_success.connect(clash_follow_up)
 
 func _enter() -> void:
+	actor.velocity.x=0
 	vfx_sprite.visible=true
 	vfx_player.play(clash_anim_name)
 	actor.current_speed=0
@@ -50,8 +51,8 @@ func _update(delta: float) -> void:
 	#actor.knockback=Vector2.ZERO
 	#if actor.velocity.x!=0:
 		#print_debug(actor.velocity.x)
-	assert(vfx_player.is_playing())
-	assert(vfx_sprite.visible)
+	#assert(vfx_player.is_playing())
+	#assert(vfx_sprite.visible)
 
 func _exit() -> void:
 	vfx_player.stop()
@@ -65,6 +66,8 @@ func _exit() -> void:
 
 
 func clash_follow_up(_follow_up := "nothing"):
+	vfx_sprite.visible=false
+	vfx_player.stop()
 	match _follow_up:
 		"riposte":
 			if stagger.stagger<=0:

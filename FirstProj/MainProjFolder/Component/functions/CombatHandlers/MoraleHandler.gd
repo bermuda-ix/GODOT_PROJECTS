@@ -20,6 +20,8 @@ func _ready() -> void:
 
 
 func morale_decrease() -> void:
+	if stagger.stagger<=0:
+		return
 	if health.health>0:
 		stagger.stagger -= stagger_decrease_value
 	

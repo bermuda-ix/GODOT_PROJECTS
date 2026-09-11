@@ -2058,7 +2058,7 @@ tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"spin"]
+"values": [&"high_damage"]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
@@ -13685,7 +13685,7 @@ z_index = -1
 position = Vector2(112.53604, -69.629166)
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_roiuv")
-animation = &"spin"
+animation = &"high_damage"
 flip_h = true
 
 [node name="Shell" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1452204381]

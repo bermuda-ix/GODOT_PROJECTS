@@ -23,6 +23,7 @@ var always_active : bool
 @onready var chase_timer = $ChaseTimer as Timer
 @onready var animated_sprite_2d = $AnimatedSprite2D as AnimatedSprite2D
 @onready var animation_player = $AnimationPlayer as AnimationPlayer
+@onready var vfx_sprite: AnimatedSprite2D = $AnimatedSprite2D/VFXSprite
 @onready var vfx_player: AnimationPlayer = $AnimationPlayer/VFXPlayer
 @onready var nav_agent = $NavigationAgent2D
 @onready var jump_timer = $JumpTimer
@@ -155,6 +156,10 @@ var distance
 @onready var falling: Falling = $LimboHSM/Falling
 @onready var land: Land = $LimboHSM/Land
 
+@onready var clashed_state: ClashedState = $LimboHSM/ClashedState
+@onready var clash_start: LimboState = $LimboHSM/ClashedState/ClashStart
+@onready var clash_counter: ClashCounter = $LimboHSM/ClashedState/ClashCounter
+@onready var clash_fail: ClashFail = $LimboHSM/ClashedState/ClashFail
 
 
 @onready var states_stack : Array[LimboState] = []
@@ -166,9 +171,6 @@ var distance
 
 
 #Counter States
-@onready var counter_sm: LimboHSM = $LimboHSM/COUNTER
-@onready var begin_counter: LimboState = $LimboHSM/COUNTER/BeginCounter
-@onready var kick_counter: LimboState = $LimboHSM/COUNTER/KickCounter
 
 
 @onready var combat_state_machine: LimboHSM = $CombatStateMachine
@@ -264,8 +266,8 @@ func _ready():
 	turret.shoot_timer.paused=true
 	_init_state_machine()
 	_init_combat_state_machine()
-	_init_counter_state_machine()
 	_init_phase_state_machine()
+	_init_clash_state_machine()
 	hurt_box.set_damage_mulitplyer(1)
 	Events.allied_enemy_hit.connect(adjust_counter)
 	Events.game_over.connect(game_over)
@@ -274,7 +276,9 @@ func _ready():
 	vision_handler.stay_on=vision_stay_on
 	vision_handler.always_on=vision_always_on
 	state_machine.change_active_state(idle)
-	bt_player.active=false
+	
+	
+	#bt_player.active=false
 	hit_box.set_collision_mask_value(7, true)
 	
 	
@@ -306,8 +310,8 @@ func _init_state_machine():
 	#state_machine.add_transition(hit, attack, &"start_attack")
 	state_machine.add_transition(attack, dodge, &"dodge")
 	state_machine.add_transition(dodge, attack, &"dodge_end")
-	state_machine.add_transition(attack, counter_sm, &"counter")
-	state_machine.add_transition(counter_sm, attack, &"counter_end")
+	
+	
 	state_machine.add_transition(shooting, bulletdodge, &"bullet_dodge")
 	state_machine.add_transition(chasing, bulletdodge, &"bullet_dodge")
 	state_machine.add_transition(attack, bulletdodge, &"bullet_dodge")
@@ -327,14 +331,14 @@ func _init_state_machine():
 	
 	state_machine.add_transition(attack, hit, &"interrupt_knockback")
 	
-	state_machine.add_transition(attack, clashed, &"clashed")
-	state_machine.add_transition(clashed, attack, &"resume_attack")
-	state_machine.add_transition(clashed, attack, &"counter_attack")
+	state_machine.add_transition(attack, clashed_state, &"clashed")
+	state_machine.add_transition(clashed_state, attack, &"resume_attack")
+	state_machine.add_transition(clashed_state, attack, &"counter_attack")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, phase_transition, &"begin_next_phase")
 	state_machine.add_transition(phase_transition, teleport_and_shoot, phase_transition.success_event)
-	state_machine.remove_transition(dying, &"begin_next_phase")
-	state_machine.remove_transition(death, &"begin_next_phase")
+	#state_machine.remove_transition(dying, &"begin_next_phase")
+	#state_machine.remove_transition(death, &"begin_next_phase")
 	
 	
 func _init_TEST_state_machine():
@@ -348,6 +352,12 @@ func _init_TEST_state_machine():
 	state_machine.add_transition(idle, hit, &"got_hit")
 	state_machine.add_transition(hit, idle, &"hit_recover")
 
+func _init_clash_state_machine():
+	clashed_state.initial_state=clash_start
+
+	clashed_state.add_transition(clash_start, clash_fail, &"clash_fail")
+	clashed_state.add_transition(clash_start, clash_counter, &"counter")
+
 func test_function():
 	state_machine.dispatch(&"teleport_counter")
 
@@ -358,11 +368,6 @@ func _init_phase_state_machine():
 	phases.set_active(true)
 	
 	phases.add_transition(phase_1, phase_2, &"next_phase")
-
-func _init_counter_state_machine():
-	counter_sm.initial_state=begin_counter
-	counter_sm.initialize(self)
-	counter_sm.add_transition(begin_counter, kick_counter, &"kick_counter")
 
 
 func _init_combat_state_machine():
@@ -672,9 +677,6 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		movement_handler.face_player()
 	elif anim_name=="dodge":
 		state_machine.dispatch(&"dodge_end")
-	elif anim_name=="clashed":
-		if stagger.stagger>0:
-			clash_counter()
 	elif anim_name=="hit" or anim_name=="hit_quick_recover":
 		state_machine.dispatch(&"hit_recover")
 	elif anim_name=="atk_dash":
@@ -983,10 +985,11 @@ func _on_hit_box_area_entered(_area: Area2D) -> void:
 
 
 func _on_hit_box_parried() -> void:
-	parried=true
-	state_machine.dispatch(&"counter")
-	bt_player.restart()
-	bt_player.active=false
+	pass
+	#parried=true
+	#state_machine.dispatch(&"counter")
+	#bt_player.restart()
+	#bt_player.active=false
 	
 
 func _on_hit_entered() -> void:
@@ -1032,9 +1035,6 @@ func _on_clash_timer_timeout() -> void:
 	clash_mult=1
 
 
-func _on_counter_updated(_delta: float) -> void:
-	if player.state_machine.get_active_state()!=player.parry_success_state and counter_timer.is_stopped():
-		state_machine.dispatch(&"counter_end")
 
 
 func _on_staggered_exited() -> void:
@@ -1104,7 +1104,11 @@ func _on_phases_handler_next_phase() -> void:
 	changing_phase=true
 	bt_player.blackboard.set_var("attack_mode", false)
 	bt_player.restart()
-	state_machine.dispatch(&"begin_next_phase")
+	if state_machine.get_active_state()==death or\
+	 state_machine.get_active_state()==dying:
+		return
+	else:
+		state_machine.dispatch(&"begin_next_phase")
 	
 
 
@@ -1269,7 +1273,14 @@ func _on_teleport_and_hit_entered() -> void:
 func _on_hurt_box_launched() -> void:
 	state_machine.change_active_state(launch)
 		
-
+func pushed_back(_force:=100):
+	var _face_dir
+	if player_right:
+		_face_dir = 1
+	else:
+		_face_dir = -1
+	
+	velocity.x=-_force*_face_dir
 
 func _on_launch_timer_timeout() -> void:
 	if phases.get_active_state()==phase_2:
@@ -1279,8 +1290,7 @@ func _on_launch_timer_timeout() -> void:
 
 
 func _on_hit_box_clashed() -> void:
-	#hit_stop.hit_stop(0.01, 0.5)
-	stun_timer.start(0.5)
+	#stun_timer.start(0.5)
 	print_debug("clashed!")
 	if hit_box.heavy_attack:
 		return
@@ -1290,26 +1300,24 @@ func _on_hit_box_clashed() -> void:
 		melee_attack_manager.set_heavy_atk_min(_heavy_atk_min)
 	
 	bt_player.blackboard.set_var("staggered", true)
-	#print_debug("clashed!")
 	attacking=false
 	#if dash_attacking:
 		#return
 	
-	stagger.stagger-=1
-	var _current_atk : String = animation_player.current_animation
-	if _current_atk != null and animation_player.has_animation(_current_atk):
-		assert(animation_player.has_animation(_current_atk))
-		var _atk_connect := animation_player.get_animation(_current_atk).get_marker_time("connect")
-		animation_player.seek(_atk_connect, true)
-	var _cur_segment :float = animation_player.current_animation_position
-	if player_right:
-		knockback.x=-200
-	else:
-		knockback.x=200
-	
-	
-	#print_debug(state_machine.get_active_state())
+	##stagger.stagger-=1
+	#var _current_atk : String = animation_player.current_animation
+	#if _current_atk != null and animation_player.has_animation(_current_atk):
+		#assert(animation_player.has_animation(_current_atk))
+		#var _atk_connect := animation_player.get_animation(_current_atk).get_marker_time("connect")
+		#animation_player.seek(_atk_connect, true)
+	#var _cur_segment :float = animation_player.current_animation_position
+	#if player_right:
+		#knockback.x=-200
+	#else:
+		#knockback.x=200
+
 	boss_ui.set_boss_stagger_smooth(stagger.stagger)
+	vfx_sprite.set_deferred("visible", false)
 	state_machine.dispatch(&"clashed")
 
 
@@ -1349,7 +1357,7 @@ func _on_clashed_entered() -> void:
 func _on_clashed_exited() -> void:
 	bt_player.blackboard.set_var("staggered", false)
 
-func clash_counter() -> void:
+func counter_clash() -> void:
 	if phases.get_active_state()==phase_1:
 		melee_attack_manager.atk_resume_helper()
 		state_machine.dispatch(&"resume_attack")
@@ -1431,6 +1439,5 @@ func _on_land_exited() -> void:
 				state_machine.dispatch(&"start_attack")
 				break
 
-
-func _on_counter_attack_timer_timeout() -> void:
-	pass # Replace with function body.
+func player_damage(_value := 1) -> void:
+	player.health.health-=_value

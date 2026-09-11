@@ -314,7 +314,7 @@ func _init_state_machine():
 	state_machine.add_transition(falling, landed, &"landed")
 	state_machine.add_transition(landed, attack, &"resume_attack")
 	state_machine.add_transition(melee_attack, clashed_state, &"clashed")
-	state_machine.add_transition(clashed_state, melee_attack, &"counter_melee")
+	state_machine.add_transition(clashed_state, melee_attack, &"counter_attack")
 	state_machine.add_transition(melee_attack, melee_attack, &"resume_melee")
 	state_machine.add_transition(clashed_state, shooting_bt_state, &"start_shoot")
 	state_machine.add_transition(melee_attack, shooting_bt_state, &"start_shoot")
@@ -500,7 +500,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 				if _melee_ranged_colliding.is_empty():
 					state_machine.dispatch(&"start_shoot")
 				else:
-					state_machine.dispatch(&"counter_melee")
+					state_machine.dispatch(&"counter_attack")
 		#print_debug(state_machine.get_active_state())
 		if _melee_ranged_colliding.is_empty():
 			state_machine.dispatch(&"start_shoot")
@@ -550,6 +550,8 @@ func _on_hurt_box_weakpoint_weakpoint_hit() -> void:
 
 
 func _on_stagger_staggered() -> void:
+	if state_machine.get_active_state()==staggered:
+		return
 	if (state_machine.get_active_state()!= dying and state_machine.get_active_state()!=death \
 	and state_machine.get_active_state()!=launch and state_machine.get_active_state()!=clashed):
 		if health.health>0:

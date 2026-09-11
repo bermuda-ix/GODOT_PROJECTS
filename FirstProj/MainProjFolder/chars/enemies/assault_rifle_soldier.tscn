@@ -2361,11 +2361,12 @@ libraries/ = SubResource("AnimationLibrary_n808b")
 
 [node name="Health" type="Node" parent="." unique_id=1716487280]
 script = ExtResource("12_d6d3y")
+max_health = 7
 metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="Stagger" type="Node" parent="." unique_id=1036046665]
 script = ExtResource("13_l650s")
-max_stagger = 1
+max_stagger = 2
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="MoraleHandler" type="Node" parent="." unique_id=1369667191 node_paths=PackedStringArray("actor", "stagger", "health")]
@@ -2535,12 +2536,13 @@ combat_state_machine = NodePath("../CombatStateMachine")
 vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
-[node name="CounterAttackHandler" type="Node" parent="." unique_id=1227636534 node_paths=PackedStringArray("actor", "jump_handler", "shoot_attack_manager", "state_machine", "counter_attack_timer", "hit_stop")]
+[node name="CounterAttackHandler" type="Node" parent="." unique_id=1227636534 node_paths=PackedStringArray("actor", "jump_handler", "shoot_attack_manager", "state_machine", "clash_state", "counter_attack_timer", "hit_stop")]
 script = ExtResource("27_nnpne")
 actor = NodePath("..")
 jump_handler = NodePath("../JumpHandler")
 shoot_attack_manager = NodePath("../ShootAttackManager")
 state_machine = NodePath("../StateMachine")
+clash_state = NodePath("../StateMachine/ClashedState")
 counter_attack_timer = NodePath("../CounterAttackTimer")
 hit_stop = NodePath("../HitStop")
 metadata/_custom_type_script = "uid://d04qf1jqrfg1h"
@@ -2603,13 +2605,14 @@ hurt_box = NodePath("../../HurtBox")
 get_player_info = NodePath("../../GetPlayerInfoHandler")
 metadata/_custom_type_script = "uid://b5an13nv6em7m"
 
-[node name="MeleeAttack" type="LimboState" parent="StateMachine" unique_id=89448626 node_paths=PackedStringArray("actor", "movement_handler", "animation_player", "hit_box")]
+[node name="MeleeAttack" type="LimboState" parent="StateMachine" unique_id=89448626 node_paths=PackedStringArray("actor", "movement_handler", "animation_player", "hit_box", "hit_box_collision")]
 script = ExtResource("39_bynfm")
 actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
 animation_player = NodePath("../../AnimationPlayer")
 anim_name = &"melee_attack"
 hit_box = NodePath("../../HitBox")
+hit_box_collision = NodePath("../../HitBox/hb_collision")
 
 [node name="ShootingBTState" type="BTState" parent="StateMachine" unique_id=1512420932 node_paths=PackedStringArray("turret", "stagger")]
 behavior_tree = ExtResource("45_nnekd")
@@ -2706,6 +2709,7 @@ stagger = NodePath("../../Stagger")
 hit_stop = NodePath("../../HitStop")
 state_machine = NodePath("..")
 counter_attack_timer = NodePath("../../CounterAttackTimer")
+counter_enabled = true
 metadata/_custom_type_script = "uid://bu2m8cwle1k11"
 
 [node name="ClashStart" type="LimboState" parent="StateMachine/ClashedState" unique_id=1829966966]

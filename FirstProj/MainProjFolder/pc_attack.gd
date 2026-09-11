@@ -1,4 +1,4 @@
-extends LimboState
+extends LimboHSM
 
 @export var anim_player : AnimationPlayer
 @export var pc : PlayerEntity

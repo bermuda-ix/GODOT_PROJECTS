@@ -138,6 +138,9 @@
 [ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="104_g8y6e"]
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="125_4cgwk"]
 [ext_resource type="Script" uid="uid://dpg0824supe1e" path="res://Component/functions/drop_handler.gd" id="132_n51gf"]
+[ext_resource type="Script" uid="uid://bu2m8cwle1k11" path="res://chars/clashed_state.gd" id="135_oh1oc"]
+[ext_resource type="Script" uid="uid://cvq0ypnvr0iwa" path="res://chars/clash_fail.gd" id="136_nyvl3"]
+[ext_resource type="Script" uid="uid://dc5y78lbovoqo" path="res://chars/clash_counter.gd" id="137_s1lrb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cv57o"]
 size = Vector2(35, 76)
@@ -1435,6 +1438,82 @@ tracks/32/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("HurtBox/hurt_box_collision:rotation")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("HurtBox/hurt_box_collision:position")
+tracks/34/interp = 1
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(6.5, 27.5)]
+}
+
+[sub_resource type="Animation" id="Animation_oh1oc"]
+resource_name = "clash_fail"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.20000002, 0.36666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 4, 2, 4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HurtBox/hurt_box_collision:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.14094158),
+"transitions": PackedFloat32Array(3.999999, 1),
+"update": 0,
+"values": [0.0, 1.5707964]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HurtBox/hurt_box_collision:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.14094158),
+"transitions": PackedFloat32Array(3.9999993, 1),
+"update": 0,
+"values": [Vector2(6.5, 27.5), Vector2(16, 53)]
+}
 
 [sub_resource type="Animation" id="Animation_g7jpo"]
 resource_name = "clashed"
@@ -1696,6 +1775,30 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 8.00001, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(3.2944162, 3.2944162, 3.2944162, 1), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HurtBox/hurt_box_collision:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HurtBox/hurt_box_collision:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(6.5, 27.5)]
 }
 
 [sub_resource type="Animation" id="Animation_ct51r"]
@@ -2232,6 +2335,30 @@ tracks/23/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1.8247963, 0, 0, 1), Color(1, 1, 1, 1)]
 }
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("HurtBox/hurt_box_collision:rotation")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("HurtBox/hurt_box_collision:position")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(6.5, 27.5)]
+}
 
 [sub_resource type="Animation" id="Animation_2a376"]
 resource_name = "parry"
@@ -2664,6 +2791,7 @@ tracks/3/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n5mdn"]
 _data = {
 &"RESET": SubResource("Animation_vtt0c"),
+&"clash_fail": SubResource("Animation_oh1oc"),
 &"clashed": SubResource("Animation_g7jpo"),
 &"dead": SubResource("Animation_86qvh"),
 &"death": SubResource("Animation_cl2c2"),
@@ -3824,6 +3952,36 @@ stagger = NodePath("../../Stagger")
 state_machine = NodePath("..")
 hit_stop = NodePath("../../HitStop")
 counter_attack_timer = NodePath("../../CounterAttackTimer")
+
+[node name="ClashedState" type="LimboHSM" parent="StateMachine" unique_id=1608987377 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "vfx_sprite", "hurt_box", "movement_handler", "stagger", "hit_stop", "state_machine", "counter_attack_timer")]
+script = ExtResource("135_oh1oc")
+actor = NodePath("../..")
+anim_player = NodePath("../../AnimationPlayer")
+vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
+vfx_sprite = NodePath("../../AnimatedSprite2D/VFXSprite")
+hurt_box = NodePath("../../HurtBox")
+movement_handler = NodePath("../../MovementHandler")
+stagger = NodePath("../../Stagger")
+hit_stop = NodePath("../../HitStop")
+state_machine = NodePath("..")
+counter_attack_timer = NodePath("../../CounterAttackTimer")
+counter_enabled = true
+metadata/_custom_type_script = "uid://bu2m8cwle1k11"
+
+[node name="ClashStart" type="LimboState" parent="StateMachine/ClashedState" unique_id=829582727]
+
+[node name="ClashFail" type="LimboState" parent="StateMachine/ClashedState" unique_id=1191694581 node_paths=PackedStringArray("actor", "animation_player")]
+script = ExtResource("136_nyvl3")
+actor = NodePath("../../..")
+animation_player = NodePath("../../../AnimationPlayer")
+metadata/_custom_type_script = "uid://cvq0ypnvr0iwa"
+
+[node name="ClashCounter" type="LimboState" parent="StateMachine/ClashedState" unique_id=1665662858 node_paths=PackedStringArray("actor", "animation_player", "state_machine")]
+script = ExtResource("137_s1lrb")
+actor = NodePath("../../..")
+animation_player = NodePath("../../../AnimationPlayer")
+state_machine = NodePath("../..")
+metadata/_custom_type_script = "uid://dc5y78lbovoqo"
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=455656030]
 

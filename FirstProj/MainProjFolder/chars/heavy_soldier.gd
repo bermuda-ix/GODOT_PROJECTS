@@ -117,6 +117,11 @@ var player_state : LimboState
 @onready var landed: LimboState = $StateMachine/Landed
 @onready var clashed: Clashed = $StateMachine/Clashed
 
+@onready var clashed_state: ClashedState = $StateMachine/ClashedState
+@onready var clash_start: LimboState = $StateMachine/ClashedState/ClashStart
+@onready var clash_fail: ClashFail = $StateMachine/ClashedState/ClashFail
+@onready var clash_counter: ClashCounter = $StateMachine/ClashedState/ClashCounter
+
 
 
 var state
@@ -193,6 +198,7 @@ func _ready():
 	_init_state_machine()
 	_init_combat_state_machine()
 	_init_shooting_states()
+	_init_clash_state_machine()
 	hurt_box.set_damage_mulitplyer(1)
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
 	
@@ -252,10 +258,10 @@ func _physics_process(delta: float) -> void:
 	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered or state_machine.get_active_state()==launch:
 		#hb_collison.disabled=true
 		if not launch_timer.is_stopped():
-			global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
+			#global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
 			#velocity.x=lerpf(-launch.knock_back_strength, -launch.knock_back_strength/2, 0.5)
 			#global_position.x=lerpf(global_position.x, launch.knocked_back, 0.1)
-			velocity.y=0
+			velocity.y=lerpf(velocity.y, 0, 0.1)
 		else:
 			
 			velocity.y += gravity * delta
@@ -342,10 +348,10 @@ func _init_state_machine():
 	state_machine.add_transition(launch, falling, &"falling")
 	state_machine.add_transition(falling, landed, &"landed")
 	state_machine.add_transition(landed, attack, &"resume_attack")
-	state_machine.add_transition(melee_attack, clashed, &"clashed")
-	state_machine.add_transition(clashed, melee_attack, &"counter_melee")
+	state_machine.add_transition(melee_attack, clashed_state, &"clashed")
+	state_machine.add_transition(clashed_state, melee_attack, &"counter_melee")
 	state_machine.add_transition(melee_attack, melee_attack, &"resume_melee")
-	state_machine.add_transition(clashed, shooting_states, &"start_shoot")
+	state_machine.add_transition(clashed_state, shooting_states, &"start_shoot")
 	state_machine.add_transition(melee_attack, shooting_states, &"start_shoot")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, hit, &"hit")
@@ -360,6 +366,12 @@ func _init_combat_state_machine():
 	
 	combat_state_machine.add_transition(ranged_mode, melee_mode, &"melee_mode")
 	combat_state_machine.add_transition(melee_mode, ranged_mode, &"ranged_mode")
+
+func _init_clash_state_machine():
+	clashed_state.initial_state=clash_start
+	clashed_state.add_transition(clash_start, clash_fail, &"clash_fail")
+	clashed_state.add_transition(clash_start, clash_counter, &"counter")
+	
 
 func _init_shooting_states():
 	shooting_states.initial_state=shoot_idle

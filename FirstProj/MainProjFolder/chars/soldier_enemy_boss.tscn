@@ -201,9 +201,6 @@
 [ext_resource type="Script" uid="uid://pjji1dxbp6vy" path="res://chars/shooting.gd" id="125_qu73d"]
 [ext_resource type="Texture2D" uid="uid://ds36fst3q3t58" path="res://Art_Components/Effects/AttackEffects/FX006/FX012.png" id="125_t6q84"]
 [ext_resource type="Texture2D" uid="uid://c8bdlu5h7gnnp" path="res://Art_Components/Effects/AttackEffects/FX006/FX013.png" id="126_5yij7"]
-[ext_resource type="Script" uid="uid://f087f5u1rlb7" path="res://chars/counter_sm.gd" id="126_ae1si"]
-[ext_resource type="Script" uid="uid://btr3yv1fexwec" path="res://chars/begin_counter.gd" id="127_kme6i"]
-[ext_resource type="Script" uid="uid://300clt220dnt" path="res://chars/kick_counter_state.gd" id="128_dnwck"]
 [ext_resource type="Script" uid="uid://doi7s32f3duwj" path="res://chars/dodge.gd" id="129_7v3re"]
 [ext_resource type="Script" uid="uid://lrmt4mpkf56b" path="res://chars/bulletdodge.gd" id="130_cgspr"]
 [ext_resource type="BehaviorTree" uid="uid://dpaegift36sdh" path="res://ai/trees/tele_away_and_shoot.tres" id="131_4m1ae"]
@@ -258,6 +255,10 @@
 [ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="218_gn0bn"]
 [ext_resource type="Script" uid="uid://dly3pw0jr2gav" path="res://chars/falling.gd" id="239_lvekc"]
 [ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="240_c7cuv"]
+[ext_resource type="Script" uid="uid://bu2m8cwle1k11" path="res://chars/clashed_state.gd" id="253_qu73d"]
+[ext_resource type="Script" uid="uid://dc5y78lbovoqo" path="res://chars/clash_counter.gd" id="254_ae1si"]
+[ext_resource type="Script" uid="uid://cvq0ypnvr0iwa" path="res://chars/clash_fail.gd" id="255_kme6i"]
+[ext_resource type="Script" uid="uid://b1el4upf44w1i" path="res://Component/functions/ClashHandler.gd" id="259_fme1f"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_chkyp"]
 shader = ExtResource("3_2r4bp")
@@ -624,6 +625,29 @@ animations = [{
 }],
 "loop": 1,
 "name": &"landed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("53_ffsxl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_mfj3t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_11qey")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_87q8v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_pln6j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_bpr6j")
+}],
+"loop": 1,
+"name": &"launched",
 "speed": 5.0
 }, {
 "frames": [{
@@ -4283,8 +4307,6 @@ stereo = true
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_gs3hl"]
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_6eofm"]
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_sqn71"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_aukkt"]
@@ -4411,27 +4433,30 @@ one_shot = true
 [node name="StunTimer" type="Timer" parent="." index="17" unique_id=240990295]
 one_shot = true
 
-[node name="ClashPower" type="Node" parent="." index="18" unique_id=374956815]
+[node name="StaggerTimer" type="Timer" parent="." index="18" unique_id=255974181]
+
+[node name="ClashPower" type="Node" parent="." index="19" unique_id=374956815]
 script = ExtResource("100_7eb78")
 metadata/_custom_type_script = "uid://byay512l00w0p"
 
-[node name="ClashTimer" type="Timer" parent="." index="19" unique_id=1971481512]
+[node name="ClashTimer" type="Timer" parent="." index="20" unique_id=1971481512]
 wait_time = 0.3
 one_shot = true
 
-[node name="CounterTimer" type="Timer" parent="." index="20" unique_id=943509683]
+[node name="CounterTimer" type="Timer" parent="." index="21" unique_id=943509683]
 wait_time = 3.0
 one_shot = true
 
-[node name="LaunchTimer" type="Timer" parent="." index="21" unique_id=901815371]
+[node name="LaunchTimer" type="Timer" parent="." index="22" unique_id=901815371]
 
-[node name="CounterAttackTimer" type="Timer" parent="." index="22" unique_id=1750847283]
+[node name="CounterAttackTimer" type="Timer" parent="." index="23" unique_id=1750847283]
 
-[node name="TargetLock" type="Node2D" parent="." index="23" unique_id=913237710]
+[node name="TargetLock" type="Node2D" parent="." index="24" unique_id=913237710]
 position = Vector2(0, -24)
 script = ExtResource("101_6tb62")
 
-[node name="HurtBox" parent="." index="24" node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["regular_enemy_hb"]]
+[node name="HurtBox" parent="." index="25" node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["regular_enemy_hb"]]
+position = Vector2(0, -22)
 collision_mask = 8388800
 priority = 1
 health = NodePath("../Health")
@@ -4448,7 +4473,7 @@ position = Vector2(0, -17)
 target_position = Vector2(52, 0)
 collision_mask = 2
 
-[node name="HitBox" parent="." index="25" node_paths=PackedStringArray("stagger", "collision_shape") groups=["hitbox"]]
+[node name="HitBox" parent="." index="26" node_paths=PackedStringArray("stagger", "collision_shape") groups=["hitbox"]]
 collision_mask = 576
 stagger = NodePath("../Stagger")
 knock_back_strength = 50.0
@@ -4460,26 +4485,25 @@ shape = SubResource("RectangleShape2D_vjgnw")
 disabled = true
 one_way_collision_margin = 0.0
 
-[node name="AttackRange" parent="." index="26"]
+[node name="AttackRange" parent="." index="27"]
 position = Vector2(-20, -12)
 collision_layer = 1024
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" index="0" unique_id=524693305]
-visible = false
 shape = SubResource("RectangleShape2D_0c6of")
 
-[node name="BulletDetection" parent="." index="27" unique_id=1193340460 instance=ExtResource("102_sqnmd")]
+[node name="BulletDetection" parent="." index="28" unique_id=1193340460 instance=ExtResource("102_sqnmd")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection" index="0" unique_id=558004549]
 visible = false
 position = Vector2(-20, 0)
 shape = SubResource("CircleShape2D_4yjj7")
 
-[node name="Stagger" parent="." index="28"]
-max_stagger = 10
+[node name="Stagger" parent="." index="29"]
+max_stagger = 5
 
-[node name="Turret" parent="." index="29" unique_id=1929477695 instance=ExtResource("103_jr353")]
+[node name="Turret" parent="." index="30" unique_id=1929477695 instance=ExtResource("103_jr353")]
 position = Vector2(-8, -7)
 multi_shot = true
 ammo_count = 6
@@ -4488,27 +4512,27 @@ max_ammo = 6
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Turret" index="2" unique_id=17709223]
 stream = SubResource("AudioStreamWAV_1dxn7")
 
-[node name="BTPlayer" type="BTPlayer" parent="." index="30" unique_id=1229422285]
+[node name="BTPlayer" type="BTPlayer" parent="." index="31" unique_id=1229422285]
 behavior_tree = ExtResource("103_nmnuj")
 blackboard_plan = SubResource("BlackboardPlan_gs3hl")
 
-[node name="HBar" type="Label" parent="." index="31" unique_id=841893766]
+[node name="HBar" type="Label" parent="." index="32" unique_id=841893766]
 visible = false
 offset_left = -20.0
 offset_top = -66.0
 offset_right = 20.0
 offset_bottom = -43.0
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="32" unique_id=1637961301]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="33" unique_id=1637961301]
 position = Vector2(0, -19)
 rect = Rect2(14, 17, 4, 4)
 
-[node name="PlayerTrackingHandler" type="Node" parent="." index="33" unique_id=558653500 node_paths=PackedStringArray("actor")]
+[node name="PlayerTrackingHandler" type="Node" parent="." index="34" unique_id=558653500 node_paths=PackedStringArray("actor")]
 script = ExtResource("105_tnx7y")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="MovementHandler" type="Node" parent="." index="34" unique_id=1422547335 node_paths=PackedStringArray("actor", "state_machine", "vision_handler", "bullet_detection")]
+[node name="MovementHandler" type="Node" parent="." index="35" unique_id=1422547335 node_paths=PackedStringArray("actor", "state_machine", "vision_handler", "bullet_detection")]
 script = ExtResource("106_518fh")
 actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
@@ -4516,13 +4540,13 @@ vision_handler = NodePath("../VisionHandler")
 bullet_detection = NodePath("../BulletDetection")
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
 
-[node name="JumpHandler" type="Node" parent="." index="35" unique_id=1636225451 node_paths=PackedStringArray("actor", "state_machine")]
+[node name="JumpHandler" type="Node" parent="." index="36" unique_id=1636225451 node_paths=PackedStringArray("actor", "state_machine")]
 script = ExtResource("107_sapcc")
 actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
 metadata/_custom_type_script = "uid://dgyx4da7oymh2"
 
-[node name="DeathHandler" type="Node" parent="." index="36" unique_id=1204797853 node_paths=PackedStringArray("actor", "sm", "animation_player", "health", "death_state")]
+[node name="DeathHandler" type="Node" parent="." index="37" unique_id=1204797853 node_paths=PackedStringArray("actor", "sm", "animation_player", "health", "death_state")]
 script = ExtResource("108_gs3hl")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
@@ -4533,7 +4557,7 @@ score = 5
 heat_value_inc = 3
 metadata/_custom_type_script = "uid://cr58jnxs33hft"
 
-[node name="ShootHandler" type="Node" parent="." index="37" unique_id=1019149738 node_paths=PackedStringArray("actor", "turret")]
+[node name="ShootHandler" type="Node" parent="." index="38" unique_id=1019149738 node_paths=PackedStringArray("actor", "turret")]
 script = ExtResource("109_01e1m")
 actor = NodePath("..")
 turret = NodePath("../Turret")
@@ -4541,7 +4565,7 @@ projectile = ExtResource("218_gn0bn")
 bullet_scale = 0.5
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
-[node name="VisionHandler" type="Node" parent="." index="38" unique_id=314274720 node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking", "nav_agent", "turret")]
+[node name="VisionHandler" type="Node" parent="." index="39" unique_id=314274720 node_paths=PackedStringArray("actor", "sm", "csm", "player_tracking", "nav_agent", "turret")]
 script = ExtResource("111_c7cuv")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
@@ -4554,12 +4578,12 @@ nav_agent = NodePath("../NavigationAgent2D")
 turret = NodePath("../Turret")
 metadata/_custom_type_script = "uid://wkp4a7ybuj21"
 
-[node name="MeleeAttackManager" type="Node" parent="." index="39" unique_id=1571607660 node_paths=PackedStringArray("actor")]
+[node name="MeleeAttackManager" type="Node" parent="." index="40" unique_id=1571607660 node_paths=PackedStringArray("actor")]
 script = ExtResource("112_l7ntw")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://ddhk64y60klpg"
 
-[node name="ShootAttackManager" type="Node" parent="." index="40" unique_id=1061555099 node_paths=PackedStringArray("actor", "animation_player", "turret")]
+[node name="ShootAttackManager" type="Node" parent="." index="41" unique_id=1061555099 node_paths=PackedStringArray("actor", "animation_player", "turret")]
 script = ExtResource("113_rd1xo")
 actor = NodePath("..")
 animation_player = NodePath("../AnimationPlayer")
@@ -4567,19 +4591,19 @@ turret = NodePath("../Turret")
 refactored_reloading = true
 metadata/_custom_type_script = "uid://5h8g0n4mebtm"
 
-[node name="GetPlayerInfoHandler" type="Node" parent="." index="41" unique_id=54495100 node_paths=PackedStringArray("actor")]
+[node name="GetPlayerInfoHandler" type="Node" parent="." index="42" unique_id=54495100 node_paths=PackedStringArray("actor")]
 script = ExtResource("114_52cq2")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://co05jfawt7xsm"
 
-[node name="DodgeManager" type="Node" parent="." index="42" unique_id=1026224709 node_paths=PackedStringArray("actor", "state_machine", "bt_player")]
+[node name="DodgeManager" type="Node" parent="." index="43" unique_id=1026224709 node_paths=PackedStringArray("actor", "state_machine", "bt_player")]
 script = ExtResource("115_lmcka")
 actor = NodePath("..")
 state_machine = NodePath("../LimboHSM")
 bt_player = NodePath("../BTPlayer")
 metadata/_custom_type_script = "uid://cp2j3xnu5vd7q"
 
-[node name="CombatStateChangeHandler" type="Node" parent="." index="43" unique_id=2039632233 node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player", "vision_handler")]
+[node name="CombatStateChangeHandler" type="Node" parent="." index="44" unique_id=2039632233 node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player", "vision_handler")]
 script = ExtResource("116_nykr5")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
@@ -4589,34 +4613,35 @@ ranged_dist = 200
 vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
-[node name="CounterAttackHandler" type="Node" parent="." index="44" unique_id=2091619902 node_paths=PackedStringArray("actor", "jump_handler", "shoot_attack_manager", "state_machine", "bt_player", "counter_attack_timer", "hit_stop")]
+[node name="CounterAttackHandler" type="Node" parent="." index="45" unique_id=2091619902 node_paths=PackedStringArray("actor", "jump_handler", "shoot_attack_manager", "state_machine", "clash_state", "bt_player", "counter_attack_timer", "hit_stop")]
 script = ExtResource("117_gi2km")
 actor = NodePath("..")
 jump_handler = NodePath("../JumpHandler")
 shoot_attack_manager = NodePath("../ShootAttackManager")
 state_machine = NodePath("../LimboHSM")
+clash_state = NodePath("../LimboHSM/ClashedState")
 bt_player = NodePath("../BTPlayer")
 counter_attack_timer = NodePath("../CounterAttackTimer")
 hit_stop = NodePath("../HitStop")
 metadata/_custom_type_script = "uid://d04qf1jqrfg1h"
 
-[node name="TeleportHandler" type="Node" parent="." index="45" unique_id=1495505504 node_paths=PackedStringArray("actor", "teleport_dir_helper_rc")]
+[node name="TeleportHandler" type="Node" parent="." index="46" unique_id=1495505504 node_paths=PackedStringArray("actor", "teleport_dir_helper_rc")]
 script = ExtResource("141_7r4t8")
 actor = NodePath("..")
 teleport_dir_helper_rc = NodePath("../RayCast2D")
 metadata/_custom_type_script = "uid://c4uno006dp70c"
 
-[node name="RayCast2D" type="RayCast2D" parent="." index="46" unique_id=923701194]
+[node name="RayCast2D" type="RayCast2D" parent="." index="47" unique_id=923701194]
 target_position = Vector2(0, -50)
 collision_mask = 3
 hit_from_inside = true
 collide_with_areas = true
 
-[node name="HitStop" type="Node" parent="." index="47" unique_id=1189527455]
+[node name="HitStop" type="Node" parent="." index="48" unique_id=1189527455]
 script = ExtResource("119_6oyq8")
 metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
-[node name="LimboHSM" type="LimboHSM" parent="." index="48" unique_id=1055402908]
+[node name="LimboHSM" type="LimboHSM" parent="." index="49" unique_id=1055402908]
 
 [node name="IDLE" type="LimboState" parent="LimboHSM" index="0" unique_id=260995949 node_paths=PackedStringArray("actor")]
 script = ExtResource("120_oi1be")
@@ -4639,79 +4664,72 @@ script = ExtResource("123_fme1f")
 actor = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="ATTACK" type="LimboState" parent="LimboHSM" index="4" unique_id=1175327493 node_paths=PackedStringArray("actor", "bt_player", "hit_box")]
+[node name="ATTACK" type="LimboState" parent="LimboHSM" index="4" unique_id=1175327493 node_paths=PackedStringArray("actor", "bt_player", "hit_box", "hurt_box", "get_player_info")]
 script = ExtResource("124_h1spd")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 hit_box = NodePath("../../HitBox")
+hurt_box = NodePath("../../HurtBox")
+get_player_info = NodePath("../../GetPlayerInfoHandler")
 
-[node name="SHOOTING" type="LimboState" parent="LimboHSM" index="5" unique_id=1178390401 node_paths=PackedStringArray("actor")]
+[node name="SHOOTING" type="LimboState" parent="LimboHSM" index="5" unique_id=1178390401 node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("125_qu73d")
 actor = NodePath("../..")
+animation_player = NodePath("../../AnimationPlayer")
 
-[node name="COUNTER" type="LimboHSM" parent="LimboHSM" index="6" unique_id=148121650 node_paths=PackedStringArray("actor")]
-blackboard_plan = SubResource("BlackboardPlan_6eofm")
-script = ExtResource("126_ae1si")
-actor = NodePath("../..")
-
-[node name="BeginCounter" type="LimboState" parent="LimboHSM/COUNTER" index="0" unique_id=661500939]
-script = ExtResource("127_kme6i")
-
-[node name="KickCounter" type="LimboState" parent="LimboHSM/COUNTER" index="1" unique_id=1302746130 node_paths=PackedStringArray("anim_player", "actor")]
-script = ExtResource("128_dnwck")
-anim_player = NodePath("../../../AnimationPlayer")
-actor = NodePath("../../..")
-
-[node name="TeleportAndShoot" type="BTState" parent="LimboHSM" index="7" unique_id=93229670]
+[node name="TeleportAndShoot" type="BTState" parent="LimboHSM" index="6" unique_id=93229670]
 behavior_tree = ExtResource("131_4m1ae")
 blackboard_plan = SubResource("BlackboardPlan_sqn71")
 
-[node name="TeleportAndHit" type="BTState" parent="LimboHSM" index="8" unique_id=1709475080]
+[node name="TeleportAndHit" type="BTState" parent="LimboHSM" index="7" unique_id=1709475080]
 behavior_tree = ExtResource("134_d3xdv")
 blackboard_plan = SubResource("BlackboardPlan_aukkt")
 
-[node name="DODGE" type="LimboState" parent="LimboHSM" index="9" unique_id=1280229628 node_paths=PackedStringArray("actor", "bt_player", "animation_player")]
+[node name="DODGE" type="LimboState" parent="LimboHSM" index="8" unique_id=1280229628 node_paths=PackedStringArray("actor", "bt_player", "animation_player")]
 script = ExtResource("129_7v3re")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="BULLETDODGE" type="LimboState" parent="LimboHSM" index="10" unique_id=723479259 node_paths=PackedStringArray("actor", "state_machine", "animation_player")]
+[node name="BULLETDODGE" type="LimboState" parent="LimboHSM" index="9" unique_id=723479259 node_paths=PackedStringArray("actor", "state_machine", "animation_player")]
 script = ExtResource("130_cgspr")
 actor = NodePath("../..")
 state_machine = NodePath("..")
 animation_player = NodePath("../../AnimationPlayer")
 
-[node name="HIT" type="LimboState" parent="LimboHSM" index="11" unique_id=1416400760 node_paths=PackedStringArray("actor", "hurtbox", "animation_player", "stagger")]
+[node name="HIT" type="LimboState" parent="LimboHSM" index="10" unique_id=1416400760 node_paths=PackedStringArray("actor", "hurtbox", "animation_player", "hit_fx_player", "stagger")]
 script = ExtResource("131_hyxc6")
 actor = NodePath("../..")
 hurtbox = NodePath("../../HurtBox")
 animation_player = NodePath("../../AnimationPlayer")
+hit_fx_player = NodePath("../../AnimationPlayer/HitFXPlayer")
 stagger = NodePath("../../Stagger")
 
-[node name="STAGGERED" type="LimboState" parent="LimboHSM" index="12" unique_id=1474770168 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player", "vfx_player")]
+[node name="STAGGERED" type="LimboState" parent="LimboHSM" index="11" unique_id=1474770168 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player", "vfx_player", "hurt_box", "stagger_timer")]
 script = ExtResource("132_ighft")
 actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
 stagger = NodePath("../../Stagger")
 bt_player = NodePath("../../BTPlayer")
 vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
+hurt_box = NodePath("../../HurtBox")
+stagger_timer = NodePath("../../StaggerTimer")
 
-[node name="DYING" type="BTState" parent="LimboHSM" index="13" unique_id=1313469762]
+[node name="DYING" type="BTState" parent="LimboHSM" index="12" unique_id=1313469762]
 behavior_tree = ExtResource("133_1o8km")
 blackboard_plan = SubResource("BlackboardPlan_jjike")
 
-[node name="PHASETRANSITION" type="BTState" parent="LimboHSM" index="14" unique_id=1418593360]
+[node name="PHASETRANSITION" type="BTState" parent="LimboHSM" index="13" unique_id=1418593360]
 behavior_tree = ExtResource("139_aukkt")
 blackboard_plan = SubResource("BlackboardPlan_thomt")
 
-[node name="Launch" type="LimboState" parent="LimboHSM" index="15" unique_id=682492004 node_paths=PackedStringArray("actor", "launch_timer")]
+[node name="Launch" type="LimboState" parent="LimboHSM" index="14" unique_id=682492004 node_paths=PackedStringArray("actor", "launch_timer")]
 script = ExtResource("150_87q8v")
 actor = NodePath("../..")
 launch_timer = NodePath("../../LaunchTimer")
 metadata/_custom_type_script = "uid://dscn2ndlewuut"
 
-[node name="Clashed" type="LimboState" parent="LimboHSM" index="16" unique_id=612323006 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "hurt_box", "movement_handler", "stagger", "state_machine", "hit_stop", "counter_attack_timer")]
+[node name="Clashed" type="LimboState" parent="LimboHSM" index="15" unique_id=612323006 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "hurt_box", "movement_handler", "stagger", "state_machine", "hit_stop", "counter_attack_timer")]
 script = ExtResource("189_ia0g3")
 actor = NodePath("../..")
 anim_player = NodePath("../../AnimationPlayer")
@@ -4724,19 +4742,48 @@ hit_stop = NodePath("../../HitStop")
 counter_attack_timer = NodePath("../../CounterAttackTimer")
 metadata/_custom_type_script = "uid://d30t6dtun2xcd"
 
-[node name="Falling" type="LimboState" parent="LimboHSM" index="17" unique_id=1669237041 node_paths=PackedStringArray("actor", "state_machine")]
+[node name="Falling" type="LimboState" parent="LimboHSM" index="16" unique_id=1669237041 node_paths=PackedStringArray("actor", "state_machine")]
 script = ExtResource("239_lvekc")
 actor = NodePath("../..")
 state_machine = NodePath("..")
 metadata/_custom_type_script = "uid://dly3pw0jr2gav"
 
-[node name="Land" type="LimboState" parent="LimboHSM" index="18" unique_id=877100382 node_paths=PackedStringArray("animation_player", "actor")]
+[node name="Land" type="LimboState" parent="LimboHSM" index="17" unique_id=877100382 node_paths=PackedStringArray("animation_player", "actor")]
 script = ExtResource("240_c7cuv")
 animation_player = NodePath("../../AnimationPlayer")
 actor = NodePath("../..")
 metadata/_custom_type_script = "uid://bhr6e5hybripf"
 
-[node name="CombatStateMachine" type="LimboHSM" parent="." index="49" unique_id=305802644]
+[node name="ClashedState" type="LimboHSM" parent="LimboHSM" index="18" unique_id=1451789734 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "vfx_sprite", "hurt_box", "movement_handler", "stagger", "hit_stop", "state_machine", "counter_attack_timer")]
+script = ExtResource("253_qu73d")
+actor = NodePath("../..")
+anim_player = NodePath("../../AnimationPlayer")
+vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
+vfx_sprite = NodePath("../../AnimatedSprite2D/VFXSprite")
+hurt_box = NodePath("../../HurtBox")
+movement_handler = NodePath("../../MovementHandler")
+stagger = NodePath("../../Stagger")
+hit_stop = NodePath("../../HitStop")
+state_machine = NodePath("..")
+counter_attack_timer = NodePath("../../CounterAttackTimer")
+metadata/_custom_type_script = "uid://bu2m8cwle1k11"
+
+[node name="ClashStart" type="LimboState" parent="LimboHSM/ClashedState" index="0" unique_id=1562251647]
+
+[node name="ClashCounter" type="LimboState" parent="LimboHSM/ClashedState" index="1" unique_id=1568645705 node_paths=PackedStringArray("actor", "animation_player", "state_machine")]
+script = ExtResource("254_ae1si")
+actor = NodePath("../../..")
+animation_player = NodePath("../../../AnimationPlayer")
+state_machine = NodePath("../..")
+metadata/_custom_type_script = "uid://dc5y78lbovoqo"
+
+[node name="ClashFail" type="LimboState" parent="LimboHSM/ClashedState" index="2" unique_id=1702905853 node_paths=PackedStringArray("actor", "animation_player")]
+script = ExtResource("255_kme6i")
+actor = NodePath("../../..")
+animation_player = NodePath("../../../AnimationPlayer")
+metadata/_custom_type_script = "uid://cvq0ypnvr0iwa"
+
+[node name="CombatStateMachine" type="LimboHSM" parent="." index="50" unique_id=305802644]
 
 [node name="RANGED" type="LimboState" parent="CombatStateMachine" index="0" unique_id=824960426 node_paths=PackedStringArray("actor", "bt_player")]
 script = ExtResource("134_lmju3")
@@ -4748,17 +4795,17 @@ script = ExtResource("135_2idfp")
 actor = NodePath("../..")
 bt_player = NodePath("../../BTPlayer")
 
-[node name="Phases" type="LimboHSM" parent="." index="50" unique_id=2049008387]
+[node name="Phases" type="LimboHSM" parent="." index="51" unique_id=2049008387]
 
 [node name="Phase1" type="LimboState" parent="Phases" index="0" unique_id=1569827271]
 
 [node name="Phase2" type="LimboState" parent="Phases" index="1" unique_id=107480339]
 
-[node name="Speed" type="Label" parent="." index="51" unique_id=1922258161]
+[node name="Speed" type="Label" parent="." index="52" unique_id=1922258161]
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="QTEHandler" type="Node" parent="." index="52" unique_id=1760859820 node_paths=PackedStringArray("actor", "anim_player", "speech", "qte_pause")]
+[node name="QTEHandler" type="Node" parent="." index="53" unique_id=1760859820 node_paths=PackedStringArray("actor", "anim_player", "speech", "qte_pause")]
 script = ExtResource("136_ylbh8")
 actor = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
@@ -4766,14 +4813,14 @@ speech = NodePath("../Speed")
 qte_pause = NodePath("../HitStop")
 metadata/_custom_type_script = "uid://wai5i0eghoou"
 
-[node name="CutsceneHandler" type="Node" parent="." index="53" unique_id=1766288813 node_paths=PackedStringArray("actor", "anim_player", "speech")]
+[node name="CutsceneHandler" type="Node" parent="." index="54" unique_id=1766288813 node_paths=PackedStringArray("actor", "anim_player", "speech")]
 script = ExtResource("137_f64i6")
 actor = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 speech = NodePath("../Speed")
 metadata/_custom_type_script = "uid://fi6gye6mlsb6"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="54" unique_id=1801299136]
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="55" unique_id=1801299136]
 
 [node name="BossUI" parent="CanvasLayer" index="0" unique_id=983433779 node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("138_ggkva")]
 visible = false
@@ -4783,7 +4830,7 @@ stagger = NodePath("../../Stagger")
 actor = NodePath("../..")
 metadata/_edit_use_anchors_ = true
 
-[node name="PhasesHandler" type="Node" parent="." index="55" unique_id=3289038 node_paths=PackedStringArray("health", "actor", "sm")]
+[node name="PhasesHandler" type="Node" parent="." index="56" unique_id=3289038 node_paths=PackedStringArray("health", "actor", "sm")]
 script = ExtResource("142_qstkj")
 health = NodePath("../Health")
 actor = NodePath("..")
@@ -4791,10 +4838,19 @@ sm = NodePath("../Phases")
 phases = Array[int]([35])
 metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 
+[node name="ClashHandler" type="Node" parent="." index="57" unique_id=1347494613 node_paths=PackedStringArray("actor", "animation_player", "state_machine", "clashed_state", "hit_stop", "stagger")]
+script = ExtResource("259_fme1f")
+actor = NodePath("..")
+animation_player = NodePath("../AnimationPlayer")
+state_machine = NodePath("../LimboHSM")
+clashed_state = NodePath("../LimboHSM")
+hit_stop = NodePath("../HitStop")
+stagger = NodePath("../Stagger")
+metadata/_custom_type_script = "uid://b1el4upf44w1i"
+
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="animation_changed" from="AnimationPlayer" to="." method="_on_animation_player_animation_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/COUNTER/KickCounter" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/Clashed" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="LimboHSM/Land" method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
@@ -4829,9 +4885,6 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="entered" from="LimboHSM/ATTACK" to="." method="_on_attack_entered"]
 [connection signal="exited" from="LimboHSM/ATTACK" to="." method="_on_attack_exited"]
 [connection signal="updated" from="LimboHSM/ATTACK" to="." method="_on_attack_updated"]
-[connection signal="exited" from="LimboHSM/COUNTER" to="." method="_on_counter_exited"]
-[connection signal="updated" from="LimboHSM/COUNTER" to="." method="_on_counter_updated"]
-[connection signal="exited" from="LimboHSM/COUNTER/KickCounter" to="." method="_on_kick_counter_exited"]
 [connection signal="entered" from="LimboHSM/TeleportAndShoot" to="." method="_on_teleport_and_shoot_entered"]
 [connection signal="exited" from="LimboHSM/TeleportAndShoot" to="." method="_on_teleport_and_shoot_exited"]
 [connection signal="entered" from="LimboHSM/TeleportAndHit" to="." method="_on_teleport_and_hit_entered"]
