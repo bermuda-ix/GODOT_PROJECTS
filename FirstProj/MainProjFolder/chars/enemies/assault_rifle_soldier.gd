@@ -104,7 +104,7 @@ var player_state : LimboState
 #@onready var defend_ally: BTState = $StateMachine/ShootingStates/DefendAlly
 @onready var shooting_bt_state: BTState = $StateMachine/ShootingBTState
 @onready var hit: Hit = $StateMachine/Hit
-@onready var parry: Parry = $StateMachine/Parry
+#@onready var parry: Parry = $StateMachine/Parry
 @onready var staggered: Staggered = $StateMachine/Staggered
 @onready var dying: BTState = $StateMachine/Dying
 @onready var death: Death = $StateMachine/Death
@@ -220,7 +220,8 @@ func _process(delta: float) -> void:
 	is_on_screen=on_screen.is_on_screen()
 	ammo_count=turret.ammo_count
 	dir = to_local(next)
-	vision_handler.handle_vision()
+	if vision_handler.path_valid():
+		vision_handler.handle_vision()
 	distance = abs(global_position.x-player.global_position.x)
 	#force_chase()
 	vision_handler.get_player_relative_loc()
@@ -228,9 +229,9 @@ func _process(delta: float) -> void:
 	if is_on_floor():
 		being_flipped()
 	flip_ally_vision()
-	if health.health<=0:
-		if state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death:
-			state_machine.dispatch(&"die")
+	#if health.health<=0:
+		#if state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death:
+			#state_machine.dispatch(&"die")
 	
 
 
@@ -238,7 +239,7 @@ func _physics_process(delta: float) -> void:
 	if state_machine.get_active_state()==death:
 		return
 	
-	if combat_state_machine.get_active_state()==ranged_mode or state_machine.get_active_state()==parry:
+	if combat_state_machine.get_active_state()==ranged_mode:
 		if state_machine.get_active_state()!=chasing:
 			current_speed=0
 	#
@@ -521,7 +522,7 @@ func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	death_knockback=400.0
 	death_launch=-30.0
-	if state_machine.get_active_state()==parry and player_state!=player.flip_state:
+	if player_state!=player.flip_state:
 		return
 	if area.is_in_group("sp_atk_default"):
 		if player_state==player.flip_state or player.state_machine.get_previous_active_state()==player.flip_state:
@@ -535,7 +536,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 
 		
 func _on_hurt_box_weakpoint_weakpoint_hit() -> void:
-	if state_machine.get_active_state()==parry and player_state!=player.flip_state :
+	if player_state!=player.flip_state :
 		return
 	else:
 		if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
@@ -774,3 +775,7 @@ func _on_shoot_attack_manager_reloading() -> void:
 
 func _on_shoot_attack_manager_reloading_done() -> void:
 	shooting_bt_state.blackboard.set_var("reloaded", true)
+
+
+func _on_death_exited() -> void:
+	pass # Replace with function body.

@@ -19,6 +19,8 @@ func _ready() -> void:
 
 	
 func increase_clash() -> void:
+	if health.health<=0:
+		return
 	if clash_power>=clash_max:
 		return
 	clash_power+=1

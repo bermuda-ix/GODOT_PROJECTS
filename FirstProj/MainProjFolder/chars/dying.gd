@@ -1,4 +1,4 @@
-class_name dying extends BTState
+class_name DyingState extends BTState
 
 @export var large_enemy := false
 @export var actor : Node2D

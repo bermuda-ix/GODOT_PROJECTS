@@ -8,6 +8,9 @@ class_name MoraleHandler extends Node
 @export var stagger_increase_value := 1
 @export var low_stagger_threshold : int = 3
 @export var low_morale_enabled := false
+@export var navigation_handler : NavigationHandler
+@export var on_screen : VisibleOnScreenNotifier2D
+@export var active := false
 signal low_stagger_morale
 signal low_health_morale
 
@@ -20,12 +23,16 @@ func _ready() -> void:
 
 
 func morale_decrease() -> void:
+	if not navigation_handler.path_valid() or not on_screen.is_on_screen():
+		return
 	if stagger.stagger<=0:
 		return
 	if health.health>0:
 		stagger.stagger -= stagger_decrease_value
 	
 func morale_increase() -> void:
+	if not navigation_handler.path_valid() or not on_screen.is_on_screen():
+		return
 	stagger.stagger += stagger_increase_value
 	if stagger.stagger<low_stagger_threshold:
 		low_morale_check()

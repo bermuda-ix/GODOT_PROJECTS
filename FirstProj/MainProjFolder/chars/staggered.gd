@@ -15,8 +15,10 @@ func _enter() -> void:
 
 
 	stagger_timer.start(3)
-	actor.hb_collision.set_deferred("disabled", true)
-	actor.current_speed=0
+	if "hb_collision" in actor:
+		actor.hb_collision.set_deferred("disabled", true)
+	if "current_speed" in actor:
+		actor.current_speed=0
 	#actor.velocity.x=0
 	
 	actor.animation_player.play("staggered")
@@ -36,8 +38,10 @@ func _enter() -> void:
 	#actor.state="STAGGERED"
 	
 func _update(delta: float) -> void:
-	actor.hb_collision.set_deferred("disabled", true)
-	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.5)
+	if "hb_collision" in actor:
+		actor.hb_collision.set_deferred("disabled", true)
+	if actor.get_class()!="StaticBody2D":
+		actor.velocity.x=lerpf(actor.velocity.x, 0, 0.5)
 	if movement_able:
 		actor.movement_handler.active=false
 		movement_handler.active=false

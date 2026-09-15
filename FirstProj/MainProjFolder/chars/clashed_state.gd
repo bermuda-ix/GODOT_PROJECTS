@@ -23,6 +23,8 @@ signal nothing_follow_up
 
 func _ready() -> void:
 	Events.parry_success.connect(clash_follow_up)
+	counter_attack_timer.ignore_time_scale=true
+	counter_attack_timer.one_shot=true
 
 func _enter() -> void:
 	actor.velocity.x=0
@@ -42,17 +44,9 @@ func _enter() -> void:
 		movement_handler.active=false
 
 func _update(delta: float) -> void:
-	#assert(not anim_player.is_playing())
 	vfx_player.speed_scale=1/Engine.time_scale
 	actor.velocity.x=0+actor.knockback.x
-	#if actor.velocity.x!=0:
-		#print_debug(actor.velocity.x)
 	actor.velocity.y=0
-	#actor.knockback=Vector2.ZERO
-	#if actor.velocity.x!=0:
-		#print_debug(actor.velocity.x)
-	#assert(vfx_player.is_playing())
-	#assert(vfx_sprite.visible)
 
 func _exit() -> void:
 	vfx_player.stop()
@@ -87,6 +81,8 @@ func clash_follow_up(_follow_up := "nothing"):
 			riposte_heavy_follow_up.emit()
 			if stagger.stagger<=1:
 				dispatch(&"clash_fail")
+			else:
+				dispatch(&"clash_success")
 		"nothing":
 			nothing_follow_up.emit()
 			actor.pushed_back(150)
