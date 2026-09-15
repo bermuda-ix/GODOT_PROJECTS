@@ -34,6 +34,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if face_player:
 		turret_face_player()
+	if not path_valid():
+		sm.dispatch(&"return_to_idle")
  
 func get_player_relative_loc():
 	if player.global_position.x>actor.global_position.x:
@@ -51,6 +53,9 @@ func handle_vision():
 		#sm.dispatch(&"start_chase")
 	elif not path_valid() and ground_enemy:
 		player_found=false
+		sm.dispatch(&"return_to_idle")
+		
+		return
 	else:
 		#actor.player_colliding=player_tracking.is_colliding()
 		if player_tracking.is_colliding():

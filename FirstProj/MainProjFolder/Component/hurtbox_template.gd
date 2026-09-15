@@ -78,10 +78,10 @@ func _on_area_entered(hitbox: Area2D) -> void:
 		#assert(shielded!=true)
 		#hitbox.active=false
 		if hitbox != null:
-			if staggered:
-				dmg_mult=3
-			else:
-				dmg_mult=1
+			#if staggered:
+				#dmg_mult=3
+			#else:
+				#dmg_mult=1
 			#############################################
 			#Replace with bullet knockback once finished#
 			#############################################
@@ -99,6 +99,11 @@ func _on_area_entered(hitbox: Area2D) -> void:
 				assert(hitbox.active==true)
 				hitbox.active=false
 				Events.hit_stop.emit(0.01,0.01)
+				var total_damage : int
+				if stagger.stagger>1:
+					hitbox.damage=1
+				else:
+					total_damage=hitbox.damage
 				if hitbox.knock_back:
 					if hitbox.global_position.x > global_position.x:
 						impact_dir_right=true
@@ -111,34 +116,34 @@ func _on_area_entered(hitbox: Area2D) -> void:
 				if hitbox.is_in_group("spc_atk"):
 					weakpoint_hit.emit()
 				if hitbox.stagger_damage:
-					stagger.stagger -= (hitbox.damage * dmg_mult)
+					stagger.stagger -= (hitbox.damage)
 					### Maybe add minimum health damage to stagger attacks?  
 
 					got_hit.emit(hitbox)
 				else:
 					if back_attack_flag != null:
 						if back_attack_flag.is_colliding():
-							health.health -= (hitbox.damage * dmg_mult)
+							health.health -= (total_damage)
 							if not staggered:
-								stagger.stagger -= (hitbox.damage * dmg_mult)
-							received_damage.emit(hitbox.damage)
+								stagger.stagger -= (total_damage)
+							received_damage.emit(total_damage)
 							got_hit.emit(hitbox)
 							weakpoint_hit.emit()
 							#Events.camera_shake.emit(2,20)
 					if weakpoint:
-						health.health -= (hitbox.damage * dmg_mult)
+						health.health -= (total_damage)
 						if not staggered:
-							stagger.stagger -= (hitbox.damage * dmg_mult)
-						received_damage.emit(hitbox.damage)
+							stagger.stagger -= (total_damage )
+						received_damage.emit(total_damage)
 						got_hit.emit(hitbox)
 						weakpoint_hit.emit()
 						#Events.camera_shake.emit(2,20)
 					else:
 						if not shielded:
 							print_debug(health.health)
-							print_debug(hitbox.damage * dmg_mult)
-							health.health -= (hitbox.damage * dmg_mult)
-							print_debug(health.health)
+							#print_debug(hitbox.damage)
+							health.health -= (hitbox.damage)
+							#print_debug(health.health)
 							print_debug(hitbox.damage)
 							#assert(hitbox.attack_clashed!=true)
 							received_damage.emit(hitbox.damage)

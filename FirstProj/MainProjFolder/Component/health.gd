@@ -42,8 +42,6 @@ func get_max_health() -> int:
 func set_immortality(value: bool):
 	immortality = value
 
-
-
 func get_immortality() -> bool:
 	return immortality
 

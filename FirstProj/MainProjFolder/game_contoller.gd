@@ -39,6 +39,7 @@ var mutex: Mutex
 
 @export_group("DEBUG FUNCTIONS")
 @export var debug_start := false
+@export var web_export := false
 
 #@onready var prologue_lvl: adv_level = $World2D/PrologueLvl
 
@@ -70,6 +71,9 @@ func _ready() -> void:
 	else:
 		change_gui_scene(LevelList.MAIN_MENU)
 		level_UI.visible=false
+		
+	if web_export:
+		load_adv_levels_web_test()
 	
 	
 func _process(delta: float) -> void:
