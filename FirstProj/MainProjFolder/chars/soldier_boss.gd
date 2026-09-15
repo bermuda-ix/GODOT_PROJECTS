@@ -25,6 +25,7 @@ var always_active : bool
 @onready var animation_player = $AnimationPlayer as AnimationPlayer
 @onready var vfx_sprite: AnimatedSprite2D = $AnimatedSprite2D/VFXSprite
 @onready var vfx_player: AnimationPlayer = $AnimationPlayer/VFXPlayer
+@onready var hit_fx_player: AnimationPlayer = $AnimationPlayer/HitFXPlayer
 @onready var nav_agent = $NavigationAgent2D
 @onready var jump_timer = $JumpTimer
 @onready var movement_handler: MovementHandler = $MovementHandler
@@ -160,6 +161,8 @@ var distance
 @onready var clash_start: LimboState = $LimboHSM/ClashedState/ClashStart
 @onready var clash_counter: ClashCounter = $LimboHSM/ClashedState/ClashCounter
 @onready var clash_fail: ClashFail = $LimboHSM/ClashedState/ClashFail
+@onready var clash_heavy_counter: LimboState = $LimboHSM/ClashedState/ClashHeavyCounter
+
 
 
 @onready var states_stack : Array[LimboState] = []
@@ -357,6 +360,7 @@ func _init_clash_state_machine():
 
 	clashed_state.add_transition(clash_start, clash_fail, &"clash_fail")
 	clashed_state.add_transition(clash_start, clash_counter, &"counter")
+	clashed_state.add_transition(clash_start, clash_heavy_counter, &"clash_success")
 
 func test_function():
 	state_machine.dispatch(&"teleport_counter")
@@ -894,8 +898,12 @@ func _on_hurt_box_bullet_hit(_damage: int) -> void:
 			launch.knock_back_strength=-500.0
 		else:
 			launch.knock_back_strength=500.0
+		print_debug(state_machine.get_active_state())
 		state_machine.dispatch(&"launched")
-		
+		pass
+	else:
+		hit_stop.hit_stop(0.1, 0.1)
+		hit_fx_player.play("hit")
 		
 
 func _on_health_health_depleted() -> void:
@@ -1303,18 +1311,6 @@ func _on_hit_box_clashed() -> void:
 	attacking=false
 	#if dash_attacking:
 		#return
-	
-	##stagger.stagger-=1
-	#var _current_atk : String = animation_player.current_animation
-	#if _current_atk != null and animation_player.has_animation(_current_atk):
-		#assert(animation_player.has_animation(_current_atk))
-		#var _atk_connect := animation_player.get_animation(_current_atk).get_marker_time("connect")
-		#animation_player.seek(_atk_connect, true)
-	#var _cur_segment :float = animation_player.current_animation_position
-	#if player_right:
-		#knockback.x=-200
-	#else:
-		#knockback.x=200
 
 	boss_ui.set_boss_stagger_smooth(stagger.stagger)
 	vfx_sprite.set_deferred("visible", false)
@@ -1376,6 +1372,7 @@ func _on_land_landed() -> void:
 	vision_handler.active=true
 	combat_state_change_handler.active=true
 	state_machine.dispatch(&"resume_attack")
+	stagger.set_temporary_immortality(3)
 	#phases_handler.phase_change(health.health)
 	if not phases_handler.is_final_phase():
 		if health.health<=phases_handler.phases.get(phases_handler.cur_phase-1):
@@ -1441,3 +1438,8 @@ func _on_land_exited() -> void:
 
 func player_damage(_value := 1) -> void:
 	player.health.health-=_value
+	
+func player_knockback(_knockback_strength := 100.0, _launch_strength :=-15.0) -> void:
+	var _face_dir = func() : if player_right: return 1 else: return -1
+	player._on_knockback(_knockback_strength, _launch_strength, _face_dir.call())
+	player.knockback_recovery_timer.start(1.0)

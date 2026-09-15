@@ -48,6 +48,7 @@ signal clash_end
 @onready var clash_timer: Timer = $ClashPower/ClashTimer
 @onready var charge_timer: Timer = $ChargeTimer
 
+@onready var input_active := true
 @onready var stairs_detected : bool = false
 @onready var stairs_release : bool = true
 @onready var drop_down_platform_detected : bool = false
@@ -106,6 +107,7 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var slam_attack: LimboState = $StateMachine/AttackState/SlamAttack
 @onready var slam_start: LimboState = $StateMachine/AttackState/SlamStart
 @onready var clashed: LimboState = $StateMachine/AttackState/Clashed
+@onready var parry_failed: LimboState = $StateMachine/ParryFailed
 
 
 
@@ -231,6 +233,7 @@ signal no_input_qte
 @onready var reset_combo_flag : bool = false
 @onready var heavy_attack_flag : bool = false
 @onready var hit_buffer: Timer = $HitBuffer
+@onready var knockback_recovery_timer: Timer = $KnockbackRecoveryTimer
 
 
 @export var attack_timer_len : float = 0.3
@@ -350,7 +353,7 @@ var flipped_over : bool = false
 @onready var flip_buffer: Timer = $FlipBuffer
 
 func set_knockback(_value : Vector2) -> void:
-	_value=knockback
+	knockback=_value
 
 #multithreading
 var thread := Thread.new()
@@ -395,7 +398,7 @@ func _ready():
 	Events.get_player_data.connect(init_player_data)
 	_new_health=health.health
 	Events.update_ui_data.connect(update_ui)
-	
+	state_machine.get
 	clash_aura_fx.visible=false
 	clash_aura_fx_2.visible=false
 	attack_fx.visible=false
@@ -478,6 +481,8 @@ func _init_state_machine():
 	
 	#Hit
 	state_machine.add_transition(parry_success_state, hit, &"got_hit")
+	state_machine.add_transition(parry_success_state, parry_failed, &"got_countered")
+	state_machine.add_transition(parry_failed, idle, &"knockback_recover")
 	state_machine.add_transition(attack_state, hit, &"got_hit")
 	
 	state_machine.add_transition(hit, attack_state, &"start_attack")
@@ -627,22 +632,17 @@ func _init_attack_states():
 func _process(_delta):
 	
 	assert(state_machine.is_active())
-	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
+	#knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	if not cutscene_handler.actor_control_active:
 		
 		if qte_handler.actor_control_active:
 			qte_input()
 		return
-	elif state_machine.get_active_state()==death or state_machine.get_active_state()==dead:
-		#move_and_slide()
-		
-		velocity=Vector2.ZERO
-		apply_gravity(_delta)
-		return
+
 #
 	input_axis = Input.get_axis("walk_left", "walk_right")
-	vel_x=velocity.x
-	label.text=str(get_real_velocity().normalized())
+
+	
 	get_target_info()
 	#previous_state()
 	atk_state_debug()
@@ -956,6 +956,7 @@ func handle_acceleration(input_axis, delta):
 	if not is_on_floor(): return
 	if charging: return
 	if s_atk: return
+	if not input_active: return
 	if input_axis != 0:
 		if state_machine.get_active_state()==aim:
 			velocity.x = move_toward(velocity.x, aim_speed * input_axis, movement_data.acceleration * delta)
@@ -1104,7 +1105,7 @@ func attack_handler():
 		return
 	
 	
-	var anim_player_time : float = anim_player.current_animation_position
+	#var anim_player_time : float = anim_player.current_animation_position
 	
 	if Input.is_action_pressed("attack"):
 		#print_debug(state_machine.get_active_state())
@@ -3121,6 +3122,10 @@ func qte_input():
 	else:
 		pass
 
+func take_damage(_value := 1) -> void:
+	hit_fx_player.play("hit")
+	health.health-=_value
+
 
 ####################################################
 #Saving and loading player data upon enter new room#
@@ -3209,11 +3214,19 @@ func _on_knockback(_launch_strength : float, _knockback_strength : float, impact
 	if impact_dir_right:
 		_knockback_strength*=-1
 	knockback.x=_knockback_strength
+	#assert(knockback.x==_knockback_strength)
 	if round(_launch_strength)!=0:
 		velocity.y= -(_launch_strength)
 	###### TBD LATTER #####
 	if _launch_strength!=0:
 		print_debug("team rockets jerking off again")
+
+func start_knockback_recovery(_dur := 1.0):
+	knockback_recovery_timer.start(_dur)
+
+func _on_knockback_recovery_timer_timeout() -> void:
+	state_machine.dispatch(&"knockback_recover")
+	velocity.x=0
 
 func _on_hit_box_clashed() -> void:
 	hb_collision.set_deferred("disabled", true)
