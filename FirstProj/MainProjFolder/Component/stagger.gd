@@ -8,6 +8,8 @@ signal max_stagger_changed (diff: int)
 @export var max_stagger: int = 3 : set = set_max_stagger, get = get_max_stagger
 @export var stagger_immortality : bool = false
 
+var immortality_timer: Timer = null
+
 @onready var stagger: int = max_stagger : set = set_stagger, get = get_stagger
 
 func set_max_stagger(value: int):
@@ -46,3 +48,23 @@ func get_stagger() -> int:
 
 func stagger_recover() -> void:
 	stagger=max_stagger
+
+func set_immortality(value: bool):
+	stagger_immortality = value
+
+func get_immortality() -> bool:
+	return stagger_immortality
+
+func set_temporary_immortality(time: float):
+	if immortality_timer == null:
+		immortality_timer = Timer.new()
+		immortality_timer.one_shot = true
+		add_child(immortality_timer)
+	
+	if immortality_timer.timeout.is_connected(set_immortality):
+		immortality_timer.timeout.disconnect(set_immortality)
+	
+	immortality_timer.set_wait_time(time)
+	immortality_timer.timeout.connect(set_immortality.bind(false))
+	stagger_immortality = true
+	immortality_timer.start()
