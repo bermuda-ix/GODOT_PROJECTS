@@ -127,12 +127,12 @@
 [ext_resource type="Texture2D" uid="uid://jc52qoo2mhuf" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00216.png" id="77_0u53p"]
 [ext_resource type="Texture2D" uid="uid://dpiavufx84ssj" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00217.png" id="78_oh1oc"]
 [ext_resource type="Texture2D" uid="uid://tldys6blkcg8" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/explosion/explosion002/explosion_00218.png" id="79_nyvl3"]
-[ext_resource type="AudioStream" uid="uid://bkjje5hbliijj" path="res://Art_Components/Effects/sound/hits/PUNCH_DESIGNED_HEAVY_14.wav" id="84_4pxgm"]
 [ext_resource type="Texture2D" uid="uid://blcu07iovyclb" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_01.png" id="86_xmcqr"]
 [ext_resource type="Texture2D" uid="uid://fbgglf4h7tni" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_02.png" id="87_oiist"]
 [ext_resource type="Texture2D" uid="uid://dxef33nv5p316" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_03.png" id="88_tk4wc"]
 [ext_resource type="Texture2D" uid="uid://8ff0cbeagj4c" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_04.png" id="89_0u53p"]
 [ext_resource type="Texture2D" uid="uid://dchoeftyjo2db" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_05.png" id="90_oh1oc"]
+[ext_resource type="AudioStream" uid="uid://dgoocryiv61ij" path="res://Art_Components/Effects/sound/swishes/swishes/swish-3.wav" id="91_oh1oc"]
 [ext_resource type="Script" uid="uid://xtvvtv1f2dfa" path="res://Component/functions/CombatHandlers/MoraleHandler.gd" id="94_oiist"]
 [ext_resource type="Script" uid="uid://dscn2ndlewuut" path="res://chars/launched.gd" id="100_8h24x"]
 [ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="104_g8y6e"]
@@ -2359,6 +2359,21 @@ tracks/25/keys = {
 "update": 0,
 "values": [Vector2(6.5, 27.5)]
 }
+tracks/26/type = "audio"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("AudioStreamPlayer2D")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("91_oh1oc")
+}],
+"times": PackedFloat32Array(0.26666668)
+}
+tracks/26/use_blend = true
 
 [sub_resource type="Animation" id="Animation_2a376"]
 resource_name = "parry"
@@ -3547,7 +3562,6 @@ sprite_frames = SubResource("SpriteFrames_incat")
 animation = &"hit"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1804512724]
-stream = ExtResource("84_4pxgm")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=13363768]
 libraries/ = SubResource("AnimationLibrary_n5mdn")
@@ -3568,11 +3582,13 @@ script = ExtResource("12_6gh4x")
 max_stagger = 2
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
-[node name="MoraleHandler" type="Node" parent="." unique_id=198596750 node_paths=PackedStringArray("actor", "stagger", "health")]
+[node name="MoraleHandler" type="Node" parent="." unique_id=198596750 node_paths=PackedStringArray("actor", "stagger", "health", "navigation_handler", "on_screen")]
 script = ExtResource("94_oiist")
 actor = NodePath("..")
 stagger = NodePath("../Stagger")
 health = NodePath("../Health")
+navigation_handler = NodePath("../NavigationHandler")
+on_screen = NodePath("../VisibleOnScreenNotifier2D")
 metadata/_custom_type_script = "uid://xtvvtv1f2dfa"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=162841846]

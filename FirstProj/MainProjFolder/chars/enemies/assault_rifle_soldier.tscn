@@ -74,6 +74,7 @@
 [ext_resource type="BehaviorTree" uid="uid://t2han52xa64j" path="res://ai/trees/parry.tres" id="43_i5gy8"]
 [ext_resource type="Texture2D" uid="uid://dchoeftyjo2db" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_05.png" id="43_uboqf"]
 [ext_resource type="Script" uid="uid://f8o0kgomg38" path="res://chars/parry.gd" id="44_ofohi"]
+[ext_resource type="AudioStream" uid="uid://cf6jn2lj1ifwr" path="res://Art_Components/Effects/sound/swishes/swishes/swish-9.wav" id="44_rcq7j"]
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="45_bf1lr"]
 [ext_resource type="BehaviorTree" uid="uid://bxakb1j8uax5m" path="res://ai/trees/shooting_bt_state.tres" id="45_nnekd"]
 [ext_resource type="Script" uid="uid://dvi5i14hskbgo" path="res://chars/enemies/shooting_bt_state.gd" id="46_c5coe"]
@@ -94,7 +95,7 @@
 [ext_resource type="Script" uid="uid://dc5y78lbovoqo" path="res://chars/clash_counter.gd" id="89_n808b"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_incat"]
-radius = 16.0
+radius = 12.0
 height = 74.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_phy6t"]
@@ -1170,6 +1171,18 @@ tracks/15/keys = {
 "update": 0,
 "values": [Vector2(0, 0)]
 }
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("HurtBox:active")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_n808b"]
 resource_name = "clash_fail"
@@ -1637,6 +1650,21 @@ tracks/13/keys = {
 "transitions": PackedFloat32Array(),
 "values": []
 }
+tracks/14/type = "audio"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("AudioStreamPlayer2D")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("44_rcq7j")
+}],
+"times": PackedFloat32Array(0.6)
+}
+tracks/14/use_blend = true
 
 [sub_resource type="Animation" id="Animation_eke2m"]
 resource_name = "reload"
@@ -2369,11 +2397,13 @@ script = ExtResource("13_l650s")
 max_stagger = 2
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
-[node name="MoraleHandler" type="Node" parent="." unique_id=1369667191 node_paths=PackedStringArray("actor", "stagger", "health")]
+[node name="MoraleHandler" type="Node" parent="." unique_id=1369667191 node_paths=PackedStringArray("actor", "stagger", "health", "navigation_handler", "on_screen")]
 script = ExtResource("46_gf2yx")
 actor = NodePath("..")
 stagger = NodePath("../Stagger")
 health = NodePath("../Health")
+navigation_handler = NodePath("../NavigationHandler")
+on_screen = NodePath("../VisibleOnScreenNotifier2D")
 metadata/_custom_type_script = "uid://xtvvtv1f2dfa"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2726783]
@@ -2779,4 +2809,5 @@ actor = NodePath("..")
 [connection signal="exited" from="StateMachine/MeleeAttack" to="." method="_on_melee_attack_exited"]
 [connection signal="exited" from="StateMachine/Staggered" to="." method="_on_staggered_exited"]
 [connection signal="entered" from="StateMachine/Death" to="." method="_on_death_entered"]
+[connection signal="exited" from="StateMachine/Death" to="." method="_on_death_exited"]
 [connection signal="active_state_changed" from="CombatStateMachine" to="." method="_on_combat_state_machine_active_state_changed"]

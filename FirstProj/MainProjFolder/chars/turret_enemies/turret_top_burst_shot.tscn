@@ -781,12 +781,14 @@ hurt_box = NodePath("../../Sprite2D/turret_top/HurtBox")
 script = ExtResource("11_f76hd")
 actor = NodePath("../..")
 
-[node name="Stagger" type="LimboState" parent="LimboHSM" unique_id=115530456 node_paths=PackedStringArray("actor", "stagger", "bt_player")]
+[node name="Stagger" type="LimboState" parent="LimboHSM" unique_id=115530456 node_paths=PackedStringArray("actor", "stagger", "bt_player", "hurt_box", "stagger_timer")]
 script = ExtResource("12_v38so")
 actor = NodePath("../..")
 stagger = NodePath("../../Stagger")
 bt_player = NodePath("../../BTPlayer")
 movement_able = false
+hurt_box = NodePath("../../Sprite2D/turret_top/HurtBox")
+stagger_timer = NodePath("../../ParryTimer")
 
 [node name="Shooting" type="LimboState" parent="LimboHSM" unique_id=336761776 node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("13_l3nx2")

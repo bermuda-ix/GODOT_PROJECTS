@@ -247,14 +247,21 @@
 [ext_resource type="Texture2D" uid="uid://c3ei3kyoroif7" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 12/578.png" id="200_52cq2"]
 [ext_resource type="Texture2D" uid="uid://b5a7amrfjvh6n" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 6/276.png" id="201_lmcka"]
 [ext_resource type="Texture2D" uid="uid://bqwilb7hxob8g" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 5/230.png" id="201_nykr5"]
+[ext_resource type="Texture2D" uid="uid://d2fvb1t2p6dsk" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I101/I101.png" id="203_cgspr"]
 [ext_resource type="Texture2D" uid="uid://blcu07iovyclb" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_01.png" id="204_dumub"]
+[ext_resource type="Texture2D" uid="uid://c1wc4l2bxbi14" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I101/I102.png" id="204_hyxc6"]
 [ext_resource type="Texture2D" uid="uid://fbgglf4h7tni" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_02.png" id="205_fme1f"]
+[ext_resource type="Texture2D" uid="uid://btk7lrkg5qk72" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I101/I103.png" id="205_ighft"]
+[ext_resource type="Texture2D" uid="uid://bclqtbl655mth" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I101/I104.png" id="206_1o8km"]
 [ext_resource type="Texture2D" uid="uid://dxef33nv5p316" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_03.png" id="206_h1spd"]
+[ext_resource type="Texture2D" uid="uid://dvygotnjn30oe" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I101/I105.png" id="207_lmju3"]
 [ext_resource type="Texture2D" uid="uid://8ff0cbeagj4c" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_04.png" id="207_qu73d"]
+[ext_resource type="Texture2D" uid="uid://mb3s0pk4twxp" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I101/I106.png" id="208_2idfp"]
 [ext_resource type="Texture2D" uid="uid://dchoeftyjo2db" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_05.png" id="208_ae1si"]
 [ext_resource type="PackedScene" uid="uid://bbjg0xw2unq4s" path="res://Component/projectiles/shotgun_bullet_enemy.tscn" id="218_gn0bn"]
 [ext_resource type="Script" uid="uid://dly3pw0jr2gav" path="res://chars/falling.gd" id="239_lvekc"]
 [ext_resource type="Script" uid="uid://bhr6e5hybripf" path="res://chars/landed.gd" id="240_c7cuv"]
+[ext_resource type="Script" uid="uid://bc3n6jsdwb4lm" path="res://chars/clash_heavy_counter.gd" id="253_h1spd"]
 [ext_resource type="Script" uid="uid://bu2m8cwle1k11" path="res://chars/clashed_state.gd" id="253_qu73d"]
 [ext_resource type="Script" uid="uid://dc5y78lbovoqo" path="res://chars/clash_counter.gd" id="254_ae1si"]
 [ext_resource type="Script" uid="uid://cvq0ypnvr0iwa" path="res://chars/clash_fail.gd" id="255_kme6i"]
@@ -2323,6 +2330,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("203_cgspr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("204_hyxc6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("205_ighft")
+}, {
+"duration": 1.0,
+"texture": ExtResource("206_1o8km")
+}, {
+"duration": 1.0,
+"texture": ExtResource("207_lmju3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("208_2idfp")
+}],
+"loop": 1,
+"name": &"heavy_hit_blunt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_g7boo")
 }, {
 "duration": 1.0,
@@ -4287,11 +4317,10 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3lv2e"]
-radius = 18.0
 height = 44.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xhp7j"]
-size = Vector2(20, 40)
+size = Vector2(25, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgnw"]
 size = Vector2(33.75, 21.25)
@@ -4398,7 +4427,7 @@ libraries/ = SubResource("AnimationLibrary_7v3re")
 libraries/ = SubResource("AnimationLibrary_t6q84")
 
 [node name="CollisionShape2D" parent="." index="4"]
-position = Vector2(-1, -3)
+position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_3lv2e")
 
 [node name="PlayerTrackerPivot" parent="." index="7"]
@@ -4450,13 +4479,14 @@ one_shot = true
 [node name="LaunchTimer" type="Timer" parent="." index="22" unique_id=901815371]
 
 [node name="CounterAttackTimer" type="Timer" parent="." index="23" unique_id=1750847283]
+one_shot = true
+ignore_time_scale = true
 
 [node name="TargetLock" type="Node2D" parent="." index="24" unique_id=913237710]
 position = Vector2(0, -24)
 script = ExtResource("101_6tb62")
 
 [node name="HurtBox" parent="." index="25" node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["regular_enemy_hb"]]
-position = Vector2(0, -22)
 collision_mask = 8388800
 priority = 1
 health = NodePath("../Health")
@@ -4464,7 +4494,6 @@ stagger = NodePath("../Stagger")
 back_attack_flag = NodePath("BackAttackFlag")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" index="0" unique_id=1428330784]
-position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_xhp7j")
 debug_color = Color(0.913049, 0.224478, 0.48102, 0.42)
 
@@ -4474,7 +4503,7 @@ target_position = Vector2(52, 0)
 collision_mask = 2
 
 [node name="HitBox" parent="." index="26" node_paths=PackedStringArray("stagger", "collision_shape") groups=["hitbox"]]
-collision_mask = 576
+collision_mask = 704
 stagger = NodePath("../Stagger")
 knock_back_strength = 50.0
 collision_shape = NodePath("CollisionShape2D")
@@ -4723,10 +4752,11 @@ blackboard_plan = SubResource("BlackboardPlan_jjike")
 behavior_tree = ExtResource("139_aukkt")
 blackboard_plan = SubResource("BlackboardPlan_thomt")
 
-[node name="Launch" type="LimboState" parent="LimboHSM" index="14" unique_id=682492004 node_paths=PackedStringArray("actor", "launch_timer")]
+[node name="Launch" type="LimboState" parent="LimboHSM" index="14" unique_id=682492004 node_paths=PackedStringArray("actor", "launch_timer", "animation_player")]
 script = ExtResource("150_87q8v")
 actor = NodePath("../..")
 launch_timer = NodePath("../../LaunchTimer")
+animation_player = NodePath("../../AnimationPlayer")
 metadata/_custom_type_script = "uid://dscn2ndlewuut"
 
 [node name="Clashed" type="LimboState" parent="LimboHSM" index="15" unique_id=612323006 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "hurt_box", "movement_handler", "stagger", "state_machine", "hit_stop", "counter_attack_timer")]
@@ -4782,6 +4812,11 @@ script = ExtResource("255_kme6i")
 actor = NodePath("../../..")
 animation_player = NodePath("../../../AnimationPlayer")
 metadata/_custom_type_script = "uid://cvq0ypnvr0iwa"
+
+[node name="ClashHeavyCounter" type="LimboState" parent="LimboHSM/ClashedState" index="3" unique_id=1248305124 node_paths=PackedStringArray("actor", "animation_player")]
+script = ExtResource("253_h1spd")
+actor = NodePath("../../..")
+animation_player = NodePath("../../../AnimationPlayer")
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." index="50" unique_id=305802644]
 

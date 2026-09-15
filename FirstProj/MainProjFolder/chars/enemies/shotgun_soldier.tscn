@@ -43,6 +43,7 @@
 [ext_resource type="Texture2D" uid="uid://dxef33nv5p316" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_03.png" id="41_qr45p"]
 [ext_resource type="Texture2D" uid="uid://8ff0cbeagj4c" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_04.png" id="42_d3186"]
 [ext_resource type="Texture2D" uid="uid://dchoeftyjo2db" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_05.png" id="43_4r7j0"]
+[ext_resource type="AudioStream" uid="uid://x0dfvgtcpmbh" path="res://Art_Components/Effects/sound/swishes/swishes/swish-5.wav" id="44_3wkqt"]
 [ext_resource type="Script" uid="uid://cnxm24jqclb68" path="res://Component/health.gd" id="44_pk3op"]
 [ext_resource type="Script" uid="uid://ba6pwl0vfuyp" path="res://Component/stagger.gd" id="45_21ask"]
 [ext_resource type="Script" uid="uid://xtvvtv1f2dfa" path="res://Component/functions/CombatHandlers/MoraleHandler.gd" id="46_ub6qo"]
@@ -94,7 +95,7 @@
 [ext_resource type="PackedScene" uid="uid://bro4najrj7577" path="res://Component/UI_Rec/npc_stats.tscn" id="89_s7f1w"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_incat"]
-radius = 16.0
+radius = 11.0
 height = 74.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a260m"]
@@ -1684,6 +1685,21 @@ tracks/13/keys = {
 "transitions": PackedFloat32Array(),
 "values": []
 }
+tracks/14/type = "audio"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("AudioStreamPlayer2D")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("44_3wkqt")
+}],
+"times": PackedFloat32Array(0.16666667)
+}
+tracks/14/use_blend = true
 
 [sub_resource type="Animation" id="Animation_eke2m"]
 resource_name = "reload"
@@ -2405,10 +2421,6 @@ collision_mask = 17
 script = ExtResource("1_s5vut")
 hitbox = NodePath("HitBox")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1259014032]
-position = Vector2(2, -2)
-shape = SubResource("CapsuleShape2D_incat")
-
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1067996596]
 navigation_layers = 2
 
@@ -2417,6 +2429,10 @@ script = ExtResource("2_mg0yh")
 navigation_agent = NodePath("../NavigationAgent2D")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://7qyekh3c2p7r"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NavigationHandler" unique_id=1259014032]
+position = Vector2(2, -2)
+shape = SubResource("CapsuleShape2D_incat")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1244162936]
 sprite_frames = SubResource("SpriteFrames_m75gd")
@@ -2458,11 +2474,13 @@ script = ExtResource("45_21ask")
 max_stagger = 2
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
-[node name="MoraleHandler" type="Node" parent="." unique_id=1369667191 node_paths=PackedStringArray("actor", "stagger", "health")]
+[node name="MoraleHandler" type="Node" parent="." unique_id=1369667191 node_paths=PackedStringArray("actor", "stagger", "health", "navigation_handler", "on_screen")]
 script = ExtResource("46_ub6qo")
 actor = NodePath("..")
 stagger = NodePath("../Stagger")
 health = NodePath("../Health")
+navigation_handler = NodePath("../NavigationHandler")
+on_screen = NodePath("../VisibleOnScreenNotifier2D")
 metadata/_custom_type_script = "uid://xtvvtv1f2dfa"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2726783]
