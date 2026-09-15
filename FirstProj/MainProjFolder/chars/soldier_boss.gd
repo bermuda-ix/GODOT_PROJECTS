@@ -162,6 +162,7 @@ var distance
 @onready var clash_counter: ClashCounter = $LimboHSM/ClashedState/ClashCounter
 @onready var clash_fail: ClashFail = $LimboHSM/ClashedState/ClashFail
 @onready var clash_heavy_counter: LimboState = $LimboHSM/ClashedState/ClashHeavyCounter
+@onready var clash_dodge: ClashDodge = $LimboHSM/ClashedState/ClashDodge
 
 
 
@@ -361,6 +362,7 @@ func _init_clash_state_machine():
 	clashed_state.add_transition(clash_start, clash_fail, &"clash_fail")
 	clashed_state.add_transition(clash_start, clash_counter, &"counter")
 	clashed_state.add_transition(clash_start, clash_heavy_counter, &"clash_success")
+	clashed_state.add_transition(clash_start, clash_dodge, &"clash_dodge")
 
 func test_function():
 	state_machine.dispatch(&"teleport_counter")
@@ -480,7 +482,10 @@ func _physics_process(delta):
 	if state_machine.get_active_state()==chasing:
 		velocity.x = (current_speed*movement_handler.move_dir) + knockback.x
 	else:
-		if state_machine.get_active_state()!=attack and state_machine.get_active_state()!=launch and state_machine.get_active_state()!=falling:
+		if state_machine.get_active_state()!=attack and \
+		state_machine.get_active_state()!=launch and \
+		state_machine.get_active_state()!=falling and \
+		state_machine.get_active_state()!=clashed_state:
 			velocity.x= knockback.x
 		else:
 			pass

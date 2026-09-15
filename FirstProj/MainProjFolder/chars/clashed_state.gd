@@ -16,6 +16,10 @@ class_name ClashedState extends LimboHSM
 @export var counter_stagger_threshold : int = 1
 @export var counter_enabled : bool = false
 @export var desperate_attack_enabled := false
+@export var counter_threshold := 3
+@onready var clashes_made := 0
+@export var counter_prepared := false
+
 
 signal riposte_follow_up
 signal riposte_heavy_follow_up
@@ -37,16 +41,22 @@ func _enter() -> void:
 	actor.knockback=Vector2.ZERO
 	#stagger.set_stagger(stagger.stagger-1)
 	vfx_player.speed_scale=1/Engine.time_scale
-	if stagger.stagger>counter_stagger_threshold and counter_enabled:
+	if clashes_made<counter_threshold and counter_enabled:
 		stagger.stagger-=1
 		counter_attack_timer.start(counter_attack_timer_dur)
+		clashes_made+=1
 	else:
+		if counter_prepared:
+			anim_player.play(&"preparing_counter")
+			anim_player.pause()
+		clashes_made==0
 		movement_handler.active=false
 
 func _update(delta: float) -> void:
 	vfx_player.speed_scale=1/Engine.time_scale
-	actor.velocity.x=0+actor.knockback.x
-	actor.velocity.y=0
+	if get_active_state()==actor.clash_start:
+		actor.velocity.x=0+actor.knockback.x
+		actor.velocity.y=0
 
 func _exit() -> void:
 	vfx_player.stop()
@@ -79,8 +89,11 @@ func clash_follow_up(_follow_up := "nothing"):
 				state_machine.dispatch(&"staggered")
 		"heavy_riposte":
 			riposte_heavy_follow_up.emit()
-			if stagger.stagger<=1:
-				dispatch(&"clash_fail")
+			if not counter_prepared:
+				if stagger.stagger<=1:
+					dispatch(&"clash_fail")
+				else:
+					dispatch(&"clash_dodge")
 			else:
 				dispatch(&"clash_success")
 		"nothing":

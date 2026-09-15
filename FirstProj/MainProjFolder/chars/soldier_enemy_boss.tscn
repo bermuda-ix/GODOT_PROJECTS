@@ -266,6 +266,7 @@
 [ext_resource type="Script" uid="uid://dc5y78lbovoqo" path="res://chars/clash_counter.gd" id="254_ae1si"]
 [ext_resource type="Script" uid="uid://cvq0ypnvr0iwa" path="res://chars/clash_fail.gd" id="255_kme6i"]
 [ext_resource type="Script" uid="uid://b1el4upf44w1i" path="res://Component/functions/ClashHandler.gd" id="259_fme1f"]
+[ext_resource type="Script" uid="uid://ccxgpgob8o5vy" path="res://chars/clash_dodge.gd" id="260_hyxc6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_chkyp"]
 shader = ExtResource("3_2r4bp")
@@ -575,6 +576,20 @@ animations = [{
 }],
 "loop": 1,
 "name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_sqn71")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4m1ae")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7r4t8")
+}],
+"loop": 1,
+"name": &"jump",
 "speed": 5.0
 }, {
 "frames": [{
@@ -4530,7 +4545,7 @@ position = Vector2(-20, 0)
 shape = SubResource("CircleShape2D_4yjj7")
 
 [node name="Stagger" parent="." index="29"]
-max_stagger = 5
+max_stagger = 15
 
 [node name="Turret" parent="." index="30" unique_id=1929477695 instance=ExtResource("103_jr353")]
 position = Vector2(-8, -7)
@@ -4796,6 +4811,8 @@ stagger = NodePath("../../Stagger")
 hit_stop = NodePath("../../HitStop")
 state_machine = NodePath("..")
 counter_attack_timer = NodePath("../../CounterAttackTimer")
+counter_enabled = true
+counter_threshold = 2
 metadata/_custom_type_script = "uid://bu2m8cwle1k11"
 
 [node name="ClashStart" type="LimboState" parent="LimboHSM/ClashedState" index="0" unique_id=1562251647]
@@ -4817,6 +4834,12 @@ metadata/_custom_type_script = "uid://cvq0ypnvr0iwa"
 script = ExtResource("253_h1spd")
 actor = NodePath("../../..")
 animation_player = NodePath("../../../AnimationPlayer")
+
+[node name="ClashDodge" type="LimboState" parent="LimboHSM/ClashedState" index="4" unique_id=1272832995 node_paths=PackedStringArray("actor", "animation_player", "hurt_box_collision")]
+script = ExtResource("260_hyxc6")
+actor = NodePath("../../..")
+animation_player = NodePath("../../../AnimationPlayer")
+hurt_box_collision = NodePath("../../../HurtBox/CollisionShape2D")
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." index="50" unique_id=305802644]
 
