@@ -7,6 +7,8 @@ extends LimboHSM
 @onready var success : bool = false
 @onready var enemy_success := false
 
+@export var state_machine : LimboHSM
+
 @export var clash_animation := "clashed"
 @export var attack_1 : LimboState
 
@@ -58,8 +60,8 @@ func _update(delta: float) -> void:
 		dur.stop()
 		success=true
 		pc.parry_stance=false
-		Events.parry_success.emit("dodge counter")
-		pc.state_machine.dispatch(&"dodge_back")
+		Events.parry_success.emit("dodge")
+		state_machine.dispatch(&"start_dodge")
 		hit_stop.end_hit_stop()
 		dur.stop()
 	elif Input.is_action_just_pressed("special_attack"):
@@ -67,7 +69,7 @@ func _update(delta: float) -> void:
 		success=true
 		pc.parry_stance=false
 		Events.parry_success.emit("heavy_riposte")
-		pc.state_machine.dispatch(&"heavy_riposte")
+		dispatch(&"heavy_riposte")
 		hit_stop.end_hit_stop()
 		dur.stop()
 	else:
@@ -82,7 +84,7 @@ func _exit() -> void:
 
 func do_nothing() -> void:
 	Events.parry_success.emit("nothing")
-	pc.state_machine.dispatch(&"no_nothing")
+	state_machine.dispatch(&"no_nothing")
 	
 	hit_stop.end_hit_stop()
 	pc.clash_timer.start()

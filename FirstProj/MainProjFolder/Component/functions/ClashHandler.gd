@@ -13,7 +13,8 @@ signal riposte_heavy_follow_up
 signal nothing_follow_up
 
 func _ready() -> void:
-	Events.parry_success.connect(clash_follow_up)
+	pass
+	#Events.parry_success.connect(clash_follow_up)
 
 func clashed_helper() -> void:
 	animation_player.stop()

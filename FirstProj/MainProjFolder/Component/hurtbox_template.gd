@@ -19,6 +19,7 @@ signal knockback(launch_strength : float, knock_back_strength : float, impact_di
 @export var dmg_mult : int = 1
 @export var weakpoint : bool = false
 @export var active : bool = true : set = set_active
+@export var collision : CollisionShape2D
 
 @export var staggered : bool = false
 

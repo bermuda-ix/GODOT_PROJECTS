@@ -9,6 +9,8 @@ const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var gpu_particles_2d: GPUParticles2D = $Sprite2D/GPUParticles2D
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var projectile_hit_box: ProjectileHitBox = $Sprite2D/ProjectileHitBox
+
 
 var dir : Vector2 = Vector2.RIGHT
 var spawnPos : Vector2
@@ -34,6 +36,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	position += dir * SPEED * delta
+	#projectile_hit_box.active=true
 	#global_rotation = spawnRot
 
 

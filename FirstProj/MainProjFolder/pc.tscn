@@ -15890,11 +15890,12 @@ script = ExtResource("96_xqicc")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 
-[node name="ParrySuccessState" type="LimboHSM" parent="StateMachine" unique_id=468265256 node_paths=PackedStringArray("anim_player", "pc", "hit_stop", "attack_1")]
+[node name="ParrySuccessState" type="LimboHSM" parent="StateMachine" unique_id=468265256 node_paths=PackedStringArray("anim_player", "pc", "hit_stop", "state_machine", "attack_1")]
 script = ExtResource("97_oktus")
 anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 hit_stop = NodePath("../../HitStop")
+state_machine = NodePath("..")
 attack_1 = NodePath("../AttackState/Attack1")
 
 [node name="AwaitInput" type="LimboState" parent="StateMachine/ParrySuccessState" unique_id=1731121438]
@@ -15936,7 +15937,7 @@ hurt_box = NodePath("../../HurtBox")
 stagger = NodePath("../../Stagger")
 state_machine = NodePath("..")
 dodge_buffer = NodePath("DodgeBuffer")
-dodge_velocity = Vector2(300, 0)
+dodge_velocity = Vector2(400, 0)
 
 [node name="DodgeBuffer" type="Timer" parent="StateMachine/DodgeState" unique_id=34708469]
 one_shot = true

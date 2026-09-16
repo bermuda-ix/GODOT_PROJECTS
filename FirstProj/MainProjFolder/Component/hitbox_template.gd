@@ -75,7 +75,6 @@ func refresh_collision() -> void:
 	if attack_clashed:
 		attack_clashed=false
 		return
-	clash_active=false
 	if collision_shape.disabled==false:
 		collision_shape.set_deferred("disabled", true)
 		collision_shape.set_deferred("disabled", false)
@@ -146,6 +145,7 @@ func _on_impact(_area :Area2D) -> void:
 			assert(pc_hitbos==false)
 			#damage = 0
 			clash_active=false
+			active=false
 			if _area.heavy_attack:
 					if heavy_attack:
 						clashed.emit()
@@ -178,8 +178,8 @@ func _on_impact(_area :Area2D) -> void:
 			#print_debug(_area.get_groups())
 			pass
 		#active=false
-		if active:
-			clash_active=false
+		#if active:
+			#clash_active=false
 			#active=false
 			#if _area.is_in_group("regular_enemy_hb") or _area.is_in_group("player_hurtbox"):
 				#active=false

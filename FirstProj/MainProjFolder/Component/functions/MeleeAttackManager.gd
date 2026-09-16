@@ -12,6 +12,8 @@ extends Node
 signal heavy_attack
 
 func melee_attack():
+	if actor.state_machine.get_active_state()==actor.clashed_state:
+		return
 	if actor.state_machine.get_active_state()==actor.attack:
 		pass
 	else:

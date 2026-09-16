@@ -478,6 +478,9 @@ func _physics_process(delta):
 	if state_machine.get_active_state()==staggered and parry_timer.time_left>0.0:
 		state_machine.change_active_state(staggered)
 		
+	if animation_player.current_animation=="atk_3":
+		hurt_box_collision.set_deferred("disabled", false)
+		assert(hurt_box_collision.disabled==false)
 	#handle_movement()
 	if state_machine.get_active_state()==chasing:
 		velocity.x = (current_speed*movement_handler.move_dir) + knockback.x
@@ -622,6 +625,8 @@ func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	
 	if anim_name.substr(0, 3)=="atk":
 		#hit_box.active=true
+		if anim_name!="atk_3":
+			pass
 		animated_sprite_2d.use_parent_material=false
 		hb_collision.set_deferred("disabled", false)
 		movement_handler.face_player_active=false
@@ -656,6 +661,10 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		elif anim_name=="atk_dash":
 			bt_player.blackboard.set_var("dash_hit", true)
 			dash_attacking=false
+		elif anim_name=="atk_3" and state_machine.get_active_state()==clashed_state:
+			bt_player.blackboard.set_var("staggered", false)
+			bt_player.restart()
+			
 		else:
 			if melee_attack_manager.heavy_attack_counter():
 				if phases.get_active_state()==phase_2:
@@ -1424,7 +1433,7 @@ func _on_land_updated(delta: float) -> void:
 	attack_timer.stop()
 	assert(attack_timer.is_stopped())
 	
-	assert(bt_player.blackboard.get_var("staggered")==true)
+	#assert(bt_player.blackboard.get_var("staggered")==true)
 	if not hb_collision.disabled:
 		hb_collision.set_deferred("disabled", true)
 
@@ -1448,3 +1457,18 @@ func player_knockback(_knockback_strength := 100.0, _launch_strength :=-15.0) ->
 	var _face_dir = func() : if player_right: return 1 else: return -1
 	player._on_knockback(_knockback_strength, _launch_strength, _face_dir.call())
 	player.knockback_recovery_timer.start(1.0)
+
+
+func _on_clashed_state_riposte_follow_up() -> void:
+	hurt_box_collision.set_deferred("disabled", false)
+	animation_player.play("atk_3")
+
+
+
+func _on_clashed_state_entered() -> void:
+	bt_player.blackboard.set_var("staggered", true)
+	
+
+
+func _on_clashed_state_exited() -> void:
+	pass # Replace with function body.

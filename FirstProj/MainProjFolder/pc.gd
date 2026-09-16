@@ -548,6 +548,7 @@ func _init_state_machine():
 	state_machine.add_transition(dodge_state, parry_success_state, &"dodge_successful")
 	state_machine.add_transition(attack_state, parry_success_state, &"clashed")
 	state_machine.add_transition(parry_success_state, attack_state, &"start_attack")
+	state_machine.add_transition(parry_success_state, dodge_state, &"start_dodge")
 
 	#Wall Stick
 	state_machine.add_transition(jump_state, wall_stick, &"stick_to_wall")
@@ -1746,7 +1747,9 @@ func call_audioplayer(sound : String) -> void:
 ## DODGE NEEDS WORK!!!
 func dodge(input_axis):
 
-	if Input.is_action_just_pressed("Dodge") and state_machine.get_active_state()!=dodge_state:
+	if Input.is_action_just_pressed("Dodge") and \
+	state_machine.get_active_state()!=dodge_state and \
+	state_machine.get_active_state()!=parry_success_state:
 		if is_on_floor():
 			if dodge_buffer.is_stopped():
 				dodge_timer.start()

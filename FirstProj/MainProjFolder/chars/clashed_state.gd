@@ -4,6 +4,7 @@ class_name ClashedState extends LimboHSM
 @export var anim_player : AnimationPlayer
 @export var vfx_player : AnimationPlayer
 @export var vfx_sprite : AnimatedSprite2D
+@export var hit_fx_player : AnimationPlayer
 @export var hurt_box : HurtBox
 @export var movement_handler : MovementHandler
 @export var stagger : Stagger
@@ -20,6 +21,9 @@ class_name ClashedState extends LimboHSM
 @onready var clashes_made := 0
 @export var counter_prepared := false
 
+
+func set_clashes_made(_value : int) -> void:
+	clashes_made=_value
 
 signal riposte_follow_up
 signal riposte_heavy_follow_up
@@ -44,19 +48,33 @@ func _enter() -> void:
 	if clashes_made<counter_threshold and counter_enabled:
 		stagger.stagger-=1
 		counter_attack_timer.start(counter_attack_timer_dur)
+		while counter_attack_timer.is_stopped():
+			counter_attack_timer.start(counter_attack_timer_dur)
+		assert(not counter_attack_timer.is_stopped())
 		clashes_made+=1
 	else:
 		if counter_prepared:
 			anim_player.play(&"preparing_counter")
 			anim_player.pause()
+			while hurt_box.collision.disabled==true:
+				hurt_box.collision.set_deferred("disabled", false)
+		if stagger.stagger>1:
+			hit_fx_player.play("counter_prepared")
+			while hurt_box.collision.disabled==true:
+				hurt_box.collision.set_deferred("disabled", false)
+			#hit_fx_player.play_section_with_markers("counter_prepared", "prepared")
+			#hit_fx_player.pause()
 		clashes_made==0
 		movement_handler.active=false
 
 func _update(delta: float) -> void:
-	vfx_player.speed_scale=1/Engine.time_scale
 	if get_active_state()==actor.clash_start:
 		actor.velocity.x=0+actor.knockback.x
 		actor.velocity.y=0
+		assert(actor.velocity.x==0)
+		#assert(not anim_player.is_playing())
+	vfx_player.speed_scale=1/Engine.time_scale
+	
 
 func _exit() -> void:
 	vfx_player.stop()
@@ -73,18 +91,23 @@ func clash_follow_up(_follow_up := "nothing"):
 	vfx_sprite.visible=false
 	vfx_player.stop()
 	match _follow_up:
-		"riposte":
+		"riposte", "dodge":
 			if stagger.stagger<=0:
 				return
 			anim_player.play()
+			hurt_box.active=true
+			
 			actor.pushed_back(250)
 			if desperate_attack_enabled and stagger.stagger==1:
 				riposte_heavy_follow_up.emit()
 			else:
 				stagger.stagger-=1
-				riposte_follow_up.emit()
+				
+			
 			if stagger.stagger>0:
-				state_machine.dispatch(&"hit")
+				riposte_follow_up.emit()
+				#else:
+					#state_machine.dispatch(&"hit")
 			else:
 				state_machine.dispatch(&"staggered")
 		"heavy_riposte":
