@@ -9,6 +9,10 @@ extends LimboHSM
 
 @export var state_machine : LimboHSM
 
+@onready var starting : float
+@onready var dash_distance := 500.0
+@onready var ranged_counter := false
+@export var attack_dash_active := false
 @export var clash_animation := "clashed"
 @export var attack_1 : LimboState
 
@@ -32,13 +36,16 @@ func _enter() -> void:
 	#assert(anim_player.current_animation_position==_marker_time)
 	anim_player.pause()
 	hit_stop.hit_stop(0.1, 5)
+	pc.knockback=Vector2.ZERO
 	pc.velocity.x=0
 	dur.start(10)
 	success=false
 	enemy_success=false
 
 func _update(delta: float) -> void:
-	pc.velocity.x=0+pc.knockback.x
+	if get_active_state()==pc.await_input:
+		pc.velocity.x=0+pc.knockback.x
+	attack_dash(delta)
 	#if pc.velocity.x!=0:
 		#print_debug(pc.velocity.x)
 	if enemy_success:
@@ -68,7 +75,10 @@ func _update(delta: float) -> void:
 		dur.stop()
 		success=true
 		pc.parry_stance=false
-		Events.parry_success.emit("heavy_riposte")
+		if ranged_counter:
+			Events.parry_success.emit("heavy_riposte_ranged")
+		else:
+			Events.parry_success.emit("heavy_riposte")
 		dispatch(&"heavy_riposte")
 		hit_stop.end_hit_stop()
 		dur.stop()
@@ -95,3 +105,17 @@ func enemy_counter(_value : String = "") -> void:
 		success=true
 		enemy_success=true
 		pc.attacking=false
+		
+func attack_dash(_delta) -> void:
+	if not attack_dash_active:
+		pc.velocity.x=lerpf(pc.velocity.x, 0, 0.75)
+		return
+	else:
+		pc.move_and_slide()
+		print_debug(pc.velocity.x)
+		pc.velocity.x=lerpf(pc.velocity.x, 0, 0.2*_delta)
+
+func attack_dash_setup(_lunge_distance := 50.0) -> void:
+	pc.velocity.x=_lunge_distance*-pc.face_dir
+	starting = pc.global_position.x
+	

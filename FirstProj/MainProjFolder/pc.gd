@@ -319,8 +319,9 @@ var thrust : bool = false
 @export var attacking : bool = false : set = set_attacking
 @export var charging := false : set = set_charging
 
-var counter_flag : bool = false
+@onready var counter_flag : bool = false
 @onready var counter_timer = $CounterTimer
+@onready var clash_prepared := false
 
 var target
 var target_string_test : String = "NONE"
@@ -683,8 +684,10 @@ func _process(_delta):
 	flip_over()
 	
 	
-	if Input.is_action_just_pressed("DEBUG_KEY"):
-		clash_power.clash_power+=1
+	#if Input.is_action_just_pressed("DEBUG_KEY"):
+		#heavy_riposte.heavy_riposte="Heavy_Riposte_Range"
+		#state_machine.change_active_state(parry_success_state)
+		#parry_success_state.change_active_state(heavy_riposte)
 	
 	
 	#if Input.is_action_just_released("attack"):
@@ -2724,9 +2727,13 @@ func _on_counter_box_area_entered(area):
 	
 		
 	if area.is_in_group("hitbox"):
-		hit_stop.hit_stop(0.5, 2)
-		counter_flag = true
-		counter_timer.start(1)
+		#hit_stop.hit_stop(0.5, 2)
+		#counter_flag = true
+		#counter_timer.start(1)
+		parry_success_state.ranged_counter=true
+		heavy_riposte.heavy_riposte="Heavy_Riposte_Range"
+		counter_timer.start(0.2)
+		clash_prepared=true
 	elif area.is_in_group("bullet"):
 		hit_stop.hit_stop(0.5, 0.25)
 		counter_flag = true
@@ -2756,7 +2763,9 @@ func _on_counter_box_body_entered(body: Node2D) -> void:
 
 func _on_counter_timer_timeout():
 	counter_flag = false
-
+	if clash_prepared:
+		state_machine.dispatch(&"dodge_successful")
+	clash_prepared=false
 
 func _on_hazard_detector_body_entered(body):
 	if body.is_in_group("Enemy"):
@@ -3252,7 +3261,8 @@ func _on_hit_box_clashed() -> void:
 	if attack_state.get_active_state()==charging_attack:
 		charge_timer.stop()
 		charge_timer.timeout.emit()
-		
+	heavy_riposte.heavy_riposte="Heavy_Riposte"
+	parry_success_state.ranged_counter=false
 	state_machine.dispatch(&"clashed")
 	hit_box.active=false
 	

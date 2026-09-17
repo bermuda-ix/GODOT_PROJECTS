@@ -497,7 +497,7 @@ shape = SubResource("RectangleShape2D_fof0c")
 environment = SubResource("Environment_dqkb5")
 
 [node name="soldier_enemy_boss" parent="." index="37" unique_id=789104702 instance=ExtResource("12_0atxr")]
-position = Vector2(923, 79)
+position = Vector2(874, 87)
 
 [connection signal="update_health" from="PC" to="CanvasLayer/UI_Level" method="set_health"]
 

@@ -759,7 +759,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 			knockback.x=-50
 		if state_machine.get_active_state()!=land and state_machine.get_active_state()!=staggered:
 			stagger.stagger -= player.sp_atk_dmg*player.clash_power.clash_power
-		boss_ui.set_boss_stagger_smooth(stagger.stagger)
+	boss_ui.set_boss_stagger_smooth(stagger.stagger)
 		
 
 
@@ -1480,3 +1480,7 @@ func _on_clashed_state_exited() -> void:
 func _on_clashed_state_updated(delta: float) -> void:
 	set_collision_mask_value(24, true)
 	hurt_box.set_collision_mask_value(24, true)
+
+
+func _on_stagger_stagger_decreased(diff: int) -> void:
+	pass # Replace with function body.

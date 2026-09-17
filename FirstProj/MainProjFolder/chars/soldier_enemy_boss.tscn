@@ -5057,6 +5057,7 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="body_exited" from="AttackRange" to="." method="_on_attack_range_body_exited"]
 [connection signal="body_entered" from="BulletDetection" to="." method="_on_bullet_detection_body_entered"]
 [connection signal="bullet_detected" from="BulletDetection" to="." method="_on_bullet_detection_bullet_detected"]
+[connection signal="stagger_decreased" from="Stagger" to="." method="_on_stagger_stagger_decreased"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="shoot_bullet" from="Turret" to="." method="_on_turret_shoot_bullet"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]

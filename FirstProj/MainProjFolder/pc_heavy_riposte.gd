@@ -3,16 +3,18 @@ extends LimboState
 @export var anim_player : AnimationPlayer
 @export var pc : PlayerEntity
 @export var hit_stop : HitStop
+@export var heavy_riposte : StringName = "Heavy_Riposte"
+@export var attack_lunge_active := false
 @onready var parry_success_state: LimboHSM = $".."
-
 
 func _enter() -> void:
 	print_debug("how do you pronouce riposte")
-	anim_player.play("Heavy_Riposte")
+	anim_player.play(heavy_riposte)
 	hit_stop.end_hit_stop()
 	
 
 
+	
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name==&"Heavy_Riposte":
+	if anim_name==heavy_riposte:
 		pc.state_machine.dispatch(&"return_to_idle")
