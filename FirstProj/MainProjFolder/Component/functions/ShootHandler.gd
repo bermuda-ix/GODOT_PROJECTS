@@ -31,7 +31,7 @@ func _ready() -> void:
 	turret.shoot_bullet.connect(shoot_bullet)
 
 func shoot_bullet():
-	var bullet_inst = projectile.instantiate()
+	var bullet_inst : RigidBody2D = projectile.instantiate()
 	bullet_inst.set_speed(bullet_speed)
 	bullet_inst.scale_size=bullet_scale
 	if bullet_inst.is_in_group("missile"):

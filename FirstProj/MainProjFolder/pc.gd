@@ -1623,7 +1623,7 @@ func shotgun_shoot() -> void:
 	shoot_handler.manual_rotation=true
 	for i in spread:
 		bullet_dir = rotation_to_direction(_bullet_dirs[i])
-		#print_debug(_bullet_dirs[i])
+		print_debug(_bullet_dirs[i])
 		shoot_handler.bullet_rotation = _bullet_dirs[i]
 		shoot_handler.shoot_bullet()
 		

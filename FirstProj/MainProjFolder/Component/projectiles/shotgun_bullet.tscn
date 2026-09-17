@@ -28,7 +28,7 @@ gravity_scale = 0.0
 custom_integrator = true
 continuous_cd = 2
 contact_monitor = true
-max_contacts_reported = 5
+max_contacts_reported = 7
 script = ExtResource("1_fsvgn")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1609644407]
