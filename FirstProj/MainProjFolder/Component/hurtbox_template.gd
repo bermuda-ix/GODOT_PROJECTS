@@ -48,6 +48,7 @@ func _ready():
 	#connect("body_entered", _bullet_hit)
 	#connect("body_entered", _knocked_back_enemy_collision)
 	body_entered.connect(_knocked_back_enemy_collision)
+	body_entered.connect(bullet_impact)
 	add_child(hit_dur)
 	hit_dur.autostart=false
 	hit_dur.one_shot=true
@@ -156,11 +157,22 @@ func _on_area_entered(hitbox: Area2D) -> void:
 func hitbox_collision():
 	pass
 
-func bullet_impact(_damage : int = 1) -> void:
+func bullet_impact(_body : Node2D):
+	if not active:
+		return
+	if "damage" in _body:
+		bullet_damage_count(_body.damage)
+	else:
+		push_error("no damage from bullet")
+		bullet_damage_count(1)
+	if "impact" in _body:
+		_body.impact()
+
+func bullet_damage_count(_damage : int = 1) -> void:
 	if not active:
 		return
 	bullet_buffer.start(0.1)
-	bullet_damage+=1
+	bullet_damage+=_damage
 	
 
 func _knocked_back_enemy_collision(_body : Node2D):

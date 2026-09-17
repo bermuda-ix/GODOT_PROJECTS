@@ -1076,6 +1076,8 @@ func _on_staggered_exited() -> void:
 func _on_bullet_detection_bullet_detected() -> void:
 	if attacking and hit_box.heavy_attack:
 		return
+	if state_machine.get_active_state()==clashed_state:
+		return
 	if state_machine.get_active_state()!=bulletdodge:
 		states_stack.push_back(state_machine.get_active_state())
 	state_machine.dispatch(&"bullet_dodge")
@@ -1383,6 +1385,7 @@ func _on_land_landed() -> void:
 	bt_player.blackboard.set_var("staggered", false)
 	hurt_box.active=true
 	hurt_box_collision.set_deferred("disabled", false)
+	set_collision_mask_value(13, true)
 	vision_handler.active=true
 	combat_state_change_handler.active=true
 	state_machine.dispatch(&"resume_attack")
@@ -1472,3 +1475,8 @@ func _on_clashed_state_entered() -> void:
 
 func _on_clashed_state_exited() -> void:
 	pass # Replace with function body.
+
+
+func _on_clashed_state_updated(delta: float) -> void:
+	set_collision_mask_value(24, true)
+	hurt_box.set_collision_mask_value(24, true)

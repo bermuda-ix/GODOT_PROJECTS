@@ -4464,7 +4464,7 @@ _data = {
 height = 44.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xhp7j"]
-size = Vector2(20, 40)
+size = Vector2(29.5, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjgnw"]
 size = Vector2(33.75, 21.25)
@@ -4488,13 +4488,14 @@ stereo = true
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_thomt"]
 
-[node name="soldier_enemy_boss" unique_id=789104702 groups=["Boss", "Enemy_arena", "Persistant", "enemy_arena", "offensive_enemy"] instance=ExtResource("1_33sos")]
+[node name="soldier_enemy_boss" unique_id=789104702 node_paths=PackedStringArray("hitbox") groups=["Boss", "Enemy_arena", "Persistant", "enemy_arena", "offensive_enemy"] instance=ExtResource("1_33sos")]
 collision_layer = 0
-collision_mask = 17
+collision_mask = 8388625
 safe_margin = 0.2
 script = ExtResource("2_87q8v")
 death_cutscene = true
 queue_free_on_death = true
+hitbox = NodePath("HitBox")
 
 [node name="NavigationAgent2D" parent="." index="0"]
 navigation_layers = 2
@@ -4674,6 +4675,7 @@ shape = SubResource("RectangleShape2D_0c6of")
 visible = false
 position = Vector2(-20, 0)
 shape = SubResource("CircleShape2D_4yjj7")
+disabled = true
 
 [node name="Stagger" parent="." index="29"]
 max_stagger = 15
@@ -5092,5 +5094,6 @@ metadata/_custom_type_script = "uid://eulrkc0hl0ww"
 [connection signal="entered" from="LimboHSM/ClashedState" to="." method="_on_clashed_state_entered"]
 [connection signal="exited" from="LimboHSM/ClashedState" to="." method="_on_clashed_state_exited"]
 [connection signal="riposte_follow_up" from="LimboHSM/ClashedState" to="." method="_on_clashed_state_riposte_follow_up"]
+[connection signal="updated" from="LimboHSM/ClashedState" to="." method="_on_clashed_state_updated"]
 [connection signal="entered" from="Phases/Phase2" to="." method="_on_phase_2_entered"]
 [connection signal="next_phase" from="PhasesHandler" to="." method="_on_phases_handler_next_phase"]

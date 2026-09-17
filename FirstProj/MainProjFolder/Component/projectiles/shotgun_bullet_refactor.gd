@@ -90,10 +90,11 @@ func get_stagger_damage() -> int:
 	return damage
 
 func _on_body_entered(body: Node) -> void:
+	
 	if body.is_in_group("WorldStatic"):
 		hard_impact()
 	else:
-		impact()
+		return
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:

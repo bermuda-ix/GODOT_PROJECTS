@@ -44,6 +44,7 @@ metadata/_custom_type_script = "uid://oh43vctkhpbh"
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprite2D/ProjectileHitBox" unique_id=704736168]
 shape = SubResource("RectangleShape2D_pgeyf")
+disabled = true
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D" unique_id=477676870]
 position = Vector2(-5, 0)

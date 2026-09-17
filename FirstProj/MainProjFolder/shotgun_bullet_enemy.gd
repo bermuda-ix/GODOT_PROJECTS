@@ -117,7 +117,8 @@ func _on_audio_stream_player_2d_finished() -> void:
 
 
 func _on_projectile_hit_box_area_entered(area: Area2D) -> void:
-	if area.is_in_group("player_hurtbox") and area.active:
-		if "bullet_impact" in area:
-			area.bullet_impact(1)
-		impact()
+	return
+	#if area.is_in_group("player_hurtbox") and area.active:
+		#if "bullet_impact" in area:
+			#area.bullet_impact(1)
+		#impact()
