@@ -684,10 +684,8 @@ func _process(_delta):
 	flip_over()
 	
 	
-	#if Input.is_action_just_pressed("DEBUG_KEY"):
-		#heavy_riposte.heavy_riposte="Heavy_Riposte_Range"
-		#state_machine.change_active_state(parry_success_state)
-		#parry_success_state.change_active_state(heavy_riposte)
+	if Input.is_action_just_pressed("DEBUG_KEY"):
+		clash_power.clash_power+=1
 	
 	
 	#if Input.is_action_just_released("attack"):
@@ -1461,6 +1459,8 @@ func dash_attack_enter():
 	##set_state(state, States.ATTACK) 
 	
 func dash_shoot_attack():
+	var _quick_aim : StringName = "clash_"+str(clampi(remap(0, clash_power.clash_power, 5, 0, 5),0,5))
+	shotty_animation_player.play_section_with_markers("shotgun_aim", _quick_aim)
 	state_machine.dispatch(&"dodge_shoot")
 	
 func heavy_dash_attack_enter():
@@ -1503,7 +1503,8 @@ func sp_atk():
 		#heavy_attack()
 		
 func aim_and_shoot():
-	if state_machine.get_active_state()==attack_state or attacking or charging:
+	if state_machine.get_active_state()==attack_state or attacking or charging\
+	or state_machine.get_active_state()==dodge_state:
 		return
 	if state_machine.get_active_state()==flip_state or state_machine.get_active_state()==flip_end_state:
 		if Input.is_action_just_pressed("special_attack"):
@@ -1626,7 +1627,6 @@ func shotgun_shoot() -> void:
 	shoot_handler.manual_rotation=true
 	for i in spread:
 		bullet_dir = rotation_to_direction(_bullet_dirs[i])
-		print_debug(_bullet_dirs[i])
 		shoot_handler.bullet_rotation = _bullet_dirs[i]
 		shoot_handler.shoot_bullet()
 		

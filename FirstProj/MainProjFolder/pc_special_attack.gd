@@ -15,8 +15,10 @@ func _enter() -> void:
 	elif state_machine.get_previous_active_state()==pc.flip_end_state:
 		pc.velocity.x=75*(pc.face_dir)
 		pc.velocity.y=-25
-	else:
-		pc.velocity=Vector2.ZERO
+
+func _update(delta: float) -> void:
+	pc.velocity.x=lerpf(pc.velocity.x, 0, 0.3)
+	pc.velocity.y=lerpf(pc.velocity.y, 0, 0.8)
 
 func _exit() -> void:
 	shotty_anim_player.play("shotgun_reset")
