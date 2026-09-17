@@ -75,9 +75,10 @@ func refresh_collision() -> void:
 	if attack_clashed:
 		attack_clashed=false
 		return
-	if collision_shape.disabled==false:
-		collision_shape.set_deferred("disabled", true)
-		collision_shape.set_deferred("disabled", false)
+	else:
+		if collision_shape.disabled==false:
+			collision_shape.set_deferred("disabled", true)
+			collision_shape.set_deferred("disabled", false)
 
 func disable_collision(_value: bool = false) -> void:
 	collision_shape.set_deferred("disabled", _value)
