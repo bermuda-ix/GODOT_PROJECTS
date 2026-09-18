@@ -90,11 +90,11 @@ func get_stagger_damage() -> int:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("WorldStatic"):
 		hard_impact()
-	elif body.is_in_group("player"):
-		if body.state_machine.get_active_state()==body.dodge_state:
-			return
-		else:
-			impact()
+	#elif body.is_in_group("player"):
+		#if body.state_machine.get_active_state()==body.dodge_state:
+			#return
+		#else:
+			#impact()
 	else:
 		impact()
 
@@ -107,6 +107,10 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area.is_in_group("shield"):
 		impact()
 		AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
+	elif area.is_in_group("player_hurtbox"):
+		if "bullet_impact" in area:
+			area.bullet_impact(1)
+		impact()
 	else:
 		#AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
 		pass
