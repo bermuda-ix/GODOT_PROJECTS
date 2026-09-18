@@ -28,7 +28,8 @@ func _enter() -> void:
 			actor.knockback.x=200
 	
 	actor.animation_player.play("staggered")
-	vfx_player.play("staggered_entered")
+	if vfx_player!=null:
+		vfx_player.play("staggered_entered")
 	#actor.hurt_box.set_damage_mulitplyer(3)
 	
 	if movement_able:
@@ -53,7 +54,7 @@ func _exit() -> void:
 
 	if movement_able:
 		movement_handler.active=true
-	actor.hurt_box.set_damage_mulitplyer(1)
+	hurt_box.set_damage_mulitplyer(1)
 	print_debug(stagger.max_stagger)
 	await stagger.stagger_recover()
 	assert(stagger.stagger!=0)

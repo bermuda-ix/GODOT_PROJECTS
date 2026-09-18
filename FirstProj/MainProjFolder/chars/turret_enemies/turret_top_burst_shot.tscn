@@ -371,58 +371,6 @@ tracks/17/keys = {
 "values": [Vector2(214.86206, -1.1557312)]
 }
 
-[sub_resource type="Animation" id="Animation_hnah5"]
-resource_name = "Staggered"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.5, 0.7, 0.801223, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(72.376, 75.138, 74.585, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(72.376, 75.138, 74.585, 1), Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.0333333, 0.0666667, 0.13418, 0.19143, 0.330977, 0.398962, 0.436532, 0.533142, 0.681634, 0.763931, 0.828338, 0.933893, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [2.91295, 2.86234, 2.91295, 2.86234, 2.91295, 2.86234, 2.91295, 2.86234, 2.91295, 2.86234, 2.91295, 2.86234, 2.91295]
-}
-
 [sub_resource type="Animation" id="Animation_7vnq2"]
 resource_name = "dead"
 loop_mode = 1
@@ -659,15 +607,67 @@ tracks/10/keys = {
 "values": [Vector2(214.86206, -1.1557312), Vector2(205, -1.156), Vector2(214.86206, -1.1557312)]
 }
 
+[sub_resource type="Animation" id="Animation_hnah5"]
+resource_name = "staggered"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5, 0.7, 0.801223, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(72.376, 75.138, 74.585, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(72.376, 75.138, 74.585, 1), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:rotation")
+tracks/3/interp = 0
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.0333333, 0.0666667, 0.13418, 0.19143, 0.330977, 0.398962, 0.436532, 0.533142, 0.681634, 0.763931, 0.828338, 0.933893, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [2.91295, 3.2620203719774015, 2.91295, 2.6616271092913526, 2.91295, 3.1607912753617313, 2.91295, 2.86234, 2.91295, 2.86234, 2.91295, 2.5638886711796696, 2.91295]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ik7so"]
 _data = {
 &"RESET": SubResource("Animation_ik7so"),
-&"Staggered": SubResource("Animation_hnah5"),
 &"dead": SubResource("Animation_7vnq2"),
 &"death": SubResource("Animation_mgwb3"),
 &"idle": SubResource("Animation_swbxs"),
 &"reload": SubResource("Animation_j0ghf"),
-&"shoot": SubResource("Animation_ksx82")
+&"shoot": SubResource("Animation_ksx82"),
+&"staggered": SubResource("Animation_hnah5")
 }
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_c3g7k"]
