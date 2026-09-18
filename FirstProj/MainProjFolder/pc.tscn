@@ -10724,7 +10724,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_pskkv"]
-resource_name = "dodge_1"
+resource_name = "dodge"
 length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -10872,7 +10872,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_yo2cx"]
-resource_name = "dodge_roll_1"
+resource_name = "dodge_roll"
 length = 0.5
 markers = [{
 "color": Color(1, 1, 1, 1),
@@ -12465,6 +12465,250 @@ tracks/17/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_1grb0"]
+resource_name = "shotgun_dash_attack"
+length = 0.53333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.46666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("AnimatedSprite2D/Shotty:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1.0757e-09, -16.3107)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/Shotty/ShotgunSmoke:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.16666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
+}
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioStreamPlayer2D")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.92,
+"start_offset": 0.3,
+"stream": ExtResource("83_dlcc0")
+}],
+"times": PackedFloat32Array(0.16666667)
+}
+tracks/3/use_blend = true
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.03333333, 0.06666668),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"shotgun_shoot"
+}, {
+"args": [],
+"method": &"shotgun_recoil"
+}]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D:animation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Dash"]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AudioStreamPlayer2D:volume_db")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AudioStreamPlayer2D:pitch_scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.3596852]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(447.2103, -20.026266)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5, 5)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:self_modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2.1168277, 2.1168277, 2.1168277, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:z_index")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-1]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:flip_h")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:animation")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"shotgun_fire"]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:frame")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0.16666667, 0.18333334, 0.2, 0.21666667, 0.23333333, 0.25, 0.28333333, 0.325, 0.375, 0.41666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0.16666667, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/17/type = "method"
+tracks/17/imported = false
+tracks/17/enabled = false
+tracks/17/path = NodePath(".")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0.03333333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_sound"
+}]
+}
+tracks/18/type = "method"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath(".")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0.033333335),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["shotgun_fire"],
+"method": &"call_audioplayer"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_dr66y"]
 resource_name = "shotgun_finish"
 length = 1.5
@@ -13007,11 +13251,11 @@ _data = {
 &"air_dash": SubResource("Animation_cg1np"),
 &"check_equipment": SubResource("Animation_67eo0"),
 &"death": SubResource("Animation_wyy57"),
-&"dodge_1": SubResource("Animation_pskkv"),
+&"dodge": SubResource("Animation_pskkv"),
 &"dodge_2": SubResource("Animation_lpb6m"),
 &"dodge_3": SubResource("Animation_nlcxh"),
 &"dodge_back": SubResource("Animation_13tdc"),
-&"dodge_roll_1": SubResource("Animation_yo2cx"),
+&"dodge_roll": SubResource("Animation_yo2cx"),
 &"dodge_roll_2": SubResource("Animation_gt6j3"),
 &"dodge_roll_3": SubResource("Animation_rviac"),
 &"enemy_countered": SubResource("Animation_73dn8"),
@@ -13037,6 +13281,7 @@ _data = {
 &"shotgun_attack": SubResource("Animation_on8rs"),
 &"shotgun_attack_fast": SubResource("Animation_okwur"),
 &"shotgun_attack_flip": SubResource("Animation_ai7hj"),
+&"shotgun_dash_attack": SubResource("Animation_1grb0"),
 &"shotgun_finish": SubResource("Animation_dr66y"),
 &"shotgun_reset": SubResource("Animation_g1hon"),
 &"stagger_recover": SubResource("Animation_58awq"),
@@ -16742,6 +16987,7 @@ stagger = NodePath("../../Stagger")
 state_machine = NodePath("..")
 dodge_buffer = NodePath("DodgeBuffer")
 dodge_velocity = Vector2(400, 0)
+dodge_distance = 150.0
 
 [node name="DodgeBuffer" type="Timer" parent="StateMachine/DodgeState" unique_id=34708469]
 one_shot = true

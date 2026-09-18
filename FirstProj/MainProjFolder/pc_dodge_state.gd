@@ -18,9 +18,9 @@ var dodge_speed : float = 1.0
 @export var dodge_min_dist := 25.0
 
 func _enter() -> void:
-	print_debug("dodging")
+	print_debug("dodging, ", pc.dodge_anim)
 	
-	anim_player.play(pc.dodge_anim_run+"_"+str(dodge_chain))
+	anim_player.play(pc.dodge_anim)
 	pc.set_collision_mask_value(15, false)
 	#pc.set_collision_layer_value(2, false)
 	pc.counter_box_collision.set_deferred("disabled", false)

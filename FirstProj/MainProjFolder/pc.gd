@@ -304,8 +304,8 @@ var forward_thrust : Vector2 = Vector2.ZERO
 var hit_box_pos
 
 var walk_anim : String = "walk"
-var dodge_anim : String = "dodge"
-var dodge_anim_run : String = "dodge"
+var dodge_anim : String = "dodge_roll"
+var dodge_anim_run : String = "dodge_roll"
 
 var attack_combo = "Attack"
 var sp_atk_combo = "shotgun_attack"
@@ -517,10 +517,12 @@ func _init_state_machine():
 	state_machine.add_transition(jump_state, aim, &"aim")
 	state_machine.add_transition(attack_state, aim, &"aim")
 	state_machine.add_transition(aim, special_attack, &"shoot")
+	state_machine.add_transition(aim, dodge_state, &"start_dodge")
 	
 	state_machine.add_transition(special_attack, falling_state, &"return_from_special")
 	#state_machine.add_transition(idle, special_attack, &"special_attack")
 	state_machine.add_transition(attack_state, dodge_state, &"start_dodge")
+	state_machine.add_transition(special_attack, dodge_state, &"start_dodge")
 	
 	state_machine.add_transition(attack_state, hit, &"interrupt_knockback")
 	
@@ -1461,6 +1463,7 @@ func dash_attack_enter():
 func dash_shoot_attack():
 	var _quick_aim : StringName = "clash_"+str(clampi(remap(0, clash_power.clash_power, 5, 0, 5),0,5))
 	shotty_animation_player.play_section_with_markers("shotgun_aim", _quick_aim)
+	shotty_animation_player.pause()
 	state_machine.dispatch(&"dodge_shoot")
 	
 func heavy_dash_attack_enter():
@@ -1512,7 +1515,9 @@ func aim_and_shoot():
 			state_machine.dispatch(&"flip_shoot")
 			hit_stop.end_hit_stop()
 	else:
-		if (Input.is_action_pressed("special_attack")) and not attacking and not Input.is_action_pressed("attack"):
+		if (Input.is_action_pressed("special_attack")) and not attacking\
+		 and not Input.is_action_pressed("attack")\
+		 and not Input.is_action_pressed("Dodge"):
 			if not reload_timer.is_stopped() and ammo>0:
 				reload_timer.stop()
 			if ammo==0:
@@ -1528,7 +1533,12 @@ func aim_and_shoot():
 					end_slow_down()
 		elif Input.is_action_just_released("special_attack"):
 			special_attack.shoot_anim="shotgun_attack"
+			dodge_anim="dodge"
 			state_machine.dispatch(&"shoot")
+			end_slow_down()
+		elif Input.is_action_just_pressed("Dodge"):
+			dodge_anim="shotgun_dash_attack"
+			state_machine.dispatch(&"start_dodge")
 			end_slow_down()
 
 func slow_down_aim():
@@ -1752,7 +1762,8 @@ func dodge(input_axis):
 
 	if Input.is_action_just_pressed("Dodge") and \
 	state_machine.get_active_state()!=dodge_state and \
-	state_machine.get_active_state()!=parry_success_state:
+	state_machine.get_active_state()!=parry_success_state and \
+	state_machine.get_active_state()!=aim:
 		if is_on_floor():
 			if dodge_buffer.is_stopped():
 				dodge_timer.start()
@@ -1766,7 +1777,7 @@ func dodge(input_axis):
 						velocity.x=0
 					state_machine.dispatch(&"start_dodge")
 				else:
-					dodge_anim_run=dodge_anim+"_roll"
+					#dodge_anim_run=dodge_anim+"_roll"
 					state_machine.dispatch(&"start_dodge")
 			else:
 				if stagger.stagger>1:
