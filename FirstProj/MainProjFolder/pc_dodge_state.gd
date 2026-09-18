@@ -19,12 +19,17 @@ var dodge_speed : float = 1.0
 
 func _enter() -> void:
 	print_debug("dodging, ", pc.dodge_anim)
-	
+	if not Input.is_action_pressed("special_attack"):
+		pc.dodge_anim="dodge_roll"
+		dodge_distance=150
+		dodge_velocity=Vector2(400,0)
 	anim_player.play(pc.dodge_anim)
 	pc.set_collision_mask_value(15, false)
 	#pc.set_collision_layer_value(2, false)
 	pc.counter_box_collision.set_deferred("disabled", false)
 	hurt_box.active=false
+	
+	
 	
 	if pc.input_axis==0:
 		pc.velocity.x=dodge_velocity.x*pc.face_dir
@@ -37,10 +42,7 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	#pc.global_position.x=lerpf(pc.global_position.x, dodge_dist, dodge_speed*delta)
-	if abs(pc.global_position.x-dodge_pos_start)>dodge_min_dist and\
-	Input.is_action_just_released("Dodge"):
-		dodge_blend()
-	elif abs(pc.global_position.x-dodge_pos_start)>dodge_distance:
+	if abs(pc.global_position.x-dodge_pos_start)>dodge_distance:
 		pc.state_machine.dispatch(&"return_to_idle")
 
 

@@ -12572,7 +12572,7 @@ tracks/17/keys = {
 
 [sub_resource type="Animation" id="Animation_1grb0"]
 resource_name = "shotgun_dash_attack"
-length = 0.53333336
+length = 0.36666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -12580,10 +12580,10 @@ tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.46666667),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.3, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 0]
+"values": [0, 1, 2, 1, 0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -12604,14 +12604,11 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.16666667, 0.2),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.06666667),
+"transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
 "method": &"shotgun_shoot"
-}, {
-"args": [],
-"method": &"shotgun_recoil"
 }]
 }
 tracks/3/type = "value"
@@ -12621,10 +12618,10 @@ tracks/3/path = NodePath("AnimatedSprite2D:animation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.108175755, 0.12872915, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [&"Dash"]
+"values": [&"Dash", &"Dash", &"GunCrouchFire", &"Dash"]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -12717,7 +12714,7 @@ tracks/11/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:frame")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0.16666667, 0.18333334, 0.2, 0.21666667, 0.23333332, 0.25, 0.28333333, 0.325, 0.375, 0.41666666),
+"times": PackedFloat32Array(0.06666667, 0.083333336, 0.099999994, 0.116666675, 0.13333333, 0.15, 0.18333334, 0.225, 0.275, 0.31666666),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -12729,23 +12726,23 @@ tracks/12/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:visible")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0.16666667, 0.4),
+"times": PackedFloat32Array(0.06666667, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
 }
 tracks/13/type = "method"
 tracks/13/imported = false
-tracks/13/enabled = false
+tracks/13/enabled = true
 tracks/13/path = NodePath(".")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0.16666667),
+"times": PackedFloat32Array(0.06666667),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
-"method": &"play_sound"
+"method": &"shotgun_recoil"
 }]
 }
 tracks/14/type = "method"
@@ -12755,7 +12752,7 @@ tracks/14/path = NodePath(".")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0.16666667),
+"times": PackedFloat32Array(0.06666667),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": ["shotgun_fire"],

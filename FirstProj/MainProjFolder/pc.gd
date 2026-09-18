@@ -1533,11 +1533,15 @@ func aim_and_shoot():
 					end_slow_down()
 		elif Input.is_action_just_released("special_attack"):
 			special_attack.shoot_anim="shotgun_attack"
-			dodge_anim="dodge"
+			dodge_anim="dodge_roll"
+			dodge_state.dodge_distance=150
+			dodge_state.dodge_velocity=Vector2(400,0)
 			state_machine.dispatch(&"shoot")
 			end_slow_down()
 		elif Input.is_action_just_pressed("Dodge"):
 			dodge_anim="shotgun_dash_attack"
+			dodge_state.dodge_distance=100
+			dodge_state.dodge_velocity=Vector2(600,50)
 			state_machine.dispatch(&"start_dodge")
 			end_slow_down()
 
@@ -1642,7 +1646,7 @@ func shotgun_shoot() -> void:
 		
 
 func shotgun_recoil() -> void:
-	Events.camera_shake.emit(1,20)
+	Events.camera_shake.emit(5,20)
 
 func call_camera_shake(_weight := 1, _fade := 2.0) -> void:
 	Events.camera_shake.emit(_weight, _fade)
