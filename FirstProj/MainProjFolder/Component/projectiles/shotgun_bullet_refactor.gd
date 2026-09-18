@@ -91,7 +91,7 @@ func get_stagger_damage() -> int:
 
 func _on_body_entered(body: Node) -> void:
 	
-	if body.is_in_group("WorldStatic"):
+	if body.is_in_group("WorldStatic") or body.is_in_group("shield"):
 		hard_impact()
 	else:
 		return
