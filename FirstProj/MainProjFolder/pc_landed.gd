@@ -7,6 +7,7 @@ extends LimboState
 
 func _enter() -> void:
 	pc.anim_player.play("landed")
+	pc.velocity.x=pc.movement_data.speed
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

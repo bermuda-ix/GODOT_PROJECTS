@@ -500,6 +500,7 @@ func _init_state_machine():
 	state_machine.add_transition(dodge_state, attack_state, &"heavy_counter")
 	state_machine.add_transition(dodge_state, special_attack, &"dodge_shoot")
 	state_machine.add_transition(dodge_state, flip_state, &"start_flip")
+	state_machine.add_transition(dodge_state, jump_state, &"start_jumping")
 	
 	state_machine.add_transition(dodge_state, dodge_state, &"dodge_chain")
 	
@@ -787,6 +788,8 @@ func _physics_process(delta):
 				apply_air_resistance(input_axis, delta)
 				shotgun_free_rotate()
 			sp_atk()
+		elif state_machine.get_active_state()==dodge_state:
+			jump_dodge(input_axis, delta)
 		elif state_machine.get_active_state()==attack_state:
 			sp_atk()
 		
@@ -859,6 +862,16 @@ func jump(input_axis, delta):
 			double_jump_flag = false
 			#state = States.JUMP
 			state_machine.dispatch(&"start_jumping")
+
+func jump_dodge(input_axis, delta):
+	if is_on_floor() or coyote_jump_timer.time_left>0.0:
+		if Input.is_action_just_pressed("jump"):
+			#state = States.JUMP
+			if not reload_timer.is_stopped():
+				reload_timer.stop()
+			state_machine.dispatch(&"start_jumping")
+			velocity.y = movement_data.jump_velocity/2
+			velocity.x = dodge_state.dodge_velocity.x*input_axis
 
 func stick_to_wall() -> void:
 	if Input.is_action_pressed("sprint")  and is_on_wall_only():

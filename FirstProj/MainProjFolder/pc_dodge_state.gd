@@ -36,13 +36,13 @@ func _enter() -> void:
 	else:
 		pc.velocity.x=dodge_velocity.x*pc.input_axis
 	dodge_pos_start=pc.global_position.x
-	dodge_buffer.start(0.1)
+	#dodge_buffer.start(0.1)
 	
 	
 
 func _update(delta: float) -> void:
 	#pc.global_position.x=lerpf(pc.global_position.x, dodge_dist, dodge_speed*delta)
-	if abs(pc.global_position.x-dodge_pos_start)>dodge_distance or (pc.is_on_wall() and dodge_buffer.is_stopped()):
+	if abs(pc.global_position.x-dodge_pos_start)>dodge_distance or (pc.is_on_wall()):
 		pc.state_machine.dispatch(&"return_to_idle")
 
 

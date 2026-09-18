@@ -16612,7 +16612,7 @@ shape = SubResource("CircleShape2D_incat")
 
 [node name="Health" type="Node" parent="." unique_id=994567121]
 script = ExtResource("4_q0gnn")
-max_health = 15
+max_health = 50
 immortality_debug = true
 
 [node name="ClashPower" type="Node" parent="." unique_id=2128103427 node_paths=PackedStringArray("health", "stagger", "hit_box")]
