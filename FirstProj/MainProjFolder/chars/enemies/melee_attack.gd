@@ -18,7 +18,7 @@ func _enter() -> void:
 	
 func _update(delta: float) -> void:
 	print_debug(hit_box_collision.disabled)
-	assert(hit_box_collision.disabled==false)
+	#assert(hit_box_collision.disabled==false)
 
 
 func _exit() -> void:

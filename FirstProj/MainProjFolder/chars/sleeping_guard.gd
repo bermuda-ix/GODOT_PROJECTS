@@ -25,6 +25,8 @@ var player : PlayerEntity = null
 @onready var bt_player: BTPlayer = $BTPlayer
 
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var is_on_screen : bool = false
+
 
 @onready var prop_enemy := true
 
@@ -35,6 +37,7 @@ func _ready():
 	_init_state_machine()
 
 func _process(delta: float) -> void:
+	is_on_screen=on_screen.is_on_screen()
 	if state_machine.get_active_state()==death:
 		return
 	if not is_on_floor():

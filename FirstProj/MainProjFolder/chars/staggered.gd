@@ -19,7 +19,13 @@ func _enter() -> void:
 		actor.hb_collision.set_deferred("disabled", true)
 	if "current_speed" in actor:
 		actor.current_speed=0
-	#actor.velocity.x=0
+	if "hurt_box_collision" in actor:
+		actor.hurt_box_collision.set_deferred("disabled", false)
+	if "knockback" in actor:
+		if actor.player_right:
+			actor.knockback.x=-200
+		else:
+			actor.knockback.x=200
 	
 	actor.animation_player.play("staggered")
 	vfx_player.play("staggered_entered")
@@ -30,11 +36,8 @@ func _enter() -> void:
 		movement_handler.active=false
 	
 	hurt_box.active=true
-	actor.hurt_box_collision.set_deferred("disabled", false)
-	if actor.player_right:
-		actor.knockback.x=-200
-	else:
-		actor.knockback.x=200
+	
+
 	#actor.state="STAGGERED"
 	
 func _update(delta: float) -> void:
