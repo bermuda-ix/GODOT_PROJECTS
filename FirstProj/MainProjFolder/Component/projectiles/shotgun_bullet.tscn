@@ -42,7 +42,7 @@ script = ExtResource("4_fsvgn")
 actor = NodePath("../..")
 metadata/_custom_type_script = "uid://oh43vctkhpbh"
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprite2D/ProjectileHitBox" unique_id=704736168]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprite2D/ProjectileHitBox" unique_id=704736168 groups=["PlayerBullet"]]
 shape = SubResource("RectangleShape2D_pgeyf")
 disabled = true
 

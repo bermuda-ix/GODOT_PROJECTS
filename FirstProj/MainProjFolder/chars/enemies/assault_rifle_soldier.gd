@@ -36,8 +36,6 @@ var always_active : bool
 #@onready var hurt_box_weakpoint_collision: CollisionShape2D = $HurtBox_Weakpoint/CollisionShape2D
 @onready var hit_stop: HitStop = $HitStop
 @onready var hit_stop_dur = 0.0
-#@onready var parry_box: ParryBox = $ParryBox
-#@onready var parry_box_collision: CollisionShape2D = $ParryBox/CollisionShape2D
 #@onready var shield: Area2D = $Shield
 #@onready var shield_collision: CollisionShape2D = $Shield/CollisionShape2D
 
@@ -104,7 +102,6 @@ var player_state : LimboState
 #@onready var defend_ally: BTState = $StateMachine/ShootingStates/DefendAlly
 @onready var shooting_bt_state: BTState = $StateMachine/ShootingBTState
 @onready var hit: Hit = $StateMachine/Hit
-#@onready var parry: Parry = $StateMachine/Parry
 @onready var staggered: Staggered = $StateMachine/Staggered
 @onready var dying: BTState = $StateMachine/Dying
 @onready var death: Death = $StateMachine/Death
@@ -301,11 +298,6 @@ func _init_state_machine():
 	state_machine.add_transition(jump, chasing, &"land")
 	state_machine.add_transition(hit, attack, &"hit_recover")
 	state_machine.add_transition(hit, shooting_bt_state, &"hit_recover_shoot")
-	#state_machine.add_transition(attack, parry, &"parry")
-	#state_machine.add_transition(chasing, parry, &"parry")
-	#state_machine.add_transition(shooting_bt_state, parry, &"parry")
-	#state_machine.add_transition(parry, attack, parry.failure_event)
-	#state_machine.add_transition(parry, shooting_bt_state, parry.success_event)
 	state_machine.add_transition(attack, shooting_bt_state, &"start_shoot")
 	state_machine.add_transition(chasing, shooting_bt_state, &"start_shoot")
 	state_machine.add_transition(chasing, melee_attack, &"melee_attack")
@@ -449,10 +441,6 @@ func _on_shooting_states_active_state_changed(current: LimboState, previous: Lim
 
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
-	#if player.attacking:
-		#state_machine.dispatch(&"parry")
-	#else:
-		#state_machine.dispatch(&"melee_attack")
 	state_machine.dispatch(&"melee_attack")
 
 func clash_follow_up(_follow_up := "nothing"):
@@ -480,8 +468,6 @@ func pushed_back(_force:=100):
 	
 	knockback.x=-(_force*_face_dir)
 
-#func _on_parry_exited() -> void:
-	#print_debug("parry exit")
 
 
 func _on_turret_shoot_bullet() -> void:

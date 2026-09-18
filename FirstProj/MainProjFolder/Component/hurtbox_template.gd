@@ -160,6 +160,8 @@ func hitbox_collision():
 func bullet_impact(_body : Node2D):
 	if not active:
 		return
+	if not _body.is_in_group("bullet") and not _body.is_in_group("PlayerBullet"):
+		return
 	if "damage" in _body:
 		bullet_damage_count(_body.damage)
 	else:

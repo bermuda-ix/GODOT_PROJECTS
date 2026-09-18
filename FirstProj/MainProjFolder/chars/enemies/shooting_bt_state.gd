@@ -4,8 +4,10 @@ class_name ShootingBT extends BTState
 @export var stagger : Stagger
 
 func _ready() -> void:
-	blackboard.bind_var_to_property("ammo", turret, "&ammo_count", true)
-	blackboard.bind_var_to_property("stagger", stagger, "&stagger", true)
+	#blackboard.bind_var_to_property("ammo", turret, "&ammo_count", true)
+	#blackboard.bind_var_to_property("stagger", stagger, "&stagger", true)
+	blackboard.set_var("ammo", turret.ammo_count)
+	blackboard.set_var("stagger", stagger.stagger)
 
 func _update(delta: float) -> void:
 	blackboard.set_var("ammo", turret.ammo_count)

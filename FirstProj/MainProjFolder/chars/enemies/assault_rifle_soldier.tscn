@@ -71,9 +71,7 @@
 [ext_resource type="Texture2D" uid="uid://dxef33nv5p316" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_03.png" id="41_gf2yx"]
 [ext_resource type="Texture2D" uid="uid://8ff0cbeagj4c" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_04.png" id="42_3am5f"]
 [ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="42_n808b"]
-[ext_resource type="BehaviorTree" uid="uid://t2han52xa64j" path="res://ai/trees/parry.tres" id="43_i5gy8"]
 [ext_resource type="Texture2D" uid="uid://dchoeftyjo2db" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_05.png" id="43_uboqf"]
-[ext_resource type="Script" uid="uid://f8o0kgomg38" path="res://chars/parry.gd" id="44_ofohi"]
 [ext_resource type="AudioStream" uid="uid://cf6jn2lj1ifwr" path="res://Art_Components/Effects/sound/swishes/swishes/swish-9.wav" id="44_rcq7j"]
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="45_bf1lr"]
 [ext_resource type="BehaviorTree" uid="uid://bxakb1j8uax5m" path="res://ai/trees/shooting_bt_state.tres" id="45_nnekd"]
@@ -2333,8 +2331,6 @@ size = Vector2(61, 71)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_bynfm"]
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_ggker"]
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_nyk46"]
 
 [node name="AssaultRifleSoldier" type="CharacterBody2D" unique_id=1122506050 node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant"]]
@@ -2660,14 +2656,6 @@ hit_fx_player = NodePath("../../AnimationPlayer/HitFXPlayer")
 stagger = NodePath("../../Stagger")
 stagger_threshold = 0
 metadata/_custom_type_script = "uid://cdsger1er8ipk"
-
-[node name="Parry" type="BTState" parent="StateMachine" unique_id=1921918181 node_paths=PackedStringArray("actor", "anim_player", "timer")]
-behavior_tree = ExtResource("43_i5gy8")
-blackboard_plan = SubResource("BlackboardPlan_ggker")
-script = ExtResource("44_ofohi")
-actor = NodePath("../..")
-anim_player = NodePath("../../AnimationPlayer")
-timer = NodePath("../../ParryTimer")
 
 [node name="Staggered" type="LimboState" parent="StateMachine" unique_id=322417903 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "vfx_player", "hurt_box", "stagger_timer")]
 script = ExtResource("45_bf1lr")
