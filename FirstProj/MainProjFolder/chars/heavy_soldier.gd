@@ -1024,3 +1024,10 @@ func _on_ranged_entered() -> void:
 
 func _on_melee_entered() -> void:
 	shield.set_collision_mask_value(7, false)
+
+
+func _on_clashed_state_entered() -> void:
+	shield_collision.set_deferred("disabled", true)
+
+func _on_clashed_state_exited() -> void:
+	shield_collision.set_deferred("disabled", false)
