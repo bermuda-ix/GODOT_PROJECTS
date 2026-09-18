@@ -2559,6 +2559,7 @@ script = ExtResource("26_u4tgr")
 actor = NodePath("..")
 sm = NodePath("../StateMachine")
 combat_state_machine = NodePath("../CombatStateMachine")
+ranged_dist = 200
 vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
 

@@ -51,7 +51,7 @@ func handle_vision():
 	if always_on:
 		player_found=true
 		#sm.dispatch(&"start_chase")
-	elif not path_valid() and ground_enemy:
+	elif not path_valid():
 		player_found=false
 		sm.dispatch(&"return_to_idle")
 		
@@ -59,7 +59,7 @@ func handle_vision():
 	else:
 		#actor.player_colliding=player_tracking.is_colliding()
 		if player_tracking.is_colliding():
-			
+			assert(path_valid())
 			var collision_result = player_tracking.get_collider()
 			if collision_result != player and collision_result != player_detect:
 				#print_debug(collision_result)

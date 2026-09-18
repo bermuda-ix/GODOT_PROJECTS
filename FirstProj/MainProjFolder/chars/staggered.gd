@@ -58,4 +58,5 @@ func _exit() -> void:
 	print_debug(stagger.max_stagger)
 	await stagger.stagger_recover()
 	assert(stagger.stagger!=0)
-	vfx_player.call_deferred("stop")
+	if vfx_player!=null:
+		vfx_player.call_deferred("stop")

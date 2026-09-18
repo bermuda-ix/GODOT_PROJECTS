@@ -293,7 +293,8 @@ func _init_state_machine():
 	state_machine.add_transition(attack, chasing, &"start_chase")
 	state_machine.add_transition(shooting_bt_state, chasing, &"start_chase")
 	state_machine.add_transition(chasing, attack, &"start_attack")
-	state_machine.add_transition(attack, idle, &"idle_mode")
+	state_machine.add_transition(attack, idle, &"return_to_idle")
+	state_machine.add_transition(chasing, idle, &"return_to_idle")
 	state_machine.add_transition(chasing, jump, &"jump")
 	state_machine.add_transition(jump, chasing, &"land")
 	state_machine.add_transition(hit, attack, &"hit_recover")
@@ -340,6 +341,8 @@ func makepath() -> void:
 	
 	
 func _on_navigation_timer_timeout() -> void:
+	if not navigation_handler.path_valid():
+		state_machine.dispatch(&"return_to_idle")
 	makepath()
 	next_y=nav_agent.get_next_path_position().y
 	next_x=nav_agent.get_next_path_position().x
