@@ -2288,15 +2288,15 @@ func _on_animation_player_animation_finished(anim_name):
 		hit_box.clash_active=false
 		hit_box.attack_clashed=false
 		hb_collision.set_deferred("disabled", true)
-		match anim_name:
-			"Attack":
-				heavy_attack_1.attack=heavy_attacks[0]
-			"Attack_2":
-				heavy_attack_1.attack=heavy_attacks[1]
-			"Attack_3":
-				heavy_attack_1.attack=heavy_attacks[2]
-			"_":
-				pass
+		#match anim_name:
+			#"Attack":
+				#heavy_attack_1.attack=heavy_attacks[0]
+			#"Attack_2":
+				#heavy_attack_1.attack=heavy_attacks[1]
+			#"Attack_3":
+				#heavy_attack_1.attack=heavy_attacks[2]
+			#"_":
+				#pass
 		match anim_name:
 			
 			"Attack_Counter":
@@ -2809,10 +2809,12 @@ func _on_animation_player_animation_started(anim_name):
 					light_attack_index=2
 				"_":
 					pass
+
 			if light_attack_index==0:
 				heavy_attack_1.attack=heavy_attacks[0]
 			else:
-				heavy_attack_1.attack=heavy_attacks[light_attack_index-1]
+				heavy_attack_1.attack=heavy_attacks[light_attack_index]
+				
 		elif attack_state.get_active_state()==dash_attack:
 			if anim_name=="Attack_Dash":
 				heavy_attack_1.attack=heavy_attacks[0]
