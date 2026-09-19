@@ -423,3 +423,7 @@ func _on_cutscene_player_animation_finished(anim_name: StringName) -> void:
 			cutscene_queue_index=0
 			load_cutscene_queue(Cutscenes.Cutscenes["MiniBoss1Outro"])
 			play_cutscene_queue()
+
+
+func _on_tree_entered() -> void:
+		Global.game_controller.cutscene_active=false
