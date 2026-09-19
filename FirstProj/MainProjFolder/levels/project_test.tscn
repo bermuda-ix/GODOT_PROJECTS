@@ -461,7 +461,8 @@ color = Color(0, 0, 0, 1)
 position = Vector2(1038, 34)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallTest" index="0" unique_id=819857499]
-position = Vector2(128, -13)
+position = Vector2(-159, 17)
+rotation = 1.0471976
 shape = SubResource("RectangleShape2D_01tlq")
 
 [node name="Enemies" type="Node" parent="." index="29" unique_id=825398583]

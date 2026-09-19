@@ -13,7 +13,7 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	player.move_and_slide()
-	player.label.text=str(player.knockback)
+	#player.label.text=str(player.knockback)
 	
 func _exit() -> void:
 	player.input_active = true

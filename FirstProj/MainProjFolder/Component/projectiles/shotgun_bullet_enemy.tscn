@@ -45,15 +45,14 @@ texture = ExtResource("2_oy31j")
 offset = Vector2(0.515003, -2.8883033)
 
 [node name="ProjectileHitBox" type="Area2D" parent="Sprite2D" unique_id=311300303 node_paths=PackedStringArray("actor") groups=["player_hitbox"]]
-collision_layer = 4096
-collision_mask = 128
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("3_m02cv")
 actor = NodePath("../..")
 metadata/_custom_type_script = "uid://oh43vctkhpbh"
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprite2D/ProjectileHitBox" unique_id=704736168]
 shape = SubResource("RectangleShape2D_pgeyf")
-disabled = true
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D" unique_id=477676870]
 position = Vector2(-5, 0)

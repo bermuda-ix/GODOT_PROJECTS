@@ -21,7 +21,7 @@ func _enter() -> void:
 func _update(delta: float) -> void:
 	
 	attack_lunge()
-	pc.label.text=str(pc.velocity.x)
+	#pc.label.text=str(pc.velocity.x)
 	if pc.state_machine.get_previous_active_state()==pc.dodge_state:
 		pc.global_position.x=lerpf(pc.global_position.x, counter_dist, 0.2)
 	

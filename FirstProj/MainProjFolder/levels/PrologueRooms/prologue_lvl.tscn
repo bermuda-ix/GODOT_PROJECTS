@@ -1224,7 +1224,7 @@ position = Vector2(1404, 215)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LabArchitect/WorldCollisions/StaticBody2D" index="0" unique_id=2002396475]
 position = Vector2(-579, -139)
-polygon = PackedVector2Array(0, 0, 557, 0, 671, 63, 672, 144, 1065, 144, 1073, 153, 638, 179, 609, 213, 1, 215)
+polygon = PackedVector2Array(0, 0, 557, 0, 672, 59, 672, 144, 1066, 144, 1066, 156, 638, 179, 609, 213, 1, 215)
 
 [node name="Desert_Background" parent="." index="11" unique_id=1325935797 instance=ExtResource("7_veiog")]
 position = Vector2(5, 14)

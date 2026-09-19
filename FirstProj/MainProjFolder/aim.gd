@@ -26,6 +26,8 @@ func _update(delta: float) -> void:
 			pc.set_shotgun_target_look(false)
 		else:
 			pass
+	if not Input.is_action_pressed("special_attack"):
+		pc.state_machine.dispatch(&"shoot")
 
 func _exit() -> void:
 	shotty_anim_player.pause()

@@ -646,7 +646,8 @@ func _process(_delta):
 
 #
 	input_axis = Input.get_axis("walk_left", "walk_right")
-
+	
+	label.text=str(state_machine.get_active_state())
 	
 	get_target_info()
 	#previous_state()
@@ -1066,7 +1067,7 @@ func update_animation(input_axis):
 				
 				if Input.is_action_pressed("sprint"):
 
-					if is_on_wall():
+					if is_on_wall_only():
 						wall_hold=true
 					if combat_states.get_active_state()!=locked:
 						walk_anim="run"
@@ -2627,7 +2628,7 @@ func _on_flip_state_entered() -> void:
 
 
 func _on_flip_state_updated(delta: float) -> void:
-	if is_on_wall():
+	if is_on_wall_only():
 		wall_hold = true
 		state_machine.dispatch(&"hit_wall")
 		hit_stop.end_hit_stop()

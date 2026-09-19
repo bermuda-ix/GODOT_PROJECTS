@@ -2960,10 +2960,9 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ie0ey"]
-size = Vector2(16.929543, 34.17295)
+size = Vector2(18.810606, 38.1933)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_incat"]
-radius = 9.055386
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mdoa6"]
 height = 46.0
@@ -12604,7 +12603,7 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.06666667),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -12738,7 +12737,7 @@ tracks/13/path = NodePath(".")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0.06666667),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -12752,7 +12751,7 @@ tracks/14/path = NodePath(".")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0.06666667),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": ["shotgun_fire"],
@@ -16172,11 +16171,11 @@ collision_layer = 2
 collision_mask = 103599113
 floor_stop_on_slope = false
 floor_constant_speed = true
-floor_max_angle = 0.87266463
-floor_snap_length = 3.0
+floor_max_angle = 1.3089969
+floor_snap_length = 5.0
 platform_floor_layers = 1
 platform_wall_layers = 1
-safe_margin = 5.0
+safe_margin = 1.0
 script = ExtResource("1_x210m")
 movement_data = ExtResource("2_4grev")
 health = NodePath("Health")
@@ -16602,12 +16601,12 @@ energy = 0.5
 texture = SubResource("GradientTexture2D_c5jop")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=771559977]
-position = Vector2(0.99999964, -10)
+position = Vector2(1.0000002, -7.9999995)
 scale = Vector2(1.06323, 0.994939)
 shape = SubResource("RectangleShape2D_ie0ey")
 
 [node name="DontGoombaStompOnMe" type="CollisionShape2D" parent="." unique_id=1408244517]
-position = Vector2(1, -29)
+position = Vector2(1, -27)
 shape = SubResource("CircleShape2D_incat")
 
 [node name="Health" type="Node" parent="." unique_id=994567121]

@@ -242,7 +242,7 @@ func _physics_process(delta: float) -> void:
 	#
 	if  state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered or state_machine.get_active_state()==launch:
 		if not launch_timer.is_stopped():
-			global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
+			#global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
 			velocity.y=0
 		else:
 			
@@ -277,7 +277,7 @@ func _physics_process(delta: float) -> void:
 	
 	velocity.x = (current_speed*movement_handler.move_dir) + knockback.x + pushback
 	if velocity.x>0:
-		print_debug(velocity.x)
+		#print_debug(velocity.x)
 		pass
 		
 	move_and_slide()
