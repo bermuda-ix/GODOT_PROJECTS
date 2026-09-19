@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://hg63g0t3rx0q" path="res://Component/UI_Rec/Char_Dialogue/dialogue_box.tscn" id="2_a51nm"]
 [ext_resource type="Texture2D" uid="uid://b1p3fdvwsdnfy" path="res://Art_Components/Backgrounds/night_1/2.png" id="2_kyvyf"]
 [ext_resource type="Texture2D" uid="uid://d0gvriwjqa03k" path="res://Art_Components/Backgrounds/background2.png" id="3_a51nm"]
+[ext_resource type="Theme" uid="uid://boqtjf88xcpu4" path="res://demo/assets/ui.theme" id="3_b4i58"]
 [ext_resource type="Texture2D" uid="uid://b03d4l8fn2u7k" path="res://Art_Components/Backgrounds/background3.png" id="4_lpo0g"]
 [ext_resource type="AudioStream" uid="uid://beaoa1qp3nt2b" path="res://Art_Components/Effects/sound/9mm/WAV/9mm Single Isolated.wav" id="7_1kyxd"]
 [ext_resource type="TileSet" uid="uid://5vc1chccqln4" path="res://levels/level_components/factory_tile_set_main_platform.tres" id="7_lpo0g"]
@@ -3458,6 +3459,24 @@ color = Color(0, 0, 0, 0)
 [node name="DialogueBox" parent="CanvasLayer" unique_id=1807181331 instance=ExtResource("2_a51nm")]
 z_index = 3
 
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer" unique_id=1660403403]
+anchors_preset = -1
+anchor_left = 0.9305556
+anchor_right = 1.0
+anchor_bottom = 0.049382716
+offset_left = -113.0
+offset_top = 186.0
+offset_right = -103.0
+offset_bottom = 195.0
+grow_horizontal = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/CenterContainer" unique_id=172532092]
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 2
+theme = ExtResource("3_b4i58")
+theme_override_font_sizes/normal_font_size = 8
+text = "ESC: Skip Cutscene"
+
 [node name="Background" type="Node2D" parent="." unique_id=454343048]
 z_index = -1
 
@@ -3610,6 +3629,7 @@ libraries/ = SubResource("AnimationLibrary_5wdao")
 position = Vector2(332, 243)
 max_polyphony = 5
 
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
 [connection signal="end_of_dialogue" from="CanvasLayer/DialogueBox" to="." method="_on_dialogue_box_end_of_dialogue"]
 [connection signal="animation_changed" from="AnimationPlayer" to="." method="_on_animation_player_animation_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

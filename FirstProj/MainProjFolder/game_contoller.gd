@@ -29,6 +29,9 @@ signal player_pos_reset_to_checkpoint
 #Region of levels to load into memory
 @onready var region : Dictionary
 
+#Input functions
+@onready var cutscene_active := false
+
 var current_2d_scene
 var prev_2d_scene
 var current_gui_scene
@@ -79,7 +82,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	#assert(player != null)
 	if Input.is_action_just_pressed("Pause"):
-		show_pause()
+		if cutscene_active:
+			pass
+		else:
+			show_pause()
 
 #For force starting levels to test
 func test_start() -> void:

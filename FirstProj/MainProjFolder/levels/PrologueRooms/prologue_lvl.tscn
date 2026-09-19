@@ -2163,6 +2163,7 @@ z_index = 1
 position = Vector2(2232, 790)
 
 [connection signal="scene_reloaded" from="." to="." method="_on_scene_reloaded"]
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
 [connection signal="locked_door" from="Props/SecDoorLower/SecEntryLower" to="Props/SecDoorLower/SecEntryLower/EventFlag" method="flag_triggered" flags=3]
 [connection signal="play_cutscene" from="Props/SecDoorLower/SecEntryLower/EventFlag" to="." method="play_cutscene"]
 [connection signal="set_max_heat" from="Spawning/SpawnFlags/HeatSpawnFlag" to="." method="set_max_heat"]
