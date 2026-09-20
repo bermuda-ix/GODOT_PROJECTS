@@ -52,6 +52,7 @@ signal clash_end
 @onready var stairs_detected : bool = false
 @onready var stairs_release : bool = true
 @onready var drop_down_platform_detected : bool = false
+@onready var controller_input_helper: ControllerInputHelper = $ControllerInputHelper
 
 
 #Base FSM
@@ -1704,6 +1705,8 @@ func shotgun_free_rotate():
 		shotgun_point_to_target()
 	elif shotgun_lookat_mouse:
 		shotty.look_at(get_global_mouse_position())
+	elif controller_input_helper.look_with_gamepad:
+		pass
 
 func set_shotgun_free_rotate(value : bool):
 	shotgun_lookat_mouse=value

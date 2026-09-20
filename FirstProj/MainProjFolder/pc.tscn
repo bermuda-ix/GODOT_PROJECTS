@@ -264,6 +264,7 @@
 [ext_resource type="Texture2D" uid="uid://c8bdlu5h7gnnp" path="res://Art_Components/Effects/AttackEffects/FX006/FX013.png" id="222_np862"]
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="222_qyvno"]
 [ext_resource type="Script" uid="uid://5gt6g8063rb4" path="res://Component/functions/ShootHandler.gd" id="230_pbr83"]
+[ext_resource type="Script" uid="uid://drdulynh613wk" path="res://Component/functions/PlayerFunctions/ControllerInputHelper.gd" id="231_u66yy"]
 [ext_resource type="PackedScene" uid="uid://dsj0t0v1bq42w" path="res://Component/projectiles/shotgun_bullet.tscn" id="231_ymji2"]
 [ext_resource type="Script" uid="uid://50oq66c4rimc" path="res://attack_closer.gd" id="232_wyrhc"]
 [ext_resource type="Script" uid="uid://cmj7am20ibwo0" path="res://charging_attack.gd" id="240_47q3x"]
@@ -16865,6 +16866,13 @@ text = "..."
 
 [node name="SpeechTimer" type="Timer" parent="Speech" unique_id=860792090]
 one_shot = true
+
+[node name="ControllerInputHelper" type="Node" parent="." unique_id=1610873349 node_paths=PackedStringArray("player", "shotty")]
+script = ExtResource("231_u66yy")
+player = NodePath("..")
+shotty = NodePath("../AnimatedSprite2D/Shotty")
+look_with_gamepad = true
+metadata/_custom_type_script = "uid://drdulynh613wk"
 
 [node name="CutsceneHandler" type="Node" parent="." unique_id=531181144 node_paths=PackedStringArray("actor", "anim_player", "speech")]
 script = ExtResource("67_67eo0")
