@@ -51,7 +51,9 @@ func handle_vision():
 	if always_on:
 		player_found=true
 		#sm.dispatch(&"start_chase")
-	elif not path_valid():
+	print_debug(path_valid())
+	if not path_valid():
+		
 		player_found=false
 		sm.dispatch(&"return_to_idle")
 		
@@ -61,6 +63,7 @@ func handle_vision():
 		if player_tracking.is_colliding():
 			assert(path_valid())
 			var collision_result = player_tracking.get_collider()
+			print_debug(player_tracking.get_collider())
 			if collision_result != player and collision_result != player_detect:
 				#print_debug(collision_result)
 				#set_state(current_state, States.GUARD)
@@ -84,10 +87,10 @@ func handle_vision():
 		else:
 		
 			#actor.set_state(actor.current_state, actor.States.IDLE)
-			if stay_on:
+			if stay_on and path_valid():
 				sm.dispatch(&"start_chase")
 			else:
-				sm.dispatch(&"idle_mode")
+				sm.dispatch(&"return_to_idle")
 				player_found = false
 		
 
@@ -130,4 +133,5 @@ func turret_face_player() -> void:
 func path_valid() -> bool:
 	if nav_agent==null:
 		return false
+	print_debug(nav_agent.is_navigation_finished())
 	return nav_agent.is_target_reachable()

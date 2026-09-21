@@ -2409,6 +2409,7 @@ position = Vector2(0, -28)
 
 [node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot" unique_id=1864179990]
 collision_mask = 3
+hit_from_inside = true
 
 [node name="Turret" parent="." unique_id=2099287433 instance=ExtResource("14_5lb1l")]
 position = Vector2(-30, -18)

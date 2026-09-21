@@ -187,6 +187,7 @@ func _ready():
 	bullet = BALL_PROCETILE
 	animation_player.play("idle")
 	state="guard"
+	makepath()
 	next=nav_agent.get_next_path_position()
 
 	Events.parry_success.connect(clash_follow_up)
@@ -219,6 +220,12 @@ func _process(delta: float) -> void:
 	dir = to_local(next)
 	if vision_handler.path_valid():
 		vision_handler.handle_vision()
+	else:
+		state_machine.dispatch(&"return_to_idle")
+	if state_machine.get_active_state()==idle and movement_handler.face_player_active:
+		movement_handler.face_player_active=false
+	elif state_machine.get_active_state()!=idle and not movement_handler.face_player_active:
+		movement_handler.face_player_active=true
 	distance = abs(global_position.x-player.global_position.x)
 	#force_chase()
 	vision_handler.get_player_relative_loc()
@@ -550,7 +557,7 @@ func _on_stagger_staggered() -> void:
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	hit_stop.hit_stop(0.05,0.1)
+	hit_stop.hit_stop(0.05,0.05)
 	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 		Events.allied_enemy_hit.emit()
 	
