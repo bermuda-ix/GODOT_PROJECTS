@@ -876,7 +876,7 @@ func jump_dodge(input_axis, delta):
 			velocity.x = dodge_state.dodge_velocity.x*input_axis
 
 func stick_to_wall() -> void:
-	if Input.is_action_pressed("sprint")  and is_on_wall_only():
+	if Input.is_action_pressed("jump")  and is_on_wall_only():
 			wall_hold=true
 
 func wall_sticking(_wall_hold : bool):
@@ -891,7 +891,7 @@ func wall_sticking(_wall_hold : bool):
 	
 	if state_machine.get_active_state()==wall_stick:
 		if state_machine.get_previous_active_state()!=flip_state and state_machine.get_previous_active_state()!=flip_end_state:
-			if Input.is_action_just_released("sprint"):
+			if Input.is_action_just_released("jump"):
 				wall_hold = false
 				state_machine.dispatch(&"fall_off_wall")
 				#assert(velocity.y!=0)
@@ -939,7 +939,7 @@ func handle_wall_jump(wall_hold, delta):
 			
 		if (Input.is_action_just_pressed("walk_right") and wall_normal==Vector2.RIGHT) \
 		or (Input.is_action_just_pressed("walk_left") and wall_normal==Vector2.LEFT) \
-		 or Input.is_action_just_pressed("jump"):
+		 or Input.is_action_just_released("jump"):
 			state_machine.dispatch(&"jump_off_wall")
 			#knockback.x=-_jump_vel
 			#knockback.y=movement_data.jump_velocity

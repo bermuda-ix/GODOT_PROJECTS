@@ -16,8 +16,14 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	pc.aim_speed=lerpf(pc.aim_speed, aim_speed_end, 0.05)
-	if Input.is_action_just_pressed("walk_left") or Input.is_action_just_pressed("walk_right"):
-		anim_player.play("walk")
+	if pc.is_on_floor():
+		if Input.is_action_just_pressed("walk_left") or Input.is_action_just_pressed("walk_right"):
+			anim_player.play("walk")
+		elif Input.is_action_just_released("walk_left") or Input.is_action_just_released("walk_right"):
+			anim_player.play("idle")
+	else:
+		anim_player.play("crouch_gun")
+	
 	if Input.is_action_just_pressed("sprint"):
 		pc.shotty_target=pc.find_closest_enemy()
 		pc.shotgun_point_to_target()
