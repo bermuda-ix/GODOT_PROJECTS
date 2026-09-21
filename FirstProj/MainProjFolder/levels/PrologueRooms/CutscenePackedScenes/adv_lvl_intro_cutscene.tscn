@@ -3464,17 +3464,17 @@ anchors_preset = -1
 anchor_left = 0.9305556
 anchor_right = 1.0
 anchor_bottom = 0.049382716
-offset_left = -113.0
+offset_left = -261.0
 offset_top = 186.0
-offset_right = -103.0
+offset_right = -51.0
 offset_bottom = 195.0
-grow_horizontal = 0
+grow_horizontal = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/CenterContainer" unique_id=172532092]
-custom_minimum_size = Vector2(50, 25)
+custom_minimum_size = Vector2(150, 25)
 layout_mode = 2
 theme = ExtResource("3_b4i58")
-theme_override_font_sizes/normal_font_size = 8
+theme_override_font_sizes/normal_font_size = 24
 text = "ESC: Skip Cutscene"
 
 [node name="Background" type="Node2D" parent="." unique_id=454343048]
