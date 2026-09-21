@@ -95,7 +95,7 @@ func _ready():
 		
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	#polygon_2d.polygon = collision_polygon_2d.polygon
-	Events.level_completed.connect(show_level_complete)
+	#Events.level_completed.connect(show_level_complete)
 	Events.game_over.connect(show_game_over)
 	Events.boss_died.connect(boss_died)
 	#Events.pause.connect(show_pause)
