@@ -12,8 +12,8 @@ class_name elevator extends Node2D
 @onready var scroll_container: ScrollContainer = $Path2D/PathFollow2D/StaticBody2D/ElevatorUI/PanelContainer/ScrollContainer
 @onready var elevator_buttons: VBoxContainer = $Path2D/PathFollow2D/StaticBody2D/ElevatorUI/PanelContainer/ScrollContainer/ElevatorButtons
 @onready var global_flag_handler: GlobalFlagHandler = $GlobalFlagHandler
-@onready var door_collision: CollisionShape2D = $Path2D/PathFollow2D/StaticBody2D/Door/DoorCollision
 @onready var player_detect_collision: CollisionShape2D = $Path2D/PathFollow2D/StaticBody2D/PlayerDetect/CollisionShape2D
+@onready var door_collision: CollisionShape2D = $Path2D/PathFollow2D/StaticBody2D/Door/DoorCollision
 
 
 
