@@ -526,6 +526,7 @@ func _init_state_machine():
 	#state_machine.add_transition(idle, special_attack, &"special_attack")
 	state_machine.add_transition(attack_state, dodge_state, &"start_dodge")
 	state_machine.add_transition(special_attack, dodge_state, &"start_dodge")
+	state_machine.add_transition(special_attack, attack_state, &"dash_attack")
 	
 	state_machine.add_transition(attack_state, hit, &"interrupt_knockback")
 	
@@ -1907,14 +1908,16 @@ func lockon():
 		
 		if state_machine.get_active_state()!=flip_state:
 			target_dir()
-			#if arc_vector<Vector2.RIGHT and Vector2.UP<arc_vector:
-				#
-				##"on right")
-				#target_right = false
-				#
-			#elif arc_vector>Vector2.LEFT and Vector2.UP>arc_vector:
-				##"on left")
-				#target_right = true
+
+
+func lockon_specific(_target : Node2D) -> void:
+	if not _target.is_in_group("Enemy"):
+		return
+	target=_target
+	target.target_lock()
+	shotty_target=target
+	set_shotgun_target_look(true)
+	combat_states.dispatch(&"locking_on")
 
 func unlock_from_target() -> void:
 	target=null

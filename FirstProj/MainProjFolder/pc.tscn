@@ -2158,6 +2158,18 @@ tracks/11/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("../../ShootHandler:tracker_round")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_lof0h"]
 resource_name = "spin"
@@ -2492,6 +2504,18 @@ tracks/10/keys = {
 "update": 0,
 "values": [Color(2.454227, 2.454227, 2.454227, 1), Color(10.5787325, 10.5787325, 10.5787325, 1)]
 }
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("../../ShootHandler:tracker_round")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0.6333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_s6wi3"]
 resource_name = "shotgun_aim_quick"
@@ -2627,6 +2651,18 @@ tracks/10/keys = {
 "transitions": PackedFloat32Array(2.4622886, 1),
 "update": 0,
 "values": [Color(2.454227, 2.454227, 2.454227, 1), Color(10.5787325, 10.5787325, 10.5787325, 1)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("../../ShootHandler:tracker_round")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_3053v"]

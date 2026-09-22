@@ -11,6 +11,7 @@ const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 @onready var projectile_hit_box: ProjectileHitBox = $Sprite2D/ProjectileHitBox
 @onready var direction_vector = Vector2.RIGHT
+@onready var tracker_round
 
 var dir : Vector2 = Vector2.RIGHT
 var spawnPos : Vector2

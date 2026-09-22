@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="6_82t0r"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="10_gem31"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="11_fof0c"]
-[ext_resource type="PackedScene" uid="uid://msi33x3r5d1d" path="res://chars/TEST_CHARS/test_dummy_v2.tscn" id="12_0atxr"]
+[ext_resource type="PackedScene" uid="uid://bbkom6a7pabbe" path="res://chars/enemies/assault_rifle_soldier.tscn" id="12_0atxr"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="12_dqkb5"]
 [ext_resource type="Script" uid="uid://klqpph3n6xut" path="res://Component/functions/PersistentData/LevelStateHandler.gd" id="12_v15hm"]
 
@@ -438,7 +438,7 @@ metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 position = Vector2(746, 59)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." index="26" unique_id=1116371728]
-position = Vector2(176, 136)
+position = Vector2(672, 128)
 collision_layer = 524289
 collision_mask = 1048578
 
@@ -483,8 +483,9 @@ position = Vector2(952, 35)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="35" unique_id=1515680001]
 environment = SubResource("Environment_dqkb5")
 
-[node name="TestDummyV2" parent="." index="36" unique_id=2043234278 groups=["Enemy"] instance=ExtResource("12_0atxr")]
-position = Vector2(672.00006, -47.999996)
+[node name="AssaultRifleSoldier" parent="." index="36" unique_id=1122506050 instance=ExtResource("12_0atxr")]
+position = Vector2(848, 72)
+scale = Vector2(0.7, 0.7)
 
 [connection signal="update_health" from="PC" to="CanvasLayer/UI_Level" method="set_health"]
 

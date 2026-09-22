@@ -2430,7 +2430,7 @@ navigation_agent = NodePath("../NavigationAgent2D")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://7qyekh3c2p7r"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="NavigationHandler" unique_id=1259014032]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1259014032]
 position = Vector2(2, -2)
 shape = SubResource("CapsuleShape2D_incat")
 

@@ -18,7 +18,7 @@ extends Node
 @export var bullet_speed : float = 400.0
 @export var bullet_damage : int = 1
 @export var bullet_rotation : float = 0.0
-
+@export var tracker_round := false : set = set_tracker_round
 
 
 @export_category("Missile Specs")
@@ -27,6 +27,8 @@ extends Node
 
 var turret_order : int =0
 
+
+
 func _ready() -> void:
 	turret.shoot_bullet.connect(shoot_bullet)
 
@@ -34,6 +36,8 @@ func shoot_bullet():
 	var bullet_inst : RigidBody2D = projectile.instantiate()
 	bullet_inst.set_speed(bullet_speed)
 	bullet_inst.scale_size=bullet_scale
+	if "tracker_round" in bullet_inst:
+		bullet_inst.tracker_round = tracker_round
 	if bullet_inst.is_in_group("missile"):
 		bullet_inst.set_accel(50.0)
 		bullet_inst.tracking_time=bullet_tracking_time
@@ -67,6 +71,7 @@ func shoot_bullet():
 		#print_debug(bullet_inst.dir)
 		
 	actor.get_tree().current_scene.add_child(bullet_inst)
+	tracker_round=false
 
 
 func set_projectile(_projectile : PackedScene):
@@ -106,3 +111,6 @@ func rotation_to_direction(_rotation_degrees : int) -> Vector2:
 	# Normalize the vector (optional, but ensures length = 1)
 	direction = direction.normalized()
 	return direction
+
+func set_tracker_round(_value) -> void:
+	tracker_round=_value

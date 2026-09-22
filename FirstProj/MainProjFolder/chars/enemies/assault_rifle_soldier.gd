@@ -736,6 +736,9 @@ func _on_hurt_box_knockback(_launch_strength: float, _knock_back_strength: float
 func _on_hurt_box_body_entered(body: Node2D) -> void:
 	death_knockback=10.0
 	death_launch=0.0
+	if "tracker_round" in body:
+		if body.tracker_round:
+			player.lockon_specific(self)
 	if "knocked_back" in body:
 		if body.knocked_back == true:
 			hit_stop.hit_stop(0.2, 0.3)
