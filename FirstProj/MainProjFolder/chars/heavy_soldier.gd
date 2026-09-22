@@ -649,7 +649,7 @@ func _on_staggered_exited() -> void:
 	shield_collision.set_deferred("disabled",false)
 
 func _on_hurt_box_received_damage(damage: int) -> void:
-	hit_stop.hit_stop(0.05,0.1)
+	hit_stop.hit_stop(0.05,0.05)
 	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 		Events.allied_enemy_hit.emit()
 	

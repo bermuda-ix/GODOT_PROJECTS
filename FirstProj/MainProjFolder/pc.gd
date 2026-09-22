@@ -47,6 +47,7 @@ signal clash_end
 @onready var clash_power: ClashPower = $ClashPower
 @onready var clash_timer: Timer = $ClashPower/ClashTimer
 @onready var charge_timer: Timer = $ChargeTimer
+@onready var sprint_mode := false
 
 @onready var input_active := true
 @onready var stairs_detected : bool = false
@@ -557,6 +558,7 @@ func _init_state_machine():
 
 	#Wall Stick
 	state_machine.add_transition(jump_state, wall_stick, &"stick_to_wall")
+	state_machine.add_transition(falling_state, wall_stick, &"stick_to_wall")
 	state_machine.add_transition(wall_stick, jump_state, &"jump_off_wall")
 	state_machine.add_transition(wall_stick, falling_state, &"fall_off_wall")
 	
@@ -891,7 +893,7 @@ func wall_sticking(_wall_hold : bool):
 	
 	if state_machine.get_active_state()==wall_stick:
 		if state_machine.get_previous_active_state()!=flip_state and state_machine.get_previous_active_state()!=flip_end_state:
-			if Input.is_action_just_released("jump"):
+			if Input.is_action_just_released("jump") and Input.is_action_just_pressed("down"):
 				wall_hold = false
 				state_machine.dispatch(&"fall_off_wall")
 				#assert(velocity.y!=0)
@@ -928,29 +930,28 @@ func jump_out(jumpout_vel : float):
 
 func handle_wall_jump(wall_hold, delta):
 	if not is_on_wall_only(): return
-	if not Input.is_action_pressed("sprint"): return
+	if not Input.is_action_pressed("jump"): return
 	var _jump_vel=50
 	wall_normal = get_wall_normal()
 
 
-	if wall_hold == true:
+	if wall_hold:
 		#state = States.WALL_STICK
-		
-			
-		if (Input.is_action_just_pressed("walk_right") and wall_normal==Vector2.RIGHT) \
-		or (Input.is_action_just_pressed("walk_left") and wall_normal==Vector2.LEFT) \
-		 or Input.is_action_just_released("jump"):
-			state_machine.dispatch(&"jump_off_wall")
-			#knockback.x=-_jump_vel
-			#knockback.y=movement_data.jump_velocity
-			velocity.x = move_toward(velocity.x, movement_data.speed * wall_normal.x * 1.5, movement_data.acceleration*10 * delta)
-			velocity.y = movement_data.jump_velocity
-			just_wall_jump = true
-			wall_hold=false
-		else:
-			state_machine.dispatch(&"stick_to_wall")
-			velocity.x =0
-			velocity.y = 0
+		pass
+		#print_debug(Input.is_action_pressed("jump"))
+		#if Input.is_action_just_released("jump"):
+			#pass
+			###knockback.x=-_jump_vel
+			###knockback.y=movement_data.jump_velocity
+			##velocity.x = move_toward(velocity.x, movement_data.speed * wall_normal.x * 1.5, movement_data.acceleration*10 * delta)
+			##velocity.y = movement_data.jump_velocity
+			##just_wall_jump = true
+			##wall_hold=false
+			##state_machine.dispatch(&"jump_off_wall")
+		#else:
+			#state_machine.dispatch(&"stick_to_wall")
+			#velocity.x =0
+			#velocity.y = 0
 
 		
 	if wall_hold == true:
@@ -1066,24 +1067,7 @@ func update_animation(input_axis):
 			 and s_atk==false:
 				#state = States.WALKING
 				
-				if Input.is_action_pressed("sprint"):
-
-					if is_on_wall_only():
-						wall_hold=true
-					if combat_states.get_active_state()!=locked:
-						walk_anim="run"
-						state_machine.dispatch(&"start_sprinting")
-					else:
-						state_machine.dispatch(&"start_walking")
-					movement_data = load("res://FasterMovementData.tres")
-				elif Input.is_action_just_released("sprint"):
-					wall_hold=false
-					movement_data = load("res://DefaultMovementData.tres")
-					walk_anim="walk"
-					state_machine.dispatch(&"start_walking")
-				else:
-					walk_anim="walk"
-					state_machine.dispatch(&"start_walking")
+				sprint_handler()
 					
 	else:
 		if not target_right:
@@ -1115,6 +1099,23 @@ func update_animation(input_axis):
 			falling=false
 			state_machine.dispatch(&"return_to_idle")
 	
+func sprint_handler() -> void:
+	if Input.is_action_just_pressed("sprint"):
+		if is_on_wall_only():
+			wall_hold=true
+		if combat_states.get_active_state()!=locked:
+			walk_anim="run"
+			state_machine.dispatch(&"start_sprinting")
+		else:
+			state_machine.dispatch(&"start_walking")
+		movement_data = load("res://FasterMovementData.tres")
+	elif Input.is_action_just_released("sprint") and not input_axis==0:
+		wall_hold=false
+		movement_data = load("res://DefaultMovementData.tres")
+		walk_anim="walk"
+		state_machine.dispatch(&"start_walking")
+	else:
+		pass
 		
 		
 func attack_handler():
@@ -1702,7 +1703,10 @@ func rotation_to_direction(_rotation_degrees : int) -> Vector2:
 
 func shotgun_free_rotate():
 	if shotgun_lookat_target:
-		shotgun_point_to_target()
+		if shotty_target!=null:
+			shotty.look_at(shotty_target.global_position)
+		elif target!=null:
+			shotty.look_at(target.global_position)
 	elif shotgun_lookat_mouse:
 		shotty.look_at(get_global_mouse_position())
 	elif controller_input_helper.look_with_gamepad:
@@ -1854,7 +1858,8 @@ func _on_air_dash_exited() -> void:
 
 func lockon():
 	var target_dist : Vector2 = Vector2.ZERO
-	
+	if state_machine.get_active_state()==aim:
+		return
 	if Input.is_action_just_pressed("lockon"):
 		if combat_states.get_active_state()==locked:
 			combat_states.dispatch(&"unlocking")

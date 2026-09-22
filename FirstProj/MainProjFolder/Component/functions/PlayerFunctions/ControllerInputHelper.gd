@@ -14,7 +14,9 @@ class_name ControllerInputHelper extends Node
 
 func _physics_process(delta: float) -> void:
 	if look_with_gamepad:
-		shotty.rotation=gun_rotate()
+		if not player.shotgun_lookat_target:
+			shotty.rotation=gun_rotate()
+
 	
 	if player.animated_sprite_2d.scale.x==-1:
 		face_dir=-1

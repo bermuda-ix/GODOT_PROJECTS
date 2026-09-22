@@ -24,10 +24,10 @@ func _update(delta: float) -> void:
 	else:
 		anim_player.play("crouch_gun")
 	
-	if Input.is_action_just_pressed("sprint"):
+	if Input.is_action_pressed("lockon"):
 		pc.shotty_target=pc.find_closest_enemy()
 		pc.shotgun_point_to_target()
-	elif Input.is_action_just_released("sprint"):
+	elif Input.is_action_just_released("lockon"):
 		if pc.target==null:
 			pc.set_shotgun_target_look(false)
 		else:
