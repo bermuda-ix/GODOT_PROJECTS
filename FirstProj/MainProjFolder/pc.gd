@@ -821,7 +821,7 @@ func _physics_process(delta):
 			knockback.y = lerpf(knockback.y, 0, 0.6)
 		forward_thrust = lerp(forward_thrust, Vector2.ZERO, 0.6)
 		#wall hold check
-		wall_sticking(wall_hold)
+		#wall_sticking(wall_hold)
 
 # Add the gravity.
 func apply_gravity(delta):
@@ -884,6 +884,7 @@ func jump_dodge(input_axis, delta):
 func stick_to_wall() -> void:
 	if Input.is_action_pressed("jump")  and is_on_wall_only():
 			wall_hold=true
+			state_machine.dispatch(&"stick_to_wall")
 
 func wall_sticking(_wall_hold : bool):
 	if just_wall_jump: return

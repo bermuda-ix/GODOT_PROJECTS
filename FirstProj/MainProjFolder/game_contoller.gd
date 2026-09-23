@@ -134,8 +134,8 @@ func load_levels(dict : Dictionary) -> void:
 	mutex.unlock()
 
 func load_adv_levels_web_test() -> void:
-	load_levels(LevelsList.prologue_unique_levels)
-	load_levels(LevelsList.level_maps)
+	load_levels(LevelsList.levels)
+	#load_levels(LevelsList.level_maps)
 
 func call_preload_levels(_dict : Dictionary):
 	thread.start(load_levels.bind(_dict))
