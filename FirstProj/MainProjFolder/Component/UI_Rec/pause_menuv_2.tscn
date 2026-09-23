@@ -3296,6 +3296,8 @@ theme_override_constants/separation = 30
 [node name="ReturnButton" type="TextureButton" parent="TextureRect/MainPause/VBoxContainer" unique_id=1706198052]
 layout_mode = 2
 size_flags_horizontal = 0
+focus_neighbor_top = NodePath("../ControlsButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
 texture_normal = ExtResource("2_07p6k")
 texture_pressed = ExtResource("5_1qtoj")
 texture_hover = ExtResource("6_pbvfj")
@@ -3317,6 +3319,8 @@ text = "CONTINUE"
 
 [node name="QuitButton" type="TextureButton" parent="TextureRect/MainPause/VBoxContainer" unique_id=210153134]
 layout_mode = 2
+focus_neighbor_top = NodePath("../ReturnButton")
+focus_neighbor_bottom = NodePath("../ControlsButton")
 texture_normal = ExtResource("2_07p6k")
 texture_pressed = ExtResource("5_1qtoj")
 texture_hover = ExtResource("6_pbvfj")
@@ -3338,6 +3342,8 @@ text = "QUIT"
 
 [node name="ControlsButton" type="TextureButton" parent="TextureRect/MainPause/VBoxContainer" unique_id=169320448]
 layout_mode = 2
+focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../ReturnButton")
 texture_normal = ExtResource("2_07p6k")
 texture_pressed = ExtResource("5_1qtoj")
 texture_hover = ExtResource("5_1qtoj")

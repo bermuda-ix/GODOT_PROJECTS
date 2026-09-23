@@ -73,9 +73,9 @@ polygon = PackedVector2Array(79, 18, 97, 18, 97, 31, 101, 32, 101, 36, 97, 36, 9
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_kuq7b"]
 polygon = PackedVector2Array(13, 33, 16, 36, 12, 54, 9, 56, 9, 60, 13, 64, -1, 65, -1, 61, 6, 59, 6, 55, -3, 55, -2, 49, 6, 51, 7.718628, 46.580666, 6, 46, 5, 35, 7, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eq3j3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_runl5"]
 atlas = ExtResource("12_pwbd4")
-region = Rect2(600, 0, 40, 153)
+region = Rect2(756, 192, 42, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k4815"]
 atlas = ExtResource("13_4ep4i")
@@ -85,7 +85,7 @@ region = Rect2(1400, 600, 200, 100)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_eq3j3")
+"texture": SubResource("AtlasTexture_runl5")
 }],
 "loop": 1,
 "name": &"broke",
@@ -102,6 +102,9 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_incat"]
 size = Vector2(202, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m75gd"]
+size = Vector2(31, 99)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_658m8"]
 b = Vector2(593, -291.31647)
@@ -1118,14 +1121,16 @@ position = Vector2(1393, 183)
 tile_map_data = PackedByteArray("AAAJAAAAAAANAAUAAAAIAAAAAAAAAAUAAAAHAAAAAAAFAAUAAAAGAAAAAAABAAUAAAAFAAAAAAAKAAUAAAAEAAAAAAAFAAUAAAADAAAAAAABAAUAAAACAAAAAAABAAUAAAABAAAAAAACAAEAAAAAAAAAAAALAAUAAAD//wAAAAAIAAUAAAAJAP//AAANAAAAAAAIAP//AAAKAAAAAAAHAP//AAACAAAAAAAGAP//AAAMAAAAAAAFAP//AAACAAQAAAAEAP//AAADAAQAAAADAP//AAABAAAAAAACAP//AAADAAAAAAABAP//AAADAAQAAAAAAP//AAADAAAAAAD/////AAAIAAAAAAA=")
 tile_set = ExtResource("11_runl5")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Tilesets/DestructableEntrance" index="1" unique_id=51587458 node_paths=PackedStringArray("connected_actor", "platform")]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Tilesets/DestructableEntrance" index="1" unique_id=51587458 node_paths=PackedStringArray("connected_actor", "platform", "destroyed")]
 self_modulate = Color(3.2944162, 3.2944162, 3.2944162, 1)
 z_index = -1
-position = Vector2(1879, 173)
+position = Vector2(1898, 182)
 sprite_frames = SubResource("SpriteFrames_m75gd")
+animation = &"broke"
 script = ExtResource("14_kx8xh")
 connected_actor = NodePath("../../../Enemy/turrets/turret_base_burst_fire")
 platform = NodePath("DestructablePlatform1/CollisionShape2D")
+destroyed = NodePath("DestructablePlatform1/Destroyed")
 
 [node name="DestructablePlatform1" type="StaticBody2D" parent="Tilesets/DestructableEntrance/AnimatedSprite2D" index="0" unique_id=1283824434]
 position = Vector2(-92, -40)
@@ -1133,6 +1138,11 @@ position = Vector2(-92, -40)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tilesets/DestructableEntrance/AnimatedSprite2D/DestructablePlatform1" index="0" unique_id=654586272]
 position = Vector2(91, 2.5)
 shape = SubResource("RectangleShape2D_incat")
+
+[node name="Destroyed" type="CollisionShape2D" parent="Tilesets/DestructableEntrance/AnimatedSprite2D/DestructablePlatform1" index="1" unique_id=2046772063]
+position = Vector2(97.5, 41.5)
+shape = SubResource("RectangleShape2D_m75gd")
+disabled = true
 
 [node name="Props" type="Node" parent="." index="8" unique_id=1204222298]
 

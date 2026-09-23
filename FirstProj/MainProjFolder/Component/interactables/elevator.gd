@@ -83,7 +83,12 @@ func add_floor_buttons():
 		_new_elevator_button.name = "Floor " + str(floors.size()-(i+1))
 		print_debug(_new_elevator_button.button_text)
 		elevator_buttons.add_child(_new_elevator_button)
+	
+
+		#button.focus_neighbor_top=button_above.get_path()
+		#button.focus_neighbor_bottom=button_below.get_path()
 		
+
 
 #for automaticallly moving elevators
 func _on_pause_move_timeout() -> void:
@@ -147,15 +152,6 @@ func get_floor_number() -> int:
 	return floors.find(next_floor)
 
 
-#func save_state():
-	#var _name=self.get_path()
-	#GlobalSaveData.add_persistent_value(_name, str(active))
-	#
-#func load_state(value : String):
-	#if value=="true":
-		#active=true
-	#else:
-		#active=false
 
 func _on_resume_timeout() -> void:
 	pass
@@ -176,7 +172,18 @@ func _on_button_panel_body_exited(body: Node2D) -> void:
 func open_elevator_menu() -> void:
 	if panel_active:
 		animation_player.play("open_elevator_menu")
-		elevator_ui.grab_focus()
+	
+		for i in range(floors.size()):
+			var button_name := str("Floor ",i)
+			var button_name_above := str("Floor ", wrapi(i+1, 0, floors.size()))
+			var button_name_below := str("Floor ", wrapi(i-1, 0, floors.size()))
+			var button : ElevatorButton = elevator_buttons.get_node(button_name)
+			var button_above : ElevatorButton = elevator_buttons.get_node(button_name_above)
+			var button_below : ElevatorButton = elevator_buttons.get_node(button_name_below)
+			
+			if i == init_floor:
+				button.grab_focus()
+				scroll_container.ensure_control_visible(button)
 		
 
 #func close_elevator_menu() -> void:

@@ -33,6 +33,8 @@ text = "Survival mode"
 
 [node name="boss" type="Button" parent="VBoxContainer" unique_id=281961610]
 layout_mode = 2
+focus_neighbor_top = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
 action_mode = 0
 text = "ADVENTURE MODE"
 

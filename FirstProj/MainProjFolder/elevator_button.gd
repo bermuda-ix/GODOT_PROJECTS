@@ -7,6 +7,11 @@ var floor_locked : bool = false
 signal floor
 
 func _ready() -> void:
+	
+	if floor_locked:
+		modulate = Color(0.234, 0.234, 0.234, 0.8)
+	else:
+		modulate = Color(1.0, 1.0, 1.0, 1.0)
 	rich_text_label.text=str("FLOOR " + button_text)
 	
 
@@ -29,4 +34,8 @@ func _on_pressed() -> void:
 
 func toggle_floor_lock(value : bool) -> void:
 	floor_locked = value
+	if value:
+		modulate = Color(0.234, 0.234, 0.234, 0.8)
+	else:
+		modulate = Color(1.0, 1.0, 1.0, 1.0)
 	#print_debug(floor_locked)

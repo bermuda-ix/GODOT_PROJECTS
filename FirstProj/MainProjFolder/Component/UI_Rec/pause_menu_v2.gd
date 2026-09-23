@@ -2,7 +2,11 @@ extends Control
 
 @onready var main_pause: Control = $TextureRect/MainPause
 @onready var controls_menu: Control = $TextureRect/ControlsMenu
+@onready var return_button: TextureButton = $TextureRect/MainPause/VBoxContainer/ReturnButton
 
+
+func _ready() -> void:
+	return_button.grab_focus()
 
 func _process(delta: float) -> void:
 	pass

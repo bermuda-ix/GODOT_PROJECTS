@@ -626,7 +626,7 @@ texture = SubResource("AtlasTexture_ophm4")
 position = Vector2(25, 18)
 texture = SubResource("AtlasTexture_0hm8f")
 
-[node name="ButtonPanel" type="Area2D" parent="Path2D/PathFollow2D/StaticBody2D/ButtonPanelSprite" unique_id=885861307]
+[node name="ButtonPanel" type="Area2D" parent="Path2D/PathFollow2D/StaticBody2D/ButtonPanelSprite" unique_id=885861307 groups=["elevator_button"]]
 collision_layer = 33554432
 collision_mask = 4194306
 
@@ -662,6 +662,7 @@ mouse_filter = 1
 [node name="ScrollContainer" type="ScrollContainer" parent="Path2D/PathFollow2D/StaticBody2D/ElevatorUI/PanelContainer" unique_id=1661033897]
 custom_minimum_size = Vector2(70, 80)
 layout_mode = 2
+follow_focus = true
 
 [node name="ElevatorButtons" type="VBoxContainer" parent="Path2D/PathFollow2D/StaticBody2D/ElevatorUI/PanelContainer/ScrollContainer" unique_id=1041235910]
 layout_mode = 2

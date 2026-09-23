@@ -2,6 +2,8 @@ extends CenterContainer
 
 @onready var boss: Button = $VBoxContainer/boss
 
+func _ready() -> void:
+	boss.grab_focus()
 
 func _on_guanlet_pressed():
 	await LevelTransition.fade_to_black()

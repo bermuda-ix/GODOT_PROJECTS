@@ -2136,12 +2136,16 @@ func _on_interactable_detector_area_entered(area: Area2D) -> void:
 			if area.is_in_group("AnimatedDoor"):
 				animated_door=true
 	elif area.is_in_group("elevator_door"):
-		interact_prompt_player.play("Enter")
+		interact_prompt_player.play("Use")
 		interact_ready=false
 		elevator_door=true
-	else:
-		interact_prompt_player.play("Enter")
+	elif area.is_in_group("elevator_button"):
+		interact_prompt_player.play("Use")
 		interact_ready=true
+	else:
+		pass
+		#interact_prompt_player.play("Enter")
+		#interact_ready=true
 		
 func _on_interactable_detector_area_exited(area: Area2D) -> void:
 	interact_prompt_player.play("RESET")
@@ -2161,7 +2165,7 @@ func _on_interactable_detector_area_exited(area: Area2D) -> void:
 		interact_ready=false
 	
 func interact() -> void:
-	if Input.is_action_just_pressed("Interact") or Input.is_action_just_pressed("up"):
+	if Input.is_action_just_pressed("Interact") and not interact_menu_open:
 		if interact_ready:
 			Events.open_interact_menu.emit()
 		elif elevator_door:
