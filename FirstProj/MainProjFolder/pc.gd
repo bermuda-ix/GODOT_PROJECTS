@@ -939,31 +939,31 @@ func handle_wall_jump(wall_hold, delta):
 	wall_normal = get_wall_normal()
 
 
-	if wall_hold:
-		#state = States.WALL_STICK
-		pass
-		#print_debug(Input.is_action_pressed("jump"))
-		#if Input.is_action_just_released("jump"):
-			#pass
-			###knockback.x=-_jump_vel
-			###knockback.y=movement_data.jump_velocity
-			##velocity.x = move_toward(velocity.x, movement_data.speed * wall_normal.x * 1.5, movement_data.acceleration*10 * delta)
-			##velocity.y = movement_data.jump_velocity
-			##just_wall_jump = true
-			##wall_hold=false
-			##state_machine.dispatch(&"jump_off_wall")
-		#else:
-			#state_machine.dispatch(&"stick_to_wall")
-			#velocity.x =0
-			#velocity.y = 0
-
-		
-	if wall_hold == true:
-		velocity.x =0
-		velocity.y = 0
-
-	else:
-		gravity = 980
+	#if wall_hold:
+		##state = States.WALL_STICK
+		#pass
+		##print_debug(Input.is_action_pressed("jump"))
+		##if Input.is_action_just_released("jump"):
+			##pass
+			####knockback.x=-_jump_vel
+			####knockback.y=movement_data.jump_velocity
+			###velocity.x = move_toward(velocity.x, movement_data.speed * wall_normal.x * 1.5, movement_data.acceleration*10 * delta)
+			###velocity.y = movement_data.jump_velocity
+			###just_wall_jump = true
+			###wall_hold=false
+			###state_machine.dispatch(&"jump_off_wall")
+		##else:
+			##state_machine.dispatch(&"stick_to_wall")
+			##velocity.x =0
+			##velocity.y = 0
+#
+		#
+	#if wall_hold == true:
+		#velocity.x =0
+		#velocity.y = 0
+#
+	#else:
+		#gravity = 980
 
 
 
@@ -3266,7 +3266,7 @@ func _on_jump_state_updated(delta: float) -> void:
 func _on_jump_state_entered() -> void:
 	var _jump_vel_x=30
 	var _jump_vel_y=50
-	velocity.y = movement_data.jump_velocity/2
+	#velocity.y = movement_data.jump_velocity/2
 
 
 
