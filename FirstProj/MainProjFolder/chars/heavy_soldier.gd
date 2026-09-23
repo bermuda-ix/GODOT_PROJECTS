@@ -24,7 +24,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 #Behaviour Tree Player
-@onready var bt_player: BTPlayer = $BTPlayer
+@export var bt_player: BTPlayer = null
 #Particles
 @onready var gpu_particles_2d: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D
 @onready var gpu_particles_2d_2: GPUParticles2D = $AnimatedSprite2D/GPUParticles2D2
@@ -187,11 +187,12 @@ func _ready():
 	animation_player.play("idle")
 	state="guard"
 	next=nav_agent.get_next_path_position()
-	bt_player.blackboard.set_var("attack_mode", false)
-	bt_player.blackboard.set_var("melee_mode", false)
-	bt_player.blackboard.set_var("ranged_mode", true)
-	bt_player.blackboard.set_var("within_range", false)
-	bt_player.blackboard.set_var("staggered", false)
+	if bt_player != null:
+		bt_player.blackboard.set_var("attack_mode", false)
+		bt_player.blackboard.set_var("melee_mode", false)
+		bt_player.blackboard.set_var("ranged_mode", true)
+		bt_player.blackboard.set_var("within_range", false)
+		bt_player.blackboard.set_var("staggered", false)
 	Events.parry_success.connect(clash_follow_up)
 	#turret.setup(0.2)
 	turret.shoot_timer.paused=true
@@ -706,8 +707,8 @@ func _on_health_health_depleted() -> void:
 	animated_sprite_2d.scale.x = 1
 	knockback.x=250
 	jump_handler.handle_jump(0.2)
-	if linked_enemies!=null or not linked_enemies.is_empty() or linked_enemies.size()==0:
-		linked_enemies.remove_at(group_link_order)
+	#if linked_enemies!=null or not linked_enemies.is_empty() or linked_enemies.size()==0:
+		#linked_enemies.remove_at(group_link_order)
 	death_handler.death()
 
 
@@ -776,7 +777,7 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	hit_stop.end_hit_stop()
 	if vision_handler.player_found or vision_handler.always_on:
 		state_machine.dispatch(&"attack_mode")
-		bt_player.blackboard.set_var("attack_mode", true)
+		#bt_player.blackboard.set_var("attack_mode", true)
 		
 	if health.health<=0:
 		queue_free()

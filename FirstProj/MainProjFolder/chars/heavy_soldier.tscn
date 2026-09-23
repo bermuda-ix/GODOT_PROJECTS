@@ -3817,12 +3817,11 @@ script = ExtResource("22_rumpe")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://ddhk64y60klpg"
 
-[node name="CombatStateChangeHandler" type="Node" parent="." unique_id=1783830282 node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "bt_player", "vision_handler")]
+[node name="CombatStateChangeHandler" type="Node" parent="." unique_id=1783830282 node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "vision_handler")]
 script = ExtResource("25_uhne8")
 actor = NodePath("..")
 sm = NodePath("../StateMachine")
 combat_state_machine = NodePath("../CombatStateMachine")
-bt_player = NodePath("")
 ranged_dist = 50
 vision_handler = NodePath("../VisionHandler")
 metadata/_custom_type_script = "uid://cvo1e5meai30k"
@@ -3841,10 +3840,9 @@ script = ExtResource("26_i7wao")
 actor = NodePath("../..")
 metadata/_custom_type_script = "uid://daq7xh1e6l7u6"
 
-[node name="Chasing" type="LimboState" parent="StateMachine" unique_id=1832901402 node_paths=PackedStringArray("actor", "bt_player")]
+[node name="Chasing" type="LimboState" parent="StateMachine" unique_id=1832901402 node_paths=PackedStringArray("actor")]
 script = ExtResource("27_2a376")
 actor = NodePath("../..")
-bt_player = NodePath("")
 metadata/_custom_type_script = "uid://dgja48rcyj78n"
 
 [node name="Jump" type="LimboState" parent="StateMachine" unique_id=1089354406 node_paths=PackedStringArray("actor", "state_machine", "jump_handler")]
@@ -3854,10 +3852,9 @@ state_machine = NodePath("..")
 jump_handler = NodePath("../../JumpHandler")
 metadata/_custom_type_script = "uid://d2wausty5l457"
 
-[node name="Attack" type="LimboState" parent="StateMachine" unique_id=1761956651 node_paths=PackedStringArray("actor", "bt_player", "hit_box", "hurt_box", "get_player_info")]
+[node name="Attack" type="LimboState" parent="StateMachine" unique_id=1761956651 node_paths=PackedStringArray("actor", "hit_box", "hurt_box", "get_player_info")]
 script = ExtResource("29_ct51r")
 actor = NodePath("../..")
-bt_player = NodePath("")
 hit_box = NodePath("../../HitBox")
 hurt_box = NodePath("../../HurtBox")
 get_player_info = NodePath("../../GetPlayerInfoHandler")
@@ -3911,12 +3908,11 @@ actor = NodePath("../..")
 anim_player = NodePath("../../AnimationPlayer")
 timer = NodePath("../../ParryTimer")
 
-[node name="Staggered" type="LimboState" parent="StateMachine" unique_id=369894600 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player", "vfx_player", "hurt_box", "stagger_timer")]
+[node name="Staggered" type="LimboState" parent="StateMachine" unique_id=369894600 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "vfx_player", "hurt_box", "stagger_timer")]
 script = ExtResource("33_eopqg")
 actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
 stagger = NodePath("../../Stagger")
-bt_player = NodePath("")
 vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
 hurt_box = NodePath("../../HurtBox")
 stagger_timer = NodePath("../../StaggerTimer")
@@ -3995,16 +3991,14 @@ metadata/_custom_type_script = "uid://dc5y78lbovoqo"
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=455656030]
 
-[node name="melee" type="LimboState" parent="CombatStateMachine" unique_id=429295658 node_paths=PackedStringArray("actor", "bt_player")]
+[node name="melee" type="LimboState" parent="CombatStateMachine" unique_id=429295658 node_paths=PackedStringArray("actor")]
 script = ExtResource("27_okbgj")
 actor = NodePath("../..")
-bt_player = NodePath("")
 metadata/_custom_type_script = "uid://dfqe6u0d8wpgw"
 
-[node name="ranged" type="LimboState" parent="CombatStateMachine" unique_id=958311789 node_paths=PackedStringArray("actor", "bt_player")]
+[node name="ranged" type="LimboState" parent="CombatStateMachine" unique_id=958311789 node_paths=PackedStringArray("actor")]
 script = ExtResource("28_xp1ci")
 actor = NodePath("../..")
-bt_player = NodePath("")
 metadata/_custom_type_script = "uid://koggvl8cxowm"
 
 [node name="NPCStats" parent="." unique_id=1588836996 node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("47_b8y0i")]
