@@ -361,8 +361,9 @@ func flip_ally_vision():
 
 
 func target_lock():
-	Events.unlock_from.emit()
+	#Events.unlock_from.emit()
 	target_lock_node.target_lock()
+	
 	
 func get_width() -> int:
 	return collision_shape_2d.get_shape().radius

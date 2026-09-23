@@ -47,7 +47,7 @@ signal clash_end
 @onready var clash_power: ClashPower = $ClashPower
 @onready var clash_timer: Timer = $ClashPower/ClashTimer
 @onready var charge_timer: Timer = $ChargeTimer
-@onready var sprint_mode := false
+@export var sprint_toggle := true
 
 @onready var input_active := true
 @onready var stairs_detected : bool = false
@@ -111,6 +111,7 @@ FLIP,THRUST, HIT, STAGGERED}
 @onready var clashed: LimboState = $StateMachine/AttackState/Clashed
 @onready var parry_failed: LimboState = $StateMachine/ParryFailed
 
+@onready var dash_attack_timer: Timer = $DashAttackTimer
 
 
 @onready var attack_state_stack : Array[LimboState] = []
@@ -325,7 +326,7 @@ var thrust : bool = false
 @onready var counter_timer = $CounterTimer
 @onready var clash_prepared := false
 
-var target
+var target : set = set_target
 var target_string_test : String = "NONE"
 var target_direction
 var movement
@@ -366,6 +367,8 @@ var mutex := Mutex.new()
 #DEBUG FLAGS TBR
 var stuck : bool = false
 
+func set_target (_value)  -> void:
+	target=_value
 
 func _ready():
 	hit_box_pos=hit_box.position
@@ -526,7 +529,7 @@ func _init_state_machine():
 	#state_machine.add_transition(idle, special_attack, &"special_attack")
 	state_machine.add_transition(attack_state, dodge_state, &"start_dodge")
 	state_machine.add_transition(special_attack, dodge_state, &"start_dodge")
-	state_machine.add_transition(special_attack, attack_state, &"dash_attack")
+	state_machine.add_transition(special_attack, attack_state, &"attack_closer")
 	
 	state_machine.add_transition(attack_state, hit, &"interrupt_knockback")
 	
@@ -664,10 +667,7 @@ func _process(_delta):
 	 and state_machine.get_active_state()!=special_attack\
 	 and state_machine.get_active_state()!=flip_state):
 		parry()
-		if not interact_menu_open:
-			attack_handler()
-		else:
-			pass
+
 		update_animation(input_axis)
 	elif state_machine.get_active_state()==flip_state:
 		break_out()
@@ -681,7 +681,10 @@ func _process(_delta):
 	#
 	if Input.is_action_just_pressed("Reload"):
 		reload_gun()
-		
+	
+	if not interact_menu_open:
+		attack_handler()
+	
 	lockon()
 	shotgun_unlock()
 	enter_door()
@@ -1088,7 +1091,7 @@ func update_animation(input_axis):
 			state_machine.dispatch(&"start_walking")
 		if Input.is_action_pressed("sprint"):
 			movement_data = load("res://FasterMovementData.tres")
-		elif Input.is_action_just_released("sprint"):
+		elif Input.is_action_just_released("sprint") and input_axis==0:
 			movement_data = load("res://DefaultMovementData.tres")
 	if (Input.is_action_just_released("walk_left") or Input.is_action_just_released("walk_right")) and input_axis==0:
 		#state = States.IDLE
@@ -1110,22 +1113,39 @@ func sprint_handler() -> void:
 		else:
 			state_machine.dispatch(&"start_walking")
 		movement_data = load("res://FasterMovementData.tres")
-	elif Input.is_action_just_released("sprint") and not input_axis==0:
-		wall_hold=false
-		movement_data = load("res://DefaultMovementData.tres")
-		walk_anim="walk"
-		state_machine.dispatch(&"start_walking")
+	
+	if sprint_toggle:
+		if not Input.is_action_pressed("sprint") and abs(input_axis)<0.2:
+			wall_hold=false
+			movement_data = load("res://DefaultMovementData.tres")
+			walk_anim="walk"
+			state_machine.dispatch(&"start_walking")
 	else:
-		pass
-		
-		
+		if Input.is_action_just_released("sprint"):
+			wall_hold=false
+			movement_data = load("res://DefaultMovementData.tres")
+			walk_anim="walk"
+			state_machine.dispatch(&"start_walking")
+			
 func attack_handler():
 	
 	if state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered or \
-	(state_machine.get_active_state()==parry_success_state and parry_success_state.success==false):
+	(state_machine.get_active_state()==parry_success_state and parry_success_state.success==false)\
+	 or state_machine.get_active_state()==flip_state\
+	 or state_machine.get_active_state()==dodge_state:
 		return
 	
-	
+	if not dash_attack_timer.is_stopped() and target!=null:
+		if Input.is_action_just_pressed("attack"):
+			attack_closer.speed=500
+			if target.is_on_floor():
+				attack_closer.closing_dir= global_position.direction_to(Vector2(target.global_position.x, global_position.y))
+			else:
+				attack_closer.closing_dir= global_position.direction_to(target.global_position)
+			closing_attack()
+			return
+		else:
+			return
 	#var anim_player_time : float = anim_player.current_animation_position
 	
 	if Input.is_action_pressed("attack"):
@@ -1304,6 +1324,7 @@ func light_attack() -> void:
 		var _dist_to_target_x=abs(global_position.x-target.global_position.x)
 		var _dist_to_target_y=abs(global_position.y-target.global_position.y)
 		if Input.is_action_pressed("sprint") and (_dist_to_target_x>50 or _dist_to_target_y>50):
+			attack_closer.speed=200
 			if target.is_on_floor():
 				attack_closer.closing_dir= global_position.direction_to(Vector2(target.global_position.x, global_position.y))
 			else:
@@ -1863,6 +1884,7 @@ func lockon():
 		return
 	if Input.is_action_just_pressed("lockon"):
 		if combat_states.get_active_state()==locked:
+			Events.unlock_from.emit()
 			combat_states.dispatch(&"unlocking")
 		enemies = get_tree().get_nodes_in_group("Enemy")
 		if enemies.is_empty():
@@ -1913,11 +1935,14 @@ func lockon():
 func lockon_specific(_target : Node2D) -> void:
 	if not _target.is_in_group("Enemy"):
 		return
-	target=_target
+	
+	set_target(_target)
+	#assert(target!=null)
 	target.target_lock()
 	shotty_target=target
 	set_shotgun_target_look(true)
 	combat_states.dispatch(&"locking_on")
+	dash_attack_timer.start(0.3)
 
 func unlock_from_target() -> void:
 	target=null
