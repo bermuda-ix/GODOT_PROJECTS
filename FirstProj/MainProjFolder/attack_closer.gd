@@ -25,8 +25,8 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	actor.velocity=closing_dir*speed
-	if actor.velocity.x==0:
-		print_debug("sum ting wong")
+	#if actor.velocity.x==0:
+		#print_debug("sum ting wong")
 	if end_dash:
 		attack_state.dispatch(&"dash_attack")
 		

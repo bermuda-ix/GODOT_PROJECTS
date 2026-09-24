@@ -17,7 +17,7 @@ var dodge_speed : float = 1.0
 @export var dodge_min_dist := 25.0
 
 func _enter() -> void:
-	print_debug("dodging")
+	#print_debug("dodging")
 	
 	anim_player.play("air_dash")
 	pc.set_collision_mask_value(15, false)
@@ -36,7 +36,9 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	pc.velocity.y=0
-	if abs(pc.global_position.x-dodge_pos_start)>dodge_min_dist and\
+	if pc.is_on_floor_only():
+		pc.state_machine.dispatch(&"wall_stick")
+	elif abs(pc.global_position.x-dodge_pos_start)>dodge_min_dist and\
 	Input.is_action_just_released("Dodge"):
 		pc.state_machine.dispatch(&"falling")
 	elif abs(pc.global_position.x-dodge_pos_start)>dodge_distance:

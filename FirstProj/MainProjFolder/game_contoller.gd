@@ -135,7 +135,7 @@ func load_levels(dict : Dictionary) -> void:
 
 func load_adv_levels_web_test() -> void:
 	load_levels(LevelsList.levels)
-	#load_levels(LevelsList.level_maps)
+	load_levels(LevelsList.level_maps)
 
 func call_preload_levels(_dict : Dictionary):
 	thread.start(load_levels.bind(_dict))
@@ -210,7 +210,7 @@ func toggle_world2d_process(value : bool) -> void:
 
 #Load single scene
 func load_cutscene(new_scene: String, \
-	delete: bool = true, \
+	delete: bool = false, \
 	keep_running: bool = false, \
 	_transition_in : String="fade_to_black", \
 	_transition_out : String="fade_from_black") -> void:
@@ -261,9 +261,12 @@ func change_2d_scene (new_scene: String, \
 			current_2d_scene.queue_free() #Deletes node entirely
 			await current_2d_scene.tree_exited
 		elif keep_running:
+			
 			current_2d_scene.visible = false #Keep in mem and running
 		else:
 			world_2d.call_deferred("remove_child", current_2d_scene)
+			await current_2d_scene.tree_exited
+			print_debug("child_removed")
 	
 	#await current_2d_scene.tree_exited
 	
@@ -271,6 +274,7 @@ func change_2d_scene (new_scene: String, \
 	
 	if world_2d.get_child_count()==0:
 		world_2d.add_child(loaded_rooms_map[new_scene])
+		print_debug("level loaded")
 	#player.reparent(loaded_rooms_map[new_scene])
 	
 	#Starting position is -1 if scene has no starting position
@@ -286,8 +290,9 @@ func change_2d_scene (new_scene: String, \
 	Events.retrieve_heat_stats.emit()
 	Events.load_level_states.emit()
 	Events.update_ui_data.emit()
-
-	load_levels(LevelsList.level_maps)
+	
+	if not web_export:
+		load_levels(LevelsList.level_maps)
 	if _previuos_return:
 		loaded_rooms_map[new_scene].player.global_position=get_prev_starting_point()
 	else:
@@ -403,3 +408,8 @@ func set_prev_starting_point(_value : Vector2) -> void:
 func get_prev_starting_point() -> Vector2:
 	return prev_starting_point
 	
+
+
+
+func _on_tree_exiting() -> void:
+	print_debug("what the balls")

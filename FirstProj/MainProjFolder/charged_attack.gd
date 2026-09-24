@@ -6,7 +6,7 @@ extends LimboState
 @export var attack_fx_sprite : AnimatedSprite2D
 
 func _enter() -> void:
-	print_debug("finished charge")
+	#print_debug("finished charge")
 	hit_box.knock_back=true
 	hit_box.knock_back_strength=100
 	pc.charge_attack_vfx(true)

@@ -73,7 +73,7 @@ func toggle_skip(value : bool) -> void:
 	skippable=value
 
 func end_cutscene(_next_scene : String = "PrologueLvl") -> void:
-	Global.game_controller.change_2d_scene("PrologueLvl", true, false, -1, "fade_to_black_quick", "fade_from_black_quick")
+	Global.game_controller.change_2d_scene("PrologueLvl", false, false, -1, "fade_to_black_quick", "fade_from_black_quick")
 
 func load_next_levels():
 	Global.game_controller.load_levels(LevelsList.prologue_unique_levels)

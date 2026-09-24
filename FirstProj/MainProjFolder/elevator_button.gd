@@ -10,19 +10,21 @@ func _ready() -> void:
 	
 	if floor_locked:
 		modulate = Color(0.234, 0.234, 0.234, 0.8)
+		rich_text_label.text=str("LOCKED")
 	else:
 		modulate = Color(1.0, 1.0, 1.0, 1.0)
-	rich_text_label.text=str("FLOOR " + button_text)
+		rich_text_label.text=str("FLOOR " + button_text)
 	
-
+#func _process(delta: float) -> void:
+	#rich_text_label = $PanelContainer/RichTextLabel
 
 func _on_pressed() -> void:
 	if floor_locked:
 		if InventoryDict.player_inventory.has(key_type):
 			toggle_floor_lock(true)
-			print_debug("Floor unlocked")
+			#print_debug("Floor unlocked")
 		else:
-			print_debug("Floor locked")
+			#print_debug("Floor locked")
 			return
 	var regex = RegEx.new()
 	regex.compile("\\d+")
@@ -36,6 +38,11 @@ func toggle_floor_lock(value : bool) -> void:
 	floor_locked = value
 	if value:
 		modulate = Color(0.234, 0.234, 0.234, 0.8)
+		rich_text_label = $PanelContainer/RichTextLabel
+		rich_text_label.text=str("LOCKED")
 	else:
 		modulate = Color(1.0, 1.0, 1.0, 1.0)
+		rich_text_label = $PanelContainer/RichTextLabel
+		rich_text_label.text=str("FLOOR " + button_text)
+		
 	#print_debug(floor_locked)

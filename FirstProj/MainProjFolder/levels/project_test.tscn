@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="6_82t0r"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="10_gem31"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="11_fof0c"]
+[ext_resource type="PackedScene" uid="uid://dpxyvs3nt3yix" path="res://Component/interactables/elevator.tscn" id="12_0atxr"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="12_dqkb5"]
 [ext_resource type="Script" uid="uid://klqpph3n6xut" path="res://Component/functions/PersistentData/LevelStateHandler.gd" id="12_v15hm"]
 
@@ -442,7 +443,7 @@ collision_layer = 524289
 collision_mask = 1048578
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" index="0" unique_id=1194551115]
-position = Vector2(627, -84)
+position = Vector2(1192, -160)
 polygon = PackedVector2Array(-56, 56, -56, -64, 29, -212, 29, 20, 109, 20, 109, -212, 224, -64, 224, 56)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." index="27" unique_id=1497060582]
@@ -481,6 +482,11 @@ position = Vector2(952, 35)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="35" unique_id=1515680001]
 environment = SubResource("Environment_dqkb5")
+
+[node name="Elevator" parent="." index="36" unique_id=330764817 instance=ExtResource("12_0atxr")]
+position = Vector2(808, 112)
+floors = Array[float]([0.0, 0.25, 0.5, 0.75, 1.0])
+init_floor = 0
 
 [connection signal="update_health" from="PC" to="CanvasLayer/UI_Level" method="set_health"]
 

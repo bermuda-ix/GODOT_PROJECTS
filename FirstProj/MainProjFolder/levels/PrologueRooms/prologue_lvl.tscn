@@ -1676,6 +1676,7 @@ position = Vector2(2199, 244)
 [node name="Entry" parent="Entries" index="1" unique_id=120719105 instance=ExtResource("22_5m18i")]
 position = Vector2(2199, 273)
 scale = Vector2(2, 2)
+web_debug = true
 room = ExtResource("21_7klgn")
 
 [node name="DoorSprite2" parent="Entries/Entry" index="1" unique_id=519586328 instance=ExtResource("22_relum")]
@@ -1686,6 +1687,7 @@ scale = Vector2(0.5, 0.5)
 [node name="Entry2" parent="Entries" index="2" unique_id=441824328 instance=ExtResource("22_5m18i")]
 position = Vector2(3030, 279)
 scale = Vector2(2, 2)
+web_debug = true
 entry = 1
 room = ExtResource("22_drpgx")
 
@@ -1697,6 +1699,7 @@ scale = Vector2(0.5, 0.5)
 [node name="Entry3" parent="Entries" index="3" unique_id=1473444436 instance=ExtResource("22_5m18i")]
 position = Vector2(3030, 66)
 scale = Vector2(2, 2)
+web_debug = true
 entry = 2
 room = ExtResource("23_veiog")
 
@@ -1708,6 +1711,7 @@ scale = Vector2(0.5, 0.5)
 [node name="Entry4" parent="Entries" index="4" unique_id=1964066290 instance=ExtResource("22_5m18i")]
 position = Vector2(3513, 1161)
 scale = Vector2(2, 2)
+web_debug = true
 entry = 3
 room = ExtResource("22_drpgx")
 
@@ -1719,6 +1723,7 @@ scale = Vector2(0.5, 0.5)
 [node name="Entry5" parent="Entries" index="5" unique_id=1137718072 instance=ExtResource("22_5m18i")]
 position = Vector2(4216, 1161)
 scale = Vector2(2, 2)
+web_debug = true
 entry = 4
 room = ExtResource("23_veiog")
 
@@ -1730,6 +1735,7 @@ scale = Vector2(0.5, 0.5)
 [node name="Entry6" parent="Entries" index="6" unique_id=326566868 instance=ExtResource("22_5m18i")]
 position = Vector2(4793, 1162)
 scale = Vector2(2, 2)
+web_debug = true
 entry = 5
 room = ExtResource("21_7klgn")
 
@@ -1752,6 +1758,7 @@ position = Vector2(-32, -72)
 position = Vector2(4512, 866)
 entry = 7
 room = ExtResource("22_drpgx")
+location_override = true
 
 [node name="DoorSprite2" parent="Entries/Entry7" index="1" unique_id=339718409 instance=ExtResource("22_relum")]
 position = Vector2(-32, -58)
@@ -1815,6 +1822,7 @@ position = Vector2(-34, -68)
 
 [node name="Entry15" parent="Entries" index="15" unique_id=1347066081 instance=ExtResource("22_5m18i")]
 position = Vector2(6968, 448)
+web_debug = true
 room = ExtResource("22_drpgx")
 
 [node name="DoorSprite2" parent="Entries/Entry15" index="1" unique_id=1466192164 instance=ExtResource("22_relum")]
@@ -1822,6 +1830,7 @@ position = Vector2(-32, -50)
 
 [node name="Entry16" parent="Entries" index="16" unique_id=659299622 instance=ExtResource("22_5m18i")]
 position = Vector2(6488, 448)
+web_debug = true
 room = ExtResource("22_drpgx")
 
 [node name="DoorSprite2" parent="Entries/Entry16" index="1" unique_id=1944474580 instance=ExtResource("22_relum")]
@@ -1829,6 +1838,7 @@ position = Vector2(-32, -49)
 
 [node name="Entry17" parent="Entries" index="17" unique_id=1587930130 instance=ExtResource("22_5m18i")]
 position = Vector2(6232, 448)
+web_debug = true
 room = ExtResource("23_veiog")
 
 [node name="DoorSprite2" parent="Entries/Entry17" index="1" unique_id=641141628 instance=ExtResource("22_relum")]
@@ -1836,6 +1846,7 @@ position = Vector2(-30, -47)
 
 [node name="Entry18" parent="Entries" index="18" unique_id=1048850857 instance=ExtResource("22_5m18i")]
 position = Vector2(5976, 240)
+web_debug = true
 room = ExtResource("21_7klgn")
 
 [node name="DoorSprite2" parent="Entries/Entry18" index="1" unique_id=1400554592 instance=ExtResource("22_relum")]
@@ -1843,6 +1854,7 @@ position = Vector2(-33, -43)
 
 [node name="Entry19" parent="Entries" index="19" unique_id=1974303573 instance=ExtResource("22_5m18i")]
 position = Vector2(6232, 240)
+web_debug = true
 room = ExtResource("23_veiog")
 
 [node name="DoorSprite2" parent="Entries/Entry19" index="1" unique_id=202237301 instance=ExtResource("22_relum")]
@@ -1850,6 +1862,7 @@ position = Vector2(-33, -44)
 
 [node name="Entry20" parent="Entries" index="20" unique_id=561461136 instance=ExtResource("22_5m18i")]
 position = Vector2(6488, 240)
+web_debug = true
 room = ExtResource("22_drpgx")
 
 [node name="DoorSprite2" parent="Entries/Entry20" index="1" unique_id=184160373 instance=ExtResource("22_relum")]
@@ -1857,6 +1870,7 @@ position = Vector2(-33, -42)
 
 [node name="Entry21" parent="Entries" index="21" unique_id=920312659 instance=ExtResource("22_5m18i")]
 position = Vector2(6968, 240)
+web_debug = true
 room = ExtResource("22_drpgx")
 
 [node name="DoorSprite2" parent="Entries/Entry21" index="1" unique_id=2136106081 instance=ExtResource("22_relum")]
@@ -1864,6 +1878,7 @@ position = Vector2(-33, -44)
 
 [node name="Entry22" parent="Entries" index="22" unique_id=1954429143 instance=ExtResource("22_5m18i")]
 position = Vector2(7384, 240)
+web_debug = true
 room = ExtResource("23_veiog")
 
 [node name="DoorSprite2" parent="Entries/Entry22" index="1" unique_id=1024156319 instance=ExtResource("22_relum")]
@@ -1871,6 +1886,7 @@ position = Vector2(-33, -45)
 
 [node name="Entry23" parent="Entries" index="23" unique_id=972256260 instance=ExtResource("22_5m18i")]
 position = Vector2(7384, 0)
+web_debug = true
 room = ExtResource("21_7klgn")
 
 [node name="DoorSprite2" parent="Entries/Entry23" index="1" unique_id=2058062958 instance=ExtResource("22_relum")]
@@ -1878,6 +1894,7 @@ position = Vector2(-33, -46)
 
 [node name="Entry24" parent="Entries" index="24" unique_id=215549894 instance=ExtResource("22_5m18i")]
 position = Vector2(6968, 0)
+web_debug = true
 room = ExtResource("21_7klgn")
 
 [node name="DoorSprite2" parent="Entries/Entry24" index="1" unique_id=1222620990 instance=ExtResource("22_relum")]

@@ -308,9 +308,10 @@ func _physics_process(delta: float) -> void:
 
 func _init_group_link():
 	if group_link_control == null:
-		print_debug("no link")
-		if linked_enemies.size()<=1:
-			print_debug("no link")
+		pass
+		#print_debug("no link")
+		#if linked_enemies.size()<=1:
+			#print_debug("no link")
 	else:
 		linked_enemies=group_link_control.all_grouped_enemies
 		for i in range(linked_enemies.size()):
@@ -816,7 +817,7 @@ func _on_hit_box_clashed() -> void:
 		return
 	velocity.x=0
 	#animation_player.stop()
-	bt_player.blackboard.set_var("staggered", true)
+	
 	hb_collision.set_deferred("disabled",true)
 	hit_box.active=false
 	vfx_sprite.set_deferred("visible", false)

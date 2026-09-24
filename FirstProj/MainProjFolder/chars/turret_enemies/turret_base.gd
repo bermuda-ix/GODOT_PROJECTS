@@ -47,9 +47,10 @@ func _ready() -> void:
 	ammo_count=turret_top.turret.ammo_count
 	turret_top.health.set_max_health(health.get_max_health())
 	if turret_link_control == null:
-		print_debug("no link")
-		if linked_turrets.size()<=1:
-			print_debug("no link")
+		pass
+		#print_debug("no link")
+		#if linked_turrets.size()<=1:
+			#print_debug("no link")
 	else:
 		linked_turrets=turret_link_control.turrets
 		for i in range(linked_turrets.size()):

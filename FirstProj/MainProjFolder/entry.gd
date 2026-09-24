@@ -10,6 +10,7 @@ signal enter_area(room : PackedScene)
 @export var entry : int = 0
 @onready var entry_name : String
 @onready var player : PlayerEntity
+@export var web_test := true
 
 @export_category("Connected Room")
 @export var room : PackedScene
@@ -24,8 +25,13 @@ signal enter_area(room : PackedScene)
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	if not LevelsList.level_maps.has(name) and not location_override:
-		entry_name =self.get_parent().get_parent().name+"/"+self.name
-		LevelsList.level_maps[entry_name] = room.resource_path
+		if web_test:
+			entry_name =self.get_parent().get_parent().name+"/"+self.name
+			#LevelsList.level_maps[entry_name] = room.instantiate()
+			Global.game_controller.loaded_rooms_map[entry_name]= room.instantiate()
+		else:
+			entry_name =self.get_parent().get_parent().name+"/"+self.name
+			LevelsList.level_maps[entry_name] = room.resource_path
 
 func _process(delta: float) -> void:
 	#if test:
@@ -45,7 +51,7 @@ func _on_body_entered(body: Node2D) -> void:
 		test=true
 		player.set_next_room(enter_to)
 		Events.in_door_way.emit(enter_to)
-		print_debug(player.next_room)
+		#print_debug(player.next_room)
 	else:
 		player.set_next_room(entry_name)
 		

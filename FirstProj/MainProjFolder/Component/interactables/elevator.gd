@@ -73,7 +73,7 @@ func open():
 
 func add_floor_buttons():
 	
-	print_debug("This elevator has " + str(floors.size()) + " floors at:")
+	#print_debug("This elevator has " + str(floors.size()) + " floors at:")
 	for i in range(floors.size()):
 		var _new_elevator_button = elevator_button.instantiate()
 		_new_elevator_button.button_text = str(floors.size()-(i+1))
@@ -81,7 +81,7 @@ func add_floor_buttons():
 			_new_elevator_button.toggle_floor_lock(true)
 		_new_elevator_button.floor.connect(self.choose_floor)
 		_new_elevator_button.name = "Floor " + str(floors.size()-(i+1))
-		print_debug(_new_elevator_button.button_text)
+		#print_debug(_new_elevator_button.button_text)
 		elevator_buttons.add_child(_new_elevator_button)
 	
 
@@ -100,12 +100,12 @@ func choose_floor(_floor : int) -> void:
 		current_floor = path_follow_2d.progress_ratio
 		next_floor = floors[_floor]
 		if current_floor<next_floor:
-			print_debug("Moving up to floor ", _floor)
+			#print_debug("Moving up to floor ", _floor)
 			going_up=true
 			animation_player.play("start_moving")
 			animation_player_door.play("close")
 		elif current_floor>next_floor:
-			print_debug("Going down to floor ", _floor)
+			#print_debug("Going down to floor ", _floor)
 			going_up=false
 			animation_player.play("start_moving")
 			animation_player_door.play("close")

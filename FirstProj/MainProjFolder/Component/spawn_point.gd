@@ -122,13 +122,13 @@ func _on_spawn_timer_timeout():
 func activate(spawn):
 	#print_debug(spawn)
 	if spawn==spawn_type:
-		print_debug("activate")
+		#print_debug("activate")
 		spawn_timer.paused=false
 		active=true
 		
 func deactivate(spawn):
 	if spawn==spawn_type:
-		print_debug("deactivate")
+		#print_debug("deactivate")
 		spawn_timer.paused=true
 		active=false
 
@@ -182,12 +182,12 @@ func reset_heat() -> void:
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	area_colliding=true
-	print_debug("no spawn")
+	#print_debug("no spawn")
 
 
 func _on_area_2d_area_exited(area: Area2D) -> void:
 	area_colliding=false
-	print_debug("spawn")
+	#print_debug("spawn")
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:

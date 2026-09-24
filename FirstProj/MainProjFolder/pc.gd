@@ -570,6 +570,7 @@ func _init_state_machine():
 	state_machine.add_transition(jump_state, air_dash, &"air_dodge")
 	state_machine.add_transition(falling_state, air_dash, &"air_dodge")
 	state_machine.add_transition(air_dash, falling_state, &"falling")
+	state_machine.add_transition(air_dash, wall_stick, &"wall_stick")
 	state_machine.add_transition(jump_state, attack_state, &"attack_slam")
 	state_machine.add_transition(falling_state, attack_state, &"attack_slam")
 	state_machine.add_transition(special_attack, attack_state, &"attack_slam")
@@ -3302,8 +3303,8 @@ func _on_knockback(_launch_strength : float, _knockback_strength : float, impact
 	if round(_launch_strength)!=0:
 		velocity.y= -(_launch_strength)
 	###### TBD LATTER #####
-	if _launch_strength!=0:
-		print_debug("team rockets jerking off again")
+	#if _launch_strength!=0:
+		#print_debug("team rockets jerking off again")
 
 func start_knockback_recovery(_dur := 1.0):
 	knockback_recovery_timer.start(_dur)
