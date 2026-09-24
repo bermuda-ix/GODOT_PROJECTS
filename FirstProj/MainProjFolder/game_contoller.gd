@@ -104,6 +104,7 @@ func show_pause():
 	canvas_layer.visible=true
 	pause_menu.show()
 	get_tree().paused = true
+	pause_menu.return_button.grab_focus()
 	
 func unpause():
 	get_tree().paused = false

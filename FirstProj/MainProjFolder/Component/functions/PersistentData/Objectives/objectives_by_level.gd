@@ -1,18 +1,18 @@
 class_name objectives_by_level extends Node
 
-@onready var prologue_init_objectives : Dictionary = {"truck" : "5",
-"wreck shit": "Make it loud"}
+@onready var prologue_init_objectives : Dictionary = {"Generator" : "Destroy",
+"Find this": "□□□□□□□□"}
 @onready var guanlet_init_objectives : Dictionary = { }
 @onready var objectives_total : Dictionary = { }
 
 
 @onready var objective_resorces : Dictionary = {
-	"truck" : {
-		"TEXTURE" : "uid://bwdyhehw5j8uj",
-		"TYPE" : "multi"
+	"Generator" : {
+		"TEXTURE" : "uid://cdwyn7p3rgiuq",
+		"TYPE" : "Single"
 		},
-	"wreck shit" :{
-		"TEXTURE" : "uid://bwdyhehw5j8uj",
+	"Find this" :{
+		"TEXTURE" : "uid://cshwi53lwaqph",
 		"TYPE" : "single"
 	}
 }
