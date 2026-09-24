@@ -142,6 +142,8 @@ signal close_interact_menu
 
 signal call_elevator
 
+signal input_change(_gamepad : bool)
+
 #Inventory update
 signal add_inventory
 signal remove_inventory

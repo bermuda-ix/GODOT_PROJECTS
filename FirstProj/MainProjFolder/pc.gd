@@ -54,6 +54,8 @@ signal clash_end
 @onready var stairs_release : bool = true
 @onready var drop_down_platform_detected : bool = false
 @onready var controller_input_helper: ControllerInputHelper = $ControllerInputHelper
+@onready var interact_prompt_sprite: AnimatedSprite2D = $InteractPromptSprite
+@onready var interact_prompt_sprite_gamepad: AnimatedSprite2D = $InteractPromptSpriteGamepad
 
 
 #Base FSM
@@ -392,6 +394,7 @@ func _ready():
 	Events.boss_died.connect(boss_died)
 	Events.unlock_from.connect(unlock_from_target)
 	Events.parry_success.connect(parry_success)
+	Events.input_change.connect(change_prompt)
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
 	_init_state_machine()
@@ -3405,3 +3408,11 @@ func _on_clashed_exited() -> void:
 
 func _on_clashed_updated(delta: float) -> void:
 	assert(anim_player.is_playing()!=true)
+
+func change_prompt(_gamepad_active) -> void:
+	if _gamepad_active:
+		interact_prompt_sprite.visible=false
+		interact_prompt_sprite_gamepad.visible=true
+	else:
+		interact_prompt_sprite.visible=true
+		interact_prompt_sprite_gamepad.visible=false

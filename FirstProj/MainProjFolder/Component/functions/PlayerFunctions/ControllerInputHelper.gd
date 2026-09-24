@@ -11,7 +11,9 @@ class_name ControllerInputHelper extends Node
 @export var shotty : Sprite2D
 @export var look_with_gamepad := false
 
-
+func _process(delta: float) -> void:
+	pass
+	
 func _physics_process(delta: float) -> void:
 	if look_with_gamepad:
 		if not player.shotgun_lookat_target:
@@ -33,3 +35,13 @@ func gun_rotate() -> float:
 		target_angle = _input_vect.angle()
 	
 	return target_angle
+
+func set_look_with_gamepad(_value) -> void:
+	look_with_gamepad=_value
+	
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey or event is InputEventMouse:
+		set_look_with_gamepad(false)
+	elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		set_look_with_gamepad(true)
+	Events.input_change.emit(look_with_gamepad)
