@@ -11,7 +11,8 @@ signal player_pos_reset_to_checkpoint
 @onready var pause_menu: Control = $GUI/CanvasLayer/PauseMenuv2
 @onready var gameui: Control = $GUI/CanvasLayer/GAMEUI
 @onready var ui_level: Control = $GUI/CanvasLayer/GAMEUI/UI_Level
-@onready var objectives_ui: objective_ui = $GUI/CanvasLayer/PauseMenuv2/TextureRect/MainPause/ObjectivesUI
+@onready var objectives_ui: objective_ui = $GUI/CanvasLayer/PauseMenuv2/TextureRect/MainPause/Objectives/ObjectivesUI
+
 @onready var level_UI: CanvasLayer = $GUI/CanvasLayer
 @onready var game_over: ColorRect = $GUI/CanvasLayer/GameOver
 #@onready var dialogue_box_controller: DialogueBoxController = $GUI/CanvasLayer/DialogueBoxController
