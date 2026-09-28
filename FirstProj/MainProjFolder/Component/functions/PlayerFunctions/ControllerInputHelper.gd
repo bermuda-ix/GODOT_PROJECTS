@@ -6,6 +6,7 @@ class_name ControllerInputHelper extends Node
 @export var player : PlayerEntity
 
 @onready var face_dir := -1
+@onready var controller_id 
 
 @export var target_angle : float
 @export var shotty : Sprite2D
@@ -44,4 +45,5 @@ func _unhandled_input(event: InputEvent) -> void:
 		set_look_with_gamepad(false)
 	elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
 		set_look_with_gamepad(true)
+		controller_id=event.device
 	Events.input_change.emit(look_with_gamepad)

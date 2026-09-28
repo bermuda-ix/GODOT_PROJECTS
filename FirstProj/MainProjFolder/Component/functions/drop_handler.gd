@@ -14,4 +14,5 @@ func spawn_drop():
 		if drop_inst.get_class()=="RigidBody2D":
 			drop_inst.linear_velocity=spawn_vel
 		drop_inst.global_position=Vector2(actor.global_position.x, actor.global_position.y-50)
-		get_tree().current_scene.add_child(drop_inst)
+		#get_tree().current_scene.add_child(drop_inst)
+		get_tree().current_scene.call_deferred("add_child", drop_inst)

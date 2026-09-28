@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://d3gnpvd8ye3rt"]
+[gd_scene format=3 uid="uid://d3gnpvd8ye3rt"]
 
 [ext_resource type="Script" uid="uid://uohhbagdod8r" path="res://Art_Components/LevelProps/large_door_sprite.gd" id="1_diybq"]
 [ext_resource type="Texture2D" uid="uid://cm36bhcpc0hsc" path="res://Art_Components/tile_maps/_PNG/1. main platforms.png" id="1_iqel8"]
@@ -262,10 +262,11 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_coa1e"]
 
-[node name="LargeDoorSprite" type="Node2D" groups=["AnimatedDoor", "door"]]
+[node name="LargeDoorSprite" type="Node2D" unique_id=1489455495 groups=["AnimatedDoor", "door"]]
+modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 script = ExtResource("1_diybq")
 
-[node name="LeftGateInner" type="Sprite2D" parent="."]
+[node name="LeftGateInner" type="Sprite2D" parent="." unique_id=792560663]
 position = Vector2(-13, 47.5)
 texture = SubResource("AtlasTexture_coa1e")
 metadata/_aseprite_wizard_interface_config_ = {
@@ -287,55 +288,55 @@ metadata/_aseprite_wizard_interface_config_ = {
 "slice_section": true
 }
 
-[node name="LeftGateOuter" type="Sprite2D" parent="."]
+[node name="LeftGateOuter" type="Sprite2D" parent="." unique_id=1055963261]
 z_index = -1
 position = Vector2(-41, 47.5)
 texture = SubResource("AtlasTexture_1ve1w")
 
-[node name="LeftGateSideFrame" type="Sprite2D" parent="."]
+[node name="LeftGateSideFrame" type="Sprite2D" parent="." unique_id=1437805073]
 z_index = -1
 position = Vector2(-70, 47.5)
 texture = SubResource("AtlasTexture_diybq")
 
-[node name="LeftPiston" type="Sprite2D" parent="."]
+[node name="LeftPiston" type="Sprite2D" parent="." unique_id=1106876806]
 position = Vector2(-62.97, 16)
 texture = SubResource("AtlasTexture_fre5j")
 flip_h = true
 
-[node name="LeftOuterFrame" type="Sprite2D" parent="."]
+[node name="LeftOuterFrame" type="Sprite2D" parent="." unique_id=642519955]
 position = Vector2(79, 48)
 rotation = -1.5707941
 texture = SubResource("AtlasTexture_u744u")
 flip_h = true
 
-[node name="LeftOuterFrameConnector" type="Sprite2D" parent="."]
+[node name="LeftOuterFrameConnector" type="Sprite2D" parent="." unique_id=1367068001]
 position = Vector2(88, 44)
 rotation = -1.5707941
 texture = SubResource("AtlasTexture_mj2c3")
 flip_h = true
 
-[node name="RightGateInner" type="Sprite2D" parent="."]
+[node name="RightGateInner" type="Sprite2D" parent="." unique_id=1027692979]
 position = Vector2(13, 48)
 texture = SubResource("AtlasTexture_smwne")
 flip_h = true
 
-[node name="RightGateOuter" type="Sprite2D" parent="."]
+[node name="RightGateOuter" type="Sprite2D" parent="." unique_id=2061167644]
 z_index = -1
 position = Vector2(41, 48)
 texture = SubResource("AtlasTexture_82vta")
 flip_h = true
 
-[node name="RightGateSideFrame" type="Sprite2D" parent="."]
+[node name="RightGateSideFrame" type="Sprite2D" parent="." unique_id=929381544]
 z_index = -1
 position = Vector2(69, 48)
 texture = SubResource("AtlasTexture_c2uwf")
 flip_h = true
 
-[node name="RightPiston" type="Sprite2D" parent="."]
+[node name="RightPiston" type="Sprite2D" parent="." unique_id=584105903]
 position = Vector2(62, 16)
 texture = SubResource("AtlasTexture_4mmwa")
 
-[node name="RightOuterFrame" type="Sprite2D" parent="."]
+[node name="RightOuterFrame" type="Sprite2D" parent="." unique_id=907084527]
 z_index = -1
 position = Vector2(-80, 48)
 rotation = -1.5707941
@@ -343,27 +344,25 @@ texture = SubResource("AtlasTexture_4quth")
 flip_h = true
 flip_v = true
 
-[node name="RightOuterFrameConnector" type="Sprite2D" parent="."]
+[node name="RightOuterFrameConnector" type="Sprite2D" parent="." unique_id=339711742]
 position = Vector2(-89, 44)
 rotation = -1.5707941
 texture = SubResource("AtlasTexture_kakqr")
 flip_h = true
 flip_v = true
 
-[node name="Top" type="Sprite2D" parent="."]
+[node name="Top" type="Sprite2D" parent="." unique_id=195282547]
 position = Vector2(0, -27)
 texture = SubResource("AtlasTexture_m1y4p")
 
-[node name="AnimationTree" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_1ve1w")
-}
+[node name="AnimationTree" type="AnimationPlayer" parent="." unique_id=2064603462]
+libraries/ = SubResource("AnimationLibrary_1ve1w")
 
-[node name="Area2D" type="Area2D" parent="." groups=["AnimatedDoor", "door"]]
+[node name="Area2D" type="Area2D" parent="." unique_id=60571611 groups=["AnimatedDoor", "door"]]
 collision_layer = 2097152
 collision_mask = 4194304
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=954388545]
 z_index = 1
 position = Vector2(0, 69)
 shape = SubResource("RectangleShape2D_coa1e")

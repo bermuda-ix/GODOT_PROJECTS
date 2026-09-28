@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bngaepo4ygpkl"]
+[gd_scene format=3 uid="uid://bngaepo4ygpkl"]
 
 [ext_resource type="Texture2D" uid="uid://cm36bhcpc0hsc" path="res://Art_Components/tile_maps/_PNG/1. main platforms.png" id="1_qharj"]
 [ext_resource type="Texture2D" uid="uid://cncridg2b6hq1" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factoryTiles.png" id="2_2bj7b"]
@@ -24,42 +24,43 @@ region = Rect2(599.30426, 1539.5858, 98.20026, 62.29248)
 atlas = ExtResource("2_2bj7b")
 region = Rect2(903.39026, 1548.2108, 97.69873, 54.674683)
 
-[node name="DoorSprite2" type="Node2D"]
+[node name="DoorSprite2" type="Node2D" unique_id=1274171178]
+modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 
-[node name="LeftDoor" type="Sprite2D" parent="."]
+[node name="LeftDoor" type="Sprite2D" parent="." unique_id=1167076257]
 position = Vector2(17, 48)
 texture = SubResource("AtlasTexture_cabkt")
 
-[node name="RightDoor" type="Sprite2D" parent="."]
+[node name="RightDoor" type="Sprite2D" parent="." unique_id=943276982]
 position = Vector2(48, 48)
 texture = SubResource("AtlasTexture_jf5w6")
 
-[node name="LeftPillar" type="Sprite2D" parent="."]
+[node name="LeftPillar" type="Sprite2D" parent="." unique_id=1817831453]
 position = Vector2(-12, 32)
 scale = Vector2(0.3, 0.3)
 texture = SubResource("AtlasTexture_yvuqu")
 
-[node name="LeftPillar2" type="Sprite2D" parent="."]
+[node name="LeftPillar2" type="Sprite2D" parent="." unique_id=988172762]
 position = Vector2(-12, 74)
 scale = Vector2(0.3, 0.3)
 texture = SubResource("AtlasTexture_yvuqu")
 
-[node name="RightPillar" type="Sprite2D" parent="."]
+[node name="RightPillar" type="Sprite2D" parent="." unique_id=1321812554]
 position = Vector2(78, 32)
 scale = Vector2(0.3, 0.3)
 texture = SubResource("AtlasTexture_yvuqu")
 
-[node name="RightPillar2" type="Sprite2D" parent="."]
+[node name="RightPillar2" type="Sprite2D" parent="." unique_id=265461266]
 position = Vector2(78, 74)
 scale = Vector2(0.3, 0.3)
 texture = SubResource("AtlasTexture_yvuqu")
 
-[node name="LeftTop" type="Sprite2D" parent="."]
+[node name="LeftTop" type="Sprite2D" parent="." unique_id=411771436]
 position = Vector2(-12, 2)
 scale = Vector2(0.3, 0.3)
 texture = SubResource("AtlasTexture_qharj")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2115306844]
 position = Vector2(78, 3)
 scale = Vector2(0.3, 0.3)
 texture = SubResource("AtlasTexture_2bj7b")

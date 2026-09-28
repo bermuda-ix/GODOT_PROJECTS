@@ -3,6 +3,7 @@
 [ext_resource type="Shader" uid="uid://d1ksiplmprxb6" path="res://chars/outline_static_v2.gdshader" id="1_dcoif"]
 [ext_resource type="Texture2D" uid="uid://cp27q8n7gwf8r" path="res://Art_Components/tile_maps/Dark Laboratory (v1.11)/png/factory.png" id="2_3qjdb"]
 [ext_resource type="Script" uid="uid://de5esxqxfnngs" path="res://Component/interactables/elevator_call_button.gd" id="3_3qjdb"]
+[ext_resource type="Theme" uid="uid://boqtjf88xcpu4" path="res://demo/assets/ui.theme" id="4_3xbei"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3xbei"]
 shader = ExtResource("1_dcoif")
@@ -21,12 +22,27 @@ material = SubResource("ShaderMaterial_3xbei")
 texture = SubResource("AtlasTexture_ebqgb")
 script = ExtResource("3_3qjdb")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=740680238 groups=["elevator_button"]]
+[node name="Area2D" type="Area2D" parent="." unique_id=740680238]
 collision_layer = 33554432
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=138142258]
 shape = SubResource("RectangleShape2D_8bxxl")
 
+[node name="AlertLabel" type="Label" parent="." unique_id=1017807020]
+visible = false
+offset_left = -40.0
+offset_top = -32.0
+offset_right = 40.0
+offset_bottom = -9.0
+theme = ExtResource("4_3xbei")
+theme_override_font_sizes/font_size = 18
+text = "ALREADY HERE"
+
+[node name="Timer" type="Timer" parent="." unique_id=1327126353]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

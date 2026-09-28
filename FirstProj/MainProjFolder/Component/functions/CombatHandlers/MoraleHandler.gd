@@ -11,6 +11,8 @@ class_name MoraleHandler extends Node
 @export var navigation_handler : NavigationHandler
 @export var on_screen : VisibleOnScreenNotifier2D
 @export var active := false
+@export var state_machine : LimboHSM
+@export var ignore_state : LimboState
 signal low_stagger_morale
 signal low_health_morale
 
@@ -23,19 +25,29 @@ func _ready() -> void:
 
 
 func morale_decrease() -> void:
-	if not navigation_handler.path_valid() or not on_screen.is_on_screen():
+	if state_machine.get_active_state()==ignore_state:
 		return
-	if stagger.stagger<=0:
+	elif not navigation_handler.path_valid() or not on_screen.is_on_screen():
 		return
-	if health.health>0:
-		stagger.stagger -= stagger_decrease_value
+	else:
+		if stagger.stagger<=0:
+			return
+		elif health.health>0:
+			print_debug(state_machine.get_active_state(),",",ignore_state)
+			assert(state_machine.get_active_state()!=ignore_state)
+			stagger.stagger -= stagger_decrease_value
+		else:
+			return
 	
 func morale_increase() -> void:
-	if not navigation_handler.path_valid() or not on_screen.is_on_screen():
+	if state_machine.get_active_state()==ignore_state:
 		return
-	stagger.stagger += stagger_increase_value
-	if stagger.stagger<low_stagger_threshold:
-		low_morale_check()
+	elif not navigation_handler.path_valid() or not on_screen.is_on_screen():
+		return
+	else:
+		stagger.stagger += stagger_increase_value
+		if stagger.stagger<low_stagger_threshold:
+			low_morale_check()
 
 func low_morale_check() -> void:
 	if not low_health_morale:

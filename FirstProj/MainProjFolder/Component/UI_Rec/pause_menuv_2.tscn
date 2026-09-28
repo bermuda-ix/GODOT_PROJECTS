@@ -3405,6 +3405,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="KeyboardMouse" type="Control" parent="TextureRect/ControlsMenu" unique_id=929593699]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -3551,7 +3552,6 @@ theme_override_font_sizes/font_size = 32
 text = "CTRL: Dodge"
 
 [node name="Gamepad" type="Control" parent="TextureRect/ControlsMenu" unique_id=1662465306]
-visible = false
 anchors_preset = 0
 offset_left = 18.0
 offset_top = 73.5

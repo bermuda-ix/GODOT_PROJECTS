@@ -436,7 +436,7 @@ func reload_gun() -> void:
 		shooting_states.dispatch(&"reload")
 
 func target_lock():
-	Events.unlock_from.emit()
+	#Events.unlock_from.emit()
 	target_lock_node.target_lock()
 	
 func get_width() -> int:
@@ -542,6 +542,8 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 	state_machine.dispatch(&"melee_attack")
 
 func clash_follow_up(_follow_up := "nothing"):
+	if state_machine.get_active_state()!=clashed_state:
+		return
 	match _follow_up:
 		"riposte":
 			animation_player.play()
@@ -652,6 +654,7 @@ func _on_staggered_exited() -> void:
 
 func _on_hurt_box_received_damage(damage: int) -> void:
 	hit_stop.hit_stop(0.05,0.05)
+	
 	if player.state==player.States.FLIP or player.prev_state==player.States.FLIP:
 		Events.allied_enemy_hit.emit()
 	
@@ -718,6 +721,7 @@ func _on_dying_entered() -> void:
 	Events.enemy_death.emit()
 	drop_handler.spawn_drop()
 	hit_stop.hit_stop(0.1, 0.3)
+	shield_collision.set_deferred("disabled",true)
 	if player_right:
 		knockback.x=-death_knockback
 	else:
@@ -907,6 +911,7 @@ func _on_landed_entered() -> void:
 func _on_hurt_box_knockback(_launch_strength: float, _knock_back_strength: float, _impact_dir_right: bool) -> void:
 	knocked_back=true
 	vfx_player.play("knocked_back")
+	Events.camera_shake.emit(2,20)
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger or state_machine.get_active_state()==staggered:
 		if player_right:
@@ -1033,3 +1038,12 @@ func _on_clashed_state_entered() -> void:
 
 func _on_clashed_state_exited() -> void:
 	shield_collision.set_deferred("disabled", false)
+
+
+func _on_shield_body_entered(body: Node2D) -> void:
+	if body.is_in_group("PlayerBullet"):
+		if "tracker_round" in body:
+			if body.tracker_round:
+				player.lockon_specific(self)
+		body.impact()
+		

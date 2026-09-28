@@ -15,7 +15,7 @@ extends LimboHSM
 @export var attack_dash_active := false
 @export var clash_animation := "clashed"
 @export var attack_1 : LimboState
-
+@onready var queue_attack := false
 signal dur_timeout
 
 
@@ -105,6 +105,7 @@ func enemy_counter(_value : String = "") -> void:
 		success=true
 		enemy_success=true
 		pc.attacking=false
+		
 		
 func attack_dash(_delta) -> void:
 	if not attack_dash_active:

@@ -3,15 +3,16 @@ extends Node
 
 @export var actor : Node2D
 @export var sm : LimboHSM
-@export var csm : LimboHSM
+@export var csm : LimboHSM = null
 @export var always_on : bool = false
 @export var active : bool = true
 @export var combat_state_active : bool = true
 @export var vision_range : int = 200
 @export var player_tracking : RayCast2D
+@export var world_detector : RayCast2D = null
 @export var bt_active : bool = true
 @export var stay_on : bool = false
-@export var nav_agent : NavigationAgent2D
+@export var nav_agent : NavigationAgent2D = null
 @export var turret : Turret
 @export var delayed_attack := false
 
@@ -29,12 +30,13 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	player_detect = get_tree().get_first_node_in_group("player_detect")
 	player_tracking.target_position = Vector2(vision_range, 0)
+	world_detector.target_position = Vector2(vision_range+10, 0)
 	
 
 func _process(delta: float) -> void:
 	if face_player:
 		turret_face_player()
-	if not path_valid():
+	if not path_valid() and nav_agent!=null:
 		sm.dispatch(&"return_to_idle")
  
 func get_player_relative_loc():
@@ -51,20 +53,25 @@ func handle_vision():
 	if always_on:
 		player_found=true
 		#sm.dispatch(&"start_chase")
-	if not path_valid():
+	if not path_valid() and nav_agent!=null:
 		
 		player_found=false
 		sm.dispatch(&"return_to_idle")
 		
 		return
+	#if world_detector.is_colliding():
+		#sm.dispatch(&"return_to_idle")
+		#return
 	else:
 		#actor.player_colliding=player_tracking.is_colliding()
 		if player_tracking.is_colliding():
-			assert(path_valid())
+			if nav_agent!= null:
+				assert(path_valid())
 			var collision_result = player_tracking.get_collider()
 			if collision_result != player and collision_result != player_detect:
 				#print_debug(collision_result)
 				#set_state(current_state, States.GUARD)
+				sm.dispatch(&"return_to_idle")
 				return
 			else:
 				if sm.get_active_state()==actor.death:

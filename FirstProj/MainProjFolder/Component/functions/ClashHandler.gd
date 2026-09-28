@@ -32,6 +32,8 @@ func clashed_helper() -> void:
 
 
 func clash_follow_up(_follow_up := "nothing"):
+	if state_machine.get_active_state()!=clashed_state:
+		return
 	match _follow_up:
 		"riposte":
 			if stagger.stagger<=0:

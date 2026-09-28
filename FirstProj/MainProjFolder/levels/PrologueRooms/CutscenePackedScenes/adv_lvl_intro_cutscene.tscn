@@ -3535,7 +3535,7 @@ animation = &"off"
 [node name="TruckAnimationPlayer" type="AnimationPlayer" parent="TruckTransport" unique_id=1431959137]
 
 [node name="JokerCutscene" type="AnimatedSprite2D" parent="." unique_id=1370434993]
-self_modulate = Color(0.2, 0.10980392, 0.023529412, 1)
+self_modulate = Color(0.28161287, 0.16262496, 0.045750044, 1)
 z_index = 1
 texture_filter = 2
 material = ExtResource("9_clkak")

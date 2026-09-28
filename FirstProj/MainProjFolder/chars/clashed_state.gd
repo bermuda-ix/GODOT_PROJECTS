@@ -20,6 +20,7 @@ class_name ClashedState extends LimboHSM
 @export var counter_threshold := 3
 @onready var clashes_made := 0
 @export var counter_prepared := false
+@onready var counter_queued := false
 
 
 func set_clashes_made(_value : int) -> void:
@@ -71,7 +72,7 @@ func _update(delta: float) -> void:
 	if get_active_state()==actor.clash_start:
 		actor.velocity.x=0+actor.knockback.x
 		actor.velocity.y=0
-		assert(actor.velocity.x==0)
+		#assert(actor.velocity.x==0)
 		#assert(not anim_player.is_playing())
 	vfx_player.speed_scale=1/Engine.time_scale
 	
@@ -90,6 +91,8 @@ func _exit() -> void:
 func clash_follow_up(_follow_up := "nothing"):
 	vfx_sprite.visible=false
 	vfx_player.stop()
+	if state_machine.get_active_state()!=self:
+		return
 	match _follow_up:
 		"riposte", "dodge":
 			if stagger.stagger<=0:
@@ -105,6 +108,8 @@ func clash_follow_up(_follow_up := "nothing"):
 				
 			
 			if stagger.stagger>0:
+				if clashes_made<counter_threshold and counter_enabled:
+					counter_queued
 				riposte_follow_up.emit()
 				#else:
 					#state_machine.dispatch(&"hit")

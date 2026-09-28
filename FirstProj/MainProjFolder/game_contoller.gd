@@ -205,6 +205,8 @@ func load_first_room (_first_room : String, \
 #Toggle UI vissibility
 func toggle_game_ui(value : bool) -> void:
 	level_UI.set_deferred("visible", value)
+	if value==true:
+		Events.update_ui_data.emit()
 	
 #Toggle world2D, the main level processing tree, processing
 func toggle_world2d_process(value : bool) -> void:

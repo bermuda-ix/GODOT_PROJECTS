@@ -1,6 +1,7 @@
 extends LimboState
 
 @export var anim_player : AnimationPlayer
+@export var attack_fx_secondary: AnimationPlayer
 @export var pc : PlayerEntity
 @export var hit_stop : HitStop
 @onready var parry_success_state: LimboHSM = $".."
@@ -9,6 +10,7 @@ extends LimboState
 func _enter() -> void:
 	print_debug("how do you pronouce riposte")
 	anim_player.play("Attack_Counter")
+	attack_fx_secondary.play("riposte")
 	hit_stop.end_hit_stop()
 	
 

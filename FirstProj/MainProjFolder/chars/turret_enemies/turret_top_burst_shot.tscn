@@ -758,7 +758,11 @@ position = Vector2(0, -32)
 [node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot" unique_id=796440792]
 target_position = Vector2(1832, 0.0046463)
 collision_mask = 3
+hit_from_inside = true
 collide_with_areas = true
+
+[node name="WorldTracker" type="RayCast2D" parent="PlayerTrackerPivot" unique_id=754865379]
+hit_from_inside = true
 
 [node name="BTPlayer" type="BTPlayer" parent="." unique_id=703124380]
 behavior_tree = ExtResource("9_pxudj")
@@ -810,13 +814,14 @@ script = ExtResource("14_uygev")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
-[node name="VisionHandler" type="Node" parent="." unique_id=1267813904 node_paths=PackedStringArray("actor", "sm", "player_tracking", "turret")]
+[node name="VisionHandler" type="Node" parent="." unique_id=1267813904 node_paths=PackedStringArray("actor", "sm", "player_tracking", "world_detector", "turret")]
 script = ExtResource("15_lkv6p")
 actor = NodePath("..")
 sm = NodePath("../LimboHSM")
 combat_state_active = false
 vision_range = 250
 player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
+world_detector = NodePath("../PlayerTrackerPivot/WorldTracker")
 stay_on = true
 turret = NodePath("../Sprite2D/Turret")
 delayed_attack = true

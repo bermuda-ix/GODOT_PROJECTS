@@ -321,7 +321,6 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_afqy1"]
 resource_name = "death"
-length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -486,7 +485,7 @@ metadata/_custom_type_script = "uid://cr58jnxs33hft"
 script = ExtResource("9_bjfg1")
 actor = NodePath("..")
 despawn_effect = ExtResource("10_kefmv")
-timer_sec = 3.0
+timer_sec = 1.0
 metadata/_custom_type_script = "uid://cbt5pqmf6i7rj"
 
 [node name="Size" type="Area2D" parent="." unique_id=929721218]

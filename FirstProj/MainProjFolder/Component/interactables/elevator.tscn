@@ -569,6 +569,7 @@ loop = false
 position = Vector2(-46, -57)
 
 [node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=1922007767]
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 position = Vector2(44, 5)
 texture = SubResource("AtlasTexture_p7nof")
 offset = Vector2(-43.0768, -24.3987)
@@ -577,11 +578,13 @@ offset = Vector2(-43.0768, -24.3987)
 position = Vector2(44, 5)
 
 [node name="DoorSprite" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D/Door" unique_id=1777675563]
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 position = Vector2(0, 32)
 texture = SubResource("AtlasTexture_jbx0s")
 offset = Vector2(-43.0768, -24.3987)
 
 [node name="DoorSpriteLower" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D/Door" unique_id=834023264]
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 position = Vector2(0, 61)
 texture = SubResource("AtlasTexture_c7n2o")
 offset = Vector2(-43.0768, -24.3987)
@@ -598,25 +601,28 @@ polygon = PackedVector2Array(-14, -9, -14, -52, 83, -52, 83, 63, -14, 63, -36, 5
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=1128329308]
 
 [node name="Sprite2D2" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=549090048]
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 position = Vector2(41, 4)
 rotation = 1.5708
 texture = SubResource("AtlasTexture_rkleh")
 offset = Vector2(-44.741, -2.22652)
 
 [node name="Sprite2D3" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=1178559187]
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 z_index = -1
 position = Vector2(41, 13)
 texture = SubResource("AtlasTexture_4h0vo")
 offset = Vector2(46.0914, -1.21437)
 
 [node name="Sprite2D4" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=1959158251]
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 position = Vector2(45.2595, 22.6657)
 rotation = 1.5708
 texture = SubResource("AtlasTexture_rkleh")
 offset = Vector2(40.3343, 1.25954)
 
 [node name="Sprite2D5" type="Sprite2D" parent="Path2D/PathFollow2D/StaticBody2D" unique_id=524697147]
-self_modulate = Color(0.151276, 0.151276, 0.151276, 1)
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 z_index = -1
 position = Vector2(44, 12)
 scale = Vector2(1.5, 1.5)

@@ -110,6 +110,8 @@ func _init_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, death, &"die")
 	state_machine.add_transition(state_machine.ANYSTATE, stagger, &"staggered")
 	state_machine.add_transition(stagger, shooting_tree, &"recovery")
+	
+	state_machine.add_transition(shooting_tree, idle, &"return_to_idle")
 
 
 

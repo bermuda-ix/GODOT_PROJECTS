@@ -1,7 +1,7 @@
 class_name objectives_by_level extends Node
 
 @onready var prologue_init_objectives : Dictionary = {"Generator" : "Destroy",
-"Find this": "□□□□□□□□"}
+"Find this": "Find □□□"}
 @onready var guanlet_init_objectives : Dictionary = { }
 @onready var objectives_total : Dictionary = { }
 

@@ -488,6 +488,8 @@ func _init_state_machine():
 	#Resume walking
 	state_machine.add_transition(attack_state, walking, &"resume_walking")
 	
+	state_machine.add_transition(attack_state, jump_state, &"start_jumping")
+	
 	#Hit
 	state_machine.add_transition(parry_success_state, hit, &"got_hit")
 	state_machine.add_transition(parry_success_state, parry_failed, &"got_countered")
@@ -788,7 +790,8 @@ func _physics_process(delta):
 		#wall_hold = false
 		if(state_machine.get_active_state()!=dodge_state and parry_stance==false \
 		and state_machine.get_active_state()!=flip_state and\
-		 state_machine.get_active_state()!=attack_state and\
+		 (state_machine.get_active_state()!=attack_state or \
+		(state_machine.get_active_state()==attack_state and not attacking)) and\
 		 state_machine.get_active_state()!=parry_success_state):
 			if not interact_menu_open:
 				handle_wall_jump(wall_hold, delta)
@@ -849,6 +852,8 @@ func return_to_idle():
 func jump(input_axis, delta):
 
 	if is_on_floor(): double_jump_flag = true
+	
+	
 	
 	if is_on_floor() or coyote_jump_timer.time_left>0.0:
 		if Input.is_action_just_pressed("jump"):
@@ -1670,7 +1675,7 @@ func gun_cone(spread : int) -> Array[int]:
 	return _bullet_spawn_angles
 
 func _on_special_attack_entered() -> void:
-	pass
+	dash_attack_timer.start(0.3)
 
 
 func shotgun_shoot() -> void:
@@ -1690,6 +1695,12 @@ func shotgun_shoot() -> void:
 
 func shotgun_recoil() -> void:
 	Events.camera_shake.emit(5,20)
+	if VibrationHandler.controller_id!=null:
+		if  Input.has_joy_vibration(VibrationHandler.controller_id):
+			Input.start_joy_vibration(VibrationHandler.controller_id, 0.5, 0.3, 0.1)
+		elif OS.has_feature("web"):
+			Input.vibrate_handheld(100)
+
 
 func call_camera_shake(_weight := 1, _fade := 2.0) -> void:
 	Events.camera_shake.emit(_weight, _fade)
@@ -1947,7 +1958,7 @@ func lockon_specific(_target : Node2D) -> void:
 	shotty_target=target
 	set_shotgun_target_look(true)
 	combat_states.dispatch(&"locking_on")
-	dash_attack_timer.start(0.3)
+	
 
 func unlock_from_target() -> void:
 	target=null
@@ -2351,6 +2362,7 @@ func _on_animation_player_animation_finished(anim_name):
 		hit_box.clash_active=false
 		hit_box.attack_clashed=false
 		hb_collision.set_deferred("disabled", true)
+		attacking=false
 		#match anim_name:
 			#"Attack":
 				#heavy_attack_1.attack=heavy_attacks[0]
@@ -2364,6 +2376,7 @@ func _on_animation_player_animation_finished(anim_name):
 			
 			"Attack_Counter":
 				counter_flag=false
+				
 				anim_player.play("idle")
 				#attack_timer.start(0.1)
 				return
@@ -2426,6 +2439,9 @@ func _on_animation_player_animation_finished(anim_name):
 				attack_1.attack=light_attacks[0]
 				attack_timer.start(0.1)
 				attack_timer.paused=false
+			"Heavy_Riposte":
+				if  Input.has_joy_vibration(VibrationHandler.controller_id):
+					Input.start_joy_vibration(VibrationHandler.controller_id, 0.8, 1.0, 1.0)
 			_:
 				#attack_1.attack=light_attacks[0]
 				#attack_timer.start(0.1)
@@ -3338,6 +3354,9 @@ func _on_hit_box_clashed() -> void:
 		charge_timer.stop()
 		charge_timer.timeout.emit()
 	heavy_riposte.heavy_riposte="Heavy_Riposte"
+	if VibrationHandler.controller_id!=null:
+		if  Input.has_joy_vibration(VibrationHandler.controller_id):
+			Input.start_joy_vibration(VibrationHandler.controller_id, 0.5, 0.8, 0.5)
 	parry_success_state.ranged_counter=false
 	state_machine.dispatch(&"clashed")
 	hit_box.active=false

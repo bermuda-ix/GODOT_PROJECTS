@@ -455,6 +455,8 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 	state_machine.dispatch(&"melee_attack")
 
 func clash_follow_up(_follow_up := "nothing"):
+	if state_machine.get_active_state()!=clashed_state:
+		return
 	match _follow_up:
 		"riposte":
 			animation_player.play()
