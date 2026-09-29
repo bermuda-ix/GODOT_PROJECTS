@@ -1238,7 +1238,7 @@ func heavy_combos():
 			return
 		if state_machine.get_active_state()==idle and (attacking or charging):
 			return
-		elif attack_state.get_active_state()==special_combo:
+		elif attack_state.get_active_state()==heavy_attack_1:
 			shotgun_combo()
 			attack_timer.start(0.2)
 			return
