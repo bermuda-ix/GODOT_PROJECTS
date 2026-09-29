@@ -2504,11 +2504,12 @@ actor = NodePath("..")
 state_machine = NodePath("../StateMachine")
 metadata/_custom_type_script = "uid://dgyx4da7oymh2"
 
-[node name="MovementHandler" type="Node" parent="." unique_id=140888824 node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
+[node name="MovementHandler" type="Node" parent="." unique_id=140888824 node_paths=PackedStringArray("actor", "state_machine", "vision_handler", "world_collider")]
 script = ExtResource("20_eke2m")
 actor = NodePath("..")
 state_machine = NodePath("../StateMachine")
 vision_handler = NodePath("../VisionHandler")
+world_collider = NodePath("../PlayerTrackerPivot/WorldDetector")
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
 
 [node name="PlayerTrackingHandler" type="Node" parent="." unique_id=1649911589 node_paths=PackedStringArray("actor")]

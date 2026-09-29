@@ -4092,12 +4092,13 @@ defend_state = NodePath("../StateMachine/ShootingStates/DefendAlly")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://c7kbv7d5voapj"
 
-[node name="MovementHandler" type="Node" parent="." unique_id=555570752 node_paths=PackedStringArray("actor", "state_machine", "vision_handler")]
+[node name="MovementHandler" type="Node" parent="." unique_id=555570752 node_paths=PackedStringArray("actor", "state_machine", "vision_handler", "world_collider")]
 script = ExtResource("16_ivtdb")
 actor = NodePath("..")
 active = false
 state_machine = NodePath("../StateMachine")
 vision_handler = NodePath("../VisionHandler")
+world_collider = NodePath("../PlayerTrackerPivot/WorldDetector")
 metadata/_custom_type_script = "uid://bsha0mnmfnjww"
 
 [node name="HitStop" type="Node" parent="." unique_id=1876432524]

@@ -9,6 +9,7 @@ extends Node
 @export var distance_from : int = 150
 @export var move_away_speed_scale : float = .8
 @export var air_turn : bool = true
+@export var world_collider : RayCast2D
 @onready var move_dir : int = clampi(0, -1, 1)
 
 @export var bullet_detection : BulletDetection
@@ -21,14 +22,20 @@ func _physics_process(delta: float) -> void:
 	
 	if not active:
 		if face_player_active:
-			face_player()
+			if world_collider!=null and world_collider.is_colliding():
+				return
+			else:
+				face_player()
 		return
 		
 	else:
 		
 		direction= actor.global_position - actor.player.global_position
 		if face_player_active:
-			face_player()
+			if world_collider!=null and world_collider.is_colliding():
+				return
+			else:
+				face_player()
 		
 		if vision_handler.player_found == true:
 			if keep_distance:

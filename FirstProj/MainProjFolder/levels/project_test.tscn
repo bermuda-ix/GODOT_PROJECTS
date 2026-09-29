@@ -438,13 +438,13 @@ metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 position = Vector2(746, 59)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." index="26" unique_id=1116371728]
-position = Vector2(0, 176)
+position = Vector2(-448, 136)
 collision_layer = 524289
 collision_mask = 1048578
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" index="0" unique_id=1194551115]
 position = Vector2(1192, -160)
-polygon = PackedVector2Array(-56, 56, -56, -64, 29, -212, 29, 20, 109, 20, 109, -212, 224, -64, 224, 56)
+polygon = PackedVector2Array(-56, 56, -56, -64, 29, -212, 24, 24, 288, 24, 288, -64, 368, -24, 368, 56)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." index="27" unique_id=1497060582]
 visible = false
@@ -462,7 +462,7 @@ shape = SubResource("RectangleShape2D_01tlq")
 [node name="Enemies" type="Node" parent="." index="29" unique_id=825398583]
 
 [node name="ShotgunSoldier" parent="Enemies" index="0" unique_id=1122506050 instance=ExtResource("8_v15hm")]
-position = Vector2(896, 80)
+position = Vector2(887.99994, -31.999992)
 scale = Vector2(0.7, 0.7)
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]

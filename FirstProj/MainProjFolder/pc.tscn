@@ -17282,7 +17282,7 @@ animation = &"clash_aura"
 [node name="hit_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=289266714]
 visible = false
 self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
-z_index = 1
+z_index = 2
 material = SubResource("ShaderMaterial_luuse")
 instance_shader_parameters/FloatParameter = 0.002000000095
 instance_shader_parameters/GlowColor = Color(8.622459e-05, 2.968426, 2.4752479, 1)
@@ -17293,6 +17293,7 @@ animation = &"heavy_attack_hit"
 
 [node name="hit_fx2" type="AnimatedSprite2D" parent="AnimatedSprite2D/hit_fx" unique_id=2062327994]
 visible = false
+z_index = 2
 sprite_frames = SubResource("SpriteFrames_bw7wn")
 animation = &"attack_hit"
 frame = 4
@@ -17300,6 +17301,7 @@ flip_h = true
 
 [node name="attack_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1283370965]
 self_modulate = Color(0.48067, 0, 1.8875431, 1)
+z_index = 2
 material = SubResource("ShaderMaterial_mesnb")
 instance_shader_parameters/FloatParameter = 0.0
 instance_shader_parameters/GlowColor = Color(0.2250466, 0.79400057, 2.454227, 1)
@@ -17312,6 +17314,7 @@ animation = &"charge_attack"
 [node name="attack_fx_secondary" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=235279320]
 visible = false
 self_modulate = Color(1.3077258, 1.8247963, 1.8247963, 1)
+z_index = 2
 material = SubResource("ShaderMaterial_mesnb")
 instance_shader_parameters/FloatParameter = 0.0
 instance_shader_parameters/GlowColor = Color(0.2250466, 0.79400057, 2.454227, 1)
@@ -17325,6 +17328,7 @@ flip_v = true
 [node name="charge_attack_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1175915077]
 visible = false
 self_modulate = Color(2.454227, 2.454227, 2.454227, 1)
+z_index = 2
 position = Vector2(16, -25)
 rotation = -1.0471976
 sprite_frames = SubResource("SpriteFrames_m75gd")
