@@ -215,7 +215,6 @@ func _ready():
 
 func _process(delta: float) -> void:
 	if state_machine.get_active_state()==death:
-		hb_collision.disabled=true
 		return
 	#if health.health<=0 and (state_machine.get_active_state()!=death and state_machine.get_active_state()!=dying):
 		#print_debug(state_machine.get_active_state())
@@ -639,7 +638,7 @@ func _on_stagger_staggered() -> void:
 	current_speed=0
 	velocity.x=0
 	if (state_machine.get_active_state()!= dying and state_machine.get_active_state()!=death \
-	and state_machine.get_active_state()!=launch and state_machine.get_active_state()!=clashed):
+	and state_machine.get_active_state()!=launch and state_machine.get_active_state()!=clashed_state):
 		if health.health>0:
 			state_machine.dispatch(&"staggered")
 
@@ -675,7 +674,8 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 			AudioStreamManager.play(SoundFx.SOCAPEX_NEW_HITS_2)
 		if (state_machine.get_active_state()!=dying and state_machine.get_active_state()!=death and state_machine.get_active_state()!=staggered):
 			parry_timer.wait_time=1
-			state_machine.dispatch(&"hit")
+			if stagger.stagger==1:
+				state_machine.dispatch(&"hit")
 		
 		#set_state(current_state, States.HIT)
 		gpu_particles_2d.emitting=true
@@ -923,8 +923,7 @@ func _on_hurt_box_knockback(_launch_strength: float, _knock_back_strength: float
 			launch.knock_back_strength =_knock_back_strength
 		launch.launch_strength=_launch_strength
 		launch.air_time=1.0
-		if state_machine.get_active_state()!=staggered:
-			state_machine.change_active_state(launch)
+		state_machine.change_active_state(launch)
 	else:
 		parry_timer.wait_time=2
 		state_machine.dispatch(&"hit")

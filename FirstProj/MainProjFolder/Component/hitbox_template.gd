@@ -28,7 +28,7 @@ signal hit_success
 
 @onready var mutex : Mutex = Mutex.new()
 
-
+@onready var hitbox_hit := false
 @export var collision_shape : CollisionShape2D
 
 func _ready():
@@ -40,12 +40,15 @@ func _ready():
 
 func set_active(_value:bool)->void:
 	if attack_clashed:
+		active=false
 		return
+		
 	active=_value
 	if _value==true:
 		assert(attack_clashed==false)
 		pass
 	elif _value==false:
+		#active=_value
 		pass
 
 func set_clash_active(_value: bool) -> void:
@@ -113,6 +116,7 @@ func _on_impact(_area :Area2D) -> void:
 			clash_active=false
 			Events.hit_stop.emit(0.05, 0.5)
 			active=false
+			hitbox_hit=true
 			if "heavy_attack" in _area:
 				if _area.heavy_attack:
 					if heavy_attack:
@@ -149,6 +153,7 @@ func _on_impact(_area :Area2D) -> void:
 			#damage = 0
 			clash_active=false
 			active=false
+			hitbox_hit=true
 			if _area.heavy_attack:
 					if heavy_attack:
 						clashed.emit()

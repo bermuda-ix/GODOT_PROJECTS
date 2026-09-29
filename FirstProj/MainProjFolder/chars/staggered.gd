@@ -10,11 +10,13 @@ extends LimboState
 @export var vfx_player : AnimationPlayer
 @export var hurt_box : HurtBox
 @export var stagger_timer : Timer
+@export var hb_collision : CollisionShape2D
 
 func _enter() -> void:
 
 
 	stagger_timer.start(3)
+	hb_collision.set_deferred("disabled",true)
 	if "hb_collision" in actor:
 		actor.hb_collision.set_deferred("disabled", true)
 	if "current_speed" in actor:

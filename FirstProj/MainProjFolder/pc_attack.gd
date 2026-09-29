@@ -15,6 +15,7 @@ func _enter() -> void:
 	counter_dist = pc.global_position.x-10*pc.face_dir
 	#pc.attacking=true
 	starting = pc.global_position.x
+	hit_box.active=false
 	hit_box.clash_active=true
 
 	

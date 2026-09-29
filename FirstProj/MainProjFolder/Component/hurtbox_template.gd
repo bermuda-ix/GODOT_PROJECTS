@@ -39,7 +39,8 @@ func set_active(_value: bool) -> void:
 	if _value==true:
 		pass
 	else:
-		hit_dur.start(0.3)
+		pass
+		#hit_dur.start(0.3)
 
 func _ready():
 	#connect("area_entered", _on_area_entered)
@@ -101,6 +102,8 @@ func _on_area_entered(hitbox: Area2D) -> void:
 				if shielded:
 					return
 				assert(hitbox.active==true)
+				assert(hitbox.attack_clashed!=true)
+				assert(hitbox.hitbox_hit==true)
 				hitbox.active=false
 				Events.hit_stop.emit(0.01,0.01)
 				var total_damage : int

@@ -46,9 +46,10 @@ func _enter() -> void:
 	actor.knockback=Vector2.ZERO
 	#stagger.set_stagger(stagger.stagger-1)
 	vfx_player.speed_scale=1/Engine.time_scale
-	if clashes_made<counter_threshold and counter_enabled:
+	if (clashes_made<counter_threshold and stagger.stagger>1) and counter_enabled:
 		stagger.stagger-=1
 		counter_attack_timer.start(counter_attack_timer_dur)
+		
 		while counter_attack_timer.is_stopped():
 			counter_attack_timer.start(counter_attack_timer_dur)
 		assert(not counter_attack_timer.is_stopped())
@@ -65,6 +66,9 @@ func _enter() -> void:
 				hurt_box.collision.set_deferred("disabled", false)
 			#hit_fx_player.play_section_with_markers("counter_prepared", "prepared")
 			#hit_fx_player.pause()
+		else:
+			anim_player.pause()
+			assert(anim_player.is_playing()!=true)
 		clashes_made==0
 		movement_handler.active=false
 
