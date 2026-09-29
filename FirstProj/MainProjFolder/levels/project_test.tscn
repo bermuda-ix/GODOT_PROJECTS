@@ -462,7 +462,7 @@ shape = SubResource("RectangleShape2D_01tlq")
 [node name="Enemies" type="Node" parent="." index="29" unique_id=825398583]
 
 [node name="ShotgunSoldier" parent="Enemies" index="0" unique_id=1122506050 instance=ExtResource("8_v15hm")]
-position = Vector2(887.99994, -31.999992)
+position = Vector2(840, 79.99999)
 scale = Vector2(0.7, 0.7)
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]

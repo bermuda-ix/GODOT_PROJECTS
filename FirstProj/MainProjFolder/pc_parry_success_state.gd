@@ -6,6 +6,7 @@ extends LimboHSM
 @onready var dur : Timer = Timer.new()
 @onready var success : bool = false
 @onready var enemy_success := false
+@export var attack_fx_secondary: AnimationPlayer
 
 @export var state_machine : LimboHSM
 
@@ -60,6 +61,7 @@ func _update(delta: float) -> void:
 		attack_1.attack=pc.light_attacks[pc.light_attack_index]
 		hit_stop.end_hit_stop()
 		Events.parry_success.emit("riposte")
+		attack_fx_secondary.play("riposte")
 		#pc.parry_success("riposte")
 		#pc.state_machine.dispatch(&"start_attack")
 		#pc.attack_state.dispatch(&"next_attack")

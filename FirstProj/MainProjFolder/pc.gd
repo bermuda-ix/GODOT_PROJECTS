@@ -3437,3 +3437,7 @@ func change_prompt(_gamepad_active) -> void:
 	else:
 		interact_prompt_sprite.visible=true
 		interact_prompt_sprite_gamepad.visible=false
+
+
+func _on_attack_fx_secondary_animation_started(anim_name: StringName) -> void:
+	pass # Replace with function body.
