@@ -47,6 +47,7 @@ func _enter() -> void:
 	anim_player.pause()
 	movement_handler.active=false
 	actor.knockback=Vector2.ZERO
+	hitbox_collision.set_deferred("disabled", true)
 	#stagger.set_stagger(stagger.stagger-1)
 	vfx_player.speed_scale=1/Engine.time_scale
 	if (clashes_made<counter_threshold and stagger.stagger>1) and counter_enabled:
@@ -78,6 +79,7 @@ func _enter() -> void:
 		movement_handler.active=false
 
 func _update(delta: float) -> void:
+	hitbox_collision.set_deferred("disabled", true)
 	if get_active_state()==actor.clash_start:
 		actor.velocity.x=0+actor.knockback.x
 		actor.velocity.y=0

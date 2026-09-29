@@ -22,4 +22,5 @@ func _update(delta: float) -> void:
 
 
 func _exit() -> void:
+	hit_box_collision.set_deferred("disabled", true)
 	movement_handler.face_player_active=true

@@ -4882,7 +4882,7 @@ animation_player = NodePath("../../AnimationPlayer")
 hit_fx_player = NodePath("../../AnimationPlayer/HitFXPlayer")
 stagger = NodePath("../../Stagger")
 
-[node name="STAGGERED" type="LimboState" parent="LimboHSM" index="11" unique_id=1474770168 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player", "vfx_player", "hurt_box", "stagger_timer")]
+[node name="STAGGERED" type="LimboState" parent="LimboHSM" index="11" unique_id=1474770168 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "bt_player", "vfx_player", "hurt_box", "stagger_timer", "hb_collision")]
 script = ExtResource("132_ighft")
 actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
@@ -4891,6 +4891,7 @@ bt_player = NodePath("../../BTPlayer")
 vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
 hurt_box = NodePath("../../HurtBox")
 stagger_timer = NodePath("../../StaggerTimer")
+hb_collision = NodePath("../../HitBox/CollisionShape2D")
 
 [node name="DYING" type="BTState" parent="LimboHSM" index="12" unique_id=1313469762]
 behavior_tree = ExtResource("133_1o8km")
@@ -4932,7 +4933,7 @@ animation_player = NodePath("../../AnimationPlayer")
 actor = NodePath("../..")
 metadata/_custom_type_script = "uid://bhr6e5hybripf"
 
-[node name="ClashedState" type="LimboHSM" parent="LimboHSM" index="18" unique_id=1451789734 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "vfx_sprite", "hit_fx_player", "hurt_box", "movement_handler", "stagger", "hit_stop", "state_machine", "counter_attack_timer")]
+[node name="ClashedState" type="LimboHSM" parent="LimboHSM" index="18" unique_id=1451789734 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "vfx_sprite", "hit_fx_player", "hurt_box", "hit_box", "hitbox_collision", "movement_handler", "stagger", "hit_stop", "state_machine", "counter_attack_timer")]
 script = ExtResource("253_qu73d")
 actor = NodePath("../..")
 anim_player = NodePath("../../AnimationPlayer")
@@ -4940,6 +4941,8 @@ vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
 vfx_sprite = NodePath("../../AnimatedSprite2D/VFXSprite")
 hit_fx_player = NodePath("../../AnimationPlayer/HitFXPlayer")
 hurt_box = NodePath("../../HurtBox")
+hit_box = NodePath("../../HitBox")
+hitbox_collision = NodePath("../../HitBox/CollisionShape2D")
 movement_handler = NodePath("../../MovementHandler")
 stagger = NodePath("../../Stagger")
 hit_stop = NodePath("../../HitStop")

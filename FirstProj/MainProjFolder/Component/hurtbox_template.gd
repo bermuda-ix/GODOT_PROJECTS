@@ -103,7 +103,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 					return
 				assert(hitbox.active==true)
 				assert(hitbox.attack_clashed!=true)
-				assert(hitbox.hitbox_hit==true)
+				#assert(hitbox.hitbox_hit==true)
 				hitbox.active=false
 				Events.hit_stop.emit(0.01,0.01)
 				var total_damage : int
