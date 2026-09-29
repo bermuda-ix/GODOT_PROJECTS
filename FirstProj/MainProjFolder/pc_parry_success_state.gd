@@ -32,7 +32,8 @@ func _enter() -> void:
 	pc.attack_timer.stop()
 	var _attack_anim=attack_1.attack
 	var _marker_time=anim_player.get_animation(_attack_anim).get_marker_time("Attack_connect")
-	anim_player.seek(_marker_time, true)
+	anim_player.seek(_marker_time, true, true)
+	pc.attacking=false
 	#assert(anim_player.current_animation_position==_marker_time)
 	anim_player.pause()
 	hit_stop.hit_stop(0.1, 5)
@@ -105,6 +106,7 @@ func enemy_counter(_value : String = "") -> void:
 		success=true
 		enemy_success=true
 		pc.attacking=false
+		pc.charging=false
 		
 		
 func attack_dash(_delta) -> void:

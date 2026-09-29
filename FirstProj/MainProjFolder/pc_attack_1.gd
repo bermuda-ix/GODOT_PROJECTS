@@ -15,7 +15,7 @@ func _enter() -> void:
 	pc.heavy_attack_flag=false
 	pc.hb_collision.set_deferred("disabled", false)
 	#attack_fx_sprite.a.nimation="sword_hit_1"
-	#pc.attacking=true
+	pc.attacking=true
 
 #func _update(delta: float) -> void:
 	#assert(not Input.is_action_pressed("attack") and (not pc.charging))

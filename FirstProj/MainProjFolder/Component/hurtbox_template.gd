@@ -68,6 +68,8 @@ func _on_area_entered(hitbox: Area2D) -> void:
 		return
 	elif not active:
 		return
+	elif hitbox.attack_clashed:
+		return
 	elif shielded and not back_attack_flag.is_colliding():
 		return
 	

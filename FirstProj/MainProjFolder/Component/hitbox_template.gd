@@ -107,6 +107,7 @@ func _on_impact(_area :Area2D) -> void:
 		print_debug(_area.get_groups())
 		
 		if _area.is_in_group("hitbox"):
+			collision_shape.set_deferred("disabled", true)
 			_area.attack_clashed=true
 			attack_clashed=true
 			clash_active=false
@@ -143,6 +144,7 @@ func _on_impact(_area :Area2D) -> void:
 				Events.camera_shake.emit(0.5,10)
 		elif _area.is_in_group("player_hitbox"):
 			#print_debug("DERGH")
+			collision_shape.set_deferred("disabled", true)
 			assert(pc_hitbos==false)
 			#damage = 0
 			clash_active=false

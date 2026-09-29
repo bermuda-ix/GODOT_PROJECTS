@@ -3059,7 +3059,7 @@ size = Vector2(7, 12)
 
 [sub_resource type="Animation" id="Animation_1ru25"]
 resource_name = "Attack"
-length = 0.3
+length = 0.23333333
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"Attack_connect",
@@ -3209,7 +3209,7 @@ tracks/11/path = NodePath("AnimatedSprite2D/HitBox:active")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0.06666667, 0.2),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -3221,7 +3221,7 @@ tracks/12/path = NodePath("AnimatedSprite2D/HitBox:clash_active")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.033333335),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -3233,7 +3233,7 @@ tracks/13/path = NodePath("AnimatedSprite2D/HitBox")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0.075),
+"times": PackedFloat32Array(0.041666668),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -3391,10 +3391,10 @@ tracks/26/path = NodePath(".:attacking")
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
 tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.3333333),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true, true, false]
+"values": [false]
 }
 tracks/27/type = "value"
 tracks/27/imported = false
@@ -3415,7 +3415,7 @@ tracks/28/path = NodePath("AnimatedSprite2D/charge_attack_fx:frame")
 tracks/28/interp = 1
 tracks/28/loop_wrap = true
 tracks/28/keys = {
-"times": PackedFloat32Array(0, 0.014856726, 0.08152339, 0.13985674, 0.2065234, 0.24166666, 0.27500004),
+"times": PackedFloat32Array(0, 0.014856726, 0.033333335, 0.06666667, 0.13333334, 0.16666667, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6]
@@ -3632,7 +3632,7 @@ tracks/11/path = NodePath("AnimatedSprite2D/HitBox:active")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0.06666667, 0.26666668),
+"times": PackedFloat32Array(0.033333335, 0.26666668),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -3644,7 +3644,7 @@ tracks/12/path = NodePath("AnimatedSprite2D/HitBox")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0.083333336),
+"times": PackedFloat32Array(0.041666668),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -3802,7 +3802,7 @@ tracks/25/path = NodePath(".:attacking")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.23333333, 0.24999999),
+"times": PackedFloat32Array(0, 0.06666668, 0.24999999),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, true, false]
@@ -3880,7 +3880,7 @@ tracks/31/keys = {
 
 [sub_resource type="Animation" id="Animation_222nm"]
 resource_name = "Attack_3"
-length = 0.53333336
+length = 0.3
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"Attack_connect",
@@ -4019,7 +4019,7 @@ tracks/10/path = NodePath("AnimatedSprite2D/HitBox:active")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0.06666667, 0.26666668),
+"times": PackedFloat32Array(0.033333335, 0.26666668),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -4031,7 +4031,7 @@ tracks/11/path = NodePath("AnimatedSprite2D/HitBox")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0.09166667),
+"times": PackedFloat32Array(0.041666668),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -4189,7 +4189,7 @@ tracks/24/path = NodePath(".:attacking")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.26666665, 0.2833333),
+"times": PackedFloat32Array(0, 0.06666666, 0.2833333),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, true, false]
@@ -17471,6 +17471,7 @@ process_material = SubResource("ParticleProcessMaterial_34r87")
 position = Vector2(0, -16.3107)
 collision_layer = 64
 collision_mask = 268435737
+priority = 1
 script = ExtResource("6_y7jp7")
 stagger = NodePath("../../Stagger")
 launch_strength = 40.0
@@ -17782,7 +17783,6 @@ shape = SubResource("RectangleShape2D_f2824")
 [node name="HurtBox" type="Area2D" parent="." unique_id=263329233 node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["player_hurtbox"]]
 collision_layer = 128
 collision_mask = 8
-priority = 1
 script = ExtResource("9_s8nmr")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")

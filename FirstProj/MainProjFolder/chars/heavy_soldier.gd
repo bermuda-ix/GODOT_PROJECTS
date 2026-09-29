@@ -555,8 +555,11 @@ func clash_follow_up(_follow_up := "nothing"):
 				state_machine.dispatch(&"staggered")
 		"nothing":
 			animation_player.play()
+		"enemy_light_counter":
+			pass
 		_:
 			animation_player.play()
+		
 
 func pushed_back(_force:=100):
 	var _face_dir
@@ -997,7 +1000,9 @@ func _on_clashed_exited() -> void:
 
 func _on_counter_attack_timer_timeout() -> void:
 	hit_stop.end_hit_stop()
+	print_debug(state_machine.get_active_state())
 	state_machine.dispatch(&"counter_melee")
+	
 	Events.parry_success.emit("enemy_light_counter")
 
 func _on_hit_entered() -> void:
@@ -1047,3 +1052,7 @@ func _on_shield_body_entered(body: Node2D) -> void:
 				player.lockon_specific(self)
 		body.impact()
 		
+
+
+func _on_animation_player_animation_started(anim_name: StringName) -> void:
+	pass # Replace with function body.

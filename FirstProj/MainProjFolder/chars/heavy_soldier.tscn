@@ -2141,7 +2141,7 @@ tracks/8/keys = {
 
 [sub_resource type="Animation" id="Animation_rh8ku"]
 resource_name = "melee_attack"
-length = 0.8
+length = 0.76666665
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"attack_start",
@@ -3907,6 +3907,7 @@ position = Vector2(0, -39)
 collision_layer = 8
 collision_mask = 192
 collision_priority = 2.0
+priority = 1
 script = ExtResource("14_0rfay")
 stagger = NodePath("../Stagger")
 knock_back = true
@@ -3923,7 +3924,6 @@ disabled = true
 position = Vector2(0, -39)
 collision_layer = 16
 collision_mask = 8413248
-priority = 1
 script = ExtResource("15_8nnwq")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
@@ -4300,6 +4300,7 @@ metadata/_custom_type_script = "uid://dpg0824supe1e"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Clashed" method="_on_animation_player_animation_finished"]
+[connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
 [connection signal="animation_changed" from="AnimationPlayer/VFXPlayer" to="." method="_on_vfx_player_animation_changed"]
 [connection signal="animation_finished" from="AnimationPlayer/VFXPlayer" to="." method="_on_vfx_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer/VFXPlayer" to="." method="_on_vfx_player_animation_started"]

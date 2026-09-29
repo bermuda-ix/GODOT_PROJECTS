@@ -1623,14 +1623,14 @@ func get_clash_power() -> int:
 func set_attacking(value : bool) -> void:
 	#if Input.is_action_pressed("attack") and value==false:
 		#return
-	#if value==true:
-		#print_debug("begin_attack")
+	if value==true and state_machine.get_active_state()==parry_success_state:
+		print_debug("begin_attack")
 	#else:
 		#print_debug("ending attack")
 	attacking=value
 
 func set_charging(_value : bool) -> void:
-	#if value==true:
+	#if _value==true:
 		#print_debug("begin_charge")
 	#else:
 		#print_debug("ending charge")
