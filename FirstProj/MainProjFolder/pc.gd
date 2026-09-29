@@ -1145,17 +1145,19 @@ func attack_handler():
 	 or state_machine.get_active_state()==dodge_state:
 		return
 	
-	if not dash_attack_timer.is_stopped() and target!=null:
+	if not dash_attack_timer.is_stopped():
 		if Input.is_action_just_pressed("attack"):
-			attack_closer.speed=500
-			if target.is_on_floor():
-				attack_closer.closing_dir= global_position.direction_to(Vector2(target.global_position.x, global_position.y))
+			if target!=null:
+				attack_closer.speed=500
+				if target.is_on_floor():
+					attack_closer.closing_dir= global_position.direction_to(Vector2(target.global_position.x, global_position.y))
+				else:
+					attack_closer.closing_dir= global_position.direction_to(target.global_position)
+				closing_attack()
+				return
 			else:
-				attack_closer.closing_dir= global_position.direction_to(target.global_position)
-			closing_attack()
-			return
-		else:
-			return
+				attack_closer.closing_dir= global_position.direction_to(global_position+Vector2(250*-face_dir, 0))
+				closing_attack()
 	#var anim_player_time : float = anim_player.current_animation_position
 	
 	if Input.is_action_pressed("attack"):
@@ -1675,7 +1677,7 @@ func gun_cone(spread : int) -> Array[int]:
 	return _bullet_spawn_angles
 
 func _on_special_attack_entered() -> void:
-	dash_attack_timer.start(0.3)
+	dash_attack_timer.start(0.8)
 
 
 func shotgun_shoot() -> void:

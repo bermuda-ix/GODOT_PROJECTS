@@ -76,8 +76,6 @@
 [ext_resource type="BehaviorTree" uid="uid://bxakb1j8uax5m" path="res://ai/trees/shooting_bt_state.tres" id="74_f52xu"]
 [ext_resource type="Script" uid="uid://dvi5i14hskbgo" path="res://chars/enemies/shooting_bt_state.gd" id="75_ndww7"]
 [ext_resource type="Script" uid="uid://cdsger1er8ipk" path="res://chars/hit.gd" id="76_mw15p"]
-[ext_resource type="BehaviorTree" uid="uid://t2han52xa64j" path="res://ai/trees/parry.tres" id="77_y0k10"]
-[ext_resource type="Script" uid="uid://f8o0kgomg38" path="res://chars/parry.gd" id="78_4h80y"]
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="79_yytsa"]
 [ext_resource type="Script" uid="uid://c4yno8xy5erif" path="res://chars/death.gd" id="80_l7fvj"]
 [ext_resource type="BehaviorTree" uid="uid://dutys3rie5tyk" path="res://ai/trees/death.tres" id="81_uailq"]
@@ -2284,8 +2282,6 @@ size = Vector2(61, 71)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_bynfm"]
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_ggker"]
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_nyk46"]
 
 [node name="RifleSoldier" type="CharacterBody2D" unique_id=1122506050 node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant"]]
@@ -2604,14 +2600,6 @@ hit_fx_player = NodePath("../../AnimationPlayer/HitFXPlayer")
 stagger = NodePath("../../Stagger")
 stagger_threshold = 0
 metadata/_custom_type_script = "uid://cdsger1er8ipk"
-
-[node name="Parry" type="BTState" parent="StateMachine" unique_id=1921918181 node_paths=PackedStringArray("actor", "anim_player", "timer")]
-behavior_tree = ExtResource("77_y0k10")
-blackboard_plan = SubResource("BlackboardPlan_ggker")
-script = ExtResource("78_4h80y")
-actor = NodePath("../..")
-anim_player = NodePath("../../AnimationPlayer")
-timer = NodePath("../../ParryTimer")
 
 [node name="Staggered" type="LimboState" parent="StateMachine" unique_id=322417903 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "vfx_player", "hurt_box", "stagger_timer")]
 script = ExtResource("79_yytsa")

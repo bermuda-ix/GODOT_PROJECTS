@@ -74,7 +74,6 @@
 [ext_resource type="Script" uid="uid://d20gnlqqx7l6k" path="res://chars/heavy_soldier_state_machine.gd" id="32_s0mi6"]
 [ext_resource type="Script" uid="uid://bmeh2aawck5wy" path="res://chars/staggered.gd" id="33_eopqg"]
 [ext_resource type="Texture2D" uid="uid://b0nakaa5du2tu" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_020.png" id="33_sqr55"]
-[ext_resource type="Script" uid="uid://f8o0kgomg38" path="res://chars/parry.gd" id="34_i7wao"]
 [ext_resource type="Script" uid="uid://c4yno8xy5erif" path="res://chars/death.gd" id="34_s0mi6"]
 [ext_resource type="Texture2D" uid="uid://bvlb553h48xyr" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_021.png" id="34_uek0c"]
 [ext_resource type="Texture2D" uid="uid://b30owder4gcpv" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_022.png" id="35_7bq3n"]
@@ -86,7 +85,6 @@
 [ext_resource type="Script" uid="uid://6lcwbcgt2hxx" path="res://chars/reload.gd" id="39_i83c4"]
 [ext_resource type="Script" uid="uid://bdhtg4sor0v57" path="res://chars/shooting_defense.gd" id="39_iqleq"]
 [ext_resource type="Texture2D" uid="uid://cjdhu3guqwuqw" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_027.png" id="40_4cgwk"]
-[ext_resource type="BehaviorTree" uid="uid://t2han52xa64j" path="res://ai/trees/parry.tres" id="40_iqleq"]
 [ext_resource type="Texture2D" uid="uid://4lytnnajqvg" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_028.png" id="41_4pxgm"]
 [ext_resource type="Texture2D" uid="uid://cyr675myk8g0c" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_029.png" id="42_g8y6e"]
 [ext_resource type="Texture2D" uid="uid://7wq8rrq24xe0" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_030.png" id="43_4sa57"]
@@ -3792,8 +3790,6 @@ size = Vector2(83, 82)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_o2wso"]
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_ypkgb"]
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vtt0c"]
 
 [node name="HeavySoldier" type="CharacterBody2D" unique_id=1955221828 node_paths=PackedStringArray("hitbox") groups=["Enemy", "Persistant", "defensive_enemy"]]
@@ -4221,14 +4217,6 @@ hit_fx_player = NodePath("../../AnimationPlayer/HitFXPlayer")
 stagger = NodePath("../../Stagger")
 metadata/_custom_type_script = "uid://cdsger1er8ipk"
 
-[node name="Parry" type="BTState" parent="StateMachine" unique_id=1934001516 node_paths=PackedStringArray("actor", "anim_player", "timer")]
-behavior_tree = ExtResource("40_iqleq")
-blackboard_plan = SubResource("BlackboardPlan_ypkgb")
-script = ExtResource("34_i7wao")
-actor = NodePath("../..")
-anim_player = NodePath("../../AnimationPlayer")
-timer = NodePath("../../ParryTimer")
-
 [node name="Staggered" type="LimboState" parent="StateMachine" unique_id=369894600 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "vfx_player", "hurt_box", "stagger_timer", "hb_collision")]
 script = ExtResource("33_eopqg")
 actor = NodePath("../..")
@@ -4403,7 +4391,6 @@ metadata/_custom_type_script = "uid://dpg0824supe1e"
 [connection signal="entered" from="StateMachine/ShootingStates/ShootingDefense" to="." method="_on_shooting_defense_entered"]
 [connection signal="entered" from="StateMachine/Hit" to="." method="_on_hit_entered"]
 [connection signal="exited" from="StateMachine/Hit" to="." method="_on_hit_exited"]
-[connection signal="exited" from="StateMachine/Parry" to="." method="_on_parry_exited"]
 [connection signal="entered" from="StateMachine/Staggered" to="." method="_on_staggered_entered"]
 [connection signal="exited" from="StateMachine/Staggered" to="." method="_on_staggered_exited"]
 [connection signal="entered" from="StateMachine/Death" to="." method="_on_death_entered"]
