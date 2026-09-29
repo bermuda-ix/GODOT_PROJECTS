@@ -243,7 +243,8 @@ func _process(delta: float) -> void:
 	
 	#if state_machine.get_active_state()==dying or state_machine.get_active_state()==death:
 		#print_debug(knockback.x)
-
+	if state_machine.get_active_state()!=melee_attack:
+		hb_collision.set_deferred("disabled",true)
 	#print_debug(state_machine.get_active_state())
 
 func _physics_process(delta: float) -> void:
@@ -261,7 +262,8 @@ func _physics_process(delta: float) -> void:
 			#global_position.y=lerpf(global_position.y, launch.launch_height, 0.1)
 			#velocity.x=lerpf(-launch.knock_back_strength, -launch.knock_back_strength/2, 0.5)
 			#global_position.x=lerpf(global_position.x, launch.knocked_back, 0.1)
-			velocity.y=lerpf(velocity.y, 0, 0.1)
+			pass
+			#velocity.y=lerpf(velocity.y, 0, 0.1)
 		else:
 			
 			velocity.y += gravity * delta
@@ -304,7 +306,9 @@ func _physics_process(delta: float) -> void:
 	if state_machine.get_active_state()!=clashed:
 		move_and_slide()
 	movement_handler.apply_gravity(delta)
-
+	if state_machine.get_active_state()!=melee_attack:
+		hb_collision.disabled=true
+	
 func _init_group_link():
 	if group_link_control == null:
 		pass
@@ -545,7 +549,9 @@ func clash_follow_up(_follow_up := "nothing"):
 		return
 	match _follow_up:
 		"riposte":
-			animation_player.play()
+			#animation_player.play()
+			while hb_collision.disabled==false:
+				hb_collision.set_deferred("disabled",true)
 			pushed_back(200)
 			stagger.stagger-=1
 			if stagger.stagger>0:

@@ -45,6 +45,7 @@ func _enter() -> void:
 	
 func _update(delta: float) -> void:
 	if "hb_collision" in actor:
+		assert(actor.hb_collision.disabled==true)
 		actor.hb_collision.set_deferred("disabled", true)
 	if "velocity" in actor:
 		actor.velocity.x=lerpf(actor.velocity.x, 0, 0.5)

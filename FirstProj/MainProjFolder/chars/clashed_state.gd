@@ -6,6 +6,8 @@ class_name ClashedState extends LimboHSM
 @export var vfx_sprite : AnimatedSprite2D
 @export var hit_fx_player : AnimationPlayer
 @export var hurt_box : HurtBox
+@export var hit_box : HitBox
+@export var hitbox_collision : CollisionShape2D
 @export var movement_handler : MovementHandler
 @export var stagger : Stagger
 @export var hit_stop : HitStop
@@ -36,6 +38,7 @@ func _ready() -> void:
 	counter_attack_timer.one_shot=true
 
 func _enter() -> void:
+	hit_box.in_clash_state=true
 	actor.velocity.x=0
 	vfx_sprite.visible=true
 	vfx_player.play(clash_anim_name)
@@ -49,7 +52,7 @@ func _enter() -> void:
 	if (clashes_made<counter_threshold and stagger.stagger>1) and counter_enabled:
 		stagger.stagger-=1
 		counter_attack_timer.start(counter_attack_timer_dur)
-		
+		hit_box.in_clash_state=false
 		while counter_attack_timer.is_stopped():
 			counter_attack_timer.start(counter_attack_timer_dur)
 		assert(not counter_attack_timer.is_stopped())
@@ -69,6 +72,8 @@ func _enter() -> void:
 		else:
 			anim_player.pause()
 			assert(anim_player.is_playing()!=true)
+			hitbox_collision.set_deferred("disabled", true)
+			hit_box.clash_active=false
 		clashes_made==0
 		movement_handler.active=false
 
@@ -99,11 +104,11 @@ func clash_follow_up(_follow_up := "nothing"):
 		return
 	match _follow_up:
 		"riposte", "dodge":
+			hitbox_collision.set_deferred("disabled", true)
 			if stagger.stagger<=0:
 				return
-			anim_player.play()
+			#anim_player.play()
 			hurt_box.active=true
-			
 			actor.pushed_back(250)
 			if desperate_attack_enabled and stagger.stagger==1:
 				riposte_heavy_follow_up.emit()

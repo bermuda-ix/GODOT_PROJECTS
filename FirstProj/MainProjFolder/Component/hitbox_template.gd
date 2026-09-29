@@ -16,6 +16,7 @@ signal hit_success
 @export var heavy_attack : bool = false : set = set_heavy_attack
 @export var attack_clashed : bool = false : set = set_attack_clashed
 
+@onready var in_clash_state :bool =false
 @export var launch : bool = false
 @export var knock_back : bool = false
 @export var launch_strength : float = 0.0
@@ -37,6 +38,10 @@ func _ready():
 	#print_debug(get_groups())
 	#collision_shape=get_tree().get_first_node_in_group("colliding_hitbox_shape")
 	
+#func set_in_clash_state(_value: bool) -> void:
+	#in_clash_state=_value
+	#if _value == false:
+		#pass
 
 func set_active(_value:bool)->void:
 	if attack_clashed:
@@ -110,6 +115,8 @@ func _on_impact(_area :Area2D) -> void:
 		print_debug(_area.get_groups())
 		
 		if _area.is_in_group("hitbox"):
+			#if _area.in_clash_state:
+				#return
 			collision_shape.set_deferred("disabled", true)
 			_area.attack_clashed=true
 			attack_clashed=true
@@ -117,6 +124,9 @@ func _on_impact(_area :Area2D) -> void:
 			Events.hit_stop.emit(0.05, 0.5)
 			active=false
 			hitbox_hit=true
+			#if not _area.clash_active:
+				#return
+			print_debug(_area.get_groups())
 			if "heavy_attack" in _area:
 				if _area.heavy_attack:
 					if heavy_attack:
