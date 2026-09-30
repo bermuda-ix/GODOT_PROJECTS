@@ -17794,6 +17794,7 @@ one_shot = true
 ignore_time_scale = true
 
 [node name="STATE" type="Label" parent="." unique_id=1506403178]
+visible = false
 z_index = 10
 offset_left = -45.0
 offset_top = -56.0

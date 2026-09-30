@@ -3278,6 +3278,7 @@ texture = ExtResource("1_7gpdj")
 metadata/_edit_use_anchors_ = true
 
 [node name="MainPause" type="Control" parent="TextureRect" unique_id=1132798982]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -3396,7 +3397,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ControlsMenu" type="Control" parent="TextureRect" unique_id=415925927]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3405,7 +3405,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="KeyboardMouse" type="Control" parent="TextureRect/ControlsMenu" unique_id=929593699]
-visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -3551,7 +3550,28 @@ theme_override_colors/font_color = Color(0.54509807, 1, 1, 1)
 theme_override_font_sizes/font_size = 32
 text = "CTRL: Dodge"
 
+[node name="CenterContainer4" type="CenterContainer" parent="TextureRect/ControlsMenu/KeyboardMouse/VBoxContainer3" unique_id=320562070]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TextureRect/ControlsMenu/KeyboardMouse/VBoxContainer3/CenterContainer4" unique_id=161880141]
+layout_mode = 2
+theme = ExtResource("8_1s0tt")
+theme_override_colors/font_color = Color(0.54509807, 1, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "R: Reload"
+
+[node name="CenterContainer5" type="CenterContainer" parent="TextureRect/ControlsMenu/KeyboardMouse/VBoxContainer3" unique_id=1491717603]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TextureRect/ControlsMenu/KeyboardMouse/VBoxContainer3/CenterContainer5" unique_id=976993367]
+layout_mode = 2
+theme = ExtResource("8_1s0tt")
+theme_override_colors/font_color = Color(0.54509807, 1, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "T: Flashlight"
+
 [node name="Gamepad" type="Control" parent="TextureRect/ControlsMenu" unique_id=1662465306]
+visible = false
 anchors_preset = 0
 offset_left = 18.0
 offset_top = 73.5
@@ -3680,6 +3700,20 @@ theme = ExtResource("8_1s0tt")
 theme_override_colors/font_color = Color(0.54509807, 1, 1, 1)
 theme_override_font_sizes/font_size = 24
 text = "Interact"
+
+[node name="CenterContainer11" type="CenterContainer" parent="TextureRect/ControlsMenu/Gamepad" unique_id=61846720]
+layout_mode = 0
+offset_left = 364.0
+offset_top = 164.0
+offset_right = 494.0
+offset_bottom = 190.0
+
+[node name="Label" type="Label" parent="TextureRect/ControlsMenu/Gamepad/CenterContainer11" unique_id=611736137]
+layout_mode = 2
+theme = ExtResource("8_1s0tt")
+theme_override_colors/font_color = Color(0.54509807, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Flashlight"
 
 [node name="CenterContainer9" type="CenterContainer" parent="TextureRect/ControlsMenu/Gamepad" unique_id=927567259]
 layout_mode = 0
