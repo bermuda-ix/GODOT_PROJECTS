@@ -1192,6 +1192,7 @@ collision_mask = 16386
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ramps/UndergroundRamp1" index="0" unique_id=1790837832]
 shape = SubResource("SegmentShape2D_658m8")
 one_way_collision = true
+one_way_collision_margin = 7.0
 
 [node name="UndergroundRamp2" type="StaticBody2D" parent="Ramps" index="1" unique_id=773982265]
 position = Vector2(9479, 480.85907)
@@ -1201,6 +1202,7 @@ collision_mask = 16386
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ramps/UndergroundRamp2" index="0" unique_id=118321678]
 shape = SubResource("SegmentShape2D_e156f")
 one_way_collision = true
+one_way_collision_margin = 7.0
 
 [node name="MidLevelFloor" type="StaticBody2D" parent="Ramps" index="2" unique_id=2056888305]
 position = Vector2(8513, 478.99164)
@@ -2067,6 +2069,7 @@ collision_mask = 16386
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stairs/StairsUnderground1" index="0" unique_id=168222566]
 shape = SubResource("SegmentShape2D_7qfih")
 one_way_collision = true
+one_way_collision_margin = 7.0
 
 [node name="FallthroughPlatform" type="Node" parent="." index="32" unique_id=4745813]
 
