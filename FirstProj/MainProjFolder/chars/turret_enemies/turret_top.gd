@@ -62,6 +62,7 @@ func get_firing_type() -> int:
 	return firing_type
 
 @onready var linked_turrets : Array[TurretBase]
+@onready var world_tracker: RayCast2D = $PlayerTrackerPivot/WorldTracker
 
 
 
@@ -79,6 +80,7 @@ func _ready():
 	shooting_tree.blackboard.set_var("ammo_amount", turret.ammo_count)
 	_init_state_machine()
 	player_tracking.target_position=Vector2(vision_handler.vision_range,0)
+	debug.text=str(state_machine.get_active_state())
 	gpu_particles_2d.process_material.scale
 	if base!=null:
 		player_tracker_pivot.scale.x*=(1/base.scale.x)
@@ -91,15 +93,18 @@ func _process(_delta):
 	is_on_screen=visible_on_screen_notifier_2d.is_on_screen()
 	#shoot_attack_manager.shoot()
 	var player_track_angle_wrap=wrapf(player_tracker_pivot.rotation, 0, 2*PI)
-	debug.text=str(rad_to_deg(player_track_angle_wrap), " ",sprite_2d.rotation_degrees)
 	heating_up_visual()
 	bt_player.blackboard.set_var("attack_mode", true)
-	debug.text=str(sprite_2d.rotation_degrees)
+	debug.text=str(state_machine.get_active_state())
+	debug.visible=true
 	bullet_dir=shoot_handler.rotation_to_direction(sprite_2d.global_rotation_degrees)
 	#if not shoot_attack_manager.shooting:
 		#stagger_shooting()
 	
 	
+func _physics_process(delta: float) -> void:
+	if world_tracker.is_colliding():
+		pass
 
 func _init_state_machine():
 	state_machine.initial_state=idle

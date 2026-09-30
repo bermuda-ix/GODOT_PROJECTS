@@ -2,6 +2,7 @@ extends RigidBody2D
 
 const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 @export var SPEED : float = 100 : set = set_speed, get = get_speed
+@onready var damage : int = 1 : set = set_damage, get = get_damage
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
@@ -68,6 +69,7 @@ func impact() -> void:
 	get_tree().current_scene.add_child(impact_fx)
 	audio_stream_player_2d.play(0.15)
 	set_physics_process(false)
+	
 	#queue_free()
 	
 func hard_impact():

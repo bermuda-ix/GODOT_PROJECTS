@@ -757,7 +757,7 @@ position = Vector2(0, -32)
 
 [node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot" unique_id=796440792]
 target_position = Vector2(1832, 0.0046463)
-collision_mask = 3
+collision_mask = 2
 hit_from_inside = true
 collide_with_areas = true
 
@@ -875,7 +875,6 @@ script = ExtResource("22_37dn2")
 metadata/_custom_type_script = "uid://cnxm24jqclb68"
 
 [node name="debug" type="Label" parent="." unique_id=1882113841]
-visible = false
 top_level = true
 offset_left = -394.0
 offset_top = -541.0

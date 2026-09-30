@@ -69,7 +69,7 @@ func handle_vision():
 				assert(path_valid())
 			var collision_result = player_tracking.get_collider()
 			if collision_result != player and collision_result != player_detect:
-				#print_debug(collision_result)
+				print_debug(collision_result)
 				#set_state(current_state, States.GUARD)
 				sm.dispatch(&"return_to_idle")
 				return

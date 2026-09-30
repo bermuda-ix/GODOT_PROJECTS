@@ -11,7 +11,7 @@ radius = 3.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_wdbjx"]
 radius = 3.0
 
-[node name="BulletProjectile" type="RigidBody2D" unique_id=1896458504 groups=["bullet"]]
+[node name="BulletProjectile" type="RigidBody2D" unique_id=1896458504 groups=["bullet", "heavy_bullet"]]
 collision_layer = 4096
 collision_mask = 131
 mass = 0.001

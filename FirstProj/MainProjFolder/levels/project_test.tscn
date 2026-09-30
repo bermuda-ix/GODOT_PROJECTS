@@ -462,9 +462,17 @@ shape = SubResource("RectangleShape2D_01tlq")
 [node name="Enemies" type="Node" parent="." index="29" unique_id=825398583]
 
 [node name="turret_base_burst_fire" parent="Enemies" index="0" unique_id=1981155838 instance=ExtResource("8_v15hm")]
-position = Vector2(560, 3.8146973e-06)
-rotation = -4.712389
+position = Vector2(808, 23.999998)
+rotation = -7.853982
 scale = Vector2(0.1, 0.1)
+
+[node name="debug" parent="Enemies/turret_base_burst_fire/turret_top_burst_shot" parent_id_path=PackedInt32Array(1981155838, 734200265) index="15" unique_id=1882113841]
+offset_left = 384.0
+offset_top = -120.0
+offset_right = 1180.0
+offset_bottom = 308.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.1, 0.1)
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]
 position = Vector2(1260, 1)
@@ -491,3 +499,5 @@ environment = SubResource("Environment_dqkb5")
 [connection signal="update_health" from="PC" to="CanvasLayer/UI_Level" method="set_health"]
 
 [editable path="CameraPos"]
+[editable path="Enemies/turret_base_burst_fire"]
+[editable path="Enemies/turret_base_burst_fire/turret_top_burst_shot"]

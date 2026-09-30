@@ -17816,7 +17816,7 @@ shape = SubResource("RectangleShape2D_f2824")
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=263329233 node_paths=PackedStringArray("health", "stagger", "back_attack_flag") groups=["player_hurtbox"]]
 collision_layer = 128
-collision_mask = 8
+collision_mask = 4104
 script = ExtResource("9_s8nmr")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
@@ -17841,7 +17841,7 @@ disabled = true
 
 [node name="CollectibleBox" type="Area2D" parent="." unique_id=327698503]
 visible = false
-collision_layer = 2
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectibleBox" unique_id=1691590735]

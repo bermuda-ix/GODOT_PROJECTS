@@ -371,7 +371,7 @@ size = Vector2(643, 352)
 
 [node name="turret_base_burst_fire" type="StaticBody2D" unique_id=1981155838 groups=["Enemy", "Persistant"]]
 collision_layer = 16384
-collision_mask = 8388609
+collision_mask = 8388608
 script = ExtResource("1_610gp")
 
 [node name="AnimatedSprite2D" type="Sprite2D" parent="." unique_id=446172145]
@@ -420,7 +420,7 @@ texture = ExtResource("3_kwyus")
 offset = Vector2(-35, 70)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="." unique_id=224298227]
-polygon = PackedVector2Array(331, 97, 42, -109, -33, -109, -326, 100)
+polygon = PackedVector2Array(331, 97, 32, -10, -25, -11, -326, 100)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=989149592]
 libraries/ = SubResource("AnimationLibrary_wstjc")

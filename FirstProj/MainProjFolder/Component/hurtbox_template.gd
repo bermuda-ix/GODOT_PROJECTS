@@ -174,6 +174,8 @@ func bullet_impact(_body : Node2D):
 		bullet_damage_count(1)
 	if "impact" in _body:
 		_body.impact()
+	if _body.is_in_group("heavy_bullet"):
+		Events.camera_shake.emit(2,20)
 
 func bullet_damage_count(_damage : int = 1) -> void:
 	if not active:
