@@ -812,6 +812,7 @@ one_shot = true
 [node name="PlayerTrackingHandler" type="Node" parent="." unique_id=433557126 node_paths=PackedStringArray("actor")]
 script = ExtResource("14_uygev")
 actor = NodePath("..")
+y_offset = -15.0
 metadata/_custom_type_script = "uid://cx8bi64kwoulc"
 
 [node name="VisionHandler" type="Node" parent="." unique_id=1267813904 node_paths=PackedStringArray("actor", "sm", "player_tracking", "world_detector", "turret")]

@@ -30,9 +30,9 @@ func _physics_process(delta: float) -> void:
 				else:
 					if abs(actor.sprite_2d.rotation_degrees-player_track_angle_wrap)<=rotation_speed+3:
 						pass
-					elif round(actor.sprite_2d.rotation_degrees) < round(player_track_angle_wrap):
+					elif snappedf(actor.sprite_2d.rotation_degrees, 0.01) < snappedf(player_track_angle_wrap, 0.01):
 						actor.sprite_2d.rotation_degrees += rotation_speed
-					elif round(actor.sprite_2d.rotation_degrees) > round(player_track_angle_wrap):
+					elif snappedf(actor.sprite_2d.rotation_degrees, 0.01) > snappedf(player_track_angle_wrap, 0.01):
 						actor.sprite_2d.rotation_degrees -= rotation_speed
 					else:
 						pass

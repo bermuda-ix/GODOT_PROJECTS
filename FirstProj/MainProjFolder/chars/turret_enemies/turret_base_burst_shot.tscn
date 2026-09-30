@@ -367,10 +367,11 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7atgd"]
-size = Vector2(576, 352)
+size = Vector2(643, 352)
 
 [node name="turret_base_burst_fire" type="StaticBody2D" unique_id=1981155838 groups=["Enemy", "Persistant"]]
-collision_layer = 8388609
+collision_layer = 16384
+collision_mask = 8388609
 script = ExtResource("1_610gp")
 
 [node name="AnimatedSprite2D" type="Sprite2D" parent="." unique_id=446172145]
@@ -419,8 +420,7 @@ texture = ExtResource("3_kwyus")
 offset = Vector2(-35, 70)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="." unique_id=224298227]
-visible = false
-polygon = PackedVector2Array(-122, 95, 82, 95, 123, 57, 122, 17, 78, 17, 72, -93, 36, -93, 32, 17, -30, 18, -66, 56, -102, 56, -122, 75)
+polygon = PackedVector2Array(331, 97, 42, -109, -33, -109, -326, 100)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=989149592]
 libraries/ = SubResource("AnimationLibrary_wstjc")
@@ -493,7 +493,7 @@ collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Size" unique_id=994201900]
-position = Vector2(32, -80)
+position = Vector2(-1.5, -80)
 shape = SubResource("RectangleShape2D_7atgd")
 
 [node name="TargetLock" type="Node2D" parent="." unique_id=1279819932]
