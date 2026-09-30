@@ -17186,10 +17186,9 @@ size = Vector2(27.275377, 41.20858)
 [node name="PC" type="CharacterBody2D" unique_id=1041091659 node_paths=PackedStringArray("health", "hitbox") groups=["player"]]
 collision_layer = 2
 collision_mask = 103599113
-floor_stop_on_slope = false
 floor_constant_speed = true
 floor_max_angle = 1.3089969
-floor_snap_length = 5.0
+floor_snap_length = 15.4
 platform_floor_layers = 1
 platform_wall_layers = 1
 safe_margin = 1.0
@@ -17635,7 +17634,11 @@ position = Vector2(1.0000002, -7.9999995)
 scale = Vector2(1.06323, 0.994939)
 shape = SubResource("RectangleShape2D_ie0ey")
 
-[node name="DontGoombaStompOnMe" type="CollisionShape2D" parent="." unique_id=1408244517]
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1242826189]
+collision_layer = 0
+collision_mask = 16384
+
+[node name="DontGoombaStompOnMe" type="CollisionShape2D" parent="StaticBody2D" unique_id=1408244517]
 position = Vector2(1, -27)
 shape = SubResource("CircleShape2D_incat")
 

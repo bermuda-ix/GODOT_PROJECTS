@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="4_ec6ti"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="6_82t0r"]
-[ext_resource type="PackedScene" uid="uid://8dll0gc5053j" path="res://chars/enemies/shotgun_soldier.tscn" id="8_v15hm"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="10_gem31"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="11_fof0c"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="12_dqkb5"]
@@ -268,6 +267,9 @@ size = Vector2(20, 180)
 background_mode = 3
 glow_enabled = true
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_incat"]
+b = Vector2(224, -104)
+
 [node name="project_test" unique_id=1972552611 groups=["GameLevel"] instance=ExtResource("1_07jkq")]
 script = ExtResource("2_v15hm")
 lvl_type = "test"
@@ -438,7 +440,7 @@ metadata/_custom_type_script = "uid://2hjmonf4ss5y"
 position = Vector2(746, 59)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." index="26" unique_id=1116371728]
-position = Vector2(-448, 136)
+position = Vector2(-40, -8)
 collision_layer = 524289
 collision_mask = 1048578
 
@@ -452,7 +454,7 @@ light_mask = 3
 color = Color(0, 0, 0, 1)
 
 [node name="WallTest" type="StaticBody2D" parent="." index="28" unique_id=47130497]
-position = Vector2(1232, 24)
+position = Vector2(1560, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallTest" index="0" unique_id=819857499]
 position = Vector2(-159, 17)
@@ -460,10 +462,6 @@ rotation = 1.0471976
 shape = SubResource("RectangleShape2D_01tlq")
 
 [node name="Enemies" type="Node" parent="." index="29" unique_id=825398583]
-
-[node name="ShotgunSoldier" parent="Enemies" index="0" unique_id=1122506050 instance=ExtResource("8_v15hm")]
-position = Vector2(840, 79.99999)
-scale = Vector2(0.7, 0.7)
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]
 position = Vector2(1260, 1)
@@ -486,6 +484,17 @@ position = Vector2(952, 35)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="35" unique_id=1515680001]
 environment = SubResource("Environment_dqkb5")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." index="36" unique_id=800047588]
+position = Vector2(784, 120)
+disable_mode = 1
+collision_layer = 524288
+collision_mask = 1048578
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" index="0" unique_id=1519123579]
+shape = SubResource("SegmentShape2D_incat")
+one_way_collision = true
+one_way_collision_margin = 6.0
 
 [connection signal="update_health" from="PC" to="CanvasLayer/UI_Level" method="set_health"]
 

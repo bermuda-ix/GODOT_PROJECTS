@@ -660,7 +660,7 @@ func _process(_delta):
 #
 	input_axis = Input.get_axis("walk_left", "walk_right")
 	
-	label.text=str(state_machine.get_active_state())
+	
 	
 	get_target_info()
 	#previous_state()
@@ -720,7 +720,7 @@ signal vel_y_changed
 
 func _physics_process(delta):
 	vel_y=velocity.y
-	
+	label.text=str(get_floor_angle())
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		apply_gravity(delta)
 		cutscene_acceleration(cutscene_handler.cutscene_dir, delta, cutscene_handler.cutscene_speed)
@@ -2099,14 +2099,27 @@ func enter_door() -> void:
 			
 
 func climb_stairs() -> void:
-	if Input.is_action_pressed("down") and stairs_detected==false:
-		set_collision_mask_value(20, false)
-		#stairs_release=
-	elif Input.is_action_just_released("down"):
-		if stairs_detected:
-			stairs_release=true
-		else:
-			set_collision_mask_value(20, true)
+	if controller_input_helper.look_with_gamepad:
+		var _move_x_input=Input.get_action_strength("down")
+		
+		if _move_x_input>=0.6 and stairs_detected==false:
+			set_collision_mask_value(20, false)
+			#stairs_release=
+		elif _move_x_input<0.6:
+			if stairs_detected:
+				stairs_release=true
+			else:
+				set_collision_mask_value(20, true)
+		
+	else:
+		if Input.is_action_pressed("down") and stairs_detected==false:
+			set_collision_mask_value(20, false)
+			#stairs_release=
+		elif Input.is_action_just_released("down"):
+			if stairs_detected:
+				stairs_release=true
+			else:
+				set_collision_mask_value(20, true)
 
 func drop_down():
 	if Input.is_action_just_pressed("down") and not drop_down_platform_detected:
