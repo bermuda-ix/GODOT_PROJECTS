@@ -267,7 +267,7 @@ tracks/6/keys = {
 }
 tracks/7/type = "value"
 tracks/7/imported = false
-tracks/7/enabled = true
+tracks/7/enabled = false
 tracks/7/path = NodePath("turret_top_burst_shot:rotation")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
@@ -436,7 +436,6 @@ base = NodePath("..")
 monitor_performance = true
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=525706724 node_paths=PackedStringArray("health", "stagger")]
-visible = false
 collision_layer = 16
 collision_mask = 8397376
 script = ExtResource("3_k7vj7")
@@ -444,8 +443,8 @@ health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
-[node name="HurtBoxCollision" type="CollisionPolygon2D" parent="HurtBox" unique_id=639604306]
-polygon = PackedVector2Array(-136, 96, 136, 96, 136, 16, 104, 0, 80, -96, 32, -96, 16, -8, -32, 8, -104, 48, -135, 62)
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="HurtBox" unique_id=953355543]
+polygon = PackedVector2Array(360, 104, 40, -16, -32, -16, -352, 104)
 
 [node name="HitStop" type="Node" parent="." unique_id=644311718]
 script = ExtResource("4_kwyus")
