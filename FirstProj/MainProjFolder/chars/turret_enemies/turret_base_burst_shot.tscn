@@ -443,7 +443,7 @@ health = NodePath("../Health")
 stagger = NodePath("../Stagger")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="HurtBox" unique_id=953355543]
+[node name="HurtBoxCollision" type="CollisionPolygon2D" parent="HurtBox" unique_id=953355543]
 polygon = PackedVector2Array(360, 104, 40, -16, -32, -16, -352, 104)
 
 [node name="HitStop" type="Node" parent="." unique_id=644311718]

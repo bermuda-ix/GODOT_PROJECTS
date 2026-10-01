@@ -32,9 +32,9 @@ func death():
 	#print_debug("dead")
 func dying():
 	actor.move_and_slide()
-	if actor.is_on_floor() and not actor.jump_timer.is_stopped():
+	if actor.is_on_floor():
 		actor.dying.blackboard.set_var("hit_the_floor", true)
-	actor.velocity.x=actor.knockback.x
+	#actor.velocity.x=actor.knockback.x
 	
 
 func dead():
