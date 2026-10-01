@@ -908,6 +908,7 @@ func _on_falling_updated(delta: float) -> void:
 
 func _on_landed_entered() -> void:
 	knocked_back=false
+	set_collision_mask_value(13, true)
 	animation_player.play("landed")
 
 

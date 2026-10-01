@@ -55,7 +55,8 @@ func _update(delta: float) -> void:
 		movement_handler.active=false
 	
 func _exit() -> void:
-
+	if "set_collision_mask_value" in actor:
+		actor.set_collision_mask_value(13, true)
 	if movement_able:
 		movement_handler.active=true
 	hurt_box.set_damage_mulitplyer(1)

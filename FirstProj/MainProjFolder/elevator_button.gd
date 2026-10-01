@@ -15,13 +15,18 @@ func _ready() -> void:
 		modulate = Color(1.0, 1.0, 1.0, 1.0)
 		rich_text_label.text=str("FLOOR " + button_text)
 	
-#func _process(delta: float) -> void:
-	#rich_text_label = $PanelContainer/RichTextLabel
+func _process(delta: float) -> void:
+	if not floor_locked:
+		modulate = Color(1.0, 1.0, 1.0, 1.0)
+		rich_text_label = $PanelContainer/RichTextLabel
+		rich_text_label.text==str("FLOOR " + button_text)
+		assert(rich_text_label.text==str("FLOOR " + button_text))
+		
 
 func _on_pressed() -> void:
 	if floor_locked:
 		if InventoryDict.player_inventory.has(key_type):
-			toggle_floor_lock(true)
+			toggle_floor_lock(false)
 			#print_debug("Floor unlocked")
 		else:
 			#print_debug("Floor locked")
@@ -46,3 +51,17 @@ func toggle_floor_lock(value : bool) -> void:
 		rich_text_label.text=str("FLOOR " + button_text)
 		
 	#print_debug(floor_locked)
+
+func update_visual() -> void:
+	if floor_locked:
+		modulate = Color(0.234, 0.234, 0.234, 0.8)
+		rich_text_label = $PanelContainer/RichTextLabel
+		rich_text_label.text=str("LOCKED")
+	else:
+		modulate = Color(1.0, 1.0, 1.0, 1.0)
+		rich_text_label = $PanelContainer/RichTextLabel
+		rich_text_label.text=str("FLOOR " + button_text)
+
+
+func _on_visibility_changed() -> void:
+	update_visual()

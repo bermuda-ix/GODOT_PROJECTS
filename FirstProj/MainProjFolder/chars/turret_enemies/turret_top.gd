@@ -92,6 +92,8 @@ func _process(_delta):
 	vision_handler.handle_vision()
 	is_on_screen=visible_on_screen_notifier_2d.is_on_screen()
 	#shoot_attack_manager.shoot()
+	if not is_on_screen:
+		state_machine.change_active_state(idle)
 	var player_track_angle_wrap=wrapf(player_tracker_pivot.rotation, 0, 2*PI)
 	heating_up_visual()
 	bt_player.blackboard.set_var("attack_mode", true)

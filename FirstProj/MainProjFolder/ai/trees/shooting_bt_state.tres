@@ -1,6 +1,11 @@
 [gd_resource type="BehaviorTree" format=3 uid="uid://bxakb1j8uax5m"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_1mc1m"]
+var/health/name = &"health"
+var/health/type = 2
+var/health/value = 0
+var/health/hint = 0
+var/health/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_buh7y"]
 type = 2
@@ -48,6 +53,15 @@ variable = &"stagger"
 check_type = 2
 value = SubResource("BBVariant_yi06b")
 
+[sub_resource type="BBVariant" id="BBVariant_1mc1m"]
+type = 2
+saved_value = 1
+resource_name = "1"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_buh7y"]
+variable = &"health"
+value = SubResource("BBVariant_1mc1m")
+
 [sub_resource type="BBNode" id="BBNode_buh7y"]
 saved_value = NodePath("AnimationPlayer")
 resource_name = "AnimationPlayer"
@@ -58,7 +72,7 @@ animation_name = &"shoot_crouch"
 
 [sub_resource type="BTSequence" id="BTSequence_ws26m"]
 custom_name = "RapidShoot"
-children = [SubResource("BTPlayAnimation_b55l8"), SubResource("BTCheckVar_em4jx"), SubResource("BTAwaitAnimation_b5oiy")]
+children = [SubResource("BTPlayAnimation_b55l8"), SubResource("BTCheckVar_em4jx"), SubResource("BTCheckVar_buh7y"), SubResource("BTAwaitAnimation_b5oiy")]
 
 [sub_resource type="BBNode" id="BBNode_00ylt"]
 saved_value = NodePath("AnimationPlayer")

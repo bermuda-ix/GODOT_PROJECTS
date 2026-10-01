@@ -12,6 +12,7 @@ class_name Launch extends LimboState
 func _enter() -> void:
 	#launch_height=actor.global_position.y-launch_strength
 	#knocked_back=actor.global_position.x-knock_back_strength
+	actor.set_collision_mask_value(13, true)
 	actor.velocity.x=knock_back_strength
 	actor.velocity.y=-launch_strength*10
 	actor.current_speed=0

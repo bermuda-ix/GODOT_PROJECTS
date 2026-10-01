@@ -184,6 +184,7 @@ func open_elevator_menu() -> void:
 			if i == init_floor:
 				button.grab_focus()
 				scroll_container.ensure_control_visible(button)
+			button.update_visual()
 		
 
 #func close_elevator_menu() -> void:

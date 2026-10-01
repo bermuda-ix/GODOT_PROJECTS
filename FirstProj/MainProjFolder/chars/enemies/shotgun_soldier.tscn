@@ -2620,6 +2620,7 @@ script = ExtResource("59_lsrwi")
 actor = NodePath("..")
 sm = NodePath("../StateMachine")
 csm = NodePath("../CombatStateMachine")
+vision_range = 500
 player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 world_detector = NodePath("../PlayerTrackerPivot/WorldDetector")
 bt_active = false

@@ -2542,6 +2542,7 @@ script = ExtResource("23_4cjr0")
 actor = NodePath("..")
 sm = NodePath("../StateMachine")
 csm = NodePath("../CombatStateMachine")
+vision_range = 500
 player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
 world_detector = NodePath("../PlayerTrackerPivot/WorldDetector")
 bt_active = false
@@ -2648,12 +2649,14 @@ anim_name = &"melee_attack"
 hit_box = NodePath("../../HitBox")
 hit_box_collision = NodePath("../../HitBox/hb_collision")
 
-[node name="ShootingBTState" type="BTState" parent="StateMachine" unique_id=1512420932 node_paths=PackedStringArray("turret", "stagger")]
+[node name="ShootingBTState" type="BTState" parent="StateMachine" unique_id=1512420932 node_paths=PackedStringArray("turret", "stagger", "health", "shoot_attack_manager")]
 behavior_tree = ExtResource("45_nnekd")
 blackboard_plan = SubResource("BlackboardPlan_bynfm")
 script = ExtResource("46_c5coe")
 turret = NodePath("../../Turret")
 stagger = NodePath("../../Stagger")
+health = NodePath("../../Health")
+shoot_attack_manager = NodePath("../../ShootAttackManager")
 
 [node name="Hit" type="LimboState" parent="StateMachine" unique_id=1063914303 node_paths=PackedStringArray("actor", "hurtbox", "animation_player", "hit_fx_player", "stagger")]
 script = ExtResource("42_n808b")

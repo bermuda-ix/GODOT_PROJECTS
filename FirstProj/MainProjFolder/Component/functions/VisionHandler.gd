@@ -59,9 +59,9 @@ func handle_vision():
 		sm.dispatch(&"return_to_idle")
 		
 		return
-	#if world_detector.is_colliding():
-		#sm.dispatch(&"return_to_idle")
-		#return
+	if world_detector.is_colliding():
+		sm.dispatch(&"return_to_idle")
+		return
 	else:
 		#actor.player_colliding=player_tracking.is_colliding()
 		if player_tracking.is_colliding():

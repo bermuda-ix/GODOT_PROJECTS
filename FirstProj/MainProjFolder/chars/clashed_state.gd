@@ -38,6 +38,7 @@ func _ready() -> void:
 	counter_attack_timer.one_shot=true
 
 func _enter() -> void:
+	actor.set_collision_mask_value(13, true)
 	hit_box.in_clash_state=true
 	actor.velocity.x=0
 	vfx_sprite.visible=true
@@ -62,15 +63,18 @@ func _enter() -> void:
 		if counter_prepared:
 			anim_player.play(&"preparing_counter")
 			anim_player.pause()
+			actor.set_collision_mask_value(13, false)
 			while hurt_box.collision.disabled==true:
 				hurt_box.collision.set_deferred("disabled", false)
 		if stagger.stagger>1:
+			actor.set_collision_mask_value(13, false)
 			hit_fx_player.play("counter_prepared")
 			while hurt_box.collision.disabled==true:
 				hurt_box.collision.set_deferred("disabled", false)
 			#hit_fx_player.play_section_with_markers("counter_prepared", "prepared")
 			#hit_fx_player.pause()
 		else:
+			actor.set_collision_mask_value(13, true)
 			anim_player.pause()
 			assert(anim_player.is_playing()!=true)
 			hitbox_collision.set_deferred("disabled", true)
