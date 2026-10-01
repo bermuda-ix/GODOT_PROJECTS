@@ -3,6 +3,7 @@ extends AnimatedSprite2D
 @export var connected_actor : Node2D = null
 @export var platform : CollisionShape2D = null
 @export var destroyed: CollisionShape2D = null
+@export var light_occluder : LightOccluder2D = null
 
 
 func _ready() -> void:
@@ -16,3 +17,5 @@ func destruct() -> void:
 		platform.set_deferred("disabled", true)
 	if destroyed!=null:
 		destroyed.set_deferred("disabled", false)
+	if light_occluder!=null:
+		light_occluder.visible=false
