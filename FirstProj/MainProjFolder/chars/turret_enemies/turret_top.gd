@@ -49,6 +49,8 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var player : PlayerEntity = null
 @onready var stagger: LimboState = $LimboHSM/Stagger
 @onready var health: Health = $Health
+@onready var hurt_box: HurtBox = $Sprite2D/turret_top/HurtBox
+
 
 @export_group("Turret Behavior")
 @onready var bullet_dir := Vector2.ZERO
@@ -107,6 +109,8 @@ func _process(_delta):
 func _physics_process(delta: float) -> void:
 	if world_tracker.is_colliding():
 		pass
+	hurt_box.position=Vector2.ZERO
+	assert(hurt_box.position==Vector2.ZERO)
 
 func _init_state_machine():
 	state_machine.initial_state=idle

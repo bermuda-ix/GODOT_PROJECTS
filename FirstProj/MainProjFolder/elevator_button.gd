@@ -53,14 +53,16 @@ func toggle_floor_lock(value : bool) -> void:
 	#print_debug(floor_locked)
 
 func update_visual() -> void:
-	if floor_locked:
-		modulate = Color(0.234, 0.234, 0.234, 0.8)
-		rich_text_label = $PanelContainer/RichTextLabel
-		rich_text_label.text=str("LOCKED")
-	else:
-		modulate = Color(1.0, 1.0, 1.0, 1.0)
-		rich_text_label = $PanelContainer/RichTextLabel
-		rich_text_label.text=str("FLOOR " + button_text)
+	if InventoryDict.player_inventory.has(key_type):
+		toggle_floor_lock(false)
+	#if floor_locked:
+		#modulate = Color(0.234, 0.234, 0.234, 0.8)
+		#rich_text_label = $PanelContainer/RichTextLabel
+		#rich_text_label.text=str("LOCKED")
+	#else:
+		#modulate = Color(1.0, 1.0, 1.0, 1.0)
+		#rich_text_label = $PanelContainer/RichTextLabel
+		#rich_text_label.text=str("FLOOR " + button_text)
 
 
 func _on_visibility_changed() -> void:

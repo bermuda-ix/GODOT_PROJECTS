@@ -3,14 +3,15 @@ class_name Death
 extends LimboState
 
 @export var actor : Node2D
-@export var animation_player : AnimationPlayer
+@export var animation_player : AnimationPlayer = null
 @export var tree_active : bool = true
 
 
 
 func _enter() -> void:
 	#actor.state="DEATH"
-	animation_player.play("dead")
+	if animation_player!=null:
+		animation_player.play("dead")
 	if "hb_collision" in actor:
 		actor.hb_collision.set_deferred("disabled", true)
 	if "hurt_box_collision" in actor:
@@ -25,8 +26,9 @@ func _enter() -> void:
 	
 
 func _update(delta: float) -> void:
-	if actor.is_in_group("turret_top"):
+	if actor.is_in_group("turret_top") or actor.get_class()=="StaticBody2D":
 		return
-	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.8)
-	print_debug(actor.velocity.x)
+	else:
+		actor.velocity.x=lerpf(actor.velocity.x, 0, 0.8)
+		print_debug(actor.velocity.x)
 	pass

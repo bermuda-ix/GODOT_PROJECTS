@@ -420,7 +420,7 @@ texture = ExtResource("3_kwyus")
 offset = Vector2(-35, 70)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="." unique_id=224298227]
-polygon = PackedVector2Array(331, 97, 32, -10, -25, -11, -326, 100)
+polygon = PackedVector2Array(296, 96, 32, 0, -24, 0, -288, 96)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=989149592]
 libraries/ = SubResource("AnimationLibrary_wstjc")
@@ -435,16 +435,17 @@ base = NodePath("..")
 [node name="BTPlayer" parent="turret_top_burst_shot" index="4" unique_id=703124380]
 monitor_performance = true
 
-[node name="HurtBox" type="Area2D" parent="." unique_id=525706724 node_paths=PackedStringArray("health", "stagger")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=525706724 node_paths=PackedStringArray("health", "stagger", "collision")]
 collision_layer = 16
 collision_mask = 8397376
 script = ExtResource("3_k7vj7")
 health = NodePath("../Health")
 stagger = NodePath("../Stagger")
+collision = NodePath("../turret_top_burst_shot/Sprite2D/turret_top/HurtBox/turret_top_collision")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
 [node name="HurtBoxCollision" type="CollisionPolygon2D" parent="HurtBox" unique_id=953355543]
-polygon = PackedVector2Array(360, 104, 40, -16, -32, -16, -352, 104)
+polygon = PackedVector2Array(384, 104, 40, -40, -32, -40, -376, 104)
 
 [node name="HitStop" type="Node" parent="." unique_id=644311718]
 script = ExtResource("4_kwyus")
