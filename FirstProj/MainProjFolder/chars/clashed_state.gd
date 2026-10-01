@@ -78,7 +78,7 @@ func _enter() -> void:
 			anim_player.pause()
 			assert(anim_player.is_playing()!=true)
 			hitbox_collision.set_deferred("disabled", true)
-			hit_box.clash_active=false
+			#hit_box.clash_active=false
 		clashes_made==0
 		movement_handler.active=false
 
@@ -96,6 +96,7 @@ func _exit() -> void:
 	vfx_player.stop()
 	vfx_sprite.visible=false
 	hit_stop.end_hit_stop()
+	hit_box.attack_clashed=false
 	if stagger.stagger<=0:
 		if not movement_handler.active:
 			movement_handler.active=true
@@ -113,13 +114,12 @@ func clash_follow_up(_follow_up := "nothing"):
 			hitbox_collision.set_deferred("disabled", true)
 			if stagger.stagger<=0:
 				return
-			#anim_player.play()
+			anim_player.pause()
 			hurt_box.active=true
 			actor.pushed_back(250)
-			if desperate_attack_enabled and stagger.stagger==1:
+			stagger.stagger-=1
+			if desperate_attack_enabled and stagger.stagger<=1:
 				riposte_heavy_follow_up.emit()
-			else:
-				stagger.stagger-=1
 				
 			
 			if stagger.stagger>0:

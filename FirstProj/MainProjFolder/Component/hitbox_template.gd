@@ -99,11 +99,16 @@ func _on_impact(_area :Area2D) -> void:
 	if _area.is_in_group("bullet"):
 		return
 	
+	if _area.is_in_group("shield"):
+		return
+	
 	if stagger.stagger<=0:
 		return
 	
 	if not clash_active:
 		return
+	
+	assert(_area.is_in_group("shield")==false)
 	
 	if active and not heavy_attack:
 		if _area.is_in_group("PlayerParryZone"):

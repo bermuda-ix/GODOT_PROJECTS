@@ -702,7 +702,7 @@ func _process(_delta):
 	
 	
 	if Input.is_action_just_pressed("DEBUG_KEY"):
-		clash_power.clash_power+=1
+		pass
 	
 	
 	#if Input.is_action_just_released("attack"):
@@ -2612,7 +2612,7 @@ func parry_success(_parry_follow_up := "nothing"):
 
 
 func _on_hit_box_area_entered(_area):
-	#print_debug(_area.getd_groups())
+	print_debug(_area.get_groups())
 	if _area.is_in_group("hurtbox"):
 		hit_sfx()
 	

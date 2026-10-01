@@ -4388,6 +4388,7 @@ metadata/_custom_type_script = "uid://dpg0824supe1e"
 [connection signal="updated" from="StateMachine/MeleeAttack" to="." method="_on_melee_attack_updated"]
 [connection signal="active_state_changed" from="StateMachine/ShootingStates" to="." method="_on_shooting_states_active_state_changed"]
 [connection signal="entered" from="StateMachine/ShootingStates" to="." method="_on_shooting_states_entered"]
+[connection signal="exited" from="StateMachine/ShootingStates" to="." method="_on_shooting_states_exited"]
 [connection signal="entered" from="StateMachine/ShootingStates/Shooting" to="." method="_on_shooting_entered"]
 [connection signal="entered" from="StateMachine/ShootingStates/ShootingDefense" to="." method="_on_shooting_defense_entered"]
 [connection signal="entered" from="StateMachine/Hit" to="." method="_on_hit_entered"]

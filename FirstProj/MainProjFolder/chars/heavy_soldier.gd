@@ -461,8 +461,8 @@ func _on_state_machine_active_state_changed(current: LimboState, previous: Limbo
 func _on_combat_state_machine_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if state_machine.get_active_state()==idle:
 		return
-	elif state_machine.get_active_state()==clashed:
-		return
+	elif state_machine.get_active_state()==clashed_state:
+		return 
 	elif state_machine.get_active_state()==attack:
 		if current==ranged_mode:
 			state_machine.dispatch(&"start_shoot")
@@ -482,6 +482,7 @@ func _on_combat_state_machine_active_state_changed(current: LimboState, previous
 func _on_chasing_entered() -> void:
 	animation_player.play("run")
 	chase_speed=40
+	shield_collision.set_deferred("disabled", false)
 	if melee_range_check():
 		state_machine.dispatch(&"melee_attack")
 
@@ -510,7 +511,8 @@ func _on_attack_entered() -> void:
 		return
 
 func melee_range_check() -> bool:
-
+	if state_machine.get_active_state()==clashed_state:
+		return false
 	var _melee_ranged_colliding := attack_range.get_overlapping_bodies()
 	if _melee_ranged_colliding.is_empty():
 		return false
@@ -537,6 +539,8 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 		#state_machine.dispatch(&"parry")
 	#else:
 		#state_machine.dispatch(&"melee_attack")
+	if state_machine.get_active_state()==clashed_state:
+		return
 	state_machine.dispatch(&"melee_attack")
 
 func clash_follow_up(_follow_up := "nothing"):
@@ -752,7 +756,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 
 func _on_shooting_states_entered() -> void:
-	shield.set_collision_mask_value(7, true)
+	shield_collision.set_deferred("disabled", false)
 
 
 func _on_vision_handler_player_sighted() -> void:
@@ -808,7 +812,9 @@ func chase():
 
 
 func _on_melee_attack_entered() -> void:
-	shield.set_collision_mask_value(7, false)
+	if state_machine.get_previous_active_state()==clashed_state:
+		pass
+	shield_collision.set_deferred("disabled", true)
 	hit_box.collision_shape.set_deferred("disabled", false)
 	movement_handler.face_player_active=false
 	movement_handler.active=false
@@ -838,6 +844,8 @@ func _on_hit_box_clashed() -> void:
 
 
 func _on_shield_area_entered(area: Area2D) -> void:
+	if area.is_in_group("player_hitbox"):
+		return
 	if "heavy_attack" in area:
 		if area.heavy_attack:
 			stagger.set_stagger(stagger.stagger-area.damage)
@@ -1032,11 +1040,11 @@ func _on_dying_updated(delta: float) -> void:
 
 
 func _on_ranged_entered() -> void:
-	shield.set_collision_mask_value(7, true)
+	shield_collision.set_deferred("disabled", false)
 
 
 func _on_melee_entered() -> void:
-	shield.set_collision_mask_value(7, false)
+	shield_collision.set_deferred("disabled", true)
 
 
 func _on_clashed_state_entered() -> void:
@@ -1044,6 +1052,8 @@ func _on_clashed_state_entered() -> void:
 
 func _on_clashed_state_exited() -> void:
 	shield_collision.set_deferred("disabled", false)
+	hit_box.clash_active=true
+	hit_box.attack_clashed=false
 
 
 func _on_shield_body_entered(body: Node2D) -> void:
@@ -1056,4 +1066,5 @@ func _on_shield_body_entered(body: Node2D) -> void:
 
 
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
-	pass # Replace with function body.
+	if state_machine.get_active_state()==clashed_state:
+		pass

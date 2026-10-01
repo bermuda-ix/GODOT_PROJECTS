@@ -48,6 +48,17 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_elma4"]
 size = Vector2(221, 130)
 
+[sub_resource type="Gradient" id="Gradient_qf1sq"]
+offsets = PackedFloat32Array(0, 0.030612245, 0.12244898, 0.52040815, 0.872449, 0.95408165, 1)
+colors = PackedColorArray(0.96862745, 0, 0, 1, 0.14877713, 0.017744869, 0.017785672, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10342883, 0, 0.00077408686, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qf1sq"]
+gradient = SubResource("Gradient_qf1sq")
+use_hdr = true
+fill = 3
+fill_from = Vector2(0, 0.51282054)
+fill_to = Vector2(1, 0.517094)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fxdsi"]
 size = Vector2(478, 190)
 
@@ -691,12 +702,17 @@ collision_mask = 66
 [node name="turret_top_collision" type="CollisionShape2D" parent="Sprite2D/turret_top" unique_id=455740457]
 position = Vector2(4.5, 3)
 shape = SubResource("RectangleShape2D_elma4")
+disabled = true
 
 [node name="PointLight2D" type="PointLight2D" parent="Sprite2D/turret_top" unique_id=1112412612]
+position = Vector2(1047.9962, 0.33663368)
+rotation = 0.002832322
+scale = Vector2(16.890625, 1.9144104)
+texture = SubResource("GradientTexture2D_qf1sq")
 
 [node name="HurtBox" type="Area2D" parent="Sprite2D/turret_top" unique_id=1995514463 node_paths=PackedStringArray("health", "stagger")]
 collision_layer = 16
-collision_mask = 8396864
+collision_mask = 8256
 script = ExtResource("3_mn1co")
 health = NodePath("../../../Health")
 stagger = NodePath("../../../Stagger")
@@ -704,6 +720,7 @@ metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
 [node name="turret_top_collision" type="CollisionShape2D" parent="Sprite2D/turret_top/HurtBox" unique_id=1299322876]
 shape = SubResource("RectangleShape2D_fxdsi")
+disabled = true
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D" unique_id=1973743075]
 self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
