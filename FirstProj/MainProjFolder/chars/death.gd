@@ -10,7 +10,7 @@ extends LimboState
 
 func _enter() -> void:
 	#actor.state="DEATH"
-	
+	animation_player.play("dead")
 	if "hb_collision" in actor:
 		actor.hb_collision.set_deferred("disabled", true)
 	if "hurt_box_collision" in actor:
@@ -25,7 +25,8 @@ func _enter() -> void:
 	
 
 func _update(delta: float) -> void:
-	if actor.get_class()=="StaticBody2D" or actor.is_in_group("turret_top"):
+	if actor.is_in_group("turret_top"):
 		return
 	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.8)
-	##print_debug("oof i'm dead sadge")
+	print_debug(actor.velocity.x)
+	pass

@@ -30,16 +30,8 @@ variable = &"hit_the_floor"
 [sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_2nf5j"]
 children = [SubResource("BTCheckTrigger_jeokm")]
 
-[sub_resource type="BBNode" id="BBNode_y0sur"]
-saved_value = NodePath("AnimationPlayer")
-resource_name = "AnimationPlayer"
-
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_xh2lj"]
-animation_player = SubResource("BBNode_y0sur")
-animation_name = &"dead"
-
 [sub_resource type="BTSequence" id="BTSequence_2o85m"]
-children = [SubResource("BTPlayAnimation_cyi20"), SubResource("BTAwaitAnimation_2nf5j"), SubResource("BTRepeatUntilSuccess_2nf5j"), SubResource("BTPlayAnimation_xh2lj")]
+children = [SubResource("BTPlayAnimation_cyi20"), SubResource("BTAwaitAnimation_2nf5j"), SubResource("BTRepeatUntilSuccess_2nf5j")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_jeokm")

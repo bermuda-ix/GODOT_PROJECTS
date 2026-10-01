@@ -295,8 +295,9 @@ func _physics_process(delta: float) -> void:
 	
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	if state_machine.get_active_state()==dying:
-		knockback.x=lerpf(knockback.x, death_knockback/3, 0.1)
-		knockback.y=lerpf(knockback.y, 0, 0.3)
+		#knockback.x=death_knockback
+		#knockback.y=death_launch
+		pass
 	else:
 		knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	pushback = lerpf(pushback, 0, 0.8)

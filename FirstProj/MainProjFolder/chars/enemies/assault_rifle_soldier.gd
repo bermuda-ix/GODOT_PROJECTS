@@ -276,8 +276,9 @@ func _physics_process(delta: float) -> void:
 	
 	knockback=clamp(knockback, Vector2(-400, -400), Vector2(400, 400) )
 	if state_machine.get_active_state()==dying:
-		knockback.x=lerpf(knockback.x, death_knockback/3, 0.1)
-		knockback.y=lerpf(knockback.y, 0, 0.3)
+		#knockback.x=death_knockback
+		#knockback.y=death_launch
+		pass
 	else:
 		knockback = lerp(knockback, Vector2.ZERO, 0.1)
 	pushback = lerpf(pushback, 0, 0.8)
@@ -520,7 +521,7 @@ func _on_vfx_player_animation_finished(anim_name: StringName) -> void:
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	death_knockback=400.0
-	death_launch=-30.0
+	death_launch=-80.0
 	if player_state!=player.flip_state:
 		return
 	if area.is_in_group("sp_atk_default"):
