@@ -101,10 +101,36 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_incat"]
-size = Vector2(202, 25)
+size = Vector2(70, 25)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_incat"]
+polygon = PackedVector2Array(-12, -12.5, -12, 13.5, 79, 13.5, 79, -12.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m75gd"]
 size = Vector2(31, 99)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pwbd4"]
+atlas = ExtResource("12_pwbd4")
+region = Rect2(680, 190, 85, 38)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4ep4i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_runl5")
+}],
+"loop": 1,
+"name": &"broke",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pwbd4")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_658m8"]
 b = Vector2(593, -291.31647)
@@ -1039,6 +1065,7 @@ max_enemy = 1
 position = Vector2(257, 26)
 rotation = -0.523599
 color = Color(0.361187, 0.505418, 0.579718, 1)
+energy = 2.0
 shadow_enabled = true
 shadow_color = Color(0, 0, 0, 0.63)
 shadow_filter = 2
@@ -1076,6 +1103,7 @@ shadow_enabled = true
 
 [node name="lights_indoors7" parent="Lights" index="6" unique_id=1892069780 instance=ExtResource("5_8qkpr")]
 position = Vector2(1051, 391)
+energy = 2.0
 shadow_enabled = true
 
 [node name="Shadows" type="Node" parent="." index="6" unique_id=1942280817]
@@ -1127,16 +1155,16 @@ position = Vector2(1393, 183)
 tile_map_data = PackedByteArray("AAAJAAAAAAANAAUAAAAIAAAAAAAAAAUAAAAHAAAAAAAFAAUAAAAGAAAAAAABAAUAAAAFAAAAAAAKAAUAAAAEAAAAAAAFAAUAAAADAAAAAAABAAUAAAACAAAAAAABAAUAAAABAAAAAAACAAEAAAAAAAAAAAALAAUAAAD//wAAAAAIAAUAAAAJAP//AAANAAAAAAAIAP//AAAKAAAAAAAHAP//AAACAAAAAAAGAP//AAAMAAAAAAAFAP//AAACAAQAAAAEAP//AAADAAQAAAADAP//AAABAAAAAAACAP//AAADAAAAAAABAP//AAADAAQAAAAAAP//AAADAAAAAAD/////AAAIAAAAAAA=")
 tile_set = ExtResource("11_runl5")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Tilesets/DestructableEntrance" index="1" unique_id=51587458 node_paths=PackedStringArray("connected_actor", "platform", "destroyed")]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Tilesets/DestructableEntrance" index="1" unique_id=51587458 node_paths=PackedStringArray("connected_actor", "platform", "destroyed", "light_occluder")]
 self_modulate = Color(3.2944162, 3.2944162, 3.2944162, 1)
 z_index = -1
 position = Vector2(1898, 182)
 sprite_frames = SubResource("SpriteFrames_m75gd")
-animation = &"broke"
 script = ExtResource("14_kx8xh")
 connected_actor = NodePath("../../../Enemy/turrets/turret_base_burst_fire")
 platform = NodePath("DestructablePlatform1/CollisionShape2D")
 destroyed = NodePath("DestructablePlatform1/Destroyed")
+light_occluder = NodePath("DestructablePlatform1/CollisionShape2D/LightOccluder2D")
 
 [node name="DestructablePlatform1" type="StaticBody2D" parent="Tilesets/DestructableEntrance/AnimatedSprite2D" index="0" unique_id=1283824434]
 position = Vector2(-92, -40)
@@ -1145,10 +1173,40 @@ position = Vector2(-92, -40)
 position = Vector2(91, 2.5)
 shape = SubResource("RectangleShape2D_incat")
 
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Tilesets/DestructableEntrance/AnimatedSprite2D/DestructablePlatform1/CollisionShape2D" index="0" unique_id=644844097]
+occluder = SubResource("OccluderPolygon2D_incat")
+
 [node name="Destroyed" type="CollisionShape2D" parent="Tilesets/DestructableEntrance/AnimatedSprite2D/DestructablePlatform1" index="1" unique_id=2046772063]
 position = Vector2(97.5, 41.5)
 shape = SubResource("RectangleShape2D_m75gd")
 disabled = true
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Tilesets/DestructableEntrance" index="2" unique_id=1076099188 node_paths=PackedStringArray("connected_actor", "platform", "destroyed", "light_occluder")]
+self_modulate = Color(3.2944162, 3.2944162, 3.2944162, 1)
+z_index = -1
+position = Vector2(784, 98)
+sprite_frames = SubResource("SpriteFrames_4ep4i")
+script = ExtResource("14_kx8xh")
+connected_actor = NodePath("../../../Enemy/turrets/turret_base_burst_fire2")
+platform = NodePath("DestructablePlatform1/CollisionShape2D")
+destroyed = NodePath("DestructablePlatform1/Destroyed")
+light_occluder = NodePath("DestructablePlatform1/LightOccluder2D")
+
+[node name="DestructablePlatform1" type="StaticBody2D" parent="Tilesets/DestructableEntrance/AnimatedSprite2D2" index="0" unique_id=899262258]
+position = Vector2(-92, -40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tilesets/DestructableEntrance/AnimatedSprite2D2/DestructablePlatform1" index="0" unique_id=868585020]
+position = Vector2(99, 32)
+shape = SubResource("RectangleShape2D_incat")
+
+[node name="Destroyed" type="CollisionShape2D" parent="Tilesets/DestructableEntrance/AnimatedSprite2D2/DestructablePlatform1" index="1" unique_id=644143824]
+position = Vector2(49, 69)
+shape = SubResource("RectangleShape2D_m75gd")
+disabled = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Tilesets/DestructableEntrance/AnimatedSprite2D2/DestructablePlatform1" index="2" unique_id=1869230393]
+position = Vector2(55, 32)
+occluder = SubResource("OccluderPolygon2D_incat")
 
 [node name="Props" type="Node" parent="." index="8" unique_id=1204222298]
 
