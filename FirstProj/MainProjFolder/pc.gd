@@ -2612,7 +2612,7 @@ func parry_success(_parry_follow_up := "nothing"):
 
 
 func _on_hit_box_area_entered(_area):
-	#print_debug(_area.get_groups())
+	#print_debug(_area.getd_groups())
 	if _area.is_in_group("hurtbox"):
 		hit_sfx()
 	
