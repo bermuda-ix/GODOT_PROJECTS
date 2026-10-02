@@ -3772,6 +3772,9 @@ _data = {
 &"hit": SubResource("Animation_qfovh")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0u53p"]
+size = Vector2(20, 70)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8fd3j"]
 size = Vector2(21, 76)
 
@@ -3905,6 +3908,12 @@ metadata/_custom_type_script = "uid://xtvvtv1f2dfa"
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=162841846]
 position = Vector2(20, -9)
 rect = Rect2(2, 2, 5, 5)
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=1556996297]
+position = Vector2(72, -8)
+shape = SubResource("RectangleShape2D_0u53p")
+target_position = Vector2(-304, 0)
+collision_mask = 2
 
 [node name="PlayerTrackerPivot" type="Node2D" parent="." unique_id=1646432594]
 position = Vector2(0, -28)
@@ -4066,7 +4075,7 @@ actor = NodePath("..")
 sm = NodePath("../StateMachine")
 csm = NodePath("../CombatStateMachine")
 vision_range = 500
-player_tracking = NodePath("../PlayerTrackerPivot/PlayerTracking")
+player_tracking = NodePath("../ShapeCast2D")
 world_detector = NodePath("../PlayerTrackerPivot/WorldDetector")
 bt_active = false
 stay_on = true

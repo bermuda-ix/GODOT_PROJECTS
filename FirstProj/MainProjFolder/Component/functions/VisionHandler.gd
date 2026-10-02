@@ -8,7 +8,7 @@ extends Node
 @export var active : bool = true
 @export var combat_state_active : bool = true
 @export var vision_range : int = 200
-@export var player_tracking : RayCast2D
+@export var player_tracking : ShapeCast2D = null
 @export var world_detector : RayCast2D = null
 @export var bt_active : bool = true
 @export var stay_on : bool = false
@@ -29,7 +29,7 @@ signal player_sighted
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	player_detect = get_tree().get_first_node_in_group("player_detect")
-	player_tracking.target_position = Vector2(vision_range, 0)
+	player_tracking.target_position = Vector2(-vision_range, 0)
 	world_detector.target_position = Vector2(vision_range+10, 0)
 	
 
@@ -67,7 +67,7 @@ func handle_vision():
 		if player_tracking.is_colliding():
 			if nav_agent!= null:
 				assert(path_valid())
-			var collision_result = player_tracking.get_collider()
+			var collision_result = player_tracking.get_collider(0)
 			if collision_result != player and collision_result != player_detect:
 				print_debug(collision_result)
 				#set_state(current_state, States.GUARD)
