@@ -126,7 +126,6 @@ var player_state : LimboState
 var state
 
 #Combat States
-@onready var combat_state_change_handler: CombatStateChangeHandler = $CombatStateChangeHandler
 @onready var combat_state_machine: LimboHSM = $CombatStateMachine
 @onready var ranged_mode: LimboState = $CombatStateMachine/ranged
 @onready var melee_mode: LimboState = $CombatStateMachine/melee

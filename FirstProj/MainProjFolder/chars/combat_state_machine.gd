@@ -1,10 +1,7 @@
-class_name CombatStateChangeHandler
-
-extends Node
+extends LimboHSM
 
 @export var actor : Node2D
 @export var sm : LimboHSM
-@export var combat_state_machine: LimboHSM
 @export var ranged_state: ranged
 @export var melee_state: melee
 @export var bt_player : BTPlayer
@@ -24,12 +21,11 @@ func _physics_process(delta: float) -> void:
 	elif actor.attacking and sm.get_active_state()==actor.chasing:
 		return
 	else:
-		actor.distance=abs(actor.global_position.x-actor.player.global_position.x)
 		#print_debug(actor.distance)
 		var _distance=actor.distance
 #		RANGED ATTACK
 		
-		if combat_state_machine.get_active_state()==ranged_state:
+		if get_active_state()==ranged_state:
 			#print_debug("ranged")
 			if actor.is_on_screen and vision_handler.player_colliding:
 				actor.turret.shoot_timer.paused=false
@@ -54,6 +50,6 @@ func _physics_process(delta: float) -> void:
 
 func combat_state_change(_distance:float)-> void:
 	if _distance>ranged_dist: 
-		combat_state_machine.dispatch(&"ranged_mode")
+		dispatch(&"ranged_mode")
 	else:
-		combat_state_machine.dispatch(&"melee_mode")
+		dispatch(&"melee_mode")

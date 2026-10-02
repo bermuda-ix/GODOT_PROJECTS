@@ -30,7 +30,7 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	player_detect = get_tree().get_first_node_in_group("player_detect")
 	player_tracking.target_position = Vector2(-vision_range, 0)
-	world_detector.target_position = Vector2(vision_range+10, 0)
+	world_detector.target_position = world_detector.to_local(player.global_position)
 	
 
 func _process(delta: float) -> void:
@@ -38,6 +38,7 @@ func _process(delta: float) -> void:
 		turret_face_player()
 	if not path_valid() and nav_agent!=null:
 		sm.dispatch(&"return_to_idle")
+	world_detector.target_position = world_detector.to_local(player.global_position)
  
 func get_player_relative_loc():
 	if player.global_position.x>actor.global_position.x:

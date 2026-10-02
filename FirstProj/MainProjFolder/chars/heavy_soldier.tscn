@@ -53,7 +53,6 @@
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="24_ni375"]
 [ext_resource type="Script" uid="uid://c7kbv7d5voapj" path="res://Component/functions/DefendEnemy.gd" id="24_o2wso"]
 [ext_resource type="Texture2D" uid="uid://c7l7qeiwcqwgt" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_012.png" id="25_q1xjq"]
-[ext_resource type="Script" uid="uid://cvo1e5meai30k" path="res://Component/functions/CombatStateChangeHandler.gd" id="25_uhne8"]
 [ext_resource type="Texture2D" uid="uid://bsgwu12ysm627" path="res://Art_Components/Effects/VFX Free Pack/Effect_Wheel/60fps/Frames/Effect_Wheel_1/Effect_Wheel_1_013.png" id="26_h6epv"]
 [ext_resource type="Script" uid="uid://daq7xh1e6l7u6" path="res://chars/idle.gd" id="26_i7wao"]
 [ext_resource type="Script" uid="uid://d2wausty5l457" path="res://chars/jump.gd" id="26_rumpe"]
@@ -138,6 +137,7 @@
 [ext_resource type="Script" uid="uid://d30t6dtun2xcd" path="res://chars/clashed.gd" id="125_4cgwk"]
 [ext_resource type="Script" uid="uid://dpg0824supe1e" path="res://Component/functions/drop_handler.gd" id="132_n51gf"]
 [ext_resource type="Script" uid="uid://bu2m8cwle1k11" path="res://chars/clashed_state.gd" id="135_oh1oc"]
+[ext_resource type="Script" uid="uid://bjshck8n820vg" path="res://chars/combat_state_machine.gd" id="136_0u53p"]
 [ext_resource type="Script" uid="uid://cvq0ypnvr0iwa" path="res://chars/clash_fail.gd" id="136_nyvl3"]
 [ext_resource type="Script" uid="uid://dc5y78lbovoqo" path="res://chars/clash_counter.gd" id="137_s1lrb"]
 
@@ -4143,15 +4143,6 @@ script = ExtResource("22_rumpe")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://ddhk64y60klpg"
 
-[node name="CombatStateChangeHandler" type="Node" parent="." unique_id=1783830282 node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "vision_handler")]
-script = ExtResource("25_uhne8")
-actor = NodePath("..")
-sm = NodePath("../StateMachine")
-combat_state_machine = NodePath("../CombatStateMachine")
-ranged_dist = 50
-vision_handler = NodePath("../VisionHandler")
-metadata/_custom_type_script = "uid://cvo1e5meai30k"
-
 [node name="GroupEnemyManager" type="Node" parent="." unique_id=81365477 node_paths=PackedStringArray("actor")]
 script = ExtResource("32_86qvh")
 actor = NodePath("..")
@@ -4312,7 +4303,13 @@ animation_player = NodePath("../../../AnimationPlayer")
 state_machine = NodePath("../..")
 metadata/_custom_type_script = "uid://dc5y78lbovoqo"
 
-[node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=455656030]
+[node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=455656030 node_paths=PackedStringArray("actor", "sm", "ranged_state", "melee_state", "vision_handler")]
+script = ExtResource("136_0u53p")
+actor = NodePath("..")
+sm = NodePath("../StateMachine")
+ranged_state = NodePath("ranged")
+melee_state = NodePath("melee")
+vision_handler = NodePath("../VisionHandler")
 
 [node name="melee" type="LimboState" parent="CombatStateMachine" unique_id=429295658 node_paths=PackedStringArray("actor")]
 script = ExtResource("27_okbgj")
