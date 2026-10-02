@@ -8,7 +8,7 @@ extends LimboState
 
 func _enter() -> void:
 	animation_player.play("shoot")
-	#print_debug("begin shooting")
+	print_debug("begin shooting")
 	#actor.hb_collision.disabled=true
 	
 func _exit() -> void:

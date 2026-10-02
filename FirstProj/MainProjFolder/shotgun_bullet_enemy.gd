@@ -24,7 +24,7 @@ func _ready():
 	gpu_particles_2d.emitting=true
 	global_position = spawnPos
 	sprite_2d.rotation_degrees=spawnRot
-	
+	linear_velocity=dir*SPEED
 	#print_debug(sprite_2d.rotation_degrees)
 	#print_debug(spawnRot)
 	
@@ -34,7 +34,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	position += dir * SPEED * delta
+	#position += dir * SPEED * delta
 	collision_shape_2d.global_rotation=sprite_2d.global_rotation
 	#global_rotation = spawnRot
 

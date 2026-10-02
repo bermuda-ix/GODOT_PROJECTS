@@ -187,7 +187,6 @@ var distance
 @onready var phase_2: LimboState = $Phases/Phase2
 @onready var phases_handler: PhasesHandler = $PhasesHandler
 @onready var changing_phase := false
-@onready var combat_state_change_handler: CombatStateChangeHandler = $CombatStateChangeHandler
 
 var spawn_loc : Vector2
 
@@ -1113,7 +1112,7 @@ func _on_dying_entered() -> void:
 func _on_phase_2_entered() -> void:
 	launch.air_time=0.5
 	bt_player.blackboard.set_var("Phase2Active", true)
-	combat_state_change_handler.ranged_dist=1000
+	combat_state_machine.ranged_dist=1000
 	bt_player.blackboard.set_var("melee_mode", true)
 	#bt_player.blackboard.set_var("attack_mode", false)
 	#bt_player.restart()
@@ -1217,7 +1216,7 @@ func boss_reset() -> void:
 		vision_handler.active=vision_active
 		vision_handler.stay_on=vision_stay_on
 		vision_handler.always_on=vision_always_on
-		combat_state_change_handler.ranged_dist=100
+		combat_state_machine.ranged_dist=100
 		bt_player.blackboard.set_var("attack_mode", false)
 		bt_player.blackboard.set_var("melee_mode", false)
 		bt_player.blackboard.set_var("ranged_mode", true)
@@ -1387,7 +1386,7 @@ func _on_land_landed() -> void:
 	hurt_box_collision.set_deferred("disabled", false)
 	set_collision_mask_value(13, true)
 	vision_handler.active=true
-	combat_state_change_handler.active=true
+	combat_state_machine.active=true
 	state_machine.dispatch(&"resume_attack")
 	stagger.set_temporary_immortality(3)
 	#phases_handler.phase_change(health.health)
@@ -1418,7 +1417,7 @@ func _on_launch_entered() -> void:
 	hurt_box.active=true
 	attack_timer.stop()
 	vision_handler.active=false
-	combat_state_change_handler.active=false
+	combat_state_machine.active=false
 	stun_timer.stop()
 	hurt_box.staggered=true
 	animation_player.play("launched")

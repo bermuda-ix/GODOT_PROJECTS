@@ -1149,6 +1149,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0u53p"]
+size = Vector2(20, 70)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2fe2"]
 size = Vector2(0, 0)
 
@@ -2759,10 +2762,10 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.03333334, 0.06666667, 0.09999997, 0.13333334, 0.16666667, 0.19999997, 0.23333332, 0.26666668, 0.29999998, 0.33333334),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.03333334, 0.06666667, 0.09999997, 0.13333334, 0.16666667, 0.19999997, 0.23333327, 0.275),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 1, 2, 3, 0, 2, 3, 1]
+"values": [0, 1, 2, 3, 2, 3, 2, 3, 1]
 }
 tracks/2/type = "method"
 tracks/2/imported = false
@@ -2771,7 +2774,7 @@ tracks/2/path = NodePath("ShootAttackManager")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.066666685, 0.1724615, 0.2666667),
+"times": PackedFloat32Array(0.066666685, 0.13333334, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [],
@@ -3772,9 +3775,6 @@ _data = {
 &"hit": SubResource("Animation_qfovh")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0u53p"]
-size = Vector2(20, 70)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8fd3j"]
 size = Vector2(21, 76)
 
@@ -3873,6 +3873,12 @@ self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 sprite_frames = SubResource("SpriteFrames_incat")
 animation = &"hit"
 
+[node name="ShapeCast2D" type="ShapeCast2D" parent="AnimatedSprite2D" unique_id=1556996297]
+position = Vector2(72, -8)
+shape = SubResource("RectangleShape2D_0u53p")
+target_position = Vector2(-304, 0)
+collision_mask = 2
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1804512724]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=13363768]
@@ -3909,12 +3915,6 @@ metadata/_custom_type_script = "uid://xtvvtv1f2dfa"
 position = Vector2(20, -9)
 rect = Rect2(2, 2, 5, 5)
 
-[node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=1556996297]
-position = Vector2(72, -8)
-shape = SubResource("RectangleShape2D_0u53p")
-target_position = Vector2(-304, 0)
-collision_mask = 2
-
 [node name="PlayerTrackerPivot" type="Node2D" parent="." unique_id=1646432594]
 position = Vector2(0, -28)
 
@@ -3925,6 +3925,7 @@ collision_mask = 3
 
 [node name="Turret" parent="." unique_id=1127688385 instance=ExtResource("13_b855v")]
 position = Vector2(-25, 9)
+multi_shot = true
 ammo_count = 12
 max_ammo = 12
 shoot_speed = 0.1
@@ -4075,7 +4076,7 @@ actor = NodePath("..")
 sm = NodePath("../StateMachine")
 csm = NodePath("../CombatStateMachine")
 vision_range = 500
-player_tracking = NodePath("../ShapeCast2D")
+player_tracking = NodePath("../AnimatedSprite2D/ShapeCast2D")
 world_detector = NodePath("../PlayerTrackerPivot/WorldDetector")
 bt_active = false
 stay_on = true
@@ -4127,6 +4128,7 @@ actor = NodePath("..")
 turret = NodePath("../Turret")
 projectile = ExtResource("104_g8y6e")
 bullet_scale = 0.5
+bullet_speed = 600.0
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
 [node name="ShootAttackManager" type="Node" parent="." unique_id=2142907253 node_paths=PackedStringArray("actor", "animation_player", "turret")]

@@ -62,7 +62,6 @@
 [ext_resource type="Script" uid="uid://wkp4a7ybuj21" path="res://Component/functions/VisionHandler.gd" id="59_lsrwi"]
 [ext_resource type="Script" uid="uid://m7cps3rc3xog" path="res://Component/functions/AllyVisionHandler.gd" id="60_x6c5o"]
 [ext_resource type="Script" uid="uid://b2h35joqffn41" path="res://Component/functions/ChaseHandler.gd" id="61_lre7r"]
-[ext_resource type="Script" uid="uid://cvo1e5meai30k" path="res://Component/functions/CombatStateChangeHandler.gd" id="62_8bwon"]
 [ext_resource type="Script" uid="uid://d04qf1jqrfg1h" path="res://Component/functions/CounterAttackHandler.gd" id="63_w02sf"]
 [ext_resource type="Script" uid="uid://cr58jnxs33hft" path="res://Component/functions/deathHandler.gd" id="64_bqda4"]
 [ext_resource type="Script" uid="uid://cbt5pqmf6i7rj" path="res://Component/functions/DespawnHandler.gd" id="65_bgdxl"]
@@ -88,6 +87,7 @@
 [ext_resource type="Script" uid="uid://dfqe6u0d8wpgw" path="res://chars/melee.gd" id="87_h2o0m"]
 [ext_resource type="Script" uid="uid://bu2m8cwle1k11" path="res://chars/clashed_state.gd" id="87_uvbyr"]
 [ext_resource type="Script" uid="uid://cvq0ypnvr0iwa" path="res://chars/clash_fail.gd" id="88_3wkqt"]
+[ext_resource type="Script" uid="uid://bjshck8n820vg" path="res://chars/combat_state_machine.gd" id="88_18l1p"]
 [ext_resource type="Script" uid="uid://koggvl8cxowm" path="res://chars/ranged.gd" id="88_srnb7"]
 [ext_resource type="Script" uid="uid://dc5y78lbovoqo" path="res://chars/clash_counter.gd" id="89_jc26s"]
 [ext_resource type="PackedScene" uid="uid://bro4najrj7577" path="res://Component/UI_Rec/npc_stats.tscn" id="89_s7f1w"]
@@ -2613,6 +2613,7 @@ actor = NodePath("..")
 turret = NodePath("../Turret")
 spread_shoot = true
 projectile = ExtResource("57_yrrax")
+bullet_speed = 600.0
 metadata/_custom_type_script = "uid://5gt6g8063rb4"
 
 [node name="ShootAttackManager" type="Node" parent="." unique_id=924585689 node_paths=PackedStringArray("actor", "animation_player", "turret")]
@@ -2648,14 +2649,6 @@ metadata/_custom_type_script = "uid://m7cps3rc3xog"
 [node name="ChaseHandler" type="Node" parent="." unique_id=528897427]
 script = ExtResource("61_lre7r")
 metadata/_custom_type_script = "uid://b2h35joqffn41"
-
-[node name="CombatStateChangeHandler" type="Node" parent="." unique_id=1247445451 node_paths=PackedStringArray("actor", "sm", "combat_state_machine", "vision_handler")]
-script = ExtResource("62_8bwon")
-actor = NodePath("..")
-sm = NodePath("../StateMachine")
-combat_state_machine = NodePath("../CombatStateMachine")
-vision_handler = NodePath("../VisionHandler")
-metadata/_custom_type_script = "uid://cvo1e5meai30k"
 
 [node name="CounterAttackHandler" type="Node" parent="." unique_id=1227636534 node_paths=PackedStringArray("actor", "jump_handler", "shoot_attack_manager", "state_machine", "clash_state", "counter_attack_timer", "hit_stop")]
 script = ExtResource("63_w02sf")
@@ -2844,7 +2837,13 @@ animation_player = NodePath("../../../AnimationPlayer")
 state_machine = NodePath("../..")
 metadata/_custom_type_script = "uid://dc5y78lbovoqo"
 
-[node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=1654448658]
+[node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=1654448658 node_paths=PackedStringArray("actor", "sm", "ranged_state", "melee_state", "vision_handler")]
+script = ExtResource("88_18l1p")
+actor = NodePath("..")
+sm = NodePath("../StateMachine")
+ranged_state = NodePath("ranged")
+melee_state = NodePath("melee")
+vision_handler = NodePath("../VisionHandler")
 
 [node name="melee" type="LimboState" parent="CombatStateMachine" unique_id=519259441 node_paths=PackedStringArray("actor")]
 script = ExtResource("87_h2o0m")
