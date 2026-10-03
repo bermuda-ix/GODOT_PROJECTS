@@ -681,6 +681,10 @@ _data = {
 &"staggered": SubResource("Animation_hnah5")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6b2mg"]
+radius = 59.95
+height = 344.68
+
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_c3g7k"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_mn1co"]
@@ -768,14 +772,15 @@ libraries/ = SubResource("AnimationLibrary_ik7so")
 [node name="PlayerTrackerPivot" type="Node2D" parent="." unique_id=2113618543]
 position = Vector2(0, -32)
 
-[node name="PlayerTracking" type="RayCast2D" parent="PlayerTrackerPivot" unique_id=796440792]
-target_position = Vector2(1832, 0.0046463)
-collision_mask = 2
-hit_from_inside = true
-collide_with_areas = true
-
 [node name="WorldTracker" type="RayCast2D" parent="PlayerTrackerPivot" unique_id=754865379]
 hit_from_inside = true
+
+[node name="PlayerTracking" type="ShapeCast2D" parent="PlayerTrackerPivot" unique_id=148952085]
+visible = false
+position = Vector2(0, 32)
+shape = SubResource("CapsuleShape2D_6b2mg")
+target_position = Vector2(569, 1)
+collision_mask = 2
 
 [node name="BTPlayer" type="BTPlayer" parent="." unique_id=703124380]
 behavior_tree = ExtResource("9_pxudj")
@@ -904,6 +909,7 @@ rect = Rect2(-105, -61, 189, 124)
 [connection signal="updated" from="LimboHSM/Attack" to="." method="_on_attack_updated"]
 [connection signal="entered" from="LimboHSM/Shooting" to="." method="_on_shooting_entered"]
 [connection signal="updated" from="LimboHSM/Shooting" to="." method="_on_shooting_updated"]
+[connection signal="entered" from="LimboHSM/ShootingTree" to="." method="_on_shooting_tree_entered"]
 [connection signal="exited" from="LimboHSM/ShootingTree" to="." method="_on_shooting_tree_exited"]
 [connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]
 [connection signal="reloading" from="ShootAttackManager" to="." method="_on_shoot_attack_manager_reloading"]

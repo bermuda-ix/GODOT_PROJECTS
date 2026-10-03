@@ -22,7 +22,8 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 @onready var player_tracker_pivot: Node2D = $PlayerTrackerPivot
-@onready var player_tracking: RayCast2D = $PlayerTrackerPivot/PlayerTracking
+@onready var player_tracking: ShapeCast2D = $PlayerTrackerPivot/PlayerTracking
+
 
 @onready var vision_handler: VisionHandler = $VisionHandler
 @onready var is_on_screen : bool = false
@@ -49,6 +50,7 @@ const BALL_PROCETILE = preload("res://Component/ball_procetile.tscn")
 @onready var player : PlayerEntity = null
 @onready var stagger: LimboState = $LimboHSM/Stagger
 @onready var health: Health = $Health
+
 @onready var hurt_box: HurtBox = $Sprite2D/turret_top/HurtBox
 
 
@@ -88,6 +90,7 @@ func _ready():
 		player_tracker_pivot.scale.x*=(1/base.scale.x)
 		player_tracker_pivot.scale.y*=(1/base.scale.y)
 	
+	assert(health!=null)
 	
 
 func _process(_delta):
@@ -101,6 +104,7 @@ func _process(_delta):
 	bt_player.blackboard.set_var("attack_mode", true)
 	debug.text=str(state_machine.get_active_state())
 	debug.visible=true
+	shoot_handler.bullet_rotation=sprite_2d.global_rotation_degrees
 	bullet_dir=shoot_handler.rotation_to_direction(sprite_2d.global_rotation_degrees)
 	#if not shoot_attack_manager.shooting:
 		#stagger_shooting()
@@ -111,6 +115,7 @@ func _physics_process(delta: float) -> void:
 		pass
 	hurt_box.position=Vector2.ZERO
 	assert(hurt_box.position==Vector2.ZERO)
+	
 
 func _init_state_machine():
 	state_machine.initial_state=idle
@@ -289,3 +294,8 @@ func _on_shooting_entered() -> void:
 
 func _on_shooting_tree_exited() -> void:
 	pass # Replace with function body.
+
+
+func _on_shooting_tree_entered() -> void:
+	shoot_handler.manual_rotation=true
+	

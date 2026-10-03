@@ -2,6 +2,7 @@ extends RigidBody2D
 
 const BULLET_IMPACT = preload("res://Component/projectiles/bullet_impact.tscn")
 @export var SPEED : float = 100 : set = set_speed, get = get_speed
+@export var rotation_offset_degree : float =0.0
 @onready var damage : int = 1 : set = set_damage, get = get_damage
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
@@ -20,20 +21,25 @@ var scale_size : float
 func _ready():
 	set_as_top_level(true)
 	#shoot_range()
+	freeze=false
 	global_position = spawnPos
-	global_rotation = spawnRot
+	#assert(spawnRot>=0 and spawnRot<=360)
+	global_rotation_degrees = spawnRot
 	linear_velocity=(dir*SPEED)
 	scale=Vector2(scale_size, scale_size)
 	linear_velocity=dir*SPEED
 	modulate.a=1
-	sleeping=true
+	angular_velocity=0
+	#sleeping=true
 
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	#position += dir * SPEED * delta
-	rotation = spawnRot
+	pass
+	#print_debug(spawnRot)
+	#rotation = spawnRot
 
 	
 	
@@ -71,7 +77,7 @@ func impact() -> void:
 	audio_stream_player_2d.play(0.15)
 	set_physics_process(false)
 	
-	#queue_free()
+	queue_free()
 	
 func hard_impact():
 	#AudioStreamManager.play(SoundFx.SOCAPE_SMALL_KNOCK)
@@ -90,6 +96,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 func _on_body_entered(body: Node) -> void:
 	#print_debug("use on body entered")
 	if body.is_in_group("WorldStatic"):
+		print_debug(body.global_position) 
 		impact()
 
 

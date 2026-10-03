@@ -57,17 +57,19 @@ func shoot_bullet():
 		bullet_inst.dir = actor.bullet_dir
 	bullet_inst.spawnPos = Vector2(turret.global_position.x,turret.global_position.y)
 	if player_tracking_active:
-		bullet_inst.spawnRot = actor.player_tracker_pivot.rotation_degrees
+		bullet_inst.spawnRot = wrapf(actor.player_tracker_pivot.rotation_degrees, 0, 360)
 	else:
 		if bullet_inst.is_in_group("missile"):
-			bullet_inst.spawnRot = actor.global_rotation_degrees
+			bullet_inst.spawnRot = wrapf(actor.global_rotation_degrees, 0, 360)
 		elif manual_rotation:
-			#print_debug(bullet_rotation)
+			print_debug(bullet_rotation)
 			bullet_inst.spawnRot=bullet_rotation
+			print_debug(bullet_inst.spawnRot)
+			assert(bullet_inst.spawnRot==bullet_rotation)
 			#bullet_inst.global_rotation=bullet_rotation
 		else:
 			#print_debug(turret.global_rotation_degrees)
-			bullet_inst.spawnRot = turret.global_rotation_degrees
+			bullet_inst.spawnRot = wrapf(turret.global_rotation_degrees, 0, 360)
 		#print_debug(bullet_inst.dir)
 		
 	actor.get_tree().current_scene.add_child(bullet_inst)
