@@ -4,6 +4,7 @@ extends GPUParticles2D
 
 func _ready() -> void:
 	emitting=true
+	audio_stream_player_2d.stream=SoundFx.
 	audio_stream_player_2d.play()
 
 func _process(delta: float) -> void:
