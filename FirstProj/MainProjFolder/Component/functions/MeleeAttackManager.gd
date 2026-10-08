@@ -3,9 +3,13 @@ extends Node
 
 @export var actor : Node2D
 @export var combo_max : int = 3
-@onready var combo_int : int = clampi(1, 1, combo_max)
+@onready var combo_int : int = clampi(0, 0, combo_max-1)
 @onready var combo : String = "atk_"+str(combo_int)
-@onready var atk_type := "atk_1" : set = set_atk_type
+@onready var atk_type_old := "atk_1" : set = set_atk_type
+@onready var atk_type := "Attack"
+@onready var light_attacks : Array[String] = ["Attack", "Attack_2", "Attack_3", "Attack_4"]
+@onready var light_attack_index : int = clampi(0, 0 , combo_max-1)
+@onready var heavy_attacks : Array[String] = ["Heavy_Combo_1", "Heavy_Combo_2"]
 
 @export var heavy_atk_min := clampi(0, 0, 100) : set = set_heavy_atk_min
 @export var heavy_atk_max := clampi(50, 0, 100) : set = set_heavy_atk_max
@@ -17,15 +21,13 @@ func melee_attack():
 	if actor.state_machine.get_active_state()==actor.attack:
 		pass
 	else:
-		#actor.state_machine.change_active_state(actor.attack)
 		print_debug(actor.state_machine.get_active_state())
 		actor.state_machine.dispatch(&"start_attack")
-		#"melee attack")
-	if not actor.attacking:
-		actor.attacking=true
-		actor.animation_player.play(atk_type)
-	else:
-		pass
+	#if not actor.attacking:
+		#actor.attacking=true
+		#actor.animation_player.play(atk_type)
+	#else:
+		#pass
 	
 func melee_counter():
 	if actor.state_machine.get_active_state()==actor.attack:
@@ -33,7 +35,7 @@ func melee_counter():
 	else:
 		actor.state_machine.change_active_state(actor.attack)
 		#print_debug("counter")
-	actor.animation_player.play("atk_counter")
+	atk_type="Attack_counter"
 	reset_combo()
 
 func melee_dash_attack():
@@ -43,15 +45,14 @@ func melee_dash_attack():
 		#actor.state_machine.change_active_state(actor.attack)
 		actor.state_machine.dispatch(&"start_attack")
 		#"melee attack")
-	actor.animation_player.play("atk_dash")
+	atk_type=="Attack_dash"
 
 func next_combo() -> void:
-	if combo_int==combo_max:
-		combo_int=1
+	if combo_int==combo_max-1:
+		combo_int=0
 	else:
 		combo_int+=1
-	combo = "atk_"+str(combo_int)
-	atk_type=combo
+	atk_type=light_attacks[combo_int]
 	
 func get_combo() -> String:
 	return combo
@@ -61,22 +62,18 @@ func reset_combo() -> void:
 	combo_int=0
 
 func set_attack(_value : String) -> void:
-	atk_type+_value
+	atk_type=_value
 
-func set_atk_type(_value : String = "atk_1") -> void:
+func set_atk_type(_value : String = "Attack") -> void:
 	atk_type=_value
 
 func atk_resume_helper() -> void:
-	var _atk_type = get_combo().substr(4, -1)
+	var _atk_type = get_combo().substr(7, -1)
 	print_debug(_atk_type)
 	if _atk_type=="_counter":
-		actor.bt_player.blackboard.set_var("atk_counter", false)
 		reset_combo()
-		actor.bt_player.blackboard.set_var(get_combo(), true)
 	else:
 		next_combo()
-		actor.bt_player.blackboard.set_var(get_combo(), true)
-			
 	actor.attack_timer.start(0.3)
 	actor.bt_player.active=true
 	actor.attacking=false
@@ -93,6 +90,7 @@ func set_heavy_atk_min(_value : int) -> void:
 	
 func set_heavy_atk_max(_value : int) -> void:
 	heavy_atk_max=_value
+
 
 #func slam(value: String):
 	##pass

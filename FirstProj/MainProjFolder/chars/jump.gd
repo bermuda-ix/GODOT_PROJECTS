@@ -19,7 +19,7 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	if actor.is_on_floor() and actor.jump_timer.is_stopped():
-		state_machine.dispatch(&"land")
+		state_machine.dispatch(&"landed")
 
 func _exit() -> void:
 	pass

@@ -8,6 +8,9 @@ class_name Launch extends LimboState
 #@export var knocked_back : float = 0
 @export var knock_back_strength : float = 40
 @export var animation_player : AnimationPlayer
+@export var hit_box : HitBox
+@export var hurt_box : HurtBox
+
 
 func _enter() -> void:
 	#launch_height=actor.global_position.y-launch_strength
@@ -17,6 +20,10 @@ func _enter() -> void:
 	actor.velocity.y=-launch_strength*10
 	actor.current_speed=0
 	animation_player.play("launched")
+	hit_box.active=false
+	hurt_box.active=true
+	hurt_box.staggered=true
+	
 
 func _update(delta: float) -> void:
 	

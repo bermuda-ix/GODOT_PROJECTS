@@ -13,7 +13,6 @@ var lunge_distance := 0
 var attack_dir := 1
 
 func _enter() -> void:
-	actor.state="ATTACK"
 	if "velocity" in actor:
 		actor.velocity= Vector2.ZERO
 	if "player_right" in actor:

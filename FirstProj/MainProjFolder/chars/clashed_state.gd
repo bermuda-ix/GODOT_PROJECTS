@@ -24,6 +24,14 @@ class_name ClashedState extends LimboHSM
 @export var counter_prepared := false
 @onready var counter_queued := false
 
+###States
+@onready var clash_start: LimboState = $ClashStart
+@onready var clash_counter: ClashCounter = $ClashCounter
+@onready var clash_fail: ClashFail = $ClashFail
+@onready var clash_heavy_counter: ClashHeavyCounterState = $ClashHeavyCounter
+@onready var clash_dodge: ClashDodge = $ClashDodge
+
+
 
 func set_clashes_made(_value : int) -> void:
 	clashes_made=_value
@@ -33,6 +41,7 @@ signal riposte_heavy_follow_up
 signal nothing_follow_up
 
 func _ready() -> void:
+	_init_clash_state_machine()
 	Events.parry_success.connect(clash_follow_up)
 	counter_attack_timer.ignore_time_scale=true
 	counter_attack_timer.one_shot=true
@@ -146,3 +155,11 @@ func clash_follow_up(_follow_up := "nothing"):
 		
 		_:
 			anim_player.play()
+
+func _init_clash_state_machine():
+	initial_state=clash_start
+
+	add_transition(clash_start, clash_fail, &"clash_fail")
+	add_transition(clash_start, clash_counter, &"counter")
+	add_transition(clash_start, clash_heavy_counter, &"clash_success")
+	add_transition(clash_start, clash_dodge, &"clash_dodge")

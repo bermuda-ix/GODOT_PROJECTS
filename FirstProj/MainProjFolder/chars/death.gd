@@ -31,4 +31,4 @@ func _update(delta: float) -> void:
 	else:
 		actor.velocity.x=lerpf(actor.velocity.x, 0, 0.8)
 		print_debug(actor.velocity.x)
-	pass
+	animation_player.play("dead")

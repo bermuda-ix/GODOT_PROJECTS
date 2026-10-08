@@ -14,7 +14,6 @@ extends LimboState
 signal stagger_threshold_reached
 
 func _enter() -> void:
-	actor.state="Hit"
 	if stagger.stagger<=stagger_threshold:
 		animation_player.play(hit_anim)
 		stagger_threshold_reached.emit()

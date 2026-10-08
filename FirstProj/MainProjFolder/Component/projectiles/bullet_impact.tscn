@@ -35,6 +35,7 @@ script = ExtResource("1_3n5m2")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=474146645]
 stream = SubResource("AudioStreamWAV_cpc3p")
-pitch_scale = 0.5
+pitch_scale = 2.04
+max_polyphony = 10
 
 [connection signal="finished" from="AudioStreamPlayer2D" to="." method="_on_audio_stream_player_2d_finished"]

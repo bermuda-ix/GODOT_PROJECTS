@@ -39,13 +39,18 @@ func _process(delta: float) -> void:
 	if not path_valid() and nav_agent!=null:
 		sm.dispatch(&"return_to_idle")
 	world_detector.target_position = world_detector.to_local(player.global_position)
+	handle_vision()
+	get_player_relative_loc()
  
 func get_player_relative_loc():
-	if player.global_position.x>actor.global_position.x:
-		actor.player_right=true
+	if "player_right" in actor:
+		if player.global_position.x>actor.global_position.x:
+			actor.player_right=true
+		else:
+			actor.player_right=false
 	else:
-		actor.player_right=false
-		
+		pass
+			
 
 func handle_vision():
 	player_colliding=player_tracking.is_colliding()
@@ -93,7 +98,7 @@ func handle_vision():
 		else:
 		
 			#actor.set_state(actor.current_state, actor.States.IDLE)
-			if stay_on and path_valid():
+			if stay_on and (path_valid() or actor.is_in_group("turret_top")):
 				sm.dispatch(&"start_chase")
 			else:
 				sm.dispatch(&"return_to_idle")
