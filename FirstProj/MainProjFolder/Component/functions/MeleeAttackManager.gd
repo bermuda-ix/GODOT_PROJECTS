@@ -6,14 +6,16 @@ extends Node
 @onready var combo_int : int = clampi(0, 0, combo_max-1)
 @onready var combo : String = "atk_"+str(combo_int)
 @onready var atk_type_old := "atk_1" : set = set_atk_type
-@onready var atk_type := "Attack"
-@onready var light_attacks : Array[String] = ["Attack", "Attack_2", "Attack_3", "Attack_4"]
+@onready var atk_type := "Attack_1"
+@export var light_attacks : Array[String] = ["Attack_1", "Attack_2", "Attack_3", "Attack_4"]
 @onready var light_attack_index : int = clampi(0, 0 , combo_max-1)
 @onready var heavy_attacks : Array[String] = ["Heavy_Combo_1", "Heavy_Combo_2"]
 
 @export var heavy_atk_min := clampi(0, 0, 100) : set = set_heavy_atk_min
 @export var heavy_atk_max := clampi(50, 0, 100) : set = set_heavy_atk_max
 signal heavy_attack
+
+
 
 func melee_attack():
 	if actor.state_machine.get_active_state()==actor.clashed_state:
@@ -54,6 +56,9 @@ func next_combo() -> void:
 		combo_int+=1
 	atk_type=light_attacks[combo_int]
 	
+
+
+
 func get_combo() -> String:
 	return combo
 	
@@ -75,7 +80,7 @@ func atk_resume_helper() -> void:
 	else:
 		next_combo()
 	actor.attack_timer.start(0.3)
-	actor.bt_player.active=true
+	#actor.bt_player.active=true
 	actor.attacking=false
 
 func heavy_attack_counter() -> bool:

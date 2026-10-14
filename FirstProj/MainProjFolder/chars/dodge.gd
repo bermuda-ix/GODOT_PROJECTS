@@ -5,6 +5,9 @@ extends LimboState
 @export var actor : Node2D
 @export var bt_player : BTPlayer
 @export var animation_player: AnimationPlayer
+@export var hit_box_collision : CollisionShape2D=null
+@export var hurt_box : HurtBox
+@export var hurt_box_collision : CollisionShape2D=null
 @export var dodge_anim := "dodge"
 @export var _velocity_x := 0.0
 @export var _velocity_y := 0.0
@@ -14,8 +17,11 @@ func _enter() -> void:
 	#print_debug("begin dodge")
 	animation_player.play(dodge_anim)
 	actor.dodge_timer.start()
-	actor.hurt_box_collision.disabled=true
-	actor.hb_collision.disabled=true
+	hurt_box.active=false
+	if hit_box_collision!=null:
+		hit_box_collision.set_deferred("disabled", true)
+	if hurt_box_collision!=null:
+		hurt_box_collision.set_deferred("disabled", true)
 	print_debug(_velocity_x)
 	if actor.player_right:
 		face_dir=1
@@ -29,6 +35,7 @@ func _update(delta: float) -> void:
 	print_debug(_velocity_x)
 	actor.velocity.x=_velocity_x
 	actor.velocity.y=_velocity_y
+	actor.move_and_slide()
 
 func _exit() -> void:
 	animation_player.stop()
@@ -37,3 +44,7 @@ func _exit() -> void:
 func dodge_setup(_vel_x :=0 , _vel_y :=0):
 	_velocity_x=_vel_x
 	_velocity_y=_vel_y
+
+func dodge_stop():
+	_velocity_x=0
+	_velocity_y=0

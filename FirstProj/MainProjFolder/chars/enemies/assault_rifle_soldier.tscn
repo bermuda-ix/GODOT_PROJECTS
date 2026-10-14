@@ -2762,11 +2762,12 @@ actor = NodePath("../../..")
 animation_player = NodePath("../../../AnimationPlayer")
 metadata/_custom_type_script = "uid://cvq0ypnvr0iwa"
 
-[node name="ClashCounter" type="LimboState" parent="StateMachine/ClashedState" unique_id=995085916 node_paths=PackedStringArray("actor", "animation_player", "state_machine")]
+[node name="ClashCounter" type="LimboState" parent="StateMachine/ClashedState" unique_id=995085916 node_paths=PackedStringArray("actor", "animation_player", "state_machine", "hit_box_collision")]
 script = ExtResource("89_n808b")
 actor = NodePath("../../..")
 animation_player = NodePath("../../../AnimationPlayer")
 state_machine = NodePath("../..")
+hit_box_collision = NodePath("../../../HitBox/hb_collision")
 metadata/_custom_type_script = "uid://dc5y78lbovoqo"
 
 [node name="CombatStateMachine" type="LimboHSM" parent="." unique_id=1654448658 node_paths=PackedStringArray("actor", "sm", "ranged_state", "melee_state", "vision_handler")]

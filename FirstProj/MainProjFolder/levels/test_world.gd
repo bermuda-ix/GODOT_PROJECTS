@@ -59,6 +59,9 @@ var init_active_enemies_list : Array[Node]
 ##Proload for debugging to be romoved later
 @onready var heart_drop=preload("res://Component/interactables/heart_drop.tscn")
 
+@onready var soldier_shield_boss: CharacterBody2D = $Enemies/SoldierShieldBoss
+
+
 
 #Camera settings
 var camera_zoom : float
@@ -114,7 +117,7 @@ func _ready():
 func _process(_delta):
 	
 	obj = (get_tree().get_nodes_in_group("Hearts").size()) + (get_tree().get_nodes_in_group("Enemy").size())
-	
+	#print_debug(soldier_shield_boss.get_process_delta_time())
 	#set_state()
 	#get_health()
 	#set_health()

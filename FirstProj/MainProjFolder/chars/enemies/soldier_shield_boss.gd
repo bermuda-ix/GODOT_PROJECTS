@@ -36,6 +36,7 @@ const vision_always_on = false
 @onready var next_nav_point : Vector2 = Vector2.ZERO
 @onready var dir_to_next : Vector2 = Vector2.ZERO
 @onready var distance_to_next := 0.0
+@onready var distance := 0.0
 
 ### On Screen checks
 @onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
@@ -82,6 +83,8 @@ const vision_always_on = false
 ### Vision and tracking
 @onready var player_tracker: ShapeCast2D = $PlayerTracker
 @onready var player_tracking_handler: PlayerTrackingHandler = $PlayerTrackingHandler
+@onready var player_tracker_pivot: Node2D = $PlayerTrackerPivot
+@onready var player_tracking: RayCast2D = $PlayerTrackerPivot/PlayerTracking
 @onready var vision_handler: VisionHandler = $VisionHandler
 @onready var get_player_info_handler: GetPlayerInfoHandler = $GetPlayerInfoHandler
 @onready var player_found : bool = true
@@ -120,7 +123,7 @@ const vision_always_on = false
 
 ### Cutscene Handler
 @onready var cutscene_handler: CutsceneHandler = $CutsceneHandler
-@onready var speed: Label = $Speed
+#@onready var speed: Label = $Speed
 @export var death_cutscene : bool = false
 
 ### Boss UI
@@ -138,12 +141,14 @@ const vision_always_on = false
 @onready var state_machine: LimboHSM = $LimboHSM
 @onready var idle: Idle = $LimboHSM/IDLE
 @onready var chasing: Chasing = $LimboHSM/CHASING
+@onready var reload_state: ReloadState = $LimboHSM/ReloadState
 @onready var jump: Jump = $LimboHSM/JUMP
 @onready var death: Death = $LimboHSM/DEATH
 @onready var attack: Attack = $LimboHSM/ATTACK
 @onready var teleport_and_shoot: BTState = $LimboHSM/TeleportAndShoot
 @onready var teleport_and_hit: BTState = $LimboHSM/TeleportAndHit
 @onready var dodge: Dodge = $LimboHSM/DODGE
+@onready var shooting_bt: ShootingBT = $LimboHSM/ShootingBT
 @onready var block: LimboState = $LimboHSM/BLOCK
 @onready var hit: Hit = $LimboHSM/HIT
 @onready var staggered: Staggered = $LimboHSM/STAGGERED
@@ -161,8 +166,8 @@ const vision_always_on = false
 
 ### Combat State
 @onready var combat_state_machine: LimboHSM = $CombatStateMachine
-@onready var ranged_state: ranged = $CombatStateMachine/RANGED
-@onready var melee_state: melee = $CombatStateMachine/MELEE
+@onready var ranged_mode: ranged = $CombatStateMachine/RANGED
+@onready var melee_mode: melee = $CombatStateMachine/MELEE
 
 @export_category("Boss Variables")
 @export var lvl_boss : bool
@@ -178,21 +183,27 @@ signal boss_reloaded
 ##If spawned on event
 @export var spawned := true
 
-
-
 ### Setters
 func set_attacking(_value: bool) -> void:
 	attacking=_value
 	
+func _set(property: StringName, _value: Variant) -> bool:
+	if property=="velocity" and abs(_value.x)<0.01:
+		velocity=_value
+	return false
+	
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	ammo_count=turret.ammo_count
-	animation_player.play("idle")
+	
 	melee_attack_manager.combo_max=3
 	next_nav_point=nav_agent.get_next_path_position()
 	_init_state_machine()
 	_init_boss_ui()
 	_init_phase_state_machine()
+	
+	animation_player.play("idle")
+	boss_activate()
 
 func _init_state_machine():
 	state_machine.initial_state=idle
@@ -201,6 +212,8 @@ func _init_state_machine():
 	
 	state_machine.add_transition(idle, attack, &"start_attack")
 	state_machine.add_transition(idle, chasing, &"start_chase")
+	state_machine.add_transition(idle, chasing, &"attack_mode")
+	state_machine.add_transition(idle, block, &"block")
 	
 	state_machine.add_transition(chasing, attack, &"start_attack")
 	state_machine.add_transition(chasing, block, &"block")
@@ -209,6 +222,7 @@ func _init_state_machine():
 	state_machine.add_transition(chasing, staggered, &"staggered")
 	state_machine.add_transition(chasing, launch, &"launch")
 	state_machine.add_transition(chasing, clashed_state, &"clashed")
+	state_machine.add_transition(chasing, reload_state, &"reload")
 	
 	state_machine.add_transition(attack, chasing, &"start_chase")
 	state_machine.add_transition(attack, jump, &"jump")
@@ -217,6 +231,18 @@ func _init_state_machine():
 	state_machine.add_transition(attack, staggered, &"staggered")
 	state_machine.add_transition(attack, launch, &"launch")
 	state_machine.add_transition(attack, clashed_state, &"clashed")
+	state_machine.add_transition(attack, reload_state, &"reload")
+	
+	state_machine.add_transition(attack, attack, &"attack_combo")
+	
+	state_machine.add_transition(block, chasing, &"start_chase")
+	state_machine.add_transition(block, attack, &"start_attack")
+	state_machine.add_transition(block, staggered, &"staggered")
+	
+	state_machine.add_transition(reload_state, chasing, &"start_chase")
+	state_machine.add_transition(reload_state, attack, &"start_attack")
+	state_machine.add_transition(shooting_bt, chasing, &"start_chase")
+	state_machine.add_transition(shooting_bt, attack, &"start_attack")
 	
 	state_machine.add_transition(jump, falling, &"falling")
 	state_machine.add_transition(launch, falling, &"falling")
@@ -228,6 +254,16 @@ func _init_state_machine():
 	
 	state_machine.add_transition(clashed_state, staggered, &"staggered")
 	state_machine.add_transition(clashed_state, attack, &"counter_attack")
+	state_machine.add_transition(clashed_state, reload_state, &"counter_with_reload")
+	state_machine.add_transition(clashed_state, dodge, &"dodge")
+	state_machine.add_transition(clashed_state, hit, &"hit")
+	
+	state_machine.add_transition(hit, dodge, &"dodge")
+	
+	state_machine.add_transition(dodge, reload_state, &"reload")
+	state_machine.add_transition(dodge, shooting_bt, &"shoot_counter")
+	state_machine.add_transition(dodge, chasing, &"start_chase")
+	state_machine.add_transition(dodge, attack, &"start_attack")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, phasetransition, &"begin_next_phase")
 	
@@ -279,7 +315,17 @@ func _physics_process(delta: float) -> void:
 	elif state_machine.get_active_state()==death :
 		hit_box_collision.disabled=true
 		return
-		
+	apply_gravity(delta)
+	if state_machine.get_active_state()==chasing:
+		velocity.x = (current_speed*movement_handler.move_dir) + knockback.x
+	else:
+		if state_machine.get_active_state()!=attack and \
+		state_machine.get_active_state()!=launch and \
+		state_machine.get_active_state()!=falling and \
+		state_machine.get_active_state()!=clashed_state and \
+		state_machine.get_active_state()!=dodge:
+			velocity.x= knockback.x
+	move_and_slide()
 		
 func teleport_counter():
 	state_machine.dispatch(&"teleport_counter")
@@ -324,16 +370,44 @@ func get_height() -> int:
 	
 
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
-	pass # Replace with function body.
-
+	match anim_name:
+		"RESET":
+			pass
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	pass # Replace with function body.
+	match anim_name:
+		"block", "reload", "heavy_counter":
+			movement_handler.active=true
+			movement_handler.face_player_active=true
+			vision_handler.active=true
+			turret.track=true
+			if melee_range_check():
+				state_machine.dispatch(&"start_attack")
+			else:
+				state_machine.dispatch(&"start_chase")
+				
+		"dodge_back_and_shoot":
+			shooting_bt.blackboard.set_var("empty_clip", true)
+			movement_handler.active=false
+			movement_handler.face_player_active=false
+			vision_handler.active=false
+			turret.track=false
+			state_machine.dispatch(&"shoot_counter")
+	if state_machine.get_active_state()==attack:
+			if melee_range_check():
+				melee_attack_manager.next_combo()
+				state_machine.dispatch(&"attack_combo")
+			else:
+				melee_attack_manager.atk_type=melee_attack_manager.light_attacks[0]
+				state_machine.dispatch(&"start_chase")
 
 
 
 func _on_attack_range_body_entered(body: Node2D) -> void:
+	
+	
 	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
+		combat_state_machine.dispatch(&"melee_mode")
 		if player.attack_state.get_active_state()==player.dash_attack or player.attack_state.get_active_state()==player.attack_closer:
 			pass
 		else:
@@ -345,7 +419,17 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player") and not animation_player.is_playing() and state_machine.get_active_state()!=staggered:
+		combat_state_machine.dispatch(&"ranged_mode")
 		state_machine.dispatch(&"start_chase")
+
+func melee_range_check() -> bool:
+	if state_machine.get_active_state()==clashed_state:
+		return false
+	var _melee_ranged_colliding := attack_range.get_overlapping_bodies()
+	if _melee_ranged_colliding.is_empty():
+		return false
+	else:
+		return true
 
 
 func _on_stagger_staggered() -> void:
@@ -383,8 +467,12 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		return
 	if state_machine.get_active_state()!=staggered:
 		hit_fx_player.play("hit")
-	else:
-		state_machine.dispatch(&"hit")
+		if state_machine.get_active_state()==hit:
+			state_machine.dispatch(&"hit")
+			if stun_timer.time_left>=0.15:
+				stun_timer.start(stun_timer.time_left-0.1)
+			else:
+				state_machine.dispatch(&"dodge")
 	#######################################################
 	###Play hit animation, depending on staggered or not###
 	#######################################################
@@ -439,8 +527,9 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 
 func _on_attack_entered() -> void:
-	if combat_state_machine.get_active_state()==melee_state:
+	if combat_state_machine.get_active_state()==melee_mode:
 		animation_player.play(melee_attack_manager.atk_type)
+		hit_box_collision.set_deferred("disabled", false)
 	
 func _on_attack_exited() -> void:
 	hurt_box.active=true
@@ -477,9 +566,11 @@ func _on_staggered_exited() -> void:
 func _on_bullet_detection_bullet_detected() -> void:
 	if attacking and hit_box.heavy_attack:
 		return
-	if state_machine.get_active_state()==clashed_state:
+	elif state_machine.get_active_state()==clashed_state:
 		return
-		
+	else:
+		state_machine.dispatch(&"block")
+		current_speed=chasing.chase_speed/2
 
 func _on_dying_entered() -> void:
 	boss_ui.deactivate_boss_ui()
@@ -577,7 +668,7 @@ func boss_reset() -> void:
 		animation_player.stop()
 		state_machine.change_active_state(idle)
 		state_machine.restart()
-		combat_state_machine.change_active_state(ranged_state)
+		combat_state_machine.change_active_state(ranged_mode)
 		combat_state_machine.restart()
 		phases.change_active_state(phase_1)
 		phases.restart()
@@ -676,10 +767,12 @@ func _on_hit_box_clashed() -> void:
 	boss_ui.set_boss_stagger_smooth(stagger.stagger)
 	vfx_sprite.set_deferred("visible", false)
 	state_machine.dispatch(&"clashed")
+	melee_attack_manager.next_combo()
 
 func _on_clashed_state_riposte_follow_up() -> void:
-	hurt_box_collision.set_deferred("disabled", false)
-	animation_player.play("atk_3")
+	stagger.stagger-=5
+	state_machine.dispatch(&"hit")
+	stun_timer.start(1)
 
 
 func _on_clashed_state_updated(delta: float) -> void:
@@ -704,6 +797,8 @@ func stunned_hit(_launch: float = 0, _knockback: float = 0, _impact_dir_right: b
 func _on_stun_timer_timeout() -> void:
 	if state_machine.get_active_state()==staggered:
 		return
+	elif state_machine.get_active_state()==hit:
+		return
 	hurt_box_collision.set_deferred("disabled", false)
 	
 func counter_clash() -> void:
@@ -727,3 +822,19 @@ func player_knockback(_knockback_strength := 100.0, _launch_strength :=-15.0) ->
 
 func _on_clashed_state_nothing_follow_up() -> void:
 	pass # Replace with function body.
+
+
+func _on_shoot_attack_manager_ammo_empty() -> void:
+	state_machine.dispatch(&"reload")
+
+
+func _on_combat_state_machine_active_state_changed(current: LimboState, previous: LimboState) -> void:
+	pass # Replace with function body.
+
+
+func _on_shoot_attack_manager_finished_shooting() -> void:
+	state_machine.dispatch(&"reload")
+
+
+func _on_shoot_attack_manager_reloading() -> void:
+	shooting_bt.blackboard.set_var("empty_clip", false)

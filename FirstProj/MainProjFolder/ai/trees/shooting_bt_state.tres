@@ -6,6 +6,21 @@ var/health/type = 2
 var/health/value = 0
 var/health/hint = 0
 var/health/hint_string = ""
+var/stagger/name = &"stagger"
+var/stagger/type = 2
+var/stagger/value = 0
+var/stagger/hint = 0
+var/stagger/hint_string = ""
+var/ammo/name = &"ammo"
+var/ammo/type = 2
+var/ammo/value = 0
+var/ammo/hint = 0
+var/ammo/hint_string = ""
+var/empty_clip/name = &"empty_clip"
+var/empty_clip/type = 1
+var/empty_clip/value = false
+var/empty_clip/hint = 0
+var/empty_clip/hint_string = ""
 
 [sub_resource type="BBVariant" id="BBVariant_buh7y"]
 type = 2
@@ -34,6 +49,52 @@ children = [SubResource("BTCheckTrigger_1mc1m")]
 [sub_resource type="BTSequence" id="BTSequence_drh6u"]
 custom_name = "Reload"
 children = [SubResource("BTCheckVar_00ylt"), SubResource("BTCallMethod_35kg5"), SubResource("BTRepeatUntilSuccess_buh7y")]
+
+[sub_resource type="BBVariant" id="BBVariant_00ylt"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_5bs0k"]
+variable = &"empty_clip"
+value = SubResource("BBVariant_00ylt")
+
+[sub_resource type="BBNode" id="BBNode_k70j1"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_xyooy"]
+await_completion = 0.05
+animation_player = SubResource("BBNode_k70j1")
+animation_name = &"shoot_crouch"
+
+[sub_resource type="BBNode" id="BBNode_xyooy"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTStopAnimation" id="BTStopAnimation_nd1re"]
+animation_player = SubResource("BBNode_xyooy")
+keep_state = true
+
+[sub_resource type="BBVariant" id="BBVariant_fnye0"]
+type = 2
+saved_value = 0
+resource_name = "0"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_345rh"]
+variable = &"ammo"
+check_type = 2
+value = SubResource("BBVariant_fnye0")
+
+[sub_resource type="BTSequence" id="BTSequence_yi06b"]
+children = [SubResource("BTPlayAnimation_xyooy"), SubResource("BTStopAnimation_nd1re"), SubResource("BTCheckVar_345rh")]
+
+[sub_resource type="BTRepeatUntilSuccess" id="BTRepeatUntilSuccess_em4jx"]
+children = [SubResource("BTSequence_yi06b")]
+
+[sub_resource type="BTSequence" id="BTSequence_b55l8"]
+custom_name = "EmptyClip"
+children = [SubResource("BTCheckVar_5bs0k"), SubResource("BTRepeatUntilSuccess_em4jx")]
 
 [sub_resource type="BBNode" id="BBNode_1mc1m"]
 saved_value = NodePath("AnimationPlayer")
@@ -104,7 +165,7 @@ children = [SubResource("BTPlayAnimation_shfor"), SubResource("BTAwaitAnimation_
 
 [sub_resource type="BTSelector" id="BTSelector_13dlj"]
 custom_name = "Shooting"
-children = [SubResource("BTSequence_drh6u"), SubResource("BTSequence_ws26m"), SubResource("BTSequence_n33kx")]
+children = [SubResource("BTSequence_drh6u"), SubResource("BTSequence_b55l8"), SubResource("BTSequence_ws26m"), SubResource("BTSequence_n33kx")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_1mc1m")

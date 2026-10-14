@@ -2,7 +2,7 @@ class_name ClashHeavyCounterState extends LimboState
 
 @export var actor: Node2D
 @export var animation_player: AnimationPlayer
-@export var counter_anim := &"heavy_counter"
+@export var counter_anim := "heavy_counter"
 @onready var player : PlayerEntity = null
 
 func _ready() -> void:

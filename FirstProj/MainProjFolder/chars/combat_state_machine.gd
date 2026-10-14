@@ -8,11 +8,17 @@ extends LimboHSM
 @export var active : bool = true
 @export var ranged_dist : int = 100
 @export var vision_handler : VisionHandler
+@export var distance_based := true
+
+func _ready() -> void:
+	_init_combat_statemachine()
 
 func _physics_process(delta: float) -> void:
 	
-	actor.distance=abs(actor.global_position.x-actor.player.global_position.x)
-	combat_state_change(actor.distance)
+	
+	if distance_based:
+		actor.distance=abs(actor.global_position.x-actor.player.global_position.x)
+		combat_state_change(actor.distance)
 	
 	if not active:
 		return
@@ -26,6 +32,8 @@ func _physics_process(delta: float) -> void:
 #		RANGED ATTACK
 		
 		if get_active_state()==ranged_state:
+			if not distance_based:
+				return
 			#print_debug("ranged")
 			if actor.is_on_screen and vision_handler.player_colliding:
 				actor.turret.shoot_timer.paused=false
@@ -45,7 +53,13 @@ func _physics_process(delta: float) -> void:
 				if not bt_player.blackboard.get_var("within_range"):
 					sm.dispatch(&"start_chase")
 
-
+func _init_combat_statemachine() -> void:
+	initial_state=ranged_state
+	initialize(self)
+	set_active(true)
+	
+	add_transition(ranged_state, melee_state, &"melee_mode")
+	add_transition(melee_state, ranged_state, &"ranged_mode")
 
 
 func combat_state_change(_distance:float)-> void:

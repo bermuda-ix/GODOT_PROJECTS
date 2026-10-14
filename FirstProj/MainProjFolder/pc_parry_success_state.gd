@@ -17,6 +17,7 @@ extends LimboHSM
 @export var clash_animation := "clashed"
 @export var attack_1 : LimboState
 @onready var queue_attack := false
+@export var clash_power : ClashPower
 signal dur_timeout
 
 
@@ -60,7 +61,7 @@ func _update(delta: float) -> void:
 		pc.light_attack_index=wrapi(pc.light_attack_index+1, 0, 3)
 		attack_1.attack=pc.light_attacks[pc.light_attack_index]
 		hit_stop.end_hit_stop()
-		Events.parry_success.emit("riposte")
+		Events.parry_success.emit("riposte", 1*clash_power.clash_power)
 		attack_fx_secondary.play("riposte")
 		#pc.parry_success("riposte")
 		#pc.state_machine.dispatch(&"start_attack")
@@ -79,9 +80,9 @@ func _update(delta: float) -> void:
 		success=true
 		pc.parry_stance=false
 		if ranged_counter:
-			Events.parry_success.emit("heavy_riposte_ranged")
+			Events.parry_success.emit("heavy_riposte_ranged", 2*clash_power.clash_power)
 		else:
-			Events.parry_success.emit("heavy_riposte")
+			Events.parry_success.emit("heavy_riposte", 2*clash_power.clash_power)
 		dispatch(&"heavy_riposte")
 		hit_stop.end_hit_stop()
 		dur.stop()

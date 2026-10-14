@@ -5,10 +5,13 @@ class_name ClashedState extends LimboHSM
 @export var vfx_player : AnimationPlayer
 @export var vfx_sprite : AnimatedSprite2D
 @export var hit_fx_player : AnimationPlayer
+@export var atk_fx_secondary_player : AnimationPlayer = null
 @export var hurt_box : HurtBox
 @export var hit_box : HitBox
+@export var melee_attack_helper : MeleeAttackManager = null
 @export var hitbox_collision : CollisionShape2D
 @export var movement_handler : MovementHandler
+@export var health : Health
 @export var stagger : Stagger
 @export var hit_stop : HitStop
 @export var clash_anim_name : StringName = "clashed"
@@ -60,6 +63,8 @@ func _enter() -> void:
 	hitbox_collision.set_deferred("disabled", true)
 	#stagger.set_stagger(stagger.stagger-1)
 	vfx_player.speed_scale=1/Engine.time_scale
+	if melee_attack_helper!= null and atk_fx_secondary_player!=null:
+		atk_fx_secondary_player.play(melee_attack_helper.atk_type)
 	if (clashes_made<counter_threshold and stagger.stagger>1) and counter_enabled:
 		stagger.stagger-=1
 		counter_attack_timer.start(counter_attack_timer_dur)
@@ -88,7 +93,6 @@ func _enter() -> void:
 			assert(anim_player.is_playing()!=true)
 			hitbox_collision.set_deferred("disabled", true)
 			#hit_box.clash_active=false
-		clashes_made==0
 		movement_handler.active=false
 
 func _update(delta: float) -> void:
@@ -102,6 +106,7 @@ func _update(delta: float) -> void:
 	
 
 func _exit() -> void:
+	
 	vfx_player.stop()
 	vfx_sprite.visible=false
 	hit_stop.end_hit_stop()
@@ -113,20 +118,22 @@ func _exit() -> void:
 	
 
 
-func clash_follow_up(_follow_up := "nothing"):
+func clash_follow_up(_follow_up := "nothing", _damage:=1):
 	vfx_sprite.visible=false
 	vfx_player.stop()
 	if state_machine.get_active_state()!=self:
 		return
 	match _follow_up:
 		"riposte", "dodge":
+			clashes_made=0
 			hitbox_collision.set_deferred("disabled", true)
 			if stagger.stagger<=0:
 				return
 			anim_player.pause()
 			hurt_box.active=true
 			actor.pushed_back(250)
-			stagger.stagger-=1
+			stagger.stagger-=_damage
+			health.health-=_damage
 			if desperate_attack_enabled and stagger.stagger<=1:
 				riposte_heavy_follow_up.emit()
 				
@@ -140,7 +147,9 @@ func clash_follow_up(_follow_up := "nothing"):
 			else:
 				state_machine.dispatch(&"staggered")
 		"heavy_riposte":
+			clashes_made=0
 			riposte_heavy_follow_up.emit()
+			health.health-=_damage
 			if not counter_prepared:
 				if stagger.stagger<=1:
 					dispatch(&"clash_fail")
@@ -149,6 +158,7 @@ func clash_follow_up(_follow_up := "nothing"):
 			else:
 				dispatch(&"clash_success")
 		"nothing":
+			clashes_made=0
 			nothing_follow_up.emit()
 			actor.pushed_back(150)
 			anim_player.play()

@@ -84,7 +84,7 @@ resource_name = "AnimationPlayer"
 
 [sub_resource type="BTPlayAnimation" id="BTPlayAnimation_ywkss"]
 animation_player = SubResource("BBNode_2n2dt")
-animation_name = &"atk_1"
+animation_name = &"Attack_1"
 speed = 1.5
 
 [sub_resource type="BBNode" id="BBNode_utuk4"]
@@ -93,7 +93,7 @@ resource_name = "AnimationPlayer"
 
 [sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_hvpee"]
 animation_player = SubResource("BBNode_utuk4")
-animation_name = &"atk_1"
+animation_name = &"Attack_1"
 
 [sub_resource type="BTSequence" id="BTSequence_vifeo"]
 custom_name = "teleport_and_hit"

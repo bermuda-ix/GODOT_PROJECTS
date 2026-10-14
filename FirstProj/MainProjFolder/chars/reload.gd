@@ -1,4 +1,4 @@
-extends LimboState
+class_name ReloadState extends LimboState
 
 @export var animation_player : AnimationPlayer
 @export var turret : Turret

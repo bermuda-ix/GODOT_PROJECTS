@@ -16,6 +16,8 @@ var turret_order : int =0
 
 signal reloading
 signal reloading_done
+signal ammo_empty
+signal finished_shooting
 
 #REFACTORED RELOADING. To be added to all actors
 @export var refactored_reloading : bool = false
@@ -64,10 +66,32 @@ func fire_missile():
 func shoot_refactor():
 	if turret.ammo_count <= 0:
 		animation_player.stop()
+		ammo_empty.emit()
 		return
 	turret.shoot()
 	turret.ammo_count-=1
 
+func rapid_shoot(_value: int):
+	var i := 0
+	while (i<_value and turret.ammo_count>0):
+		animation_player.play("shoot_crouch")
+		turret.ammo_count-=1
+		await get_tree().create_timer(0.2).timeout
+		i+=1
+	animation_player.stop()
+	finished_shooting.emit()
+	return
+
+func empty_clip():
+	var i:=0
+	
+	while turret.ammo_count > 0:
+		turret.shoot()
+		turret.ammo_count-=1
+		await get_tree().create_timer(0.1).timeout
+	animation_player.stop()
+	ammo_empty.emit()
+	return
 
 func reload():
 	reloading.emit()

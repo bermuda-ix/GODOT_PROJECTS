@@ -8,6 +8,7 @@ class_name ShootingBT extends BTState
 func _ready() -> void:
 	#blackboard.bind_var_to_property("ammo", turret, "&ammo_count", true)
 	#blackboard.bind_var_to_property("stagger", stagger, "&stagger", true)
+	blackboard.set_var("empty_clip", false)
 	blackboard.set_var("ammo", turret.ammo_count)
 	blackboard.set_var("stagger", stagger.stagger)
 	blackboard.set_var("health", health.health)

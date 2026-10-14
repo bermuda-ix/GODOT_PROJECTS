@@ -30,7 +30,8 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	player_detect = get_tree().get_first_node_in_group("player_detect")
 	player_tracking.target_position = Vector2(-vision_range, 0)
-	world_detector.target_position = world_detector.to_local(player.global_position)
+	if world_detector!= null:
+		world_detector.target_position = world_detector.to_local(player.global_position)
 	
 
 func _process(delta: float) -> void:
@@ -38,7 +39,8 @@ func _process(delta: float) -> void:
 		turret_face_player()
 	if not path_valid() and nav_agent!=null:
 		sm.dispatch(&"return_to_idle")
-	world_detector.target_position = world_detector.to_local(player.global_position)
+	if world_detector!= null:
+		world_detector.target_position = world_detector.to_local(player.global_position)
 	handle_vision()
 	get_player_relative_loc()
  
@@ -110,9 +112,7 @@ func handle_vision():
 	if combat_state_active:
 		if csm.get_active_state()==actor.ranged_mode and player_found:
 			#actor.set_state(actor.current_state, actor.States.ATTACK)
-			if actor.is_on_screen:
-				sm.dispatch(&"attack_mode")
-			else:
+			if not actor.is_on_screen:
 				sm.dispatch(&"start_chase")
 		elif csm.get_active_state()==actor.melee_mode and player_found:
 			if bt_active:

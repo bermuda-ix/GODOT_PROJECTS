@@ -8,3 +8,6 @@ extends Node
 
 func dodge():
 	state_machine.dispatch(&"dodge")
+
+func start_dodge():
+	pass

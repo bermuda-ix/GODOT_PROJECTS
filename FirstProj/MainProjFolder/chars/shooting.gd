@@ -4,10 +4,11 @@ extends LimboState
 
 @export var actor : Node2D
 @export var animation_player : AnimationPlayer
+@export var shooting_anim : String = "shoot"
 #@export var bt_player : BTPlayer
 
 func _enter() -> void:
-	animation_player.play("shoot")
+	animation_player.play(shooting_anim)
 	print_debug("begin shooting")
 	#actor.hb_collision.disabled=true
 	

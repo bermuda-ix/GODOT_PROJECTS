@@ -32,7 +32,6 @@ func _update(delta: float) -> void:
 	
 	
 func _exit() -> void:
-	print_debug("exit")
 	if hit_box != null:
 		hit_box.active=false
 	hurt_box.active=true
