@@ -94,8 +94,10 @@ func _on_body_entered(body: Node) -> void:
 	
 	if body.is_in_group("WorldStatic") or body.is_in_group("shield"):
 		hard_impact()
-	else:
-		return
+	elif body.is_in_group("enemy"):
+		if "bullet_impact_backup" in body:
+			body.bullet_impact_backup(self)
+		impact()
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
