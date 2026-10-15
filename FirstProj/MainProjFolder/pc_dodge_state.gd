@@ -22,7 +22,11 @@ func _enter() -> void:
 	if not Input.is_action_pressed("special_attack"):
 		pc.dodge_anim="dodge_roll"
 		dodge_distance=150
-		dodge_velocity=Vector2(400,0)
+		if pc.input_axis==0:
+			dodge_velocity=Vector2(40,0)
+		else:
+			dodge_velocity=Vector2(400,0)
+		
 	anim_player.play(pc.dodge_anim)
 	pc.set_collision_mask_value(15, false)
 	#pc.set_collision_layer_value(2, false)
