@@ -106,6 +106,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 				#assert(hitbox.hitbox_hit==true)
 				hitbox.active=false
 				Events.hit_stop.emit(0.01,0.01)
+				health.set_temporary_immortality(0.1)
 				var total_damage : int
 				if stagger.stagger>1:
 					hitbox.damage=1

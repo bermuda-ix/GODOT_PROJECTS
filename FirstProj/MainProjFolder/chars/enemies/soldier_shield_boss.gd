@@ -265,6 +265,10 @@ func _init_state_machine():
 	state_machine.add_transition(dodge, chasing, &"start_chase")
 	state_machine.add_transition(dodge, attack, &"start_attack")
 	
+	state_machine.add_transition(staggered, dodge, &"recover_dodge")
+	state_machine.add_transition(staggered, chasing, &"recover_chase")
+	state_machine.add_transition(staggered, attack, &"recover_attack")
+	
 	state_machine.add_transition(state_machine.ANYSTATE, phasetransition, &"begin_next_phase")
 	
 	
@@ -386,6 +390,16 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			else:
 				state_machine.dispatch(&"start_chase")
 				
+		"recover":
+			health.immortality=false
+			movement_handler.active=true
+			movement_handler.face_player_active=true
+			vision_handler.active=true
+			turret.track=true
+			if melee_range_check():
+				state_machine.dispatch(&"recover_attack")
+			else:
+				state_machine.dispatch(&"recover_chase")
 		"dodge_back_and_shoot":
 			shooting_bt.blackboard.set_var("empty_clip", true)
 			movement_handler.active=false
@@ -561,7 +575,13 @@ func _on_staggered_exited() -> void:
 	else:
 		phases_handler.phase_change(health.health)
 
-
+func _on_stagger_timer_timeout() -> void:
+	var _recover_time=randi_range(0, 10)
+	if _recover_time<=5:
+		state_machine.dispatch(&"recover_dodge")
+	else:
+		health.immortality=true
+		animation_player.play("recover")
 
 func _on_bullet_detection_bullet_detected() -> void:
 	if attacking and hit_box.heavy_attack:
@@ -838,3 +858,6 @@ func _on_shoot_attack_manager_finished_shooting() -> void:
 
 func _on_shoot_attack_manager_reloading() -> void:
 	shooting_bt.blackboard.set_var("empty_clip", false)
+	
+func bullet_impact_backup(_body : Node2D):
+	hurt_box.bullet_impact(_body)

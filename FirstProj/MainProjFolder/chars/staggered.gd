@@ -15,7 +15,7 @@ extends LimboState
 func _enter() -> void:
 
 
-	stagger_timer.start(3)
+	stagger_timer.start(1.5)
 	if hb_collision!= null:
 		hb_collision.set_deferred("disabled",true)
 	if "hb_collision" in actor:
