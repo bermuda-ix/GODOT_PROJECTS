@@ -100,7 +100,8 @@ func handle_vision():
 		else:
 		
 			#actor.set_state(actor.current_state, actor.States.IDLE)
-			if stay_on and (path_valid() or actor.is_in_group("turret_top")):
+			if (stay_on and (path_valid() or actor.is_in_group("turret_top")))\
+			 and sm.get_active_state()!= actor.attack:
 				sm.dispatch(&"start_chase")
 			else:
 				sm.dispatch(&"return_to_idle")

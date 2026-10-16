@@ -59,14 +59,24 @@ resource_name = "true"
 variable = &"empty_clip"
 value = SubResource("BBVariant_00ylt")
 
+[sub_resource type="BBNode" id="BBNode_nd1re"]
+saved_value = NodePath("ShootAttackManager")
+resource_name = "ShootAttackManager"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_synut"]
+node = SubResource("BBNode_nd1re")
+method = &"empty_clip"
+
 [sub_resource type="BBNode" id="BBNode_k70j1"]
 saved_value = NodePath("AnimationPlayer")
 resource_name = "AnimationPlayer"
 
 [sub_resource type="BTPlayAnimation" id="BTPlayAnimation_xyooy"]
-await_completion = 0.05
+await_completion = 0.7
 animation_player = SubResource("BBNode_k70j1")
 animation_name = &"shoot_crouch"
+speed = 3.0
+_enabled = false
 
 [sub_resource type="BBNode" id="BBNode_xyooy"]
 saved_value = NodePath("AnimationPlayer")
@@ -74,7 +84,9 @@ resource_name = "AnimationPlayer"
 
 [sub_resource type="BTStopAnimation" id="BTStopAnimation_nd1re"]
 animation_player = SubResource("BBNode_xyooy")
+animation_name = &"shoot_crouch"
 keep_state = true
+_enabled = false
 
 [sub_resource type="BBVariant" id="BBVariant_fnye0"]
 type = 2
@@ -94,7 +106,7 @@ children = [SubResource("BTSequence_yi06b")]
 
 [sub_resource type="BTSequence" id="BTSequence_b55l8"]
 custom_name = "EmptyClip"
-children = [SubResource("BTCheckVar_5bs0k"), SubResource("BTRepeatUntilSuccess_em4jx")]
+children = [SubResource("BTCheckVar_5bs0k"), SubResource("BTCallMethod_synut"), SubResource("BTRepeatUntilSuccess_em4jx")]
 
 [sub_resource type="BBNode" id="BBNode_1mc1m"]
 saved_value = NodePath("AnimationPlayer")

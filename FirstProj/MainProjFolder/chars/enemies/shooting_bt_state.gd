@@ -4,6 +4,7 @@ class_name ShootingBT extends BTState
 @export var stagger : Stagger
 @export var health : Health
 @export var shoot_attack_manager : ShootAttackManager = null
+@export var animation_player: AnimationPlayer = null
 
 func _ready() -> void:
 	#blackboard.bind_var_to_property("ammo", turret, "&ammo_count", true)
@@ -31,3 +32,7 @@ func _on_shoot_attack_manager_reloading_done() -> void:
 
 func _on_shoot_attack_manager_reloading() -> void:
 	blackboard.set_var("reloaded", false)
+
+func restart_animation() -> void:
+	if animation_player.is_playing() and animation_player!=null:
+		animation_player.seek(0, true) 

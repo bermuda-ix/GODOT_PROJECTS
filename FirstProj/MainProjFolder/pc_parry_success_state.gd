@@ -103,7 +103,7 @@ func do_nothing() -> void:
 	hit_stop.end_hit_stop()
 	pc.clash_timer.start()
 	
-func enemy_counter(_value : String = "") -> void:
+func enemy_counter(_value : String = "", _damage := 0) -> void:
 	if _value=="enemy_light_counter":
 		pc.start_attack_timer(0.2)
 		success=true

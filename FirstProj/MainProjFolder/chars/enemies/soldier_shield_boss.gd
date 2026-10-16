@@ -243,6 +243,7 @@ func _init_state_machine():
 	state_machine.add_transition(reload_state, attack, &"start_attack")
 	state_machine.add_transition(shooting_bt, chasing, &"start_chase")
 	state_machine.add_transition(shooting_bt, attack, &"start_attack")
+	state_machine.add_transition(shooting_bt, reload_state, &"reload")
 	
 	state_machine.add_transition(jump, falling, &"falling")
 	state_machine.add_transition(launch, falling, &"falling")
@@ -259,6 +260,7 @@ func _init_state_machine():
 	state_machine.add_transition(clashed_state, hit, &"hit")
 	
 	state_machine.add_transition(hit, dodge, &"dodge")
+	state_machine.add_transition(hit, staggered, &"staggered")
 	
 	state_machine.add_transition(dodge, reload_state, &"reload")
 	state_machine.add_transition(dodge, shooting_bt, &"shoot_counter")
@@ -396,6 +398,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			movement_handler.face_player_active=true
 			vision_handler.active=true
 			turret.track=true
+			stagger.stagger_immortality=false
 			if melee_range_check():
 				state_machine.dispatch(&"recover_attack")
 			else:
@@ -432,7 +435,10 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 		
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
+	if state_machine.get_active_state()==attack:
+		return
 	if body.is_in_group("player") and not animation_player.is_playing() and state_machine.get_active_state()!=staggered:
+		assert(state_machine.get_active_state()!=attack)
 		combat_state_machine.dispatch(&"ranged_mode")
 		state_machine.dispatch(&"start_chase")
 
@@ -456,6 +462,7 @@ func _on_stagger_staggered() -> void:
 	hit_box.active=false
 	hurt_box.active=true
 	state_machine.dispatch(&"staggered")
+	print_debug(state_machine.get_active_state())
 	assert(state_machine.get_active_state()==staggered)
 	Events.camera_shake.emit(2,20)
 
@@ -577,10 +584,12 @@ func _on_staggered_exited() -> void:
 
 func _on_stagger_timer_timeout() -> void:
 	var _recover_time=randi_range(0, 10)
+	health.set_temporary_immortality(0.1)
 	if _recover_time<=5:
+		stagger.set_temporary_immortality(2.0)
 		state_machine.dispatch(&"recover_dodge")
 	else:
-		health.immortality=true
+		stagger.set_temporary_immortality(1.0)
 		animation_player.play("recover")
 
 func _on_bullet_detection_bullet_detected() -> void:
@@ -841,11 +850,12 @@ func player_knockback(_knockback_strength := 100.0, _launch_strength :=-15.0) ->
 
 
 func _on_clashed_state_nothing_follow_up() -> void:
-	pass # Replace with function body.
+	clashed_state.clashes_made=0
 
 
 func _on_shoot_attack_manager_ammo_empty() -> void:
 	state_machine.dispatch(&"reload")
+
 
 
 func _on_combat_state_machine_active_state_changed(current: LimboState, previous: LimboState) -> void:
@@ -861,3 +871,8 @@ func _on_shoot_attack_manager_reloading() -> void:
 	
 func bullet_impact_backup(_body : Node2D):
 	hurt_box.bullet_impact(_body)
+
+
+
+func _on_clash_timer_timeout() -> void:
+	pass # Replace with function body.

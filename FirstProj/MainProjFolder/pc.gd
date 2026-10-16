@@ -188,6 +188,8 @@ var atk_state="ATK_1"
 @onready var attack_fx: AnimatedSprite2D = $AnimatedSprite2D/attack_fx
 @onready var charge_attack_fx: AnimatedSprite2D = $AnimatedSprite2D/charge_attack_fx
 
+@onready var particle_spawn_location: Marker2D = $AnimatedSprite2D/particle_spawn_location
+@onready var dodge_success_vfx:=preload("uid://dw0lfbxu5gwb2")
 
 @onready var hit_animation : String = "hit_landed"
 
@@ -2839,6 +2841,12 @@ func _on_counter_box_area_entered(area):
 		heavy_riposte.heavy_riposte="Heavy_Riposte_Range"
 		counter_timer.start(0.2)
 		clash_prepared=true
+		var dodge_vfx=dodge_success_vfx.instantiate()
+		dodge_vfx.global_position=particle_spawn_location.global_position
+		dodge_vfx.scale.x=animated_sprite_2d.scale.x
+		get_tree().root.add_child(dodge_vfx)
+		dodge_vfx.play_vfx()
+		counter_box_collision.call_deferred("set_disabled", true)
 	elif area.is_in_group("bullet"):
 		hit_stop.hit_stop(0.5, 0.25)
 		counter_flag = true

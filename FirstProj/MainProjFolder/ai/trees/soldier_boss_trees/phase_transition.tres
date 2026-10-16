@@ -26,7 +26,6 @@ resource_name = "AnimationPlayer"
 [sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_n2g17"]
 animation_player = SubResource("BBNode_c5jop")
 animation_name = &"phase_change"
-max_time = 2.1
 
 [sub_resource type="BBVariant" id="BBVariant_dpyug"]
 type = 1

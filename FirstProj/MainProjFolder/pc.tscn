@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://dyo70ce0nstg6" path="res://Art_Components/Effects/DashFX/IAHC003.png" id="15_47q3x"]
 [ext_resource type="Texture2D" uid="uid://c7cdkbu41sfv1" path="res://Art_Components/Effects/DashFX/IAHC004.png" id="16_77ty3"]
 [ext_resource type="Texture2D" uid="uid://bvkboaa5by4j4" path="res://Art_Components/Effects/DashFX/IAHC005.png" id="17_4jq81"]
+[ext_resource type="Texture2D" uid="uid://odqmneukra88" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 10/476.png" id="18_cg1np"]
 [ext_resource type="Script" uid="uid://ba6pwl0vfuyp" path="res://Component/stagger.gd" id="53_7ax8a"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="53_jef5t"]
 [ext_resource type="FontFile" uid="uid://n231m6uqsq6x" path="res://demo/assets/fonts/junction_bold.otf" id="59_4yxaj"]
@@ -336,6 +337,54 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4q17"]
+atlas = ExtResource("18_cg1np")
+region = Rect2(0, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02p78"]
+atlas = ExtResource("18_cg1np")
+region = Rect2(64, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gt4k4"]
+atlas = ExtResource("18_cg1np")
+region = Rect2(128, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5s5n"]
+atlas = ExtResource("18_cg1np")
+region = Rect2(192, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ugi8"]
+atlas = ExtResource("18_cg1np")
+region = Rect2(256, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wawq4"]
+atlas = ExtResource("18_cg1np")
+region = Rect2(320, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_244tu"]
+atlas = ExtResource("18_cg1np")
+region = Rect2(384, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qmdfy"]
+atlas = ExtResource("18_cg1np")
+region = Rect2(448, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2uutl"]
+atlas = ExtResource("18_cg1np")
+region = Rect2(512, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6bhc"]
+atlas = ExtResource("18_cg1np")
+region = Rect2(576, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_viai3"]
+atlas = ExtResource("18_cg1np")
+region = Rect2(640, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2452g"]
+atlas = ExtResource("18_cg1np")
+region = Rect2(704, 320, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ai7hj"]
 atlas = ExtResource("84_8w5mx")
 region = Rect2(0, 0, 108, 116)
@@ -626,6 +675,47 @@ animations = [{
 }],
 "loop": 1,
 "name": &"dash_fx",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4q17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02p78")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gt4k4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5s5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ugi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wawq4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_244tu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qmdfy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2uutl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6bhc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_viai3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2452g")
+}],
+"loop": 1,
+"name": &"dodged_success",
 "speed": 5.0
 }, {
 "frames": [{
@@ -3002,20 +3092,6 @@ radius = 23.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnh6k"]
 size = Vector2(10, 30)
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kd7ms"]
-particles_animation = true
-particles_anim_h_frames = 5
-particles_anim_v_frames = 2
-particles_anim_loop = true
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cdmbu"]
-particle_flag_disable_z = true
-gravity = Vector3(0, 0, 0)
-scale_min = 1.2
-scale_max = 1.2
-anim_speed_min = 0.7
-anim_speed_max = 0.7
 
 [sub_resource type="Gradient" id="Gradient_mesnb"]
 offsets = PackedFloat32Array(0, 0.7111651)
@@ -15268,6 +15344,94 @@ tracks/12/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_nwgo4"]
+resource_name = "Attack_Counter"
+length = 0.46666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("attack_fx:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [&"sword_hit_1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("attack_fx:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 0.225, 0.3, 0.35833332, 0.38333333, 0.40833333, 0.43333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("attack_fx:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(19.999996, -20.999994)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("attack_fx:flip_v")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("attack_fx:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("attack_fx:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.3490658503988659]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("attack_fx:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.18333334, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [false, false, true]
+}
+
 [sub_resource type="Animation" id="Animation_obi53"]
 length = 0.001
 tracks/0/type = "value"
@@ -15594,6 +15758,54 @@ tracks/26/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("sprite_fx:flip_h")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("sprite_fx:animation")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"dodged_success"]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("sprite_fx:frame")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("sprite_fx:visible")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_u66yy"]
 resource_name = "charge_attack"
@@ -15904,6 +16116,57 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 0.9411765, 0.5568628, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_svqqd"]
+resource_name = "dodged_success"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite_fx:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sprite_fx:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"dodged_success"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("sprite_fx:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667, 0.20000002, 0.23333335, 0.26666668, 0.3, 0.33333334, 0.36666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("sprite_fx:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_joxu4"]
@@ -16227,9 +16490,11 @@ _data = {
 &"Attack": SubResource("Animation_r1d4u"),
 &"Attack_2": SubResource("Animation_g2ube"),
 &"Attack_3": SubResource("Animation_aah2i"),
+&"Attack_Counter": SubResource("Animation_nwgo4"),
 &"RESET": SubResource("Animation_obi53"),
 &"charge_attack": SubResource("Animation_u66yy"),
 &"clashed": SubResource("Animation_1ddda"),
+&"dodged_success": SubResource("Animation_svqqd"),
 &"heavy_attack_landed": SubResource("Animation_joxu4"),
 &"hit": SubResource("Animation_k4xmx"),
 &"hit_blunt": SubResource("Animation_d24pd"),
@@ -17114,7 +17379,7 @@ _data = {
 size = Vector2(31.97803, 41.20858)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qebxi"]
-size = Vector2(48, 41)
+size = Vector2(72, 41)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmx5o"]
 size = Vector2(27.275377, 41.20858)
@@ -17180,10 +17445,12 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "e40bf6776b8b2a4268a34f1cf42c192c"
 
 [node name="sprite_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=5149376]
-visible = false
 position = Vector2(-26, -19)
 sprite_frames = SubResource("SpriteFrames_3ciys")
-animation = &"staggered"
+animation = &"dodged_success"
+
+[node name="particle_spawn_location" type="Marker2D" parent="AnimatedSprite2D" unique_id=839412255]
+position = Vector2(13, -15)
 
 [node name="heat_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1522867712]
 visible = false
@@ -17481,17 +17748,6 @@ position = Vector2(6, -1.00005)
 shape = SubResource("RectangleShape2D_rnh6k")
 disabled = true
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="AnimatedSprite2D" unique_id=314869217]
-modulate = Color(0.976471, 0.611765, 0, 0.462745)
-z_index = -1
-material = SubResource("CanvasItemMaterial_kd7ms")
-position = Vector2(3, -25)
-emitting = false
-amount = 1
-speed_scale = 2.0
-local_coords = true
-process_material = SubResource("ParticleProcessMaterial_cdmbu")
-
 [node name="InteractUI" type="Control" parent="AnimatedSprite2D" unique_id=1209992314]
 process_mode = 3
 layout_mode = 3
@@ -17664,6 +17920,7 @@ one_shot = true
 [node name="CounterTimer" type="Timer" parent="." unique_id=1071679165]
 wait_time = 0.2
 one_shot = true
+ignore_time_scale = true
 
 [node name="FlipBuffer" type="Timer" parent="." unique_id=1056057937]
 wait_time = 0.1
@@ -17760,7 +18017,6 @@ shape = SubResource("RectangleShape2D_oupih")
 target_position = Vector2(-34, 0)
 
 [node name="CounterBox" type="Area2D" parent="." unique_id=811846985]
-visible = false
 collision_layer = 0
 collision_mask = 4104
 

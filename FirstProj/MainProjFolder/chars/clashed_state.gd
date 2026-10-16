@@ -16,6 +16,7 @@ class_name ClashedState extends LimboHSM
 @export var hit_stop : HitStop
 @export var clash_anim_name : StringName = "clashed"
 @export var state_machine : LimboHSM
+@export var clash_timer : Timer
 @export_category("Counter Attack Properties")
 @export var counter_attack_timer : Timer
 @export var counter_attack_timer_dur := 0.2
@@ -57,12 +58,19 @@ func _enter() -> void:
 	vfx_player.play(clash_anim_name)
 	actor.current_speed=0
 	hurt_box.shielded=false
+	var _current_anim:= melee_attack_helper.light_attacks[melee_attack_helper.combo_int]
+	#anim_player.stop()
+	#anim_player.play_section_with_markers(_current_anim, &"clashed")
+
+	var _marker_time=anim_player.get_animation(_current_anim).get_marker_time("clashed")
+	anim_player.seek(_marker_time, true, true)
 	anim_player.pause()
 	movement_handler.active=false
 	actor.knockback=Vector2.ZERO
 	hitbox_collision.set_deferred("disabled", true)
 	#stagger.set_stagger(stagger.stagger-1)
 	vfx_player.speed_scale=1/Engine.time_scale
+	clash_timer.stop()
 	if melee_attack_helper!= null and atk_fx_secondary_player!=null:
 		atk_fx_secondary_player.play(melee_attack_helper.atk_type)
 	if (clashes_made<counter_threshold and stagger.stagger>1) and counter_enabled:
@@ -106,11 +114,12 @@ func _update(delta: float) -> void:
 	
 
 func _exit() -> void:
-	
+
 	vfx_player.stop()
 	vfx_sprite.visible=false
 	hit_stop.end_hit_stop()
 	hit_box.attack_clashed=false
+	clash_timer.start(1)
 	if stagger.stagger<=0:
 		if not movement_handler.active:
 			movement_handler.active=true

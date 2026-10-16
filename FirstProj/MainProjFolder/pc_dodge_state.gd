@@ -21,11 +21,11 @@ func _enter() -> void:
 	print_debug("dodging, ", pc.dodge_anim)
 	if not Input.is_action_pressed("special_attack"):
 		pc.dodge_anim="dodge_roll"
-		dodge_distance=150
+		dodge_velocity=Vector2(400,0)
 		if pc.input_axis==0:
-			dodge_velocity=Vector2(40,0)
+			dodge_distance=20
 		else:
-			dodge_velocity=Vector2(400,0)
+			dodge_distance=150
 		
 	anim_player.play(pc.dodge_anim)
 	pc.set_collision_mask_value(15, false)
@@ -52,7 +52,7 @@ func _update(delta: float) -> void:
 
 func _exit() -> void:
 	pc.velocity.x=0
-	pc.counter_box_collision.call_deferred("set_disabled", true)
+	
 	pc.set_collision_mask_value(15, true)
 	hurt_box.active=true
 	dodge_buffer.start(0.5)
@@ -74,3 +74,4 @@ func _on_dodge_buffer_timeout() -> void:
 		return
 	else:
 		dodge_chain=1
+	pc.counter_box_collision.call_deferred("set_disabled", true)

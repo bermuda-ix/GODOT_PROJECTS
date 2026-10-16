@@ -4219,11 +4219,12 @@ hit_fx_player = NodePath("../../AnimationPlayer/HitFXPlayer")
 stagger = NodePath("../../Stagger")
 metadata/_custom_type_script = "uid://cdsger1er8ipk"
 
-[node name="Staggered" type="LimboState" parent="StateMachine" unique_id=369894600 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "vfx_player", "hurt_box", "stagger_timer", "hb_collision")]
+[node name="Staggered" type="LimboState" parent="StateMachine" unique_id=369894600 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "health", "vfx_player", "hurt_box", "stagger_timer", "hb_collision")]
 script = ExtResource("33_eopqg")
 actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
 stagger = NodePath("../../Stagger")
+health = NodePath("../../Health")
 vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
 hurt_box = NodePath("../../HurtBox")
 stagger_timer = NodePath("../../StaggerTimer")

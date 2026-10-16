@@ -5,19 +5,23 @@ extends LimboState
 @export var actor : Node2D
 @export var movement_handler : MovementHandler
 @export var stagger : Stagger
+@export var health : Health
 @export var bt_player : BTPlayer
 @export var movement_able : bool = true 
 @export var vfx_player : AnimationPlayer
 @export var hurt_box : HurtBox
 @export var stagger_timer : Timer
 @export var hb_collision : CollisionShape2D = null
+@export var hurt_box_collision : CollisionShape2D = null
 
 func _enter() -> void:
 
-
+	health.immortality=false
 	stagger_timer.start(1.5)
 	if hb_collision!= null:
 		hb_collision.set_deferred("disabled",true)
+	if hurt_box_collision!=null:
+		hurt_box_collision.set_deferred("disabled",true)
 	if "hb_collision" in actor:
 		actor.hb_collision.set_deferred("disabled", true)
 	if "current_speed" in actor:

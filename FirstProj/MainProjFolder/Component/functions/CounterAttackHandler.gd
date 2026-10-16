@@ -48,7 +48,7 @@ func shoot_counter():
 				if state_machine.get_active_state()==actor.attack:
 					state_machine.dispatch(&"jump")
 
-func parry_counter(value: String) -> void:
+func parry_counter(value: String, _dmg := 0) -> void:
 	if actor.parried:
 		#if actor.stagger.stagger>=0:
 			#print_debug(value)
