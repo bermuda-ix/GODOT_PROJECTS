@@ -2147,6 +2147,10 @@ func _on_hazard_detector_area_entered(area):
 	elif area.is_in_group("Enemy"):
 		hit_stop.hit_stop(0.05, 0.05)
 		#knockback.x = input_dir.x * knockback.x *0.25
+	elif area.is_in_group("knockback"):
+		hit_stop.hit_stop(0.1, 0.2)
+		var dir = global_position.direction_to(area.global_position)
+		knockback=Vector2(400*(dir.x*-1), 100*(dir.y*-1))
 		
 
 func _on_interactable_detector_area_entered(area: Area2D) -> void:
@@ -2590,7 +2594,7 @@ func _on_parry_timer_timeout():
 	
 	#anim_player.stop()
 	
-func parry_success(_parry_follow_up := "nothing"):
+func parry_success(_parry_follow_up := "nothing", _damage := 1):
 	#hit_box.attack_clashed=false
 	match _parry_follow_up:
 		"riposte":
@@ -3381,6 +3385,7 @@ func _on_hit_box_clashed() -> void:
 		if  Input.has_joy_vibration(VibrationHandler.controller_id):
 			Input.start_joy_vibration(VibrationHandler.controller_id, 0.5, 0.8, 0.5)
 	parry_success_state.ranged_counter=false
+	print_debug(state_machine.get_active_state())
 	state_machine.dispatch(&"clashed")
 	hit_box.active=false
 	

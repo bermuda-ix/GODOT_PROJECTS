@@ -30,6 +30,9 @@ const vision_always_on = false
 @onready var hit_box_collision: CollisionShape2D = $HitBox/HitBoxCollision
 @onready var attack_range: AttackRange = $AttackRange
 @onready var bullet_detection: BulletDetection = $BulletDetection
+@onready var knockback_area: Area2D = $AnimatedSprite2D/knockback_area
+@onready var knockback_collision: CollisionShape2D = $AnimatedSprite2D/knockback_area/CollisionShape2D
+
 
 ### Navigation
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
@@ -346,9 +349,9 @@ func apply_gravity(delta : float) -> void:
 		
 		
 func target_lock():
-	Events.unlock_from.emit()
+	#Events.unlock_from.emit()
 	target_lock_node.target_lock()
-	locked_on=true
+	#locked_on=true
 	
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
@@ -393,6 +396,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 				state_machine.dispatch(&"start_chase")
 				
 		"recover":
+			knockback_collision.set_deferred("disabled", true)
+			clashed_state.clashed_invuln=false
 			health.immortality=false
 			movement_handler.active=true
 			movement_handler.face_player_active=true
@@ -404,6 +409,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			else:
 				state_machine.dispatch(&"recover_chase")
 		"dodge_back_and_shoot":
+			clashed_state.clashed_invuln=false
 			shooting_bt.blackboard.set_var("empty_clip", true)
 			movement_handler.active=false
 			movement_handler.face_player_active=false
@@ -487,13 +493,23 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 		hit_stop.hit_stop(0.1, 0.01)
 		return
 	if state_machine.get_active_state()!=staggered:
-		hit_fx_player.play("hit")
-		if state_machine.get_active_state()==hit:
-			state_machine.dispatch(&"hit")
-			if stun_timer.time_left>=0.15:
-				stun_timer.start(stun_timer.time_left-0.1)
+		if state_machine.get_active_state()==attack:
+			hit_fx_player.play("hit")
+			if clashed_state.clashes_made<clashed_state.counter_threshold:
+				clashed_state.clashes_made+=1
 			else:
+				state_machine.dispatch(&"hit")
+				await animation_player.animation_finished
 				state_machine.dispatch(&"dodge")
+		else:
+			hit_fx_player.play("hit")
+			clashed_state.clashes_made+=1
+			if state_machine.get_active_state()==hit:
+				state_machine.dispatch(&"hit")
+				if stun_timer.time_left>=0.15:
+					stun_timer.start(stun_timer.time_left-0.1)
+				else:
+					state_machine.dispatch(&"dodge")
 	#######################################################
 	###Play hit animation, depending on staggered or not###
 	#######################################################
@@ -551,6 +567,8 @@ func _on_attack_entered() -> void:
 	if combat_state_machine.get_active_state()==melee_mode:
 		animation_player.play(melee_attack_manager.atk_type)
 		hit_box_collision.set_deferred("disabled", false)
+		vision_handler.face_player=false
+		movement_handler.face_player_active=false
 	
 func _on_attack_exited() -> void:
 	hurt_box.active=true
@@ -583,9 +601,9 @@ func _on_staggered_exited() -> void:
 		phases_handler.phase_change(health.health)
 
 func _on_stagger_timer_timeout() -> void:
-	var _recover_time=randi_range(0, 10)
+	var _recover_time=randi_range(1, 10)
 	health.set_temporary_immortality(0.1)
-	if _recover_time<=5:
+	if _recover_time<=0:
 		stagger.set_temporary_immortality(2.0)
 		state_machine.dispatch(&"recover_dodge")
 	else:
@@ -876,3 +894,7 @@ func bullet_impact_backup(_body : Node2D):
 
 func _on_clash_timer_timeout() -> void:
 	pass # Replace with function body.
+
+
+func _on_knockback_area_body_entered(body: Node2D) -> void:
+	knockback_collision.set_deferred("disabled", true)

@@ -24,7 +24,8 @@ class_name ClashedState extends LimboHSM
 @export var counter_enabled : bool = false
 @export var desperate_attack_enabled := false
 @export var counter_threshold := 3
-@onready var clashes_made := 0
+@onready var clashes_made := 0 : set=set_clashes_made
+@onready var clashed_invuln := false
 @export var counter_prepared := false
 @onready var counter_queued := false
 
@@ -38,7 +39,10 @@ class_name ClashedState extends LimboHSM
 
 
 func set_clashes_made(_value : int) -> void:
-	clashes_made=_value
+	if clashed_invuln:
+		return
+	else:
+		clashes_made=_value
 
 signal riposte_follow_up
 signal riposte_heavy_follow_up
@@ -128,6 +132,7 @@ func _exit() -> void:
 
 
 func clash_follow_up(_follow_up := "nothing", _damage:=1):
+	#clashes_made=0
 	vfx_sprite.visible=false
 	vfx_player.stop()
 	if state_machine.get_active_state()!=self:
@@ -135,6 +140,7 @@ func clash_follow_up(_follow_up := "nothing", _damage:=1):
 	match _follow_up:
 		"riposte", "dodge":
 			clashes_made=0
+			clashed_invuln=true
 			hitbox_collision.set_deferred("disabled", true)
 			if stagger.stagger<=0:
 				return
@@ -156,6 +162,7 @@ func clash_follow_up(_follow_up := "nothing", _damage:=1):
 			else:
 				state_machine.dispatch(&"staggered")
 		"heavy_riposte":
+			clashed_invuln=true
 			clashes_made=0
 			riposte_heavy_follow_up.emit()
 			health.health-=_damage
@@ -167,6 +174,7 @@ func clash_follow_up(_follow_up := "nothing", _damage:=1):
 			else:
 				dispatch(&"clash_success")
 		"nothing":
+			clashed_invuln=true
 			clashes_made=0
 			nothing_follow_up.emit()
 			actor.pushed_back(150)

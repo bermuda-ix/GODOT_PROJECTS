@@ -12,7 +12,7 @@ func _enter() -> void:
 	actor.hurt_box_collision.disabled=true
 	actor.clash_mult+=1
 
-func counter(value : String) -> void:
+func counter(value : String, _damage : int) -> void:
 	#print_debug(value)
 	actor.counter_sm.dispatch(&"kick_counter")
 

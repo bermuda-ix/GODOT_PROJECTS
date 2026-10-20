@@ -984,6 +984,38 @@ region = Rect2(768, 512, 64, 64)
 atlas = ExtResource("130_t8h3m")
 region = Rect2(832, 512, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfk8r"]
+atlas = ExtResource("98_vok01")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fa32"]
+atlas = ExtResource("98_vok01")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vu62k"]
+atlas = ExtResource("98_vok01")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysat3"]
+atlas = ExtResource("98_vok01")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5iwwc"]
+atlas = ExtResource("98_vok01")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sh4fr"]
+atlas = ExtResource("98_vok01")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bswfs"]
+atlas = ExtResource("98_vok01")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kir4d"]
+atlas = ExtResource("98_vok01")
+region = Rect2(448, 0, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_s1lrb"]
 atlas = ExtResource("60_b1euv")
 region = Rect2(0, 448, 64, 64)
@@ -1306,6 +1338,35 @@ animations = [{
 }],
 "loop": 1,
 "name": &"phase_change",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfk8r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5fa32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vu62k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysat3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5iwwc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sh4fr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bswfs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kir4d")
+}],
+"loop": 1,
+"name": &"recover_knockback",
 "speed": 5.0
 }, {
 "frames": [{
@@ -2405,6 +2466,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m75gd"]
+size = Vector2(63, 36)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_incat"]
 radius = 11.0
 height = 46.0
@@ -2801,6 +2865,18 @@ tracks/29/keys = {
 "update": 0,
 "values": [1.5]
 }
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("BulletDetection:position")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-34, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_nwia3"]
 resource_name = "Attack_2"
@@ -3131,6 +3207,18 @@ tracks/24/keys = {
 "update": 0,
 "values": [1.5]
 }
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("BulletDetection:position")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-34, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_1fnpr"]
 resource_name = "Attack_3"
@@ -3186,7 +3274,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.4, 0.5, 0.5333333, 0.56666666, 0.79999995, 0.88944554, 0.9),
 "transitions": PackedFloat32Array(1, 3, 3, 1, 1, 2, 1, 3),
 "update": 0,
-"values": [14.573499254152651, -1.0471975511965976, -0.5235987755982988, 1.0471975511965976, 2.530727415391778, 2.530727415391778, 0.0, -2.5342180738957665]
+"values": [14.573499254152653, -1.0471975511965976, -0.5235987755982988, 1.0471975511965976, 2.530727415391778, 2.530727415391778, 0.0, -2.5342180738957665]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -3449,6 +3537,18 @@ tracks/23/keys = {
 "update": 0,
 "values": [1.5]
 }
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("BulletDetection:position")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-34, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_eb4gh"]
 resource_name = "Attack_4"
@@ -3608,6 +3708,18 @@ tracks/12/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-10, 1)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("BulletDetection:position")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-34, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_q8445"]
@@ -4474,6 +4586,30 @@ tracks/47/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
+}
+tracks/48/type = "value"
+tracks/48/imported = false
+tracks/48/enabled = true
+tracks/48/path = NodePath("BulletDetection:position")
+tracks/48/interp = 1
+tracks/48/loop_wrap = true
+tracks/48/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-34, 0)]
+}
+tracks/49/type = "value"
+tracks/49/imported = false
+tracks/49/enabled = true
+tracks/49/path = NodePath("AnimatedSprite2D/knockback_area/CollisionShape2D:disabled")
+tracks/49/interp = 1
+tracks/49/loop_wrap = true
+tracks/49/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_g6ohj"]
@@ -5751,6 +5887,66 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AnimatedSprite2D/VFXSprite:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.36666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedSprite2D/VFXSprite:animation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"recover_knockback"]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedSprite2D/VFXSprite:frame")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.1, 0.13333334, 0.16666667, 0.2, 0.23333332, 0.26666668, 0.3, 0.33333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AnimatedSprite2D/VFXSprite:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0.11315982),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-13, 36)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimatedSprite2D/knockback_area/CollisionShape2D:disabled")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_rr5lo"]
@@ -7824,7 +8020,7 @@ size = Vector2(20, 50)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_ve0rd"]
 
-[node name="SoldierShieldBoss" type="CharacterBody2D" unique_id=1602463733]
+[node name="SoldierShieldBoss" type="CharacterBody2D" unique_id=1602463733 groups=["Enemy"]]
 collision_layer = 16384
 collision_mask = 3
 script = ExtResource("1_whmhs")
@@ -7912,6 +8108,15 @@ sprite_frames = SubResource("SpriteFrames_roiuv")
 animation = &"Attack_Spin_Impact"
 flip_h = true
 
+[node name="knockback_area" type="Area2D" parent="AnimatedSprite2D" unique_id=204572087 groups=["knockback"]]
+position = Vector2(-10, 40)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/knockback_area" unique_id=1428020353]
+position = Vector2(-0.5, -15)
+shape = SubResource("RectangleShape2D_m75gd")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1887355125]
 visible = false
 position = Vector2(0, -2)
@@ -7994,9 +8199,10 @@ one_shot = true
 one_shot = true
 ignore_time_scale = true
 
-[node name="TargetLock" type="Node2D" parent="." unique_id=1531855935]
-position = Vector2(0, -24)
+[node name="TargetLock" type="Node2D" parent="." unique_id=1531855935 node_paths=PackedStringArray("actor")]
+position = Vector2(0, -23)
 script = ExtResource("102_7aa0r")
+actor = NodePath("..")
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=2054836214 node_paths=PackedStringArray("health", "stagger", "collision") groups=["regular_enemy_hb"]]
 collision_layer = 16
@@ -8038,9 +8244,9 @@ position = Vector2(11, 9)
 shape = SubResource("RectangleShape2D_veolm")
 
 [node name="BulletDetection" parent="." unique_id=2032327560 groups=["regular_enemy_hb"] instance=ExtResource("106_1k4ab")]
+position = Vector2(-34, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection" unique_id=859333409]
-visible = false
 position = Vector2(0, -5)
 rotation = -1.5707964
 shape = SubResource("RectangleShape2D_76yi3")
@@ -8397,6 +8603,7 @@ phases = [NodePath("Phase1"), NodePath("Phase2")]
 
 [node name="Phase2" type="LimboState" parent="Phases" unique_id=497628344]
 
+[connection signal="body_entered" from="AnimatedSprite2D/knockback_area" to="." method="_on_knockback_area_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
