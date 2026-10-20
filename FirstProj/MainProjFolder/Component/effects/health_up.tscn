@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://rwbopr3b0pxc"]
+
+[ext_resource type="Texture2D" uid="uid://oenou4xufxx6" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0010.png" id="1_vouga"]
+[ext_resource type="Texture2D" uid="uid://cihy4plkocmpu" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0011.png" id="2_2w772"]
+[ext_resource type="Script" uid="uid://dajboy4yxyxkx" path="res://dodge_success_vfx.gd" id="2_mn3xc"]
+[ext_resource type="Texture2D" uid="uid://d0xs5fbjawika" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0012.png" id="3_4t6rc"]
+[ext_resource type="Texture2D" uid="uid://bmc83hu31tfcp" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0013.png" id="4_jay8f"]
+[ext_resource type="Texture2D" uid="uid://dr2vo0yi4i1aw" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0014.png" id="5_w0a2n"]
+[ext_resource type="Texture2D" uid="uid://ceiku1h75ivyd" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0015.png" id="6_qx2xr"]
+[ext_resource type="Texture2D" uid="uid://c2aaoer7whe2o" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0016.png" id="7_qu48d"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_incat"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_vouga")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_2w772")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_4t6rc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_jay8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_w0a2n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_qx2xr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_qu48d")
+}],
+"loop": 1,
+"name": &"health_up",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_o65bt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"health_up"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0009999999),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+
+[sub_resource type="Animation" id="Animation_cio61"]
+resource_name = "dodge_success"
+length = 0.43333334
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"health_up"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e5ew8"]
+_data = {
+&"RESET": SubResource("Animation_o65bt"),
+&"dodge_success": SubResource("Animation_cio61")
+}
+
+[node name="HealthUp" type="AnimatedSprite2D" unique_id=817411184]
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
+top_level = true
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_incat")
+animation = &"health_up"
+frame = 6
+flip_h = true
+script = ExtResource("2_mn3xc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1420351081]
+libraries/ = SubResource("AnimationLibrary_e5ew8")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -191,6 +191,9 @@ var atk_state="ATK_1"
 @onready var particle_spawn_location: Marker2D = $AnimatedSprite2D/particle_spawn_location
 @onready var dodge_success_vfx:=preload("uid://dw0lfbxu5gwb2")
 
+@onready var health_up_locaiton: Marker2D = $AnimatedSprite2D/health_up_locaiton
+@onready var health_up = preload("uid://rwbopr3b0pxc")
+
 @onready var hit_animation : String = "hit_landed"
 
 @onready var interact_prompt_player: AnimationPlayer = $InteractPromptPlayer
@@ -2211,7 +2214,10 @@ func interact() -> void:
 func picked_up(_value : String = "") -> void:
 	match _value:
 		"health":
-			interact_prompt_player.play("health_up")
+			var _health_up=health_up.instantiate()
+			_health_up.global_position=health_up_locaiton.global_position
+			add_child(_health_up)
+			_health_up.play_vfx()
 		"":
 			pass
 		_:
@@ -2364,6 +2370,10 @@ func _on_collectible_box_area_entered(area: Area2D) -> void:
 		increase_health()
 		
 func increase_health() -> void:
+	var _health_up=health_up.instantiate()
+	_health_up.global_position=health_up_locaiton.global_position
+	add_child(_health_up)
+	_health_up.play_vfx()
 	health.health+=1
 	set_health()
 

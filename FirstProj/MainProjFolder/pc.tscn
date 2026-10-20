@@ -24,6 +24,13 @@
 [ext_resource type="Texture2D" uid="uid://c7cdkbu41sfv1" path="res://Art_Components/Effects/DashFX/IAHC004.png" id="16_77ty3"]
 [ext_resource type="Texture2D" uid="uid://bvkboaa5by4j4" path="res://Art_Components/Effects/DashFX/IAHC005.png" id="17_4jq81"]
 [ext_resource type="Texture2D" uid="uid://odqmneukra88" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 10/476.png" id="18_cg1np"]
+[ext_resource type="Texture2D" uid="uid://oenou4xufxx6" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0010.png" id="19_wyy57"]
+[ext_resource type="Texture2D" uid="uid://cihy4plkocmpu" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0011.png" id="20_iahef"]
+[ext_resource type="Texture2D" uid="uid://d0xs5fbjawika" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0012.png" id="21_gbflm"]
+[ext_resource type="Texture2D" uid="uid://bmc83hu31tfcp" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0013.png" id="22_4h0ef"]
+[ext_resource type="Texture2D" uid="uid://dr2vo0yi4i1aw" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0014.png" id="23_pwps4"]
+[ext_resource type="Texture2D" uid="uid://ceiku1h75ivyd" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0015.png" id="24_gt6j3"]
+[ext_resource type="Texture2D" uid="uid://c2aaoer7whe2o" path="res://Art_Components/Effects/+35_Pixel_Effects_Package_nyknck/heal/heal_0016.png" id="25_rviac"]
 [ext_resource type="Script" uid="uid://ba6pwl0vfuyp" path="res://Component/stagger.gd" id="53_7ax8a"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="53_jef5t"]
 [ext_resource type="FontFile" uid="uid://n231m6uqsq6x" path="res://demo/assets/fonts/junction_bold.otf" id="59_4yxaj"]
@@ -716,6 +723,32 @@ animations = [{
 }],
 "loop": 1,
 "name": &"dodged_success",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_wyy57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_iahef")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_gbflm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_4h0ef")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_pwps4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_gt6j3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_rviac")
+}],
+"loop": 1,
+"name": &"health_up",
 "speed": 5.0
 }, {
 "frames": [{
@@ -17136,6 +17169,78 @@ tracks/14/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("AnimatedSprite2D/sprite_fx:self_modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1.8247963, 1.8247963, 1.8247963, 1)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("AnimatedSprite2D/sprite_fx:scale")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 2)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("AnimatedSprite2D/sprite_fx:position")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, -43)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("AnimatedSprite2D/sprite_fx:frame")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("AnimatedSprite2D/sprite_fx:animation")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"health_up"]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("AnimatedSprite2D/sprite_fx:visible")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_mvkgt"]
 resource_name = "Use"
@@ -17240,66 +17345,79 @@ tracks/7/keys = {
 
 [sub_resource type="Animation" id="Animation_a4jbf"]
 resource_name = "health_up"
+length = 0.33333334
 step = 0.016666668
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:self_modulate")
+tracks/0/path = NodePath("AnimatedSprite2D/sprite_fx:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.95, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0, 1, 0, 0), Color(0, 1, 0, 1), Color(0, 1, 0, 1), Color(0, 1, 0, 0)]
+"values": [Color(1.8247963, 1.8247963, 1.8247963, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:position")
+tracks/1/path = NodePath("AnimatedSprite2D/sprite_fx:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(0.2871746, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(6, 38), Vector2(6, 27)]
+"values": [Vector2(2, 2)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:size")
+tracks/2/path = NodePath("AnimatedSprite2D/sprite_fx:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(29, 14)]
+"values": [Vector2(1, -43)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:visible")
+tracks/3/path = NodePath("AnimatedSprite2D/sprite_fx:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.049999997, 0.1, 0.15, 0.2, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [true, false]
+"values": [0, 1, 2, 3, 4, 5, 6]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("AnimatedSprite2D/InteractUI/TextPopup:text")
+tracks/4/path = NodePath("AnimatedSprite2D/sprite_fx:animation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": ["HP +1"]
+"values": [&"health_up"]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D/sprite_fx:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.33333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_22pp6"]
@@ -17445,12 +17563,18 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "e40bf6776b8b2a4268a34f1cf42c192c"
 
 [node name="sprite_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=5149376]
-position = Vector2(-26, -19)
+visible = false
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
+position = Vector2(1, -43)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_3ciys")
-animation = &"dodged_success"
+animation = &"health_up"
 
 [node name="particle_spawn_location" type="Marker2D" parent="AnimatedSprite2D" unique_id=839412255]
 position = Vector2(13, -15)
+
+[node name="health_up_locaiton" type="Marker2D" parent="AnimatedSprite2D" unique_id=1401788083]
+position = Vector2(2, -39)
 
 [node name="heat_fx" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1522867712]
 visible = false
