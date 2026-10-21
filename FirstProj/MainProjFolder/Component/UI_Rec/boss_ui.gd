@@ -28,6 +28,7 @@ func _ready():
 	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween.tween_property(boss_health, "value", health_debug, 0.8)
 	tween.connect("finished", tween_done)
+	_init_boss_ui()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -35,7 +36,11 @@ func _process(delta):
 	#set_boss_health_smooth(health.health)
 	#set_boss_stagger_smooth(stagger.stagger)
 
-
+func _init_boss_ui() -> void:
+	set_max_boss_health(health.max_health)
+	set_boss_health(health.health)
+	set_max_boss_stamina(stagger.max_stagger)
+	set_boss_stagger(stagger.stagger)
 
 
 func set_boss_health(value: int) -> void:

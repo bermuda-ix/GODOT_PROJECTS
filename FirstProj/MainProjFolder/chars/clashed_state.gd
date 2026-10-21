@@ -72,7 +72,7 @@ func _enter() -> void:
 	movement_handler.active=false
 	actor.knockback=Vector2.ZERO
 	hitbox_collision.set_deferred("disabled", true)
-	#stagger.set_stagger(stagger.stagger-1)
+	stagger.set_stagger(stagger.stagger-1)
 	vfx_player.speed_scale=1/Engine.time_scale
 	clash_timer.stop()
 	if melee_attack_helper!= null and atk_fx_secondary_player!=null:

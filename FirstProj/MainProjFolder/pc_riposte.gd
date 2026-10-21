@@ -5,6 +5,7 @@ extends LimboState
 @export var pc : PlayerEntity
 @export var hit_stop : HitStop
 @export var hitbox : HitBox
+@export var clash_power : ClashPower
 @onready var parry_success_state: LimboHSM = $".."
 
 
@@ -15,7 +16,8 @@ func _enter() -> void:
 	attack_fx_secondary.play("riposte")
 	hit_stop.end_hit_stop()
 	
-
+func _exit() -> void:
+	clash_power.clash_power+=1
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="Attack_Counter":

@@ -251,7 +251,12 @@
 [ext_resource type="Texture2D" uid="uid://dlfj8ycunyumx" path="res://Art_Components/Effects/Spritesheets/Gravity-Sheet.png" id="152_5fa32"]
 [ext_resource type="Texture2D" uid="uid://5tadkaf1kutw" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 5/231.png" id="156_ux2ht"]
 [ext_resource type="Texture2D" uid="uid://bvqw6042x5lr7" path="res://Art_Components/Weapons/Guns Update - V1.01/Guns_V1.01 - Commission - Copy/02 - Sprite sheets/Submachine - MP5A3 [80x48]/[RELOAD] Submachine - MP5A3.png" id="169_jdr48"]
+[ext_resource type="Texture2D" uid="uid://cf1m2wp30eq57" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I111/I111.png" id="187_q8445"]
+[ext_resource type="Texture2D" uid="uid://c2s5qtgr5ucxh" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I111/I112.png" id="188_8mm40"]
+[ext_resource type="Texture2D" uid="uid://c8rptlxwrk2rb" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I111/I113.png" id="189_go0he"]
 [ext_resource type="Texture2D" uid="uid://i4bnf6dqpsr2" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 3/114.png" id="190_6fibr"]
+[ext_resource type="Texture2D" uid="uid://cvb5s6hmynhfd" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I111/I114.png" id="190_57edj"]
+[ext_resource type="Texture2D" uid="uid://b5u72gupuhl6m" path="res://Art_Components/Effects/+40FXPack_NYKNCK/Impact/I111/I115.png" id="191_fl7nc"]
 [ext_resource type="AudioStream" uid="uid://266rkppmswxk" path="res://Art_Components/Effects/sound/swishes/swishes/swish-1.wav" id="202_nwia3"]
 [ext_resource type="Script" uid="uid://6lcwbcgt2hxx" path="res://chars/reload.gd" id="225_brlrt"]
 [ext_resource type="Script" uid="uid://mjhwhe8agd7d" path="res://chars/enemies/block_state.gd" id="231_brlrt"]
@@ -1607,6 +1612,26 @@ animations = [{
 }],
 "loop": 1,
 "name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("187_q8445")
+}, {
+"duration": 1.0,
+"texture": ExtResource("188_8mm40")
+}, {
+"duration": 1.0,
+"texture": ExtResource("189_go0he")
+}, {
+"duration": 1.0,
+"texture": ExtResource("190_57edj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("191_fl7nc")
+}],
+"loop": 1,
+"name": &"hit_staggered",
 "speed": 5.0
 }]
 
@@ -7398,6 +7423,18 @@ tracks/5/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../AnimatedSprite2D/HitFXSprite:self_modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1.8247963, 1.8247963, 1.8247963, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_hyxc6"]
 resource_name = "counter_prepared"
@@ -7507,12 +7544,77 @@ tracks/2/keys = {
 "update": 1,
 "values": [true, false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../AnimatedSprite2D/HitFXSprite:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1.8247963, 1.8247963, 1.8247963, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_whw1v"]
+resource_name = "hit_staggered"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D/HitFXSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"hit_staggered"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D/HitFXSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.075, 0.09166667, 0.10833334, 0.125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D/HitFXSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.14166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../AnimatedSprite2D/HitFXSprite:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1.8247963, 0, 0, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_raqe1"]
 _data = {
 &"RESET": SubResource("Animation_dumub"),
 &"counter_prepared": SubResource("Animation_hyxc6"),
-&"hit": SubResource("Animation_dnwck")
+&"hit": SubResource("Animation_dnwck"),
+&"hit_staggered": SubResource("Animation_whw1v")
 }
 
 [sub_resource type="Animation" id="Animation_ydk3k"]
@@ -8215,7 +8317,6 @@ collision = NodePath("HurtBoxCollision")
 metadata/_custom_type_script = "uid://bet3nodk2voxv"
 
 [node name="HurtBoxCollision" type="CollisionShape2D" parent="HurtBox" unique_id=1314721919]
-visible = false
 position = Vector2(0, -1.5)
 shape = SubResource("RectangleShape2D_roiuv")
 
@@ -8393,8 +8494,11 @@ metadata/_custom_type_script = "uid://fi6gye6mlsb6"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=710087636]
 
-[node name="BossUI" parent="CanvasLayer" unique_id=1545874622 instance=ExtResource("124_wtt6n")]
+[node name="BossUI" parent="CanvasLayer" unique_id=1545874622 node_paths=PackedStringArray("health", "stagger", "actor") instance=ExtResource("124_wtt6n")]
 mouse_filter = 2
+health = NodePath("../../Health")
+stagger = NodePath("../../Stagger")
+actor = NodePath("../..")
 metadata/_edit_use_anchors_ = true
 
 [node name="PhasesHandler" type="Node" parent="." unique_id=1493736948 node_paths=PackedStringArray("health", "actor", "sm")]
@@ -8495,6 +8599,7 @@ hurt_box = NodePath("../../HurtBox")
 stagger_timer = NodePath("../../StaggerTimer")
 hb_collision = NodePath("../../HitBox/HitBoxCollision")
 hurt_box_collision = NodePath("../../HurtBox/HurtBoxCollision")
+stagger_dur = 5.0
 
 [node name="DYING" type="BTState" parent="LimboHSM" unique_id=1075430871]
 behavior_tree = ExtResource("136_bew0b")

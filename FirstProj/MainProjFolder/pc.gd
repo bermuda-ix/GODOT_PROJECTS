@@ -3373,6 +3373,7 @@ func _on_hit_box_clashed() -> void:
 	hb_collision.set_deferred("disabled", true)
 	hit_box.active=false
 	clash_power.increase_clash()
+	Events.camera_shake.emit(10,10)
 	if unlocked:
 		lockon()
 	#hit_fx_player.play("clashed")

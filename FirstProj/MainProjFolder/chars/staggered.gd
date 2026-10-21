@@ -13,15 +13,17 @@ extends LimboState
 @export var stagger_timer : Timer
 @export var hb_collision : CollisionShape2D = null
 @export var hurt_box_collision : CollisionShape2D = null
+@export var stagger_dur := 1.5
 
 func _enter() -> void:
 
 	health.immortality=false
-	stagger_timer.start(1.5)
+	stagger_timer.start(stagger_dur)
+	hurt_box.active=true
 	if hb_collision!= null:
 		hb_collision.set_deferred("disabled",true)
 	if hurt_box_collision!=null:
-		hurt_box_collision.set_deferred("disabled",true)
+		hurt_box_collision.set_deferred("disabled",false)
 	if "hb_collision" in actor:
 		actor.hb_collision.set_deferred("disabled", true)
 	if "current_speed" in actor:
@@ -52,6 +54,8 @@ func _update(delta: float) -> void:
 	if "hb_collision" in actor:
 		assert(actor.hb_collision.disabled==true)
 		hb_collision.set_deferred("disabled",true)
+	if hurt_box_collision!=null:
+		hurt_box_collision.set_deferred("disabled",false)
 	if "velocity" in actor:
 		actor.velocity.x=lerpf(actor.velocity.x, 0, 0.5)
 	if movement_able:

@@ -96,6 +96,8 @@ const vision_always_on = false
 @onready var player_right : bool = false
 @onready var player_state : LimboState = null
 
+### Audio
+@onready var stagger_hit = preload(SoundFx.SOCAPEX_NEW_HITS_1)
 
 ### Attack Handlers
 @onready var shoot_handler: ShootHandler = $ShootHandler
@@ -202,7 +204,6 @@ func _ready() -> void:
 	melee_attack_manager.combo_max=3
 	next_nav_point=nav_agent.get_next_path_position()
 	_init_state_machine()
-	_init_boss_ui()
 	_init_phase_state_machine()
 	
 	animation_player.play("idle")
@@ -285,9 +286,7 @@ func _init_phase_state_machine():
 	
 	phases.add_transition(phase_1, phase_2, &"next_phase")
 
-func _init_boss_ui() -> void:
-	boss_ui.set_max_boss_health(health.max_health)
-	boss_ui.set_boss_health(health.health)
+
 
 func _process(delta: float) -> void:
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
@@ -510,6 +509,11 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 					stun_timer.start(stun_timer.time_left-0.1)
 				else:
 					state_machine.dispatch(&"dodge")
+	else:
+		hit_fx_player.play("hit_staggered")
+		hit_stop.hit_stop(0.01, 0.1)
+		AudioStreamManager.play(SoundFx.SOCAPEX_NEW_HITS_1)
+		
 	#######################################################
 	###Play hit animation, depending on staggered or not###
 	#######################################################
@@ -592,6 +596,7 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 func _on_staggered_entered() -> void:
 	hurt_box.staggered=true
 	parry_timer.start(5)
+	health.immortality=false
 
 func _on_staggered_exited() -> void:
 	hurt_box.staggered=false
