@@ -2631,6 +2631,7 @@ func _on_hit_box_area_entered(_area):
 	print_debug(_area.get_groups())
 	if _area.is_in_group("hurtbox"):
 		hit_sfx()
+		clash_timer.start()
 	
 	#if not hitbox.active:
 		#return

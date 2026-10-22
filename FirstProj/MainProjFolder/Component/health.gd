@@ -52,6 +52,9 @@ func set_temporary_immortality(time: float):
 		immortality_timer.one_shot = true
 		add_child(immortality_timer)
 	
+	if immortality_timer!=null and not immortality_timer.is_stopped():
+		return
+	
 	if immortality_timer.timeout.is_connected(set_immortality):
 		immortality_timer.timeout.disconnect(set_immortality)
 	

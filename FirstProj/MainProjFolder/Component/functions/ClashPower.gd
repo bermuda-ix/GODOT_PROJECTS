@@ -16,6 +16,7 @@ signal aura_reset
 func _ready() -> void:
 	clashed.connect(increase_clash)
 	Events.enemy_death.connect(increase_clash)
+	Events.enemy_staggered.connect(increase_clash)
 
 	
 func increase_clash() -> void:
@@ -35,6 +36,6 @@ func decrease_clash() -> void:
 	aura_change.emit(clash_power)
 
 func reset_clash() -> void:
-	clash_power=0
+	clash_power=1
 	hit_box.damage=1
 	aura_reset.emit()

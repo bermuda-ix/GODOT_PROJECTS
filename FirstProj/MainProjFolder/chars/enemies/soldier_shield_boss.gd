@@ -470,6 +470,7 @@ func _on_stagger_staggered() -> void:
 	print_debug(state_machine.get_active_state())
 	assert(state_machine.get_active_state()==staggered)
 	Events.camera_shake.emit(2,20)
+	Events.enemy_staggered.emit()
 
 
 func _on_stagger_stagger_decreased(diff: int) -> void:

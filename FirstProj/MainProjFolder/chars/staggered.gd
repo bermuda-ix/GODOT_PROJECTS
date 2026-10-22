@@ -20,6 +20,7 @@ func _enter() -> void:
 	health.immortality=false
 	stagger_timer.start(stagger_dur)
 	hurt_box.active=true
+	hurt_box.staggered=true
 	if hb_collision!= null:
 		hb_collision.set_deferred("disabled",true)
 	if hurt_box_collision!=null:
@@ -68,6 +69,7 @@ func _exit() -> void:
 	if movement_able:
 		movement_handler.active=true
 	hurt_box.set_damage_mulitplyer(1)
+	hurt_box.staggered=false
 	print_debug(stagger.max_stagger)
 	await stagger.stagger_recover()
 	assert(stagger.stagger!=0)

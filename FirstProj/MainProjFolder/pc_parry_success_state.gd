@@ -44,6 +44,7 @@ func _enter() -> void:
 	dur.start(10)
 	success=false
 	enemy_success=false
+	clash_power.clash_power+=1
 
 func _update(delta: float) -> void:
 	if get_active_state()==pc.await_input:

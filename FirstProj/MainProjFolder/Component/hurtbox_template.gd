@@ -106,12 +106,14 @@ func _on_area_entered(hitbox: Area2D) -> void:
 				#assert(hitbox.hitbox_hit==true)
 				hitbox.active=false
 				Events.hit_stop.emit(0.01,0.01)
-				health.set_temporary_immortality(0.1)
+				if not staggered:
+					health.set_temporary_immortality(0.05)
 				var total_damage : int
-				if stagger.stagger>1:
-					hitbox.damage=1
+				if not staggered:
+					total_damage=1
 				else:
 					total_damage=hitbox.damage
+					print_debug(total_damage)
 				if hitbox.knock_back:
 					if hitbox.global_position.x > global_position.x:
 						impact_dir_right=true
@@ -149,7 +151,7 @@ func _on_area_entered(hitbox: Area2D) -> void:
 					else:
 						if not shielded:
 							print_debug(health.health)
-							#print_debug(hitbox.damage)
+							print_debug(hitbox.damage)
 							health.health -= (hitbox.damage)
 							#print_debug(health.health)
 							print_debug(hitbox.damage)
