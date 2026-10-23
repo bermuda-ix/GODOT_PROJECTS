@@ -2503,11 +2503,11 @@ size = Vector2(30, 34.5)
 
 [sub_resource type="Animation" id="Animation_6fibr"]
 resource_name = "Attack_1"
-length = 0.8333333
+length = 0.7
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"clashed",
-"time": 0.6333333
+"time": 0.43333334
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -2564,7 +2564,7 @@ tracks/4/path = NodePath("AnimatedSprite2D:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.36666667, 0.43333334, 0.6333333, 0.7, 0.76666665),
+"times": PackedFloat32Array(0, 0.26666668, 0.33333334, 0.5333333, 0.6, 0.6666666),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
@@ -2576,7 +2576,7 @@ tracks/5/path = NodePath("AnimatedSprite2D/ShieldSprite:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.43333334, 0.5),
+"times": PackedFloat32Array(0, 0.33333334, 0.4),
 "transitions": PackedFloat32Array(3, 3, 1),
 "update": 0,
 "values": [Vector2(7, 13), Vector2(7, 13), Vector2(-27, 21)]
@@ -2588,10 +2588,10 @@ tracks/6/path = NodePath("AnimatedSprite2D/ShieldSprite:rotation")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.16666667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [13.962634015954636, 1.3089969]
+"values": [6.981317007977318, 1.3089969]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -2636,7 +2636,7 @@ tracks/10/path = NodePath("AnimatedSprite2D/AttackVFX:rotation")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.40000004, 0.46666667),
+"times": PackedFloat32Array(0, 0.30000004, 0.36666667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [-0.2617994, -0.2617994, -0.2617994]
@@ -2648,7 +2648,7 @@ tracks/11/path = NodePath("AnimatedSprite2D/AttackVFX:position")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.40000004, 0.46666667),
+"times": PackedFloat32Array(0, 0.30000004, 0.36666667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(8.999999, 15.000001), Vector2(8.999999, 15.000001), Vector2(-2.384187e-07, 14.000001)]
@@ -2660,7 +2660,7 @@ tracks/12/path = NodePath("AnimatedSprite2D/AttackVFX:scale")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.46666667),
+"times": PackedFloat32Array(0, 0.3, 0.36666667),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0.7, 0.7), Vector2(0.7, 0.7), Vector2(-1, -0.3)]
@@ -2672,7 +2672,7 @@ tracks/13/path = NodePath("AnimatedSprite2D/AttackVFX:animation")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0, 0.46666667),
+"times": PackedFloat32Array(0, 0.33333334),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [&"Attack_spin", &"Attack_1"]
@@ -2684,10 +2684,10 @@ tracks/14/path = NodePath("AnimatedSprite2D/AttackVFX:frame")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0, 0.016666668, 0.033333335, 0.05, 0.06666667, 0.083333336, 0.1, 0.11666667, 0.1178417, 0.13333334, 0.13450837, 0.15, 0.15117502, 0.16666667, 0.1678417, 0.18333334, 0.18450835, 0.2, 0.20117503, 0.21666667, 0.21784168, 0.23333333, 0.25, 0.26666668, 0.28333333, 0.3, 0.3166667, 0.33333334, 0.35, 0.36666664, 0.4, 0.425, 0.4666667, 0.50052303, 0.5338564, 0.5671897, 0.60052305, 0.63385636),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.016666668, 0.033333335, 0.05, 0.06666667, 0.083333336, 0.1, 0.11666667, 0.13333334, 0.15, 0.16666667, 0.18333335, 0.2, 0.3666667, 0.40052304, 0.4338564, 0.4671897, 0.5005231, 0.5338564),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 3, 8, 4, 9, 5, 3, 6, 4, 7, 5, 8, 6, 9, 7, 8, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 0, 1, 2, 3, 4, 5]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
@@ -2709,7 +2709,7 @@ tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
 "clips": PackedStringArray("Attack_Thrust_Impact"),
-"times": PackedFloat32Array(0.5333333)
+"times": PackedFloat32Array(0.4333333)
 }
 tracks/17/type = "value"
 tracks/17/imported = false
@@ -2802,7 +2802,7 @@ tracks/24/path = NodePath("LimboHSM/ATTACK")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0.5333333),
+"times": PackedFloat32Array(0.4333333),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [200.0],
@@ -2828,7 +2828,7 @@ tracks/26/path = NodePath("HitBox:active")
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
 tracks/26/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -2840,7 +2840,7 @@ tracks/27/path = NodePath("HitBox")
 tracks/27/interp = 1
 tracks/27/loop_wrap = true
 tracks/27/keys = {
-"times": PackedFloat32Array(0.525),
+"times": PackedFloat32Array(0.42499998),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -2866,16 +2866,8 @@ tracks/28/keys = {
 "end_offset": 0.0,
 "start_offset": 0.0256,
 "stream": ExtResource("202_nwia3")
-}, {
-"end_offset": 0.0,
-"start_offset": 0.0256,
-"stream": ExtResource("202_nwia3")
-}, {
-"end_offset": 0.0,
-"start_offset": 0.0256,
-"stream": ExtResource("202_nwia3")
 }],
-"times": PackedFloat32Array(0, 0.1, 0.19166666, 0.28333333, 0.375)
+"times": PackedFloat32Array(0, 0.1, 0.18333334)
 }
 tracks/28/use_blend = true
 tracks/29/type = "value"
@@ -2905,11 +2897,11 @@ tracks/30/keys = {
 
 [sub_resource type="Animation" id="Animation_nwia3"]
 resource_name = "Attack_2"
-length = 0.8333333
+length = 0.7
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"clashed",
-"time": 0.6666667
+"time": 0.46666667
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -2930,7 +2922,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.26666668, 0.40000004, 0.5, 0.76666665),
+"times": PackedFloat32Array(0.16666667, 0.3, 0.39999998, 0.6666667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
@@ -2942,7 +2934,7 @@ tracks/2/path = NodePath("AnimatedSprite2D/ShieldSprite:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.26666668, 0.4666667, 0.53333336, 0.6666667, 0.8000001),
+"times": PackedFloat32Array(0.16666667, 0.36666667, 0.43333334, 0.56666666, 0.7000001),
 "transitions": PackedFloat32Array(3, 3, 1, 2, 1),
 "update": 0,
 "values": [Vector2(0.99999905, 22), Vector2(0.99999905, 22), Vector2(-18, 10), Vector2(-18, 10), Vector2(-8, 24)]
@@ -2954,7 +2946,7 @@ tracks/3/path = NodePath("AnimatedSprite2D/ShieldSprite:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.26666668, 0.6666667, 0.8000001),
+"times": PackedFloat32Array(0, 0.16666667, 0.56666666, 0.7000001),
 "transitions": PackedFloat32Array(1, 1, 1.5, 1),
 "update": 0,
 "values": [8.377580409572781, -1.0471976, -1.0471975511965976, 0.0]
@@ -2990,7 +2982,7 @@ tracks/6/path = NodePath("AnimatedSprite2D/AttackVFX:rotation")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.40000004, 0.46666667),
+"times": PackedFloat32Array(0, 0.3, 0.36666664),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [-0.2617994, -0.2617994, -2.6179938]
@@ -3002,7 +2994,7 @@ tracks/7/path = NodePath("AnimatedSprite2D/AttackVFX:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.46666667),
+"times": PackedFloat32Array(0, 0.29999998, 0.36666664),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(-0.99999905, 24), Vector2(-0.99999905, 24), Vector2(2, 21)]
@@ -3014,7 +3006,7 @@ tracks/8/path = NodePath("AnimatedSprite2D/AttackVFX:scale")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.46666667),
+"times": PackedFloat32Array(0, 0.29999998, 0.36666664),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0.7, 0.7), Vector2(0.7, 0.7), Vector2(1, 0.3)]
@@ -3026,7 +3018,7 @@ tracks/9/path = NodePath("AnimatedSprite2D/AttackVFX:animation")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.46666667),
+"times": PackedFloat32Array(0, 0.36666664),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [&"Attack_spin", &"Attack_1"]
@@ -3038,10 +3030,10 @@ tracks/10/path = NodePath("AnimatedSprite2D/AttackVFX:frame")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.016666668, 0.033333335, 0.05, 0.06666667, 0.083333336, 0.1, 0.11666667, 0.1178417, 0.13333334, 0.13450837, 0.15, 0.15117502, 0.16666667, 0.1678417, 0.18333334, 0.18450835, 0.2, 0.20117503, 0.21666667, 0.21784168, 0.23333333, 0.25, 0.26666668, 0.28333333, 0.3, 0.3166667, 0.33333334, 0.35, 0.36666664, 0.4, 0.425, 0.46666667, 0.5005231, 0.5338564, 0.5671897, 0.6005231, 0.6338564),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.016666668, 0.033333335, 0.05, 0.06666667, 0.083333336, 0.1, 0.11666667, 0.1178417, 0.13333334, 0.13450837, 0.15, 0.15117502, 0.16666667, 0.1678417, 0.18333334, 0.18450835, 0.2, 0.20117503, 0.21666667, 0.21784168, 0.23333333, 0.25, 0.26666662, 0.29999998, 0.325, 0.36666664, 0.40052307, 0.43385637, 0.46718967, 0.5005231, 0.5338564),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 3, 8, 4, 9, 5, 3, 6, 4, 7, 5, 8, 6, 9, 7, 8, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 3, 8, 4, 9, 5, 3, 6, 4, 7, 5, 8, 6, 9, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
@@ -3062,7 +3054,7 @@ tracks/12/path = NodePath("AnimatedSprite2D/AttackVFX:visible")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.45833334, 0.475, 0.6517358),
+"times": PackedFloat32Array(0, 0.35833332, 0.37499997, 0.55173576),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [true, false, true, false]
@@ -3111,7 +3103,7 @@ tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
 "clips": PackedStringArray("Attack_Thrust_Impact"),
-"times": PackedFloat32Array(0.56666666)
+"times": PackedFloat32Array(0.46666667)
 }
 tracks/17/type = "value"
 tracks/17/imported = false
@@ -3144,7 +3136,7 @@ tracks/19/path = NodePath("LimboHSM/ATTACK")
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
-"times": PackedFloat32Array(0.53333336),
+"times": PackedFloat32Array(0.43333337),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [200.0],
@@ -3170,7 +3162,7 @@ tracks/21/path = NodePath("HitBox:active")
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
-"times": PackedFloat32Array(0, 0.53333336),
+"times": PackedFloat32Array(0, 0.43333337),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -3182,7 +3174,7 @@ tracks/22/path = NodePath("HitBox")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
-"times": PackedFloat32Array(0.5583334),
+"times": PackedFloat32Array(0.4583334),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -3208,16 +3200,8 @@ tracks/23/keys = {
 "end_offset": 0.0,
 "start_offset": 0.0256,
 "stream": ExtResource("202_nwia3")
-}, {
-"end_offset": 0.0,
-"start_offset": 0.0256,
-"stream": ExtResource("202_nwia3")
-}, {
-"end_offset": 0.0,
-"start_offset": 0.0256,
-"stream": ExtResource("202_nwia3")
 }],
-"times": PackedFloat32Array(0, 0.1, 0.19166666, 0.28333333, 0.375)
+"times": PackedFloat32Array(0, 0.1, 0.19166666)
 }
 tracks/23/use_blend = true
 tracks/24/type = "value"
@@ -3247,11 +3231,11 @@ tracks/25/keys = {
 
 [sub_resource type="Animation" id="Animation_1fnpr"]
 resource_name = "Attack_3"
-length = 0.9
+length = 0.8
 markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"clashed",
-"time": 0.7
+"time": 0.53333336
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -3272,7 +3256,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.46666667, 0.6666666, 0.73333335, 0.79999995, 0.8666667),
+"times": PackedFloat32Array(0, 0.3, 0.36666667, 0.5666666, 0.6333333, 0.6999999, 0.76666665),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6]
@@ -3284,7 +3268,7 @@ tracks/2/path = NodePath("AnimatedSprite2D/ShieldSprite:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.5, 0.5333333, 0.79999995, 0.88944554),
+"times": PackedFloat32Array(0, 0.26666665, 0.36666664, 0.39999995, 0.6666666, 0.7561122),
 "transitions": PackedFloat32Array(1, 2, 3, 3, 3, 1),
 "update": 0,
 "values": [Vector2(14, 7), Vector2(14, 7), Vector2(0, 23), Vector2(-18, 13), Vector2(-18, 13), Vector2(-5, 23)]
@@ -3296,7 +3280,7 @@ tracks/3/path = NodePath("AnimatedSprite2D/ShieldSprite:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.5, 0.5333333, 0.56666666, 0.79999995, 0.88944554, 0.9),
+"times": PackedFloat32Array(0, 0.26666665, 0.36666664, 0.39999995, 0.4333333, 0.6666666, 0.7561122, 0.76666665),
 "transitions": PackedFloat32Array(1, 3, 3, 1, 1, 2, 1, 3),
 "update": 0,
 "values": [14.573499254152653, -1.0471975511965976, -0.5235987755982988, 1.0471975511965976, 2.530727415391778, 2.530727415391778, 0.0, -2.5342180738957665]
@@ -3308,7 +3292,7 @@ tracks/4/path = NodePath("AnimatedSprite2D/AttackVFX:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.46666667),
+"times": PackedFloat32Array(0, 0.29166666, 0.35833332),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0.7, 0.7), Vector2(0.7, 0.7), Vector2(1, 1)]
@@ -3320,7 +3304,7 @@ tracks/5/path = NodePath("AnimatedSprite2D/AttackVFX:animation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.46666667),
+"times": PackedFloat32Array(0, 0.35833332),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [&"Attack_spin", &"Attack_3"]
@@ -3332,10 +3316,10 @@ tracks/6/path = NodePath("AnimatedSprite2D/AttackVFX:frame")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.01666667, 0.033333335, 0.05, 0.06666668, 0.08333334, 0.10000001, 0.116666675, 0.117841706, 0.13333334, 0.13450837, 0.15, 0.15117502, 0.16666667, 0.1678417, 0.18333334, 0.18450835, 0.2, 0.20117503, 0.21666667, 0.21784168, 0.23333335, 0.25, 0.26666668, 0.28333333, 0.3, 0.3166667, 0.33333334, 0.35, 0.36666664, 0.4, 0.425, 0.5, 0.5333333, 0.5666667, 0.6, 0.6666666, 0.67499995, 0.6833333, 0.6916666),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.01666667, 0.033333335, 0.05, 0.06666668, 0.08333334, 0.10000001, 0.116666675, 0.117841706, 0.13333334, 0.13450837, 0.15, 0.15117502, 0.16666667, 0.1678417, 0.18333334, 0.18450835, 0.2, 0.20117503, 0.21666667, 0.21784168, 0.23333335, 0.25, 0.26666668, 0.29166666, 0.31666666, 0.39166665, 0.42499995, 0.45833337, 0.49166667, 0.5583333, 0.5666666, 0.5749999, 0.58333325),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 3, 8, 4, 9, 5, 3, 6, 4, 7, 5, 8, 6, 9, 7, 8, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 3, 8, 4, 9, 5, 3, 6, 4, 7, 5, 8, 6, 9, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -3344,7 +3328,7 @@ tracks/7/path = NodePath("AnimatedSprite2D/AttackVFX:rotation")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.46666667),
+"times": PackedFloat32Array(0.35833332),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [2.3561945]
@@ -3356,7 +3340,7 @@ tracks/8/path = NodePath("AnimatedSprite2D/AttackVFX:visible")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.46666667, 0.49999997, 0.76666665),
+"times": PackedFloat32Array(0, 0.35833332, 0.39166662, 0.6583333),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [true, false, true, false]
@@ -3393,7 +3377,7 @@ tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "clips": PackedStringArray("Attack_Spin_Impact"),
-"times": PackedFloat32Array(0.46666667)
+"times": PackedFloat32Array(0.36666667)
 }
 tracks/12/type = "value"
 tracks/12/imported = false
@@ -3450,7 +3434,7 @@ tracks/16/path = NodePath("AnimatedSprite2D/AttackVFX:position")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
-"times": PackedFloat32Array(0, 0.46666667, 0.5),
+"times": PackedFloat32Array(0, 0.35833332, 0.39166665),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(13.999998, 6.9999995), Vector2(13.999998, 6.9999995), Vector2(1.999999, 11)]
@@ -3474,7 +3458,7 @@ tracks/18/path = NodePath("LimboHSM/ATTACK")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
-"times": PackedFloat32Array(0.5333333),
+"times": PackedFloat32Array(0.4333333),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [200.0],
@@ -3500,7 +3484,7 @@ tracks/20/path = NodePath("HitBox:active")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
-"times": PackedFloat32Array(0, 0.5333333),
+"times": PackedFloat32Array(0, 0.4333333),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -3512,7 +3496,7 @@ tracks/21/path = NodePath("HitBox")
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
-"times": PackedFloat32Array(0.5583333),
+"times": PackedFloat32Array(0.45833328),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -3542,12 +3526,8 @@ tracks/22/keys = {
 "end_offset": 0.0,
 "start_offset": 0.0256,
 "stream": ExtResource("202_nwia3")
-}, {
-"end_offset": 0.0,
-"start_offset": 0.0256,
-"stream": ExtResource("202_nwia3")
 }],
-"times": PackedFloat32Array(0, 0.1, 0.19166666, 0.28333333, 0.375)
+"times": PackedFloat32Array(0, 0.1, 0.19166666, 0.28333333)
 }
 tracks/22/use_blend = true
 tracks/23/type = "value"
@@ -8249,7 +8229,7 @@ libraries/ = SubResource("AnimationLibrary_go0he")
 
 [node name="Health" type="Node" parent="." unique_id=400641533]
 script = ExtResource("99_g086c")
-max_health = 150
+max_health = 100
 
 [node name="Stagger" type="Node" parent="." unique_id=222599103]
 script = ExtResource("100_2id7f")
@@ -8325,6 +8305,7 @@ collision_layer = 8
 collision_mask = 192
 script = ExtResource("104_oxolm")
 stagger = NodePath("../Stagger")
+active = true
 collision_shape = NodePath("HitBoxCollision")
 metadata/_custom_type_script = "uid://5ijvah6jjgdb"
 
