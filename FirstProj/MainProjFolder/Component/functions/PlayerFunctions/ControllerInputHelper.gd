@@ -12,8 +12,11 @@ class_name ControllerInputHelper extends Node
 @export var shotty : Sprite2D
 @export var look_with_gamepad := false
 
+@onready var controller_input_axis : float
+
 func _process(delta: float) -> void:
-	pass
+	if look_with_gamepad:
+		controller_input_axis=Input.get_joy_axis(0, JOY_AXIS_LEFT_X)
 	
 func _physics_process(delta: float) -> void:
 	if look_with_gamepad:

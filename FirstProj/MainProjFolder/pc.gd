@@ -2850,7 +2850,10 @@ func _on_counter_box_area_entered(area):
 		get_tree().root.add_child(dodge_vfx)
 		dodge_vfx.play_vfx()
 		counter_box_collision.call_deferred("set_disabled", true)
-		state_machine.dispatch(&"dodge_successful")
+		if input_axis==0 or \
+		(controller_input_helper.look_with_gamepad and \
+		abs(controller_input_helper.controller_input_axis)<0.1):
+			state_machine.dispatch(&"dodge_successful")
 	elif area.is_in_group("bullet"):
 		hit_stop.hit_stop(0.5, 0.25)
 		counter_flag = true
