@@ -85,6 +85,7 @@ func _enter() -> void:
 			counter_attack_timer.start(counter_attack_timer_dur)
 		assert(not counter_attack_timer.is_stopped())
 		clashes_made+=1
+		hit_stop.end_hit_stop()
 	else:
 		if counter_prepared:
 			anim_player.play(&"preparing_counter")
@@ -104,7 +105,6 @@ func _enter() -> void:
 			anim_player.pause()
 			assert(anim_player.is_playing()!=true)
 			hitbox_collision.set_deferred("disabled", true)
-			#hit_box.clash_active=false
 		movement_handler.active=false
 
 func _update(delta: float) -> void:

@@ -2473,6 +2473,8 @@ func _on_animation_player_animation_finished(anim_name):
 			"Heavy_Riposte":
 				if  Input.has_joy_vibration(VibrationHandler.controller_id):
 					Input.start_joy_vibration(VibrationHandler.controller_id, 0.8, 1.0, 1.0)
+			"dodge_roll", "dodge_back":
+				pass
 			_:
 				#attack_1.attack=light_attacks[0]
 				#attack_timer.start(0.1)
@@ -2633,26 +2635,12 @@ func _on_hit_box_area_entered(_area):
 		hit_sfx()
 		clash_timer.start()
 	
-	#if not hitbox.active:
-		#return
-	#else:
-		#hit_buffer.start(1)
-		##hitbox.active=false
-		#hit_sound=hit1
-		#AudioStreamManager.play(hit_sound)
-		##hb_collision.disabled
-		##hb_collision.set_deferred("disabled", true)
-		#hit_fx.visible=true
-		#hit_fx_player.stop()
-		#hit_fx_player.play(hit_animation)
+
 
 func hit_sfx() -> void:
 	hit_buffer.start(1)
 	hit_sound=hit1
 	AudioStreamManager.play(hit_sound)
-	#hit_fx.visible=true
-	#hit_fx_player.stop()
-	#hit_fx_player.play(hit_animation)
 
 
 func _on_hit_box_body_entered(body):
@@ -2862,6 +2850,7 @@ func _on_counter_box_area_entered(area):
 		get_tree().root.add_child(dodge_vfx)
 		dodge_vfx.play_vfx()
 		counter_box_collision.call_deferred("set_disabled", true)
+		state_machine.dispatch(&"dodge_successful")
 	elif area.is_in_group("bullet"):
 		hit_stop.hit_stop(0.5, 0.25)
 		counter_flag = true

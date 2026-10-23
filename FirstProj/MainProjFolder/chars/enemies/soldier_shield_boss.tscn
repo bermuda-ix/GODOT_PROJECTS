@@ -8236,9 +8236,11 @@ script = ExtResource("100_2id7f")
 max_stagger = 30
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
-[node name="ClashPower" type="Node" parent="." unique_id=167040191 node_paths=PackedStringArray("health")]
+[node name="ClashPower" type="Node" parent="." unique_id=167040191 node_paths=PackedStringArray("health", "stagger", "hit_box")]
 script = ExtResource("101_vgmlq")
 health = NodePath("../Health")
+stagger = NodePath("../Stagger")
+hit_box = NodePath("../HitBox")
 metadata/_custom_type_script = "uid://byay512l00w0p"
 
 [node name="NavigationTimer" type="Timer" parent="." unique_id=1123224239]
@@ -8302,7 +8304,7 @@ shape = SubResource("RectangleShape2D_roiuv")
 
 [node name="HitBox" type="Area2D" parent="." unique_id=650656632 node_paths=PackedStringArray("stagger", "collision_shape") groups=["hitbox"]]
 collision_layer = 8
-collision_mask = 192
+collision_mask = 134217920
 script = ExtResource("104_oxolm")
 stagger = NodePath("../Stagger")
 active = true

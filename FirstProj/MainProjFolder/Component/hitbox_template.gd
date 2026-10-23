@@ -197,6 +197,10 @@ func _on_impact(_area :Area2D) -> void:
 			#print_debug("parried!")
 			stagger.stagger -= 1
 			parried.emit()
+		elif _area.is_in_group("dodge_area"):
+			if _area.is_in_group("player_owned"):
+				stagger.stagger-=1
+			clashed.emit()
 		else:
 			#print_debug(_area.get_groups())
 			pass

@@ -466,8 +466,11 @@ func _on_stagger_staggered() -> void:
 	hurt_box_collision.set_deferred("disabled", false)
 	hit_box.active=false
 	hurt_box.active=true
+	print_debug(state_machine.get_active_state())
 	state_machine.dispatch(&"staggered")
 	print_debug(state_machine.get_active_state())
+	if state_machine.get_active_state()!=staggered:
+		state_machine.change_active_state(staggered)
 	assert(state_machine.get_active_state()==staggered)
 	Events.camera_shake.emit(2,20)
 	Events.enemy_staggered.emit()
@@ -878,6 +881,8 @@ func _on_clashed_state_nothing_follow_up() -> void:
 
 
 func _on_shoot_attack_manager_ammo_empty() -> void:
+	if stagger.stagger<=0:
+		return
 	state_machine.dispatch(&"reload")
 
 
@@ -887,6 +892,8 @@ func _on_combat_state_machine_active_state_changed(current: LimboState, previous
 
 
 func _on_shoot_attack_manager_finished_shooting() -> void:
+	if stagger.stagger<=0:
+		return
 	state_machine.dispatch(&"reload")
 
 

@@ -18140,8 +18140,8 @@ shape = SubResource("RectangleShape2D_oupih")
 [node name="BackAttackFlag" type="RayCast2D" parent="." unique_id=1319491597]
 target_position = Vector2(-34, 0)
 
-[node name="CounterBox" type="Area2D" parent="." unique_id=811846985]
-collision_layer = 0
+[node name="CounterBox" type="Area2D" parent="." unique_id=811846985 groups=["dodge_area", "player_owned"]]
+collision_layer = 134217728
 collision_mask = 4104
 
 [node name="CounterBoxCollision" type="CollisionShape2D" parent="CounterBox" unique_id=1878118416]
