@@ -275,6 +275,7 @@ signal no_input_qte
 @onready var sp_atk_hit_box = $AnimatedSprite2D/Shotty/SpAtkHitBox
 @onready var sp_atk_cone = $AnimatedSprite2D/Shotty/SpAtkHitBox/SpAtkCone
 @onready var cpu_particles_2d = $AnimatedSprite2D/Shotty/CPUParticles2D
+@onready var shotty_rotation_offset := 0.0
 @onready var audio_stream_player_2d = $AudioStreamPlayer2D
 @onready var hit_sound = hit1
 @onready var player_hit: GPUParticles2D = $AnimatedSprite2D/PlayerHit
@@ -400,6 +401,7 @@ func _ready():
 	Events.unlock_from.connect(unlock_from_target)
 	Events.parry_success.connect(parry_success)
 	Events.input_change.connect(change_prompt)
+	Events.enemy_attack_missed.connect(dodge_successful)
 	flip.connect(flip_over)
 	jump_out_signal.connect(jump_out)
 	_init_state_machine()
@@ -726,6 +728,7 @@ signal vel_y_changed
 func _physics_process(delta):
 	vel_y=velocity.y
 	label.text=str(get_floor_angle())
+	shotty_rotation_offset=lerpf(shotty_rotation_offset, 0.0, 0.8)
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		apply_gravity(delta)
 		cutscene_acceleration(cutscene_handler.cutscene_dir, delta, cutscene_handler.cutscene_speed)
@@ -735,6 +738,8 @@ func _physics_process(delta):
 		
 
 		return
+	
+	
 	
 	elif state_machine.get_active_state()==flip_state:
 		flipping(delta)
@@ -2610,7 +2615,11 @@ func parry_success(_parry_follow_up := "nothing", _damage := 1):
 	#hit_box.attack_clashed=false
 	match _parry_follow_up:
 		"riposte":
-			anim_player.play()
+			charge_timer.stop()
+			if parry_success_state.ranged_counter:
+				anim_player.play("Ranged_Riposte")
+			else:
+				anim_player.play()
 			#start_attack_timer(0.2)
 			heavy_attack_buffer_timer.start()
 		"enemy_light_counter":
@@ -2833,8 +2842,11 @@ func atk_state_debug():
 			atk_state="SPC_ATK_BACK"
 			
 
+func dodge_successful() -> void:
+	parry_success_state.counter_attack="Ranged_Riposte"
+	state_machine.dispatch(&"dodge_successful")
+
 func _on_counter_box_area_entered(area):
-	
 		
 	if area.is_in_group("hitbox"):
 		#hit_stop.hit_stop(0.5, 2)

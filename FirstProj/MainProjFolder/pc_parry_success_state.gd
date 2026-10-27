@@ -13,6 +13,7 @@ extends LimboHSM
 @onready var starting : float
 @onready var dash_distance := 500.0
 @onready var ranged_counter := false
+@export var counter_attack := "Attack_Counter"
 @export var attack_dash_active := false
 @export var clash_animation := "clashed"
 @export var attack_1 : LimboState
@@ -57,13 +58,16 @@ func _update(delta: float) -> void:
 	if Input.is_action_just_pressed("attack"):
 		dur.stop()
 		pc.velocity.x=0
-		success=true
 		pc.parry_stance=false
 		pc.light_attack_index=wrapi(pc.light_attack_index+1, 0, 3)
 		attack_1.attack=pc.light_attacks[pc.light_attack_index]
 		hit_stop.end_hit_stop()
 		Events.parry_success.emit("riposte", 1*clash_power.clash_power)
-		attack_fx_secondary.play("riposte")
+		if ranged_counter:
+			pass
+		else:
+			success=true
+			attack_fx_secondary.play("riposte")
 		#pc.parry_success("riposte")
 		#pc.state_machine.dispatch(&"start_attack")
 		#pc.attack_state.dispatch(&"next_attack")

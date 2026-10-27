@@ -10754,6 +10754,200 @@ tracks/91/keys = {
 "values": [Vector2(1, 0.5)]
 }
 
+[sub_resource type="Animation" id="Animation_0eycj"]
+resource_name = "Ranged_Riposte"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"GunCrouchFire"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.19999999, 0.24166666, 0.28333333, 0.325),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/2/type = "animation"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/Shotty/ShottyAnimationPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": PackedStringArray("shotgun_aim_quick"),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.2, 0.23333335),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"shotgun_shoot"
+}, {
+"args": [],
+"method": &"shotgun_recoil"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.3596852]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(447.2103, -20.026266)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5, 5)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:self_modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2.1168277, 2.1168277, 2.1168277, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:z_index")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-1]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:flip_h")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:animation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"shotgun_fire"]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:frame")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0.20833333, 0.225, 0.24166664, 0.25833333, 0.27500004, 0.2916667, 0.325, 0.36666667, 0.4166667, 0.4583333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("AnimatedSprite2D/Shotty/shotgun_fx:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0.20833333, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/13/type = "method"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath(".")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.46666667),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [false],
+"method": &"set_shotgun_free_rotate"
+}, {
+"args": [true],
+"method": &"set_shotgun_free_rotate"
+}]
+}
+tracks/14/type = "method"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath(".")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["shotgun_fire"],
+"method": &"call_audioplayer"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_oktus"]
 resource_name = "Riposte"
 length = 0.65
@@ -13484,6 +13678,7 @@ _data = {
 &"Parry": SubResource("Animation_x1wk2"),
 &"Parry_Success": SubResource("Animation_irs7o"),
 &"RESET": SubResource("Animation_13dif"),
+&"Ranged_Riposte": SubResource("Animation_0eycj"),
 &"Riposte": SubResource("Animation_oktus"),
 &"air_dash": SubResource("Animation_cg1np"),
 &"check_equipment": SubResource("Animation_67eo0"),
@@ -17541,7 +17736,6 @@ material = ExtResource("4_2dddn")
 position = Vector2(0, 8)
 sprite_frames = ExtResource("5_2dddn")
 animation = &"SwordCrouch"
-speed_scale = 0.16
 offset = Vector2(2.59398, -39.5489)
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": true,
@@ -18390,13 +18584,14 @@ clash_power = NodePath("../../ClashPower")
 [node name="AwaitInput" type="LimboState" parent="StateMachine/ParrySuccessState" unique_id=1731121438]
 script = ExtResource("98_54hn3")
 
-[node name="Riposte" type="LimboState" parent="StateMachine/ParrySuccessState" unique_id=678449105 node_paths=PackedStringArray("anim_player", "attack_fx_secondary", "pc", "hit_stop", "hitbox")]
+[node name="Riposte" type="LimboState" parent="StateMachine/ParrySuccessState" unique_id=678449105 node_paths=PackedStringArray("anim_player", "attack_fx_secondary", "pc", "hit_stop", "hitbox", "clash_power")]
 script = ExtResource("98_oktus")
 anim_player = NodePath("../../../AnimationPlayer")
 attack_fx_secondary = NodePath("../../../AttackFXSecondary")
 pc = NodePath("../../..")
 hit_stop = NodePath("../../../HitStop")
 hitbox = NodePath("../../../AnimatedSprite2D/HitBox")
+clash_power = NodePath("../../../ClashPower")
 
 [node name="HeavyRiposte" type="LimboState" parent="StateMachine/ParrySuccessState" unique_id=1896379606 node_paths=PackedStringArray("anim_player", "pc", "hit_stop")]
 script = ExtResource("104_dlcc0")

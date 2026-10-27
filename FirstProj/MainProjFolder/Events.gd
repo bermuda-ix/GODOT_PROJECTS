@@ -73,6 +73,7 @@ signal parried
 signal staggered
 signal enemy_parried
 signal enemy_clash_react
+signal enemy_attack_missed
 
 #Handle Player Data
 signal set_player_data

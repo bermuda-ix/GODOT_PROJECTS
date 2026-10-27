@@ -23,7 +23,7 @@ func _enter() -> void:
 		pc.dodge_anim="dodge_roll"
 		dodge_velocity=Vector2(400,0)
 		if pc.input_axis==0:
-			dodge_distance=20
+			dodge_distance=40
 		else:
 			dodge_distance=150
 		

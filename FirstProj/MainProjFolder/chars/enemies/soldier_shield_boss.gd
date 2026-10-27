@@ -403,6 +403,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			vision_handler.active=true
 			turret.track=true
 			stagger.stagger_immortality=false
+			clashed_state.clashes_made=0
 			if melee_range_check():
 				state_machine.dispatch(&"recover_attack")
 			else:
@@ -414,6 +415,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			movement_handler.face_player_active=false
 			vision_handler.active=false
 			turret.track=false
+			clashed_state.clashes_made=0
 			state_machine.dispatch(&"shoot_counter")
 	if state_machine.get_active_state()==attack:
 			if melee_range_check():

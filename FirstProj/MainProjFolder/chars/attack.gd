@@ -22,6 +22,7 @@ func _enter() -> void:
 			attack_dir = -1
 	if "starting" in actor:
 		starting = actor.global_position.x
+	hit_box.attack_missed=false
 	#print_debug("begin attack")
 	#bt_player.blackboard.set_var("attack_mode", true)
 	

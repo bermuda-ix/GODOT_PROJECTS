@@ -15,6 +15,7 @@ signal hit_success
 @export var clash_active : bool = false : set = set_clash_active
 @export var heavy_attack : bool = false : set = set_heavy_attack
 @export var attack_clashed : bool = false : set = set_attack_clashed
+@export var attack_missed : bool = false : set = set_attack_missed
 
 @onready var in_clash_state :bool =false
 @export var launch : bool = false
@@ -65,6 +66,9 @@ func set_clash_active(_value: bool) -> void:
 
 func set_attack_clashed(_value: bool) -> void:
 	attack_clashed=_value
+	
+func set_attack_missed(_value: bool) -> void:
+	attack_missed=_value
 		
 func set_heavy_attack(_value: bool) -> void:
 	heavy_attack=_value
@@ -200,6 +204,8 @@ func _on_impact(_area :Area2D) -> void:
 		elif _area.is_in_group("dodge_area"):
 			if _area.is_in_group("player_owned"):
 				stagger.stagger-=1
+				Events.enemy_attack_missed.emit()
+			attack_missed=true
 			clashed.emit()
 		else:
 			#print_debug(_area.get_groups())

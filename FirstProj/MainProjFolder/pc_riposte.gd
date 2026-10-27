@@ -2,11 +2,13 @@ extends LimboState
 
 @export var anim_player : AnimationPlayer
 @export var attack_fx_secondary: AnimationPlayer
+@export var counter_attack := "Attack_Counter"
 @export var pc : PlayerEntity
 @export var hit_stop : HitStop
 @export var hitbox : HitBox
 @export var clash_power : ClashPower
 @onready var parry_success_state: LimboHSM = $".."
+
 
 
 func _enter() -> void:
