@@ -4,13 +4,17 @@ extends Node
 signal staggered
 signal stagger_decreased (diff: int)
 signal max_stagger_changed (diff: int)
+signal angry_threshold_reached
 
 @export var max_stagger: int = 3 : set = set_max_stagger, get = get_max_stagger
 @export var stagger_immortality : bool = false
+@export var angry_stagger_threshold : int = clampi(1,1, max_stagger)
 
 var immortality_timer: Timer = null
 
 @onready var stagger: int = max_stagger : set = set_stagger, get = get_stagger
+
+
 
 func set_max_stagger(value: int):
 	var clamped_value = 1 if value <= 0 else value
@@ -36,6 +40,9 @@ func set_stagger(value: int):
 		var difference = clamped_value - stagger
 		stagger = value
 		stagger_decreased.emit(difference)
+		
+		if stagger < angry_stagger_threshold:
+			angry_threshold_reached.emit()
 		
 		if stagger <= 0:
 			staggered.emit()

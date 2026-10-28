@@ -24,6 +24,7 @@ func _enter() -> void:
 	
 func _update(delta: float) -> void:
 	actor.velocity.x=lerpf(actor.velocity.x, 0, 0.3)
+
 	
 
 func _exit() -> void:

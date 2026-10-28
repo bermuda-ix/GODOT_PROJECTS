@@ -23,8 +23,8 @@ animation_name = &"teleport_start"
 duration = 0.5
 
 [sub_resource type="BBNode" id="BBNode_ompq3"]
-saved_value = NodePath(".")
-resource_name = "."
+saved_value = NodePath("TeleportHandler")
+resource_name = "TeleportHandler"
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_x6v1h"]
 node = SubResource("BBNode_ompq3")

@@ -28,8 +28,8 @@ saved_value = false
 resource_name = "false"
 
 [sub_resource type="BBNode" id="BBNode_1xld1"]
-saved_value = NodePath(".")
-resource_name = "."
+saved_value = NodePath("TeleportHandler")
+resource_name = "TeleportHandler"
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_k2tdh"]
 node = SubResource("BBNode_1xld1")
@@ -46,8 +46,8 @@ saved_value = true
 resource_name = "true"
 
 [sub_resource type="BBNode" id="BBNode_otn0j"]
-saved_value = NodePath(".")
-resource_name = "."
+saved_value = NodePath("TeleportHandler")
+resource_name = "TeleportHandler"
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_1xld1"]
 node = SubResource("BBNode_otn0j")

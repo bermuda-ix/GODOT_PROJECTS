@@ -667,7 +667,7 @@ func _process(_delta):
 #
 	input_axis = Input.get_axis("walk_left", "walk_right")
 	
-	
+	label.text=str(state_machine.get_active_state())
 	
 	get_target_info()
 	#previous_state()
@@ -727,7 +727,7 @@ signal vel_y_changed
 
 func _physics_process(delta):
 	vel_y=velocity.y
-	label.text=str(get_floor_angle())
+	#label.text=str(get_floor_angle())
 	shotty_rotation_offset=lerpf(shotty_rotation_offset, 0.0, 0.8)
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		apply_gravity(delta)

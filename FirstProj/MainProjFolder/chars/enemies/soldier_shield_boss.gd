@@ -15,6 +15,7 @@ const vision_always_on = false
 ### Sprites
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var vfx_sprite: AnimatedSprite2D = $AnimatedSprite2D/VFXSprite
+@onready var vfx_sprite_secondary: AnimatedSprite2D = $AnimatedSprite2D/VFXSpriteSecondary
 @onready var hit_fx_sprite: AnimatedSprite2D = $AnimatedSprite2D/HitFXSprite
 @onready var shield_sprite: AnimatedSprite2D = $AnimatedSprite2D/ShieldSprite
 @onready var shield: Area2D = $AnimatedSprite2D/ShieldSprite/Shield
@@ -48,6 +49,7 @@ const vision_always_on = false
 ### Animation Players
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var vfx_player: AnimationPlayer = $AnimationPlayer/VFXPlayer
+@onready var vfx_player_secondary: AnimationPlayer = $AnimationPlayer/VFXPlayerSecondary
 @onready var hit_fx_player: AnimationPlayer = $AnimationPlayer/HitFXPlayer
 
 ### Basic Stats
@@ -276,7 +278,7 @@ func _init_state_machine():
 	state_machine.add_transition(staggered, attack, &"recover_attack")
 	
 	state_machine.add_transition(state_machine.ANYSTATE, phasetransition, &"begin_next_phase")
-	
+	state_machine.add_transition(phasetransition, teleport_and_shoot, phasetransition.success_event)
 	
 	
 func _init_phase_state_machine():
@@ -286,9 +288,10 @@ func _init_phase_state_machine():
 	
 	phases.add_transition(phase_1, phase_2, &"next_phase")
 
-
+@onready var debug: Label = $DEBUG
 
 func _process(delta: float) -> void:
+	debug.text=str(state_machine.get_active_state())
 	if not cutscene_handler.actor_control_active or not qte_handler.actor_control_active:
 		return
 	dir_to_next = to_local(next_nav_point)
@@ -418,12 +421,16 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			clashed_state.clashes_made=0
 			state_machine.dispatch(&"shoot_counter")
 	if state_machine.get_active_state()==attack:
-			if melee_range_check():
+			if stagger.stagger<(stagger.max_stagger*0.8):
 				melee_attack_manager.next_combo()
 				state_machine.dispatch(&"attack_combo")
 			else:
-				melee_attack_manager.atk_type=melee_attack_manager.light_attacks[0]
-				state_machine.dispatch(&"start_chase")
+				if melee_range_check():
+					melee_attack_manager.next_combo()
+					state_machine.dispatch(&"attack_combo")
+				else:
+					melee_attack_manager.atk_type=melee_attack_manager.light_attacks[0]
+					state_machine.dispatch(&"start_chase")
 
 
 
@@ -543,7 +550,7 @@ func _on_hurt_box_bullet_hit(_damage: int) -> void:
 
 func _on_health_health_depleted() -> void:
 	parry_timer.stop()
-	hit_box_collision.disabled=true
+	hit_box_collision.set_deferred("disabled", true)
 	movement_handler.active=false
 	animated_sprite_2d.scale.x = 1
 	if player_right:
@@ -603,6 +610,7 @@ func _on_staggered_entered() -> void:
 	hurt_box.staggered=true
 	parry_timer.start(5)
 	health.immortality=false
+	vfx_player_secondary.stop()
 
 func _on_staggered_exited() -> void:
 	hurt_box.staggered=false
@@ -913,3 +921,15 @@ func _on_clash_timer_timeout() -> void:
 
 func _on_knockback_area_body_entered(body: Node2D) -> void:
 	knockback_collision.set_deferred("disabled", true)
+
+
+func _on_hit_updated(delta: float) -> void:
+	if animation_player.current_animation!=hit.hit_anim:
+		if stun_timer.is_stopped() and parry_timer.is_stopped():
+			state_machine.dispatch(&"dodge")
+		else:
+			state_machine.dispatch(&"stagger")
+
+
+func _on_stagger_angry_threshold_reached() -> void:
+	vfx_player_secondary.play("angry")
