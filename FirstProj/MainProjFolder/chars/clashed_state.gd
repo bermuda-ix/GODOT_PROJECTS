@@ -78,7 +78,8 @@ func _enter() -> void:
 	if melee_attack_helper!= null and atk_fx_secondary_player!=null:
 		atk_fx_secondary_player.play(melee_attack_helper.atk_type)
 	if (clashes_made<counter_threshold and stagger.stagger>1) and counter_enabled:
-		stagger.stagger-=1
+		if stagger.stagger>1:
+			stagger.stagger-=1
 		counter_attack_timer.start(counter_attack_timer_dur)
 		hit_box.in_clash_state=false
 		while counter_attack_timer.is_stopped():

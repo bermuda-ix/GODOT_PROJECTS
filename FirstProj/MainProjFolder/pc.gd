@@ -2867,7 +2867,8 @@ func _on_counter_box_area_entered(area):
 		abs(controller_input_helper.controller_input_axis)<0.1):
 			state_machine.dispatch(&"dodge_successful")
 	elif area.is_in_group("bullet"):
-		hit_stop.hit_stop(0.5, 0.25)
+		hit_stop.end_hit_stop()
+		hit_stop.hit_stop(0.1, 0.25)
 		counter_flag = true
 		counter_timer.start(1)
 		#print_debug("enemy dodge")

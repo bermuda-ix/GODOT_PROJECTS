@@ -3,7 +3,7 @@ extends Node
 
 @export var actor : Node2D
 @export var combo_max : int = 3
-@onready var combo_int : int = clampi(0, 0, combo_max-1)
+@onready var combo_int : int = clampi(0, 0, combo_max-1) : set = set_combo_int
 @onready var combo : String = "atk_"+str(combo_int)
 @onready var atk_type_old := "atk_1" : set = set_atk_type
 @onready var atk_type := "Attack_1"
@@ -49,11 +49,15 @@ func melee_dash_attack():
 		#"melee attack")
 	atk_type=="Attack_dash"
 
+func set_combo_int(_value : int) -> void:
+	_value=clampi(0, 0, combo_max-1)
+
 func next_combo() -> void:
-	if combo_int==combo_max-1:
-		combo_int=0
-	else:
-		combo_int+=1
+	#if combo_int==combo_max-1:
+		#combo_int=0
+	#else:
+		#combo_int+=1
+	combo_int=wrapi(combo_int+1, 0, combo_max)
 	atk_type=light_attacks[combo_int]
 	
 

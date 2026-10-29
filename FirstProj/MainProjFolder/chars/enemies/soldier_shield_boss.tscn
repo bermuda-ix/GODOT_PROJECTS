@@ -8650,7 +8650,8 @@ max_health = 100
 [node name="Stagger" type="Node" parent="." unique_id=222599103]
 script = ExtResource("100_2id7f")
 max_stagger = 30
-angry_stagger_threshold = 20
+angry_stagger_threshold = 15
+stagger_morale_thresholds = Array[int]([25, 20, 15, 0])
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="ClashPower" type="Node" parent="." unique_id=167040191 node_paths=PackedStringArray("health", "stagger", "hit_box")]
@@ -9052,8 +9053,7 @@ hit_stop = NodePath("../../HitStop")
 state_machine = NodePath("..")
 clash_timer = NodePath("../../ClashTimer")
 counter_attack_timer = NodePath("../../CounterAttackTimer")
-counter_enabled = true
-counter_threshold = 2
+counter_threshold = 1
 counter_prepared = true
 metadata/_custom_type_script = "uid://bu2m8cwle1k11"
 
@@ -9124,7 +9124,7 @@ text = "DEBUG"
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
-[connection signal="angry_threshold_reached" from="Stagger" to="." method="_on_stagger_angry_threshold_reached"]
+[connection signal="morale_threshold_reached" from="Stagger" to="." method="_on_stagger_morale_threshold_reached"]
 [connection signal="stagger_decreased" from="Stagger" to="." method="_on_stagger_stagger_decreased"]
 [connection signal="staggered" from="Stagger" to="." method="_on_stagger_staggered"]
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_navigation_timer_timeout"]

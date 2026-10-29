@@ -481,6 +481,8 @@ func _on_stagger_staggered() -> void:
 	if state_machine.get_active_state()!=staggered:
 		state_machine.change_active_state(staggered)
 	assert(state_machine.get_active_state()==staggered)
+	vfx_player_secondary.stop()
+	vfx_sprite_secondary.hide()
 	Events.camera_shake.emit(2,20)
 	Events.enemy_staggered.emit()
 
@@ -610,10 +612,16 @@ func _on_staggered_entered() -> void:
 	hurt_box.staggered=true
 	parry_timer.start(5)
 	health.immortality=false
-	vfx_player_secondary.stop()
+	animation_player.speed_scale=1
+	if phases.get_active_state()==phase_1:
+		clashed_state.counter_enabled=false
+		clashed_state.counter_threshold=1
+	
 
 func _on_staggered_exited() -> void:
 	hurt_box.staggered=false
+	stagger.stagger_morale_threshold_index=0
+	melee_attack_manager.combo_max=1
 	if phases_handler.is_final_phase():
 		pass
 	else:
@@ -676,6 +684,7 @@ func _on_phases_handler_next_phase() -> void:
 func _on_phase_2_entered() -> void:
 	launch.air_time=0.5
 	combat_state_machine.ranged_dist=1000
+	stagger.angry_stagger_threshold=stagger.max_stagger*.75
 
 
 func _on_teleport_and_shoot_entered() -> void:
@@ -833,6 +842,8 @@ func _on_hit_box_clashed() -> void:
 	boss_ui.set_boss_stagger_smooth(stagger.stagger)
 	vfx_sprite.set_deferred("visible", false)
 	state_machine.dispatch(&"clashed")
+	if state_machine.get_active_state()!=clashed_state and stagger.stagger>0:
+		state_machine.change_active_state(clashed_state)
 	melee_attack_manager.next_combo()
 
 func _on_clashed_state_riposte_follow_up() -> void:
@@ -930,6 +941,13 @@ func _on_hit_updated(delta: float) -> void:
 		else:
 			state_machine.dispatch(&"stagger")
 
-
-func _on_stagger_angry_threshold_reached() -> void:
-	vfx_player_secondary.play("angry")
+func _on_stagger_morale_threshold_reached(_threshold : int) -> void:
+	print_debug("stagger threshold reached: ", _threshold)
+	match _threshold:
+		0:
+			clashed_state.counter_enabled=true
+		1:
+			clashed_state.counter_threshold=2
+		2:
+			animation_player.speed_scale=1.5
+			vfx_player_secondary.play("angry")
