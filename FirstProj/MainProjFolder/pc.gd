@@ -3382,18 +3382,9 @@ func _on_hit_box_clashed() -> void:
 	Events.camera_shake.emit(10,10)
 	if unlocked:
 		lockon()
-	#hit_fx_player.play("clashed")
 	hit_animation="clashed"
 	hit_sfx()
-	#var _current_atk : String
-	#if heavy_attacking:
-		#_current_atk = heavy_attack_1.attack
-	#else:
-		#_current_atk = attack_1.attack
-	#var _atk_clash_anim : String = _current_atk+"_connect"
-	#var _atk_clash_anim_end : String = _current_atk+"_end"
-	#assert(anim_player.has_animation(_current_atk))
-	#var _atk_connect := anim_player.get_animation(_current_atk).get_marker_time(_atk_clash_anim)
+
 	if attack_state.get_active_state()==charging_attack:
 		charge_timer.stop()
 		charge_timer.timeout.emit()

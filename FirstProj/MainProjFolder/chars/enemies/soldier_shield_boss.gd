@@ -841,6 +841,7 @@ func _on_hit_box_clashed() -> void:
 
 	boss_ui.set_boss_stagger_smooth(stagger.stagger)
 	vfx_sprite.set_deferred("visible", false)
+	print_debug(state_machine.get_active_state())
 	state_machine.dispatch(&"clashed")
 	if state_machine.get_active_state()!=clashed_state and stagger.stagger>0:
 		state_machine.change_active_state(clashed_state)

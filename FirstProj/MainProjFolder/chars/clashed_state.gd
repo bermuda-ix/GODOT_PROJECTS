@@ -92,13 +92,15 @@ func _enter() -> void:
 			anim_player.play(&"preparing_counter")
 			anim_player.pause()
 			actor.set_collision_mask_value(13, false)
-			while hurt_box.collision.disabled==true:
-				hurt_box.collision.set_deferred("disabled", false)
+			#while hurt_box.collision.disabled==true:
+				#hurt_box.collision.set_deferred("disabled", false)
+			hurt_box.collision.set_deferred("disabled", false)
 		if stagger.stagger>1:
 			actor.set_collision_mask_value(13, false)
 			hit_fx_player.play("counter_prepared")
-			while hurt_box.collision.disabled==true:
-				hurt_box.collision.set_deferred("disabled", false)
+			#while hurt_box.collision.disabled==true:
+				#hurt_box.collision.set_deferred("disabled", false)
+			hurt_box.collision.set_deferred("disabled", false)
 			#hit_fx_player.play_section_with_markers("counter_prepared", "prepared")
 			#hit_fx_player.pause()
 		else:

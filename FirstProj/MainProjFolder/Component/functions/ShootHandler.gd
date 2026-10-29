@@ -62,9 +62,9 @@ func shoot_bullet():
 		if bullet_inst.is_in_group("missile"):
 			bullet_inst.spawnRot = wrapf(actor.global_rotation_degrees, 0, 360)
 		elif manual_rotation:
-			print_debug(bullet_rotation)
+			#print_debug(bullet_rotation)
 			bullet_inst.spawnRot=bullet_rotation
-			print_debug(bullet_inst.spawnRot)
+			#print_debug(bullet_inst.spawnRot)
 			assert(bullet_inst.spawnRot==bullet_rotation)
 			#bullet_inst.global_rotation=bullet_rotation
 		else:
