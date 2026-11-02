@@ -1195,6 +1195,8 @@ func attack_handler():
 
 			
 	elif Input.is_action_just_released("attack"):
+		if state_machine.get_active_state()==parry_success_state:
+			return
 		if attacking:
 			if charging:
 				light_attack()
@@ -3059,35 +3061,11 @@ func _on_state_machine_active_state_changed(current: LimboState, _previous: Limb
 			atk_1_resume=true
 		elif attack_state.get_active_state()==attack_2:
 			atk_2_resume=true
+	if _previous==parry_success_state and current==attack_state:
+		pass
+	
 	#FOR DEBUGGING TO BE REMOVED
-	match current:
-		attack_state:
-			cur_state="ATTACK"
-		special_attack:
-			cur_state="SPECIAL_ATTACK"
-		idle:
-			cur_state="IDLE"
-		walking:
-			cur_state="WALKING"
-		jumping:
-			cur_state="JUMP"
-		dodge_state:
-			cur_state="DODGE"
-		wall_stick:
-			cur_state="WALL STICK"
-		sprint:
-			cur_state = "SPRINTING"
-		parry_state:
-			cur_state = "PARRY"
-		flip_state:
-			cur_state = "FLIP"
-		parry_success_state:
-			cur_state= "PARRY SUCCESS"
-		recovery:
-			if _previous==hit:
-				recovery.recover_anim="hit_recover"
-			elif _previous==staggered:
-				recovery.recover_anim="stagger_recover"
+	
 
 
 func _on_attack_state_active_state_changed(current: LimboState, previous: LimboState) -> void:
@@ -3395,6 +3373,11 @@ func _on_hit_box_clashed() -> void:
 	parry_success_state.ranged_counter=false
 	print_debug(state_machine.get_active_state())
 	state_machine.dispatch(&"clashed")
+	print_debug("starting clashed!")
+	await state_machine.active_state_changed
+	print_debug("clashed!")
+	if state_machine.get_active_state()!=parry_success_state and stagger.stagger>0:
+		state_machine.change_active_state(parry_success_state)
 	hit_box.active=false
 	
 
@@ -3475,3 +3458,10 @@ func change_prompt(_gamepad_active) -> void:
 
 func _on_attack_fx_secondary_animation_started(anim_name: StringName) -> void:
 	pass # Replace with function body.
+
+
+
+func _on_parry_success_state_updated(delta: float) -> void:
+	if target!=null:
+		if target.state_machine.get_active_state()==target.clashed_state:
+			pass

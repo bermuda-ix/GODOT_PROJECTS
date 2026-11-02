@@ -657,9 +657,10 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		if anim_name=="atk_counter":
 			bt_player.blackboard.set_var("atk_counter", false)
 			melee_attack_manager.reset_combo()
-		elif anim_name=="atk_dash":
+		elif anim_name=="dash_attack":
 			bt_player.blackboard.set_var("dash_hit", true)
 			dash_attacking=false
+			state_machine.dispatch(&"clashed")
 		elif anim_name=="atk_3" and state_machine.get_active_state()==clashed_state:
 			bt_player.blackboard.set_var("staggered", false)
 			bt_player.restart()
@@ -1314,7 +1315,7 @@ func _on_launch_timer_timeout() -> void:
 
 func _on_hit_box_clashed() -> void:
 	#stun_timer.start(0.5)
-	print_debug("clashed!")
+	
 	if hit_box.heavy_attack:
 		return
 	else:
@@ -1330,6 +1331,9 @@ func _on_hit_box_clashed() -> void:
 	boss_ui.set_boss_stagger_smooth(stagger.stagger)
 	vfx_sprite.set_deferred("visible", false)
 	state_machine.dispatch(&"clashed")
+	print_debug("starting clashed!")
+	await state_machine.active_state_changed
+	print_debug("clashed!")
 
 
 	
@@ -1479,6 +1483,8 @@ func _on_clashed_state_exited() -> void:
 func _on_clashed_state_updated(delta: float) -> void:
 	set_collision_mask_value(24, true)
 	hurt_box.set_collision_mask_value(24, true)
+	if player.state_machine.get_active_state()==player.parry_success_state:
+		pass
 
 
 func _on_stagger_stagger_decreased(diff: int) -> void:

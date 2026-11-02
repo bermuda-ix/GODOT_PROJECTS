@@ -18776,6 +18776,7 @@ pc = NodePath("../..")
 [connection signal="updated" from="StateMachine/AttackState/Clashed" to="." method="_on_clashed_updated"]
 [connection signal="entered" from="StateMachine/SpecialAttack" to="." method="_on_special_attack_entered"]
 [connection signal="dur_timeout" from="StateMachine/ParrySuccessState" to="StateMachine/ParrySuccessState" method="_on_dur_timeout"]
+[connection signal="updated" from="StateMachine/ParrySuccessState" to="." method="_on_parry_success_state_updated"]
 [connection signal="entered" from="StateMachine/DodgeState" to="." method="_on_dodge_state_entered"]
 [connection signal="exited" from="StateMachine/DodgeState" to="." method="_on_dodge_state_exited"]
 [connection signal="timeout" from="StateMachine/DodgeState/DodgeBuffer" to="StateMachine/DodgeState" method="_on_dodge_buffer_timeout"]

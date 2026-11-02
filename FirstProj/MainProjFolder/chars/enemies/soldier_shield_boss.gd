@@ -227,7 +227,7 @@ func _init_state_machine():
 	state_machine.add_transition(chasing, jump, &"jump")
 	state_machine.add_transition(chasing, staggered, &"staggered")
 	state_machine.add_transition(chasing, launch, &"launch")
-	state_machine.add_transition(chasing, clashed_state, &"clashed")
+	#state_machine.add_transition(chasing, clashed_state, &"clashed")
 	state_machine.add_transition(chasing, reload_state, &"reload")
 	
 	state_machine.add_transition(attack, chasing, &"start_chase")
@@ -238,7 +238,6 @@ func _init_state_machine():
 	state_machine.add_transition(attack, launch, &"launch")
 	state_machine.add_transition(attack, clashed_state, &"clashed")
 	state_machine.add_transition(attack, reload_state, &"reload")
-	
 	state_machine.add_transition(attack, attack, &"attack_combo")
 	
 	state_machine.add_transition(block, chasing, &"start_chase")
@@ -440,7 +439,7 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and state_machine.get_active_state()!=staggered:
 		combat_state_machine.dispatch(&"melee_mode")
 		if player.attack_state.get_active_state()==player.dash_attack or player.attack_state.get_active_state()==player.attack_closer:
-			pass
+			state_machine.dispatch(&"clashed")
 		else:
 			pass
 		state_machine.dispatch(&"start_attack")
@@ -450,6 +449,8 @@ func _on_attack_range_body_entered(body: Node2D) -> void:
 
 func _on_attack_range_body_exited(body: Node2D) -> void:
 	if state_machine.get_active_state()==attack:
+		return
+	if animation_player.current_animation=="dodge_back_and_shoot":
 		return
 	if body.is_in_group("player") and not animation_player.is_playing() and state_machine.get_active_state()!=staggered:
 		assert(state_machine.get_active_state()!=attack)
@@ -670,6 +671,7 @@ func _on_phasetransition_entered() -> void:
 func _on_phasetransition_exited() -> void:
 	hurt_box.active=true
 	hit_box.active=false
+	changing_phase=false
 	phases.dispatch(&"next_phase")
 
 func _on_phases_handler_next_phase() -> void:
@@ -685,6 +687,8 @@ func _on_phase_2_entered() -> void:
 	launch.air_time=0.5
 	combat_state_machine.ranged_dist=1000
 	stagger.angry_stagger_threshold=stagger.max_stagger*.75
+	clashed_state.counter_enabled=true
+	clashed_state.counter_threshold=3
 
 
 func _on_teleport_and_shoot_entered() -> void:
@@ -850,7 +854,7 @@ func _on_hit_box_clashed() -> void:
 func _on_clashed_state_riposte_follow_up() -> void:
 	stagger.stagger-=5
 	state_machine.dispatch(&"hit")
-	stun_timer.start(1)
+	stun_timer.start(0.2)
 
 
 func _on_clashed_state_updated(delta: float) -> void:
@@ -933,6 +937,7 @@ func _on_clash_timer_timeout() -> void:
 
 func _on_knockback_area_body_entered(body: Node2D) -> void:
 	knockback_collision.set_deferred("disabled", true)
+	player_knockback(200, 0)
 
 
 func _on_hit_updated(delta: float) -> void:
@@ -943,12 +948,27 @@ func _on_hit_updated(delta: float) -> void:
 			state_machine.dispatch(&"stagger")
 
 func _on_stagger_morale_threshold_reached(_threshold : int) -> void:
-	print_debug("stagger threshold reached: ", _threshold)
-	match _threshold:
-		0:
-			clashed_state.counter_enabled=true
-		1:
-			clashed_state.counter_threshold=2
-		2:
-			animation_player.speed_scale=1.5
-			vfx_player_secondary.play("angry")
+	if phases.get_active_state()==phase_2:
+		match _threshold:
+			0, 1:
+				clashed_state.counter_enabled=true
+				clashed_state.counter_threshold=3
+			2:
+				animation_player.speed_scale=1.5
+				vfx_player_secondary.play("angry")
+
+	else:
+		match _threshold:
+			0:
+				clashed_state.counter_enabled=true
+			1:
+				clashed_state.counter_threshold=2
+			2:
+				animation_player.speed_scale=1.5
+				vfx_player_secondary.play("angry")
+
+
+
+func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
+	if previous==clashed_state and current==attack:
+		pass
