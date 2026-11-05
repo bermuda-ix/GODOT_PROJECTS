@@ -62,6 +62,7 @@ func _enter() -> void:
 	vfx_player.play(clash_anim_name)
 	actor.current_speed=0
 	hurt_box.shielded=false
+	clash_timer.start(1)
 	var _current_anim:= melee_attack_helper.light_attacks[melee_attack_helper.combo_int]
 	#anim_player.stop()
 	#anim_player.play_section_with_markers(_current_anim, &"clashed")
@@ -74,10 +75,11 @@ func _enter() -> void:
 	hitbox_collision.set_deferred("disabled", true)
 	stagger.set_stagger(stagger.stagger-1)
 	vfx_player.speed_scale=1/Engine.time_scale
-	clash_timer.stop()
+	#clash_timer.stop()
 	if melee_attack_helper!= null and atk_fx_secondary_player!=null:
 		atk_fx_secondary_player.play(melee_attack_helper.atk_type)
 	if (clashes_made<counter_threshold and stagger.stagger>1) and counter_enabled:
+		clash_timer.stop()
 		if stagger.stagger>1:
 			stagger.stagger-=1
 		counter_attack_timer.start(counter_attack_timer_dur)
@@ -126,7 +128,12 @@ func _exit() -> void:
 	vfx_sprite.visible=false
 	hit_stop.end_hit_stop()
 	hit_box.attack_clashed=false
-	clash_timer.start(1)
+	
+	if clash_timer.is_stopped():
+		pass
+	else:
+		pass
+	
 	if stagger.stagger<=0:
 		if not movement_handler.active:
 			movement_handler.active=true
@@ -142,6 +149,7 @@ func clash_follow_up(_follow_up := "nothing", _damage:=1):
 		return
 	match _follow_up:
 		"riposte", "dodge":
+			clash_timer.stop()
 			clashes_made=0
 			clashed_invuln=true
 			hitbox_collision.set_deferred("disabled", true)
@@ -165,6 +173,7 @@ func clash_follow_up(_follow_up := "nothing", _damage:=1):
 			else:
 				state_machine.dispatch(&"staggered")
 		"heavy_riposte":
+			clash_timer.stop()
 			clashed_invuln=true
 			clashes_made=0
 			riposte_heavy_follow_up.emit()

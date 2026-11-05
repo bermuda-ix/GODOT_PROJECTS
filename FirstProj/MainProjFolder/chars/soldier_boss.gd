@@ -1331,9 +1331,6 @@ func _on_hit_box_clashed() -> void:
 	boss_ui.set_boss_stagger_smooth(stagger.stagger)
 	vfx_sprite.set_deferred("visible", false)
 	state_machine.dispatch(&"clashed")
-	print_debug("starting clashed!")
-	await state_machine.active_state_changed
-	print_debug("clashed!")
 
 
 	
@@ -1483,7 +1480,7 @@ func _on_clashed_state_exited() -> void:
 func _on_clashed_state_updated(delta: float) -> void:
 	set_collision_mask_value(24, true)
 	hurt_box.set_collision_mask_value(24, true)
-	if player.state_machine.get_active_state()==player.parry_success_state:
+	if player.state_machine.get_active_state()!=player.parry_success_state:
 		pass
 
 

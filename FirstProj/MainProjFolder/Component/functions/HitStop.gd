@@ -14,7 +14,7 @@ func _ready() -> void:
 	dur.autostart=false
 	dur.one_shot=true
 	dur.ignore_time_scale=true
-	dur.timeout.connect(dur_debug)
+	#dur.timeout.connect(dur_debug)
 	
 func _process(delta: float) -> void:
 	if not dur.is_stopped() and slow_down_ease:

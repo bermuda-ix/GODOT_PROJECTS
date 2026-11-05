@@ -434,7 +434,7 @@ func _init_state_machine():
 	state_machine.add_transition(landed, idle, &"return_to_idle")
 	state_machine.add_transition(parry_state, idle, &"return_to_idle")
 	state_machine.add_transition(dodge_state, idle, &"return_to_idle")
-	state_machine.add_transition(parry_success_state, idle, &"return_to_idle")
+	state_machine.add_transition(parry_success_state, idle, &"clash_return_to_idle")
 	state_machine.add_transition(special_attack, idle, &"return_to_idle")
 	state_machine.add_transition(recovery, idle, &"return_to_idle")
 	
@@ -498,7 +498,7 @@ func _init_state_machine():
 	state_machine.add_transition(attack_state, jump_state, &"start_jumping")
 	
 	#Hit
-	state_machine.add_transition(parry_success_state, hit, &"got_hit")
+	state_machine.add_transition(parry_success_state, hit, &"clash_failed")
 	state_machine.add_transition(parry_success_state, parry_failed, &"got_countered")
 	state_machine.add_transition(parry_failed, idle, &"knockback_recover")
 	state_machine.add_transition(attack_state, hit, &"got_hit")
@@ -857,6 +857,8 @@ func return_to_idle():
 		state_machine.dispatch(&"return_to_idle")
 		set_collision_mask_value(16384, true)
 		#attacking=false
+	if state_machine.get_active_state()==parry_success_state:
+		pass
 	
 # Handle jump.
 func jump(input_axis, delta):
@@ -1340,7 +1342,8 @@ func start_attack_timer(_value:=1.0) -> void:
 	attack_timer.start(_value)
 		
 func light_attack() -> void:
-	
+	if state_machine.get_active_state()==parry_success_state:
+		return
 	if combat_states.get_active_state()!=locked:
 		regular_attack()
 	else:
@@ -2395,12 +2398,13 @@ func set_start_pos(checkpoint_position):
 
 func _on_animation_player_animation_finished(anim_name):
 	cutscene_handler.anim_count_up()
-	if state_machine.get_active_state()==attack_state or state_machine.get_active_state()==clashed:
+	if state_machine.get_active_state()==attack_state or state_machine.get_active_state()==parry_success_state:
 		hit_success=false
 		hit_box.clash_active=false
 		hit_box.attack_clashed=false
 		hb_collision.set_deferred("disabled", true)
 		attacking=false
+		
 		#match anim_name:
 			#"Attack":
 				#heavy_attack_1.attack=heavy_attacks[0]
@@ -2447,29 +2451,16 @@ func _on_animation_player_animation_finished(anim_name):
 				reset_combo_flag=true
 				#attacking=false
 				state_machine.dispatch(&"return_to_idle")
-			"Attack":
-				attack_1.attack=light_attacks[1]
-				anim_player.play("idle")
-				charging_attack.attack=light_attacks[1]
-				#attack_state_stack.push_front(attack_1)
-				#attack_timer.start(0.1)
-				attack_timer.paused=false
-			"Attack_2":
-				attack_1.attack=light_attacks[2]
-				anim_player.play("idle")
-				charging_attack.attack=light_attacks[2]
-				#attack_state_stack.push_front(attack_2)
-				#attack_timer.start(0.1)
-				attack_timer.paused=false
-			"Attack_3":
+			"Attack", "Attack_2", "Attack_3":
 				attack_1.attack=light_attacks[0]
 				anim_player.play("idle")
 				charging_attack.attack=light_attacks[0]
+				hb_collision.set_deferred("disabled", true)
 				#attack_state_stack.push_front(attack_3)
 				#attack_timer.start(0.1)
 				attack_timer.paused=false
-				#reset_combo_flag=true
-				#attacking=false
+				if state_machine.get_active_state()==parry_success_state:
+					attack_timer.start(0.1)
 			"Attack_Slam":
 				if is_on_floor():
 					state_machine.dispatch(&"return_to_idle")
@@ -2478,8 +2469,11 @@ func _on_animation_player_animation_finished(anim_name):
 				attack_timer.start(0.1)
 				attack_timer.paused=false
 			"Heavy_Riposte":
+				
 				if  Input.has_joy_vibration(VibrationHandler.controller_id):
 					Input.start_joy_vibration(VibrationHandler.controller_id, 0.8, 1.0, 1.0)
+				if state_machine.get_active_state()==parry_success_state:
+					state_machine.change_active_state(idle)
 			"dodge_roll", "dodge_back":
 				pass
 			_:
@@ -2529,13 +2523,14 @@ func _on_attack_timer_timeout():
 		state_machine.dispatch(&"return_to_idle")
 		return
 	
-	if state_machine.get_active_state()==parry_success_state or attack_state.get_active_state()==attack_closer:
+	if attack_state.get_active_state()==attack_closer:
 		state_machine.dispatch(&"return_to_idle")
 		return
 	elif attack_state.get_active_state()==special_combo:
 		state_machine.dispatch(&"return_to_idle")
-	elif state_machine.get_active_state()==clashed:
-		state_machine.dispatch(&"return_to_idle")
+	elif state_machine.get_active_state()==parry_success_state:
+		state_machine.dispatch(&"clash_return_to_idle")
+		
 	atk_chain = 0
 	attack_combo = "Attack"
 	attack_1.attack = "Attack"
@@ -2968,6 +2963,7 @@ func _on_animation_player_animation_started(anim_name):
 		#s_atk=true
 	elif anim_name=="shotgun_finish":
 		print_debug("heavy finisher")
+	
 
 
 func _on_hurt_box_received_damage(damage: int) -> void:
@@ -2979,10 +2975,10 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 	if state_machine.get_active_state()==flip_state:
 		hit.hit_anim="knocked_back"
 		state_machine.dispatch(&"got_hit")
-	elif state_machine.get_active_state()==parry_success_state:
-		hit.hit_anim="knocked_back"
-		state_machine.dispatch(&"got_hit")
-		stagger.stagger-=3
+	#elif state_machine.get_active_state()==parry_success_state:
+		#hit.hit_anim="knocked_back"
+		##state_machine.dispatch(&"got_hit")
+		#stagger.stagger-=3
 		
 	set_stagger()
 	set_health()
@@ -3354,6 +3350,12 @@ func _on_knockback_recovery_timer_timeout() -> void:
 	velocity.x=0
 
 func _on_hit_box_clashed() -> void:
+	print_debug(hb_collision.disabled)
+	if hb_collision.disabled==true:
+		return
+	if state_machine.get_active_state()==idle or\
+	state_machine.get_active_state()==parry_success_state:
+		return
 	hb_collision.set_deferred("disabled", true)
 	hit_box.active=false
 	clash_power.increase_clash()
@@ -3373,8 +3375,6 @@ func _on_hit_box_clashed() -> void:
 	parry_success_state.ranged_counter=false
 	print_debug(state_machine.get_active_state())
 	state_machine.dispatch(&"clashed")
-	print_debug("starting clashed!")
-	await state_machine.active_state_changed
 	print_debug("clashed!")
 	if state_machine.get_active_state()!=parry_success_state and stagger.stagger>0:
 		state_machine.change_active_state(parry_success_state)

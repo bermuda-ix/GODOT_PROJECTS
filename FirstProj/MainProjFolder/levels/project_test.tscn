@@ -463,7 +463,7 @@ shape = SubResource("RectangleShape2D_01tlq")
 [node name="Enemies" type="Node" parent="." index="29" unique_id=825398583]
 
 [node name="SoldierShieldBoss" parent="Enemies" index="0" unique_id=1602463733 instance=ExtResource("8_v15hm")]
-position = Vector2(808, 84)
+position = Vector2(933, 88)
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]
 position = Vector2(1260, 1)

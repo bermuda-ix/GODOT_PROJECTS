@@ -19,6 +19,7 @@ extends LimboHSM
 @export var attack_1 : LimboState
 @onready var queue_attack := false
 @export var clash_power : ClashPower
+@export var clashing_timer : Timer
 signal dur_timeout
 
 
@@ -46,6 +47,7 @@ func _enter() -> void:
 	success=false
 	enemy_success=false
 	clash_power.clash_power+=1
+	clashing_timer.start(1)
 
 func _update(delta: float) -> void:
 	if get_active_state()==pc.await_input:
@@ -56,6 +58,7 @@ func _update(delta: float) -> void:
 	if enemy_success:
 		return
 	if Input.is_action_just_pressed("attack"):
+		clashing_timer.stop()
 		dur.stop()
 		pc.velocity.x=0
 		pc.parry_stance=false
@@ -73,6 +76,7 @@ func _update(delta: float) -> void:
 		#pc.attack_state.dispatch(&"next_attack")
 		
 	elif Input.is_action_just_pressed("Dodge"):
+		clashing_timer.stop()
 		dur.stop()
 		success=true
 		pc.parry_stance=false
@@ -81,6 +85,7 @@ func _update(delta: float) -> void:
 		hit_stop.end_hit_stop()
 		dur.stop()
 	elif Input.is_action_just_pressed("special_attack"):
+		clashing_timer.stop()
 		dur.stop()
 		success=true
 		pc.parry_stance=false
@@ -99,17 +104,22 @@ func _exit() -> void:
 	pc.attack_timer.stop()
 	success=false
 	pc.attacking=false
+	if clashing_timer.is_stopped():
+		pass
+	else:
+		pass
 	#pc.hurt_box_detect.disabled=false
 
 func do_nothing() -> void:
 	Events.parry_success.emit("nothing")
 	state_machine.dispatch(&"no_nothing")
-	
+	clashing_timer.stop()
 	hit_stop.end_hit_stop()
 	pc.clash_timer.start()
 	
 func enemy_counter(_value : String = "", _damage := 0) -> void:
 	if _value=="enemy_light_counter":
+		clashing_timer.stop()
 		pc.start_attack_timer(0.2)
 		success=true
 		enemy_success=true

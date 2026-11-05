@@ -39,7 +39,7 @@ func _update(delta: float) -> void:
 
 func _exit() -> void:
 	animation_player.stop()
-	actor.hurt_box_collision.disabled=false
+	actor.hurt_box_collision.set_deferred("disabled", false)
 
 func dodge_setup(_vel_x :=0 , _vel_y :=0):
 	_velocity_x=_vel_x

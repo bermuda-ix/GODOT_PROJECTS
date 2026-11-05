@@ -207,6 +207,7 @@ func _ready() -> void:
 	next_nav_point=nav_agent.get_next_path_position()
 	_init_state_machine()
 	_init_phase_state_machine()
+	hit_box_collision.set_deferred("disabled", true)
 	
 	animation_player.play("idle")
 	boss_activate()
@@ -257,12 +258,16 @@ func _init_state_machine():
 	state_machine.add_transition(jump, staggered, &"staggered")
 	state_machine.add_transition(jump, launch, &"launch")
 	state_machine.add_transition(falling, staggered, &"staggered")
+	state_machine.add_transition(land, attack, &"start_attack")
+	state_machine.add_transition(land, shooting_bt, &"start_shooting")
 	
 	state_machine.add_transition(clashed_state, staggered, &"staggered")
 	state_machine.add_transition(clashed_state, attack, &"counter_attack")
 	state_machine.add_transition(clashed_state, reload_state, &"counter_with_reload")
 	state_machine.add_transition(clashed_state, dodge, &"dodge")
 	state_machine.add_transition(clashed_state, hit, &"hit")
+	
+	state_machine.add_transition(clashed_state, chasing, &"recover_chase")
 	
 	state_machine.add_transition(hit, dodge, &"dodge")
 	state_machine.add_transition(hit, staggered, &"staggered")
@@ -588,6 +593,7 @@ func _on_attack_entered() -> void:
 		animation_player.play(melee_attack_manager.atk_type)
 		hit_box_collision.set_deferred("disabled", false)
 		vision_handler.face_player=false
+		print_debug(animation_player.current_animation_position)
 		movement_handler.face_player_active=false
 	
 func _on_attack_exited() -> void:
@@ -601,6 +607,8 @@ func _on_attack_updated(delta: float) -> void:
 			hurt_box.active=true
 		else:
 			hurt_box.active=false
+	if player.state_machine.get_active_state()==player.parry_success_state:
+		state_machine.dispatch(&"clashed")
 
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
@@ -812,7 +820,10 @@ func _on_land_landed() -> void:
 	set_collision_mask_value(13, true)
 	vision_handler.active=true
 	combat_state_machine.active=true
-	state_machine.dispatch(&"resume_attack")
+	if melee_range_check():
+		state_machine.dispatch(&"start_attack")
+	else:
+		state_machine.dispatch(&"start_chase")
 	stagger.set_temporary_immortality(3)
 	#phases_handler.phase_change(health.health)
 	if not phases_handler.is_final_phase():
@@ -860,6 +871,14 @@ func _on_clashed_state_riposte_follow_up() -> void:
 func _on_clashed_state_updated(delta: float) -> void:
 	set_collision_mask_value(24, true)
 	hurt_box.set_collision_mask_value(24, true)
+	if player_state!=player.parry_success_state:
+		#push_error("stuck in a clash")
+		if melee_range_check():
+			state_machine.dispatch(&"start_attack")
+		else:
+			state_machine.dispatch(&"start_chase")
+	else:
+		pass
 
 func stunned_hit(_launch: float = 0, _knockback: float = 0, _impact_dir_right: bool = true, _damage: int = 1) -> void:
 	hit.hit_anim="knocked_back"
@@ -885,8 +904,9 @@ func _on_stun_timer_timeout() -> void:
 	
 func counter_clash() -> void:
 	if phases.get_active_state()==phase_1:
-		melee_attack_manager.atk_resume_helper()
-		state_machine.dispatch(&"resume_attack")
+		#melee_attack_manager.atk_resume_helper()
+		melee_attack_manager.next_combo()
+		state_machine.dispatch(&"counter_attack")
 	else:
 		if randi_range(0,1)==0:
 			state_machine.dispatch(&"teleport_hit")
@@ -971,4 +991,9 @@ func _on_stagger_morale_threshold_reached(_threshold : int) -> void:
 
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
 	if previous==clashed_state and current==attack:
-		pass
+		if not clash_timer.is_stopped():
+			pass
+
+
+func _on_chasing_updated(delta: float) -> void:
+	hit_box_collision.set_deferred("disabled", true)

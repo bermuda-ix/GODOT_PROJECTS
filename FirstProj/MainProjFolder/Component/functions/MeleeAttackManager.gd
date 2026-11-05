@@ -46,7 +46,7 @@ func melee_dash_attack():
 	atk_type=="Attack_dash"
 
 func set_combo_int(_value : int) -> void:
-	_value=clampi(0, 0, combo_max-1)
+	combo_int=clampi(_value, 0, combo_max-1)
 
 func next_combo() -> void:
 	#if combo_int==combo_max-1:

@@ -19,9 +19,11 @@ func counter_attack(_anim_name : StringName) -> void:
 	if not signal_ready:
 		return
 	#actor.hb_collision.set_deferred("disabled",false)
-	state_machine.dispatch(&"counter_attack")
+	
 	if "counter_clash" in actor:
 		actor.counter_clash()
+	else:
+		state_machine.dispatch(&"counter_attack")
 
 func _exit() -> void:
 	signal_ready=false
