@@ -125,7 +125,7 @@ func enemy_counter(_value : String = "", _damage := 0) -> void:
 		enemy_success=true
 		pc.attacking=false
 		pc.charging=false
-		
+		state_machine.dispatch(&"clash_failed")
 		
 func attack_dash(_delta) -> void:
 	if not attack_dash_active:

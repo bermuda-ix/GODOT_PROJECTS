@@ -16,4 +16,4 @@ func _exit() -> void:
 	
 func counter_prepared(anim_name : String) -> void:
 	if anim_name==prepare_counter_anim:
-		counter_attack.emit()
+		counter_attack.emit(anim_name)
