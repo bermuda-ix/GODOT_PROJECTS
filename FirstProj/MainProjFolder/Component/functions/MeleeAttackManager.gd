@@ -55,6 +55,7 @@ func next_combo() -> void:
 		#combo_int+=1
 	combo_int=wrapi(combo_int+1, 0, combo_max)
 	atk_type=light_attacks[combo_int]
+	pass
 	
 
 
@@ -65,6 +66,7 @@ func get_combo() -> String:
 	
 func reset_combo() -> void:
 	combo_int=0
+	atk_type=light_attacks[0]
 
 func set_attack(_value : String) -> void:
 	atk_type=_value

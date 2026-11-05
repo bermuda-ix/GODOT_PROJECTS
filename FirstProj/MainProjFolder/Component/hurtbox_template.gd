@@ -113,14 +113,13 @@ func _on_area_entered(hitbox: Area2D) -> void:
 					total_damage=1
 				else:
 					total_damage=hitbox.damage
-					print_debug(total_damage)
+
 				if hitbox.knock_back:
 					if hitbox.global_position.x > global_position.x:
 						impact_dir_right=true
 					else:
 						impact_dir_right=false
-					print_debug(hitbox.launch_strength, ", ", hitbox.knock_back_strength)
-					#Events.camera_shake.emit(2,20)
+
 					knockback.emit(hitbox.launch_strength, hitbox.knock_back_strength, impact_dir_right)
 			
 				if hitbox.is_in_group("spc_atk"):
@@ -150,12 +149,8 @@ func _on_area_entered(hitbox: Area2D) -> void:
 						#Events.camera_shake.emit(2,20)
 					else:
 						if not shielded:
-							print_debug(health.health)
-							print_debug(hitbox.damage)
+
 							health.health -= (hitbox.damage)
-							#print_debug(health.health)
-							print_debug(hitbox.damage)
-							#assert(hitbox.attack_clashed!=true)
 							received_damage.emit(hitbox.damage)
 							
 							got_hit.emit(hitbox)

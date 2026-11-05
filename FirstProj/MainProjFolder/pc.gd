@@ -3351,11 +3351,9 @@ func _on_knockback_recovery_timer_timeout() -> void:
 
 func _on_hit_box_clashed() -> void:
 	print_debug(hb_collision.disabled)
-	if hb_collision.disabled==true:
-		return
-	if state_machine.get_active_state()==idle or\
-	state_machine.get_active_state()==parry_success_state:
-		return
+	#if state_machine.get_active_state()==idle or\
+	#state_machine.get_active_state()==parry_success_state:
+		#return
 	hb_collision.set_deferred("disabled", true)
 	hit_box.active=false
 	clash_power.increase_clash()

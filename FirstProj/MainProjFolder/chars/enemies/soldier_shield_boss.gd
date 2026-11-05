@@ -170,6 +170,8 @@ const vision_always_on = false
 @onready var clash_fail: ClashFail = $LimboHSM/ClashedState/ClashFail
 @onready var clash_heavy_counter: ClashHeavyCounterState = $LimboHSM/ClashedState/ClashHeavyCounter
 @onready var clash_dodge: ClashDodge = $LimboHSM/ClashedState/ClashDodge
+@onready var preparing_counter: LimboState = $LimboHSM/PreparingCounter
+
 
 ### Combat State
 @onready var combat_state_machine: LimboHSM = $CombatStateMachine
@@ -262,10 +264,13 @@ func _init_state_machine():
 	state_machine.add_transition(land, shooting_bt, &"start_shooting")
 	
 	state_machine.add_transition(clashed_state, staggered, &"staggered")
-	state_machine.add_transition(clashed_state, attack, &"counter_attack")
+	#state_machine.add_transition(clashed_state, attack, &"start_attack")
+	state_machine.add_transition(clashed_state, preparing_counter, &"counter_attack")
 	state_machine.add_transition(clashed_state, reload_state, &"counter_with_reload")
 	state_machine.add_transition(clashed_state, dodge, &"dodge")
 	state_machine.add_transition(clashed_state, hit, &"hit")
+	
+	state_machine.add_transition(preparing_counter, attack, &"start_attack")
 	
 	state_machine.add_transition(clashed_state, chasing, &"recover_chase")
 	
@@ -425,7 +430,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 			clashed_state.clashes_made=0
 			state_machine.dispatch(&"shoot_counter")
 	if state_machine.get_active_state()==attack:
-			if stagger.stagger<(stagger.max_stagger*0.8):
+			if stagger.stagger<(stagger.max_stagger*0.8) and anim_name!="Attack_3":
 				melee_attack_manager.next_combo()
 				state_machine.dispatch(&"attack_combo")
 			else:
@@ -590,14 +595,18 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 func _on_attack_entered() -> void:
 	if combat_state_machine.get_active_state()==melee_mode:
+		#animation_player.stop()
+		#print_debug(animation_player.current_animation_length)
 		animation_player.play(melee_attack_manager.atk_type)
 		hit_box_collision.set_deferred("disabled", false)
 		vision_handler.face_player=false
-		print_debug(animation_player.current_animation_position)
+		#print_debug(melee_attack_manager.atk_type)
+		#print_debug(animation_player.current_animation_length)
 		movement_handler.face_player_active=false
 	
 func _on_attack_exited() -> void:
 	hurt_box.active=true
+	print_debug(get_stack())
 	movement_handler.face_player_active=true
 
 func _on_attack_updated(delta: float) -> void:
@@ -858,11 +867,12 @@ func _on_hit_box_clashed() -> void:
 	vfx_sprite.set_deferred("visible", false)
 	print_debug(state_machine.get_active_state())
 	state_machine.dispatch(&"clashed")
-	if state_machine.get_active_state()!=clashed_state and stagger.stagger>0:
-		state_machine.change_active_state(clashed_state)
+	#if state_machine.get_active_state()!=clashed_state and stagger.stagger>0:
+		#state_machine.change_active_state(clashed_state)
 	melee_attack_manager.next_combo()
 
 func _on_clashed_state_riposte_follow_up() -> void:
+	melee_attack_manager.reset_combo()
 	stagger.stagger-=5
 	state_machine.dispatch(&"hit")
 	stun_timer.start(0.2)
@@ -876,7 +886,7 @@ func _on_clashed_state_updated(delta: float) -> void:
 		if melee_range_check():
 			state_machine.dispatch(&"start_attack")
 		else:
-			state_machine.dispatch(&"start_chase")
+			state_machine.dispatch(&"recover_chase")
 	else:
 		pass
 
@@ -905,13 +915,17 @@ func _on_stun_timer_timeout() -> void:
 func counter_clash() -> void:
 	if phases.get_active_state()==phase_1:
 		#melee_attack_manager.atk_resume_helper()
-		melee_attack_manager.next_combo()
+		#melee_attack_manager.next_combo()
 		state_machine.dispatch(&"counter_attack")
 	else:
 		if randi_range(0,1)==0:
 			state_machine.dispatch(&"teleport_hit")
 		else:
 			state_machine.dispatch(&"teleport_shoot")
+	
+func _on_preparing_counter_counter_attack() -> void:
+	state_machine.dispatch(&"start_attack")
+
 	
 func player_damage(_value := 1) -> void:
 	player.health.health-=_value
@@ -974,7 +988,7 @@ func _on_stagger_morale_threshold_reached(_threshold : int) -> void:
 				clashed_state.counter_enabled=true
 				clashed_state.counter_threshold=3
 			2:
-				animation_player.speed_scale=1.5
+				animation_player.speed_scale=1.2
 				vfx_player_secondary.play("angry")
 
 	else:
@@ -984,15 +998,15 @@ func _on_stagger_morale_threshold_reached(_threshold : int) -> void:
 			1:
 				clashed_state.counter_threshold=2
 			2:
-				animation_player.speed_scale=1.5
+				animation_player.speed_scale=1.2
 				vfx_player_secondary.play("angry")
 
 
 
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
-	if previous==clashed_state and current==attack:
-		if not clash_timer.is_stopped():
-			pass
+	if current==clashed_state:
+		print_debug(get_stack())
+		pass
 
 
 func _on_chasing_updated(delta: float) -> void:

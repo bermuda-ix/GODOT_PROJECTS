@@ -70,6 +70,7 @@ func _enter() -> void:
 	var _marker_time=anim_player.get_animation(_current_anim).get_marker_time("clashed")
 	anim_player.seek(_marker_time, true, true)
 	anim_player.pause()
+	print_debug(get_stack())
 	movement_handler.active=false
 	actor.knockback=Vector2.ZERO
 	hitbox_collision.set_deferred("disabled", true)
