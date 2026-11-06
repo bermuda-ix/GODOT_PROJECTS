@@ -106,10 +106,8 @@
 [ext_resource type="Texture2D" uid="uid://dqid86dsgea5q" path="res://Art_Components/Effects/VFX Free Pack/Effect_Anima/60fps/Frames/Effect_Anima_1/Effect_Anima_1_016.png" id="90_g2ube"]
 [ext_resource type="Script" uid="uid://kb7fopen4aev" path="res://pc_attack_1.gd" id="90_ku1wp"]
 [ext_resource type="Texture2D" uid="uid://xrk22xxf8e17" path="res://Art_Components/Effects/VFX Free Pack/Effect_Anima/60fps/Frames/Effect_Anima_1/Effect_Anima_1_017.png" id="91_3nuhy"]
-[ext_resource type="Script" uid="uid://c78m0n8otjpq7" path="res://pc_attack_2.gd" id="91_7s5mg"]
 [ext_resource type="Script" uid="uid://cbqtfnav5rki3" path="res://pc_wall_stick.gd" id="91_nab3n"]
 [ext_resource type="Texture2D" uid="uid://b7n4d7dx4gk5x" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_012.png" id="91_wth7j"]
-[ext_resource type="Script" uid="uid://dqt4i3oya3xtx" path="res://pc_attack_3.gd" id="92_7s5mg"]
 [ext_resource type="Texture2D" uid="uid://c54b4sck8ewy0" path="res://Art_Components/Effects/VFX Free Pack/Effect_Anima/60fps/Frames/Effect_Anima_1/Effect_Anima_1_018.png" id="92_k5kw6"]
 [ext_resource type="Texture2D" uid="uid://bp61i0lh7x4gg" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_013.png" id="92_sdhj2"]
 [ext_resource type="Texture2D" uid="uid://brdl2m6xp1pc6" path="res://Art_Components/Effects/VFX Free Pack/Effect_Impact/60fps/Frames/Effect_Impact_1/Effect_Impact_1_014.png" id="93_4xvn2"]
@@ -286,6 +284,7 @@
 [ext_resource type="Script" uid="uid://bdqmxfqxyho1k" path="res://down_air_attack.gd" id="247_pbr83"]
 [ext_resource type="Script" uid="uid://r2oos1mk14ds" path="res://slam_attack.gd" id="248_ymji2"]
 [ext_resource type="Script" uid="uid://dqska7qmsu8it" path="res://slam_start.gd" id="249_1o5op"]
+[ext_resource type="Script" uid="uid://cmimx185602oa" path="res://attack_start.gd" id="255_lof0h"]
 [ext_resource type="Script" uid="uid://ddysmm2s885h4" path="res://air_dash.gd" id="257_i0kkw"]
 [ext_resource type="Script" uid="uid://5nuxraficihm" path="res://heavy_counter.gd" id="267_gt6j3"]
 [ext_resource type="Script" uid="uid://db5e1jxyirqau" path="res://parry_failed.gd" id="269_g8gik"]
@@ -3157,6 +3156,10 @@ markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"Attack_connect",
 "time": 0.1
+}, {
+"color": Color(1, 1, 1, 1),
+"name": &"attack_start",
+"time": 0.033333335
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -3484,10 +3487,10 @@ tracks/26/path = NodePath(".:attacking")
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
 tracks/26/keys = {
-"times": PackedFloat32Array(0.2),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.083333336, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [false]
+"values": [true, true, false]
 }
 tracks/27/type = "value"
 tracks/27/imported = false
@@ -3563,13 +3566,27 @@ tracks/32/keys = {
 }
 tracks/33/type = "animation"
 tracks/33/imported = false
-tracks/33/enabled = false
+tracks/33/enabled = true
 tracks/33/path = NodePath("AttackFXSecondary")
 tracks/33/interp = 1
 tracks/33/loop_wrap = true
 tracks/33/keys = {
 "clips": PackedStringArray("Attack"),
-"times": PackedFloat32Array(0)
+"times": PackedFloat32Array(0.033333335)
+}
+tracks/34/type = "method"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath(".")
+tracks/34/interp = 1
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0.041666668),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"next_light_combo"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_vtlvl"]
@@ -3579,6 +3596,10 @@ markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"Attack_connect",
 "time": 0.13333334
+}, {
+"color": Color(1, 1, 1, 1),
+"name": &"attack_start",
+"time": 0.033333335
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -3895,7 +3916,7 @@ tracks/25/path = NodePath(".:attacking")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
-"times": PackedFloat32Array(0, 0.06666668, 0.24999999),
+"times": PackedFloat32Array(0, 0.125, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, true, false]
@@ -3962,13 +3983,27 @@ tracks/30/keys = {
 }
 tracks/31/type = "animation"
 tracks/31/imported = false
-tracks/31/enabled = false
+tracks/31/enabled = true
 tracks/31/path = NodePath("AttackFX")
 tracks/31/interp = 1
 tracks/31/loop_wrap = true
 tracks/31/keys = {
 "clips": PackedStringArray("Attack_2"),
-"times": PackedFloat32Array(0)
+"times": PackedFloat32Array(0.033333335)
+}
+tracks/32/type = "method"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath(".")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0.041666668),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"next_light_combo"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_222nm"]
@@ -3978,6 +4013,10 @@ markers = [{
 "color": Color(1, 1, 1, 1),
 "name": &"Attack_connect",
 "time": 0.13333334
+}, {
+"color": Color(1, 1, 1, 1),
+"name": &"attack_start",
+"time": 0.033333335
 }]
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -4282,7 +4321,7 @@ tracks/24/path = NodePath(".:attacking")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
-"times": PackedFloat32Array(0, 0.06666666, 0.2833333),
+"times": PackedFloat32Array(0, 0.11666667, 0.2833333),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, true, false]
@@ -4366,19 +4405,22 @@ tracks/31/path = NodePath(".")
 tracks/31/interp = 1
 tracks/31/loop_wrap = true
 tracks/31/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"values": []
+"times": PackedFloat32Array(0.041666668),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"next_light_combo"
+}]
 }
 tracks/32/type = "animation"
 tracks/32/imported = false
-tracks/32/enabled = false
+tracks/32/enabled = true
 tracks/32/path = NodePath("AttackFX")
 tracks/32/interp = 1
 tracks/32/loop_wrap = true
 tracks/32/keys = {
 "clips": PackedStringArray("Attack_3"),
-"times": PackedFloat32Array(0)
+"times": PackedFloat32Array(0.033333335)
 }
 
 [sub_resource type="Animation" id="Animation_np862"]
@@ -14387,6 +14429,7 @@ _data = {
 
 [sub_resource type="Animation" id="Animation_rs1m1"]
 resource_name = "Attack"
+length = 0.36666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -14466,7 +14509,7 @@ tracks/6/path = NodePath("AnimatedSprite2D/attack_fx:frame")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.03333333, 0.04166667, 0.058333337, 0.33333334, 0.36666667, 0.39999998, 0.43333334),
+"times": PackedFloat32Array(0.03333333, 0.04166667, 0.058333337, 0.2, 0.23333332, 0.26666662, 0.29999998),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6]
@@ -14490,7 +14533,7 @@ tracks/8/path = NodePath("AnimatedSprite2D/attack_fx:visible")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0.03333334, 0.46666667),
+"times": PackedFloat32Array(0.03333334, 0.33333334),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -18457,22 +18500,18 @@ anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 hit_box = NodePath("../../AnimatedSprite2D/HitBox")
 
+[node name="AttackStart" type="LimboState" parent="StateMachine/AttackState" unique_id=1494830625 node_paths=PackedStringArray("animation_player", "pc")]
+script = ExtResource("255_lof0h")
+animation_player = NodePath("../../../AnimationPlayer")
+attack_name = "Attack"
+pc = NodePath("../../..")
+
 [node name="Attack1" type="LimboState" parent="StateMachine/AttackState" unique_id=2086725559 node_paths=PackedStringArray("anim_player", "anim_player_atk_fx", "pc", "attack_fx_sprite")]
 script = ExtResource("90_ku1wp")
 anim_player = NodePath("../../../AnimationPlayer")
 anim_player_atk_fx = NodePath("../../../AttackFX")
 pc = NodePath("../../..")
 attack_fx_sprite = NodePath("../../../AnimatedSprite2D/attack_fx")
-
-[node name="Attack2" type="LimboState" parent="StateMachine/AttackState" unique_id=2019114778 node_paths=PackedStringArray("anim_player", "pc")]
-script = ExtResource("91_7s5mg")
-anim_player = NodePath("../../../AnimationPlayer")
-pc = NodePath("../../..")
-
-[node name="Attack3" type="LimboState" parent="StateMachine/AttackState" unique_id=1191633258 node_paths=PackedStringArray("anim_player", "pc")]
-script = ExtResource("92_7s5mg")
-anim_player = NodePath("../../../AnimationPlayer")
-pc = NodePath("../../..")
 
 [node name="SpecialCombo" type="LimboState" parent="StateMachine/AttackState" unique_id=332878213 node_paths=PackedStringArray("anim_player", "pc")]
 script = ExtResource("104_l1qeb")

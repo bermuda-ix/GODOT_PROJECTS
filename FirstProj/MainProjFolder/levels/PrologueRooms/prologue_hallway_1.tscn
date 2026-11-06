@@ -155,6 +155,9 @@
 [ext_resource type="Texture2D" uid="uid://bkpxhxq6jd3iq" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_03.png" id="129_pkvt8"]
 [ext_resource type="Texture2D" uid="uid://c2safri3xr8y7" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_04.png" id="130_ddxeq"]
 [ext_resource type="Texture2D" uid="uid://cqpelmj4ie8mt" path="res://Art_Components/Effects/AttackEffects/FX089_nyknck/FX010/FX010_05.png" id="131_lpx8v"]
+[ext_resource type="Texture2D" uid="uid://dkm62pjfkmk48" path="res://Art_Components/knight.png" id="139_4jxj7"]
+[ext_resource type="Texture2D" uid="uid://bvqw6042x5lr7" path="res://Art_Components/Weapons/Guns Update - V1.01/Guns_V1.01 - Commission - Copy/02 - Sprite sheets/Submachine - MP5A3 [80x48]/[RELOAD] Submachine - MP5A3.png" id="140_1po5n"]
+[ext_resource type="Texture2D" uid="uid://dd47dbm4n65qr" path="res://Art_Components/Weapons/Guns Update - V1.01/Guns_V1.01 - Commission - Copy/02 - Sprite sheets/Submachine - MP5A3 [80x48]/[SHOOT_ALL] Sub_MP5A3.png" id="141_wpyu5"]
 [ext_resource type="Texture2D" uid="uid://b2g3wlxwfhvvs" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Slide/Slide01.png" id="149_vbfng"]
 [ext_resource type="Texture2D" uid="uid://bsg5nyssxvh6t" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Slide/Slide02.png" id="150_2eqvo"]
 [ext_resource type="Texture2D" uid="uid://03f25l45wykv" path="res://Art_Components/PixelPrototypePlayer/Pixel Prototype Player/Sprites/Slide/Slide03.png" id="151_h701y"]
@@ -1080,6 +1083,78 @@ tracks/65/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/66/type = "value"
+tracks/66/imported = false
+tracks/66/enabled = true
+tracks/66/path = NodePath("SoldierBoss_Cutscene/ShieldSprite:rotation")
+tracks/66/interp = 1
+tracks/66/loop_wrap = true
+tracks/66/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.0471976]
+}
+tracks/67/type = "value"
+tracks/67/imported = false
+tracks/67/enabled = true
+tracks/67/path = NodePath("SoldierBoss_Cutscene/ShieldSprite:position")
+tracks/67/interp = 1
+tracks/67/loop_wrap = true
+tracks/67/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(9, 26)]
+}
+tracks/68/type = "value"
+tracks/68/imported = false
+tracks/68/enabled = true
+tracks/68/path = NodePath("SoldierBoss_Cutscene/Gun:scale")
+tracks/68/interp = 1
+tracks/68/loop_wrap = true
+tracks/68/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.35, 0.35)]
+}
+tracks/69/type = "value"
+tracks/69/imported = false
+tracks/69/enabled = true
+tracks/69/path = NodePath("SoldierBoss_Cutscene/Gun:rotation")
+tracks/69/interp = 1
+tracks/69/loop_wrap = true
+tracks/69/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.5707964]
+}
+tracks/70/type = "value"
+tracks/70/imported = false
+tracks/70/enabled = true
+tracks/70/path = NodePath("SoldierBoss_Cutscene/Gun:position")
+tracks/70/interp = 1
+tracks/70/loop_wrap = true
+tracks/70/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-7, 24)]
+}
+tracks/71/type = "value"
+tracks/71/imported = false
+tracks/71/enabled = true
+tracks/71/path = NodePath("SoldierBoss_Cutscene/ShieldSprite:scale")
+tracks/71/interp = 1
+tracks/71/loop_wrap = true
+tracks/71/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_wbdor"]
 resource_name = "SOLDIER1"
@@ -1408,6 +1483,78 @@ tracks/26/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("SoldierBoss_Cutscene/ShieldSprite:rotation")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.0471976]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("SoldierBoss_Cutscene/ShieldSprite:position")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(9, 26)]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("SoldierBoss_Cutscene/Gun:scale")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.35, 0.35)]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("SoldierBoss_Cutscene/Gun:rotation")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.5707964]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("SoldierBoss_Cutscene/Gun:position")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-7, 24)]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("SoldierBoss_Cutscene/ShieldSprite:scale")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_2p30m"]
 resource_name = "SOLDIER2"
@@ -1692,6 +1839,66 @@ tracks/16/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("SoldierBoss_Cutscene/Gun:position")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0.13333334, 0.19166666),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-7, 24), Vector2(-12, 16)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("SoldierBoss_Cutscene/Gun:rotation")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0.13333334, 0.19166666),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-1.5707964, 0.0]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("SoldierBoss_Cutscene/ShieldSprite:scale")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 0.024999984),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.5, 1)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("SoldierBoss_Cutscene/ShieldSprite:rotation")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 0.024999984),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-1.0471976, 0.0]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("SoldierBoss_Cutscene/ShieldSprite:position")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 0.024999984),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(9, 26), Vector2(-8, 23)]
+}
 
 [sub_resource type="Animation" id="Animation_vlsbg"]
 resource_name = "miniboss_hallway_death"
@@ -1775,10 +1982,10 @@ tracks/6/path = NodePath("Ace_Cutscene:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.5333333, 0.8333334, 0.8370565, 2.7034168, 2.725, 3.3999996, 3.5074096),
-"transitions": PackedFloat32Array(1, 0.27739263, 1, 1.3195075, 0.55478483, 1, 1),
+"times": PackedFloat32Array(0.5333333, 0.8333334, 0.8370565, 2.7, 2.75, 2.8333333, 2.8549163, 3.3999996, 3.5074096),
+"transitions": PackedFloat32Array(1, 0.27739263, 1, 2, 1, 1.3195075, 0.55478483, 1, 1),
 "update": 0,
-"values": [Vector2(-2295, 253), Vector2(-2260, 253), Vector2(-2260, 253), Vector2(-2260, 253), Vector2(-2277.5166, 253), Vector2(-2409, 253), Vector2(-2409, 253)]
+"values": [Vector2(-2295, 253), Vector2(-2260, 253), Vector2(-2260, 253), Vector2(-2260, 253), Vector2(-2221, 253), Vector2(-2221, 253), Vector2(-2277.5166, 253), Vector2(-2409, 253), Vector2(-2409, 253)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -1811,7 +2018,7 @@ tracks/9/path = NodePath("Ace_Cutscene:animation")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0.5333333, 0.8666667, 0.9263731, 1.6999999, 2.683888, 2.7666664, 3.4166665),
+"times": PackedFloat32Array(0.5333333, 0.8666667, 0.9263731, 1.6999999, 2.683888, 2.8333333, 3.4166665),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [&"backflip", &"landed", &"reload", &"crouch_gun", &"sprint", &"slide", &"crouch_gun"]
@@ -1823,7 +2030,7 @@ tracks/10/path = NodePath("Ace_Cutscene:frame")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0.5333333, 0.56666666, 0.59999996, 0.6333333, 0.6666666, 0.6999999, 0.73333335, 0.76666665, 0.79999995, 0.8333334, 0.8666667, 0.9, 0.9263731, 0.9666667, 1, 1.0333333, 1.0666667, 1.1, 1.1333333, 1.1666666, 1.8333331, 1.8588651, 1.8921984, 1.925532, 1.9588653, 2.6916666, 2.733333, 2.7999997, 2.8666663, 2.9333334, 3, 3.4333334, 3.5, 3.5666666, 3.6333332, 3.6999998),
+"times": PackedFloat32Array(0.5333333, 0.56666666, 0.59999996, 0.6333333, 0.6666666, 0.6999999, 0.73333335, 0.76666665, 0.79999995, 0.8333334, 0.8666667, 0.9, 0.9263731, 0.9666667, 1, 1.0333333, 1.0666667, 1.1, 1.1333333, 1.1666666, 1.8333331, 1.8588651, 1.8921984, 1.925532, 1.9588653, 2.7666664, 2.808333, 2.9416664, 3.008333, 3.075, 3.1416667, 3.4333334, 3.5, 3.5666666, 3.6333332, 3.6999998),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 0, 2, 3, 4, 5, 6, 7, 8, 0, 1, 2, 3, 4, 1, 2, 0, 1, 2, 3, 0, 1, 2, 3, 4]
@@ -2226,6 +2433,78 @@ tracks/42/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
+}
+tracks/43/type = "value"
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/path = NodePath("SoldierBoss_Cutscene/ShieldSprite:scale")
+tracks/43/interp = 1
+tracks/43/loop_wrap = true
+tracks/43/keys = {
+"times": PackedFloat32Array(0, 1.5987215, 1.6666666, 1.7904999),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 1), Vector2(0.5, 1), Vector2(1, 1), Vector2(1, 1)]
+}
+tracks/44/type = "value"
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/path = NodePath("SoldierBoss_Cutscene/ShieldSprite:rotation")
+tracks/44/interp = 1
+tracks/44/loop_wrap = true
+tracks/44/keys = {
+"times": PackedFloat32Array(0, 1.5987215, 1.6666666, 1.8166667, 1.8293444, 1.8916667, 1.9, 2.55, 2.5666666),
+"transitions": PackedFloat32Array(1, 1, 1, 3, 1, 1, 3, 3, 1),
+"update": 0,
+"values": [-1.5707964, -1.5707964, 0.0, 0.0, 0.7853982, 0.7853982, 0.0, 0.0, -1.5707964]
+}
+tracks/45/type = "value"
+tracks/45/imported = false
+tracks/45/enabled = true
+tracks/45/path = NodePath("SoldierBoss_Cutscene/ShieldSprite:position")
+tracks/45/interp = 1
+tracks/45/loop_wrap = true
+tracks/45/keys = {
+"times": PackedFloat32Array(0, 0.69742876, 0.7, 1.6056603, 1.6666666, 1.8166667, 1.8293444, 1.8916667, 1.9, 2.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 3, 1, 1, 3, 3),
+"update": 0,
+"values": [Vector2(5, 11), Vector2(5, 11), Vector2(-8, 39), Vector2(-8, 39), Vector2(-4, 22), Vector2(-4, 22), Vector2(20, 12), Vector2(20, 12), Vector2(-4, 22), Vector2(-4, 22)]
+}
+tracks/46/type = "value"
+tracks/46/imported = false
+tracks/46/enabled = true
+tracks/46/path = NodePath("SoldierBoss_Cutscene/Gun:rotation")
+tracks/46/interp = 1
+tracks/46/loop_wrap = true
+tracks/46/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.5707964]
+}
+tracks/47/type = "value"
+tracks/47/imported = false
+tracks/47/enabled = true
+tracks/47/path = NodePath("SoldierBoss_Cutscene/Gun:scale")
+tracks/47/interp = 1
+tracks/47/loop_wrap = true
+tracks/47/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.35, 0.35)]
+}
+tracks/48/type = "value"
+tracks/48/imported = false
+tracks/48/enabled = true
+tracks/48/path = NodePath("SoldierBoss_Cutscene/Gun:position")
+tracks/48/interp = 1
+tracks/48/loop_wrap = true
+tracks/48/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2.000001, 18.656067)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ggnol"]
@@ -4315,6 +4594,242 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6hbcx"]
+shader = ExtResource("22_ggnol")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/neighbor_pixels = 2
+shader_parameter/center_distance_cap = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57tv1"]
+atlas = ExtResource("139_4jxj7")
+region = Rect2(195, 34, 15, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_inq7e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57tv1")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vlsbg"]
+shader = ExtResource("22_ggnol")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/neighbor_pixels = 1
+shader_parameter/center_distance_cap = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3hl3"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(0, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yfdn7"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(80, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tg4r"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(160, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kduqy"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(240, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5h0uj"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(320, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlsj8"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(400, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2n3dg"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(480, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lc3rx"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(560, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtge4"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(640, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6bgxr"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(720, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdspr"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(800, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jl4e"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(880, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ohq5t"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(960, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_brlrt"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(1040, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6ohj"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(1120, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vl2p"]
+atlas = ExtResource("140_1po5n")
+region = Rect2(1200, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqwn2"]
+atlas = ExtResource("141_wpyu5")
+region = Rect2(0, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_navgb"]
+atlas = ExtResource("141_wpyu5")
+region = Rect2(80, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mpha3"]
+atlas = ExtResource("141_wpyu5")
+region = Rect2(160, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vslpy"]
+atlas = ExtResource("141_wpyu5")
+region = Rect2(240, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fb6n3"]
+atlas = ExtResource("141_wpyu5")
+region = Rect2(320, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxq3v"]
+atlas = ExtResource("141_wpyu5")
+region = Rect2(400, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msetj"]
+atlas = ExtResource("141_wpyu5")
+region = Rect2(480, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_orrv5"]
+atlas = ExtResource("141_wpyu5")
+region = Rect2(560, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ow8st"]
+atlas = ExtResource("141_wpyu5")
+region = Rect2(640, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8axm"]
+atlas = ExtResource("141_wpyu5")
+region = Rect2(720, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydk3k"]
+atlas = ExtResource("141_wpyu5")
+region = Rect2(800, 0, 80, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8fv1u"]
+atlas = ExtResource("141_wpyu5")
+region = Rect2(880, 0, 80, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m1id5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3hl3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yfdn7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tg4r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kduqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5h0uj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mlsj8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2n3dg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lc3rx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtge4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6bgxr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sdspr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jl4e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ohq5t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_brlrt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6ohj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vl2p")
+}],
+"loop": 1,
+"name": &"reload",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qqwn2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_navgb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mpha3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vslpy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fb6n3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxq3v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_msetj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_orrv5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ow8st")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8axm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydk3k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8fv1u")
+}],
+"loop": 1,
+"name": &"shoot",
+"speed": 5.0
+}]
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_lhcp8"]
 animations = [{
 "frames": [{
@@ -4709,7 +5224,7 @@ flag_active = false
 [node name="GlobalFlagHandler" parent="DemonStalker" index="3" unique_id=1406087607 groups=["global_flag"]]
 
 [node name="PC" parent="." unique_id=1041091659 instance=ExtResource("17_j8gjg")]
-position = Vector2(-2317, 284)
+position = Vector2(-2353.344, 287.47818)
 scale = Vector2(1.0760809, 0.94640315)
 
 [node name="BossArena" type="Node" parent="." unique_id=1859008299]
@@ -4745,6 +5260,7 @@ avoidance_layers = 3
 [node name="SoldierBoss_Cutscene" parent="." unique_id=1998686262 instance=ExtResource("21_n0r6o")]
 visible = false
 self_modulate = Color(0.45490196, 0.45490196, 0.45490196, 1)
+z_index = 1
 material = SubResource("ShaderMaterial_glpjs")
 position = Vector2(-2303, 252)
 sprite_frames = SubResource("SpriteFrames_bw5xo")
@@ -4782,6 +5298,28 @@ sprite_frames = SubResource("SpriteFrames_dn5ex")
 animation = &"Shoot"
 flip_h = true
 
+[node name="ShieldSprite" type="AnimatedSprite2D" parent="SoldierBoss_Cutscene" unique_id=464853372]
+self_modulate = Color(0, 0, 0, 1)
+z_index = 2
+texture_filter = 2
+material = SubResource("ShaderMaterial_6hbcx")
+position = Vector2(9, 26)
+rotation = -1.0471976
+scale = Vector2(0.5, 1)
+sprite_frames = SubResource("SpriteFrames_inq7e")
+
+[node name="Gun" type="AnimatedSprite2D" parent="SoldierBoss_Cutscene" unique_id=1425410670]
+self_modulate = Color(1.5720325, 1.5720325, 1.5720325, 1)
+z_index = -1
+material = SubResource("ShaderMaterial_vlsbg")
+position = Vector2(-7, 24)
+rotation = -1.5707964
+scale = Vector2(0.35, 0.35)
+sprite_frames = SubResource("SpriteFrames_m1id5")
+animation = &"shoot"
+offset = Vector2(-15.743593, 9.144087)
+flip_h = true
+
 [node name="Ace_Cutscene" parent="." unique_id=933460979 instance=ExtResource("21_n0r6o")]
 visible = false
 position = Vector2(-2511, 254)
@@ -4803,7 +5341,7 @@ flip_h = true
 [node name="Paths" type="Node" parent="." unique_id=1154897587]
 
 [node name="Path2D" type="Path2D" parent="Paths" unique_id=765633217]
-position = Vector2(-24, -74)
+position = Vector2(-789, -67)
 scale = Vector2(0.6628577, 1.2705309)
 curve = SubResource("Curve2D_k5twc")
 

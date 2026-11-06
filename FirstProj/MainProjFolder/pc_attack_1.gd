@@ -8,7 +8,9 @@ extends LimboState
 
 func _enter() -> void:
 	anim_player.speed_scale=1
-	anim_player.play(attack)
+	#anim_player.play(attack)
+	anim_player.play_section_with_markers(attack, "attack_start")
+	anim_player.advance(0)
 	anim_player_atk_fx.play(attack)
 	pc.hit_fx_player.speed_scale=1
 	pc.hit_animation="hit_landed"
@@ -16,9 +18,10 @@ func _enter() -> void:
 	pc.hb_collision.set_deferred("disabled", false)
 	#attack_fx_sprite.a.nimation="sword_hit_1"
 	pc.attacking=true
+	
 
 #func _update(delta: float) -> void:
 	#assert(not Input.is_action_pressed("attack") and (not pc.charging))
 
-func _exit() -> void:
-	pass
+#func _exit() -> void:
+	#pc.attacking=false

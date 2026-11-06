@@ -93,15 +93,14 @@ FLIP,THRUST, HIT, STAGGERED}
 
 #Attack Combos
 @onready var attack_state: LimboHSM = $StateMachine/AttackState
+@onready var attack_start: AttackStartState = $StateMachine/AttackState/AttackStart
 @onready var attack_1: LimboState = $StateMachine/AttackState/Attack1
-@onready var attack_2: LimboState = $StateMachine/AttackState/Attack2
-@onready var attack_3: LimboState = $StateMachine/AttackState/Attack3
+
 @onready var special_combo: LimboState = $StateMachine/AttackState/SpecialCombo
 @onready var special_combo_2: LimboState = $StateMachine/AttackState/SpecialCombo2
 @onready var dash_attack: LimboState = $StateMachine/AttackState/DashAttack
 @onready var heavy_attack_1: LimboState = $StateMachine/AttackState/HeavyAttack1
-@onready var heavy_attack_2: LimboState = $StateMachine/AttackState/HeavyAttack2
-@onready var heavy_attack_3: LimboState = $StateMachine/AttackState/HeavyAttack3
+
 @onready var heavy_dash_attack: LimboState = $StateMachine/AttackState/HeavyDashAttack
 @onready var heavy_counter: LimboState = $StateMachine/AttackState/HeavyCounter
 @onready var attack_closer: LimboState = $StateMachine/AttackState/AttackCloser
@@ -118,7 +117,7 @@ FLIP,THRUST, HIT, STAGGERED}
 
 @onready var attack_state_stack : Array[LimboState] = []
 @onready var light_attacks : Array[String] = ["Attack", "Attack_2", "Attack_3"]
-@onready var light_attack_index : int = clampi(0, 0 , 2)
+@onready var light_attack_index : int = clampi(0, 0 , 2) : set = set_light_attack_index
 @onready var heavy_attacks : Array[String] = ["Heavy_Combo_2", "Heavy_Combo_1", "shotgun_finish"]
 
 @export var heavy_attacking : bool = false
@@ -367,6 +366,9 @@ var flipped_over : bool = false
 func set_knockback(_value : Vector2) -> void:
 	knockback=_value
 
+func set_light_attack_index(_value : int) -> void:
+	light_attack_index=wrapi(_value, 0, 3)
+
 #multithreading
 var thread := Thread.new()
 var mutex := Mutex.new()
@@ -610,9 +612,12 @@ func _init_parry_success_state_machine():
 	parry_success_state.add_transition(await_input, nothing, &"do_nothing")
 	
 func _init_attack_states():
-	attack_state.initial_state=attack_1
+	attack_state.initial_state=attack_start
 
-	attack_state.add_transition(attack_1, attack_1, &"next_attack")
+	attack_state.add_transition(attack_start, attack_1, &"release_attack")
+	attack_state.add_transition(attack_1, attack_start, &"next_attack")
+	
+	
 	#attack_state.add_transition(attack_1, clashed, &"clashed")
 	#attack_state.add_transition(clashed, attack_1, &"riposte")
 	#attack_state.add_transition(clashed, heavy_attack_1, &"heavy_riposte")
@@ -1152,9 +1157,10 @@ func sprint_handler() -> void:
 func attack_handler():
 	
 	if state_machine.get_active_state()==hit or state_machine.get_active_state()==staggered or \
-	(state_machine.get_active_state()==parry_success_state and parry_success_state.success==false)\
+	(state_machine.get_active_state()==parry_success_state)\
 	 or state_machine.get_active_state()==flip_state\
-	 or state_machine.get_active_state()==dodge_state:
+	 or state_machine.get_active_state()==dodge_state\
+	 or (attack_state.get_active_state()==attack_1):
 		return
 	
 	if not dash_attack_timer.is_stopped():
@@ -1172,82 +1178,95 @@ func attack_handler():
 				closing_attack()
 	#var anim_player_time : float = anim_player.current_animation_position
 	
+	
+	###Begin Attack. Hold start of attack, charges up power if clash power greater than one
 	if Input.is_action_pressed("attack"):
 		#print_debug(state_machine.get_active_state())
 		if not reload_timer.is_stopped():
 			reload_timer.stop()
-		if state_machine.get_active_state()==idle and (attacking or charging):
-			return
+		#if state_machine.get_active_state()==idle and (attacking or charging):
+			#return
 			
 		if attack_state.get_active_state()==attack_1:
 			if attacking:
 				return
-
-		if not charge_timer.is_stopped():
-			return
-		else:
-			assert(charge_timer.is_stopped())
-			if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
-				charge_timer.start(0.01)
 			else:
-				charge_timer.start(0.2)
-				charging=true
-				charging_attack.attack=attack_1.attack
+				attack_state.dispatch(&"next_attack")
+
+		#if not charge_timer.is_stopped():
+			#return
+		else:
+			#assert(charge_timer.is_stopped())
+			#if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
+				#charge_timer.start(0.01)
+			#else:
+				#charge_timer.start(0.2)
+				#charging=true
+				#charging_attack.attack=attack_1.attack
+			state_machine.dispatch(&"start_attack")
 
 
 			
 	elif Input.is_action_just_released("attack"):
 		if state_machine.get_active_state()==parry_success_state:
 			return
-		if attacking:
-			if charging:
-				light_attack()
-			else:
-				return
+		#if attacking:
+			#if charging:
+				#light_attack()
+			#else:
+				#return
 		#if not reload_timer.is_stopped():
 			#reload_timer.stop()
 		if not charge_timer.is_stopped():
 			charge_timer.stop()
 			
-		if not charging and not attacking:
-			light_attack()
+		#if not charging and not attacking:
+			#light_attack()
 			
 	
 		charging=false
 		
 		#print_debug(state_machine.get_active_state())
 		
-		if state_machine.get_active_state()==idle and attacking:
-			attacking=false
-			
-			
-		elif state_machine.get_active_state()==attack_state:
-			
-			if state_machine.get_active_state()==charged_attack:
-				return
-			#if attacking:
-				#attacking=false
-			if not charging:
+		#if state_machine.get_active_state()==idle and attacking:
+			#attacking=false
+			#
+			#
+		#elif state_machine.get_active_state()==attack_state:
+			#
+			#if state_machine.get_active_state()==charged_attack:
+				#return
+			##if attacking:
+				##attacking=false
+			#if not charging:
+				##charging=false
+				#if anim_player.current_animation_position>=anim_player.current_animation_length and\
+				#hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
+					#pass
+				#else:
+					#light_attack()
+			#else:
 				#charging=false
-				if anim_player.current_animation_position>=anim_player.current_animation_length and\
-				hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
-					pass
-				else:
-					light_attack()
-			else:
-				charging=false
-				
-				if attack_timer.time_left<0.01:
-					#attack_timer.start(0.05)
-					attack_timer.paused=false
-				else:
-					#attack_timer.start(0.1)
-					attack_timer.paused=false
-				
-		else:
-			light_attack()
+				#
+				#if attack_timer.time_left<0.01:
+					##attack_timer.start(0.05)
+					#attack_timer.paused=false
+				#else:
+					##attack_timer.start(0.1)
+					#attack_timer.paused=false
+				#
+		#else:
+			#light_attack()
 			
-	
+		if state_machine.get_active_state()==attack_state:
+			light_attack()
+
+func next_light_combo()->void:
+	light_attack_index=wrapi(light_attack_index+1,0,3)
+	attack_1.attack=light_attacks[light_attack_index]
+	attack_start.attack_name=light_attacks[light_attack_index]
+	print_debug(light_attacks[light_attack_index])
+
 func heavy_combos():
 	if Input.is_action_pressed("special_attack") and not Input.is_action_pressed("attack"):
 		if attack_timer.is_stopped():
@@ -1310,32 +1329,34 @@ func heavy_combos():
 			
 		
 func _on_charge_timer_timeout() -> void:
+	return
+	
 	
 	#print_debug(hit_box.damage,", ", clash_power.clash_power)
-	if state_machine.get_active_state()==clashed:
-		return
-	assert(charge_timer.time_left<=0)
-	if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
-		if attack_state.get_active_state()==heavy_attack_1:
-			shotgun_combo()
-		else:
-			if heavy_attacking:
-				heavy_attack()
-			else:
-				light_attack()
-	else:
-		if  not hit_box.heavy_attack:
-			hit_box.heavy_attack=true
-		if heavy_attacking:
-			attack_state.dispatch(&"heavy_combo")
-			attack_state.dispatch(&"charge_attack")
-			#charging_attack.anim_second+=0.1
-		else:
-			charging=true
-			if state_machine.get_active_state()!=attack_state:
-				state_machine.dispatch(&"start_attack")
-			attack_state.dispatch(&"charge_attack")
-			#charging_attack.anim_second+=0.1
+	#if state_machine.get_active_state()==clashed:
+		#return
+	#assert(charge_timer.time_left<=0)
+	#if hit_box.damage>=clash_power.clash_power or clash_power.clash_power==0:
+		#if attack_state.get_active_state()==heavy_attack_1:
+			#shotgun_combo()
+		#else:
+			#if heavy_attacking:
+				#heavy_attack()
+			#else:
+				#light_attack()
+	#else:
+		#if  not hit_box.heavy_attack:
+			#hit_box.heavy_attack=true
+		#if heavy_attacking:
+			#attack_state.dispatch(&"heavy_combo")
+			#attack_state.dispatch(&"charge_attack")
+			##charging_attack.anim_second+=0.1
+		#else:
+			#charging=true
+			#if state_machine.get_active_state()!=attack_state:
+				#state_machine.dispatch(&"start_attack")
+			#attack_state.dispatch(&"charge_attack")
+			##charging_attack.anim_second+=0.1
 
 
 func start_attack_timer(_value:=1.0) -> void:
@@ -1365,8 +1386,8 @@ func light_attack() -> void:
 	
 
 func regular_attack() -> void:
-	if attacking and not charging:
-		return
+	#if attacking and not charging:
+		#return
 	if (state_machine.get_active_state()==parry_success_state and parry_success_state.success==false):
 		return
 	
@@ -1396,7 +1417,7 @@ func regular_attack() -> void:
 			#hit_box.set_damage(1)
 			
 			attack_sfx()
-			print_debug(attack_state.get_active_state())
+			#print_debug(attack_state.get_active_state())
 			if state_machine.get_active_state()==attack_state:
 				#var _prev_attack : LimboState
 				#if not attack_state_stack.is_empty():
@@ -1404,18 +1425,20 @@ func regular_attack() -> void:
 				#else:
 					#_prev_attack=attack_1
 					
-				if attack_state.get_active_state()==charging_attack:
-					#if not attacking:
-						#attacking=true
-					attack_state.dispatch(&"charged")
-				else:
-					light_attack_index=wrapi(light_attack_index+1, 0, 3)
-					attack_1.attack=light_attacks[light_attack_index]
-					attack_state.dispatch(&"next_attack")
+				#if attack_state.get_active_state()==charging_attack:
+					##if not attacking:
+						##attacking=true
+					#attack_state.dispatch(&"charged")
+				#else:
+					#light_attack_index=wrapi(light_attack_index+1, 0, 3)
+					#attack_1.attack=light_attacks[light_attack_index]
+					#attack_state.dispatch(&"next_attack")
+					
+				attack_state.dispatch(&"release_attack")
 		
-			else:
-				#attack_state.initial_state=attack_1
-				state_machine.dispatch(&"start_attack")
+			#else:
+				##attack_state.initial_state=attack_1
+				#state_machine.dispatch(&"start_attack")
 			#await anim_player.animation_finished
 			#attack_timer.paused=false
 			
@@ -1640,8 +1663,8 @@ func get_clash_power() -> int:
 func set_attacking(value : bool) -> void:
 	#if Input.is_action_pressed("attack") and value==false:
 		#return
-	if value==true and state_machine.get_active_state()==parry_success_state:
-		print_debug("begin_attack")
+	#if value==true and state_machine.get_active_state()==parry_success_state:
+		#print_debug("begin_attack")
 	#else:
 		#print_debug("ending attack")
 	attacking=value
@@ -2399,11 +2422,14 @@ func set_start_pos(checkpoint_position):
 func _on_animation_player_animation_finished(anim_name):
 	cutscene_handler.anim_count_up()
 	if state_machine.get_active_state()==attack_state or state_machine.get_active_state()==parry_success_state:
+		if attack_state.get_active_state()==attack_start:
+			return
+		#else:
 		hit_success=false
 		hit_box.clash_active=false
 		hit_box.attack_clashed=false
 		hb_collision.set_deferred("disabled", true)
-		attacking=false
+		#attacking=false
 		
 		#match anim_name:
 			#"Attack":
@@ -2452,15 +2478,16 @@ func _on_animation_player_animation_finished(anim_name):
 				#attacking=false
 				state_machine.dispatch(&"return_to_idle")
 			"Attack", "Attack_2", "Attack_3":
-				attack_1.attack=light_attacks[0]
-				anim_player.play("idle")
-				charging_attack.attack=light_attacks[0]
+				
+				#anim_player.play("idle")
+				#charging_attack.attack=light_attacks[0]
 				hb_collision.set_deferred("disabled", true)
-				#attack_state_stack.push_front(attack_3)
-				#attack_timer.start(0.1)
+				
 				attack_timer.paused=false
 				if state_machine.get_active_state()==parry_success_state:
 					attack_timer.start(0.1)
+				else:
+					state_machine.dispatch(&"return_to_idle")
 			"Attack_Slam":
 				if is_on_floor():
 					state_machine.dispatch(&"return_to_idle")
@@ -2636,7 +2663,7 @@ func parry_success(_parry_follow_up := "nothing", _damage := 1):
 
 
 func _on_hit_box_area_entered(_area):
-	print_debug(_area.get_groups())
+	#print_debug(_area.get_groups())
 	if _area.is_in_group("hurtbox"):
 		hit_sfx()
 		clash_timer.start()
@@ -2703,7 +2730,7 @@ func flipping(delta):
 			
 func _on_flip_state_entered() -> void:
 	#	variables set and declared
-	print_debug("entering flip")
+	#print_debug("entering flip")
 	velocity=flip_vel
 	target_pos_y=(target.global_position.y)
 	var pos_above_y=target.global_position.y-global_position.y
@@ -2901,8 +2928,8 @@ func _on_hazard_detector_body_entered(body):
 	if body.is_in_group("Enemy"):
 		if (position.y-body.position.y)<0:
 			target_below=true
-		else:
-			print_debug("enemy above")
+		#else:
+			#print_debug("enemy above")
 
 
 func _on_hazard_detector_body_exited(body):
@@ -2912,20 +2939,22 @@ func _on_hazard_detector_body_exited(body):
 
 
 func _on_animation_player_animation_started(anim_name):
+	if attack_start.attack_debug==anim_name and attack_state.get_active_state()==attack_start:
+		pass
+
 	if state_machine.get_active_state()==attack_state:
 		#hit_box.active=true
+		if attack_state.get_active_state()==attack_start:
+			return
 		hb_collision.set_deferred("disabled", false)
 		velocity.y=0
 		if attack_state.get_active_state()==attack_1:
 			hit_box.attack_clashed=false
 			#charge_timer.stop()
 			match anim_name:
-				"Attack":
-					light_attack_index=0
-				"Attack_2":
-					light_attack_index=1
-				"Attack_3":
-					light_attack_index=2
+
+				"Attack", "Attack_2", "Attack_3":
+					pass
 				"_":
 					pass
 
@@ -2961,8 +2990,8 @@ func _on_animation_player_animation_started(anim_name):
 	elif anim_name=="shotgun_attack":
 		vel_y=velocity.y
 		#s_atk=true
-	elif anim_name=="shotgun_finish":
-		print_debug("heavy finisher")
+	#elif anim_name=="shotgun_finish":
+		#print_debug("heavy finisher")
 	
 
 
@@ -3055,8 +3084,6 @@ func _on_state_machine_active_state_changed(current: LimboState, _previous: Limb
 		
 		if attack_state.get_active_state()==attack_1:
 			atk_1_resume=true
-		elif attack_state.get_active_state()==attack_2:
-			atk_2_resume=true
 	if _previous==parry_success_state and current==attack_state:
 		pass
 	
@@ -3065,21 +3092,19 @@ func _on_state_machine_active_state_changed(current: LimboState, _previous: Limb
 
 
 func _on_attack_state_active_state_changed(current: LimboState, previous: LimboState) -> void:
+
 	if current==special_combo:
 		if previous==attack_1:
 			atk_2_resume=false
 			atk_1_resume=true
-		elif previous==attack_2:
-			atk_2_resume=true
-			atk_1_resume=false
 		
 	if previous==special_combo:
 		atk_1_resume=false
 		atk_2_resume=false
 	
-	if current in [attack_1, attack_2, attack_3]:
+	if current in [attack_1]:
 		hitbox.stagger_damage=false
-	elif current in [heavy_attack_1, heavy_attack_2]:
+	elif current in [heavy_attack_1]:
 		hitbox.stagger_damage=true
 
 
@@ -3350,7 +3375,7 @@ func _on_knockback_recovery_timer_timeout() -> void:
 	velocity.x=0
 
 func _on_hit_box_clashed() -> void:
-	print_debug(hb_collision.disabled)
+	#print_debug(hb_collision.disabled)
 	#if state_machine.get_active_state()==idle or\
 	#state_machine.get_active_state()==parry_success_state:
 		#return
@@ -3371,9 +3396,9 @@ func _on_hit_box_clashed() -> void:
 		if  Input.has_joy_vibration(VibrationHandler.controller_id):
 			Input.start_joy_vibration(VibrationHandler.controller_id, 0.5, 0.8, 0.5)
 	parry_success_state.ranged_counter=false
-	print_debug(state_machine.get_active_state())
+	#print_debug(state_machine.get_active_state())
 	state_machine.dispatch(&"clashed")
-	print_debug("clashed!")
+	#print_debug("clashed!")
 	if state_machine.get_active_state()!=parry_success_state and stagger.stagger>0:
 		state_machine.change_active_state(parry_success_state)
 	hit_box.active=false
@@ -3381,7 +3406,8 @@ func _on_hit_box_clashed() -> void:
 
 
 func _on_animation_player_animation_changed(old_name: StringName, new_name: StringName) -> void:
-	pass
+	if attack_start.attack_debug==new_name and attack_state.get_active_state()==attack_start:
+		pass
 
 func _on_animation_player_current_animation_changed(name: StringName) -> void:
 	pass
