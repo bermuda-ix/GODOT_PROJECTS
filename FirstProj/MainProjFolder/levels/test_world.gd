@@ -59,7 +59,7 @@ var init_active_enemies_list : Array[Node]
 ##Proload for debugging to be romoved later
 @onready var heart_drop=preload("res://Component/interactables/heart_drop.tscn")
 
-@onready var soldier_shield_boss: CharacterBody2D = $Enemies/SoldierShieldBoss
+#@onready var soldier_shield_boss: CharacterBody2D = $Enemies/SoldierShieldBoss
 
 
 

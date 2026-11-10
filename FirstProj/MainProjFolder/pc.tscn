@@ -18453,6 +18453,7 @@ wait_time = 0.35
 ignore_time_scale = true
 
 [node name="ClashingTimer" type="Timer" parent="." unique_id=539340979]
+one_shot = true
 
 [node name="StateMachine" type="LimboHSM" parent="." unique_id=822739335]
 
@@ -18500,11 +18501,12 @@ anim_player = NodePath("../../AnimationPlayer")
 pc = NodePath("../..")
 hit_box = NodePath("../../AnimatedSprite2D/HitBox")
 
-[node name="AttackStart" type="LimboState" parent="StateMachine/AttackState" unique_id=1494830625 node_paths=PackedStringArray("animation_player", "pc")]
+[node name="AttackStart" type="LimboState" parent="StateMachine/AttackState" unique_id=1494830625 node_paths=PackedStringArray("animation_player", "pc", "charge_timer")]
 script = ExtResource("255_lof0h")
 animation_player = NodePath("../../../AnimationPlayer")
 attack_name = "Attack"
 pc = NodePath("../../..")
+charge_timer = NodePath("../../../ChargeTimer")
 
 [node name="Attack1" type="LimboState" parent="StateMachine/AttackState" unique_id=2086725559 node_paths=PackedStringArray("anim_player", "anim_player_atk_fx", "pc", "attack_fx_sprite")]
 script = ExtResource("90_ku1wp")
@@ -18804,7 +18806,6 @@ pc = NodePath("../..")
 [connection signal="entered" from="StateMachine/FallingState" to="." method="_on_falling_state_entered"]
 [connection signal="active_state_changed" from="StateMachine/AttackState" to="." method="_on_attack_state_active_state_changed"]
 [connection signal="exited" from="StateMachine/AttackState" to="." method="_on_attack_state_exited"]
-[connection signal="updated" from="StateMachine/AttackState" to="." method="_on_attack_state_updated"]
 [connection signal="exited" from="StateMachine/AttackState/SpecialCombo" to="." method="_on_special_combo_exited"]
 [connection signal="exited" from="StateMachine/AttackState/SpecialCombo2" to="." method="_on_special_combo_2_exited"]
 [connection signal="dur_timeout" from="StateMachine/AttackState/AttackCloser" to="StateMachine/AttackState/AttackCloser" method="_on_dur_timeout"]

@@ -3,6 +3,7 @@ class_name AttackStartState extends LimboState
 @export var animation_player : AnimationPlayer
 @export var attack_name : String
 @export var pc : PlayerEntity = null
+@export var charge_timer : Timer = null
 
 @onready var attack_debug := "Attack"
 
@@ -14,6 +15,7 @@ func _enter() -> void:
 	animation_player.play_section_with_markers(attack_name, "", "attack_start")
 	print_debug(animation_player.current_animation)
 	pc.attacking=true
+	charge_timer.start(0.2)
 
 func _exit() -> void:
 	attack_debug=animation_player.current_animation

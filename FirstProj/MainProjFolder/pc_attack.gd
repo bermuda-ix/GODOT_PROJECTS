@@ -17,7 +17,9 @@ func _enter() -> void:
 	starting = pc.global_position.x
 	hit_box.active=false
 	hit_box.clash_active=true
-
+	#change_active_state(pc.attack_start)
+	#assert(get_active_state()==pc.attack_start)
+	pass
 	
 func _update(delta: float) -> void:
 	

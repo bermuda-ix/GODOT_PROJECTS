@@ -548,7 +548,7 @@ func _init_state_machine():
 	state_machine.add_transition(attack_state, hit, &"interrupt_knockback")
 	
 	#Charge Attacks
-	#state_machine.add_transition(attack_state, charging_attack, &"charge_attack")
+	state_machine.add_transition(attack_state, attack_state, &"next_attack")
 	#state_machine.add_transition(charging_attack, attack_state, &"charged")
 	#state_machine.add_transition(charging_attack, attack_2, &"charged_2")
 	#state_machine.add_transition(charging_attack, attack_3, &"charged_3")
@@ -613,20 +613,21 @@ func _init_parry_success_state_machine():
 	
 func _init_attack_states():
 	attack_state.initial_state=attack_start
+	#attack_state.initialize(self)
 
 	attack_state.add_transition(attack_start, attack_1, &"release_attack")
-	attack_state.add_transition(attack_1, attack_start, &"next_attack")
+	#attack_state.add_transition(attack_1, attack_start, &"next_attack")
 	
 	
 	#attack_state.add_transition(attack_1, clashed, &"clashed")
 	#attack_state.add_transition(clashed, attack_1, &"riposte")
 	#attack_state.add_transition(clashed, heavy_attack_1, &"heavy_riposte")
 
-	attack_state.add_transition(attack_state.ANYSTATE, dash_attack, &"dash_attack")
-	attack_state.add_transition(attack_state.ANYSTATE, heavy_dash_attack, &"heavy_dash_attack")
-	attack_state.add_transition(attack_state.ANYSTATE, heavy_counter, &"heavy_counter")
-	attack_state.add_transition(attack_state.ANYSTATE, attack_closer, &"attack_closer")
-	attack_state.add_transition(attack_state.ANYSTATE, slam_start, &"attack_slam")
+	attack_state.add_transition(attack_start, dash_attack, &"dash_attack")
+	attack_state.add_transition(attack_start, heavy_dash_attack, &"heavy_dash_attack")
+	attack_state.add_transition(attack_start, heavy_counter, &"heavy_counter")
+	attack_state.add_transition(attack_start, attack_closer, &"attack_closer")
+	attack_state.add_transition(attack_start, slam_start, &"attack_slam")
 	attack_state.add_transition(slam_start, slam_attack, &"slam_end")
 	
 	#Heavy attack Combos
@@ -657,7 +658,7 @@ func _init_attack_states():
 	#attack_state.add_transition(special_combo, attack_2, &"combo_resume")
 	#attack_state.add_transition(special_combo, attack_3, &"combo_resume_2")
 	
-	attack_state.add_transition(attack_state.ANYSTATE, attack_1, &"reset_combo")
+	#attack_state.add_transition(attack_start, attack_1, &"reset_combo")
 
 func _process(_delta):
 	
@@ -714,8 +715,7 @@ func _process(_delta):
 	
 	
 	if Input.is_action_just_pressed("DEBUG_KEY"):
-		pass
-	
+		clash_power.clash_power+=1
 	
 	#if Input.is_action_just_released("attack"):
 		#light_attack()
@@ -1191,7 +1191,7 @@ func attack_handler():
 			if attacking:
 				return
 			else:
-				attack_state.dispatch(&"next_attack")
+				state_machine.dispatch(&"next_attack")
 
 		#if not charge_timer.is_stopped():
 			#return
@@ -1203,12 +1203,15 @@ func attack_handler():
 				#charge_timer.start(0.2)
 				#charging=true
 				#charging_attack.attack=attack_1.attack
+			attack_state.initial_state=attack_start
 			state_machine.dispatch(&"start_attack")
 
 
 			
 	elif Input.is_action_just_released("attack"):
 		if state_machine.get_active_state()==parry_success_state:
+			return
+		if attack_state.get_active_state()!=attack_start:
 			return
 		#if attacking:
 			#if charging:
@@ -1265,7 +1268,7 @@ func next_light_combo()->void:
 	light_attack_index=wrapi(light_attack_index+1,0,3)
 	attack_1.attack=light_attacks[light_attack_index]
 	attack_start.attack_name=light_attacks[light_attack_index]
-	print_debug(light_attacks[light_attack_index])
+	#print_debug(light_attacks[light_attack_index])
 
 func heavy_combos():
 	if Input.is_action_pressed("special_attack") and not Input.is_action_pressed("attack"):
@@ -1329,9 +1332,13 @@ func heavy_combos():
 			
 		
 func _on_charge_timer_timeout() -> void:
-	return
-	
-	
+	if state_machine.get_active_state()==clashed:
+		return
+	if clash_power.clash_power>0:
+		hit_box.heavy_attack=true
+		hit_fx_player.play("charge_attack")
+	else:
+		light_attack()
 	#print_debug(hit_box.damage,", ", clash_power.clash_power)
 	#if state_machine.get_active_state()==clashed:
 		#return
@@ -2566,7 +2573,7 @@ func _on_attack_timer_timeout():
 	if input_axis!=0:
 		state_machine.dispatch(&"resume_walking")
 	else:
-		#return
+		print_debug(state_machine.get_active_state())
 		state_machine.dispatch(&"return_to_idle")
 		#assert(state_machine.get_active_state()==idle)
 	#attack_state.dispatch(&"reset_combo")
@@ -3093,14 +3100,14 @@ func _on_state_machine_active_state_changed(current: LimboState, _previous: Limb
 
 func _on_attack_state_active_state_changed(current: LimboState, previous: LimboState) -> void:
 
-	if current==special_combo:
-		if previous==attack_1:
-			atk_2_resume=false
-			atk_1_resume=true
-		
-	if previous==special_combo:
-		atk_1_resume=false
-		atk_2_resume=false
+	#if current==special_combo:
+		#if previous==attack_1:
+			#atk_2_resume=false
+			#atk_1_resume=true
+		#
+	#if previous==special_combo:
+		#atk_1_resume=false
+		#atk_2_resume=false
 	
 	if current in [attack_1]:
 		hitbox.stagger_damage=false
@@ -3339,9 +3346,11 @@ func _on_jump_state_entered() -> void:
 
 func _on_attack_state_exited() -> void:
 	charging=false
+	charge_timer.stop()
 	set_shotgun_free_rotate(true)
 	hb_collision.set_deferred("disabled", true)
 	attack_fx.visible=false
+	#attack_state.change_active_state(attack_start)
 
 
 func _on_stagger_stagger_decreased(diff: int) -> void:
