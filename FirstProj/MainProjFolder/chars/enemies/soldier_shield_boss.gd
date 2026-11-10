@@ -883,8 +883,9 @@ func _on_clashed_state_riposte_follow_up() -> void:
 func _on_clashed_state_updated(delta: float) -> void:
 	set_collision_mask_value(24, true)
 	hurt_box.set_collision_mask_value(24, true)
-	if player_state!=player.parry_success_state:
-		#push_error("stuck in a clash")
+	if player_state!=player.parry_success_state and \
+	player_state!=player.hit:
+		print_debug(player_state)
 		if melee_range_check():
 			state_machine.dispatch(&"start_attack")
 		else:
@@ -1019,7 +1020,7 @@ func _on_stagger_morale_threshold_reached(_threshold : int) -> void:
 
 
 func _on_limbo_hsm_active_state_changed(current: LimboState, previous: LimboState) -> void:
-	if previous==clashed_state and current==reload_state:
+	if previous==clashed_state and current==chasing:
 		print_debug(get_stack())
 		pass
 

@@ -647,11 +647,11 @@ func _init_attack_states():
 	#attack_state.add_transition(heavy_attack_2, charging_attack, &"charge_attack")
 	#attack_state.add_transition(heavy_attack_3, charging_attack, &"charge_attack")
 	
-	attack_state.add_transition(charging_attack, charged_attack, &"charged")
+	#attack_state.add_transition(charging_attack, charged_attack, &"charged")
 	
 	#attack_state.add_transition(charged_attack, attack_2, &"combo_resume")
 	#attack_state.add_transition(charged_attack, attack_3, &"combo_resume_2")
-	attack_state.add_transition(charged_attack, attack_1, &"next_attack")
+	#attack_state.add_transition(charged_attack, attack_1, &"next_attack")
 	
 	
 	#Resume Combos
@@ -1165,6 +1165,7 @@ func attack_handler():
 	
 	if not dash_attack_timer.is_stopped():
 		if Input.is_action_just_pressed("attack"):
+			hit_box.clash_active=true
 			if target!=null:
 				attack_closer.speed=500
 				if target.is_on_floor():
@@ -1548,8 +1549,8 @@ func dash_attack_enter():
 	if state_machine.get_active_state()==attack_state:
 		return
 	attack_timer.paused=true
-	attack_state.dispatch(&"dash_attack")
 	state_machine.dispatch(&"dash_attack")
+	attack_state.dispatch(&"dash_attack")
 	#attack_combo = "Attack_Dash"
 	#hit_sound = hit1
 	#AudioStreamManager.play(swing1)

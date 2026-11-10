@@ -34,9 +34,11 @@ func _ready() -> void:
 func _enter() -> void:
 	print_debug("successful parry")
 	pc.attack_timer.stop()
-	var _attack_anim=attack_1.attack
-	var _marker_time=anim_player.get_animation(_attack_anim).get_marker_time("Attack_connect")
-	anim_player.seek(_marker_time, true, true)
+	#var _attack_anim=attack_1.attack
+	#var _marker_time=anim_player.get_animation(_attack_anim).get_marker_time("Attack_connect")
+	anim_player.play_section_with_markers(attack_1.attack, "Attack_connect")
+	anim_player.advance(0)
+	#anim_player.seek(_marker_time, true, true)
 	pc.attacking=false
 	#assert(anim_player.current_animation_position==_marker_time)
 	anim_player.pause()
