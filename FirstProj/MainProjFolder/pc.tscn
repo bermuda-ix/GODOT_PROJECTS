@@ -17753,6 +17753,9 @@ script = ExtResource("1_x210m")
 movement_data = ExtResource("2_4grev")
 health = NodePath("Health")
 hitbox = NodePath("AnimatedSprite2D/HitBox")
+attacking = false
+heavy_attacking = false
+charging = false
 
 [node name="InteractPromptSprite" type="AnimatedSprite2D" parent="." unique_id=585863432]
 self_modulate = Color(1, 1, 1, 0)
@@ -18731,7 +18734,6 @@ pc = NodePath("../..")
 script = ExtResource("109_mj1xc")
 pc = NodePath("../..")
 
-[connection signal="clash_up" from="." to="." method="_on_clash_up"]
 [connection signal="area_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_entered" from="AnimatedSprite2D/HitBox" to="StateMachine/AttackState/AttackCloser" method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_body_entered"]
