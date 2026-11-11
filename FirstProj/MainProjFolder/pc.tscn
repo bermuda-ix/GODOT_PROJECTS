@@ -7671,6 +7671,15 @@ tracks/13/keys = {
 [sub_resource type="Animation" id="Animation_i0kkw"]
 resource_name = "Heavy_Combo_1"
 length = 0.9
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"attack_start",
+"time": 0.10870269
+}, {
+"color": Color(1, 1, 1, 1),
+"name": &"Attack_connect",
+"time": 0.39921784
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -8120,6 +8129,15 @@ tracks/35/keys = {
 [sub_resource type="Animation" id="Animation_cdmbu"]
 resource_name = "Heavy_Combo_2"
 length = 0.9
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"attack_start",
+"time": 0.073109776
+}, {
+"color": Color(1, 1, 1, 1),
+"name": &"Attack_connect",
+"time": 0.28666726
+}]
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = false
@@ -17753,9 +17771,6 @@ script = ExtResource("1_x210m")
 movement_data = ExtResource("2_4grev")
 health = NodePath("Health")
 hitbox = NodePath("AnimatedSprite2D/HitBox")
-attacking = false
-heavy_attacking = false
-charging = false
 
 [node name="InteractPromptSprite" type="AnimatedSprite2D" parent="." unique_id=585863432]
 self_modulate = Color(1, 1, 1, 0)
