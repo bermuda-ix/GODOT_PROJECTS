@@ -35,6 +35,7 @@ var always_active : bool
 #@onready var hurt_box_weakpoint: HurtBox = $HurtBox_Weakpoint
 #@onready var hurt_box_weakpoint_collision: CollisionShape2D = $HurtBox_Weakpoint/CollisionShape2D
 @onready var hit_stop: HitStop = $HitStop
+
 @onready var hit_stop_dur = 0.0
 #@onready var shield: Area2D = $Shield
 #@onready var shield_collision: CollisionShape2D = $Shield/CollisionShape2D
@@ -388,6 +389,7 @@ func _on_state_machine_active_state_changed(current: LimboState, previous: Limbo
 
 
 func _on_combat_state_machine_active_state_changed(current: LimboState, previous: LimboState) -> void:
+	await self.ready
 	if state_machine.get_active_state()==idle:
 		return
 	elif state_machine.get_active_state()==clashed:
@@ -647,6 +649,7 @@ func force_chase():
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	await self.ready
 	hit_stop.end_hit_stop()
 	if vision_handler.player_found or vision_handler.always_on:
 		state_machine.dispatch(&"attack_mode")
@@ -727,6 +730,8 @@ func _on_hurt_box_knockback(_launch_strength: float, _knock_back_strength: float
 		launch.launch_strength=_launch_strength
 		launch.air_time=1.0
 		if state_machine.get_active_state()!=staggered:
+			state_machine.change_active_state(launch)
+		else:
 			state_machine.change_active_state(launch)
 	else:
 		parry_timer.wait_time=2

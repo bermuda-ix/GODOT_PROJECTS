@@ -9,7 +9,7 @@ signal morale_threshold_reached
 @export var max_stagger: int = 3 : set = set_max_stagger, get = get_max_stagger
 @export var stagger_immortality : bool = false
 @export var angry_stagger_threshold : int = clampi(1,1, max_stagger)
-@export var stagger_morale_thresholds : Array[int]
+@export var stagger_morale_thresholds : Array[int] = [1]
 @export var stagger_morale_threshold_index : int =0
 
 var immortality_timer: Timer = null
@@ -47,7 +47,7 @@ func set_stagger(value: int):
 			pass
 		elif stagger < stagger_morale_thresholds[stagger_morale_threshold_index]:
 			morale_threshold_reached.emit(stagger_morale_threshold_index)
-			stagger_morale_threshold_index+=1
+			stagger_morale_threshold_index=clampi(stagger_morale_threshold_index, 0, stagger_morale_thresholds.size()-1)
 		
 		if stagger <= 0:
 			staggered.emit()

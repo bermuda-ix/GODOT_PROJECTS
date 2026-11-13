@@ -18534,9 +18534,10 @@ anim_player_atk_fx = NodePath("../../../AttackFX")
 pc = NodePath("../../..")
 attack_fx_sprite = NodePath("../../../AnimatedSprite2D/attack_fx")
 
-[node name="SpecialCombo" type="LimboState" parent="StateMachine/AttackState" unique_id=332878213 node_paths=PackedStringArray("anim_player", "pc")]
+[node name="SpecialCombo" type="LimboState" parent="StateMachine/AttackState" unique_id=332878213 node_paths=PackedStringArray("anim_player", "shotty_anim_player", "pc")]
 script = ExtResource("104_l1qeb")
 anim_player = NodePath("../../../AnimationPlayer")
+shotty_anim_player = NodePath("../../../AnimatedSprite2D/Shotty/ShottyAnimationPlayer")
 pc = NodePath("../../..")
 
 [node name="SpecialCombo2" type="LimboState" parent="StateMachine/AttackState" unique_id=886325446 node_paths=PackedStringArray("anim_player", "pc")]
@@ -18749,6 +18750,7 @@ pc = NodePath("../..")
 script = ExtResource("109_mj1xc")
 pc = NodePath("../..")
 
+[connection signal="animation_finished" from="AnimatedSprite2D/Shotty/ShottyAnimationPlayer" to="." method="_on_shotty_animation_player_animation_finished"]
 [connection signal="area_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_entered" from="AnimatedSprite2D/HitBox" to="StateMachine/AttackState/AttackCloser" method="_on_hit_box_area_entered"]
 [connection signal="body_entered" from="AnimatedSprite2D/HitBox" to="." method="_on_hit_box_body_entered"]
@@ -18776,6 +18778,7 @@ pc = NodePath("../..")
 [connection signal="area_entered" from="InteractableDetector" to="." method="_on_interactable_detector_area_entered"]
 [connection signal="area_exited" from="InteractableDetector" to="." method="_on_interactable_detector_area_exited"]
 [connection signal="hit_stop_finished" from="HitStop" to="." method="_on_hit_stop_hit_stop_finished"]
+[connection signal="hit_stop_started" from="HitStop" to="." method="_on_hit_stop_hit_stop_started"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="HeavyAttackBufferTimer" to="." method="_on_heavy_attack_buffer_timer_timeout"]
 [connection signal="timeout" from="SpecialAttackBufferTimer" to="." method="_on_special_attack_buffer_timer_timeout"]

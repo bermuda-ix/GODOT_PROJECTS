@@ -65,10 +65,10 @@ func _enter() -> void:
 	clash_timer.start(1)
 	var _current_anim:= melee_attack_helper.light_attacks[melee_attack_helper.combo_int]
 	#anim_player.stop()
-	#anim_player.play_section_with_markers(_current_anim, &"clashed")
-
-	var _marker_time=anim_player.get_animation(_current_anim).get_marker_time("clashed")
-	anim_player.seek(_marker_time, true, true)
+	anim_player.play_section_with_markers(_current_anim, &"clashed")
+	anim_player.advance(0)
+	#var _marker_time=anim_player.get_animation(_current_anim).get_marker_time("clashed")
+	#anim_player.seek(_marker_time, true, true)
 	anim_player.pause()
 	print_debug(get_stack())
 	movement_handler.active=false

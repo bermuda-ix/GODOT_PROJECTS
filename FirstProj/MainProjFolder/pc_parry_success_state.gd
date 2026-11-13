@@ -20,6 +20,7 @@ extends LimboHSM
 @onready var queue_attack := false
 @export var clash_power : ClashPower
 @export var clashing_timer : Timer
+@onready var riposte_type := "riposte"
 signal dur_timeout
 
 
@@ -69,7 +70,7 @@ func _update(delta: float) -> void:
 		hit_stop.end_hit_stop()
 		Events.parry_success.emit("riposte", 1*clash_power.clash_power)
 		if ranged_counter:
-			pass
+			attack_fx_secondary.play("riposte")
 		else:
 			success=true
 			attack_fx_secondary.play("riposte")

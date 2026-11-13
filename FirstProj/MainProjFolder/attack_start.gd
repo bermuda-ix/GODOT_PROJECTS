@@ -12,7 +12,7 @@ func  _ready() -> void:
 	pc = get_tree().get_first_node_in_group("player")
 
 func _enter() -> void:
-	hit_box_collision.set_deferred("disabled", false)
+	#hit_box_collision.set_deferred("disabled", false)
 	print_debug(attack_name)
 	animation_player.play_section_with_markers(attack_name, "", "attack_start")
 	print_debug(animation_player.current_animation)
@@ -20,4 +20,5 @@ func _enter() -> void:
 	charge_timer.start(0.2)
 
 func _exit() -> void:
+	hit_box_collision.set_deferred("disabled", false)
 	attack_debug=animation_player.current_animation

@@ -31,7 +31,7 @@ extends CharacterBody2D
 
 @onready var launch_timer: Timer = $LaunchTimer
 @onready var launch_height : float = 40
-@onready var launch_strength : float = 40
+@onready var launch_strength : float = 200
 
 @onready var is_on_screen : bool =false
 @onready var on_screen: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
@@ -105,3 +105,10 @@ func _on_hurt_box_received_damage(damage: int) -> void:
 
 func _on_teleport_timer_timeout() -> void:
 	label.visible=false
+
+
+func _on_hurt_box_knockback(launch_strength: float, knock_back_strength: float, impact_dir_right: bool) -> void:
+	print_debug("launched")
+	launch_timer.start(1)
+	state_machine.change_active_state(launched)
+	launch_height=global_position.y-launch_strength

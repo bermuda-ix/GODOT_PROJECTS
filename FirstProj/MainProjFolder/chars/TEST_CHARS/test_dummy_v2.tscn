@@ -69,6 +69,7 @@ shape = SubResource("CircleShape2D_clner")
 [node name="Stagger" type="Node" parent="." unique_id=144674053]
 script = ExtResource("6_2y32f")
 max_stagger = 40
+stagger_morale_thresholds = Array[int]([2, 1, 0])
 metadata/_custom_type_script = "uid://ba6pwl0vfuyp"
 
 [node name="Health" type="Node" parent="." unique_id=1459976039]
@@ -111,6 +112,7 @@ one_shot = true
 [node name="LaunchTimer" type="Timer" parent="." unique_id=477796289]
 one_shot = true
 
+[connection signal="knockback" from="HurtBox" to="." method="_on_hurt_box_knockback"]
 [connection signal="launched" from="HurtBox" to="." method="_on_hurt_box_launched"]
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="timeout" from="TeleportTimer" to="." method="_on_teleport_timer_timeout"]

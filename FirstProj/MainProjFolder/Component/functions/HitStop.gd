@@ -8,6 +8,7 @@ extends Node
 @onready var slow_down_ease: bool = false
 
 signal hit_stop_finished
+signal hit_stop_started
 
 func _ready() -> void:
 	add_child(dur)
@@ -30,6 +31,7 @@ func _process(delta: float) -> void:
 
 func hit_stop(time_scale : float, duration : float):
 	Engine.time_scale = time_scale
+	hit_stop_started.emit()
 	if not dur.is_inside_tree():
 		add_timer()
 	dur.start(duration)

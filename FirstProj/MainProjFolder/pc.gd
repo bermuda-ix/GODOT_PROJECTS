@@ -541,6 +541,7 @@ func _init_state_machine():
 	state_machine.add_transition(attack_state, aim, &"aim")
 	state_machine.add_transition(aim, special_attack, &"shoot")
 	state_machine.add_transition(aim, dodge_state, &"start_dodge")
+	state_machine.add_transition(attack_state, special_attack, &"shoot_combo")
 	
 	state_machine.add_transition(special_attack, falling_state, &"return_from_special")
 	#state_machine.add_transition(idle, special_attack, &"special_attack")
@@ -630,6 +631,7 @@ func _init_attack_states():
 	attack_state.add_transition(attack_start, heavy_dash_attack, &"heavy_dash_attack")
 	attack_state.add_transition(attack_start, heavy_counter, &"heavy_counter")
 	attack_state.add_transition(attack_start, attack_closer, &"attack_closer")
+	attack_state.add_transition(attack_start, dash_attack, &"dash_attack")
 	attack_state.add_transition(attack_start, slam_start, &"attack_slam")
 	attack_state.add_transition(slam_start, slam_attack, &"slam_end")
 	
@@ -677,7 +679,7 @@ func _process(_delta):
 #
 	input_axis = Input.get_axis("walk_left", "walk_right")
 	
-	label.text=str(state_machine.get_active_state())
+	label.text=str(state_machine.get_active_state(),"\n",attack_state.get_active_state())
 	
 	get_target_info()
 	#previous_state()
@@ -1189,6 +1191,7 @@ func attack_handler():
 	if Input.is_action_pressed("attack"):
 		#print_debug(state_machine.get_active_state())
 		combo_type=directional_attack_type()
+		special_combo.combo_type=directional_attack_type()
 		match combo_type:
 			attack_direction.NEUTRAL:
 				attack_start.attack_name=light_attacks[light_attack_index]
@@ -1196,7 +1199,7 @@ func attack_handler():
 			attack_direction.UP:
 				attack_start.attack_name=heavy_attacks[1]
 				attack_1.attack=heavy_attacks[1]
-			attack_direction.FORWARD:
+			attack_direction.BACK:
 				attack_start.attack_name=heavy_attacks[0]
 				attack_1.attack=heavy_attacks[0]
 		if not reload_timer.is_stopped():
@@ -1501,6 +1504,7 @@ func dash_attack_enter():
 func dash_shoot_attack():
 	var _quick_aim : StringName = "clash_"+str(clampi(remap(0, clash_power.clash_power, 5, 0, 5),0,5))
 	shotty_animation_player.play_section_with_markers("shotgun_aim", _quick_aim)
+	shotty_animation_player.advance(0)
 	shotty_animation_player.pause()
 	state_machine.dispatch(&"dodge_shoot")
 	
@@ -1533,6 +1537,8 @@ func sp_atk():
 		aim_and_shoot()
 	else:
 		if Input.is_action_pressed("sprint") or (state_machine.get_active_state()!=attack_state):
+			aim_and_shoot()
+		elif attack_state.get_active_state() in [heavy_attack_1]:
 			aim_and_shoot()
 		else:
 			heavy_combos()
@@ -1570,6 +1576,8 @@ func aim_and_shoot():
 				else:
 					end_slow_down()
 		elif Input.is_action_just_released("special_attack"):
+			if attack_state.get_active_state()==special_combo:
+				return
 			special_attack.shoot_anim="shotgun_attack"
 			dodge_anim="dodge_roll"
 			dodge_state.dodge_distance=150
@@ -1584,8 +1592,8 @@ func aim_and_shoot():
 			end_slow_down()
 
 func slow_down_aim():
-	shotty_animation_player.speed_scale=(1/Engine.time_scale)*0.8
 	Engine.time_scale=0.5
+	shotty_animation_player.speed_scale=(1/Engine.time_scale)*0.8
 
 func end_slow_down():
 	shotty_animation_player.speed_scale=1
@@ -2486,6 +2494,14 @@ func _on_animation_player_animation_finished(anim_name):
 	#else:
 		#pass
 
+
+func _on_shotty_animation_player_animation_finished(anim_name: StringName) -> void:
+	if attack_state.get_active_state()==special_combo:
+		match anim_name:
+			"shotgun_aim_quick":
+				print_debug(state_machine.get_active_state())
+				state_machine.dispatch(&"shoot_combo")
+
 func _on_attack_timer_timeout():
 	if Input.is_action_pressed("attack"):
 		state_machine.dispatch(&"return_to_idle")
@@ -2495,7 +2511,8 @@ func _on_attack_timer_timeout():
 		state_machine.dispatch(&"return_to_idle")
 		return
 	elif attack_state.get_active_state()==special_combo:
-		state_machine.dispatch(&"return_to_idle")
+		return
+		#state_machine.dispatch(&"return_to_idle")
 	elif state_machine.get_active_state()==parry_success_state:
 		state_machine.dispatch(&"clash_return_to_idle")
 		
@@ -3004,12 +3021,21 @@ func _on_hit_box_clash_interrupt(_launch: float, _knockback: float, _impact_dir_
 	stagger.stagger-= _damage
 	attacking=false
 		
+
+func animation_hit_stop_scale() -> void:
+	anim_player.speed_scale=1/Engine.time_scale
+	shotty_animation_player.speed_scale=1/Engine.time_scale
+
 func _on_hit_stop_hit_stop_finished() -> void:
+	anim_player.speed_scale=1
+	shotty_animation_player.speed_scale=1
 	if not qte_handler.actor_control_active:
 		no_input_qte.emit()
 	else:
 		pass
 
+func _on_hit_stop_hit_stop_started() -> void:
+	pass # Replace with function body.
 
 
 func _on_idle_entered() -> void:

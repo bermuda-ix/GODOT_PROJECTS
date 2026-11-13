@@ -53,7 +53,7 @@ func _enter() -> void:
 	
 func _update(delta: float) -> void:
 	if "hb_collision" in actor:
-		assert(actor.hb_collision.disabled==true)
+		#assert(actor.hb_collision.disabled==true)
 		hb_collision.set_deferred("disabled",true)
 	if hurt_box_collision!=null:
 		hurt_box_collision.set_deferred("disabled",false)
@@ -73,5 +73,6 @@ func _exit() -> void:
 	print_debug(stagger.max_stagger)
 	await stagger.stagger_recover()
 	assert(stagger.stagger!=0)
+	stagger.stagger_morale_threshold_index=0
 	if vfx_player!=null:
 		vfx_player.call_deferred("stop")
