@@ -4,11 +4,20 @@ extends LimboState
 
 @export var actor : Node2D
 @export var bt_player : BTPlayer
-@export var chase_speed : float = 40
+@export var chase_speed : float = 40 : set = set_chase_speed
 @export var run_anim : String = "run"
+@export var vision_handler : VisionHandler = null
+
+func set_chase_speed(_value : float) -> void:
+	chase_speed=_value
+	if _value==40.0:
+		pass
 
 func _enter() -> void:
-	actor.player_found=true
+	if vision_handler!=null:
+		vision_handler.player_found=true
+	else:
+		actor.player_found=true
 	#actor.hb_collision.disabled=true
 	if "hb_collision" in actor:
 		actor.hb_collision.set_deferred("disabled", true)

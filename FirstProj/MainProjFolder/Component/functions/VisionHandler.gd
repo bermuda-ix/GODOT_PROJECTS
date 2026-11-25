@@ -21,6 +21,7 @@ extends Node
 @onready var player_colliding := false
 
 @onready var player_found : bool = false
+@onready var player_right : bool = false
 
 @export var ground_enemy := true
 @export var face_player := true
@@ -55,11 +56,13 @@ func get_player_relative_loc():
 			
 
 func handle_vision():
-	player_colliding=player_tracking.is_colliding()
 	if not active:
 		return
+	player_colliding=player_tracking.is_colliding()
+	
 	if always_on:
 		player_found=true
+		return
 		#sm.dispatch(&"start_chase")
 	if not path_valid() and nav_agent!=null:
 		
@@ -146,3 +149,9 @@ func path_valid() -> bool:
 	if nav_agent==null:
 		return false
 	return nav_agent.is_target_reachable()
+
+func check_player_right() -> void:
+	if player.global_position.x>actor.global_position.x:
+		player_right=true
+	else:
+		player_right=false

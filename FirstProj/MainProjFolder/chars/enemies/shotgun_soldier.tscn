@@ -46,6 +46,7 @@
 [ext_resource type="Texture2D" uid="uid://dchoeftyjo2db" path="res://Art_Components/Effects/AttackEffects/FX035_nyknck/FX035_05.png" id="43_4r7j0"]
 [ext_resource type="AudioStream" uid="uid://x0dfvgtcpmbh" path="res://Art_Components/Effects/sound/swishes/swishes/swish-5.wav" id="44_3wkqt"]
 [ext_resource type="Script" uid="uid://cnxm24jqclb68" path="res://Component/health.gd" id="44_pk3op"]
+[ext_resource type="Texture2D" uid="uid://5tadkaf1kutw" path="res://Art_Components/Effects/Effect and FX Pixel All Free/Free/Part 5/231.png" id="45_3wkqt"]
 [ext_resource type="Script" uid="uid://ba6pwl0vfuyp" path="res://Component/stagger.gd" id="45_21ask"]
 [ext_resource type="Script" uid="uid://xtvvtv1f2dfa" path="res://Component/functions/CombatHandlers/MoraleHandler.gd" id="46_ub6qo"]
 [ext_resource type="PackedScene" uid="uid://0ug6bp2pmux4" path="res://chars/turret.tscn" id="47_bvwya"]
@@ -1014,6 +1015,127 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfoy4"]
+atlas = ExtResource("45_3wkqt")
+region = Rect2(0, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3pura"]
+atlas = ExtResource("45_3wkqt")
+region = Rect2(64, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4bhlc"]
+atlas = ExtResource("45_3wkqt")
+region = Rect2(128, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qx3of"]
+atlas = ExtResource("45_3wkqt")
+region = Rect2(192, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umrx8"]
+atlas = ExtResource("45_3wkqt")
+region = Rect2(256, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4w8m"]
+atlas = ExtResource("45_3wkqt")
+region = Rect2(320, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eb4gh"]
+atlas = ExtResource("45_3wkqt")
+region = Rect2(384, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jdr48"]
+atlas = ExtResource("45_3wkqt")
+region = Rect2(448, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ghc81"]
+atlas = ExtResource("45_3wkqt")
+region = Rect2(512, 448, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jc26s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mfoy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3pura")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4bhlc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qx3of")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umrx8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4w8m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eb4gh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jdr48")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ghc81")
+}],
+"loop": 1,
+"name": &"Attack_Thrust_Impact",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xif7g"]
+atlas = ExtResource("13_gofci")
+region = Rect2(0, 832, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ux2ht"]
+atlas = ExtResource("13_gofci")
+region = Rect2(64, 832, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nwfsy"]
+atlas = ExtResource("13_gofci")
+region = Rect2(128, 832, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3emi5"]
+atlas = ExtResource("13_gofci")
+region = Rect2(192, 832, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhoqo"]
+atlas = ExtResource("13_gofci")
+region = Rect2(256, 832, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjigh"]
+atlas = ExtResource("13_gofci")
+region = Rect2(320, 832, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3wkqt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xif7g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ux2ht")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nwfsy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3emi5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lhoqo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjigh")
+}],
+"loop": 1,
+"name": &"Attack_1",
+"speed": 5.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_incat"]
 size = Vector2(31, 24)
 
@@ -1222,6 +1344,18 @@ tracks/16/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("AnimatedSprite2D/VFXSprite:scale")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
 }
 
 [sub_resource type="Animation" id="Animation_uvbyr"]
@@ -1705,6 +1839,28 @@ tracks/14/keys = {
 "times": PackedFloat32Array(0.16666667)
 }
 tracks/14/use_blend = true
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("AnimatedSprite2D/VFXSprite:scale")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.26666668, 0.28333333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1, 1)]
+}
+tracks/16/type = "animation"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("AnimationPlayer/AttackFXSecondary")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"clips": PackedStringArray("melee_attack"),
+"times": PackedFloat32Array(0.25833333)
+}
 
 [sub_resource type="Animation" id="Animation_eke2m"]
 resource_name = "reload"
@@ -2408,6 +2564,127 @@ _data = {
 &"hit": SubResource("Animation_rcq7j")
 }
 
+[sub_resource type="Animation" id="Animation_jc26s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D/AttackFX:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D/AttackFX:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.1415927]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D/AttackFX:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-17, 4)]
+}
+
+[sub_resource type="Animation" id="Animation_j30rp"]
+resource_name = "melee_attack"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D/AttackFX:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.6651917]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D/AttackFX:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-7, -18)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D/AttackFX:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../AnimatedSprite2D/AttackFX:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.033333335),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Attack_1"]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../AnimatedSprite2D/AttackFX:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../AnimatedSprite2D/AttackFX:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 0.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vyyax"]
+_data = {
+&"RESET": SubResource("Animation_jc26s"),
+&"melee_attack": SubResource("Animation_j30rp")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_18l1p"]
 size = Vector2(20, 70)
 
@@ -2461,6 +2738,21 @@ self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 sprite_frames = SubResource("SpriteFrames_g28q7")
 animation = &"hit"
 
+[node name="AttackFXSecondary" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1805143159]
+position = Vector2(-1, 0)
+sprite_frames = SubResource("SpriteFrames_jc26s")
+animation = &"Attack_Thrust_Impact"
+
+[node name="AttackFX" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=2075332755]
+visible = false
+self_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
+position = Vector2(-17, 4)
+rotation = 3.1415927
+scale = Vector2(1, 0.5)
+sprite_frames = SubResource("SpriteFrames_3wkqt")
+animation = &"Attack_1"
+frame = 5
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1703919617]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1336017752]
@@ -2471,6 +2763,9 @@ libraries/ = SubResource("AnimationLibrary_dkp45")
 
 [node name="HitFXPlayer" type="AnimationPlayer" parent="AnimationPlayer" unique_id=2075158784]
 libraries/ = SubResource("AnimationLibrary_n808b")
+
+[node name="AttackFXSecondary" type="AnimationPlayer" parent="AnimationPlayer" unique_id=1097582155]
+libraries/ = SubResource("AnimationLibrary_vyyax")
 
 [node name="Health" type="Node" parent="." unique_id=1716487280]
 script = ExtResource("44_pk3op")
@@ -2591,6 +2886,8 @@ wait_time = 0.2
 one_shot = true
 ignore_time_scale = true
 
+[node name="ClashTimer" type="Timer" parent="." unique_id=523683029]
+
 [node name="JumpHandler" type="Node" parent="." unique_id=1621061860 node_paths=PackedStringArray("actor", "state_machine")]
 script = ExtResource("52_b5r0w")
 actor = NodePath("..")
@@ -2701,9 +2998,10 @@ metadata/_custom_type_script = "uid://4wnsld0u1lhl"
 
 [node name="StateMachine" type="LimboHSM" parent="." unique_id=1864908001]
 
-[node name="Idle" type="LimboState" parent="StateMachine" unique_id=839714288 node_paths=PackedStringArray("actor")]
+[node name="Idle" type="LimboState" parent="StateMachine" unique_id=839714288 node_paths=PackedStringArray("actor", "animation_player")]
 script = ExtResource("69_pek6b")
 actor = NodePath("../..")
+animation_player = NodePath("../../AnimationPlayer")
 metadata/_custom_type_script = "uid://daq7xh1e6l7u6"
 
 [node name="Chasing" type="LimboState" parent="StateMachine" unique_id=692867265 node_paths=PackedStringArray("actor")]
@@ -2736,12 +3034,15 @@ anim_name = &"melee_attack"
 hit_box = NodePath("../../HitBox")
 hit_box_collision = NodePath("../../HitBox/hb_collision")
 
-[node name="ShootingBTState" type="BTState" parent="StateMachine" unique_id=1512420932 node_paths=PackedStringArray("turret", "stagger")]
+[node name="ShootingBTState" type="BTState" parent="StateMachine" unique_id=1512420932 node_paths=PackedStringArray("turret", "stagger", "health", "shoot_attack_manager", "animation_player")]
 behavior_tree = ExtResource("74_j3yct")
 blackboard_plan = SubResource("BlackboardPlan_bynfm")
 script = ExtResource("75_pxyfr")
 turret = NodePath("../../Turret")
 stagger = NodePath("../../Stagger")
+health = NodePath("../../Health")
+shoot_attack_manager = NodePath("../../ShootAttackManager")
+animation_player = NodePath("../../AnimationPlayer")
 
 [node name="Hit" type="LimboState" parent="StateMachine" unique_id=1063914303 node_paths=PackedStringArray("actor", "hurtbox", "animation_player", "hit_fx_player", "stagger")]
 script = ExtResource("76_bgv8i")
@@ -2753,15 +3054,17 @@ stagger = NodePath("../../Stagger")
 stagger_threshold = 0
 metadata/_custom_type_script = "uid://cdsger1er8ipk"
 
-[node name="Staggered" type="LimboState" parent="StateMachine" unique_id=322417903 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "vfx_player", "hurt_box", "stagger_timer", "hb_collision")]
+[node name="Staggered" type="LimboState" parent="StateMachine" unique_id=322417903 node_paths=PackedStringArray("actor", "movement_handler", "stagger", "health", "vfx_player", "hurt_box", "stagger_timer", "hb_collision", "hurt_box_collision")]
 script = ExtResource("79_8lalx")
 actor = NodePath("../..")
 movement_handler = NodePath("../../MovementHandler")
 stagger = NodePath("../../Stagger")
+health = NodePath("../../Health")
 vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
 hurt_box = NodePath("../../HurtBox")
 stagger_timer = NodePath("../../StaggerTimer")
 hb_collision = NodePath("../../HitBox/hb_collision")
+hurt_box_collision = NodePath("../../HurtBox/hurt_box_collision")
 metadata/_custom_type_script = "uid://bmeh2aawck5wy"
 
 [node name="Death" type="LimboState" parent="StateMachine" unique_id=182666007 node_paths=PackedStringArray("actor", "animation_player")]
@@ -2780,13 +3083,15 @@ death_knockback = 400
 drop_handler = NodePath("../../DropHandler")
 hit_stop = NodePath("../../HitStop")
 
-[node name="Launch" type="LimboState" parent="StateMachine" unique_id=1855801004 node_paths=PackedStringArray("actor", "launch_timer", "animation_player")]
+[node name="Launch" type="LimboState" parent="StateMachine" unique_id=1855801004 node_paths=PackedStringArray("actor", "launch_timer", "animation_player", "hit_box", "hurt_box")]
 script = ExtResource("83_kgui0")
 actor = NodePath("../..")
 launch_timer = NodePath("../../LaunchTimer")
 launch_strength = 0.0
 knock_back_strength = 0.0
 animation_player = NodePath("../../AnimationPlayer")
+hit_box = NodePath("../../HitBox")
+hurt_box = NodePath("../../HurtBox")
 metadata/_custom_type_script = "uid://dscn2ndlewuut"
 
 [node name="Falling" type="LimboState" parent="StateMachine" unique_id=2121598801 node_paths=PackedStringArray("animation_player", "actor", "state_machine")]
@@ -2812,20 +3117,24 @@ state_machine = NodePath("..")
 hit_stop = NodePath("../../HitStop")
 counter_attack_timer = NodePath("../../CounterAttackTimer")
 
-[node name="ClashedState" type="LimboHSM" parent="StateMachine" unique_id=1376127275 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "vfx_sprite", "hit_fx_player", "hurt_box", "hit_box", "hitbox_collision", "movement_handler", "stagger", "hit_stop", "state_machine", "counter_attack_timer")]
+[node name="ClashedState" type="LimboHSM" parent="StateMachine" unique_id=1376127275 node_paths=PackedStringArray("actor", "anim_player", "vfx_player", "vfx_sprite", "hit_fx_player", "atk_fx_secondary_player", "hurt_box", "hit_box", "melee_attack_helper", "hitbox_collision", "movement_handler", "health", "stagger", "hit_stop", "state_machine", "clash_timer", "counter_attack_timer")]
 script = ExtResource("87_uvbyr")
 actor = NodePath("../..")
 anim_player = NodePath("../../AnimationPlayer")
 vfx_player = NodePath("../../AnimationPlayer/VFXPlayer")
 vfx_sprite = NodePath("../../AnimatedSprite2D/VFXSprite")
 hit_fx_player = NodePath("../../AnimationPlayer/HitFXPlayer")
+atk_fx_secondary_player = NodePath("../../AnimationPlayer/AttackFXSecondary")
 hurt_box = NodePath("../../HurtBox")
 hit_box = NodePath("../../HitBox")
+melee_attack_helper = NodePath("../../MeleeAttackManager")
 hitbox_collision = NodePath("../../HitBox/hb_collision")
 movement_handler = NodePath("../../MovementHandler")
+health = NodePath("../../Health")
 stagger = NodePath("../../Stagger")
 hit_stop = NodePath("../../HitStop")
 state_machine = NodePath("..")
+clash_timer = NodePath("../../ClashTimer")
 counter_attack_timer = NodePath("../../CounterAttackTimer")
 counter_enabled = true
 metadata/_custom_type_script = "uid://bu2m8cwle1k11"

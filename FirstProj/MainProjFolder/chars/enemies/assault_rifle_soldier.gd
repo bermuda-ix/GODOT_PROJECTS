@@ -720,6 +720,7 @@ func _on_hurt_box_launched(launch_strength : float) -> void:
 
 func _on_hurt_box_knockback(_launch_strength: float, _knock_back_strength: float, _impact_dir_right: bool) -> void:
 	knocked_back=true
+	death_launch=_launch_strength
 	vfx_player.play("knocked_back")
 	var _total_stagger_damage = player.clash_power.clash_power+player.hitbox.damage
 	if _total_stagger_damage>=stagger.stagger or state_machine.get_active_state()==staggered:

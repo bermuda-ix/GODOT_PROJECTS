@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://vxei7p72t0rb" path="res://Component/functions/camera_comps/camera_pos.tscn" id="4_ec6ti"]
 [ext_resource type="PackedScene" uid="uid://cmbh5yrvkl5a6" path="res://chars/flying_enemy.tscn" id="5_fkwqf"]
 [ext_resource type="Script" uid="uid://2hjmonf4ss5y" path="res://Component/functions/HeatHandler.gd" id="6_82t0r"]
-[ext_resource type="PackedScene" uid="uid://bbkom6a7pabbe" path="res://chars/enemies/assault_rifle_soldier.tscn" id="8_v15hm"]
+[ext_resource type="PackedScene" uid="uid://qshtwqbeag6h" path="res://chars/enemies/flying_enemy_v_2.tscn" id="8_v15hm"]
 [ext_resource type="PackedScene" uid="uid://c1qrqrc41irxt" path="res://Component/checkpoint.tscn" id="10_gem31"]
 [ext_resource type="Script" uid="uid://4wnsld0u1lhl" path="res://Component/functions/HitStop.gd" id="11_fof0c"]
 [ext_resource type="PackedScene" uid="uid://b4uytwmkvsqi0" path="res://pc.tscn" id="12_dqkb5"]
@@ -39,9 +39,9 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(8, 112, 184, 112, 184, 
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_nxtlr"]
-vertices = PackedVector2Array(946, -237.008, 946, -90.9766, 199.992, -90, 10, -90, 10, -238, 447.977, -238)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(0, -248, 0, -80, 200, -80, 956, -81, 956, -247, 448, -248)])
+vertices = PackedVector2Array(-33.023438, -758, 969.53125, -776.7969, 946, -247.21875, 227.40625, -416.71094, 946, -90.97656, 199.99219, -90, 10.453125, -90, 18.59375, -276.4297, 235.61719, -286.47656, -36.796875, -424.96875, -516.96094, -531.02344, -516.03125, -768.77344)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7, 8, 2), PackedInt32Array(9, 10, 11, 0, 3), PackedInt32Array(3, 2, 8)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(9, -286, 0, -80, 200, -80, 956, -81, 956, -247, 980, -787, -33, -768, -526, -779, -527, -523, -38, -415, 218, -407, 225, -296)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ec6ti"]
@@ -390,13 +390,12 @@ navigation_polygon = SubResource("NavigationPolygon_f2p4u")
 navigation_layers = 2
 
 [node name="NavigationRegion2D11" type="NavigationRegion2D" parent="." index="19" unique_id=1674618902]
-visible = false
-navigation_polygon = SubResource("NavigationPolygon_nxtlr")
-
-[node name="NavigationRegion2D13" type="NavigationRegion2D" parent="." index="20" unique_id=1840139446]
-position = Vector2(672, -152)
 navigation_polygon = SubResource("NavigationPolygon_nxtlr")
 enabled = false
+
+[node name="NavigationRegion2D13" type="NavigationRegion2D" parent="." index="20" unique_id=1840139446]
+position = Vector2(538, 143)
+navigation_polygon = SubResource("NavigationPolygon_nxtlr")
 
 [node name="NavigationRegion2D12" type="NavigationRegion2D" parent="." index="21" unique_id=1325755171]
 navigation_polygon = SubResource("NavigationPolygon_ec6ti")
@@ -412,7 +411,6 @@ camera_zoom = 0.75
 offset = Vector2(0, -10)
 
 [node name="Camera2D" parent="CameraPos" index="0" unique_id=206778168]
-zoom = Vector2(1.5, 1.5)
 limit_enabled = false
 limit_left = 0
 limit_top = 0
@@ -462,8 +460,8 @@ shape = SubResource("RectangleShape2D_01tlq")
 
 [node name="Enemies" type="Node" parent="." index="29" unique_id=825398583]
 
-[node name="AssaultRifleSoldier" parent="Enemies" index="0" unique_id=1122506050 instance=ExtResource("8_v15hm")]
-position = Vector2(1050, 53)
+[node name="FlyingEnemyV2" parent="Enemies" index="0" unique_id=1309291986 instance=ExtResource("8_v15hm")]
+position = Vector2(971, -82)
 
 [node name="Checkpoint" parent="." index="30" unique_id=517145652 instance=ExtResource("10_gem31")]
 position = Vector2(1260, 1)
