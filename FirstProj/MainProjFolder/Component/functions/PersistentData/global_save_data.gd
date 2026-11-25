@@ -137,6 +137,12 @@ func load_highscores() -> void:
 	#for i in range(_loaded_scores.size()-1 , -1 , -1):
 		#print_debug(_loaded_scores[i].name, _loaded_scores[i].score)
 
+func load_highscores_dict() -> Dictionary:
+	var _file = FileAccess.open( GlobalSaveData.SAVE_PATH + "highscores//highscores_list.sav", FileAccess.READ)
+	var _load_json = JSON.new()
+	var _parse_result = _load_json.parse(_file.get_line())
+	return _parse_result
+
 #Save game functions
 func save_game() -> void:
 	save_player_data()

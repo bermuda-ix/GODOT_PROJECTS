@@ -42,6 +42,8 @@ signal spawn_boss_signal
 
 var boss_preload
 
+@onready var boss_preload_web : PackedScene = null
+
 @onready var boss_spawn_level := 0
 
 @onready var current_heat : int = 0
@@ -234,13 +236,16 @@ func inc_score(value : int):
 	else:
 		if score_spawn<=0:
 			boss_active=true
+			countdown_to_boss()
+			###Disabled in web export
 			match boss_spawn_level:
 				0:
-					prepare_boss_spawn(enemy_list.BOSS_REF["SOLDIER_BOSS"])
+					boss_preload_web=enemy_list.BOSSES["SHIELD_BOSS"]
 				1:
-					prepare_boss_spawn(enemy_list.BOSS_REF["MECH_RANGED"])
+					boss_preload_web=enemy_list.BOSSES["SHIELD_BOSS"]
 				2:
-					prepare_boss_spawn(enemy_list.BOSS_REF["DEMON_1"])
+					boss_preload_web=enemy_list.BOSSES["SHIELD_BOSS"]
+			
 			#if boss_spawn_level==0:
 				#prepare_boss_spawn(enemy_list.BOSS_REF["SOLDIER_BOSS"])
 			#else:
@@ -272,7 +277,7 @@ func increase_heat(value : int) -> void:
 		3:
 			Events.spawn_update.emit(enemy_list.ELITE_ENEMIES["HEAVY_SOLDIER"])
 		5:
-			Events.spawn_update.emit(enemy_list.ELITE_ENEMIES["SOLDIER_ENEMY"])
+			Events.spawn_update.emit(enemy_list.ELITE_ENEMIES["ASSAULT_RIFLE_SOLDIER"])
 		
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -330,7 +335,8 @@ func countdown_to_boss():
 		
 
 func spawn_boss():
-	var _boss=boss_preload.instantiate()
+	#var _boss=boss_preload.instantiate()
+	var _boss=boss_preload_web
 	_boss.global_position=boss_spawn_point.global_position
 	add_child(_boss)
 	_boss.boss_ui.activate_boss_ui()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dy51s6y6y8p08"]
+[gd_scene format=3 uid="uid://dy51s6y6y8p08"]
 
 [ext_resource type="Script" uid="uid://dvfweaey15pf3" path="res://Component/functions/PersistentData/highscore_list.gd" id="1_wfq2b"]
 [ext_resource type="Texture2D" uid="uid://1fmns6p332ye" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Panel05.png" id="2_0gft3"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cu63xecyubohj" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Button01.png" id="3_6m5uc"]
 [ext_resource type="Texture2D" uid="uid://es8ukh45ffw7" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Button02.png" id="4_0gft3"]
 [ext_resource type="Texture2D" uid="uid://trivk6x3hslt" path="res://Art_Components/UI/Wenrexa Assets UI Casual Techno/Wenrexa Assets UI Casual Techno/Blue/Button03.png" id="5_etvb2"]
+[ext_resource type="PackedScene" uid="uid://co7bq5nw080hk" path="res://Component/functions/ScoringFunctions/save_load_scores.tscn" id="7_etvb2"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_etvb2"]
 texture = ExtResource("2_0gft3")
@@ -52,7 +53,7 @@ default_font_size = 30
 default_font = ExtResource("2_yjokj")
 default_font_size = 36
 
-[node name="HighscoreList" type="Control"]
+[node name="HighscoreList" type="Control" unique_id=1883696776]
 z_index = 5
 layout_mode = 3
 anchors_preset = 15
@@ -62,20 +63,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wfq2b")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=843131468]
 layout_mode = 0
 offset_left = 64.0
 offset_right = 512.0
 offset_bottom = 328.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_etvb2")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer" unique_id=1492047333]
 layout_mode = 2
 theme = SubResource("Theme_srgfs")
 text = "HIGHSCORES"
 horizontal_alignment = 1
 
-[node name="NameList" type="VBoxContainer" parent="."]
+[node name="NameList" type="VBoxContainer" parent="." unique_id=377837229]
 layout_mode = 0
 offset_left = 128.0
 offset_top = 40.0
@@ -83,12 +84,12 @@ offset_right = 280.0
 offset_bottom = 275.0
 theme_override_constants/separation = 2
 
-[node name="NamePanelTitle" type="PanelContainer" parent="NameList"]
+[node name="NamePanelTitle" type="PanelContainer" parent="NameList" unique_id=1435645762]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme = SubResource("Theme_6m5uc")
 
-[node name="NameText" type="RichTextLabel" parent="NameList/NamePanelTitle"]
+[node name="NameText" type="RichTextLabel" parent="NameList/NamePanelTitle" unique_id=1248021268]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 theme = SubResource("Theme_d2tjr")
@@ -97,11 +98,11 @@ text = "[u]NAME[/u]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NamePanel1" type="PanelContainer" parent="NameList"]
+[node name="NamePanel1" type="PanelContainer" parent="NameList" unique_id=75442561]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="Name1" type="RichTextLabel" parent="NameList/NamePanel1" groups=["name"]]
+[node name="Name1" type="RichTextLabel" parent="NameList/NamePanel1" unique_id=127744734 groups=["name"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 theme = SubResource("Theme_m2hgp")
@@ -110,11 +111,11 @@ text = "Empty"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NamePanel2" type="PanelContainer" parent="NameList"]
+[node name="NamePanel2" type="PanelContainer" parent="NameList" unique_id=1135394049]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="Name2" type="RichTextLabel" parent="NameList/NamePanel2" groups=["name"]]
+[node name="Name2" type="RichTextLabel" parent="NameList/NamePanel2" unique_id=1601838802 groups=["name"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 theme = SubResource("Theme_m2hgp")
@@ -123,11 +124,11 @@ text = "Empty"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NamePanel3" type="PanelContainer" parent="NameList"]
+[node name="NamePanel3" type="PanelContainer" parent="NameList" unique_id=1217480339]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="Name3" type="RichTextLabel" parent="NameList/NamePanel3" groups=["name"]]
+[node name="Name3" type="RichTextLabel" parent="NameList/NamePanel3" unique_id=1417810562 groups=["name"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 theme = SubResource("Theme_m2hgp")
@@ -136,11 +137,11 @@ text = "Empty"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NamePanel4" type="PanelContainer" parent="NameList"]
+[node name="NamePanel4" type="PanelContainer" parent="NameList" unique_id=1986192970]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="Name4" type="RichTextLabel" parent="NameList/NamePanel4" groups=["name"]]
+[node name="Name4" type="RichTextLabel" parent="NameList/NamePanel4" unique_id=969883967 groups=["name"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 theme = SubResource("Theme_m2hgp")
@@ -149,11 +150,11 @@ text = "Empty"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NamePanel5" type="PanelContainer" parent="NameList"]
+[node name="NamePanel5" type="PanelContainer" parent="NameList" unique_id=1094459098]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="Name5" type="RichTextLabel" parent="NameList/NamePanel5" groups=["name"]]
+[node name="Name5" type="RichTextLabel" parent="NameList/NamePanel5" unique_id=1762024812 groups=["name"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 theme = SubResource("Theme_m2hgp")
@@ -162,7 +163,7 @@ text = "Empty"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScoreList" type="VBoxContainer" parent="."]
+[node name="ScoreList" type="VBoxContainer" parent="." unique_id=522388437]
 layout_mode = 0
 offset_left = 296.0
 offset_top = 40.0
@@ -170,11 +171,11 @@ offset_right = 448.0
 offset_bottom = 275.0
 theme_override_constants/separation = 2
 
-[node name="ScorePanelTitle" type="PanelContainer" parent="ScoreList"]
+[node name="ScorePanelTitle" type="PanelContainer" parent="ScoreList" unique_id=333913947]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="ScoreText" type="RichTextLabel" parent="ScoreList/ScorePanelTitle"]
+[node name="ScoreText" type="RichTextLabel" parent="ScoreList/ScorePanelTitle" unique_id=196015485]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 theme = SubResource("Theme_d2tjr")
@@ -183,11 +184,11 @@ text = "[u]SCORE[/u]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScorePanel1" type="PanelContainer" parent="ScoreList"]
+[node name="ScorePanel1" type="PanelContainer" parent="ScoreList" unique_id=51552071]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="Score1" type="RichTextLabel" parent="ScoreList/ScorePanel1" groups=["score"]]
+[node name="Score1" type="RichTextLabel" parent="ScoreList/ScorePanel1" unique_id=616184535 groups=["score"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 theme = SubResource("Theme_ts3jf")
@@ -196,11 +197,11 @@ text = "0000"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScorePanel2" type="PanelContainer" parent="ScoreList"]
+[node name="ScorePanel2" type="PanelContainer" parent="ScoreList" unique_id=851885631]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="Score2" type="RichTextLabel" parent="ScoreList/ScorePanel2" groups=["score"]]
+[node name="Score2" type="RichTextLabel" parent="ScoreList/ScorePanel2" unique_id=28504999 groups=["score"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 theme = SubResource("Theme_702ol")
@@ -209,11 +210,11 @@ text = "0000"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScorePanel3" type="PanelContainer" parent="ScoreList"]
+[node name="ScorePanel3" type="PanelContainer" parent="ScoreList" unique_id=1468459496]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="Score3" type="RichTextLabel" parent="ScoreList/ScorePanel3" groups=["score"]]
+[node name="Score3" type="RichTextLabel" parent="ScoreList/ScorePanel3" unique_id=755712054 groups=["score"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 theme = SubResource("Theme_tmdc2")
@@ -222,11 +223,11 @@ text = "0000"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScorePanel4" type="PanelContainer" parent="ScoreList"]
+[node name="ScorePanel4" type="PanelContainer" parent="ScoreList" unique_id=1561909171]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="Score4" type="RichTextLabel" parent="ScoreList/ScorePanel4" groups=["score"]]
+[node name="Score4" type="RichTextLabel" parent="ScoreList/ScorePanel4" unique_id=1850030167 groups=["score"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 theme = SubResource("Theme_ms577")
@@ -235,11 +236,11 @@ text = "0000"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScorePanel5" type="PanelContainer" parent="ScoreList"]
+[node name="ScorePanel5" type="PanelContainer" parent="ScoreList" unique_id=1194350537]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 
-[node name="Score5" type="RichTextLabel" parent="ScoreList/ScorePanel5" groups=["score"]]
+[node name="Score5" type="RichTextLabel" parent="ScoreList/ScorePanel5" unique_id=1930344909 groups=["score"]]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 theme = SubResource("Theme_exjum")
@@ -248,7 +249,7 @@ text = "0000"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RETURN" type="TextureButton" parent="."]
+[node name="RETURN" type="TextureButton" parent="." unique_id=226445171]
 layout_mode = 0
 offset_left = 112.0
 offset_top = 266.0
@@ -261,7 +262,7 @@ texture_pressed = ExtResource("4_0gft3")
 texture_hover = ExtResource("5_etvb2")
 stretch_mode = 0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="RETURN"]
+[node name="RichTextLabel" type="RichTextLabel" parent="RETURN" unique_id=1935183091]
 layout_mode = 0
 offset_left = 32.0
 offset_top = 16.0
@@ -272,7 +273,7 @@ text = "RETURN TO MENU"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="QUIT" type="TextureButton" parent="."]
+[node name="QUIT" type="TextureButton" parent="." unique_id=142273083]
 layout_mode = 0
 offset_left = 320.0
 offset_top = 266.0
@@ -285,7 +286,7 @@ texture_pressed = ExtResource("4_0gft3")
 texture_hover = ExtResource("5_etvb2")
 stretch_mode = 0
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="QUIT"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="QUIT" unique_id=219941419]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
@@ -296,5 +297,8 @@ text = "QUIT GAME"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="SaveLoadScores" parent="." unique_id=1121270383 instance=ExtResource("7_etvb2")]
+
 [connection signal="pressed" from="RETURN" to="." method="_on_return_pressed"]
 [connection signal="pressed" from="QUIT" to="." method="_on_quit_pressed"]
+[connection signal="scores_recieved" from="SaveLoadScores" to="." method="_on_save_load_scores_scores_recieved"]

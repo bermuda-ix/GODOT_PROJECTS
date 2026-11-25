@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://co7bq5nw080hk"]
+
+[ext_resource type="Script" uid="uid://8fy8lwiet807" path="res://save_load_scores.gd" id="1_kh1hc"]
+
+[node name="SaveLoadScores" type="Node" unique_id=1121270383]
+script = ExtResource("1_kh1hc")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1901435327]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=830052481]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

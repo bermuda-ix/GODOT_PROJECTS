@@ -30,6 +30,8 @@ extends Control
 @onready var score_panel_5: PanelContainer = $ScoreList/ScorePanel5
 @onready var score_5: RichTextLabel = $ScoreList/ScorePanel5/Score5
 
+@onready var save_load_scores: SaveLoadScores = $SaveLoadScores
+
 var _name_list : Array
 var _score_list : Array
 var _list_size : int
@@ -39,7 +41,8 @@ func _ready() -> void:
 	_score_list = get_tree().get_nodes_in_group("score")
 	_name_list = get_tree().get_nodes_in_group("name")
 	_list_size = _name_list.size()
-	load_scores()
+	#load_scores()
+	save_load_scores.recieve_scores()
 	
 	
 func load_scores() -> void:
@@ -59,8 +62,8 @@ func load_scores() -> void:
 func display_scores(_size : int, _list : Array) -> void:
 	assert(_size<=5)
 	for i in range(_size-1, -1, -1):
-		var _name=str(_list[i][0])
-		var _score=str(_list[i][1])
+		var _name=str(_list[i]["Name"])
+		var _score=str(_list[i]["Score"])
 		_name_list[i].text=_name
 		_score_list[i].text=_score
 
@@ -72,3 +75,20 @@ func _on_return_pressed() -> void:
 	GlobalSaveData.score=0
 	Global.game_controller.change_gui_scene(LevelsList.MAIN_MENU)
 	Global.game_controller.reload_game()
+
+
+func _on_save_load_scores_scores_recieved(response_text: String) -> void:
+	var json = JSON.new()
+	json.parse(response_text)
+	var _recieved_scores : Array = json.data
+	#var _scores_sorted : Array = []
+	if _list_size>_recieved_scores.size():
+		_list_size=_recieved_scores.size()
+	_recieved_scores.sort_custom(sort_descending)
+	display_scores(_list_size, _recieved_scores)
+
+func sort_top_five(_scores) -> void:
+	pass
+	
+static func sort_descending(a: Dictionary, b: Dictionary)-> bool:
+	return int(a["Score"]>b["Score"])

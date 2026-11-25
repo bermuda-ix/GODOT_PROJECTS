@@ -12,19 +12,21 @@ const REG_ENEMIES := {
 #Elite Enemies
 const ELITE_ENEMIES := {
 	SOLDIER_ENEMY = preload("res://chars/soldier_enemy.tscn"),
-	HEAVY_SOLDIER = preload("res://chars/heavy_soldier.tscn")
+	HEAVY_SOLDIER = preload("res://chars/heavy_soldier.tscn"),
+	ASSAULT_RIFLE_SOLDIER = preload("uid://bbkom6a7pabbe"),
+	SHOTGUN_BULLET_ENEMY = preload("uid://bbjg0xw2unq4s")
 	}
 
 #Bosses
 @export_category("Bosses")
 #Preloaded
 const BOSSES := {
-	MECH_RANGED = preload("res://chars/mech_ranged.tscn"),
-	DEMON_1 = preload("res://chars/demon_phase1.tscn")
+	SHIELD_BOSS = preload("uid://c8aamv61i62mb")
 }
 #Nonloaded
 const BOSS_REF := {
 	"SOLDIER_BOSS" = "uid://cu7yn55uf2fn8",
 	"MECH_RANGED" = "res://chars/mech_ranged.tscn",
-	"DEMON_1" = "res://chars/demon_phase1.tscn"
+	"DEMON_1" = "res://chars/demon_phase1.tscn",
+	"SHIELD_BOSS" = "uid://c8aamv61i62mb"
 	}
